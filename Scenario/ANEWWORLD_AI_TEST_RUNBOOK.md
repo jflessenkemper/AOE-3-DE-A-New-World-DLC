@@ -188,11 +188,17 @@ threshold:
 python3 tools/validation/exhibition_runner.py --civs all
 ```
 
-This drives the game via `tools/aoe3_automation/manage_game.py`,
-swapping civs into the playbook scenarios (`ANW_Coverage_A..F`), and
-captures probes from every AI in every match. The cold-relaunch fix
-landed earlier in this session (`fb17a8f`) so each match starts from a
-deterministic mode-1 state.
+The runner uses **the single canonical `ANEWWORLD.age3Yscn`** for every
+match; it walks the 46-civ roster built at import time (`ANW_ROSTER`)
+and varies the matchup by re-emitting the scenario with different civ
+bindings per match (via `scenario_emitter.set_player_bindings`). The
+cold-relaunch fix landed earlier in this session (`fb17a8f`) so each
+match starts from a deterministic mode-1 state. There are no separate
+`ANW_Coverage_*` playbook scenarios — the runner is single-scenario by
+design now that the emitter can re-bind civ slots in O(milliseconds).
+
+Note: headless matrix mode currently requires the load-gate to be
+resolved (see `tools/validation/SCENARIO_LOAD_GATE_DIAGNOSIS.md`).
 
 ## Files involved
 
