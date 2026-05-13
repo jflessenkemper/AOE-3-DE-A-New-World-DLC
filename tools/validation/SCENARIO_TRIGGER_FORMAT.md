@@ -29,6 +29,17 @@ Note the asymmetry: `lpu8` length covers the null terminator,
 The empty `lpu8` is just `u32 0` (no string bytes, no null).
 The empty `lpu16` is just `u32 0`.
 
+**Non-canonical empty `lpu8` (observed in `Bombard_Brawl`)**: some
+fields (e.g. the `display` string of certain Params) encode an empty
+string as `u32 1` + a single `\x00` byte (a length-1 string consisting
+only of the null terminator). This is semantically equivalent to the
+canonical empty form but byte-different. The parser exposes
+`Reader.lp_utf8_raw()` which preserves the raw length prefix, and the
+writer's `lp_utf8(s, raw_len=N)` re-emits the original prefix when
+asked, enabling byte-exact round-trips. Callers that build new
+triggers should emit the canonical `u32 0` form unless replicating a
+specific captured scenario.
+
 ## Location
 
 The trigger section is a tagged sub-record embedded in the

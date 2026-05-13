@@ -101,6 +101,23 @@ class Reader:
             return raw.decode("utf-8", errors="replace")
         return raw[:-1].decode("utf-8", errors="replace")
 
+    def lp_utf8_raw(self) -> Tuple[str, int]:
+        """Like lp_utf8 but also returns the raw u32 length prefix value.
+
+        This is needed to round-trip the non-canonical empty-string encoding
+        used in some campaign scenarios: ``01 00 00 00 00`` (length=1 with just
+        a null byte) encodes the empty string but differs on-wire from the
+        canonical ``00 00 00 00`` (length=0).  Callers that need byte-perfect
+        re-serialisation must use this method and store the returned raw_len.
+        """
+        n = self.u32()
+        if n == 0:
+            return "", 0
+        raw = self.take(n)
+        if raw[-1] != 0:
+            return raw.decode("utf-8", errors="replace"), n
+        return raw[:-1].decode("utf-8", errors="replace"), n
+
     def lp_utf16(self) -> str:
         """Read a length-prefixed UTF-16-LE string. Length is u32 = CHAR
         count. No trailing null in the wire format."""
@@ -119,7 +136,8 @@ class Reader:
 class Param:
     """One named parameter of a condition or effect."""
 
-    __slots__ = ("type_tag", "name", "display", "value_type", "values", "extra")
+    __slots__ = ("type_tag", "name", "display", "value_type", "values", "extra",
+                 "_name_raw_len", "_disp_raw_len")
 
     def __init__(
         self,
@@ -129,6 +147,8 @@ class Param:
         value_type: int,
         values: List[str],
         extra: bytes = b"",
+        _name_raw_len: int = -1,
+        _disp_raw_len: int = -1,
     ) -> None:
         self.type_tag = type_tag
         self.name = name
@@ -138,6 +158,11 @@ class Param:
         # `extra` holds the type-specific bonus field. For value_type=22 it is
         # the u32 "0" that follows vcount=1. For other types it is empty.
         self.extra = extra
+        # Raw length-prefix values preserved for byte-perfect re-serialisation.
+        # -1 means "not recorded" (use canonical encoding).  For empty strings,
+        # some campaign files use 1 (null-only byte) instead of 0.
+        self._name_raw_len = _name_raw_len
+        self._disp_raw_len = _disp_raw_len
 
     def __repr__(self) -> str:
         v = repr(self.values) if len(self.values) <= 4 else f"[{len(self.values)} vals]"
@@ -182,7 +207,8 @@ class Condition:
     that prepare the runtime state. The trigger fires when eval_expr
     evaluates true."""
 
-    __slots__ = ("type_tag", "name", "display", "params", "eval_expr", "xs_blocks")
+    __slots__ = ("type_tag", "name", "display", "params", "eval_expr", "xs_blocks",
+                 "_name_raw_len", "_disp_raw_len")
 
     def __init__(
         self,
@@ -192,6 +218,8 @@ class Condition:
         params: List[Param],
         eval_expr: str,
         xs_blocks: List[XSBlock],
+        _name_raw_len: int = -1,
+        _disp_raw_len: int = -1,
     ) -> None:
         self.type_tag = type_tag
         self.name = name
@@ -199,6 +227,8 @@ class Condition:
         self.params = params
         self.eval_expr = eval_expr
         self.xs_blocks = xs_blocks
+        self._name_raw_len = _name_raw_len
+        self._disp_raw_len = _disp_raw_len
 
     def __repr__(self) -> str:
         return (
@@ -214,7 +244,8 @@ class Effect:
     an eval_expr (usually "true"), and a list of XS blocks that run when
     the trigger fires."""
 
-    __slots__ = ("type_tag", "name", "display", "params", "eval_expr", "xs_blocks")
+    __slots__ = ("type_tag", "name", "display", "params", "eval_expr", "xs_blocks",
+                 "_name_raw_len", "_disp_raw_len")
 
     def __init__(
         self,
@@ -224,6 +255,8 @@ class Effect:
         params: List[Param],
         eval_expr: str,
         xs_blocks: List[XSBlock],
+        _name_raw_len: int = -1,
+        _disp_raw_len: int = -1,
     ) -> None:
         self.type_tag = type_tag
         self.name = name
@@ -231,6 +264,8 @@ class Effect:
         self.params = params
         self.eval_expr = eval_expr
         self.xs_blocks = xs_blocks
+        self._name_raw_len = _name_raw_len
+        self._disp_raw_len = _disp_raw_len
 
     def __repr__(self) -> str:
         return (
@@ -361,8 +396,8 @@ def _parse_param(r: Reader) -> Param:
     (LocalizedStringID, used by Msg/Subtitle/StringID/Text) inserts an
     extra u32=0 between vcount and the values."""
     type_tag = r.u32()
-    name = r.lp_utf8()
-    display = r.lp_utf8()
+    name, name_raw_len = r.lp_utf8_raw()
+    display, disp_raw_len = r.lp_utf8_raw()
     value_type = r.u32()
     vcount = r.u32()
     extra = b""
@@ -372,7 +407,8 @@ def _parse_param(r: Reader) -> Param:
     values: List[str] = []
     for _ in range(vcount):
         values.append(r.lp_utf16())
-    return Param(type_tag, name, display, value_type, values, extra)
+    return Param(type_tag, name, display, value_type, values, extra,
+                 _name_raw_len=name_raw_len, _disp_raw_len=disp_raw_len)
 
 
 def _parse_xs_block(r: Reader) -> XSBlock:
@@ -395,16 +431,18 @@ def _parse_cond_or_effect(r: Reader, is_effect: bool):
     """Parse a single condition or effect. The on-wire layout is identical.
     Returns Condition or Effect (depending on `is_effect`)."""
     type_tag = r.u32()  # observed: always 2
-    name = r.lp_utf8()
-    display = r.lp_utf8()
+    name, name_raw_len = r.lp_utf8_raw()
+    display, disp_raw_len = r.lp_utf8_raw()
     param_count = r.u32()
     params = [_parse_param(r) for _ in range(param_count)]
     eval_expr = r.lp_utf8()
     xs_count = r.u32()
     xs_blocks = [_parse_xs_block(r) for _ in range(xs_count)]
     if is_effect:
-        return Effect(type_tag, name, display, params, eval_expr, xs_blocks)
-    return Condition(type_tag, name, display, params, eval_expr, xs_blocks)
+        return Effect(type_tag, name, display, params, eval_expr, xs_blocks,
+                      _name_raw_len=name_raw_len, _disp_raw_len=disp_raw_len)
+    return Condition(type_tag, name, display, params, eval_expr, xs_blocks,
+                     _name_raw_len=name_raw_len, _disp_raw_len=disp_raw_len)
 
 
 def parse_trigger(buf: bytes, off: int, payload_end: int) -> Tuple[Trigger, int]:
