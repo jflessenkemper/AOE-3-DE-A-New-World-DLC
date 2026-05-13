@@ -74,14 +74,32 @@ Expected output:
 
 **If `INVALID FILE` dialog appears:**
 
-The engine's scenario-load gate has rejected the file. Per the prior
-investigation in `tools/validation/scenario_load_bypass.md`, this is
-likely the Arxan-protected Steam Inventory / DRM check, not a
-binary-format problem (our validator confirms the structure is clean).
-The documented workaround is the Goldberg Steam Emu replacement
-`steam_api64.dll` — see `scenario_load_bypass.md` § "Recommended next
-step" for the exact procedure. Capture `Age3Log.txt` first so we can
-diff successful skirmish vs failed scenario load.
+The engine's scenario-load gate has rejected the file. **Do NOT** retry
+Goldberg Steam Emu — empirically refuted on 2026-05-11 (Arxan hash-
+checks `steam_api64.dll` itself and fails the launch with error 0x5).
+The current authoritative diagnosis lives in
+`tools/validation/SCENARIO_LOAD_GATE_DIAGNOSIS.md` (391 lines, written
+2026-05-13). Run the recommended sequence in that doc:
+
+1. **Option B (already applied this session):** the stale 2026-05-06
+   `ANEWWORLD.age3Yscn` in the user-Scenario dir has been parked as
+   `ANEWWORLD.age3Yscn.legacy-2026-05-06` so it can no longer shadow
+   the fresh build.
+2. **Option C (already staged this session):** a byte-identical copy
+   of stock `Bombard_Brawl.age3Yscn` (sha256 `7e6ec953…`) has been
+   placed in BOTH the user-Scenario dir AND the mod's Scenario dir.
+   When you next launch, try loading **Bombard_Brawl** from each
+   location. The pattern of which load(s) succeed tells us whether
+   the gate is path-based or content-based (see the diagnosis doc
+   for the decision tree).
+3. **Option A (user-driven):** tail the log with
+   `python3 tools/validation/watch_scenario_load.py
+   --expect-civs ANWBritish ANWAztecs ANWMaltese --timeout-s 180`
+   in a second terminal *before* clicking OPEN on ANEWWORLD. This
+   captures the actual rejection event (or PASS) — the current
+   `Age3Log.txt` has no scenario-load attempt recorded so we cannot
+   currently confirm whether the gate is still active at all on the
+   freshly-rebuilt binary.
 
 ## What gets captured during the match
 
