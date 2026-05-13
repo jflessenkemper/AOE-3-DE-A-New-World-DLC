@@ -1,4 +1,44 @@
 //==============================================================================
+// aiBuildingsWalls.xs — SMART WALLS implementation
+//
+// Track 1.1a  llDetectChokepointVector      — real chokepoint detection via
+//             kbAreaGetNumberBorderAreas / kbAreaGetBorderAreaID, cached once
+//             per match. Falls back to forward-biased center on flat maps.
+//
+// Track 1.1b  llGetForwardBiasedWallCenter  — water/cliff AVOIDANCE: samples
+//             kbAreaGetType after biasing; walks inland 8-unit steps (up to 5)
+//             if the proposed center lands in water or a 0-tile area.
+//
+// Track 1.1b+ llDetectCoastVector           — water/cliff EXPLOITATION:
+//             scans the AI base area's borders for water-typed neighbours,
+//             computes the seaward centroid, and returns a wall center
+//             pushed inland by ~30% of the ring radius. Used by
+//             llPlanCoastalBatteriesWall to make the doctrine actually
+//             coastal-aware (vs cosmetic naming). Returns cInvalidVector
+//             on inland maps; caller falls back to forward-bias. Cached
+//             per-AI per-match like the chokepoint detector.
+//
+// Track 1.1c  llSelectWallType              — wall-tier wrapper. All ages
+//             currently return cBuildWallPlanWallTypeRing; radius + gate-count
+//             callers (llGetLegendaryWallRadius / llGetLegendaryWallGateCount)
+//             provide the actual age-based tier differentiation.
+//
+// Track 1.1d  rule verifyWallClosure        — gap-closure watchdog firing
+//             every 60s once a ring plan is active. Escalates priority and
+//             villager pool when coverage < 60% after 4 min; re-emits a fresh
+//             plan if the original was destroyed.
+//
+// Track 1.1e  Smart gate placement          — SKIPPED / not supported.
+//             cBuildWallPlanGate0Position and cBuildWallPlanGate1Position do
+//             not appear anywhere in the engine surface or any .xs file in
+//             this codebase. Attempting to pass them via aiPlanSetVariableVector
+//             would reference an undefined constant and crash the script
+//             validator. Gate count is controlled via cBuildWallPlanNumberOfGates;
+//             gate placement remains engine-determined.
+//             If a future engine patch exposes these constants, wire them in
+//             here (bias gate 0 toward our TC, gate 1 at the flank) and remove
+//             this notice.
+//==============================================================================
 // RULE explorationAgeWalling
 // Start a basic ring wall around the main base in the Exploration Age.
 //==============================================================================
@@ -99,6 +139,11 @@ int llGetLegendaryWallGateCount(bool lateGame = false)
 // the likely enemy arc). A full ring still surrounds the base, but the
 // extra bias thickens wall coverage on the contested side where it matters
 // most. Returns the input unchanged if no front vector is registered.
+//
+// SMART WALLS — Track 1.1b: water/cliff fixup. After biasing, sample the
+// area type. If we land in water (or a 0-tile area), walk backwards along
+// the inverse front vector in 8-unit steps (up to 5) trying to find land.
+// If we never find land, return baseCenter unchanged (safer than ocean).
 vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
                                     int mainBaseID = -1,
                                     float biasFactor = 0.25)
@@ -117,7 +162,206 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
    float shift = radius * biasFactor;
    float nx = xsVectorGetX(baseCenter) + xsVectorGetX(frontVec) * shift;
    float nz = xsVectorGetZ(baseCenter) + xsVectorGetZ(frontVec) * shift;
-   return (xsVectorSet(nx, xsVectorGetY(baseCenter), nz));
+   vector biased = xsVectorSet(nx, xsVectorGetY(baseCenter), nz);
+
+   // Water/cliff fixup. Sample the biased center's area; if it's water or
+   // a 0-tile area, step inland (opposite of frontVec) 8 units at a time
+   // up to 5 times. Each step is re-sampled. First valid land wins.
+   int areaID = kbAreaGetIDByPosition(biased);
+   int areaType = -1;
+   int areaTiles = 0;
+   if (areaID >= 0)
+   {
+      areaType = kbAreaGetType(areaID);
+      areaTiles = kbAreaGetNumberTiles(areaID);
+   }
+   if ((areaID < 0) || (areaType == cAreaTypeWater) || (areaTiles <= 0))
+   {
+      vector corrected = biased;
+      int steps = 0;
+      bool fixed = false;
+      for (i = 1; <= 5)
+      {
+         float bx = nx - xsVectorGetX(frontVec) * 8.0 * i;
+         float bz = nz - xsVectorGetZ(frontVec) * 8.0 * i;
+         vector candidate = xsVectorSet(bx, xsVectorGetY(baseCenter), bz);
+         int candID = kbAreaGetIDByPosition(candidate);
+         if (candID < 0) { continue; }
+         int candType = kbAreaGetType(candID);
+         int candTiles = kbAreaGetNumberTiles(candID);
+         if ((candType != cAreaTypeWater) && (candTiles > 0))
+         {
+            corrected = candidate;
+            steps = i;
+            fixed = true;
+            break;
+         }
+      }
+      llProbe("wall.water_fix", "orig=" + llFmtVec(biased) +
+         " final=" + llFmtVec(corrected) + " steps=" + steps +
+         " fixed=" + fixed);
+      if (fixed == true)
+      {
+         return (corrected);
+      }
+      // Every step still in water/invalid — fall back to baseCenter
+      // (safer than placing a ring centered in the ocean).
+      return (baseCenter);
+   }
+   // SMART WALLS — Track 1.1b (Defect 2 fix): always emit a wall.water_fix
+   // probe so flat inland maps register the feature as "ran, no fix needed"
+   // rather than "feature absent". orig==final and steps=0 on this path.
+   llProbe("wall.water_fix", "orig=" + llFmtVec(biased) +
+      " final=" + llFmtVec(biased) + " steps=0 fixed=false");
+   return (biased);
+}
+
+//==============================================================================
+// SMART WALLS — Track 1.1a: chokepoint detection.
+//
+// Walks the AI's base area and its border areas once per match (cached) to
+// find the narrowest "gap" between two impassable-style neighbours. The
+// gap area's center is returned as the chokepoint vector. Fall back to
+// llGetForwardBiasedWallCenter() on flat maps (no water/impassable borders).
+//
+// NOTE: the engine's area-type vocabulary in this codebase is only
+// confirmed to expose cAreaTypeWater. No cAreaTypeImpassableLand /
+// cAreaTypeCliff constants are referenced anywhere in the mod or the
+// surrounding files. We therefore approximate "impassable" via a
+// tile-count heuristic: a border area whose tile count is < 25% of the
+// AI base area's tile count is treated as a non-traversable shoulder
+// (cliff face, terrain wall, small water inlet). Combined with the
+// hard cAreaTypeWater check, this gives us "narrowest gap" on real maps.
+//==============================================================================
+vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+{
+   // Per-AI cache: compute once per match, reuse thereafter.
+   static int chokepointCached = 0;
+   static vector chokepointVec = cInvalidVector;
+   if (chokepointCached == 1)
+   {
+      // SMART WALLS — Track 1.1a (Defect 3 fix): keep the schema numeric
+      // for tiles (`tiles=<int>`). The cached-hit path emits 0 to signal
+      // "no fresh tile-count was computed this tick"; cached=1 distinguishes
+      // from a true zero-tile measurement.
+      llProbe("wall.chokepoint", "vec=" + llFmtVec(chokepointVec) +
+         " tiles=0 cached=1");
+      return (chokepointVec);
+   }
+
+   if ((baseCenter == cInvalidVector) || (mainBaseID < 0))
+   {
+      return (llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35));
+   }
+
+   int baseAreaID = kbAreaGetIDByPosition(baseCenter);
+   if (baseAreaID < 0)
+   {
+      return (llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35));
+   }
+   int baseTiles = kbAreaGetNumberTiles(baseAreaID);
+   int numBorders = kbAreaGetNumberBorderAreas(baseAreaID);
+   if (numBorders <= 0)
+   {
+      // No border areas at all -> open map, no chokepoint to detect.
+      vector fallbackNoBorders = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
+      chokepointVec = fallbackNoBorders;
+      chokepointCached = 1;
+      llProbe("wall.chokepoint", "vec=" + llFmtVec(fallbackNoBorders) +
+         " tiles=0 cached=0 fallback=noBorders");
+      return (fallbackNoBorders);
+   }
+
+   // First pass: tag each border area as "impassable-ish" (water OR very
+   // few tiles vs. base). Then scan for the narrowest border with at
+   // least one impassable-ish neighbour adjacent — that's the choke.
+   int narrowestID = -1;
+   int narrowestTiles = 999999;
+   int impassableThreshold = baseTiles / 4;  // < 25% of base area
+   if (impassableThreshold < 8) { impassableThreshold = 8; }
+
+   for (i = 0; < numBorders)
+   {
+      int borderID = kbAreaGetBorderAreaID(baseAreaID, i);
+      if (borderID < 0) { continue; }
+      int btype = kbAreaGetType(borderID);
+      int btiles = kbAreaGetNumberTiles(borderID);
+      // Skip water borders themselves — we want LAND chokepoints
+      // (the engine can't path through water for walling).
+      if (btype == cAreaTypeWater) { continue; }
+      // Skip "fat" borders — these are open ground, not chokes.
+      if (btiles >= baseTiles) { continue; }
+
+      // Does this border have at least one impassable-ish neighbour
+      // (water OR a tiny area)? If yes, it's a candidate chokepoint.
+      bool hasImpassableNeighbour = false;
+      int neighbourCount = kbAreaGetNumberBorderAreas(borderID);
+      for (j = 0; < neighbourCount)
+      {
+         int neighbourID = kbAreaGetBorderAreaID(borderID, j);
+         if (neighbourID < 0) { continue; }
+         if (neighbourID == baseAreaID) { continue; }
+         int ntype = kbAreaGetType(neighbourID);
+         int ntiles = kbAreaGetNumberTiles(neighbourID);
+         if ((ntype == cAreaTypeWater) || (ntiles <= impassableThreshold))
+         {
+            hasImpassableNeighbour = true;
+            break;
+         }
+      }
+      if (hasImpassableNeighbour == false) { continue; }
+
+      if (btiles < narrowestTiles)
+      {
+         narrowestTiles = btiles;
+         narrowestID = borderID;
+      }
+   }
+
+   if (narrowestID < 0)
+   {
+      // Flat map: nothing pinched. Use forward-biased fallback.
+      vector fallbackFlatMap = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
+      chokepointVec = fallbackFlatMap;
+      chokepointCached = 1;
+      llProbe("wall.chokepoint", "vec=" + llFmtVec(fallbackFlatMap) +
+         " tiles=0 cached=0 fallback=flatMap");
+      return (fallbackFlatMap);
+   }
+
+   vector chokeCenter = kbAreaGetCenter(narrowestID);
+   chokepointVec = chokeCenter;
+   chokepointCached = 1;
+   llProbe("wall.chokepoint", "vec=" + llFmtVec(chokeCenter) +
+      " tiles=" + narrowestTiles + " cached=0");
+   return (chokeCenter);
+}
+
+//==============================================================================
+// SMART WALLS — Track 1.1c: wall-type / tier dispatch.
+//
+// Only cBuildWallPlanWallTypeRing is confirmed in the engine vocabulary
+// referenced by this codebase — no cBuildWallPlanWallTypeSegment or
+// cBuildWallPlanWallTypeFortified is documented anywhere we can see.
+// Engine wall-type vocabulary not fully documented; using Ring at all ages
+// with radius/gate variation as the tier knob (see llGetLegendaryWallRadius
+// and llGetLegendaryWallGateCount, both already age-aware).
+//
+// Returns the wall-type constant to feed into cBuildWallPlanWallType.
+// All ages return cBuildWallPlanWallTypeRing today; the dispatch is
+// here so once additional constants are confirmed they can be slotted
+// in without touching every strategy function.
+//==============================================================================
+int llSelectWallType(int wallStrategy = -1, int age = 1)
+{
+   // Age 1 -> light palisade-style ring (small radius handled by callers).
+   // Age 2-3 -> normal stone ring.
+   // Age 4+ -> fortified ring + outer supplement (already handled in
+   //          delayWallsNew's outerRingPlaced branch).
+   // All three currently map to the same engine wall-type constant; the
+   // radius/gate-count callers apply on top of this is the actual tier
+   // differentiator.
+   return (cBuildWallPlanWallTypeRing);
 }
 
 //==============================================================================
@@ -133,7 +377,8 @@ int llPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVect
    float radius = llGetLegendaryWallRadius(false);
    int planID = aiPlanCreate("FortressRing Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
-   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0, cBuildWallPlanWallTypeRing);
+   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
+      llSelectWallType(gLLWallStrategy, kbGetAge()));
    // Heavy villager commitment — a ~264-unit perimeter at radius 42 needs a
    // sustained pool, not a 3–5 starter crew that finishes its first segment
    // and goes home. Bumped 3,5 -> 6,12 so the ring actually closes.
@@ -160,10 +405,14 @@ int llPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVect
 int llPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
    float radius = llGetLegendaryWallRadius(false) - 4.0;
-   vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
+   // SMART WALLS — Track 1.1a: real chokepoint detection rather than
+   // the misnamed forward-biased fallback. Detector itself falls back
+   // to forward-biased on flat maps.
+   vector center = llDetectChokepointVector(mainBaseID, baseCenter);
    int planID = aiPlanCreate("Chokepoint Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
-   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0, cBuildWallPlanWallTypeRing);
+   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
+      llSelectWallType(gLLWallStrategy, kbGetAge()));
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, 10);  // min=2 to release idlers when plan stalls
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
@@ -177,16 +426,144 @@ int llPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector
    return (planID);
 }
 
+//==============================================================================
+// SMART WALLS — Track 1.1b EXTENSION: coastline exploitation.
+//
+// llGetForwardBiasedWallCenter handles AVOIDANCE (walks inland if biased
+// center lands in water). This helper handles EXPLOITATION: detects the
+// direction from baseCenter toward water-bordering areas, then returns a
+// wall center pushed INLAND (opposite of the coast centroid). The seaward
+// arc of the resulting ring backs up onto the shoreline — the coast itself
+// acts as a natural barrier, freeing wall pieces to thicken the landward
+// perimeter. This is what makes "CoastalBatteries" actually doctrinal on
+// real coastal/island maps instead of cosmetic.
+//
+// Returns cInvalidVector when no water borders are detected (inland map);
+// caller must fall back to llGetForwardBiasedWallCenter() in that case.
+//
+// Per-AI cached: computed once per match.
+//==============================================================================
+vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+{
+   static int coastCached = 0;
+   static vector coastVec = cInvalidVector;
+   if (coastCached == 1)
+   {
+      llProbe("wall.coast", "vec=" + llFmtVec(coastVec) +
+         " waterBorders=0 cached=1");
+      return (coastVec);
+   }
+
+   if ((baseCenter == cInvalidVector) || (mainBaseID < 0))
+   {
+      coastCached = 1;
+      llProbe("wall.coast",
+         "vec=cInvalidVector waterBorders=0 cached=0 fallback=invalidArgs");
+      return (cInvalidVector);
+   }
+
+   int baseAreaID = kbAreaGetIDByPosition(baseCenter);
+   if (baseAreaID < 0)
+   {
+      coastCached = 1;
+      llProbe("wall.coast",
+         "vec=cInvalidVector waterBorders=0 cached=0 fallback=noBaseArea");
+      return (cInvalidVector);
+   }
+
+   int numBorders = kbAreaGetNumberBorderAreas(baseAreaID);
+   if (numBorders <= 0)
+   {
+      coastCached = 1;
+      llProbe("wall.coast",
+         "vec=cInvalidVector waterBorders=0 cached=0 fallback=noBorders");
+      return (cInvalidVector);
+   }
+
+   // Sum the centers of all water-typed border areas, then average to get
+   // the coastline centroid. The vector FROM baseCenter TO that centroid
+   // points seaward; inverting it pulls the wall ring inland.
+   float sumX = 0.0;
+   float sumZ = 0.0;
+   int waterCount = 0;
+   for (i = 0; < numBorders)
+   {
+      int borderID = kbAreaGetBorderAreaID(baseAreaID, i);
+      if (borderID < 0) { continue; }
+      if (kbAreaGetType(borderID) != cAreaTypeWater) { continue; }
+      vector bcenter = kbAreaGetCenter(borderID);
+      sumX = sumX + xsVectorGetX(bcenter);
+      sumZ = sumZ + xsVectorGetZ(bcenter);
+      waterCount = waterCount + 1;
+   }
+
+   if (waterCount <= 0)
+   {
+      // No water borders on this base area — inland map. Caller falls back.
+      coastCached = 1;
+      llProbe("wall.coast",
+         "vec=cInvalidVector waterBorders=0 cached=0 fallback=inlandMap");
+      return (cInvalidVector);
+   }
+
+   float waterX = sumX / waterCount;
+   float waterZ = sumZ / waterCount;
+   vector waterCentroid = xsVectorSet(waterX, xsVectorGetY(baseCenter), waterZ);
+   vector seaward = waterCentroid - baseCenter;
+   float mag = xsVectorLength(seaward);
+   if (mag <= 0.0)
+   {
+      coastCached = 1;
+      coastVec = baseCenter;
+      llProbe("wall.coast", "vec=" + llFmtVec(baseCenter) +
+         " waterBorders=" + waterCount + " cached=0 fallback=zeroMagnitude");
+      return (baseCenter);
+   }
+   vector inlandUnit = xsVectorNormalize(0.0 - seaward);
+   float radius = llGetLegendaryWallRadius(false);
+   // Inland push of ~30% of wall radius — same scale as forward bias but
+   // anchored to the coast geometry rather than the front vector. Matches
+   // historical peninsular doctrine: wall the landward face thick, leave
+   // the seaward face to the navy / shore guns.
+   float shift = radius * 0.30;
+   vector coastBiased = baseCenter + inlandUnit * shift;
+   coastVec = coastBiased;
+   coastCached = 1;
+   llProbe("wall.coast", "vec=" + llFmtVec(coastBiased) +
+      " waterBorders=" + waterCount + " cached=0 shift=" + shift);
+   return (coastBiased);
+}
+
 // CoastalBatteries: land-side partial ring (Wellington Torres Vedras, Henry Elmina).
 // Ring center pushed inland (away from the coast arc) so the wall covers
 // the landward approach more thickly — matches real peninsular doctrine.
+//
+// 2026-05-13 (Track 1.1b extension): on coastal/island maps we now use
+// llDetectCoastVector() to push the ring center AWAY from the water-border
+// centroid. Falls back to llGetForwardBiasedWallCenter (the old behaviour)
+// on inland maps where no water border is detected — keeps the doctrine
+// graceful on flat terrain instead of NaN-ing the plan.
 int llPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
    float radius = llGetLegendaryWallRadius(false);
-   vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.20);
+   vector coastCenter = llDetectCoastVector(mainBaseID, baseCenter);
+   vector center = cInvalidVector;
+   string centerSrc = "";
+   if (coastCenter == cInvalidVector)
+   {
+      // Inland map — fall back to forward-biased (front-vector) center.
+      center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.20);
+      centerSrc = "frontBias";
+   }
+   else
+   {
+      center = coastCenter;
+      centerSrc = "coastInland";
+   }
    int planID = aiPlanCreate("CoastalBatteries Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
-   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0, cBuildWallPlanWallTypeRing);
+   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
+      llSelectWallType(gLLWallStrategy, kbGetAge()));
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, 10);  // min=2 to release idlers when plan stalls
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
@@ -196,7 +573,8 @@ int llPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalid
    aiPlanSetDesiredPriority(planID, 86);
    aiPlanSetActive(planID, true);
    llProbe("plan.wall.create", "type=CoastalBatteries radius=" + radius +
-      " gates=4 vils=6-10 priority=86 plan=" + planID);
+      " gates=4 vils=6-10 priority=86 plan=" + planID +
+      " centerSrc=" + centerSrc);
    return (planID);
 }
 
@@ -208,7 +586,8 @@ int llPlanFrontierPalisadeWall(int mainBaseID = -1, vector baseCenter = cInvalid
    vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.15);
    int planID = aiPlanCreate("FrontierPalisade Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
-   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0, cBuildWallPlanWallTypeRing);
+   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
+      llSelectWallType(gLLWallStrategy, kbGetAge()));
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, 8);   // min=2 to release idlers when plan stalls
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
@@ -229,7 +608,8 @@ int llPlanUrbanBarricadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVe
    vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.15);
    int planID = aiPlanCreate("UrbanBarricade Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
-   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0, cBuildWallPlanWallTypeRing);
+   aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
+      llSelectWallType(gLLWallStrategy, kbGetAge()));
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, 8);   // min=2 to release idlers when plan stalls
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
@@ -372,6 +752,9 @@ minInterval 20
 
    llLogPlanEvent("create", wallPlanID, "exploration-wall strategy=" + gLLWallStrategy + " center=" + baseCenter);
    xsEnableRule("fillInWallGapsNew");
+   // SMART WALLS — Track 1.1d: arm the closure watchdog so it can
+   // escalate / re-emit if the plan stalls at <60% closure.
+   xsEnableRule("verifyWallClosure");
    // Stay active: anti-spam dedup above prevents duplicate plans, but if
    // this plan ever dies we want to place a fresh one.
 }
@@ -441,11 +824,30 @@ minInterval 30
       cPlanBuildWall, cBuildWallPlanWallType, cBuildWallPlanWallTypeRing, true) >= 0);
 
    // Wider outer ring for late-game walls; more gates for sally options.
-   // FortressRing = symmetric; all others bias forward toward the enemy arc.
+   // SMART WALLS — Track 1.1 (Defect 1 fix): late-game walls must respect
+   // the per-doctrine strategy the same way the Age-1 dispatch in
+   // llPlanExplorationAgeWall does. Previously this path forward-biased
+   // for everyone except FortressRing and never called
+   // llDetectChokepointVector(), so Pachacuti / Shivaji / Kangxi late-game
+   // walls would ring a forward-biased point rather than the actual valley
+   // mouth that defines the doctrine.
    float wallRadius = llGetLegendaryWallRadius(true);
    vector wallCenter = baseCenter;
-   if (gLLWallStrategy != cLLWallStrategyFortressRing)
+   if (gLLWallStrategy == cLLWallStrategyFortressRing)
    {
+      // Symmetric all-around ring; baseCenter is correct.
+   }
+   else if (gLLWallStrategy == cLLWallStrategyChokepointSegments)
+   {
+      // Real chokepoint detection (cached). Falls back to forward-bias
+      // on flat maps with no impassable borders.
+      wallCenter = llDetectChokepointVector(mainBaseID, baseCenter);
+   }
+   else
+   {
+      // CoastalBatteries, FrontierPalisades, MobileNoWalls (skipped earlier
+      // via llShouldBuildLegendaryWalls), HiddenForts, etc. — bias toward
+      // the enemy arc.
       wallCenter = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.18);
    }
 
@@ -476,7 +878,12 @@ minInterval 30
       return;
    }
 
-   aiPlanSetVariableInt(wallPlanID, cBuildWallPlanWallType, 0, cBuildWallPlanWallTypeRing);
+   // SMART WALLS — Track 1.1 (Defect 1 fix): use the strategy/age dispatch
+   // wrapper instead of hardcoding Ring, so future tier constants flow
+   // through this path automatically. Today this resolves to Ring at every
+   // age, but the call site is now correct.
+   aiPlanSetVariableInt(wallPlanID, cBuildWallPlanWallType, 0,
+      llSelectWallType(gLLWallStrategy, kbGetAge()));
    // 3–5 dedicated villagers — walls are top-priority protection.
    aiPlanAddUnitType(wallPlanID, gEconUnit, 0, 3, 5);
    aiPlanSetVariableVector(wallPlanID, cBuildWallPlanWallRingCenterPoint, 0, wallCenter);
@@ -489,6 +896,10 @@ minInterval 30
    aiPlanSetDesiredPriority(wallPlanID, placingOuter ? 70 : 75);
    aiPlanSetActive(wallPlanID, true);
    xsEnableRule("fillInWallGapsNew");
+   // SMART WALLS — Track 1.1d: arm the closure watchdog for late-game
+   // walls too. It self-disables when llShouldBuildLegendaryWalls flips
+   // false.
+   xsEnableRule("verifyWallClosure");
 
    if (placingOuter == true)
    {
@@ -509,6 +920,70 @@ minInterval 30
       " radius=" + wallRadius +
       " wallLevel=" + gLLWallLevel);
    // Stay active: if this plan ever dies, re-create it next tick.
+}
+//==============================================================================
+// RULE verifyWallClosure
+// SMART WALLS — Track 1.1d: closure verification + escalation.
+//
+// The engine reports a wall plan SUCCESS even when only ~40% of pieces got
+// placed ("half walls"). This rule recomputes expected wall-piece count
+// from circumference / piece-length and compares to kbUnitCount of owned
+// wall segments. If we're under 60% closure after 4 minutes of game time
+// we bump priority + villager pool on the live plan, or re-emit a plan
+// if the previous one was destroyed by the engine.
+//==============================================================================
+rule verifyWallClosure
+inactive
+minInterval 60
+{
+   if (llShouldBuildLegendaryWalls(false) == false)
+   {
+      xsDisableSelf();
+      return;
+   }
+   int mainBaseID = kbBaseGetMainID(cMyID);
+   if (mainBaseID < 0) { return; }
+   vector baseCenter = kbBaseGetLocation(cMyID, mainBaseID);
+   if (baseCenter == cInvalidVector) { return; }
+
+   // expected wall pieces = circumference / piece-length (~4 tiles per
+   // wall segment in AoE3 DE)
+   float radius = llGetLegendaryWallRadius(kbGetAge() >= cAge3);
+   int expectedPieces = 1 + (2.0 * 3.14159 * radius / 4.0);
+   int actualPieces = kbUnitCount(cMyID, cUnitTypeAbstractWall, cUnitStateABQ);
+   float closure = 0.0;
+   if (expectedPieces > 0)
+   {
+      // 2026-05-12 fix: XS performs integer division on `int / int` BEFORE
+      // assigning to a float, so any closure ratio < 1.0 truncated to 0
+      // and tripped the spurious-escalation branch every 60s. Multiplying
+      // by 1.0 forces float arithmetic.
+      closure = (1.0 * actualPieces) / expectedPieces;
+   }
+   llProbe("wall.closure", "expected=" + expectedPieces +
+      " actual=" + actualPieces +
+      " closure=" + closure + " age=" + kbGetAge());
+
+   // <60% closure after 4 minutes of game time -> escalate.
+   if ((closure < 0.6) && (xsGetTime() >= 240000))
+   {
+      int planID = aiPlanGetIDByTypeAndVariableType(cPlanBuildWall,
+         cBuildWallPlanWallType, cBuildWallPlanWallTypeRing, true);
+      if (planID >= 0)
+      {
+         // Plan is still alive but slow — bump priority and feed it
+         // more villagers.
+         aiPlanSetDesiredPriority(planID, 95);
+         aiPlanAddUnitType(planID, gEconUnit, 0, 4, 16);
+         llProbe("wall.escalate", "plan=" + planID + " closure=" + closure);
+      }
+      else
+      {
+         // Plan died — re-emit through the normal dispatch.
+         llPlanExplorationAgeWall(mainBaseID, baseCenter);
+         llProbe("wall.reemit", "closure=" + closure);
+      }
+   }
 }
 //==============================================================================
 // RULE fillInWallGapsNew

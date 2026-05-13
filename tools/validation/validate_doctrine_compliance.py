@@ -35,6 +35,13 @@ Probe tags consumed:
     comp.snapshot                 ageMs=… vil=… inf=… cav=… arty=… landmil=… warship=…
     posture.snapshot              ageMs=… age=… ws=… bs=… mdist=… edist=…
                                   walls=… forts=… docks=… tposts=…
+    wall.closure                  expected=<N> actual=<N> closure=<0.0-1.0> age=<int>
+                                  — OR (llVerifyWallClosure format) —
+                                  key=wall.closure planID=<N> coverage=<percent> elapsed=<seconds>
+    wall.chokepoint               vec=<x,z> tiles=<int> cached=<0/1>
+    wall.water_fix                orig=<x,z> final=<x,z> steps=<int>
+    wall.escalate                 plan=<id> closure=<0.0-1.0>
+    wall.reemit                   closure=<0.0-1.0>
 
 Probe → spec key wiring:
     The probe header carries (civ=<engine_name>, ldr=<gLLLeaderKey>).
@@ -47,11 +54,13 @@ CLI:
     python3 tools/validation/validate_doctrine_compliance.py \\
         --spec playstyle_spec.json \\
         --logs path/to/match.log [path/to/another.log ...] \\
-        [--out report.txt] [--json report.json] [--allow-fail]
+        [--out report.txt] [--json report.json] [--html report.html]
+        [--allow-fail]
 """
 from __future__ import annotations
 
 import argparse
+import html as _html_mod
 import json
 import re
 import sys
@@ -65,6 +74,14 @@ from typing import Any, Optional
 PROBE_RE = re.compile(
     r"\[LLP v=2\s+t=(\d+)\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)$"
 )
+# llVerifyWallClosure emits a flat key=value line (no bracketed header):
+#   [LLP v=2] key=wall.closure planID=<N> coverage=<percent> elapsed=<seconds>
+# The civ/ldr must be inferred from surrounding context; the parser records
+# these under the special sentinel civ "_plan_closure_" and merges them in
+# a post-process step when the civ/ldr header has been seen for that log.
+PLAN_CLOSURE_RE = re.compile(
+    r"\[LLP v=2\]\s+key=wall\.closure\s+planID=(\d+)\s+coverage=([\d.]+)\s+elapsed=([\d.]+)"
+)
 KV_RE = re.compile(r'(\w+)=("(?:[^"\\]|\\.)*"|[^\s]+)')
 
 
@@ -77,6 +94,21 @@ class Probe:
     fields: dict[str, str]
 
 
+@dataclass
+class PlanClosureRecord:
+    """One emission from the llVerifyWallClosure rule.
+
+    The flat `[LLP v=2] key=wall.closure …` format carries no civ/ldr
+    header — those are filled in during the merge step in `parse_probes`
+    by assigning them to the most recently seen (civ, ldr) actor in the
+    same log file."""
+    plan_id: int
+    coverage: float   # percentage (0–100)
+    elapsed: float    # seconds since game start
+    civ: str = ""     # filled during merge
+    ldr: str = ""     # filled during merge
+
+
 def _parse_kv(s: str) -> dict[str, str]:
     out: dict[str, str] = {}
     for m in KV_RE.finditer(s):
@@ -87,25 +119,71 @@ def _parse_kv(s: str) -> dict[str, str]:
     return out
 
 
-def parse_probes(log_paths: list[Path]) -> list[Probe]:
+def parse_probes(log_paths: list[Path]) -> tuple[list[Probe], list[PlanClosureRecord]]:
+    """Parse all `[LLP v=2]` lines from the given log files.
+
+    Returns:
+        (probes, plan_closures) where:
+          - probes: list of Probe from the standard bracketed format
+          - plan_closures: list of PlanClosureRecord from the flat
+            `key=wall.closure planID=…` format emitted by llVerifyWallClosure.
+            Each record's civ/ldr is set to the last seen actor in the same
+            log; records that appear before any actor header keep civ="" ldr="".
+    """
     probes: list[Probe] = []
+    plan_closures: list[PlanClosureRecord] = []
     for p in log_paths:
         if not p.exists():
             print(f"warn: log {p} missing", file=sys.stderr)
             continue
+        last_civ = ""
+        last_ldr = ""
         with p.open(encoding="utf-8", errors="replace") as fh:
             for line in fh:
+                # Standard bracketed probe format
                 m = PROBE_RE.search(line)
-                if not m:
+                if m:
+                    last_civ = m.group(2)
+                    last_ldr = m.group(3)
+                    probes.append(Probe(
+                        t=int(m.group(1)),
+                        civ=last_civ,
+                        ldr=last_ldr,
+                        tag=m.group(4).strip(),
+                        fields=_parse_kv(m.group(5)),
+                    ))
                     continue
-                probes.append(Probe(
-                    t=int(m.group(1)),
-                    civ=m.group(2),
-                    ldr=m.group(3),
-                    tag=m.group(4).strip(),
-                    fields=_parse_kv(m.group(5)),
-                ))
-    return probes
+                # Flat llVerifyWallClosure probe format
+                mc = PLAN_CLOSURE_RE.search(line)
+                if mc:
+                    plan_closures.append(PlanClosureRecord(
+                        plan_id=int(mc.group(1)),
+                        coverage=float(mc.group(2)),
+                        elapsed=float(mc.group(3)),
+                        civ=last_civ,
+                        ldr=last_ldr,
+                    ))
+    return probes, plan_closures
+
+
+def aggregate_plan_closures(
+    plan_closures: list[PlanClosureRecord],
+) -> dict[tuple[str, str], float]:
+    """Aggregate per-plan coverage records into per-(civ,ldr) max coverage.
+
+    For each (civ, ldr) pair we take the *maximum* coverage percentage seen
+    across all planIDs and all time-points. This captures the best-case
+    wall completion the AI achieved during the run, regardless of plan count.
+
+    Returns a dict mapping (civ, ldr) → max_coverage_percent (0–100).
+    """
+    best: dict[tuple[str, str], float] = {}
+    for rec in plan_closures:
+        if not rec.civ:
+            continue  # records before any civ header — can't attribute
+        key = (rec.civ, rec.ldr)
+        best[key] = max(best.get(key, 0.0), rec.coverage)
+    return best
 
 
 # ─── spec → probe key resolution ───────────────────────────────────────────
@@ -399,6 +477,418 @@ def evaluate_civ(spec_key: str, claims: dict[str, Any], probes: list[Probe]) -> 
     return results
 
 
+# ─── wall closure section ─────────────────────────────────────────────────
+#
+# A separate XS agent emits wall.* probes from the smart-walls subsystem.
+# The five tags surface different stages of the wall lifecycle:
+#
+#   wall.closure     — verifyWallClosure rule, every 60s
+#   wall.chokepoint  — chokepoint search hit (cached or fresh)
+#   wall.water_fix   — water-tile snap-back when planner picked an off-shore vertex
+#   wall.coast       — coastline-exploitation center for CoastalBatteries doctrine
+#   wall.escalate    — escalation from soft to hard wall plan after low closure
+#   wall.reemit      — fallback re-emission after the planner timed out
+#
+# We summarise per-civ to give the release reviewer a one-look verdict on
+# whether the wall system is functional for that civ. Strategy 5
+# ("MobileNoWalls") legitimately emits zero wall.closure probes — those
+# civs are SKIPped, not FAILed.
+
+WALL_PASS        = "PASS"
+WALL_WARN        = "WARN"
+WALL_FAIL        = "FAIL"
+WALL_SKIP        = "SKIP"
+WALL_INCOMPLETE  = "INCOMPLETE"
+
+# AoE3 age constants (engine: cAge1 .. cAge5). posture.snapshot.age uses
+# the same values, so we can correlate wall.closure timestamps to age-ups
+# via the nearest posture.snapshot.
+_AGE2_THRESHOLD = 2
+_AGE3_THRESHOLD = 3
+
+# wall_strategy=5 is MobileNoWalls in the spec — these civs are *expected*
+# to never emit wall.closure probes (they skip the verifyWallClosure rule
+# entirely). Don't penalise them.
+_MOBILE_NO_WALLS_STRATEGY = 5
+
+# Closure thresholds for the verdict ladder.
+_CLOSURE_PASS_THRESHOLD = 0.6
+_CLOSURE_WARN_THRESHOLD = 0.4
+_CLOSURE_TARGET         = 0.6  # for the time_to_60pct_ms metric
+
+
+@dataclass
+class WallClosureSummary:
+    """Per-civ wall closure roll-up. All optional fields are None when the
+    AI never reached that milestone (e.g. never aged up, never emitted a
+    closure probe)."""
+    civ_key: str
+    final_closure: Optional[float] = None
+    closure_by_age2: Optional[float] = None
+    closure_by_age3: Optional[float] = None
+    time_to_60pct_ms: Optional[int] = None
+    closure_probe_count: int = 0
+    chokepoint_count: int = 0
+    water_fix_count: int = 0
+    coast_count: int = 0
+    escalate_count: int = 0
+    reemit_count: int = 0
+    verdict: str = WALL_INCOMPLETE
+    note: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "civ_key": self.civ_key,
+            "verdict": self.verdict,
+            "final_closure": self.final_closure,
+            "closure_by_age2": self.closure_by_age2,
+            "closure_by_age3": self.closure_by_age3,
+            "time_to_60pct_ms": self.time_to_60pct_ms,
+            "probe_counts": {
+                "wall.closure":    self.closure_probe_count,
+                "wall.chokepoint": self.chokepoint_count,
+                "wall.water_fix":  self.water_fix_count,
+                "wall.coast":      self.coast_count,
+                "wall.escalate":   self.escalate_count,
+                "wall.reemit":     self.reemit_count,
+            },
+            "note": self.note,
+        }
+
+
+def _first_age_crossing_ms(probes: list[Probe], min_age: int) -> Optional[int]:
+    """Return timestamp of the earliest posture.snapshot whose age field is
+    >= min_age, or None if the AI never reached that age. Falls back to
+    inspecting the wall.closure age= field if no posture snapshots exist."""
+    snaps = [p for p in probes if p.tag == "posture.snapshot"]
+    snaps.sort(key=lambda p: p.t)
+    for p in snaps:
+        try:
+            if int(p.fields.get("age", "0")) >= min_age:
+                return p.t
+        except (TypeError, ValueError):
+            continue
+    # Fallback: wall.closure probes carry their own age= field.
+    closures = [p for p in probes if p.tag == "wall.closure"]
+    closures.sort(key=lambda p: p.t)
+    for p in closures:
+        try:
+            if int(p.fields.get("age", "0")) >= min_age:
+                return p.t
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
+def _closure_at_or_before(probes: list[Probe], cutoff_ms: int) -> Optional[float]:
+    """Return the most recent wall.closure value at-or-before cutoff_ms,
+    or None if no closure probe fired before that timestamp."""
+    best_t = -1
+    best_val: Optional[float] = None
+    for p in probes:
+        if p.tag != "wall.closure" or p.t > cutoff_ms:
+            continue
+        if p.t > best_t:
+            try:
+                best_val = float(p.fields.get("closure", "0"))
+                best_t = p.t
+            except (TypeError, ValueError):
+                continue
+    return best_val
+
+
+def evaluate_wall_closure(spec_key: str, claims: dict[str, Any],
+                          probes: list[Probe]) -> WallClosureSummary:
+    """Build a per-civ WallClosureSummary from this civ's probe stream.
+
+    Decision ladder:
+        SKIP        — no wall.closure probes AND wall_strategy is
+                      MobileNoWalls (5). Legitimately walls-free civ.
+        INCOMPLETE  — no wall.closure probes for any other strategy
+                      (test was too short or the rule never fired).
+        PASS        — closure_by_age3 >= 0.6
+        WARN        — 0.4 <= closure_by_age3 < 0.6
+        FAIL        — closure_by_age3 < 0.4
+    """
+    summary = WallClosureSummary(civ_key=spec_key)
+
+    closure_probes = [p for p in probes if p.tag == "wall.closure"]
+    summary.closure_probe_count = len(closure_probes)
+    summary.chokepoint_count = sum(1 for p in probes if p.tag == "wall.chokepoint")
+    summary.water_fix_count  = sum(1 for p in probes if p.tag == "wall.water_fix")
+    summary.coast_count      = sum(1 for p in probes if p.tag == "wall.coast")
+    summary.escalate_count   = sum(1 for p in probes if p.tag == "wall.escalate")
+    summary.reemit_count     = sum(1 for p in probes if p.tag == "wall.reemit")
+
+    if not closure_probes:
+        if claims.get("wall_strategy") == _MOBILE_NO_WALLS_STRATEGY:
+            summary.verdict = WALL_SKIP
+            summary.note = "MobileNoWalls — no closure probes expected"
+        else:
+            summary.verdict = WALL_INCOMPLETE
+            summary.note = "no wall.closure probes observed"
+        return summary
+
+    # Sort once; we read from this list multiple times.
+    closure_probes.sort(key=lambda p: p.t)
+
+    # final_closure — last closure= seen
+    try:
+        summary.final_closure = float(closure_probes[-1].fields.get("closure", "0"))
+    except (TypeError, ValueError):
+        summary.final_closure = None
+
+    # time_to_60pct_ms — earliest probe with closure >= target
+    for p in closure_probes:
+        try:
+            if float(p.fields.get("closure", "0")) >= _CLOSURE_TARGET:
+                summary.time_to_60pct_ms = p.t
+                break
+        except (TypeError, ValueError):
+            continue
+
+    # closure_by_age2 / age3 — closure at the moment the AI first observed
+    # kbGetAge() >= cAge{2,3}. Fall back to final closure if never reached.
+    age2_ms = _first_age_crossing_ms(probes, _AGE2_THRESHOLD)
+    age3_ms = _first_age_crossing_ms(probes, _AGE3_THRESHOLD)
+
+    if age2_ms is not None:
+        summary.closure_by_age2 = _closure_at_or_before(closure_probes, age2_ms)
+    if summary.closure_by_age2 is None:
+        summary.closure_by_age2 = summary.final_closure
+
+    if age3_ms is not None:
+        summary.closure_by_age3 = _closure_at_or_before(closure_probes, age3_ms)
+    if summary.closure_by_age3 is None:
+        summary.closure_by_age3 = summary.final_closure
+
+    # Verdict ladder against closure_by_age3.
+    c3 = summary.closure_by_age3 if summary.closure_by_age3 is not None else 0.0
+    if c3 >= _CLOSURE_PASS_THRESHOLD:
+        summary.verdict = WALL_PASS
+    elif c3 >= _CLOSURE_WARN_THRESHOLD:
+        summary.verdict = WALL_WARN
+    else:
+        summary.verdict = WALL_FAIL
+
+    return summary
+
+
+# ─── 5-dimension release-readiness per civ ────────────────────────────────
+
+# Verdict labels reused from the wall-closure ladder.
+_RR_PASS = "PASS"
+_RR_WARN = "WARN"
+_RR_FAIL = "FAIL"
+
+# Closed-over thresholds for the wall-closure dimension (plan-coverage path).
+# plan_coverage is in 0–100 (percent). Translate to 0–1 for comparison
+# against the existing threshold constants (which use 0–1 fractions).
+_PLAN_COV_PASS = _CLOSURE_PASS_THRESHOLD * 100   # 60.0
+_PLAN_COV_WARN = _CLOSURE_WARN_THRESHOLD * 100   # 40.0
+
+
+@dataclass
+class DimResult:
+    """One per-civ dimension score in the 5-column release-readiness table."""
+    dimension: str
+    verdict: str            # PASS / WARN / FAIL / SKIP / UNKNOWN
+    detail: str = ""        # short human-readable note
+
+
+@dataclass
+class CivReadiness:
+    """Five-dimension release-readiness verdict for a single civ."""
+    civ_key: str
+    dims: list[DimResult] = field(default_factory=list)
+
+    @property
+    def overall(self) -> str:
+        """Overall verdict: FAIL if any red, WARN if any yellow, else PASS."""
+        statuses = {d.verdict for d in self.dims}
+        if _RR_FAIL in statuses:
+            return _RR_FAIL
+        if _RR_WARN in statuses:
+            return _RR_WARN
+        return _RR_PASS
+
+
+def _dim_wall_strategy(spec_key: str, claims: dict[str, Any],
+                       results: list[ClaimResult]) -> DimResult:
+    """Dim 1 — wall strategy enum match.
+
+    Pass condition: the observed wall_strategy from the most recent
+    posture.snapshot equals the expected value in claims["wall_strategy"].
+    Pulls from the already-evaluated ClaimResult list so we don't
+    re-evaluate probes.
+    """
+    for r in results:
+        if r.claim == "wall_strategy":
+            if r.status == PASS:
+                return DimResult("wall_strategy", _RR_PASS,
+                                 f"ws={r.actual}=={r.expected}")
+            if r.status == FAIL:
+                return DimResult("wall_strategy", _RR_FAIL,
+                                 f"ws={r.actual} expected={r.expected}")
+            return DimResult("wall_strategy", _RR_WARN,
+                             r.note or "no posture.snapshot")
+    # Claim not present in spec at all
+    if "wall_strategy" not in claims:
+        return DimResult("wall_strategy", _RR_WARN, "not in spec")
+    return DimResult("wall_strategy", _RR_WARN, "no probe data")
+
+
+def _dim_wall_closure(spec_key: str, claims: dict[str, Any],
+                      wall_summary: Optional[WallClosureSummary],
+                      plan_max_pct: Optional[float]) -> DimResult:
+    """Dim 2 — wall closure >= 60 % by Age 3.
+
+    Two evidence sources, resolved in priority order:
+      a) plan_max_pct — max coverage from the new planID/coverage format
+         (0–100 percent scale). Used when present.
+      b) wall_summary.closure_by_age3 — from the existing closure= field
+         (0–1 fraction). Used as fallback.
+
+    PASS >= 60 %, WARN 40–60 %, FAIL < 40 %.
+    SKIP if MobileNoWalls (wall_strategy 5).
+    """
+    if claims.get("wall_strategy") == _MOBILE_NO_WALLS_STRATEGY:
+        return DimResult("wall_closure_age3", "SKIP", "MobileNoWalls")
+
+    # --- source (a): llVerifyWallClosure planID/coverage probes
+    if plan_max_pct is not None:
+        pct = plan_max_pct
+        if pct >= _PLAN_COV_PASS:
+            return DimResult("wall_closure_age3", _RR_PASS,
+                             f"plan_coverage={pct:.1f}%")
+        if pct >= _PLAN_COV_WARN:
+            return DimResult("wall_closure_age3", _RR_WARN,
+                             f"plan_coverage={pct:.1f}% (<60%)")
+        return DimResult("wall_closure_age3", _RR_FAIL,
+                         f"plan_coverage={pct:.1f}% (<40%)")
+
+    # --- source (b): existing wall.closure tag
+    if wall_summary is None:
+        return DimResult("wall_closure_age3", _RR_WARN, "no wall data")
+    if wall_summary.verdict == WALL_SKIP:
+        return DimResult("wall_closure_age3", "SKIP", "MobileNoWalls")
+    if wall_summary.verdict == WALL_INCOMPLETE:
+        return DimResult("wall_closure_age3", _RR_WARN, "no wall.closure probes")
+    if wall_summary.verdict == WALL_PASS:
+        c3 = wall_summary.closure_by_age3 or 0.0
+        return DimResult("wall_closure_age3", _RR_PASS,
+                         f"closure_age3={c3*100:.1f}%")
+    if wall_summary.verdict == WALL_WARN:
+        c3 = wall_summary.closure_by_age3 or 0.0
+        return DimResult("wall_closure_age3", _RR_WARN,
+                         f"closure_age3={c3*100:.1f}% (<60%)")
+    # WALL_FAIL
+    c3 = wall_summary.closure_by_age3 or 0.0
+    return DimResult("wall_closure_age3", _RR_FAIL,
+                     f"closure_age3={c3*100:.1f}% (<40%)")
+
+
+def _dim_comp_ratio(spec_key: str, results: list[ClaimResult]) -> DimResult:
+    """Dim 3 — composition ratio in band.
+
+    Pulls expects_cavalry, expects_infantry, expects_artillery from the
+    already-evaluated ClaimResult list.
+    """
+    comp_claims = [r for r in results
+                   if r.claim in ("expects_cavalry", "expects_infantry",
+                                  "expects_artillery")]
+    if not comp_claims:
+        return DimResult("comp_ratio", _RR_WARN, "no comp claims in spec")
+    fails = [r for r in comp_claims if r.status == FAIL]
+    unknowns = [r for r in comp_claims if r.status == UNKNOWN]
+    if fails:
+        return DimResult("comp_ratio", _RR_FAIL,
+                         f"failed: {[r.claim for r in fails]}")
+    if len(unknowns) == len(comp_claims):
+        return DimResult("comp_ratio", _RR_WARN, "all UNKNOWN (short match?)")
+    return DimResult("comp_ratio", _RR_PASS,
+                     f"ok ({len(comp_claims)} comp claims)")
+
+
+def _dim_age_up_timings(spec_key: str, results: list[ClaimResult]) -> DimResult:
+    """Dim 4 — age-up timings in band.
+
+    Pulls time-bound milestone claims: first_barracks_before_ms,
+    first_dock_before_ms, first_wall_before_ms from ClaimResults.
+    """
+    timing_claims = [r for r in results
+                     if r.claim in ("first_barracks_before_ms",
+                                    "first_dock_before_ms",
+                                    "first_wall_before_ms")]
+    if not timing_claims:
+        return DimResult("age_up_timings", _RR_WARN, "no timing claims in spec")
+    fails = [r for r in timing_claims if r.status == FAIL]
+    unknowns = [r for r in timing_claims if r.status == UNKNOWN]
+    if fails:
+        return DimResult("age_up_timings", _RR_FAIL,
+                         f"failed: {[r.claim for r in fails]}")
+    if len(unknowns) == len(timing_claims):
+        return DimResult("age_up_timings", _RR_WARN, "all UNKNOWN (short match?)")
+    return DimResult("age_up_timings", _RR_PASS,
+                     f"ok ({len(timing_claims)} timing claims)")
+
+
+def _dim_first_mil_building(spec_key: str, results: list[ClaimResult]) -> DimResult:
+    """Dim 5 — first military building type match."""
+    for r in results:
+        if r.claim == "first_military_building":
+            if r.status == PASS:
+                return DimResult("first_mil_building", _RR_PASS,
+                                 f"actual={r.actual} expected={r.expected}")
+            if r.status == FAIL:
+                return DimResult("first_mil_building", _RR_FAIL,
+                                 f"actual={r.actual} expected={r.expected}")
+            return DimResult("first_mil_building", _RR_WARN, r.note or "UNKNOWN")
+    return DimResult("first_mil_building", _RR_WARN, "not in spec")
+
+
+def build_readiness_table(
+    spec: dict[str, Any],
+    per_civ: dict[str, list[ClaimResult]],
+    wall_per_civ: dict[str, WallClosureSummary],
+    plan_cov_per_civ: dict[str, float],
+) -> list[CivReadiness]:
+    """Produce a CivReadiness record for every civ key in the spec.
+
+    Args:
+        spec:            parsed playstyle_spec.json
+        per_civ:         ClaimResult lists from evaluate_civ()
+        wall_per_civ:    WallClosureSummary objects from evaluate_wall_closure()
+        plan_cov_per_civ: max plan coverage % from aggregate_plan_closures()
+                          keyed by spec_key (already resolved)
+
+    Returns:
+        List of CivReadiness sorted by civ_key.
+    """
+    all_keys = set(per_civ) | set(wall_per_civ)
+    # Also add any civ in the spec that was never seen in probes — they
+    # appear as all-WARN rows (no data) rather than being silently absent.
+    for k in spec.get("civs", {}):
+        all_keys.add(k)
+
+    rows: list[CivReadiness] = []
+    for civ_key in sorted(all_keys):
+        claims = spec.get("civs", {}).get(civ_key, {}).get("claims", {})
+        results = per_civ.get(civ_key, [])
+        wall_sum = wall_per_civ.get(civ_key)
+        plan_pct = plan_cov_per_civ.get(civ_key)
+
+        row = CivReadiness(civ_key=civ_key, dims=[
+            _dim_wall_strategy(civ_key, claims, results),
+            _dim_wall_closure(civ_key, claims, wall_sum, plan_pct),
+            _dim_comp_ratio(civ_key, results),
+            _dim_age_up_timings(civ_key, results),
+            _dim_first_mil_building(civ_key, results),
+        ])
+        rows.append(row)
+    return rows
+
+
 # ─── reporting ─────────────────────────────────────────────────────────────
 
 def _verdict_for(results: list[ClaimResult]) -> str:
@@ -407,9 +897,99 @@ def _verdict_for(results: list[ClaimResult]) -> str:
     return UNKNOWN
 
 
-def render_text(per_civ: dict[str, list[ClaimResult]]) -> str:
+def _release_readiness(per_civ: dict[str, list[ClaimResult]],
+                       wall_per_civ: dict[str, WallClosureSummary]
+                       ) -> tuple[str, list[tuple[str, list[str]]]]:
+    """Aggregate per-civ verdicts into a release readiness banner.
+
+    Returns (overall_verdict, failing_civs) where overall_verdict is one of
+    PASS / WARN / FAIL and failing_civs is a list of
+    (civ_key, [dimension, …]) for any civ tripping a hard FAIL on either
+    doctrine claims or wall closure.
+
+    The mod only release-blocks on hard FAILs; WARN civs are listed but
+    don't flip the banner red.
+    """
+    failing: list[tuple[str, list[str]]] = []
+    warning: list[str] = []
+    all_civs = set(per_civ) | set(wall_per_civ)
+    for civ_key in sorted(all_civs):
+        dims: list[str] = []
+        # Doctrine-claim failures — pick out the specific claim names that
+        # FAILed so the user can see *which* dimension regressed.
+        for r in per_civ.get(civ_key, []):
+            if r.status == FAIL:
+                dims.append(r.claim)
+        # Wall-closure failures contribute a single dimension.
+        w = wall_per_civ.get(civ_key)
+        if w is not None and w.verdict == WALL_FAIL:
+            dims.append(f"wall_closure<{_CLOSURE_WARN_THRESHOLD}")
+        if dims:
+            failing.append((civ_key, dims))
+        elif w is not None and w.verdict == WALL_WARN:
+            warning.append(civ_key)
+
+    if failing:
+        return WALL_FAIL, failing
+    if warning:
+        return WALL_WARN, [(c, ["wall_closure<0.6"]) for c in warning]
+    return WALL_PASS, []
+
+
+def _render_wall_section(wall_per_civ: dict[str, WallClosureSummary]) -> list[str]:
+    """Format the per-civ Wall Closure block. Always a fixed-width table so
+    the at-a-glance pass/fail column lines up regardless of civ name length."""
     out: list[str] = []
+    if not wall_per_civ:
+        return out
+    out.append("")
+    out.append("─" * 78)
+    out.append("WALL CLOSURE")
+    out.append("─" * 78)
+    # Header
+    out.append(f"  {'civ':<46} {'verdict':<10} {'final':>6} {'@age3':>6} {'t60%':>8}")
+    for civ_key in sorted(wall_per_civ):
+        w = wall_per_civ[civ_key]
+        fin = f"{w.final_closure:.2f}"      if w.final_closure   is not None else "  - "
+        c3  = f"{w.closure_by_age3:.2f}"    if w.closure_by_age3 is not None else "  - "
+        t60 = f"{w.time_to_60pct_ms}"       if w.time_to_60pct_ms is not None else "   -"
+        out.append(f"  {civ_key[:46]:<46} {w.verdict:<10} {fin:>6} {c3:>6} {t60:>8}")
+        # Corrective-mechanism counts on a sub-line if any fired.
+        sub = []
+        if w.chokepoint_count: sub.append(f"chokepoint×{w.chokepoint_count}")
+        if w.water_fix_count:  sub.append(f"water_fix×{w.water_fix_count}")
+        if w.coast_count:      sub.append(f"coast×{w.coast_count}")
+        if w.escalate_count:   sub.append(f"escalate×{w.escalate_count}")
+        if w.reemit_count:     sub.append(f"reemit×{w.reemit_count}")
+        if sub:
+            out.append(f"    └─ {', '.join(sub)}")
+        if w.note:
+            out.append(f"    └─ note: {w.note}")
+    return out
+
+
+def render_text(per_civ: dict[str, list[ClaimResult]],
+                wall_per_civ: dict[str, WallClosureSummary] | None = None) -> str:
+    wall_per_civ = wall_per_civ or {}
+    out: list[str] = []
+
+    # Release readiness banner first — short, scannable summary at the top.
+    overall_verdict, failing = _release_readiness(per_civ, wall_per_civ)
+    if overall_verdict == WALL_FAIL:
+        banner = f"Release Readiness: FAIL ({len(failing)} civs)"
+    elif overall_verdict == WALL_WARN:
+        banner = f"Release Readiness: WARN ({len(failing)} civs)"
+    else:
+        banner = "Release Readiness: PASS"
     out.append("=" * 78)
+    out.append(banner)
+    if failing:
+        for civ_key, dims in failing[:25]:
+            out.append(f"  - {civ_key}: {', '.join(dims)}")
+        if len(failing) > 25:
+            out.append(f"  ... and {len(failing) - 25} more")
+    out.append("=" * 78)
+
     out.append("DOCTRINE COMPLIANCE REPORT")
     out.append("=" * 78)
     overall = {PASS: 0, FAIL: 0, UNKNOWN: 0}
@@ -425,6 +1005,8 @@ def render_text(per_civ: dict[str, list[ClaimResult]]) -> str:
                 line += f"  ({r.note})"
             out.append(line)
 
+    out.extend(_render_wall_section(wall_per_civ))
+
     out.append("\n" + "=" * 78)
     out.append(f"SUMMARY: {overall[PASS]} pass / {overall[FAIL]} fail "
                f"/ {overall[UNKNOWN]} unknown across {len(per_civ)} civs")
@@ -432,9 +1014,19 @@ def render_text(per_civ: dict[str, list[ClaimResult]]) -> str:
     return "\n".join(out)
 
 
-def render_json(per_civ: dict[str, list[ClaimResult]]) -> dict[str, Any]:
+def render_json(per_civ: dict[str, list[ClaimResult]],
+                wall_per_civ: dict[str, WallClosureSummary] | None = None
+                ) -> dict[str, Any]:
+    wall_per_civ = wall_per_civ or {}
+    overall_verdict, failing = _release_readiness(per_civ, wall_per_civ)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
+        "release_readiness": {
+            "verdict": overall_verdict,
+            "failing_civs": [
+                {"civ": c, "dimensions": d} for c, d in failing
+            ],
+        },
         "civs": {
             k: {
                 "verdict": _verdict_for(v),
@@ -446,22 +1038,228 @@ def render_json(per_civ: dict[str, list[ClaimResult]]) -> dict[str, Any]:
             }
             for k, v in per_civ.items()
         },
+        "wall_closure": {
+            k: w.to_dict() for k, w in wall_per_civ.items()
+        },
     }
 
 
+# ─── HTML report ───────────────────────────────────────────────────────────
+
+_VERDICT_COLOUR = {
+    "PASS":    ("#1f7a1f", "#e6f5e6"),
+    "WARN":    ("#a06a00", "#fff3d6"),
+    "FAIL":    ("#a01010", "#fde0e0"),
+    "SKIP":    ("#404a8a", "#e3e8fb"),
+    "UNKNOWN": ("#666666", "#f0f0f0"),
+}
+
+_DIM_LABELS = [
+    "Wall strategy<br>enum match",
+    "Wall closure<br>&ge;60% by Age 3",
+    "Comp ratio<br>in band",
+    "Age-up timings<br>in band",
+    "First military<br>building type",
+]
+
+
+def _h(text: str) -> str:
+    """HTML-escape a string."""
+    return _html_mod.escape(str(text))
+
+
+def _verdict_cell(verdict: str, detail: str) -> str:
+    """One colored <td> cell."""
+    fg, bg = _VERDICT_COLOUR.get(verdict, ("#333", "#fff"))
+    return (
+        f'<td style="background:{bg};color:{fg};font-weight:600;'
+        f'text-align:center;padding:4px 6px;border:1px solid #ccc;'
+        f'font-size:12px;" title="{_h(detail)}">'
+        f'{_h(verdict)}</td>'
+    )
+
+
+def _overall_badge(verdict: str) -> str:
+    fg, bg = _VERDICT_COLOUR.get(verdict, ("#333", "#fff"))
+    return (
+        f'<span style="display:inline-block;padding:3px 10px;border-radius:4px;'
+        f'font-size:13px;font-weight:700;color:{fg};background:{bg};'
+        f'border:1px solid {fg};">{_h(verdict)}</span>'
+    )
+
+
+def render_html(
+    readiness_rows: list[CivReadiness],
+    spec: dict[str, Any],
+    *,
+    generated_by: str = "",
+) -> str:
+    """Render a one-page-per-civ HTML compliance report.
+
+    Args:
+        readiness_rows: output of build_readiness_table()
+        spec:           parsed playstyle_spec.json (for doctrine labels)
+        generated_by:   optional banner note (log paths, timestamp, …)
+
+    Returns:
+        Complete HTML document as a string.
+    """
+    n_pass = sum(1 for r in readiness_rows if r.overall == _RR_PASS)
+    n_warn = sum(1 for r in readiness_rows if r.overall == _RR_WARN)
+    n_fail = sum(1 for r in readiness_rows if r.overall == _RR_FAIL)
+    total  = len(readiness_rows)
+
+    # Build summary banner
+    summary_html = (
+        '<section style="border:2px solid #2a6;border-radius:8px;'
+        'margin:8px 0 14px 0;padding:12px;background:#eafbef;">'
+        '<h2 style="margin:0 0 6px 0;color:#194;font-size:18px;">'
+        "Release Readiness — AI Playstyle Compliance</h2>"
+        f'<div style="font-size:15px;color:#234;">'
+        f'<b>{n_pass}/{total} PASS</b> &nbsp;|&nbsp; '
+        f'<b style="color:#a06a00;">{n_warn}/{total} WARN</b> &nbsp;|&nbsp; '
+        f'<b style="color:#a01010;">{n_fail}/{total} FAIL</b>'
+        f'</div>'
+    )
+    if generated_by:
+        summary_html += (
+            f'<div style="font-size:11px;color:#567;margin-top:4px;">'
+            f'{_h(generated_by)}</div>'
+        )
+    summary_html += "</section>"
+
+    # Legend
+    legend_html = '<div style="margin:8px 0 12px 0;font-size:12px;">'
+    for v, (fg, bg) in _VERDICT_COLOUR.items():
+        legend_html += (
+            f'<span style="display:inline-block;padding:2px 8px;margin-right:6px;'
+            f'border-radius:3px;color:{fg};background:{bg};border:1px solid {fg};">'
+            f'{_h(v)}</span>'
+        )
+    legend_html += (
+        '&nbsp;<span style="color:#555;font-size:11px;">'
+        'Hover a cell to see detail. SKIP = dimension not applicable for this civ.</span>'
+        "</div>"
+    )
+
+    # Table header
+    header_cells = "".join(
+        f'<th style="background:#2c5282;color:#fff;padding:6px 10px;'
+        f'font-size:12px;text-align:center;border:1px solid #1a3a60;'
+        f'white-space:nowrap;">{label}</th>'
+        for label in _DIM_LABELS
+    )
+    table_html = (
+        '<table style="border-collapse:collapse;width:100%;font-size:13px;">'
+        "<thead><tr>"
+        '<th style="background:#2c5282;color:#fff;padding:6px 10px;'
+        'text-align:left;border:1px solid #1a3a60;min-width:220px;">Civ / Leader</th>'
+        '<th style="background:#2c5282;color:#fff;padding:6px 10px;'
+        'text-align:center;border:1px solid #1a3a60;">Overall</th>'
+        + header_cells +
+        "</tr></thead><tbody>"
+    )
+
+    civs_spec = spec.get("civs", {})
+    for i, row in enumerate(readiness_rows):
+        stripe = '#f9f9f9' if i % 2 == 0 else '#fff'
+        civ_entry = civs_spec.get(row.civ_key, {})
+        doc_label = civ_entry.get("doctrine_label", "")
+        doc_summary = civ_entry.get("doctrine_summary", "")
+
+        civ_cell = (
+            f'<td style="padding:5px 10px;border:1px solid #ddd;background:{stripe};">'
+            f'<b>{_h(row.civ_key)}</b>'
+        )
+        if doc_label:
+            civ_cell += (
+                f'<br><span style="font-size:11px;color:#555;">'
+                f'{_h(doc_label)}'
+                + (f' — {_h(doc_summary)}' if doc_summary else '')
+                + '</span>'
+            )
+        civ_cell += '</td>'
+
+        overall_cell = (
+            f'<td style="text-align:center;padding:5px 8px;'
+            f'border:1px solid #ddd;background:{stripe};">'
+            + _overall_badge(row.overall)
+            + "</td>"
+        )
+
+        dim_cells = "".join(
+            _verdict_cell(d.verdict, d.detail) for d in row.dims
+        )
+
+        table_html += (
+            f"<tr>{civ_cell}{overall_cell}{dim_cells}</tr>"
+        )
+
+    table_html += "</tbody></table>"
+
+    # Full document
+    return (
+        "<!DOCTYPE html>\n"
+        '<html lang="en">\n<head>\n'
+        '<meta charset="UTF-8">\n'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+        "<title>ANW AI Playstyle Compliance Report</title>\n"
+        "<style>\n"
+        "body{font-family:system-ui,sans-serif;margin:16px 24px;color:#222;}\n"
+        "h1{font-size:22px;margin:0 0 6px 0;}\n"
+        "table{table-layout:fixed;}\n"
+        "th,td{vertical-align:middle;}\n"
+        "tr:hover td{filter:brightness(0.96);}\n"
+        "</style>\n"
+        "</head>\n<body>\n"
+        "<h1>ANW AI Playstyle — Release Readiness Report</h1>\n"
+        + summary_html
+        + legend_html
+        + table_html
+        + "\n</body>\n</html>\n"
+    )
+
+
 # ─── main ──────────────────────────────────────────────────────────────────
+
+# Default search root for auto-discovered match.log files. Each run lives
+# under artifacts/validation/ai_playstyle/<run_id>/.../match.log.
+_DEFAULT_LOG_ROOT = Path(__file__).resolve().parents[2] / "artifacts" / "validation" / "ai_playstyle"
+
+
+def _auto_discover_logs(root: Path) -> list[Path]:
+    """Return every match.log under the conventional artifact root.
+
+    Sorted to keep the report deterministic between invocations on the same
+    set of inputs."""
+    if not root.exists():
+        return []
+    return sorted(root.rglob("match.log"))
+
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--spec", type=Path,
                     default=Path("playstyle_spec.json"),
                     help="path to playstyle_spec.json")
-    ap.add_argument("--logs", type=Path, nargs="+", required=True,
-                    help="one or more match-log paths to scan for [LLP v=2 …]")
+    ap.add_argument("--logs", type=Path, nargs="+", default=None,
+                    help="one or more match-log paths to scan for [LLP v=2 …]. "
+                         "If omitted, auto-discovers match.log files under "
+                         "artifacts/validation/ai_playstyle/")
+    ap.add_argument("--civ", action="append", default=[],
+                    help="filter to this civ token (repeatable). Matches the "
+                         "engine `civ=` field, e.g. ANWBritish.")
     ap.add_argument("--out",  type=Path, default=None,
                     help="write text report here (default stdout)")
     ap.add_argument("--json", type=Path, default=None,
                     help="also write a JSON report at this path")
+    ap.add_argument("--html", type=Path, default=None,
+                    help="write a one-page-per-civ HTML release-readiness report "
+                         "at this path. Defaults to "
+                         "artifacts/validation/ai_playstyle/compliance_report.html "
+                         "when flag is present without a value.",
+                    nargs="?",
+                    const=_DEFAULT_LOG_ROOT / "compliance_report.html")
     ap.add_argument("--decks", type=Path,
                     default=Path(__file__).resolve().parents[1]
                                   / "playtest" / "html_card_decks.json",
@@ -469,6 +1267,9 @@ def main() -> int:
                          "compliance assertions (keyed by leader slug)")
     ap.add_argument("--allow-fail", action="store_true",
                     help="exit 0 even when some civs FAIL")
+    ap.add_argument("--allow-empty", action="store_true",
+                    help="exit 0 when no probes are found (useful for "
+                         "release smoke runs against an empty artifact tree)")
     args = ap.parse_args()
 
     if not args.spec.exists():
@@ -476,9 +1277,30 @@ def main() -> int:
         return 2
     spec = json.loads(args.spec.read_text(encoding="utf-8"))
 
-    probes = parse_probes(args.logs)
-    if not probes:
+    # Resolve log paths. Explicit --logs wins; otherwise sweep the default
+    # artifact root so callers can do `validate_doctrine_compliance.py --civ X`
+    # without specifying log files by hand.
+    log_paths = args.logs if args.logs else _auto_discover_logs(_DEFAULT_LOG_ROOT)
+    if not log_paths:
+        msg = (f"error: no logs provided and none found under "
+               f"{_DEFAULT_LOG_ROOT}")
+        print(msg, file=sys.stderr)
+        if args.allow_empty:
+            print("Release Readiness: PASS (no probes found, --allow-empty)")
+            return 0
+        return 2
+
+    probes, plan_closures = parse_probes(log_paths)
+    if args.civ:
+        wanted = set(args.civ)
+        probes = [p for p in probes if p.civ in wanted]
+        plan_closures = [r for r in plan_closures if r.civ in wanted]
+
+    if not probes and not plan_closures:
         print("error: no [LLP v=2 …] probes found in any log", file=sys.stderr)
+        if args.allow_empty:
+            print("Release Readiness: PASS (no probes found, --allow-empty)")
+            return 0
         return 2
 
     # Bucket probes by (civ, ldr).
@@ -494,20 +1316,36 @@ def main() -> int:
               file=sys.stderr)
 
     per_civ: dict[str, list[ClaimResult]] = {}
+    wall_per_civ: dict[str, WallClosureSummary] = {}
+    # spec_key → (civ, ldr) reverse map for plan_closures attribution
+    spec_key_to_actor: dict[str, tuple[str, str]] = {}
     unmatched: list[tuple[str, str]] = []
     for (civ, ldr), plist in per_actor.items():
         spec_key = _resolve_spec_key(civ, ldr, spec)
         if spec_key is None:
             unmatched.append((civ, ldr))
             continue
+        spec_key_to_actor[spec_key] = (civ, ldr)
         claims = spec["civs"][spec_key].get("claims", {})
         results = evaluate_civ(spec_key, claims, plist) if claims else []
         if decks:
             results.extend(evaluate_card_compliance(spec_key, ldr, plist, decks))
         if results:
             per_civ[spec_key] = results
+        # Wall closure runs even when the doctrine claim list is empty —
+        # we still want a verdict for civs whose only signal is wall.*.
+        wall_per_civ[spec_key] = evaluate_wall_closure(spec_key, claims, plist)
 
-    text = render_text(per_civ)
+    # Aggregate llVerifyWallClosure planID/coverage records per (civ,ldr),
+    # then re-key by spec_key for use in the readiness table.
+    raw_plan_cov = aggregate_plan_closures(plan_closures)
+    plan_cov_per_civ: dict[str, float] = {}
+    for spec_key, (civ, ldr) in spec_key_to_actor.items():
+        pct = raw_plan_cov.get((civ, ldr))
+        if pct is not None:
+            plan_cov_per_civ[spec_key] = pct
+
+    text = render_text(per_civ, wall_per_civ)
     if unmatched:
         text += "\n\nUnmatched probe actors (no spec entry):\n"
         for civ, ldr in unmatched:
@@ -519,11 +1357,29 @@ def main() -> int:
         print(text)
 
     if args.json:
-        args.json.write_text(json.dumps(render_json(per_civ), indent=2),
-                             encoding="utf-8")
+        args.json.write_text(
+            json.dumps(render_json(per_civ, wall_per_civ), indent=2),
+            encoding="utf-8")
 
+    if args.html:
+        html_path: Path = args.html
+        html_path.parent.mkdir(parents=True, exist_ok=True)
+        readiness_rows = build_readiness_table(
+            spec, per_civ, wall_per_civ, plan_cov_per_civ
+        )
+        generated_by = (
+            f"Generated from {len(log_paths)} log(s). "
+            f"Spec: {args.spec}"
+        )
+        html_str = render_html(readiness_rows, spec, generated_by=generated_by)
+        html_path.write_text(html_str, encoding="utf-8")
+        print(f"HTML report written to {html_path}", file=sys.stderr)
+
+    # The mod release-blocks ONLY on hard FAILs — wall WARN/SKIP/INCOMPLETE
+    # do not flip exit status, matching the release_readiness banner.
     has_fail = any(_verdict_for(rs) == FAIL for rs in per_civ.values())
-    if has_fail and not args.allow_fail:
+    wall_fail = any(w.verdict == WALL_FAIL for w in wall_per_civ.values())
+    if (has_fail or wall_fail) and not args.allow_fail:
         return 1
     return 0
 
