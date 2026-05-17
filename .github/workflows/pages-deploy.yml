@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "a_new_world.html"
+      - "a_new_world_columns.html"
       - "map_3d.html"
       - "resources/images/icons/**"
       - "resources/3d/**"
@@ -34,6 +35,10 @@ jobs:
           # Legacy URL alias — keep the old filename serving so external
           # links to /LEGENDARY_LEADERS_TREE.html don't 404.
           cp a_new_world.html _site/LEGENDARY_LEADERS_TREE.html
+          # Civ review column view (horizontal-scroll one-column-per-civ).
+          if [ -f a_new_world_columns.html ]; then
+            cp a_new_world_columns.html _site/a_new_world_columns.html
+          fi
           # 3D viewer
           if [ -f map_3d.html ]; then
             cp map_3d.html _site/map_3d.html
