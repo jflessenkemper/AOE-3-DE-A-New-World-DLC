@@ -8,41 +8,46 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* The scroll container is the ONLY element that scrolls horizontally.
+   Putting the scroll on a dedicated wrapper (rather than html or body)
+   makes wheel/keyboard handlers reliable across browsers — scrollLeft
+   on a known element ID can't be silently routed to the wrong root. */
+#scroll-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: 100%;
-  /* Firefox: thick, always-visible horizontal scrollbar */
+  /* Firefox: thick, always-visible scrollbar */
   scrollbar-width: auto;
   scrollbar-color: rgba(255,255,255,0.45) rgba(0,0,0,0.40);
 }
 /* WebKit/Blink (Chrome, Edge, Safari): styled, thick horizontal scrollbar */
-html::-webkit-scrollbar {
+#scroll-container::-webkit-scrollbar {
   height: 16px;
   background: rgba(0,0,0,0.40);
 }
-html::-webkit-scrollbar-thumb {
+#scroll-container::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.40);
   border-radius: 8px;
   border: 2px solid rgba(0,0,0,0.40);
 }
-html::-webkit-scrollbar-thumb:hover {
+#scroll-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255,255,255,0.65);
 }
-html::-webkit-scrollbar-track {
+#scroll-container::-webkit-scrollbar-track {
   background: rgba(0,0,0,0.30);
-}
-
-body {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  height: 100vh;
-  overflow: hidden;
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  /* Base 11px — small enough to fit dense data, big enough to read */
-  font-size: 11px;
-  line-height: 1.4;
 }
 
 /* ── Column ── */
@@ -525,8 +530,9 @@ body {
 </style>
 </head>
 <body>
-<!-- 45 columns, ~14400px total width (overflow-x: scroll on html) -->
+<!-- 45 columns, ~14400px total width (overflow-x: scroll on #scroll-container) -->
 <!-- First 3 column IDs: id="French", id="British", id="Germans" -->
+<div id="scroll-container">
 <section class="civ-col" id="French" style="background:linear-gradient(160deg,rgb(0,51,102) 0%,rgb(0,21,72) 100%);color:#fff">
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png" alt="Bourbon France" title="resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
@@ -4113,6 +4119,7 @@ Minutemen are upgraded to Texian Marines. Marines no longer lose hitpoints and i
   </div>
 </section>
 
+</div>
 <!-- Shared lightbox modal — one instance for the entire page -->
 <div id="capture-modal" class="capture-modal" hidden>
   <button class="modal-close" aria-label="Close (Esc)">&times;</button>
@@ -4292,45 +4299,41 @@ Minutemen are upgraded to Texian Marines. Marines no longer lose hitpoints and i
     });
   }
 
-  // Vertical wheel -> horizontal scroll. The body is a flex row; the html
-  // element is the scroll container (overflow-x: scroll, overflow-y: hidden).
-  // Translate primarily-vertical wheel events into scrollLeft delta so a
-  // mouse wheel scrolls across columns naturally. Touchpad horizontal
-  // gestures (deltaX dominant) pass through unchanged; modal-open suppresses.
+  // Dedicated horizontal scroll container. Targeting a specific element
+  // (instead of window/document/scrollingElement) is reliable across all
+  // browsers — no ambiguity about which root actually scrolls.
+  var scroller = document.getElementById('scroll-container');
+
   function horizScrollHandler(e) {
+    if (!scroller) return;
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
     if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
     if (e.deltaY === 0) return;
     e.preventDefault();
     var dy = e.deltaY;
-    // Normalise deltaMode: 0=pixels, 1=lines (~16px each), 2=pages.
-    if (e.deltaMode === 1) dy *= 16;
-    else if (e.deltaMode === 2) dy *= window.innerHeight;
-    // window.scrollBy works regardless of which element is the scroll root
-    // (some browsers route this to body, others to documentElement).
-    window.scrollBy({ left: dy, top: 0, behavior: 'auto' });
+    if (e.deltaMode === 1) dy *= 16;             // lines → px
+    else if (e.deltaMode === 2) dy *= window.innerHeight;  // pages → px
+    scroller.scrollLeft += dy;
   }
-  // Bind on both window and document to maximise capture coverage; passive
-  // false is required so preventDefault() actually suppresses native vertical
-  // scroll (which would be a no-op anyway since body is overflow:hidden, but
-  // some browsers still emit a console "Unable to preventDefault" warning).
+  // Bind on window so the handler fires regardless of which child element
+  // the cursor is over. passive:false is required for preventDefault().
   window.addEventListener('wheel', horizScrollHandler, { passive: false });
-  document.addEventListener('wheel', horizScrollHandler, { passive: false });
 
-  // Keyboard navigation: Left/Right arrows = scroll one column,
-  // PageUp/PageDown = scroll one viewport, Home/End = jump.
+  // Keyboard navigation: Left/Right = one column, PageUp/PageDown = one
+  // viewport, Home/End = first/last column. Modal-open suppresses.
   document.addEventListener('keydown', function (e) {
+    if (!scroller) return;
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
-    var col = 380;  // ~one column width
+    var col = 380;
     var vp = window.innerWidth;
-    if (e.key === 'ArrowRight') { window.scrollBy({left:  col, top: 0}); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft')  { window.scrollBy({left: -col, top: 0}); e.preventDefault(); }
-    else if (e.key === 'PageDown')   { window.scrollBy({left:  vp,  top: 0}); e.preventDefault(); }
-    else if (e.key === 'PageUp')     { window.scrollBy({left: -vp,  top: 0}); e.preventDefault(); }
-    else if (e.key === 'Home')       { window.scrollTo({left: 0, top: 0}); e.preventDefault(); }
-    else if (e.key === 'End')        { window.scrollTo({left: document.documentElement.scrollWidth, top: 0}); e.preventDefault(); }
+    if (e.key === 'ArrowRight')      { scroller.scrollLeft +=  col; e.preventDefault(); }
+    else if (e.key === 'ArrowLeft')  { scroller.scrollLeft += -col; e.preventDefault(); }
+    else if (e.key === 'PageDown')   { scroller.scrollLeft +=  vp;  e.preventDefault(); }
+    else if (e.key === 'PageUp')     { scroller.scrollLeft += -vp;  e.preventDefault(); }
+    else if (e.key === 'Home')       { scroller.scrollLeft = 0; e.preventDefault(); }
+    else if (e.key === 'End')        { scroller.scrollLeft = scroller.scrollWidth; e.preventDefault(); }
   });
 }());
 
