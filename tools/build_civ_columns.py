@@ -494,6 +494,25 @@ def get_civ_stem(civ_token):
             return lower[len(prefix):]
     return lower
 
+
+# Map a file-stem (returned by get_civ_stem) to the mod XML / vanilla-summary
+# stem key — needed because some XP/DE tokens strip to historic-vanilla names
+# (XPAztec→aztec, XPIroquois→iroquois) while the JSON summary keys use the
+# mod's renamed plural form (aztecs, haudenosaunee).
+_VANILLA_STEM_ALIAS = {
+    "aztec":     "aztecs",
+    "iroquois":  "haudenosaunee",
+    "sioux":     "lakota",
+    "americans": "usa",
+    "swedish":   "swedes",
+}
+
+
+def vanilla_summary_stem(civ_token):
+    """Stem key to look up in VANILLA_SUMMARY for this civ token."""
+    s = get_civ_stem(civ_token)
+    return _VANILLA_STEM_ALIAS.get(s, s)
+
 def find_leader_portraits(civ_stem):
     """List per-leader avatar files for this civ_stem.
     Returns [{leader, png_rel, ddt_rel, has_png, has_ddt}, ...]."""
@@ -743,8 +762,9 @@ def render_art_section(civ_token, civ_el, hc, strings):
         'Vanilla asset parity (vs. British)</div>'
     )
     ref = VANILLA_SUMMARY.get("british", {})
-    cur = VANILLA_SUMMARY.get(stem, {})
-    aliases = cur.get("_aliases", [stem]) if cur else [stem]
+    summary_key = vanilla_summary_stem(civ_token)
+    cur = VANILLA_SUMMARY.get(summary_key, {})
+    aliases = cur.get("_aliases", [summary_key]) if cur else [summary_key]
     if not VANILLA_SUMMARY:
         parts.append(
             '<div class="cov-row"><span class="cov-lbl">(summary unavailable)</span></div>'
@@ -1008,7 +1028,29 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     if sub_parts:
         sub_line = f'<div class="col-sub">{" · ".join(sub_parts)}</div>'
 
+    # ── "Needs full custom art" banner: civ has zero vanilla content AND
+    # very little mod-managed content. Pulled from VANILLA_SUMMARY digest.
+    summary_stem = vanilla_summary_stem(civ_token)
+    van_summary = VANILLA_SUMMARY.get(summary_stem, {}) if VANILLA_SUMMARY else {}
+    van_total   = van_summary.get("_total", 0) if van_summary else 0
+    empty_banner = ""
+    if van_total == 0:
+        empty_banner = (
+            '<div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ'
+            '<div class="sub">All home-city scene, voice, unit-model, building, '
+            'and resource art needs to be custom-authored or aliased to a base civ.</div>'
+            '</div>'
+        )
+    elif van_total < 50:
+        empty_banner = (
+            f'<div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">'
+            f'⚠ Minimal vanilla assets ({van_total} entries) — partial coverage only'
+            '<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div>'
+            '</div>'
+        )
+
     col = f"""<section class="civ-col" id="{html_module.escape(civ_token)}" style="{bg}color:{tc}">
+  {empty_banner}
   <div class="col-header">
     {header_img}
     <div class="hdr-text">
@@ -1038,34 +1080,32 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
-/* The scroll container is the ONLY element that scrolls horizontally.
-   Putting the scroll on a dedicated wrapper (rather than html or body)
-   makes wheel/keyboard handlers reliable across browsers — scrollLeft
-   on a known element ID can't be silently routed to the wrong root. */
+/* One-civ-per-viewport pager: each .civ-col is 100vw × 100vh and
+   scroll-snaps to fill the screen. Vertical scroll inside the
+   container moves between civs. Internal civ content scrolls
+   vertically within its own viewport. */
 #scroll-container {
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  /* Firefox: thick, always-visible scrollbar */
-  scrollbar-width: auto;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.45) rgba(0,0,0,0.40);
 }
-/* WebKit/Blink (Chrome, Edge, Safari): styled, thick horizontal scrollbar */
 #scroll-container::-webkit-scrollbar {
-  height: 16px;
+  width: 14px;
   background: rgba(0,0,0,0.40);
 }
 #scroll-container::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.40);
-  border-radius: 8px;
+  border-radius: 7px;
   border: 2px solid rgba(0,0,0,0.40);
 }
 #scroll-container::-webkit-scrollbar-thumb:hover {
@@ -1075,146 +1115,273 @@ html, body {
   background: rgba(0,0,0,0.30);
 }
 
-/* ── Column ── */
+/* ── Civ page (one per nation, fills viewport) ── */
 .civ-col {
-  flex: 0 0 clamp(290px, 14vw, 370px);
+  flex: 0 0 100vh;
+  width: 100vw;
   height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(0,0,0,0.50);
   position: relative;
 }
 
-/* Right-edge shadow to visually separate columns */
-.civ-col::after {
-  content: "";
+/* ── Pager controls (fixed in viewport corners) ── */
+.pager-toc {
+  position: fixed;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  z-index: 60;
+  background: rgba(0,0,0,0.72);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px;
+  padding: 8px 6px;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-size: 11px;
+  color: #eee;
+  backdrop-filter: blur(6px);
+}
+.pager-toc-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.65);
+  padding: 2px 8px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  margin-bottom: 4px;
+}
+.pager-toc a {
+  display: block;
+  padding: 2px 8px;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  border-radius: 3px;
+  white-space: nowrap;
+  transition: background 0.1s, color 0.1s;
+  font-size: 10.5px;
+}
+.pager-toc a:hover {
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+}
+.pager-toc a.active {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-weight: 700;
+}
+
+.pager-counter {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  background: rgba(0,0,0,0.72);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #eee;
+  letter-spacing: 0.03em;
+}
+
+.pager-nav {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pager-nav button {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.72);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.pager-nav button:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* ── Empty civ banner ── */
+.empty-banner {
   position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: 5px;
-  background: linear-gradient(to right, transparent, rgba(0,0,0,0.30));
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  background: linear-gradient(135deg, rgba(170,40,40,0.92), rgba(120,20,20,0.92));
+  border: 2px solid rgba(255,180,180,0.45);
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-align: center;
+  max-width: 70vw;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
   pointer-events: none;
+}
+.empty-banner .sub {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+  margin-top: 4px;
 }
 
 /* ── Header ── */
 .col-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 7px;
-  /* Dark overlay: anchors text against any civ hue (WCAG AA safe) */
-  background: rgba(0,0,0,0.52);
-  border-bottom: 2px solid rgba(255,255,255,0.18);
+  gap: 14px;
+  padding: 14px 22px;
+  background: rgba(0,0,0,0.55);
+  border-bottom: 2px solid rgba(255,255,255,0.20);
   flex-shrink: 0;
+  min-height: 78px;
 }
 .col-header img {
-  width: 40px; height: 40px;
+  width: 64px; height: 64px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.40);
+  border: 3px solid rgba(255,255,255,0.45);
   flex-shrink: 0;
 }
 .hdr-text {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   overflow: hidden;
 }
 .col-name {
-  font-size: 13px;
+  font-size: 26px;
   font-weight: 800;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  line-height: 1.1;
   color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.65);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .col-sub {
-  font-size: 9.5px;
+  font-size: 14px;
   font-weight: 500;
-  color: rgba(255,255,255,0.80);
+  color: rgba(255,255,255,0.85);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .hdr-doctrine {
   font-style: italic;
-  color: rgba(255,220,130,0.90);
+  color: rgba(255,220,130,0.92);
 }
 
-/* ── Body split: text top / art bottom ── */
+/* ── Body: text left / art right (side-by-side, internal vertical scroll) ── */
 .col-body {
   flex: 1 1 0;
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 0;
+  overflow: hidden;
 }
 
-/* Semi-opaque content surface behind text — key contrast fix */
+/* Left: text/doctrine/cards section */
 .text-section {
-  flex: 0 0 54%;
-  overflow: hidden;
-  padding: 4px 6px;
-  background: rgba(0,0,0,0.42);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
+  flex: 1 1 50%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.44);
+  border-right: 1px solid rgba(255,255,255,0.12);
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.35) rgba(0,0,0,0.30);
+}
+.text-section::-webkit-scrollbar {
+  width: 8px;
+}
+.text-section::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.35);
+  border-radius: 4px;
 }
 
+/* Right: art & assets section */
 .art-section {
-  flex: 0 0 46%;
-  overflow: hidden;
-  padding: 3px 6px;
-  background: rgba(0,0,0,0.28);
+  flex: 1 1 50%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.30);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.35) rgba(0,0,0,0.30);
+}
+.art-section::-webkit-scrollbar {
+  width: 8px;
+}
+.art-section::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.35);
+  border-radius: 4px;
 }
 
 /* ── Info table ── */
 .info-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 10px;
+  font-size: 13px;
 }
 .info-table tr:hover td {
   background: rgba(255,255,255,0.06);
 }
 .info-table td {
-  padding: 1.5px 3px;
+  padding: 3px 6px;
   vertical-align: top;
 }
 .info-table .lbl {
-  width: 36%;
-  color: rgba(255,255,255,0.62);
+  width: 32%;
+  color: rgba(255,255,255,0.66);
   font-weight: 600;
   white-space: nowrap;
-  font-size: 9px;
-  padding-right: 4px;
+  font-size: 12px;
+  padding-right: 8px;
 }
 .info-table .mono code {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 9px;
+  font-size: 12px;
   background: rgba(0,0,0,0.35);
-  padding: 0 3px;
-  border-radius: 2px;
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 .info-table .blurb-cell {
-  font-size: 9.5px;
-  line-height: 1.35;
-  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.90);
 }
 
 /* ── Cards section ── */
 .cards-section {
-  flex: 1 1 auto;
-  overflow: hidden;
-  font-size: 9px;
-  line-height: 1.35;
+  flex: 0 0 auto;
+  font-size: 13px;
+  line-height: 1.4;
 }
 .age-row {
   margin-bottom: 3px;
@@ -1235,15 +1402,15 @@ html, body {
 .age-lbl {
   display: inline-block;
   font-weight: 700;
-  font-size: 8px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.90;
-  padding: 1px 3px;
-  border-radius: 2px;
+  opacity: 0.92;
+  padding: 2px 6px;
+  border-radius: 3px;
   flex-shrink: 0;
   align-self: center;
-  min-width: 52px;
+  min-width: 72px;
 }
 /* Stronger pill colours for the label itself */
 .age-row.age-0 .age-lbl { background: rgba(160,160,160,0.35); }
@@ -1264,17 +1431,17 @@ html, body {
   vertical-align: middle;
 }
 .card-img {
-  width: 22px;
-  height: 22px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 2px;
+  border-radius: 3px;
   background: rgba(0,0,0,0.30);
   cursor: help;
   transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 .card-img:hover {
-  transform: scale(1.45);
+  transform: scale(1.8);
   border-color: rgba(255,255,255,0.65);
   box-shadow: 0 0 6px rgba(0,0,0,0.55);
   z-index: 2;
@@ -1294,27 +1461,25 @@ html, body {
 .art-row {
   display: flex;
   align-items: flex-start;
-  gap: 4px;
-  margin-bottom: 2px;
-  overflow: hidden;
-  max-height: 62px;
+  gap: 8px;
+  margin-bottom: 5px;
 }
 .art-lbl {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.60);
-  min-width: 58px;
-  max-width: 68px;
+  color: rgba(255,255,255,0.65);
+  min-width: 100px;
+  max-width: 120px;
   flex-shrink: 0;
-  padding-top: 2px;
-  line-height: 1.2;
+  padding-top: 4px;
+  line-height: 1.3;
 }
 .art-row img {
-  width: 56px;
-  height: 56px;
+  width: 84px;
+  height: 84px;
   object-fit: contain;
   border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 3px;
+  border-radius: 4px;
   background: rgba(0,0,0,0.30);
   flex-shrink: 0;
   transition: box-shadow 0.15s, border-color 0.15s;
@@ -1327,11 +1492,11 @@ html, body {
 /* Engine-path text: monospace, truncated, full path on hover title */
 .path-text {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 8.5px;
-  color: rgba(255,255,255,0.72);
+  font-size: 11px;
+  color: rgba(255,255,255,0.74);
   background: rgba(0,0,0,0.30);
-  padding: 1px 4px;
-  border-radius: 2px;
+  padding: 2px 5px;
+  border-radius: 3px;
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -1342,46 +1507,45 @@ html, body {
 }
 .path-missing code {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 8.5px;
-  color: rgba(255,120,120,0.75);
+  font-size: 11px;
+  color: rgba(255,120,120,0.78);
   word-break: break-all;
 }
 
 /* ── Art coverage audit ── */
 .cov-summary {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 700;
-  color: rgba(255,255,255,0.70);
-  margin-bottom: 4px;
-  padding: 2px 4px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 2px;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.30);
+  border-radius: 4px;
 }
 .cov-group-lbl {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.45);
-  margin: 4px 0 2px;
-  border-bottom: 1px dotted rgba(255,255,255,0.10);
-  padding-bottom: 1px;
+  color: rgba(255,255,255,0.55);
+  margin: 12px 0 4px;
+  border-bottom: 1px dotted rgba(255,255,255,0.15);
+  padding-bottom: 2px;
 }
 .cov-row {
   display: flex;
   align-items: center;
-  gap: 3px;
-  margin-bottom: 1px;
-  font-size: 9px;
-  line-height: 1.3;
-  overflow: hidden;
+  gap: 8px;
+  margin-bottom: 3px;
+  font-size: 12px;
+  line-height: 1.35;
 }
 .cov-lbl {
-  font-size: 8.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: rgba(255,255,255,0.62);
-  min-width: 80px;
-  max-width: 90px;
+  color: rgba(255,255,255,0.70);
+  min-width: 150px;
+  max-width: 180px;
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -1390,43 +1554,43 @@ html, body {
 .cov-ok {
   color: #6ee07a;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .cov-bad {
   color: #ff7777;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .cov-na {
-  color: rgba(255,255,255,0.30);
+  color: rgba(255,255,255,0.35);
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .cov-thumb {
-  width: 22px;
-  height: 22px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  border: 1px solid rgba(255,255,255,0.20);
-  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 3px;
   background: rgba(0,0,0,0.30);
   flex-shrink: 0;
   cursor: help;
   transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 .cov-thumb:hover {
-  transform: scale(2.4);
+  transform: scale(3.0);
   border-color: rgba(255,255,255,0.65);
-  box-shadow: 0 0 6px rgba(0,0,0,0.55);
-  z-index: 3;
+  box-shadow: 0 0 10px rgba(0,0,0,0.65);
+  z-index: 30;
   position: relative;
 }
 .cov-path {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 7.5px;
-  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  color: rgba(255,255,255,0.60);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1434,23 +1598,23 @@ html, body {
   flex-shrink: 1;
 }
 .cov-path.cov-path-missing {
-  color: rgba(255,120,120,0.70);
+  color: rgba(255,120,120,0.75);
 }
 .cov-leader .cov-lbl {
-  padding-left: 8px;
-  color: rgba(255,255,255,0.75);
+  padding-left: 12px;
+  color: rgba(255,255,255,0.78);
 }
 
 .section-label {
-  font-size: 8.5px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 3px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.62);
+  margin: 4px 0 6px;
   flex-shrink: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-  padding-bottom: 1px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  padding-bottom: 3px;
 }
 
 .empty { opacity: 0.38; font-style: italic; }
@@ -1774,42 +1938,132 @@ LIGHTBOX_JS = r"""
     });
   }
 
-  // Dedicated horizontal scroll container. Targeting a specific element
-  // (instead of window/document/scrollingElement) is reliable across all
-  // browsers — no ambiguity about which root actually scrolls.
+  // Vertical pager: one civ per 100vh page, scroll-snap-y mandatory.
+  // We override mouse-wheel to snap-to-next/prev section instead of free-scroll.
   var scroller = document.getElementById('scroll-container');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.civ-col'));
+  var counter  = document.getElementById('pager-counter');
+  var tocEl    = document.getElementById('pager-toc');
 
-  function horizScrollHandler(e) {
+  function currentIndex() {
+    if (!scroller) return 0;
+    return Math.round(scroller.scrollTop / window.innerHeight);
+  }
+
+  function gotoIndex(idx) {
+    if (!scroller) return;
+    idx = Math.max(0, Math.min(sections.length - 1, idx));
+    scroller.scrollTo({ top: idx * window.innerHeight, behavior: 'smooth' });
+    updateActive(idx);
+    if (sections[idx] && sections[idx].id) {
+      history.replaceState(null, '', '#' + sections[idx].id);
+    }
+  }
+
+  function updateActive(idx) {
+    if (counter) {
+      counter.textContent = (idx + 1) + ' / ' + sections.length;
+    }
+    if (tocEl) {
+      var links = tocEl.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].classList.toggle('active', i === idx);
+      }
+      // Scroll active item into view in the ToC
+      var active = links[idx];
+      if (active) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+  }
+
+  // Wheel: snap one section at a time. Debounce so a single wheel-roll
+  // doesn't skip multiple civs.
+  var wheelLock = false;
+  window.addEventListener('wheel', function (e) {
     if (!scroller) return;
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
-    if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
-    if (e.deltaY === 0) return;
+    // Allow internal scroll inside the text/art sections — only intercept
+    // when the wheel target is the page background (not within a scrollable child).
+    var target = e.target;
+    while (target && target !== scroller && target !== document.body) {
+      var style = window.getComputedStyle(target);
+      if ((style.overflowY === 'auto' || style.overflowY === 'scroll')
+          && target.scrollHeight > target.clientHeight) {
+        // Inside a scrollable child — let it scroll normally.
+        return;
+      }
+      target = target.parentElement;
+    }
+    if (Math.abs(e.deltaY) < 5) return;
+    if (wheelLock) { e.preventDefault(); return; }
     e.preventDefault();
-    var dy = e.deltaY;
-    if (e.deltaMode === 1) dy *= 16;             // lines → px
-    else if (e.deltaMode === 2) dy *= window.innerHeight;  // pages → px
-    scroller.scrollLeft += dy;
-  }
-  // Bind on window so the handler fires regardless of which child element
-  // the cursor is over. passive:false is required for preventDefault().
-  window.addEventListener('wheel', horizScrollHandler, { passive: false });
+    wheelLock = true;
+    var dir = e.deltaY > 0 ? 1 : -1;
+    gotoIndex(currentIndex() + dir);
+    setTimeout(function () { wheelLock = false; }, 380);
+  }, { passive: false });
 
-  // Keyboard navigation: Left/Right = one column, PageUp/PageDown = one
-  // viewport, Home/End = first/last column. Modal-open suppresses.
+  // Keyboard: Down/Right/PageDown/Space = next; Up/Left/PageUp = prev;
+  // Home/End = first/last; digits 1-9 = nth civ (1-indexed).
   document.addEventListener('keydown', function (e) {
     if (!scroller) return;
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
-    var col = 380;
-    var vp = window.innerWidth;
-    if (e.key === 'ArrowRight')      { scroller.scrollLeft +=  col; e.preventDefault(); }
-    else if (e.key === 'ArrowLeft')  { scroller.scrollLeft += -col; e.preventDefault(); }
-    else if (e.key === 'PageDown')   { scroller.scrollLeft +=  vp;  e.preventDefault(); }
-    else if (e.key === 'PageUp')     { scroller.scrollLeft += -vp;  e.preventDefault(); }
-    else if (e.key === 'Home')       { scroller.scrollLeft = 0; e.preventDefault(); }
-    else if (e.key === 'End')        { scroller.scrollLeft = scroller.scrollWidth; e.preventDefault(); }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); gotoIndex(currentIndex() + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); gotoIndex(currentIndex() - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault(); gotoIndex(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); gotoIndex(sections.length - 1);
+    } else if (/^[1-9]$/.test(e.key)) {
+      e.preventDefault(); gotoIndex(parseInt(e.key, 10) - 1);
+    }
   });
+
+  // Pager nav buttons (▲ / ▼) — use onclick wired via id.
+  var btnPrev = document.getElementById('pager-prev');
+  var btnNext = document.getElementById('pager-next');
+  if (btnPrev) btnPrev.addEventListener('click', function () { gotoIndex(currentIndex() - 1); });
+  if (btnNext) btnNext.addEventListener('click', function () { gotoIndex(currentIndex() + 1); });
+
+  // ToC link clicks
+  if (tocEl) {
+    tocEl.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-idx]');
+      if (!a) return;
+      e.preventDefault();
+      gotoIndex(parseInt(a.dataset.idx, 10));
+    });
+  }
+
+  // Track scroll to update counter/ToC highlight.
+  var scrollTimer = null;
+  scroller.addEventListener('scroll', function () {
+    if (scrollTimer) return;
+    scrollTimer = setTimeout(function () {
+      updateActive(currentIndex());
+      scrollTimer = null;
+    }, 80);
+  });
+
+  // Open at hash if present (e.g. #ANWCanadians).
+  if (location.hash) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) {
+      var idx = sections.indexOf(target);
+      if (idx >= 0) {
+        // jump (no smooth) on initial load
+        scroller.scrollTop = idx * window.innerHeight;
+        updateActive(idx);
+        return;
+      }
+    }
+  }
+  updateActive(0);
 }());
 """
 
@@ -1863,30 +2117,58 @@ def build():
         total_resolved += resolved
         total_missing  += missing
 
-    # Total width calculation for comment
-    num_cols   = len(civ_order)
-    approx_w_px = num_cols * 320  # approximate based on clamp midpoint
-
-    first3 = [f'id="{c}"' for c in civ_order[:3]]
+    num_cols = len(civ_order)
 
     # Build a JS mapping from civ_token -> display_name for modal captions
     civ_display_map_js = build_civ_display_map(civ_order, civmods, strings)
 
     lightbox_js = LIGHTBOX_JS.replace("__CIV_DISPLAY_MAP__", civ_display_map_js)
 
+    # Build ToC (table-of-contents) sidebar: one link per civ, with display name.
+    toc_items = []
+    for idx, token in enumerate(civ_order):
+        civ_el = civmods.get(token)
+        if civ_el is not None:
+            display_id   = civ_el.findtext("displaynameid") or ""
+            display_name = strings.get(display_id, token)
+        else:
+            display_name = token
+        # Mark civs with empty vanilla parity using a small dot
+        van_total = VANILLA_SUMMARY.get(vanilla_summary_stem(token), {}).get("_total", 0) if VANILLA_SUMMARY else 0
+        marker = ""
+        if van_total == 0:
+            marker = ' <span style="color:#ff8a8a;">●</span>'
+        elif van_total < 50:
+            marker = ' <span style="color:#ffc070;">●</span>'
+        toc_items.append(
+            f'<a href="#{html_module.escape(token)}" data-idx="{idx}" title="{html_module.escape(token)}">'
+            f'{html_module.escape(display_name)}{marker}</a>'
+        )
+    toc_html = (
+        '<nav id="pager-toc" class="pager-toc" aria-label="Civ navigation">'
+        f'<div class="pager-toc-title">{num_cols} nations</div>'
+        + "".join(toc_items)
+        + '</nav>'
+    )
+
     html_out = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANW Civ Review Columns — A New World</title>
+<title>ANW Civ Review — A New World ({num_cols} nations)</title>
 <style>
 {CSS}
 </style>
 </head>
 <body>
-<!-- {num_cols} columns, ~{approx_w_px}px total width (overflow-x: scroll on #scroll-container) -->
-<!-- First 3 column IDs: {", ".join(first3)} -->
+<!-- {num_cols} civs · vertical pager, one civ per 100vh page (scroll-snap-y mandatory) -->
+<div id="pager-counter" class="pager-counter">1 / {num_cols}</div>
+{toc_html}
+<div class="pager-nav">
+  <button id="pager-prev" aria-label="Previous nation (↑)">▲</button>
+  <button id="pager-next" aria-label="Next nation (↓)">▼</button>
+</div>
 <div id="scroll-container">
 {"".join(columns_html)}
 </div>

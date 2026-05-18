@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANW Civ Review Columns — A New World</title>
+<title>ANW Civ Review — A New World (45 nations)</title>
 <style>
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,34 +13,32 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
-/* The scroll container is the ONLY element that scrolls horizontally.
-   Putting the scroll on a dedicated wrapper (rather than html or body)
-   makes wheel/keyboard handlers reliable across browsers — scrollLeft
-   on a known element ID can't be silently routed to the wrong root. */
+/* One-civ-per-viewport pager: each .civ-col is 100vw × 100vh and
+   scroll-snaps to fill the screen. Vertical scroll inside the
+   container moves between civs. Internal civ content scrolls
+   vertically within its own viewport. */
 #scroll-container {
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  /* Firefox: thick, always-visible scrollbar */
-  scrollbar-width: auto;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.45) rgba(0,0,0,0.40);
 }
-/* WebKit/Blink (Chrome, Edge, Safari): styled, thick horizontal scrollbar */
 #scroll-container::-webkit-scrollbar {
-  height: 16px;
+  width: 14px;
   background: rgba(0,0,0,0.40);
 }
 #scroll-container::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.40);
-  border-radius: 8px;
+  border-radius: 7px;
   border: 2px solid rgba(0,0,0,0.40);
 }
 #scroll-container::-webkit-scrollbar-thumb:hover {
@@ -50,146 +48,273 @@ html, body {
   background: rgba(0,0,0,0.30);
 }
 
-/* ── Column ── */
+/* ── Civ page (one per nation, fills viewport) ── */
 .civ-col {
-  flex: 0 0 clamp(290px, 14vw, 370px);
+  flex: 0 0 100vh;
+  width: 100vw;
   height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(0,0,0,0.50);
   position: relative;
 }
 
-/* Right-edge shadow to visually separate columns */
-.civ-col::after {
-  content: "";
+/* ── Pager controls (fixed in viewport corners) ── */
+.pager-toc {
+  position: fixed;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  z-index: 60;
+  background: rgba(0,0,0,0.72);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px;
+  padding: 8px 6px;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-size: 11px;
+  color: #eee;
+  backdrop-filter: blur(6px);
+}
+.pager-toc-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.65);
+  padding: 2px 8px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  margin-bottom: 4px;
+}
+.pager-toc a {
+  display: block;
+  padding: 2px 8px;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  border-radius: 3px;
+  white-space: nowrap;
+  transition: background 0.1s, color 0.1s;
+  font-size: 10.5px;
+}
+.pager-toc a:hover {
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+}
+.pager-toc a.active {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-weight: 700;
+}
+
+.pager-counter {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  background: rgba(0,0,0,0.72);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #eee;
+  letter-spacing: 0.03em;
+}
+
+.pager-nav {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pager-nav button {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.72);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.pager-nav button:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* ── Empty civ banner ── */
+.empty-banner {
   position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: 5px;
-  background: linear-gradient(to right, transparent, rgba(0,0,0,0.30));
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  background: linear-gradient(135deg, rgba(170,40,40,0.92), rgba(120,20,20,0.92));
+  border: 2px solid rgba(255,180,180,0.45);
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-align: center;
+  max-width: 70vw;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
   pointer-events: none;
+}
+.empty-banner .sub {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+  margin-top: 4px;
 }
 
 /* ── Header ── */
 .col-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 7px;
-  /* Dark overlay: anchors text against any civ hue (WCAG AA safe) */
-  background: rgba(0,0,0,0.52);
-  border-bottom: 2px solid rgba(255,255,255,0.18);
+  gap: 14px;
+  padding: 14px 22px;
+  background: rgba(0,0,0,0.55);
+  border-bottom: 2px solid rgba(255,255,255,0.20);
   flex-shrink: 0;
+  min-height: 78px;
 }
 .col-header img {
-  width: 40px; height: 40px;
+  width: 64px; height: 64px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.40);
+  border: 3px solid rgba(255,255,255,0.45);
   flex-shrink: 0;
 }
 .hdr-text {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   overflow: hidden;
 }
 .col-name {
-  font-size: 13px;
+  font-size: 26px;
   font-weight: 800;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  line-height: 1.1;
   color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.65);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .col-sub {
-  font-size: 9.5px;
+  font-size: 14px;
   font-weight: 500;
-  color: rgba(255,255,255,0.80);
+  color: rgba(255,255,255,0.85);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .hdr-doctrine {
   font-style: italic;
-  color: rgba(255,220,130,0.90);
+  color: rgba(255,220,130,0.92);
 }
 
-/* ── Body split: text top / art bottom ── */
+/* ── Body: text left / art right (side-by-side, internal vertical scroll) ── */
 .col-body {
   flex: 1 1 0;
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 0;
+  overflow: hidden;
 }
 
-/* Semi-opaque content surface behind text — key contrast fix */
+/* Left: text/doctrine/cards section */
 .text-section {
-  flex: 0 0 54%;
-  overflow: hidden;
-  padding: 4px 6px;
-  background: rgba(0,0,0,0.42);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
+  flex: 1 1 50%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.44);
+  border-right: 1px solid rgba(255,255,255,0.12);
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.35) rgba(0,0,0,0.30);
+}
+.text-section::-webkit-scrollbar {
+  width: 8px;
+}
+.text-section::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.35);
+  border-radius: 4px;
 }
 
+/* Right: art & assets section */
 .art-section {
-  flex: 0 0 46%;
-  overflow: hidden;
-  padding: 3px 6px;
-  background: rgba(0,0,0,0.28);
+  flex: 1 1 50%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.30);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.35) rgba(0,0,0,0.30);
+}
+.art-section::-webkit-scrollbar {
+  width: 8px;
+}
+.art-section::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.35);
+  border-radius: 4px;
 }
 
 /* ── Info table ── */
 .info-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 10px;
+  font-size: 13px;
 }
 .info-table tr:hover td {
   background: rgba(255,255,255,0.06);
 }
 .info-table td {
-  padding: 1.5px 3px;
+  padding: 3px 6px;
   vertical-align: top;
 }
 .info-table .lbl {
-  width: 36%;
-  color: rgba(255,255,255,0.62);
+  width: 32%;
+  color: rgba(255,255,255,0.66);
   font-weight: 600;
   white-space: nowrap;
-  font-size: 9px;
-  padding-right: 4px;
+  font-size: 12px;
+  padding-right: 8px;
 }
 .info-table .mono code {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 9px;
+  font-size: 12px;
   background: rgba(0,0,0,0.35);
-  padding: 0 3px;
-  border-radius: 2px;
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 .info-table .blurb-cell {
-  font-size: 9.5px;
-  line-height: 1.35;
-  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.90);
 }
 
 /* ── Cards section ── */
 .cards-section {
-  flex: 1 1 auto;
-  overflow: hidden;
-  font-size: 9px;
-  line-height: 1.35;
+  flex: 0 0 auto;
+  font-size: 13px;
+  line-height: 1.4;
 }
 .age-row {
   margin-bottom: 3px;
@@ -210,15 +335,15 @@ html, body {
 .age-lbl {
   display: inline-block;
   font-weight: 700;
-  font-size: 8px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.90;
-  padding: 1px 3px;
-  border-radius: 2px;
+  opacity: 0.92;
+  padding: 2px 6px;
+  border-radius: 3px;
   flex-shrink: 0;
   align-self: center;
-  min-width: 52px;
+  min-width: 72px;
 }
 /* Stronger pill colours for the label itself */
 .age-row.age-0 .age-lbl { background: rgba(160,160,160,0.35); }
@@ -239,17 +364,17 @@ html, body {
   vertical-align: middle;
 }
 .card-img {
-  width: 22px;
-  height: 22px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 2px;
+  border-radius: 3px;
   background: rgba(0,0,0,0.30);
   cursor: help;
   transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 .card-img:hover {
-  transform: scale(1.45);
+  transform: scale(1.8);
   border-color: rgba(255,255,255,0.65);
   box-shadow: 0 0 6px rgba(0,0,0,0.55);
   z-index: 2;
@@ -269,27 +394,25 @@ html, body {
 .art-row {
   display: flex;
   align-items: flex-start;
-  gap: 4px;
-  margin-bottom: 2px;
-  overflow: hidden;
-  max-height: 62px;
+  gap: 8px;
+  margin-bottom: 5px;
 }
 .art-lbl {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.60);
-  min-width: 58px;
-  max-width: 68px;
+  color: rgba(255,255,255,0.65);
+  min-width: 100px;
+  max-width: 120px;
   flex-shrink: 0;
-  padding-top: 2px;
-  line-height: 1.2;
+  padding-top: 4px;
+  line-height: 1.3;
 }
 .art-row img {
-  width: 56px;
-  height: 56px;
+  width: 84px;
+  height: 84px;
   object-fit: contain;
   border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 3px;
+  border-radius: 4px;
   background: rgba(0,0,0,0.30);
   flex-shrink: 0;
   transition: box-shadow 0.15s, border-color 0.15s;
@@ -302,11 +425,11 @@ html, body {
 /* Engine-path text: monospace, truncated, full path on hover title */
 .path-text {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 8.5px;
-  color: rgba(255,255,255,0.72);
+  font-size: 11px;
+  color: rgba(255,255,255,0.74);
   background: rgba(0,0,0,0.30);
-  padding: 1px 4px;
-  border-radius: 2px;
+  padding: 2px 5px;
+  border-radius: 3px;
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -317,46 +440,45 @@ html, body {
 }
 .path-missing code {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 8.5px;
-  color: rgba(255,120,120,0.75);
+  font-size: 11px;
+  color: rgba(255,120,120,0.78);
   word-break: break-all;
 }
 
 /* ── Art coverage audit ── */
 .cov-summary {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 700;
-  color: rgba(255,255,255,0.70);
-  margin-bottom: 4px;
-  padding: 2px 4px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 2px;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.30);
+  border-radius: 4px;
 }
 .cov-group-lbl {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.45);
-  margin: 4px 0 2px;
-  border-bottom: 1px dotted rgba(255,255,255,0.10);
-  padding-bottom: 1px;
+  color: rgba(255,255,255,0.55);
+  margin: 12px 0 4px;
+  border-bottom: 1px dotted rgba(255,255,255,0.15);
+  padding-bottom: 2px;
 }
 .cov-row {
   display: flex;
   align-items: center;
-  gap: 3px;
-  margin-bottom: 1px;
-  font-size: 9px;
-  line-height: 1.3;
-  overflow: hidden;
+  gap: 8px;
+  margin-bottom: 3px;
+  font-size: 12px;
+  line-height: 1.35;
 }
 .cov-lbl {
-  font-size: 8.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: rgba(255,255,255,0.62);
-  min-width: 80px;
-  max-width: 90px;
+  color: rgba(255,255,255,0.70);
+  min-width: 150px;
+  max-width: 180px;
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -365,43 +487,43 @@ html, body {
 .cov-ok {
   color: #6ee07a;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .cov-bad {
   color: #ff7777;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .cov-na {
-  color: rgba(255,255,255,0.30);
+  color: rgba(255,255,255,0.35);
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 .cov-thumb {
-  width: 22px;
-  height: 22px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  border: 1px solid rgba(255,255,255,0.20);
-  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 3px;
   background: rgba(0,0,0,0.30);
   flex-shrink: 0;
   cursor: help;
   transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 .cov-thumb:hover {
-  transform: scale(2.4);
+  transform: scale(3.0);
   border-color: rgba(255,255,255,0.65);
-  box-shadow: 0 0 6px rgba(0,0,0,0.55);
-  z-index: 3;
+  box-shadow: 0 0 10px rgba(0,0,0,0.65);
+  z-index: 30;
   position: relative;
 }
 .cov-path {
   font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 7.5px;
-  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  color: rgba(255,255,255,0.60);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -409,23 +531,23 @@ html, body {
   flex-shrink: 1;
 }
 .cov-path.cov-path-missing {
-  color: rgba(255,120,120,0.70);
+  color: rgba(255,120,120,0.75);
 }
 .cov-leader .cov-lbl {
-  padding-left: 8px;
-  color: rgba(255,255,255,0.75);
+  padding-left: 12px;
+  color: rgba(255,255,255,0.78);
 }
 
 .section-label {
-  font-size: 8.5px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 3px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.62);
+  margin: 4px 0 6px;
   flex-shrink: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-  padding-bottom: 1px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  padding-bottom: 3px;
 }
 
 .empty { opacity: 0.38; font-style: italic; }
@@ -624,10 +746,16 @@ html, body {
 </style>
 </head>
 <body>
-<!-- 45 columns, ~14400px total width (overflow-x: scroll on #scroll-container) -->
-<!-- First 3 column IDs: id="French", id="British", id="Germans" -->
+<!-- 45 civs · vertical pager, one civ per 100vh page (scroll-snap-y mandatory) -->
+<div id="pager-counter" class="pager-counter">1 / 45</div>
+<nav id="pager-toc" class="pager-toc" aria-label="Civ navigation"><div class="pager-toc-title">45 nations</div><a href="#French" data-idx="0" title="French">Bourbon France</a><a href="#British" data-idx="1" title="British">British Empire</a><a href="#Germans" data-idx="2" title="Germans">German Empire</a><a href="#Russians" data-idx="3" title="Russians">Russian Empire</a><a href="#Spanish" data-idx="4" title="Spanish">Spanish Empire</a><a href="#Ottomans" data-idx="5" title="Ottomans">Ottoman Empire</a><a href="#Portuguese" data-idx="6" title="Portuguese">Portuguese Empire</a><a href="#Dutch" data-idx="7" title="Dutch">Dutch Republic</a><a href="#DEItalians" data-idx="8" title="DEItalians">Kingdom of Italy</a><a href="#DEMaltese" data-idx="9" title="DEMaltese">Knights of Malta</a><a href="#DESwedish" data-idx="10" title="DESwedish">Swedish Empire</a><a href="#Chinese" data-idx="11" title="Chinese">Qing Dynasty</a><a href="#Japanese" data-idx="12" title="Japanese">Tokugawa Shogunate</a><a href="#Indians" data-idx="13" title="Indians">Maratha Empire</a><a href="#XPAztec" data-idx="14" title="XPAztec">Aztec Triple Alliance</a><a href="#XPIroquois" data-idx="15" title="XPIroquois">Haudenosaunee Confederacy</a><a href="#DEInca" data-idx="16" title="DEInca">Inca Empire</a><a href="#XPSioux" data-idx="17" title="XPSioux">Lakota Sioux</a><a href="#DEAmericans" data-idx="18" title="DEAmericans">United States</a><a href="#DEMexicans" data-idx="19" title="DEMexicans">First Mexican Empire</a><a href="#DEEthiopians" data-idx="20" title="DEEthiopians">Ethiopian Empire</a><a href="#DEHausa" data-idx="21" title="DEHausa">Sokoto Caliphate</a><a href="#ANWNapoleonicFrance" data-idx="22" title="ANWNapoleonicFrance">France (Napoleonic Era) <span style="color:#ff8a8a;">●</span></a><a href="#ANWRevFrance" data-idx="23" title="ANWRevFrance">France <span style="color:#ff8a8a;">●</span></a><a href="#ANWCanadians" data-idx="24" title="ANWCanadians">Province of Canada <span style="color:#ffc070;">●</span></a><a href="#ANWFrenchCanadians" data-idx="25" title="ANWFrenchCanadians">ANWFrenchCanadians <span style="color:#ff8a8a;">●</span></a><a href="#ANWBrazil" data-idx="26" title="ANWBrazil">Empire of Brazil <span style="color:#ffc070;">●</span></a><a href="#ANWArgentines" data-idx="27" title="ANWArgentines">Argentine Confederation <span style="color:#ff8a8a;">●</span></a><a href="#ANWChileans" data-idx="28" title="ANWChileans">Republic of Chile <span style="color:#ff8a8a;">●</span></a><a href="#ANWPeruvians" data-idx="29" title="ANWPeruvians">Republic of Peru <span style="color:#ff8a8a;">●</span></a><a href="#ANWColumbians" data-idx="30" title="ANWColumbians">Gran Colombia <span style="color:#ff8a8a;">●</span></a><a href="#ANWHaitians" data-idx="31" title="ANWHaitians">First Empire of Haiti <span style="color:#ff8a8a;">●</span></a><a href="#ANWIndonesians" data-idx="32" title="ANWIndonesians">Sultanate of Yogyakarta <span style="color:#ffc070;">●</span></a><a href="#ANWSouthAfricans" data-idx="33" title="ANWSouthAfricans">South African Republic <span style="color:#ff8a8a;">●</span></a><a href="#ANWFinnish" data-idx="34" title="ANWFinnish">Grand Duchy of Finland <span style="color:#ffc070;">●</span></a><a href="#ANWHungarians" data-idx="35" title="ANWHungarians">Kingdom of Hungary <span style="color:#ffc070;">●</span></a><a href="#ANWRomanians" data-idx="36" title="ANWRomanians">United Romanian Principalities <span style="color:#ffc070;">●</span></a><a href="#ANWBarbary" data-idx="37" title="ANWBarbary">Regency of Algiers</a><a href="#ANWEgyptians" data-idx="38" title="ANWEgyptians">Khedivate of Egypt <span style="color:#ffc070;">●</span></a><a href="#ANWCentralAmericans" data-idx="39" title="ANWCentralAmericans">ANWCentralAmericans <span style="color:#ff8a8a;">●</span></a><a href="#ANWYucatan" data-idx="40" title="ANWYucatan">ANWYucatan</a><a href="#ANWRioGrande" data-idx="41" title="ANWRioGrande">ANWRioGrande <span style="color:#ff8a8a;">●</span></a><a href="#ANWMayans" data-idx="42" title="ANWMayans">Cruzob Maya</a><a href="#ANWCalifornians" data-idx="43" title="ANWCalifornians">ANWCalifornians <span style="color:#ff8a8a;">●</span></a><a href="#ANWTexians" data-idx="44" title="ANWTexians">Republic of Texas <span style="color:#ff8a8a;">●</span></a></nav>
+<div class="pager-nav">
+  <button id="pager-prev" aria-label="Previous nation (↑)">▲</button>
+  <button id="pager-next" aria-label="Next nation (↓)">▼</button>
+</div>
 <div id="scroll-container">
 <section class="civ-col" id="French" style="background:linear-gradient(160deg,rgb(0,51,102) 0%,rgb(0,21,72) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png" alt="Bourbon France" title="resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -718,6 +846,7 @@ Your explorer gains the ability to use a temporary Hot Air Balloon for reconnais
   </div>
 </section>
 <section class="civ-col" id="British" style="background:linear-gradient(160deg,rgb(153,0,0) 0%,rgb(123,0,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png" alt="British Empire" title="resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -814,6 +943,7 @@ Dragoons inflict more damage and may be recruited in the Commerce Age."></span><
   </div>
 </section>
 <section class="civ-col" id="Germans" style="background:linear-gradient(160deg,rgb(25,25,112) 0%,rgb(0,0,82) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png" alt="German Empire" title="resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -889,6 +1019,7 @@ Gives all artillery (except Mortars) a devastating close-range attack against un
   </div>
 </section>
 <section class="civ-col" id="Russians" style="background:linear-gradient(160deg,rgb(0,100,0) 0%,rgb(0,70,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png" alt="Russian Empire" title="resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -958,6 +1089,7 @@ Notably increases the melee damage of Cavalry Archers, Streltsy, and Poruchiks. 
   </div>
 </section>
 <section class="civ-col" id="Spanish" style="background:linear-gradient(160deg,rgb(204,51,0) 0%,rgb(174,21,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png" alt="Spanish Empire" title="resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1038,6 +1170,7 @@ Enables Generals to construct Outposts and an extra Fort. All defensive building
   </div>
 </section>
 <section class="civ-col" id="Ottomans" style="background:linear-gradient(160deg,rgb(0,153,76) 0%,rgb(0,123,46) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png" alt="Ottoman Empire" title="resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1114,6 +1247,7 @@ Enables Grenadiers to be trained and equips them with a hand mortar, which quick
   </div>
 </section>
 <section class="civ-col" id="Portuguese" style="background:linear-gradient(160deg,rgb(0,102,204) 0%,rgb(0,72,174) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png" alt="Portuguese Empire" title="resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1190,6 +1324,7 @@ Monumental Inca architecture increases the hitpoints of buildings and the damage
   </div>
 </section>
 <section class="civ-col" id="Dutch" style="background:linear-gradient(160deg,rgb(255,140,0) 0%,rgb(225,110,0) 100%);color:#111">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png" alt="Dutch Republic" title="resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1273,6 +1408,7 @@ Ships a regiment of musket-armed Blue Guards from the homeland and enables them 
   </div>
 </section>
 <section class="civ-col" id="DEItalians" style="background:linear-gradient(160deg,rgb(0,140,0) 0%,rgb(0,110,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png" alt="Kingdom of Italy" title="resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1347,6 +1483,7 @@ Improves the damage of all Italian musket and rifle infantry."><img class="card-
   </div>
 </section>
 <section class="civ-col" id="DEMaltese" style="background:linear-gradient(160deg,rgb(178,34,34) 0%,rgb(148,4,4) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png" alt="Knights of Malta" title="resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1435,6 +1572,7 @@ Ships cords of 2000 wood the first time you send it. Ships 1300 thereafter."></s
   </div>
 </section>
 <section class="civ-col" id="DESwedish" style="background:linear-gradient(160deg,rgb(0,102,204) 0%,rgb(0,72,174) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png" alt="Swedish Empire" title="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1499,13 +1637,14 @@ Ships a mighty Battleship!"></span></div>
 
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
-      <div class="cov-summary">22 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Swedish.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Swedish.png">Flag_Swedish.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_swedish.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_swedish.png">flag_hc_swedish.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png">cpai_avatar_swedes_gustavus.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Swedish.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Swedish.png">Flag_Swedish.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png">cpai_avatar_swedes_gustavus.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_swedish.png">cpai_avatar_swedish.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_swedish.ddt">cpai_avatar_swedish.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity.xml">swedish\swedish_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity_water.xml">swedish\swedish_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_background.xml">swedish\swedish_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\pathable_area.gr2">swedish\pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity_camera.cam">swedish\swedish_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity_widescreencamera.cam">swedish\swedish_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\britishambientsounds.xml">homecity\britishambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish_homecity">swedish_homecity</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="London">London</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Mansion</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\tower_of_london_icon">ui\home_city\tower_of_london_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\nw_trading_company_icon">ui\home_city\nw_trading_company_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\military_academy_icon">ui\home_city\military_academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\cathedral_icon">ui\home_city\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\manufacturing_plant_icon">ui\home_city\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\harbor_icon">ui\home_city\harbor_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwswedish.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">swedish</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">0 / 555</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">0 / 30</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">0 / 205</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-bad">✗</span><code class="cov-path">0 / 32</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-bad">✗</span><code class="cov-path">0 / 52</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">0 / 18</code></div>
+      <div class="cov-summary">22 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Swedish.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Swedish.png">Flag_Swedish.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_swedish.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_swedish.png">flag_hc_swedish.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png">cpai_avatar_swedes_gustavus.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Swedish.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Swedish.png">Flag_Swedish.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png">cpai_avatar_swedes_gustavus.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_swedish.png">cpai_avatar_swedish.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_swedish.ddt">cpai_avatar_swedish.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity.xml">swedish\swedish_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity_water.xml">swedish\swedish_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_background.xml">swedish\swedish_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\pathable_area.gr2">swedish\pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity_camera.cam">swedish\swedish_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish\swedish_homecity_widescreencamera.cam">swedish\swedish_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\britishambientsounds.xml">homecity\britishambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="swedish_homecity">swedish_homecity</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="London">London</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Mansion</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\tower_of_london_icon">ui\home_city\tower_of_london_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\nw_trading_company_icon">ui\home_city\nw_trading_company_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\military_academy_icon">ui\home_city\military_academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\cathedral_icon">ui\home_city\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\manufacturing_plant_icon">ui\home_city\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\harbor_icon">ui\home_city\harbor_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwswedish.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">swedish</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">362 / 555 (65%)</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">10 / 30 (33%)</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">21 / 205 (10%)</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-ok">✓</span><code class="cov-path">44 / 32 (138%)</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-bad">✗</span><code class="cov-path">35 / 52 (67%)</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">2 / 18 (11%)</code></div>
       
       
     </div>
   </div>
 </section>
 <section class="civ-col" id="Chinese" style="background:linear-gradient(160deg,rgb(204,153,0) 0%,rgb(174,123,0) 100%);color:#111">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png" alt="Qing Dynasty" title="resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1592,6 +1731,7 @@ Ships a Wokou Junk containing Petards."></span></div>
   </div>
 </section>
 <section class="civ-col" id="Japanese" style="background:linear-gradient(160deg,rgb(139,0,0) 0%,rgb(109,0,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png" alt="Tokugawa Shogunate" title="resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1672,6 +1812,7 @@ Ships a powerful Daimyo. Daimyos receives Shipments, can train infantry and cava
   </div>
 </section>
 <section class="civ-col" id="Indians" style="background:linear-gradient(160deg,rgb(255,153,51) 0%,rgb(225,123,21) 100%);color:#111">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png" alt="Maratha Empire" title="resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1760,6 +1901,7 @@ Ships a number of Indian Arsonist mercenaries and Indian Jat Lancer mercenaries,
   </div>
 </section>
 <section class="civ-col" id="XPAztec" style="background:linear-gradient(160deg,rgb(0,204,153) 0%,rgb(0,174,123) 100%);color:#111">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" alt="Aztec Triple Alliance" title="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1828,13 +1970,14 @@ The High Priest of Huitzilopochtli sends 11 Skull Knights, increases Skull Knigh
 
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
-      <div class="cov-summary">25 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Aztec.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Aztec.png">Flag_Aztec.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_aztec.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_aztec.png">flag_hc_aztec.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png">cpai_avatar_aztecs_montezuma.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Aztec.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Aztec.png">Flag_Aztec.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png">cpai_avatar_aztecs_montezuma.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_aztec.png">cpai_avatar_aztec.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_aztec.ddt">cpai_avatar_aztec.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity.xml">aztec\aztec_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity_water.xml">aztec\aztec_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_background.xml">aztec\aztec_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\pathable_area.gr2">aztec\pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity_camera.cam">aztec\aztec_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity_widescreencamera.cam">aztec\aztec_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\aztecambientsounds.xml">homecity\aztecambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Tenochtitlan">Tenochtitlan</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Seville">Seville</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Estate</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\estate_icon">homecity\buildings_west\estate_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\market_icon">homecity\buildings_west\market_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\academy_icon">homecity\buildings_west\academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\cathedral_icon">homecity\buildings_west\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\manufacturing_plant_icon">homecity\buildings_west\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwaztec.personality</code></div><div class="cov-group-lbl">Custom card icons (3)</div><div class="cov-row cov-leader"><span class="cov-lbl">aztec_fortification</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/cards/aztec_fortification.png" alt=""></div><div class="cov-row cov-leader"><span class="cov-lbl">aztec_mining</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/cards/aztec_mining.png" alt=""></div><div class="cov-row cov-leader"><span class="cov-lbl">aztec_temple_icon</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/cards/aztec_temple_icon.png" alt=""></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">aztec</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">0 / 555</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">0 / 30</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">0 / 205</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-bad">✗</span><code class="cov-path">0 / 32</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-bad">✗</span><code class="cov-path">0 / 52</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">0 / 18</code></div>
+      <div class="cov-summary">26 present · 3 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Aztec.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Aztec.png">Flag_Aztec.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_aztec.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_aztec.png">flag_hc_aztec.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png">cpai_avatar_aztecs_montezuma.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Aztec.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Aztec.png">Flag_Aztec.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png">cpai_avatar_aztecs_montezuma.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_aztec.png">cpai_avatar_aztec.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_aztec.ddt">cpai_avatar_aztec.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity.xml">aztec\aztec_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity_water.xml">aztec\aztec_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_background.xml">aztec\aztec_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\pathable_area.gr2">aztec\pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity_camera.cam">aztec\aztec_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="aztec\aztec_homecity_widescreencamera.cam">aztec\aztec_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\aztecambientsounds.xml">homecity\aztecambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Tenochtitlan">Tenochtitlan</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Seville">Seville</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Estate</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\estate_icon">homecity\buildings_west\estate_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\market_icon">homecity\buildings_west\market_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\academy_icon">homecity\buildings_west\academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\cathedral_icon">homecity\buildings_west\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\manufacturing_plant_icon">homecity\buildings_west\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwaztec.personality</code></div><div class="cov-group-lbl">Custom card icons (3)</div><div class="cov-row cov-leader"><span class="cov-lbl">aztec_fortification</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/cards/aztec_fortification.png" alt=""></div><div class="cov-row cov-leader"><span class="cov-lbl">aztec_mining</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/cards/aztec_mining.png" alt=""></div><div class="cov-row cov-leader"><span class="cov-lbl">aztec_temple_icon</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/cards/aztec_temple_icon.png" alt=""></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">aztec</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-ok">✓</span><code class="cov-path">668 / 555 (120%)</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-ok">✓</span><code class="cov-path">26 / 30 (87%)</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-ok">✓</span><code class="cov-path">165 / 205 (80%)</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-ok">✓</span><code class="cov-path">560 / 32 (1750%)</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-ok">✓</span><code class="cov-path">463 / 52 (890%)</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-ok">✓</span><code class="cov-path">22 / 18 (122%)</code></div>
       
       
     </div>
   </div>
 </section>
 <section class="civ-col" id="XPIroquois" style="background:linear-gradient(160deg,rgb(139,0,0) 0%,rgb(109,0,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" alt="Haudenosaunee Confederacy" title="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -1911,13 +2054,14 @@ Receive for free all Market woodcutting upgrades."><img class="card-img" loading
 
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
-      <div class="cov-summary">22 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Iroquois.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Iroquois.png">Flag_Iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_iroquois.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_iroquois.png">flag_hc_iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png">cpai_avatar_haudenosaunee_hiawatha.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Iroquois.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Iroquois.png">Flag_Iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png">cpai_avatar_haudenosaunee_hiawatha.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_iroquois.png">cpai_avatar_iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_iroquois.ddt">cpai_avatar_iroquois.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity.xml">iroquois\iroquois_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity_water.xml">iroquois\iroquois_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_background.xml">iroquois\iroquois_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\pathable_area.gr2">iroquois\pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity_camera.cam">iroquois\iroquois_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity_widescreencamera.cam">iroquois\iroquois_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\iroquoisambientsounds.xml">homecity\iroquoisambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="hc_iroquois1">hc_iroquois1</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Berlin">Berlin</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="city_with_waterpaths">city_with_waterpaths</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Estate</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\estate_icon">homecity\buildings_west\estate_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\market_icon">homecity\buildings_west\market_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\academy_icon">homecity\buildings_west\academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\cathedral_icon">homecity\buildings_west\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\manufacturing_plant_icon">homecity\buildings_west\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwiroquois.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">iroquois</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">0 / 555</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">0 / 30</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">0 / 205</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-bad">✗</span><code class="cov-path">0 / 32</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-bad">✗</span><code class="cov-path">0 / 52</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">0 / 18</code></div>
+      <div class="cov-summary">23 present · 3 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Iroquois.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Iroquois.png">Flag_Iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_iroquois.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_iroquois.png">flag_hc_iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png">cpai_avatar_haudenosaunee_hiawatha.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Iroquois.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Iroquois.png">Flag_Iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png">cpai_avatar_haudenosaunee_hiawatha.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_iroquois.png">cpai_avatar_iroquois.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_iroquois.ddt">cpai_avatar_iroquois.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity.xml">iroquois\iroquois_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity_water.xml">iroquois\iroquois_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_background.xml">iroquois\iroquois_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\pathable_area.gr2">iroquois\pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity_camera.cam">iroquois\iroquois_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="iroquois\iroquois_homecity_widescreencamera.cam">iroquois\iroquois_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\iroquoisambientsounds.xml">homecity\iroquoisambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="hc_iroquois1">hc_iroquois1</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Berlin">Berlin</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="city_with_waterpaths">city_with_waterpaths</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Estate</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\estate_icon">homecity\buildings_west\estate_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\market_icon">homecity\buildings_west\market_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\academy_icon">homecity\buildings_west\academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\cathedral_icon">homecity\buildings_west\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\manufacturing_plant_icon">homecity\buildings_west\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwiroquois.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">iroquois</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-ok">✓</span><code class="cov-path">765 / 555 (138%)</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-ok">✓</span><code class="cov-path">29 / 30 (97%)</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">145 / 205 (71%)</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-ok">✓</span><code class="cov-path">507 / 32 (1584%)</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-ok">✓</span><code class="cov-path">46 / 52 (88%)</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">8 / 18 (44%)</code></div>
       
       
     </div>
   </div>
 </section>
 <section class="civ-col" id="DEInca" style="background:linear-gradient(160deg,rgb(204,172,0) 0%,rgb(174,142,0) 100%);color:#111">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png" alt="Inca Empire" title="resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2009,6 +2153,7 @@ Greatly increases the damage of your War Chief who inflicts area damage and gain
   </div>
 </section>
 <section class="civ-col" id="XPSioux" style="background:linear-gradient(160deg,rgb(240,240,240) 0%,rgb(210,210,210) 100%);color:#111">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" alt="Lakota Sioux" title="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2066,13 +2211,14 @@ The Burnt Thigh council sends 7 Rifle Riders and 2 Healers."></span></div>
 
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
-      <div class="cov-summary">22 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Sioux.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Sioux.png">Flag_Sioux.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_sioux.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_sioux.png">flag_hc_sioux.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png">cpai_avatar_lakota_crazy_horse.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Sioux.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Sioux.png">Flag_Sioux.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png">cpai_avatar_lakota_crazy_horse.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_sioux.png">cpai_avatar_sioux.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_sioux.ddt">cpai_avatar_sioux.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity.xml">sioux\sioux_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity_water.xml">sioux\sioux_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_background.xml">sioux\sioux_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_pathable_area.gr2">sioux\sioux_pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity_camera.cam">sioux\sioux_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity_widescreencamera.cam">sioux\sioux_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\siouxambientsounds.xml">homecity\siouxambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux_hc">sioux_hc</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Seville">Seville</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Estate</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\estate_icon">homecity\buildings_west\estate_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\market_icon">homecity\buildings_west\market_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\academy_icon">homecity\buildings_west\academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\cathedral_icon">homecity\buildings_west\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\manufacturing_plant_icon">homecity\buildings_west\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwsioux.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">sioux</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">0 / 555</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">0 / 30</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">0 / 205</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-bad">✗</span><code class="cov-path">0 / 32</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-bad">✗</span><code class="cov-path">0 / 52</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">0 / 18</code></div>
+      <div class="cov-summary">22 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Sioux.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Sioux.png">Flag_Sioux.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_sioux.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_sioux.png">flag_hc_sioux.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png">cpai_avatar_lakota_crazy_horse.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_Sioux.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_Sioux.png">Flag_Sioux.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png">cpai_avatar_lakota_crazy_horse.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_sioux.png">cpai_avatar_sioux.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_sioux.ddt">cpai_avatar_sioux.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (0)</div><div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity.xml">sioux\sioux_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity_water.xml">sioux\sioux_homecity_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_background.xml">sioux\sioux_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_pathable_area.gr2">sioux\sioux_pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity_camera.cam">sioux\sioux_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux\sioux_homecity_widescreencamera.cam">sioux\sioux_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\siouxambientsounds.xml">homecity\siouxambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="sioux_hc">sioux_hc</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="Seville">Seville</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Estate</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\estate_icon">homecity\buildings_west\estate_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\market_icon">homecity\buildings_west\market_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\academy_icon">homecity\buildings_west\academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Cathedral</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\cathedral_icon">homecity\buildings_west\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\manufacturing_plant_icon">homecity\buildings_west\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwsioux.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">sioux</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">370 / 555 (67%)</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">21 / 30 (70%)</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">145 / 205 (71%)</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-ok">✓</span><code class="cov-path">86 / 32 (269%)</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-ok">✓</span><code class="cov-path">47 / 52 (90%)</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">6 / 18 (33%)</code></div>
       
       
     </div>
   </div>
 </section>
 <section class="civ-col" id="DEAmericans" style="background:linear-gradient(160deg,rgb(0,51,102) 0%,rgb(0,21,72) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png" alt="United States" title="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2141,13 +2287,14 @@ Ships a number of powerful Grenadiers equipped with Grenade Launchers and enable
 
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
-      <div class="cov-summary">25 present · 5 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_USA.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_USA.png">Flag_USA.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_american.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_american.png">flag_hc_american.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png">cpai_avatar_united_states_washington.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_USA.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_USA.png">Flag_USA.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png">cpai_avatar_united_states_washington.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_americans.png">cpai_avatar_americans.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_americans.ddt">cpai_avatar_americans.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (2)</div><div class="cov-row cov-leader"><span class="cov-lbl">jefferson</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_americans_jefferson.png" alt=""><code class="cov-path">cpai_avatar_americans_jefferson.png</code><span class="cov-ok" title="DDT present">DDT ✓</span></div><div class="cov-row cov-leader"><span class="cov-lbl">washington</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_americans_washington.png" alt=""><code class="cov-path">cpai_avatar_americans_washington.png</code><span class="cov-bad" title="missing: art/ui/singleplayer/cpai_avatar_americans_washington.ddt">DDT ✗</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_homecity.xml">american\american_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_water.xml">american\american_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_background.xml">american\american_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_pathable_area.gr2">american\american_pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_homecity_camera.cam">american\american_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_homecity_widescreencamera.cam">american\american_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\britishambientsounds.xml">homecity\britishambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="American_Homecity">American_Homecity</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="London">London</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Mansion</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\tower_of_london_icon">ui\home_city\tower_of_london_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\nw_trading_company_icon">ui\home_city\nw_trading_company_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\military_academy_icon">ui\home_city\military_academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Capitol</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\cathedral_icon">ui\home_city\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\manufacturing_plant_icon">ui\home_city\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\harbor_icon">ui\home_city\harbor_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwamericans.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">americans</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-bad">✗</span><code class="cov-path">0 / 555</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">0 / 30</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-bad">✗</span><code class="cov-path">0 / 205</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-bad">✗</span><code class="cov-path">0 / 32</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-bad">✗</span><code class="cov-path">0 / 52</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-bad">✗</span><code class="cov-path">0 / 18</code></div>
+      <div class="cov-summary">26 present · 4 missing</div><div class="cov-group-lbl">UI surfaces (civmods.xml)</div><div class="cov-row"><span class="cov-lbl">HC flag (large)</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_USA.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_USA.png">Flag_USA.png</code></div><div class="cov-row"><span class="cov-lbl">HC flag button</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/flag_hc_american.png" alt=""><code class="cov-path" title="resources/images/icons/flags/flag_hc_american.png">flag_hc_american.png</code></div><div class="cov-row"><span class="cov-lbl">HC preview</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png">cpai_avatar_united_states_washington.png</code></div><div class="cov-row"><span class="cov-lbl">PG flag</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/flags/Flag_USA.png" alt=""><code class="cov-path" title="resources/images/icons/flags/Flag_USA.png">Flag_USA.png</code></div><div class="cov-row"><span class="cov-lbl">Matchmaking</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png" alt=""><code class="cov-path" title="resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png">cpai_avatar_united_states_washington.png</code></div><div class="cov-group-lbl">Default avatar</div><div class="cov-row"><span class="cov-lbl">Default avatar PNG</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: resources/images/icons/singleplayer/cpai_avatar_americans.png">cpai_avatar_americans.png</code></div><div class="cov-row"><span class="cov-lbl">Default avatar DDT</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing" title="missing: art/ui/singleplayer/cpai_avatar_americans.ddt">cpai_avatar_americans.ddt</code></div><div class="cov-group-lbl">Per-leader portraits (2)</div><div class="cov-row cov-leader"><span class="cov-lbl">jefferson</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_americans_jefferson.png" alt=""><code class="cov-path">cpai_avatar_americans_jefferson.png</code><span class="cov-ok" title="DDT present">DDT ✓</span></div><div class="cov-row cov-leader"><span class="cov-lbl">washington</span><span class="cov-ok">✓</span><img class="cov-thumb" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_americans_washington.png" alt=""><code class="cov-path">cpai_avatar_americans_washington.png</code><span class="cov-bad" title="missing: art/ui/singleplayer/cpai_avatar_americans_washington.ddt">DDT ✗</span></div><div class="cov-group-lbl">HC scene declaration</div><div class="cov-row"><span class="cov-lbl">Scene visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_homecity.xml">american\american_homecity.xml</code></div><div class="cov-row"><span class="cov-lbl">Water visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_water.xml">american\american_water.xml</code></div><div class="cov-row"><span class="cov-lbl">Background visual</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_background.xml">american\american_background.xml</code></div><div class="cov-row"><span class="cov-lbl">Path data (.gr2)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_pathable_area.gr2">american\american_pathable_area.gr2</code></div><div class="cov-row"><span class="cov-lbl">Camera (.cam)</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_homecity_camera.cam">american\american_homecity_camera.cam</code></div><div class="cov-row"><span class="cov-lbl">Widescreen cam</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="american\american_homecity_widescreencamera.cam">american\american_homecity_widescreencamera.cam</code></div><div class="cov-row"><span class="cov-lbl">Ambient sounds</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="homecity\britishambientsounds.xml">homecity\britishambientsounds.xml</code></div><div class="cov-row"><span class="cov-lbl">Light set</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="American_Homecity">American_Homecity</code></div><div class="cov-row"><span class="cov-lbl">Water type</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="London">London</code></div><div class="cov-row"><span class="cov-lbl">XSAI personality</span><span class="cov-ok" title="declared in homecity XML">✓</span><code class="cov-path" title="generic_city">generic_city</code></div><div class="cov-group-lbl">HC buildings (7)</div><div class="cov-row cov-leader"><span class="cov-lbl">Mansion</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\tower_of_london_icon">ui\home_city\tower_of_london_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Market</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\nw_trading_company_icon">ui\home_city\nw_trading_company_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Academy</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\military_academy_icon">ui\home_city\military_academy_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Capitol</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\cathedral_icon">ui\home_city\cathedral_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">ManufacturingPlant</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\manufacturing_plant_icon">ui\home_city\manufacturing_plant_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Dock</span><span class="cov-ok">✓</span><code class="cov-path" title="ui\home_city\harbor_icon">ui\home_city\harbor_icon</code></div><div class="cov-row cov-leader"><span class="cov-lbl">Customization</span><span class="cov-ok">✓</span><code class="cov-path" title="homecity\buildings_west\dock_icon">homecity\buildings_west\dock_icon</code></div><div class="cov-group-lbl">AI personality</div><div class="cov-row"><span class="cov-lbl">Personality</span><span class="cov-bad">✗</span><code class="cov-path cov-path-missing">anwamericans.personality</code></div><div class="cov-group-lbl">Custom card icons (0)</div><div class="cov-row"><span class="cov-lbl">(none)</span></div><div class="cov-group-lbl" title="vanilla AoE3 DE .bar inventory match counts; British is the reference">Vanilla asset parity (vs. British)</div><div class="cov-row"><span class="cov-lbl">Vanilla token(s)</span><code class="cov-path">american, usa</code></div><div class="cov-row"><span class="cov-lbl">HC scene</span><span class="cov-ok">✓</span><code class="cov-path">543 / 555 (98%)</code></div><div class="cov-row"><span class="cov-lbl">UI surfaces</span><span class="cov-bad">✗</span><code class="cov-path">18 / 30 (60%)</code></div><div class="cov-row"><span class="cov-lbl">Voice lines</span><span class="cov-ok">✓</span><code class="cov-path">249 / 205 (121%)</code></div><div class="cov-row"><span class="cov-lbl">Unit models</span><span class="cov-ok">✓</span><code class="cov-path">442 / 32 (1381%)</code></div><div class="cov-row"><span class="cov-lbl">Buildings</span><span class="cov-ok">✓</span><code class="cov-path">50 / 52 (96%)</code></div><div class="cov-row"><span class="cov-lbl">Resources</span><span class="cov-ok">✓</span><code class="cov-path">209 / 18 (1161%)</code></div>
       
       
     </div>
   </div>
 </section>
 <section class="civ-col" id="DEMexicans" style="background:linear-gradient(160deg,rgb(0,153,51) 0%,rgb(0,123,21) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png" alt="First Mexican Empire" title="resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2226,6 +2373,7 @@ Native Warriors are trained 10% faster and shipped 50% faster. You get a large S
   </div>
 </section>
 <section class="civ-col" id="DEEthiopians" style="background:linear-gradient(160deg,rgb(0,128,0) 0%,rgb(0,98,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png" alt="Ethiopian Empire" title="resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2291,6 +2439,7 @@ Grants free improvements that increase the combat ability of Walls, Outposts, Bl
   </div>
 </section>
 <section class="civ-col" id="DEHausa" style="background:linear-gradient(160deg,rgb(153,102,0) 0%,rgb(123,72,0) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_hausa_usman.png" alt="Sokoto Caliphate" title="resources/images/icons/singleplayer/cpai_avatar_hausa_usman.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2371,6 +2520,7 @@ You receive a Kingdom Builder for every Town Center you currently own. Kingdom B
   </div>
 </section>
 <section class="civ-col" id="ANWNapoleonicFrance" style="background:linear-gradient(160deg,rgb(0,43,92) 0%,rgb(0,13,62) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png" alt="France (Napoleonic Era)" title="resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2460,6 +2610,7 @@ Arrives fast! Disables Home City shipments for all enemy and allied players for 
   </div>
 </section>
 <section class="civ-col" id="ANWRevFrance" style="background:linear-gradient(160deg,rgb(18,62,140) 0%,rgb(0,32,110) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png" alt="France" title="resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2534,6 +2685,7 @@ Ships a mighty Battleship! French Battleships now benefit from Defence Promotion
   </div>
 </section>
 <section class="civ-col" id="ANWCanadians" style="background:linear-gradient(160deg,rgb(187,0,0) 0%,rgb(157,0,0) 100%);color:#fff">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (3 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png" alt="Province of Canada" title="resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2611,6 +2763,7 @@ Ships 12 Métis Pathfinders."></span></div>
   </div>
 </section>
 <section class="civ-col" id="ANWFrenchCanadians" style="background:linear-gradient(160deg,rgb(52,92,164) 0%,rgb(22,62,134) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png" alt="ANWFrenchCanadians" title="resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2685,6 +2838,7 @@ Ships 10 Métis Voyageurs."></span></div>
   </div>
 </section>
 <section class="civ-col" id="ANWBrazil" style="background:linear-gradient(160deg,rgb(0,122,61) 0%,rgb(0,92,31) 100%);color:#fff">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (30 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png" alt="Empire of Brazil" title="resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2763,6 +2917,7 @@ Ships a mighty Battleship!"><img class="card-img" loading="lazy" src="resources/
   </div>
 </section>
 <section class="civ-col" id="ANWArgentines" style="background:linear-gradient(160deg,rgb(102,178,255) 0%,rgb(72,148,225) 100%);color:#111">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png" alt="Argentine Confederation" title="resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2848,6 +3003,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWChileans" style="background:linear-gradient(160deg,rgb(213,43,30) 0%,rgb(183,13,0) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png" alt="Republic of Chile" title="resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -2930,6 +3086,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWPeruvians" style="background:linear-gradient(160deg,rgb(186,0,0) 0%,rgb(156,0,0) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png" alt="Republic of Peru" title="resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3017,6 +3174,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWColumbians" style="background:linear-gradient(160deg,rgb(255,204,0) 0%,rgb(225,174,0) 100%);color:#111">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png" alt="Gran Colombia" title="resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3100,6 +3258,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWHaitians" style="background:linear-gradient(160deg,rgb(0,51,153) 0%,rgb(0,21,123) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png" alt="First Empire of Haiti" title="resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3177,6 +3336,7 @@ Ships a mighty Battleship!"></span></div>
   </div>
 </section>
 <section class="civ-col" id="ANWIndonesians" style="background:linear-gradient(160deg,rgb(0,110,84) 0%,rgb(0,80,54) 100%);color:#fff">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (1 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png" alt="Sultanate of Yogyakarta" title="resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3259,6 +3419,7 @@ Sends some Akan Ankobias and allows you to train them in Native Embassies, +3 Na
   </div>
 </section>
 <section class="civ-col" id="ANWSouthAfricans" style="background:linear-gradient(160deg,rgb(0,96,56) 0%,rgb(0,66,26) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png" alt="South African Republic" title="resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3330,6 +3491,7 @@ Ships a number of Mounted Rifleman mercenaries."><img class="card-img" loading="
   </div>
 </section>
 <section class="civ-col" id="ANWFinnish" style="background:linear-gradient(160deg,rgb(0,53,128) 0%,rgb(0,23,98) 100%);color:#fff">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (20 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png" alt="Grand Duchy of Finland" title="resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3417,6 +3579,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWHungarians" style="background:linear-gradient(160deg,rgb(120,0,0) 0%,rgb(90,0,0) 100%);color:#fff">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (1 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png" alt="Kingdom of Hungary" title="resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3496,6 +3659,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWRomanians" style="background:linear-gradient(160deg,rgb(0,43,127) 0%,rgb(0,13,97) 100%);color:#fff">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (1 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png" alt="United Romanian Principalities" title="resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3581,6 +3745,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWBarbary" style="background:linear-gradient(160deg,rgb(0,122,92) 0%,rgb(0,92,62) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png" alt="Regency of Algiers" title="resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3658,6 +3823,7 @@ Ships a number of Ottoman mercenaries: Stradiots, Mamelukes and Corsairs."></spa
   </div>
 </section>
 <section class="civ-col" id="ANWEgyptians" style="background:linear-gradient(160deg,rgb(196,154,55) 0%,rgb(166,124,25) 100%);color:#111">
+  <div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">⚠ Minimal vanilla assets (1 entries) — partial coverage only<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png" alt="Khedivate of Egypt" title="resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3733,6 +3899,7 @@ Ships a mighty Battleship!"></span></div>
   </div>
 </section>
 <section class="civ-col" id="ANWCentralAmericans" style="background:linear-gradient(160deg,rgb(0,108,54) 0%,rgb(0,78,24) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_central_americans_morazan.png" alt="ANWCentralAmericans" title="resources/images/icons/singleplayer/cpai_avatar_central_americans_morazan.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3813,6 +3980,7 @@ Upgrades Saloons to Cantinas, which have Ronin, and outlaw-type units cost less 
   </div>
 </section>
 <section class="civ-col" id="ANWYucatan" style="background:linear-gradient(160deg,rgb(0,140,102) 0%,rgb(0,110,72) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_yucatan_carrillo_puerto.png" alt="ANWYucatan" title="resources/images/icons/singleplayer/cpai_avatar_yucatan_carrillo_puerto.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3891,6 +4059,7 @@ Changes the Coin cost of Mexican Cavalry and Infantry to Wood. May be sent again
   </div>
 </section>
 <section class="civ-col" id="ANWRioGrande" style="background:linear-gradient(160deg,rgb(120,30,30) 0%,rgb(90,0,0) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_rio_grande_canales_rosillo.png" alt="ANWRioGrande" title="resources/images/icons/singleplayer/cpai_avatar_rio_grande_canales_rosillo.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -3963,6 +4132,7 @@ All cavalry attack and hitpoints increased."></span></div>
   </div>
 </section>
 <section class="civ-col" id="ANWMayans" style="background:linear-gradient(160deg,rgb(22,148,125) 0%,rgb(0,118,95) 100%);color:#fff">
+  
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png" alt="Cruzob Maya" title="resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -4049,6 +4219,7 @@ Sends Mayan warriors and also upgrades them to Elite."></span></div>
   </div>
 </section>
 <section class="civ-col" id="ANWCalifornians" style="background:linear-gradient(160deg,rgb(198,155,44) 0%,rgb(168,125,14) 100%);color:#111">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_californians_vallejo.png" alt="ANWCalifornians" title="resources/images/icons/singleplayer/cpai_avatar_californians_vallejo.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -4133,6 +4304,7 @@ Ships a Factory Wagon to your town, allowing you to construct a powerful Factory
   </div>
 </section>
 <section class="civ-col" id="ANWTexians" style="background:linear-gradient(160deg,rgb(104,66,27) 0%,rgb(74,36,0) 100%);color:#fff">
+  <div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ<div class="sub">All home-city scene, voice, unit-model, building, and resource art needs to be custom-authored or aliased to a base civ.</div></div>
   <div class="col-header">
     <img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png" alt="Republic of Texas" title="resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png" style="width:40px;height:40px;object-fit:contain;border:1px solid rgba(255,255,255,0.2);border-radius:2px;background:#0004;">
     <div class="hdr-text">
@@ -4393,42 +4565,132 @@ Minutemen are upgraded to Texian Marines. Marines no longer lose hitpoints and i
     });
   }
 
-  // Dedicated horizontal scroll container. Targeting a specific element
-  // (instead of window/document/scrollingElement) is reliable across all
-  // browsers — no ambiguity about which root actually scrolls.
+  // Vertical pager: one civ per 100vh page, scroll-snap-y mandatory.
+  // We override mouse-wheel to snap-to-next/prev section instead of free-scroll.
   var scroller = document.getElementById('scroll-container');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.civ-col'));
+  var counter  = document.getElementById('pager-counter');
+  var tocEl    = document.getElementById('pager-toc');
 
-  function horizScrollHandler(e) {
+  function currentIndex() {
+    if (!scroller) return 0;
+    return Math.round(scroller.scrollTop / window.innerHeight);
+  }
+
+  function gotoIndex(idx) {
+    if (!scroller) return;
+    idx = Math.max(0, Math.min(sections.length - 1, idx));
+    scroller.scrollTo({ top: idx * window.innerHeight, behavior: 'smooth' });
+    updateActive(idx);
+    if (sections[idx] && sections[idx].id) {
+      history.replaceState(null, '', '#' + sections[idx].id);
+    }
+  }
+
+  function updateActive(idx) {
+    if (counter) {
+      counter.textContent = (idx + 1) + ' / ' + sections.length;
+    }
+    if (tocEl) {
+      var links = tocEl.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].classList.toggle('active', i === idx);
+      }
+      // Scroll active item into view in the ToC
+      var active = links[idx];
+      if (active) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+  }
+
+  // Wheel: snap one section at a time. Debounce so a single wheel-roll
+  // doesn't skip multiple civs.
+  var wheelLock = false;
+  window.addEventListener('wheel', function (e) {
     if (!scroller) return;
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
-    if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
-    if (e.deltaY === 0) return;
+    // Allow internal scroll inside the text/art sections — only intercept
+    // when the wheel target is the page background (not within a scrollable child).
+    var target = e.target;
+    while (target && target !== scroller && target !== document.body) {
+      var style = window.getComputedStyle(target);
+      if ((style.overflowY === 'auto' || style.overflowY === 'scroll')
+          && target.scrollHeight > target.clientHeight) {
+        // Inside a scrollable child — let it scroll normally.
+        return;
+      }
+      target = target.parentElement;
+    }
+    if (Math.abs(e.deltaY) < 5) return;
+    if (wheelLock) { e.preventDefault(); return; }
     e.preventDefault();
-    var dy = e.deltaY;
-    if (e.deltaMode === 1) dy *= 16;             // lines → px
-    else if (e.deltaMode === 2) dy *= window.innerHeight;  // pages → px
-    scroller.scrollLeft += dy;
-  }
-  // Bind on window so the handler fires regardless of which child element
-  // the cursor is over. passive:false is required for preventDefault().
-  window.addEventListener('wheel', horizScrollHandler, { passive: false });
+    wheelLock = true;
+    var dir = e.deltaY > 0 ? 1 : -1;
+    gotoIndex(currentIndex() + dir);
+    setTimeout(function () { wheelLock = false; }, 380);
+  }, { passive: false });
 
-  // Keyboard navigation: Left/Right = one column, PageUp/PageDown = one
-  // viewport, Home/End = first/last column. Modal-open suppresses.
+  // Keyboard: Down/Right/PageDown/Space = next; Up/Left/PageUp = prev;
+  // Home/End = first/last; digits 1-9 = nth civ (1-indexed).
   document.addEventListener('keydown', function (e) {
     if (!scroller) return;
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
-    var col = 380;
-    var vp = window.innerWidth;
-    if (e.key === 'ArrowRight')      { scroller.scrollLeft +=  col; e.preventDefault(); }
-    else if (e.key === 'ArrowLeft')  { scroller.scrollLeft += -col; e.preventDefault(); }
-    else if (e.key === 'PageDown')   { scroller.scrollLeft +=  vp;  e.preventDefault(); }
-    else if (e.key === 'PageUp')     { scroller.scrollLeft += -vp;  e.preventDefault(); }
-    else if (e.key === 'Home')       { scroller.scrollLeft = 0; e.preventDefault(); }
-    else if (e.key === 'End')        { scroller.scrollLeft = scroller.scrollWidth; e.preventDefault(); }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); gotoIndex(currentIndex() + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); gotoIndex(currentIndex() - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault(); gotoIndex(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); gotoIndex(sections.length - 1);
+    } else if (/^[1-9]$/.test(e.key)) {
+      e.preventDefault(); gotoIndex(parseInt(e.key, 10) - 1);
+    }
   });
+
+  // Pager nav buttons (▲ / ▼) — use onclick wired via id.
+  var btnPrev = document.getElementById('pager-prev');
+  var btnNext = document.getElementById('pager-next');
+  if (btnPrev) btnPrev.addEventListener('click', function () { gotoIndex(currentIndex() - 1); });
+  if (btnNext) btnNext.addEventListener('click', function () { gotoIndex(currentIndex() + 1); });
+
+  // ToC link clicks
+  if (tocEl) {
+    tocEl.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-idx]');
+      if (!a) return;
+      e.preventDefault();
+      gotoIndex(parseInt(a.dataset.idx, 10));
+    });
+  }
+
+  // Track scroll to update counter/ToC highlight.
+  var scrollTimer = null;
+  scroller.addEventListener('scroll', function () {
+    if (scrollTimer) return;
+    scrollTimer = setTimeout(function () {
+      updateActive(currentIndex());
+      scrollTimer = null;
+    }, 80);
+  });
+
+  // Open at hash if present (e.g. #ANWCanadians).
+  if (location.hash) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) {
+      var idx = sections.indexOf(target);
+      if (idx >= 0) {
+        // jump (no smooth) on initial load
+        scroller.scrollTop = idx * window.innerHeight;
+        updateActive(idx);
+        return;
+      }
+    }
+  }
+  updateActive(0);
 }());
 
 </script>
