@@ -474,52 +474,260 @@ def render_text_section(civ_token, civ_el, strings, hc, blurbs, spec, decks, car
 </div>
 """
 
+def get_civ_stem(civ_token):
+    """Strip prefix to get the short stem used in avatar/flag filenames.
+    e.g. ANWBritish→british, DEItalians→italians, XPAztec→aztec."""
+    lower = civ_token.lower()
+    for prefix in ("anw", "de", "xp"):
+        if lower.startswith(prefix):
+            return lower[len(prefix):]
+    return lower
+
+def find_leader_portraits(civ_stem):
+    """List per-leader avatar files for this civ_stem.
+    Returns [{leader, png_rel, ddt_rel, has_png, has_ddt}, ...]."""
+    portrait_dir = os.path.join(MOD_ROOT, "resources/images/icons/singleplayer")
+    out = []
+    if not os.path.isdir(portrait_dir):
+        return out
+    prefix = f"cpai_avatar_{civ_stem}_"
+    for fn in sorted(os.listdir(portrait_dir)):
+        if fn.startswith(prefix) and fn.endswith(".png"):
+            leader = fn[len(prefix):-4]
+            png_rel = f"resources/images/icons/singleplayer/{fn}"
+            ddt_rel = f"art/ui/singleplayer/cpai_avatar_{civ_stem}_{leader}.ddt"
+            out.append({
+                "leader":  leader,
+                "png_rel": png_rel,
+                "ddt_rel": ddt_rel,
+                "has_png": True,
+                "has_ddt": os.path.exists(os.path.join(MOD_ROOT, ddt_rel)),
+            })
+    return out
+
 def render_art_section(civ_token, civ_el, hc, strings):
-    imgs_resolved = 0
-    imgs_missing  = 0
+    """Comprehensive art-coverage audit. Uses British as the reference surface set.
+    Each row is ✓ (present + thumb when previewable) / ✗ (referenced but missing on
+    disk) / — (not referenced in XML)."""
+    stem = get_civ_stem(civ_token)
+    present = 0
+    missing = 0
     parts = []
 
-    def art_row(label, path_or_key):
-        """Render an image row. Skip silently if path is empty or doesn't resolve."""
-        nonlocal imgs_resolved, imgs_missing
-        if not path_or_key:
-            return
-        tag, ok = img_tag(path_or_key, label, 56)
-        if not ok:
-            imgs_missing += 1
-            return
-        imgs_resolved += 1
-        parts.append(
-            f'<div class="art-row"><span class="art-lbl">{html_module.escape(label)}</span>'
-            f'{tag}</div>'
+    def thumb(rel):
+        return (
+            f'<img class="cov-thumb" loading="lazy" '
+            f'src="{html_module.escape(rel)}" alt="">'
         )
 
-    # Portrait (3D flag from civmods)
-    portrait = civ_el.findtext("portrait") or ""
-    art_row("Portrait (3D)", portrait)
+    def cov_row(label, key_or_path, *, expect_file=None, kind="ui"):
+        """One coverage row.
+        - key_or_path : XML-declared path, or "" for "not referenced"
+        - expect_file : optional fallback path to test if no XML ref (used for
+                         default avatar PNG/DDT which aren't in civmods.xml)"""
+        nonlocal present, missing
+        path = key_or_path or ""
+        if path:
+            rel, exists = resolve_img(path)
+        elif expect_file:
+            full = os.path.join(MOD_ROOT, expect_file)
+            exists = os.path.exists(full)
+            rel = expect_file if exists else expect_file
+        else:
+            parts.append(
+                f'<div class="cov-row"><span class="cov-lbl">{html_module.escape(label)}</span>'
+                f'<span class="cov-na">—</span>'
+                f'<code class="cov-path">(no XML ref)</code></div>'
+            )
+            return
 
-    # Homecity flag texture
-    hc_flag_tex = civ_el.findtext("homecityflagtexture") or ""
-    art_row("HC flag tex", hc_flag_tex)
+        basename = os.path.basename(rel)
+        if exists:
+            present += 1
+            previewable = rel.lower().endswith((".png", ".jpg", ".webp"))
+            mark = '<span class="cov-ok">✓</span>'
+            thumb_html = thumb(rel) if previewable else ""
+            parts.append(
+                f'<div class="cov-row"><span class="cov-lbl">{html_module.escape(label)}</span>'
+                f'{mark}{thumb_html}'
+                f'<code class="cov-path" title="{html_module.escape(rel)}">{html_module.escape(basename)}</code></div>'
+            )
+        else:
+            missing += 1
+            mark = '<span class="cov-bad">✗</span>'
+            parts.append(
+                f'<div class="cov-row"><span class="cov-lbl">{html_module.escape(label)}</span>'
+                f'{mark}'
+                f'<code class="cov-path cov-path-missing" title="missing: {html_module.escape(path or expect_file or "")}">'
+                f'{html_module.escape(basename)}</code></div>'
+            )
 
-    # Post-game flag texture
-    pg_flag_tex = civ_el.findtext("postgameflagtexture") or ""
-    art_row("PG flag tex", pg_flag_tex)
+    # ── Section A: WPF/PNG surfaces from civmods.xml ─────────────────────────
+    parts.append('<div class="cov-group-lbl">UI surfaces (civmods.xml)</div>')
+    cov_row("HC flag (large)",  civ_el.findtext("homecityflagiconwpf") or "")
+    cov_row("HC flag button",   civ_el.findtext("homecityflagbuttonwpf") or "")
+    cov_row("HC preview",       civ_el.findtext("homecitypreviewwpf") or "")
+    cov_row("PG flag",          civ_el.findtext("postgameflagiconwpf") or "")
+    mm_el = civ_el.find(".//smallportraittexturewpf")
+    mm_path = (mm_el.text or "").strip() if mm_el is not None else ""
+    cov_row("Matchmaking",      mm_path)
 
-    # WPF paths (actual PNG resources)
-    hc_flag_icon = civ_el.findtext("homecityflagiconwpf") or ""
-    art_row("HC flag icon", hc_flag_icon)
+    # ── Section B: Default avatar (PNG + compiled DDT) ───────────────────────
+    parts.append('<div class="cov-group-lbl">Default avatar</div>')
+    default_png = f"resources/images/icons/singleplayer/cpai_avatar_{stem}.png"
+    default_ddt = f"art/ui/singleplayer/cpai_avatar_{stem}.ddt"
+    cov_row("Default avatar PNG", "", expect_file=default_png)
+    cov_row("Default avatar DDT", "", expect_file=default_ddt)
 
-    pg_flag_icon = civ_el.findtext("postgameflagiconwpf") or ""
-    art_row("PG flag icon", pg_flag_icon)
+    # ── Section C: Per-leader portraits ──────────────────────────────────────
+    leaders = find_leader_portraits(stem)
+    parts.append(
+        f'<div class="cov-group-lbl">Per-leader portraits ({len(leaders)})</div>'
+    )
+    if not leaders:
+        parts.append(
+            '<div class="cov-row cov-leader"><span class="cov-lbl">(none found)</span></div>'
+        )
+    for L in leaders:
+        present += 1  # PNG counted
+        if L["has_ddt"]:
+            present += 1
+            ddt_mark = '<span class="cov-ok" title="DDT present">DDT ✓</span>'
+        else:
+            missing += 1
+            ddt_mark = (
+                '<span class="cov-bad" title="missing: '
+                + html_module.escape(L["ddt_rel"]) + '">DDT ✗</span>'
+            )
+        parts.append(
+            f'<div class="cov-row cov-leader">'
+            f'<span class="cov-lbl">{html_module.escape(L["leader"])}</span>'
+            f'<span class="cov-ok">✓</span>'
+            f'{thumb(L["png_rel"])}'
+            f'<code class="cov-path">cpai_avatar_{html_module.escape(stem)}_{html_module.escape(L["leader"])}.png</code>'
+            f'{ddt_mark}</div>'
+        )
 
-    hc_preview   = civ_el.findtext("homecitypreviewwpf") or ""
-    art_row("HC preview", hc_preview)
+    # ── Section D: HC scene composition (declared in anwhomecity<civ>.xml) ──
+    # Engine-managed asset files, but the *declaration* is mod-managed.
+    # British is the reference: 10 surfaces all declared.
+    parts.append('<div class="cov-group-lbl">HC scene declaration</div>')
+    scene_surfaces = [
+        ("Scene visual",     "visual"),
+        ("Water visual",     "watervisual"),
+        ("Background visual","backgroundvisual"),
+        ("Path data (.gr2)", "pathdata"),
+        ("Camera (.cam)",    "camera"),
+        ("Widescreen cam",   "widescreencamera"),
+        ("Ambient sounds",   "ambientsounds"),
+        ("Light set",        "lightset"),
+        ("Water type",       "watertype"),
+        ("XSAI personality", "xsai"),
+    ]
+    for label, key in scene_surfaces:
+        val = (hc or {}).get(key, "").strip()
+        if val:
+            present += 1
+            parts.append(
+                f'<div class="cov-row"><span class="cov-lbl">{html_module.escape(label)}</span>'
+                f'<span class="cov-ok" title="declared in homecity XML">✓</span>'
+                f'<code class="cov-path" title="{html_module.escape(val)}">{html_module.escape(val)}</code></div>'
+            )
+        else:
+            missing += 1
+            parts.append(
+                f'<div class="cov-row"><span class="cov-lbl">{html_module.escape(label)}</span>'
+                f'<span class="cov-bad" title="not declared in homecity XML">✗</span>'
+                f'<code class="cov-path cov-path-missing">(undeclared)</code></div>'
+            )
 
-    hc_flag_btn  = civ_el.findtext("homecityflagbuttonwpf") or ""
-    art_row("HC flag btn", hc_flag_btn)
+    # ── Section E: HC buildings ────────────────────────────────────────────
+    # Count <homecitybuilding> blocks in the home city XML. British has 7.
+    hc_file = civ_el.findtext("homecityfilename") or ""
+    hc_buildings = []
+    if hc_file:
+        hc_path = os.path.join(DATA_DIR, hc_file)
+        if os.path.exists(hc_path):
+            try:
+                hc_tree = ET.parse(hc_path)
+                hc_root = hc_tree.getroot()
+                # Direct children of <homecity> tagged <building>
+                for b in hc_root.findall("./building"):
+                    name = b.findtext("name") or "?"
+                    portrait = b.findtext("portrait") or ""
+                    hc_buildings.append({"name": name, "portrait": portrait})
+            except ET.ParseError:
+                pass
+    parts.append(
+        f'<div class="cov-group-lbl">HC buildings ({len(hc_buildings)})</div>'
+    )
+    if not hc_buildings:
+        parts.append(
+            '<div class="cov-row"><span class="cov-lbl">(none parsed)</span></div>'
+        )
+    for b in hc_buildings:
+        present += 1
+        parts.append(
+            f'<div class="cov-row cov-leader">'
+            f'<span class="cov-lbl">{html_module.escape(b["name"])}</span>'
+            f'<span class="cov-ok">✓</span>'
+            f'<code class="cov-path" title="{html_module.escape(b["portrait"])}">'
+            f'{html_module.escape(os.path.basename(b["portrait"])) if b["portrait"] else "(no portrait)"}'
+            f'</code></div>'
+        )
 
-    return "".join(parts), imgs_resolved, imgs_missing
+    # ── Section F: AI personality ─────────────────────────────────────────
+    parts.append('<div class="cov-group-lbl">AI personality</div>')
+    personality_rel = f"game/ai/anw{stem}.personality"
+    if os.path.exists(os.path.join(MOD_ROOT, personality_rel)):
+        present += 1
+        parts.append(
+            f'<div class="cov-row"><span class="cov-lbl">Personality</span>'
+            f'<span class="cov-ok">✓</span>'
+            f'<code class="cov-path">{html_module.escape(os.path.basename(personality_rel))}</code></div>'
+        )
+    else:
+        missing += 1
+        parts.append(
+            f'<div class="cov-row"><span class="cov-lbl">Personality</span>'
+            f'<span class="cov-bad">✗</span>'
+            f'<code class="cov-path cov-path-missing">{html_module.escape(os.path.basename(personality_rel))}</code></div>'
+        )
+
+    # ── Section G: Card icons (custom mod-art per civ) ────────────────────
+    # Scan resources/images/icons/cards/ for files containing the civ stem.
+    card_icons = []
+    card_dir = os.path.join(MOD_ROOT, "resources/images/icons/cards")
+    if os.path.isdir(card_dir):
+        stem_re = re.compile(rf"(?:^|[_-]){re.escape(stem)}(?:[_.-]|$)", re.IGNORECASE)
+        for fn in sorted(os.listdir(card_dir)):
+            if fn.endswith(".png") and stem_re.search(fn[:-4]):
+                card_icons.append(fn)
+    parts.append(
+        f'<div class="cov-group-lbl">Custom card icons ({len(card_icons)})</div>'
+    )
+    if not card_icons:
+        parts.append(
+            '<div class="cov-row"><span class="cov-lbl">(none)</span></div>'
+        )
+    for fn in card_icons[:12]:  # cap so the column stays scannable
+        present += 1
+        rel = f"resources/images/icons/cards/{fn}"
+        parts.append(
+            f'<div class="cov-row cov-leader">'
+            f'<span class="cov-lbl">{html_module.escape(fn[:-4])}</span>'
+            f'<span class="cov-ok">✓</span>'
+            f'{thumb(rel)}</div>'
+        )
+    if len(card_icons) > 12:
+        parts.append(
+            f'<div class="cov-row"><span class="cov-lbl">… +{len(card_icons)-12} more</span></div>'
+        )
+
+    summary = (
+        f'<div class="cov-summary">{present} present · {missing} missing</div>'
+    )
+    return summary + "".join(parts), present, missing
 
 # ── Capture thumbnail section renderer ────────────────────────────────────────
 def render_captures_section(civ_token, display_name, manifest, ally_manifest):
@@ -1064,6 +1272,100 @@ html, body {
   font-size: 8.5px;
   color: rgba(255,120,120,0.75);
   word-break: break-all;
+}
+
+/* ── Art coverage audit ── */
+.cov-summary {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.70);
+  margin-bottom: 4px;
+  padding: 2px 4px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 2px;
+}
+.cov-group-lbl {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.45);
+  margin: 4px 0 2px;
+  border-bottom: 1px dotted rgba(255,255,255,0.10);
+  padding-bottom: 1px;
+}
+.cov-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 1px;
+  font-size: 9px;
+  line-height: 1.3;
+  overflow: hidden;
+}
+.cov-lbl {
+  font-size: 8.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.62);
+  min-width: 80px;
+  max-width: 90px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cov-ok {
+  color: #6ee07a;
+  font-weight: 700;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.cov-bad {
+  color: #ff7777;
+  font-weight: 700;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.cov-na {
+  color: rgba(255,255,255,0.30);
+  font-weight: 700;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.cov-thumb {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 2px;
+  background: rgba(0,0,0,0.30);
+  flex-shrink: 0;
+  cursor: help;
+  transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+.cov-thumb:hover {
+  transform: scale(2.4);
+  border-color: rgba(255,255,255,0.65);
+  box-shadow: 0 0 6px rgba(0,0,0,0.55);
+  z-index: 3;
+  position: relative;
+}
+.cov-path {
+  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+  font-size: 7.5px;
+  color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex-shrink: 1;
+}
+.cov-path.cov-path-missing {
+  color: rgba(255,120,120,0.70);
+}
+.cov-leader .cov-lbl {
+  padding-left: 8px;
+  color: rgba(255,255,255,0.75);
 }
 
 .section-label {
