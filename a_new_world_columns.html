@@ -12,9 +12,25 @@ html {
   overflow-x: scroll;
   overflow-y: hidden;
   height: 100%;
-  /* Scrollbar always visible so layout is stable */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.25) transparent;
+  /* Firefox: thick, always-visible horizontal scrollbar */
+  scrollbar-width: auto;
+  scrollbar-color: rgba(255,255,255,0.45) rgba(0,0,0,0.40);
+}
+/* WebKit/Blink (Chrome, Edge, Safari): styled, thick horizontal scrollbar */
+html::-webkit-scrollbar {
+  height: 16px;
+  background: rgba(0,0,0,0.40);
+}
+html::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.40);
+  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.40);
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.65);
+}
+html::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.30);
 }
 
 body {
@@ -4281,15 +4297,41 @@ Minutemen are upgraded to Texian Marines. Marines no longer lose hitpoints and i
   // Translate primarily-vertical wheel events into scrollLeft delta so a
   // mouse wheel scrolls across columns naturally. Touchpad horizontal
   // gestures (deltaX dominant) pass through unchanged; modal-open suppresses.
-  window.addEventListener('wheel', function (e) {
+  function horizScrollHandler(e) {
     var modal = document.getElementById('capture-modal');
     if (modal && !modal.hidden) return;
     if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
     if (e.deltaY === 0) return;
     e.preventDefault();
-    var scroller = document.scrollingElement || document.documentElement;
-    scroller.scrollLeft += e.deltaY;
-  }, { passive: false });
+    var dy = e.deltaY;
+    // Normalise deltaMode: 0=pixels, 1=lines (~16px each), 2=pages.
+    if (e.deltaMode === 1) dy *= 16;
+    else if (e.deltaMode === 2) dy *= window.innerHeight;
+    // window.scrollBy works regardless of which element is the scroll root
+    // (some browsers route this to body, others to documentElement).
+    window.scrollBy({ left: dy, top: 0, behavior: 'auto' });
+  }
+  // Bind on both window and document to maximise capture coverage; passive
+  // false is required so preventDefault() actually suppresses native vertical
+  // scroll (which would be a no-op anyway since body is overflow:hidden, but
+  // some browsers still emit a console "Unable to preventDefault" warning).
+  window.addEventListener('wheel', horizScrollHandler, { passive: false });
+  document.addEventListener('wheel', horizScrollHandler, { passive: false });
+
+  // Keyboard navigation: Left/Right arrows = scroll one column,
+  // PageUp/PageDown = scroll one viewport, Home/End = jump.
+  document.addEventListener('keydown', function (e) {
+    var modal = document.getElementById('capture-modal');
+    if (modal && !modal.hidden) return;
+    var col = 380;  // ~one column width
+    var vp = window.innerWidth;
+    if (e.key === 'ArrowRight') { window.scrollBy({left:  col, top: 0}); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft')  { window.scrollBy({left: -col, top: 0}); e.preventDefault(); }
+    else if (e.key === 'PageDown')   { window.scrollBy({left:  vp,  top: 0}); e.preventDefault(); }
+    else if (e.key === 'PageUp')     { window.scrollBy({left: -vp,  top: 0}); e.preventDefault(); }
+    else if (e.key === 'Home')       { window.scrollTo({left: 0, top: 0}); e.preventDefault(); }
+    else if (e.key === 'End')        { window.scrollTo({left: document.documentElement.scrollWidth, top: 0}); e.preventDefault(); }
+  });
 }());
 
 </script>
