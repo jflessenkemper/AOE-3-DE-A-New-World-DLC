@@ -1,0 +1,747 @@
+{
+  "argentines": {
+    "_aliases": [
+      "argentines"
+    ],
+    "_total": 0
+  },
+  "aztecs": {
+    "_aliases": [
+      "aztec"
+    ],
+    "_total": 2040,
+    "building": 463,
+    "hc_scene": 668,
+    "misc": 20,
+    "objects": 35,
+    "physics": 8,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 5,
+    "res_other": 22,
+    "res_tech": 9,
+    "sound": 165,
+    "terrain_tree": 49,
+    "textures": 3,
+    "ui_avatar": 1,
+    "ui_eso": 5,
+    "ui_history": 5,
+    "ui_ingame_flag": 6,
+    "ui_other": 9,
+    "unit": 560
+  },
+  "barbary": {
+    "_aliases": [
+      "barbary"
+    ],
+    "_total": 134,
+    "hc_scene": 5,
+    "misc": 10,
+    "objects": 2,
+    "res_flag": 4,
+    "res_history": 1,
+    "res_other": 19,
+    "res_tech": 4,
+    "sound": 10,
+    "ui_history": 1,
+    "unit": 78
+  },
+  "brazil": {
+    "_aliases": [
+      "brazil"
+    ],
+    "_total": 30,
+    "hc_scene": 2,
+    "misc": 6,
+    "objects": 1,
+    "res_flag": 6,
+    "res_other": 2,
+    "res_tech": 2,
+    "ui_eso": 4,
+    "ui_ingame": 1,
+    "ui_ingame_flag": 5,
+    "ui_other": 1
+  },
+  "british": {
+    "_aliases": [
+      "british"
+    ],
+    "_total": 956,
+    "building": 52,
+    "hc_scene": 555,
+    "misc": 4,
+    "objects": 2,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 7,
+    "res_history": 1,
+    "res_other": 18,
+    "res_tech": 18,
+    "sound": 205,
+    "terrain_tree": 26,
+    "textures": 3,
+    "ui_avatar": 1,
+    "ui_character_setup": 3,
+    "ui_civilizations": 1,
+    "ui_eso": 5,
+    "ui_explorer_tech": 1,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 4,
+    "ui_other": 1,
+    "unit": 32
+  },
+  "californians": {
+    "_aliases": [
+      "californians"
+    ],
+    "_total": 0
+  },
+  "canadians": {
+    "_aliases": [
+      "canadians"
+    ],
+    "_total": 3,
+    "objects": 1,
+    "res_flag": 1,
+    "res_tech": 1
+  },
+  "centralamericans": {
+    "_aliases": [
+      "centralamericans"
+    ],
+    "_total": 0
+  },
+  "chileans": {
+    "_aliases": [
+      "chileans"
+    ],
+    "_total": 0
+  },
+  "chinese": {
+    "_aliases": [
+      "china",
+      "chinese"
+    ],
+    "_total": 3076,
+    "building": 469,
+    "hc_scene": 1149,
+    "misc": 90,
+    "objects": 3,
+    "physics": 22,
+    "res_avatar": 2,
+    "res_flag": 6,
+    "res_history": 4,
+    "res_other": 147,
+    "res_tech": 7,
+    "sound": 222,
+    "terrain_other": 2,
+    "terrain_tree": 42,
+    "textures": 24,
+    "ui_avatar": 1,
+    "ui_eso": 6,
+    "ui_history": 3,
+    "ui_home_city": 4,
+    "ui_ingame": 1,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 1,
+    "ui_other": 10,
+    "unit": 857
+  },
+  "columbians": {
+    "_aliases": [
+      "columbians"
+    ],
+    "_total": 0
+  },
+  "dutch": {
+    "_aliases": [
+      "dutch"
+    ],
+    "_total": 1048,
+    "building": 68,
+    "hc_scene": 669,
+    "misc": 4,
+    "objects": 3,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 1,
+    "res_other": 14,
+    "res_tech": 21,
+    "sound": 190,
+    "terrain_tree": 14,
+    "textures": 3,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 6,
+    "ui_explorer_tech": 1,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 3,
+    "ui_other": 3,
+    "unit": 23
+  },
+  "egyptians": {
+    "_aliases": [
+      "egyptians"
+    ],
+    "_total": 1,
+    "res_flag": 1
+  },
+  "ethiopians": {
+    "_aliases": [
+      "ethiopia",
+      "ethiopian"
+    ],
+    "_total": 893,
+    "building": 118,
+    "hc_scene": 246,
+    "misc": 24,
+    "objects": 1,
+    "res_avatar": 1,
+    "res_flag": 4,
+    "res_history": 2,
+    "res_other": 43,
+    "res_tech": 43,
+    "sound": 141,
+    "unit": 270
+  },
+  "finnish": {
+    "_aliases": [
+      "finnish"
+    ],
+    "_total": 20,
+    "misc": 2,
+    "objects": 1,
+    "res_flag": 4,
+    "res_other": 1,
+    "res_tech": 3,
+    "sound": 9
+  },
+  "french": {
+    "_aliases": [
+      "french"
+    ],
+    "_total": 931,
+    "building": 48,
+    "hc_scene": 515,
+    "misc": 12,
+    "objects": 5,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 14,
+    "res_history": 1,
+    "res_other": 19,
+    "res_tech": 17,
+    "sound": 214,
+    "terrain_tree": 49,
+    "textures": 3,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 5,
+    "ui_explorer_tech": 2,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 3,
+    "unit": 5
+  },
+  "frenchcanadians": {
+    "_aliases": [
+      "frenchcanadians"
+    ],
+    "_total": 0
+  },
+  "germans": {
+    "_aliases": [
+      "german"
+    ],
+    "_total": 1100,
+    "building": 57,
+    "hc_scene": 613,
+    "misc": 16,
+    "objects": 2,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 1,
+    "res_other": 8,
+    "res_tech": 28,
+    "sound": 224,
+    "terrain_tree": 102,
+    "textures": 6,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 7,
+    "ui_explorer_tech": 1,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 4,
+    "ui_other": 2,
+    "unit": 4
+  },
+  "haitians": {
+    "_aliases": [
+      "haitians"
+    ],
+    "_total": 0
+  },
+  "haudenosaunee": {
+    "_aliases": [
+      "iroquois"
+    ],
+    "_total": 1704,
+    "building": 46,
+    "hc_scene": 765,
+    "misc": 153,
+    "objects": 29,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 5,
+    "res_other": 8,
+    "res_tech": 3,
+    "sound": 145,
+    "terrain_tree": 7,
+    "ui_avatar": 1,
+    "ui_eso": 6,
+    "ui_history": 5,
+    "ui_ingame_flag": 6,
+    "ui_other": 11,
+    "unit": 507
+  },
+  "hausa": {
+    "_aliases": [
+      "hausa"
+    ],
+    "_total": 874,
+    "hc_scene": 252,
+    "misc": 13,
+    "objects": 1,
+    "res_avatar": 1,
+    "res_flag": 5,
+    "res_other": 44,
+    "res_tech": 65,
+    "sound": 141,
+    "unit": 352
+  },
+  "hungarians": {
+    "_aliases": [
+      "hungarians"
+    ],
+    "_total": 1,
+    "res_other": 1
+  },
+  "inca": {
+    "_aliases": [
+      "inca"
+    ],
+    "_total": 1858,
+    "building": 211,
+    "hc_scene": 580,
+    "misc": 260,
+    "objects": 1,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 5,
+    "res_other": 69,
+    "res_tech": 55,
+    "sound": 145,
+    "ui_history": 3,
+    "ui_other": 4,
+    "unit": 516
+  },
+  "indians": {
+    "_aliases": [
+      "india",
+      "indian"
+    ],
+    "_total": 3719,
+    "building": 1120,
+    "hc_scene": 636,
+    "misc": 73,
+    "objects": 63,
+    "physics": 31,
+    "res_avatar": 2,
+    "res_flag": 14,
+    "res_history": 3,
+    "res_other": 139,
+    "res_tech": 15,
+    "sound": 207,
+    "textures": 12,
+    "ui_avatar": 1,
+    "ui_eso": 10,
+    "ui_history": 3,
+    "ui_home_city": 8,
+    "ui_ingame": 1,
+    "ui_ingame_flag": 7,
+    "ui_other": 10,
+    "unit": 1364
+  },
+  "indonesians": {
+    "_aliases": [
+      "indonesians"
+    ],
+    "_total": 1,
+    "res_other": 1
+  },
+  "italians": {
+    "_aliases": [
+      "italy",
+      "italian"
+    ],
+    "_total": 1126,
+    "building": 13,
+    "hc_scene": 467,
+    "misc": 20,
+    "objects": 2,
+    "res_avatar": 1,
+    "res_flag": 4,
+    "res_history": 1,
+    "res_other": 154,
+    "res_tech": 52,
+    "sound": 241,
+    "terrain_other": 29,
+    "terrain_tree": 50,
+    "ui_civilizations": 32,
+    "ui_ingame": 8,
+    "ui_minimap": 3,
+    "ui_other": 10,
+    "unit": 39
+  },
+  "japanese": {
+    "_aliases": [
+      "japan",
+      "japanese"
+    ],
+    "_total": 3421,
+    "building": 1013,
+    "hc_scene": 758,
+    "misc": 78,
+    "objects": 4,
+    "physics": 28,
+    "res_avatar": 2,
+    "res_flag": 7,
+    "res_history": 1,
+    "res_other": 89,
+    "res_tech": 5,
+    "sound": 213,
+    "terrain_other": 208,
+    "terrain_tree": 260,
+    "textures": 39,
+    "ui_avatar": 1,
+    "ui_eso": 5,
+    "ui_history": 1,
+    "ui_home_city": 4,
+    "ui_ingame": 1,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 1,
+    "ui_other": 11,
+    "unit": 688
+  },
+  "lakota": {
+    "_aliases": [
+      "sioux"
+    ],
+    "_total": 704,
+    "building": 47,
+    "hc_scene": 370,
+    "misc": 9,
+    "objects": 1,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 3,
+    "res_other": 6,
+    "res_tech": 2,
+    "sound": 145,
+    "terrain_tree": 7,
+    "ui_avatar": 1,
+    "ui_eso": 4,
+    "ui_history": 3,
+    "ui_ingame_flag": 6,
+    "ui_other": 7,
+    "unit": 86
+  },
+  "maltese": {
+    "_aliases": [
+      "malta",
+      "maltese"
+    ],
+    "_total": 651,
+    "building": 2,
+    "hc_scene": 357,
+    "misc": 21,
+    "objects": 2,
+    "res_avatar": 1,
+    "res_flag": 8,
+    "res_history": 3,
+    "res_other": 137,
+    "res_tech": 43,
+    "sound": 58,
+    "ui_eso": 5,
+    "unit": 14
+  },
+  "mayans": {
+    "_aliases": [
+      "maya",
+      "mayan"
+    ],
+    "_total": 73,
+    "building": 11,
+    "hc_scene": 1,
+    "misc": 3,
+    "objects": 1,
+    "res_flag": 4,
+    "res_history": 2,
+    "res_other": 5,
+    "res_tech": 8,
+    "sound": 6,
+    "ui_history": 2,
+    "ui_other": 3,
+    "unit": 27
+  },
+  "mexicans": {
+    "_aliases": [
+      "mexico",
+      "mexican"
+    ],
+    "_total": 891,
+    "hc_scene": 373,
+    "misc": 12,
+    "objects": 2,
+    "res_avatar": 1,
+    "res_flag": 12,
+    "res_history": 1,
+    "res_other": 104,
+    "res_tech": 163,
+    "sound": 201,
+    "ui_eso": 4,
+    "ui_ingame": 1,
+    "ui_ingame_flag": 5,
+    "unit": 12
+  },
+  "napoleonicfrance": {
+    "_aliases": [
+      "napoleonicfrance"
+    ],
+    "_total": 0
+  },
+  "ottomans": {
+    "_aliases": [
+      "ottoman"
+    ],
+    "_total": 818,
+    "building": 61,
+    "hc_scene": 426,
+    "misc": 7,
+    "objects": 2,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 1,
+    "res_other": 20,
+    "res_tech": 17,
+    "sound": 168,
+    "terrain_tree": 7,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 6,
+    "ui_explorer_tech": 1,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 3,
+    "ui_other": 2,
+    "unit": 72
+  },
+  "peruvians": {
+    "_aliases": [
+      "peruvians"
+    ],
+    "_total": 0
+  },
+  "portuguese": {
+    "_aliases": [
+      "portuguese"
+    ],
+    "_total": 801,
+    "building": 49,
+    "hc_scene": 476,
+    "misc": 14,
+    "objects": 2,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 7,
+    "res_history": 1,
+    "res_other": 6,
+    "res_tech": 19,
+    "sound": 191,
+    "textures": 3,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 5,
+    "ui_explorer_tech": 2,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 3,
+    "ui_other": 4
+  },
+  "revfrance": {
+    "_aliases": [
+      "revfrance"
+    ],
+    "_total": 0
+  },
+  "riogrande": {
+    "_aliases": [
+      "riogrande"
+    ],
+    "_total": 0
+  },
+  "romanians": {
+    "_aliases": [
+      "romanians"
+    ],
+    "_total": 1,
+    "res_flag": 1
+  },
+  "russians": {
+    "_aliases": [
+      "russian"
+    ],
+    "_total": 1143,
+    "building": 27,
+    "hc_scene": 583,
+    "misc": 30,
+    "objects": 2,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 1,
+    "res_other": 12,
+    "res_tech": 20,
+    "sound": 208,
+    "textures": 6,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 5,
+    "ui_explorer_tech": 1,
+    "ui_history": 1,
+    "ui_home_city": 2,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 3,
+    "ui_other": 3,
+    "unit": 217
+  },
+  "southafricans": {
+    "_aliases": [
+      "southafricans"
+    ],
+    "_total": 0
+  },
+  "spanish": {
+    "_aliases": [
+      "spanish"
+    ],
+    "_total": 911,
+    "building": 65,
+    "hc_scene": 482,
+    "misc": 15,
+    "objects": 22,
+    "physics": 2,
+    "res_avatar": 1,
+    "res_flag": 6,
+    "res_history": 1,
+    "res_other": 13,
+    "res_tech": 25,
+    "sound": 193,
+    "terrain_tree": 12,
+    "textures": 3,
+    "ui_avatar": 1,
+    "ui_civilizations": 1,
+    "ui_eso": 7,
+    "ui_explorer_tech": 1,
+    "ui_history": 1,
+    "ui_home_city": 1,
+    "ui_ingame": 7,
+    "ui_ingame_flag": 4,
+    "ui_minimap": 3,
+    "ui_other": 6,
+    "unit": 39
+  },
+  "swedes": {
+    "_aliases": [
+      "swedish"
+    ],
+    "_total": 490,
+    "building": 35,
+    "hc_scene": 362,
+    "misc": 9,
+    "objects": 1,
+    "res_flag": 4,
+    "res_other": 2,
+    "res_tech": 2,
+    "sound": 21,
+    "ui_civilizations": 1,
+    "ui_ingame": 6,
+    "ui_minimap": 3,
+    "unit": 44
+  },
+  "texians": {
+    "_aliases": [
+      "texians"
+    ],
+    "_total": 0
+  },
+  "usa": {
+    "_aliases": [
+      "american",
+      "usa"
+    ],
+    "_total": 1761,
+    "building": 50,
+    "hc_scene": 543,
+    "misc": 28,
+    "objects": 6,
+    "res_avatar": 2,
+    "res_flag": 25,
+    "res_history": 2,
+    "res_other": 209,
+    "res_tech": 187,
+    "sound": 249,
+    "ui_eso": 4,
+    "ui_history": 2,
+    "ui_home_city": 1,
+    "ui_ingame": 1,
+    "ui_ingame_flag": 5,
+    "ui_other": 5,
+    "unit": 442
+  },
+  "yucatan": {
+    "_aliases": [
+      "yucatan"
+    ],
+    "_total": 96,
+    "hc_scene": 1,
+    "misc": 4,
+    "objects": 1,
+    "res_flag": 4,
+    "res_history": 2,
+    "res_other": 9,
+    "terrain_other": 66,
+    "ui_history": 2,
+    "ui_other": 7
+  }
+}
