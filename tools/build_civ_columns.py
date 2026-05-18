@@ -16,6 +16,81 @@ GAME_DIR     = os.path.join(MOD_ROOT, "game")
 RESOURCES    = os.path.join(MOD_ROOT, "resources")
 OUTPUT_HTML  = os.path.join(MOD_ROOT, "a_new_world_columns.html")
 
+# Capture artifacts root (host-perspective manifests live here)
+VISUAL_ART_DIR = os.path.join(MOD_ROOT, "artifacts", "validation", "visual_art")
+
+# URL base used in the generated HTML — maps to the staging step in pages-deploy.yml:
+#   cp -r artifacts/validation/visual_art _site/artifacts/visual_art
+VISUAL_ART_URL_BASE = "artifacts/visual_art"
+
+# Manifest schema version this generator understands
+MANIFEST_SCHEMA_VERSION = 1
+
+# Human-readable surface names for crop names
+CROP_SURFACE_LABELS = {
+    "lobby_portrait":          "Lobby portrait",
+    "loading_flag":            "Loading flag",
+    "home_city_button":        "Home City button",
+    "hud_flag_corner":         "HUD flag corner",
+    "home_city_scene":         "Home City scene",
+    "tech_tree_overview":      "Tech tree overview",
+    "diplomacy_panel":         "Diplomacy panel",
+    "scoreboard_player_row":   "Scoreboard row",
+    "esc_menu_player_summary": "ESC menu summary",
+    "endgame_flag":            "Endgame flag",
+    "diplomacy_ally_portrait": "Ally portrait",
+}
+
+def surface_label(crop_name):
+    """Return a human-readable label for a crop/surface name."""
+    if crop_name in CROP_SURFACE_LABELS:
+        return CROP_SURFACE_LABELS[crop_name]
+    # Fallback: title-case with underscores replaced by spaces
+    return crop_name.replace("_", " ").title()
+
+
+def capture_dir_key(civ_token):
+    """
+    Return the directory name used under artifacts/validation/visual_art/ for a civ.
+
+    The capture pipeline uses ANW-prefixed tokens (e.g. ANWBritish) as directory
+    names.  The civmods/playercolors data uses the base tokens (e.g. British).
+    blurb_key() already contains the canonical ANW mapping, so reuse it.
+    """
+    return blurb_key(civ_token)
+
+
+def load_capture_manifest(civ_token, ally=False):
+    """
+    Load and validate a capture manifest for a civ.
+
+    For host perspective:  artifacts/validation/visual_art/<dir_key>/manifest.json
+    For ally perspective:  artifacts/validation/visual_art/allies/<dir_key>/manifest.json
+
+    Returns the parsed dict if schema_version==1 and status=="complete", else None.
+    """
+    dir_key = capture_dir_key(civ_token)
+    if ally:
+        manifest_path = os.path.join(VISUAL_ART_DIR, "allies", dir_key, "manifest.json")
+    else:
+        manifest_path = os.path.join(VISUAL_ART_DIR, dir_key, "manifest.json")
+
+    if not os.path.exists(manifest_path):
+        return None
+
+    try:
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return None
+
+    if data.get("schema_version") != MANIFEST_SCHEMA_VERSION:
+        return None
+    if data.get("status") != "complete":
+        return None
+
+    return data
+
 # ── Load data sources ──────────────────────────────────────────────────────────
 def load_strings():
     path = os.path.join(DATA_DIR, "strings", "english", "stringmods.xml")
@@ -306,20 +381,37 @@ def render_text_section(civ_token, civ_el, strings, hc, blurbs, spec, decks, car
         age_cards = deck_data.get(age, [])
         if not age_cards:
             continue
-        card_names = []
+        card_html_items = []
         for card_id in age_cards:
             card_info = cards.get(card_id, {})
-            card_name = card_info.get("name", card_id)
-            if not card_name:
-                card_name = card_id
-            card_names.append(html_module.escape(card_name))
+            card_name = card_info.get("name") or card_id
+            card_desc = card_info.get("desc") or ""
+            card_icon = card_info.get("icon") or ""
+            tooltip = card_name + (f"\n\n{card_desc}" if card_desc else "")
+            tooltip_attr = html_module.escape(tooltip[:400], quote=True)
+            icon_rendered = False
+            if card_icon:
+                icon_rel = f"resources/images/icons/cards/{card_icon}"
+                if os.path.exists(os.path.join(MOD_ROOT, icon_rel)):
+                    card_html_items.append(
+                        f'<img class="card-img" loading="lazy" '
+                        f'src="{html_module.escape(icon_rel)}" '
+                        f'alt="{html_module.escape(card_name)}" '
+                        f'title="{tooltip_attr}">'
+                    )
+                    icon_rendered = True
+            if not icon_rendered:
+                card_html_items.append(
+                    f'<span class="card-text" title="{tooltip_attr}">'
+                    f'{html_module.escape(card_name)}</span>'
+                )
         age_label = {
             "0": "Discovery", "1": "Colonial", "2": "Fortress",
             "3": "Industrial", "4": "Imperial"
         }.get(age, f"Age {age}")
         cards_html_parts.append(
             f'<div class="age-row age-{age}"><span class="age-lbl">{age_label}</span>'
-            f' {", ".join(card_names)}</div>'
+            f'<span class="age-cards">{"".join(card_html_items)}</span></div>'
         )
 
     # Rush/boom
@@ -387,29 +479,20 @@ def render_art_section(civ_token, civ_el, hc, strings):
     imgs_missing  = 0
     parts = []
 
-    def art_row(label, path_or_key, is_file_path=True):
+    def art_row(label, path_or_key):
+        """Render an image row. Skip silently if path is empty or doesn't resolve."""
         nonlocal imgs_resolved, imgs_missing
         if not path_or_key:
-            parts.append(
-                f'<div class="art-row"><span class="art-lbl">{html_module.escape(label)}</span>'
-                f'<span class="empty">—</span></div>'
-            )
             return
-        if is_file_path:
-            tag, ok = img_tag(path_or_key, label, 56)
-            if ok:
-                imgs_resolved += 1
-            else:
-                imgs_missing += 1
-            parts.append(
-                f'<div class="art-row"><span class="art-lbl">{html_module.escape(label)}</span>'
-                f'{tag}</div>'
-            )
-        else:
-            parts.append(
-                f'<div class="art-row"><span class="art-lbl">{html_module.escape(label)}</span>'
-                f'<code class="path-text" title="{html_module.escape(path_or_key)}">{html_module.escape(path_or_key)}</code></div>'
-            )
+        tag, ok = img_tag(path_or_key, label, 56)
+        if not ok:
+            imgs_missing += 1
+            return
+        imgs_resolved += 1
+        parts.append(
+            f'<div class="art-row"><span class="art-lbl">{html_module.escape(label)}</span>'
+            f'{tag}</div>'
+        )
 
     # Portrait (3D flag from civmods)
     portrait = civ_el.findtext("portrait") or ""
@@ -436,35 +519,147 @@ def render_art_section(civ_token, civ_el, hc, strings):
     hc_flag_btn  = civ_el.findtext("homecityflagbuttonwpf") or ""
     art_row("HC flag btn", hc_flag_btn)
 
-    # Homecity XML fields
-    if hc:
-        visual    = hc.get("visual", "")
-        water     = hc.get("watervisual", "")
-        bg        = hc.get("backgroundvisual", "")
-        camera    = hc.get("camera", "")
-        ws_cam    = hc.get("widescreencamera", "")
-        pathdata  = hc.get("pathdata", "")
-        lightset  = hc.get("lightset", "")
-        watertype = hc.get("watertype", "")
-        ambient   = hc.get("ambientsounds", "")
-        xsai      = hc.get("xsai", "")
-
-        art_row("HC scene",    visual, False)
-        art_row("HC water",    water, False)
-        art_row("HC bg",       bg, False)
-        art_row("Camera",      camera, False)
-        art_row("WS camera",   ws_cam, False)
-        art_row("Path data",   pathdata, False)
-        art_row("Light set",   lightset, False)
-        art_row("Water type",  watertype, False)
-        art_row("Ambient",     ambient, False)
-        art_row("XSAI",        xsai, False)
-
-    # Personality
-    pers_path = personality_path_str(civ_token)
-    art_row("Personality", pers_path, False)
-
     return "".join(parts), imgs_resolved, imgs_missing
+
+# ── Capture thumbnail section renderer ────────────────────────────────────────
+def render_captures_section(civ_token, display_name, manifest, ally_manifest):
+    """
+    Render the "Visual confirmation" section for a civ column.
+
+    manifest      — host-perspective manifest dict (or None)
+    ally_manifest — ally-perspective manifest dict (or None)
+
+    Returns an HTML string, or "" if no captures exist for this civ.
+    """
+    thumbs = []  # list of dicts: {thumb_url, full_url, crop_name, label}
+    dir_key = capture_dir_key(civ_token)
+
+    def collect_crops(mf, url_dir_key, is_ally=False):
+        """Extract thumbnail entries from a manifest."""
+        for capture in mf.get("captures", []):
+            for crop in capture.get("crops", []):
+                crop_name = crop.get("name", "")
+                # For ally, only emit the ally portrait crop
+                if is_ally and crop_name != "diplomacy_ally_portrait":
+                    continue
+                thumb_path = crop.get("thumb_path", "")
+                crop_path  = crop.get("crop_path", "")
+                if not thumb_path or not crop_path:
+                    continue
+                # Build URL-relative paths from the deployed base
+                # thumb_path is like "thumbs/lobby_portrait.webp"
+                # crop_path  is like "crops/lobby_portrait.png"
+                thumb_url = f"{VISUAL_ART_URL_BASE}/{url_dir_key}/{thumb_path}"
+                full_url  = f"{VISUAL_ART_URL_BASE}/{url_dir_key}/{crop_path}"
+                thumbs.append({
+                    "thumb_url": thumb_url,
+                    "full_url":  full_url,
+                    "crop_name": crop_name,
+                    "label":     surface_label(crop_name),
+                })
+
+    if manifest:
+        collect_crops(manifest, dir_key, is_ally=False)
+
+    if ally_manifest:
+        # The ally manifest lives under artifacts/validation/visual_art/allies/<dir_key>/
+        # and is deployed to artifacts/visual_art/allies/<dir_key>/
+        collect_crops(ally_manifest, f"allies/{dir_key}", is_ally=True)
+
+    if not thumbs:
+        return ""
+
+    dn_esc = html_module.escape(display_name)
+    tok_esc = html_module.escape(civ_token)
+
+    figure_parts = []
+    for t in thumbs:
+        label_esc      = html_module.escape(t["label"])
+        thumb_url_esc  = html_module.escape(t["thumb_url"])
+        full_url_esc   = html_module.escape(t["full_url"])
+        crop_name_esc  = html_module.escape(t["crop_name"])
+        aria            = html_module.escape(f"Open {display_name} {t['label']} full size")
+        figure_parts.append(
+            f'<figure class="capture-thumb" tabindex="0"'
+            f' data-full-src="{full_url_esc}"'
+            f' data-civ="{tok_esc}"'
+            f' data-surface="{crop_name_esc}"'
+            f' aria-label="{aria}">'
+            f'<img loading="lazy" src="{thumb_url_esc}" alt="{label_esc}">'
+            f'<figcaption>{label_esc}</figcaption>'
+            f'</figure>'
+        )
+
+    figures_html = "\n      ".join(figure_parts)
+    return f"""<div class="captures-section">
+  <div class="section-label">Visual confirmation</div>
+  <div class="captures-grid">
+      {figures_html}
+  </div>
+</div>
+"""
+
+
+# ── Doctrine evidence renderer (smart walls, elite units, hero+army) ────────
+DOCTRINE_SURFACES = [
+    ("doctrine_wall_planning",   "Wall planning (T+0:30)"),
+    ("doctrine_wall_chokepoint", "Wall chokepoint (T+5:00)"),
+    ("doctrine_wall_closure",    "Wall closure (T+10:00)"),
+    ("doctrine_elite_units",     "Elite composition (T+15:00)"),
+    ("doctrine_hero_attack",     "Hero leading army (T+18:00)"),
+    ("doctrine_endgame_state",   "Late-game state (T+22:00)"),
+]
+
+
+def render_doctrine_section(civ_token, display_name):
+    """Render doctrine evidence screenshots — embedded directly in the civ column.
+
+    Reads from artifacts/validation/visual_art/<dir_key>/doctrine/<surface>.png
+    (full 1920x1080 PNGs).  No manifest required — file existence is the only
+    gate.  Captured by tools/aoe3_automation/anw_doctrine_capture_runner.py.
+
+    Returns "" if no doctrine PNGs exist for this civ.
+    """
+    dir_key = capture_dir_key(civ_token)
+    doctrine_dir = os.path.join(VISUAL_ART_DIR, dir_key, "doctrine")
+    if not os.path.isdir(doctrine_dir):
+        return ""
+
+    figure_parts = []
+    for surface_name, label in DOCTRINE_SURFACES:
+        png_path = os.path.join(doctrine_dir, f"{surface_name}.png")
+        if not os.path.exists(png_path):
+            continue
+        # URL relative to deployed _site/artifacts/visual_art/<dir_key>/doctrine/
+        full_url = f"{VISUAL_ART_URL_BASE}/{dir_key}/doctrine/{surface_name}.png"
+        label_esc = html_module.escape(label)
+        full_url_esc = html_module.escape(full_url)
+        surface_esc = html_module.escape(surface_name)
+        tok_esc = html_module.escape(civ_token)
+        aria = html_module.escape(f"Open {display_name} {label} doctrine evidence")
+        figure_parts.append(
+            f'<figure class="doctrine-thumb" tabindex="0"'
+            f' data-full-src="{full_url_esc}"'
+            f' data-civ="{tok_esc}"'
+            f' data-surface="{surface_esc}"'
+            f' aria-label="{aria}">'
+            f'<img loading="lazy" src="{full_url_esc}" alt="{label_esc}">'
+            f'<figcaption>{label_esc}</figcaption>'
+            f'</figure>'
+        )
+
+    if not figure_parts:
+        return ""
+
+    figures_html = "\n      ".join(figure_parts)
+    return f"""<div class="doctrine-section">
+  <div class="section-label">AI Doctrine Evidence (live game)</div>
+  <div class="doctrine-grid">
+      {figures_html}
+  </div>
+</div>
+"""
+
 
 # ── Main column renderer ───────────────────────────────────────────────────────
 def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, cards):
@@ -508,6 +703,12 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     )
     art_html, resolved, missing = render_art_section(civ_token, civ_el, hc, strings)
 
+    # Load capture manifests (host + ally perspectives)
+    host_manifest  = load_capture_manifest(civ_token, ally=False)
+    ally_manifest  = load_capture_manifest(civ_token, ally=True)
+    captures_html  = render_captures_section(civ_token, display_name, host_manifest, ally_manifest)
+    doctrine_html  = render_doctrine_section(civ_token, display_name)
+
     # Leader image for header (try homecitypreviewwpf)
     leader_preview = civ_el.findtext("homecitypreviewwpf") or ""
     header_img = ""
@@ -539,6 +740,8 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
       {art_html}
+      {captures_html}
+      {doctrine_html}
     </div>
   </div>
 </section>
@@ -712,12 +915,13 @@ body {
   line-height: 1.35;
 }
 .age-row {
-  margin-bottom: 2px;
-  word-break: break-word;
-  overflow: hidden;
-  max-height: 2.9em;
-  padding: 1px 3px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 2px 3px;
   border-radius: 3px;
+  overflow: hidden;
 }
 /* Age-band colour coding */
 .age-row.age-0 { background: rgba(130,130,130,0.22); }  /* Discovery — gray  */
@@ -729,13 +933,15 @@ body {
 .age-lbl {
   display: inline-block;
   font-weight: 700;
-  margin-right: 4px;
   font-size: 8px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.85;
-  padding: 0 3px;
+  opacity: 0.90;
+  padding: 1px 3px;
   border-radius: 2px;
+  flex-shrink: 0;
+  align-self: center;
+  min-width: 52px;
 }
 /* Stronger pill colours for the label itself */
 .age-row.age-0 .age-lbl { background: rgba(160,160,160,0.35); }
@@ -746,6 +952,40 @@ body {
 
 .age-row:hover {
   background: rgba(255,255,255,0.10) !important;
+}
+
+/* Card thumbnails inside an age-row */
+.age-cards {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  vertical-align: middle;
+}
+.card-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 2px;
+  background: rgba(0,0,0,0.30);
+  cursor: help;
+  transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+.card-img:hover {
+  transform: scale(1.45);
+  border-color: rgba(255,255,255,0.65);
+  box-shadow: 0 0 6px rgba(0,0,0,0.55);
+  z-index: 2;
+  position: relative;
+}
+.card-text {
+  display: inline-block;
+  font-size: 8.5px;
+  padding: 0 3px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.80);
+  cursor: help;
 }
 
 /* ── Art rows ── */
@@ -818,7 +1058,360 @@ body {
 }
 
 .empty { opacity: 0.38; font-style: italic; }
+
+/* ── Visual capture thumbnails ── */
+.captures-section {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+/* 4 or 5 column grid — thumbs are 56-72px tall; 2 rows of 5 fit without overflow */
+.captures-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  /* No overflow here — constraint is honoured by column height */
+}
+
+.capture-thumb {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.30);
+  overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.45);
+  outline: none;
+}
+
+.capture-thumb:hover {
+  transform: scale(1.04);
+  filter: brightness(1.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.65);
+  border-color: rgba(255,255,255,0.50);
+}
+
+.capture-thumb:focus-visible {
+  outline: 2px solid rgba(100,180,255,0.85);
+  outline-offset: 1px;
+}
+
+.capture-thumb img {
+  width: 100%;
+  height: 56px;
+  object-fit: cover;
+  display: block;
+}
+
+.capture-thumb figcaption {
+  font-size: 7px;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(255,255,255,0.72);
+  padding: 1px 2px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  line-height: 1.2;
+}
+
+/* ── Doctrine evidence section (AI live-game proofs) ── */
+.doctrine-section {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255,220,140,0.22);
+}
+
+.doctrine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.doctrine-thumb {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid rgba(255,220,140,0.32);
+  background: rgba(60,40,10,0.40);
+  transition: transform 80ms ease, box-shadow 80ms ease;
+}
+
+.doctrine-thumb:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.65);
+  border-color: rgba(255,220,140,0.85);
+}
+
+.doctrine-thumb:focus-visible {
+  outline: 2px solid rgba(255,220,140,0.85);
+  outline-offset: 1px;
+}
+
+.doctrine-thumb img {
+  width: 100%;
+  height: 64px;
+  object-fit: cover;
+  display: block;
+}
+
+.doctrine-thumb figcaption {
+  font-size: 7px;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(255,220,140,0.88);
+  padding: 1px 2px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  line-height: 1.2;
+}
+
+/* ── Lightbox modal ── */
+.capture-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* No overflow rules here — intentional, to avoid conflicting with
+     the no-vertical-scroll constraint on the column layout */
+}
+
+/* When hidden attribute is present the browser hides it — no extra CSS needed */
+.capture-modal[hidden] {
+  display: none;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  z-index: 9001;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.22);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 95vw;
+  max-height: 90vh;
+}
+
+#modal-img {
+  max-width: 95vw;
+  max-height: 83vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.8);
+  display: block;
+}
+
+#modal-caption {
+  color: rgba(255,255,255,0.82);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
 """
+
+# ── Lightbox JS (vanilla, no framework) ───────────────────────────────────────
+# Uses __CIV_DISPLAY_MAP__ as a substitution token — replaced at build time
+# via str.replace() to avoid Python format() conflicts with JS braces.
+LIGHTBOX_JS = r"""
+(function () {
+  'use strict';
+
+  // Map from civ_token -> human display name, injected by the generator
+  var CIV_DISPLAY = __CIV_DISPLAY_MAP__;
+
+  // Surface labels matching CROP_SURFACE_LABELS in the Python generator
+  var SURFACE_LABELS = {
+    lobby_portrait:          'Lobby portrait',
+    loading_flag:            'Loading flag',
+    home_city_button:        'Home City button',
+    hud_flag_corner:         'HUD flag corner',
+    home_city_scene:         'Home City scene',
+    tech_tree_overview:      'Tech tree overview',
+    diplomacy_panel:         'Diplomacy panel',
+    scoreboard_player_row:   'Scoreboard row',
+    esc_menu_player_summary: 'ESC menu summary',
+    endgame_flag:            'Endgame flag',
+    diplomacy_ally_portrait: 'Ally portrait'
+  };
+
+  function surfaceLabel(name) {
+    return SURFACE_LABELS[name] || name.replace(/_/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+  }
+
+  var modal    = document.getElementById('capture-modal');
+  var modalImg = document.getElementById('modal-img');
+  var caption  = document.getElementById('modal-caption');
+
+  function openModal(figure) {
+    var fullSrc  = figure.dataset.fullSrc;
+    var civToken = figure.dataset.civ;
+    var surface  = figure.dataset.surface;
+    var civName  = CIV_DISPLAY[civToken] || civToken;
+    modalImg.src = fullSrc;
+    modalImg.alt = civName + ' \u2014 ' + surfaceLabel(surface);
+    caption.textContent = civName + ' \u2014 ' + surfaceLabel(surface);
+    modal.removeAttribute('hidden');
+    modal.focus();
+  }
+
+  function closeModal() {
+    modal.setAttribute('hidden', '');
+    modalImg.src = '';  // free memory
+  }
+
+  function getAllThumbs(figure) {
+    var col = figure.closest('.civ-col');
+    if (!col) return [];
+    return Array.from(col.querySelectorAll('.capture-thumb, .doctrine-thumb'));
+  }
+
+  // Track the currently open figure for arrow navigation
+  var currentFigure = null;
+
+  // Event delegation — click on any .capture-thumb
+  document.addEventListener('click', function (e) {
+    var fig = e.target.closest('.capture-thumb, .doctrine-thumb');
+    if (fig) {
+      currentFigure = fig;
+      openModal(fig);
+      return;
+    }
+    // Close on backdrop click (not on image or caption)
+    if (e.target === modal) {
+      closeModal();
+      currentFigure = null;
+    }
+  });
+
+  function navigateAndTrack(direction) {
+    if (!currentFigure) return;
+    var thumbs = getAllThumbs(currentFigure);
+    if (thumbs.length === 0) return;
+    var idx  = thumbs.indexOf(currentFigure);
+    var next = (idx + direction + thumbs.length) % thumbs.length;
+    currentFigure = thumbs[next];
+    openModal(currentFigure);
+  }
+
+  // Keyboard handler
+  document.addEventListener('keydown', function (e) {
+    if (modal.hasAttribute('hidden')) return;
+    if (e.key === 'Escape') {
+      closeModal();
+      currentFigure = null;
+    } else if (e.key === 'ArrowLeft') {
+      navigateAndTrack(-1);
+    } else if (e.key === 'ArrowRight') {
+      navigateAndTrack(1);
+    }
+  });
+
+  // Close button
+  document.querySelector('.modal-close').addEventListener('click', function () {
+    closeModal();
+    currentFigure = null;
+  });
+
+  // Keyboard activation on thumbnails (Enter / Space)
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var fig = document.activeElement && document.activeElement.closest('.capture-thumb, .doctrine-thumb');
+    if (fig) {
+      e.preventDefault();
+      currentFigure = fig;
+      openModal(fig);
+    }
+  });
+
+  // Pre-cache on hover (pointer: fine devices only)
+  var supportsPointerFine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+  if (supportsPointerFine) {
+    document.addEventListener('mouseover', function (e) {
+      var fig = e.target.closest('.capture-thumb, .doctrine-thumb');
+      if (fig && fig.dataset.fullSrc && !fig._precached) {
+        fig._precached = true;
+        var img = new Image();
+        img.src = fig.dataset.fullSrc;
+      }
+    });
+  }
+
+  // Vertical wheel -> horizontal scroll. The body is a flex row; the html
+  // element is the scroll container (overflow-x: scroll, overflow-y: hidden).
+  // Translate primarily-vertical wheel events into scrollLeft delta so a
+  // mouse wheel scrolls across columns naturally. Touchpad horizontal
+  // gestures (deltaX dominant) pass through unchanged; modal-open suppresses.
+  window.addEventListener('wheel', function (e) {
+    var modal = document.getElementById('capture-modal');
+    if (modal && !modal.hidden) return;
+    if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+    if (e.deltaY === 0) return;
+    e.preventDefault();
+    var scroller = document.scrollingElement || document.documentElement;
+    scroller.scrollLeft += e.deltaY;
+  }, { passive: false });
+}());
+"""
+
+# ── CIV display name map builder ──────────────────────────────────────────────
+def build_civ_display_map(civ_order, civmods, strings):
+    """Return a JS object literal mapping civ_token -> display name."""
+    pairs = []
+    for token in civ_order:
+        civ_el = civmods.get(token)
+        if civ_el is not None:
+            display_id   = civ_el.findtext("displaynameid") or ""
+            display_name = strings.get(display_id, token)
+        else:
+            display_name = token
+        # Escape for JS string literal
+        safe_token = token.replace("'", "\\'")
+        safe_name  = display_name.replace("'", "\\'")
+        pairs.append(f"  '{safe_token}': '{safe_name}'")
+    return "{\n" + ",\n".join(pairs) + "\n}"
+
 
 # ── CIV order (same as playercolors.xml, which has 45 entries) ────────────────
 def get_civ_order():
@@ -858,6 +1451,11 @@ def build():
 
     first3 = [f'id="{c}"' for c in civ_order[:3]]
 
+    # Build a JS mapping from civ_token -> display_name for modal captions
+    civ_display_map_js = build_civ_display_map(civ_order, civmods, strings)
+
+    lightbox_js = LIGHTBOX_JS.replace("__CIV_DISPLAY_MAP__", civ_display_map_js)
+
     html_out = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -872,6 +1470,17 @@ def build():
 <!-- {num_cols} columns, ~{approx_w_px}px total width (overflow-x: scroll on html) -->
 <!-- First 3 column IDs: {", ".join(first3)} -->
 {"".join(columns_html)}
+<!-- Shared lightbox modal — one instance for the entire page -->
+<div id="capture-modal" class="capture-modal" hidden>
+  <button class="modal-close" aria-label="Close (Esc)">&times;</button>
+  <div class="modal-content">
+    <img id="modal-img" src="" alt="">
+    <div id="modal-caption"></div>
+  </div>
+</div>
+<script>
+{lightbox_js}
+</script>
 </body>
 </html>
 """
@@ -882,7 +1491,7 @@ def build():
     print(f"Written: {OUTPUT_HTML}")
     print(f"Columns: {num_cols}")
     print(f"Art assets resolved as <img>: {total_resolved}")
-    print(f"Art assets shown as path-text: {total_missing}")
+    print(f"Art assets skipped (path missing): {total_missing}")
     print(f"File size: {os.path.getsize(OUTPUT_HTML):,} bytes")
 
 if __name__ == "__main__":
