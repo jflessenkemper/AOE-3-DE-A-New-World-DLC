@@ -61,10 +61,12 @@ captured a clean resign on every match.
   who want both gameplay sets available.
 
 ### Added
-- **40 ANW civilizations** in the roster — 22 base civs + 18 revolutions
-  promoted to top-level pickable nations. 37 are lobby-selectable; the
-  three non-picker entries (`ANWFrenchCanadians`, `ANWAmericans`,
-  `ANWMexicans`) exist only as in-game revolution triggers.
+- **40 ANW civilizations** in the lobby picker (`data/civmods.xml`) —
+  22 base civs + 18 revolution civs promoted to top-level pickable
+  nations. Two additional revolution-only variants
+  (`ANWFrenchCanadians`, `ANWAmericans`) trigger in-game from the
+  Lower Canada Patriotes and American-Revolution political choices
+  without being directly lobby-selectable.
 - **Per-leader AI doctrine** (`game/ai/leaders/*.xs`) — distinct build orders,
   military comp, and explorer-escort posture per nation.
 - **Leader-escort doctrine** — AI treats its explorer as the battlefield

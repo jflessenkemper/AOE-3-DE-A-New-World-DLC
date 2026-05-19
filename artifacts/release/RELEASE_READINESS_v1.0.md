@@ -139,9 +139,18 @@ delta is intentional: some legacy-civ tokens never received an
 civmods.xml). The 40-civ set is fully validated:
 
 - 22 reskinned base civs
-- 18 revolution civs (with `ANWFrenchCanadians`, `ANWAmericans`,
-  `ANWMexicans` marked non-picker — they exist only as revolution
-  triggers, not lobby-pickable; see `ANW_NON_PICKER_TOKENS`)
+- 18 revolution civs promoted to lobby-pickable
+- All 40 appear in `data/civmods.xml` — confirmed by
+  `validate_offline_picker.py` (✓ PASS, 39 picker + 1 also-revolution-trigger
+  reported; `ANWMexicans` is in `ANW_NON_PICKER_TOKENS` by historical
+  intent but also ships in civmods.xml as a regular lobby civ, so it's
+  selectable AND revolution-triggerable — see note in
+  `tools/migration/anw_mapping.py:178`).
+- Two additional revolution-only variants — `ANWFrenchCanadians`
+  and `ANWAmericans` — exist as in-game revolution triggers
+  (Lower Canada Patriotes / American Revolution political choices)
+  without a civmods.xml lobby-picker entry. Confirmed absent from
+  `data/civmods.xml`.
 
 ## FrenchCanadians / Lower Canada audit
 
