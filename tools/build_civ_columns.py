@@ -446,22 +446,11 @@ _CPAI_PORTRAIT = {
     "ANWEgyptians":        "egyptians_muhammad_ali.png",
     "ANWMayans":           "mayans_canek.png",
     "ANWTexians":          "texians_sam_houston.png",
-    "Californians":        "californians_vallejo.png",
-    "CentralAmericans":    "central_americans_morazan.png",
-    "FrenchCanadians":     "french_canadians_papineau.png",
-    "RioGrande":           "rio_grande_canales_rosillo.png",
-    "Yucatan":             "yucatan_carrillo_puerto.png",
 }
 _CPAI_PORTRAIT_BASE = "resources/images/icons/singleplayer/cpai_avatar_"
 
 # ── Reference-site walling doctrine labels for civs lacking a spec entry ──────
-_REF_DOCTRINE_LABEL = {
-    "Californians":     "Frontier Palisades",
-    "CentralAmericans": "Frontier Palisades",
-    "FrenchCanadians":  "Frontier Palisades",
-    "RioGrande":        "Frontier Palisades",
-    "Yucatan":          "Urban Barricade",
-}
+_REF_DOCTRINE_LABEL = {}
 
 
 def deck_key(civ_token):
@@ -2978,15 +2967,11 @@ def build_civ_display_map(civ_order, civmods, strings):
     return "{\n" + ",\n".join(pairs) + "\n}"
 
 
-# ── CIV order (playercolors.xml 40 + 5 reference-only revolutions = 45) ───────
-_EXTRA_CIVS = ["Californians", "CentralAmericans", "FrenchCanadians", "RioGrande", "Yucatan"]
-
+# ── CIV order (playercolors.xml = 40 civs with civmods data) ─────────────────
 def get_civ_order():
     path = os.path.join(DATA_DIR, "playercolors.xml")
     tree = ET.parse(path)
-    order = [c.get("civ") for c in tree.getroot().findall(".//Color") if c.get("civ")]
-    order.extend(_EXTRA_CIVS)
-    return order
+    return [c.get("civ") for c in tree.getroot().findall(".//Color") if c.get("civ")]
 
 # ── Build ──────────────────────────────────────────────────────────────────────
 def build():
