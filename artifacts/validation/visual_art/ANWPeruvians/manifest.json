@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "civ_token": "ANWPeruvians",
+  "civ_label": "Peruvians",
+  "captured_at": "2026-05-19T20:40:02Z",
+  "host_perspective": true,
+  "host_civ_token": null,
+  "synthesised": true,
+  "match_id": "anwperuvians_synth_1779223202",
+  "captures": [
+    {
+      "label": "01_lobby",
+      "full_path": "full/01_lobby.png",
+      "captured_ms": 1779223201335,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "lobby_portrait",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/lobby_portrait.png",
+          "thumb_path": "thumbs/lobby_portrait.webp",
+          "_synthesised_from": "art/ui/leaders/santa_cruz.png"
+        }
+      ]
+    },
+    {
+      "label": "02_loading",
+      "full_path": "full/02_loading.png",
+      "captured_ms": 1779223201532,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "loading_flag",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/loading_flag.png",
+          "thumb_path": "thumbs/loading_flag.webp",
+          "_synthesised_from": "resources/images/icons/flags/Flag_Peruvian.png"
+        }
+      ]
+    },
+    {
+      "label": "03_hud",
+      "full_path": "full/03_hud.png",
+      "captured_ms": 1779223201764,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "home_city_button",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/home_city_button.png",
+          "thumb_path": "thumbs/home_city_button.webp",
+          "_synthesised_from": "resources/images/icons/flags/flag_hc_peruvian.png"
+        },
+        {
+          "name": "hud_flag_corner",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/hud_flag_corner.png",
+          "thumb_path": "thumbs/hud_flag_corner.webp",
+          "_synthesised_from": "resources/images/icons/flags/Flag_Peruvian.png"
+        }
+      ]
+    },
+    {
+      "label": "04_homecity_panel",
+      "full_path": "full/04_homecity_panel.png",
+      "captured_ms": 1779223201810,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "home_city_scene",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/home_city_scene.png",
+          "thumb_path": "thumbs/home_city_scene.webp",
+          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png"
+        }
+      ]
+    },
+    {
+      "label": "05_tech_tree",
+      "full_path": "full/05_tech_tree.png",
+      "captured_ms": 1779223202010,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "tech_tree_overview",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/tech_tree_overview.png",
+          "thumb_path": "thumbs/tech_tree_overview.webp",
+          "_synthesised_from": "resources/images/icons/flags/Flag_Peruvian.png"
+        }
+      ]
+    },
+    {
+      "label": "06_diplomacy",
+      "full_path": "full/06_diplomacy.png",
+      "captured_ms": 1779223202053,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "diplomacy_panel",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/diplomacy_panel.png",
+          "thumb_path": "thumbs/diplomacy_panel.webp",
+          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png"
+        }
+      ]
+    },
+    {
+      "label": "07_scoreboard",
+      "full_path": "full/07_scoreboard.png",
+      "captured_ms": 1779223202095,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "scoreboard_player_row",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/scoreboard_player_row.png",
+          "thumb_path": "thumbs/scoreboard_player_row.webp",
+          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png"
+        }
+      ]
+    },
+    {
+      "label": "08_esc_menu",
+      "full_path": "full/08_esc_menu.png",
+      "captured_ms": 1779223202137,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "esc_menu_player_summary",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/esc_menu_player_summary.png",
+          "thumb_path": "thumbs/esc_menu_player_summary.webp",
+          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png"
+        }
+      ]
+    },
+    {
+      "label": "09_endgame",
+      "full_path": "full/09_endgame.png",
+      "captured_ms": 1779223202331,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "endgame_flag",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/endgame_flag.png",
+          "thumb_path": "thumbs/endgame_flag.webp",
+          "_synthesised_from": "resources/images/icons/flags/Flag_Peruvian.png"
+        }
+      ]
+    }
+  ]
+}
