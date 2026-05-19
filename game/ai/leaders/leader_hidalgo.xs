@@ -25,7 +25,7 @@ bool gHidalgoRulesEnabled = false;
 
 void initLeaderHidalgo(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Miguel Hidalgo personality.");
+   llVerboseEcho("A New World: activating Miguel Hidalgo personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the Grito comes early.

@@ -27,7 +27,7 @@ bool gGaribaldiRulesEnabled = false;
 
 void initLeaderGaribaldi(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Giuseppe Garibaldi personality.");
+   llVerboseEcho("A New World: activating Giuseppe Garibaldi personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the campaign opens early.

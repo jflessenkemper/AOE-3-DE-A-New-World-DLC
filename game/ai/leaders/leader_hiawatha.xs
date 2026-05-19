@@ -23,7 +23,7 @@ bool gHiawathaRulesEnabled = false;
 
 void initLeaderHiawatha(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Hiawatha personality.");
+   llVerboseEcho("A New World: activating Hiawatha personality.");
 
    llSetBalancedPersonality();
    btRushBoom = 0.1;              // Light boom; the warpath opens early.

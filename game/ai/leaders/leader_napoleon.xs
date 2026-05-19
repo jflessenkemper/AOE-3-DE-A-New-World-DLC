@@ -29,7 +29,7 @@ bool gNapoleonRulesEnabled = false;
 
 void initLeaderNapoleon(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Napoleon Bonaparte personality.");
+   llVerboseEcho("A New World: activating Napoleon Bonaparte personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.1;              // Light boom; the campaign opens fast.

@@ -30,7 +30,7 @@ bool gBourbonRulesEnabled = false;
 
 void initLeaderBourbon(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Louis XVIII personality.");
+   llVerboseEcho("A New World: activating Louis XVIII personality.");
 
    llSetDefensivePersonality();
    btRushBoom = -0.45;            // Heavy boom; restored economy first.

@@ -27,7 +27,7 @@ bool gIsabellaRulesEnabled = false;
 
 void initLeaderIsabella(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Isabella I personality.");
+   llVerboseEcho("A New World: activating Isabella I personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the Reconquista does not wait.

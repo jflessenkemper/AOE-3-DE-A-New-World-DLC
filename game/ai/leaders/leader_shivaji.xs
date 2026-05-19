@@ -28,7 +28,7 @@ bool gShivajiRulesEnabled = false;
 
 void initLeaderShivaji(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Shivaji Maharaj personality.");
+   llVerboseEcho("A New World: activating Shivaji Maharaj personality.");
 
    llSetBalancedPersonality();
    btRushBoom = 0.0;              // Light boom; the raids open early.

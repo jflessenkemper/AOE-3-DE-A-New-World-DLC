@@ -28,7 +28,7 @@ bool gWashingtonRulesEnabled = false;
 
 void initLeaderWashington(void)
 {
-   llVerboseEcho("Legendary Leaders: activating George Washington personality.");
+   llVerboseEcho("A New World: activating George Washington personality.");
 
    llSetBalancedPersonality();
    btRushBoom = -0.15;            // Hard boom; Continental Army needs the supply train.

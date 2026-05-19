@@ -24,7 +24,7 @@ bool gKangxiRulesEnabled = false;
 
 void initLeaderKangxi(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Kangxi Emperor personality.");
+   llVerboseEcho("A New World: activating Kangxi Emperor personality.");
 
    llSetBalancedPersonality();
    btRushBoom = -0.15;            // Slow, methodical, banner-build first.

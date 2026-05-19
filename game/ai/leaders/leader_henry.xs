@@ -29,7 +29,7 @@ bool gHenryRulesEnabled = false;
 
 void initLeaderHenry(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Prince Henry the Navigator personality.");
+   llVerboseEcho("A New World: activating Prince Henry the Navigator personality.");
 
    llSetBalancedPersonality();
    btRushBoom = -0.4;             // Hard boom; the carracks fund the war.

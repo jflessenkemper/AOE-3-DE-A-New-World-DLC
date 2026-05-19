@@ -26,7 +26,7 @@ bool gMenelikRulesEnabled = false;
 
 void initLeaderMenelik(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Menelik II personality.");
+   llVerboseEcho("A New World: activating Menelik II personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.15;             // Mild boom, then commit.

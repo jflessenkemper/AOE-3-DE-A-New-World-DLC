@@ -25,7 +25,7 @@ bool gMauriceRulesEnabled = false;
 
 void initLeaderMaurice(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Maurice of Nassau personality.");
+   llVerboseEcho("A New World: activating Maurice of Nassau personality.");
 
    llSetDefensivePersonality();
    btRushBoom = -0.45;            // Hard boom; banks finance the war.

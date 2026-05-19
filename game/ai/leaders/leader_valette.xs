@@ -26,7 +26,7 @@ bool gValetteRulesEnabled = false;
 
 void initLeaderValette(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Jean Parisot de Valette personality.");
+   llVerboseEcho("A New World: activating Jean Parisot de Valette personality.");
 
    llSetDefensivePersonality();
    btRushBoom = -0.45;            // Hard boom; the bastions come first.

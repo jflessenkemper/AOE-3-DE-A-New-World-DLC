@@ -36,7 +36,7 @@ bool gUsmanRulesEnabled = false;
 
 void initLeaderUsman(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Muhammadu Kanta of Kebbi personality.");
+   llVerboseEcho("A New World: activating Muhammadu Kanta of Kebbi personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.1;              // Light boom; the jihad starts early.

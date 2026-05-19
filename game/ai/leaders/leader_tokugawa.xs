@@ -24,7 +24,7 @@ bool gTokugawaRulesEnabled = false;
 
 void initLeaderTokugawa(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Tokugawa Ieyasu personality.");
+   llVerboseEcho("A New World: activating Tokugawa Ieyasu personality.");
 
    llSetDefensivePersonality();
    btRushBoom = -0.4;             // Hard boom; the Bakufu builds first.

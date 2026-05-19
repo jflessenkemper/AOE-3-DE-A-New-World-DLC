@@ -28,7 +28,7 @@ bool gSuleimanRulesEnabled = false;
 
 void initLeaderSuleiman(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Suleiman the Magnificent personality.");
+   llVerboseEcho("A New World: activating Suleiman the Magnificent personality.");
 
    llSetBalancedPersonality();
    btRushBoom = -0.15;            // Ottoman vill auto-spawn lets us rush less hard.

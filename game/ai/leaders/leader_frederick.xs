@@ -28,7 +28,7 @@ bool gFrederickRulesEnabled = false;
 
 void initLeaderFrederick(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Frederick the Great personality.");
+   llVerboseEcho("A New World: activating Frederick the Great personality.");
 
    llSetBalancedPersonality();
    btRushBoom = 0.05;             // Light boom; campaign begins early.

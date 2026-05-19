@@ -26,7 +26,7 @@ bool gPachacutiRulesEnabled = false;
 
 void initLeaderPachacuti(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Pachacuti personality.");
+   llVerboseEcho("A New World: activating Pachacuti personality.");
 
    llSetDefensivePersonality();
    btRushBoom = -0.3;             // Hard boom - Mit'a economy first.

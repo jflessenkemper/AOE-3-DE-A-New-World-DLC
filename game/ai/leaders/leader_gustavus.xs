@@ -27,7 +27,7 @@ bool gGustavusRulesEnabled = false;
 
 void initLeaderGustavus(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Gustavus Adolphus personality.");
+   llVerboseEcho("A New World: activating Gustavus Adolphus personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the campaign opens early.
