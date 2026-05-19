@@ -106,7 +106,7 @@
     },
     "Californians Vallejo Revolution": {
       "civ_label": "Californians",
-      "leader_label": "Vallejo Revolution",
+      "leader_label": "Mariano Guadalupe Vallejo",
       "data_name": "Californians Vallejo Revolution",
       "doctrine_label": "Distributed Economic Network",
       "doctrine_summary": "Hacienda-cattle ranch economy",
@@ -144,7 +144,7 @@
     },
     "Central Americans Morazan Revolution": {
       "civ_label": "Central Americans",
-      "leader_label": "Morazan Revolution",
+      "leader_label": "Francisco Morazán",
       "data_name": "Central Americans Morazan Revolution",
       "doctrine_label": "Distributed Economic Network",
       "doctrine_summary": "Federal Republic frontier militia",
@@ -302,7 +302,7 @@
     },
     "French Canadians Papineau Revolution": {
       "civ_label": "French Canadians",
-      "leader_label": "Papineau Revolution",
+      "leader_label": "Louis-Joseph Papineau",
       "data_name": "French Canadians Papineau Revolution",
       "doctrine_label": "Civic Militia Center",
       "doctrine_summary": "Patriote militia and outpost line",
@@ -720,7 +720,7 @@
     },
     "Rio Grande Canales Rosillo Revolution": {
       "civ_label": "Rio Grande",
-      "leader_label": "Canales Rosillo Revolution",
+      "leader_label": "Antonio Canales Rosillo",
       "data_name": "Rio Grande Canales Rosillo Revolution",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Norteno raid-republic on the frontier",
@@ -803,7 +803,7 @@
     },
     "Spanish Isabella Castile": {
       "civ_label": "Spanish",
-      "leader_label": "Isabella Castile",
+      "leader_label": "Isabella I of Castile",
       "data_name": "Spanish Isabella Castile",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Reconquista Tercio precursor",
@@ -845,7 +845,7 @@
     },
     "Texians Sam Houston Texas Revolution": {
       "civ_label": "Texians",
-      "leader_label": "Sam Houston Texas Revolution",
+      "leader_label": "Sam Houston",
       "data_name": "Texians Sam Houston Texas Revolution",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Republic of Texas militia",
@@ -887,7 +887,7 @@
     },
     "Yucatan Pat Revolution": {
       "civ_label": "Yucatan",
-      "leader_label": "Pat Revolution",
+      "leader_label": "Jacinto Pat",
       "data_name": "Yucatan Pat Revolution",
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Maya Caste War jungle insurgency",
