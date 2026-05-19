@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWIndians",
   "civ_label": "Indians",
-  "captured_at": "2026-05-19T20:39:49Z",
+  "captured_at": "2026-05-19T21:12:21Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwindians_synth_1779223189",
+  "match_id": "anwindians_synth_1779225141",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779223188948,
+      "captured_ms": 1779225140070,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779223189101,
+      "captured_ms": 1779225140223,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779223189274,
+      "captured_ms": 1779225140396,
       "ocr_text": null,
       "crops": [
         {
@@ -84,7 +84,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779223189303,
+      "captured_ms": 1779225140424,
       "ocr_text": null,
       "crops": [
         {
@@ -104,7 +104,7 @@
     {
       "label": "05_tech_tree",
       "full_path": "full/05_tech_tree.png",
-      "captured_ms": 1779223189455,
+      "captured_ms": 1779225140577,
       "ocr_text": null,
       "crops": [
         {
@@ -124,7 +124,7 @@
     {
       "label": "06_diplomacy",
       "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1779223189459,
+      "captured_ms": 1779225140780,
       "ocr_text": null,
       "crops": [
         {
@@ -137,14 +137,14 @@
           ],
           "crop_path": "crops/diplomacy_panel.png",
           "thumb_path": "thumbs/diplomacy_panel.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_anwindians.png"
+          "_synthesised_from": "art/ui/leaders/shivaji.png"
         }
       ]
     },
     {
       "label": "07_scoreboard",
       "full_path": "full/07_scoreboard.png",
-      "captured_ms": 1779223189463,
+      "captured_ms": 1779225140986,
       "ocr_text": null,
       "crops": [
         {
@@ -157,14 +157,14 @@
           ],
           "crop_path": "crops/scoreboard_player_row.png",
           "thumb_path": "thumbs/scoreboard_player_row.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_anwindians.png"
+          "_synthesised_from": "art/ui/leaders/shivaji.png"
         }
       ]
     },
     {
       "label": "08_esc_menu",
       "full_path": "full/08_esc_menu.png",
-      "captured_ms": 1779223189467,
+      "captured_ms": 1779225141193,
       "ocr_text": null,
       "crops": [
         {
@@ -177,14 +177,14 @@
           ],
           "crop_path": "crops/esc_menu_player_summary.png",
           "thumb_path": "thumbs/esc_menu_player_summary.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_anwindians.png"
+          "_synthesised_from": "art/ui/leaders/shivaji.png"
         }
       ]
     },
     {
       "label": "09_endgame",
       "full_path": "full/09_endgame.png",
-      "captured_ms": 1779223189621,
+      "captured_ms": 1779225141346,
       "ocr_text": null,
       "crops": [
         {

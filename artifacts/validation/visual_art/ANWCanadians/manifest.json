@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWCanadians",
   "civ_label": "Canadians",
-  "captured_at": "2026-05-19T20:39:32Z",
+  "captured_at": "2026-05-19T21:11:57Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwcanadians_synth_1779223172",
+  "match_id": "anwcanadians_synth_1779225117",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779223171419,
+      "captured_ms": 1779225116528,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779223171625,
+      "captured_ms": 1779225116702,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779223171855,
+      "captured_ms": 1779225116905,
       "ocr_text": null,
       "crops": [
         {
@@ -84,7 +84,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779223171900,
+      "captured_ms": 1779225116939,
       "ocr_text": null,
       "crops": [
         {
@@ -104,7 +104,7 @@
     {
       "label": "05_tech_tree",
       "full_path": "full/05_tech_tree.png",
-      "captured_ms": 1779223172104,
+      "captured_ms": 1779225117113,
       "ocr_text": null,
       "crops": [
         {
@@ -124,7 +124,7 @@
     {
       "label": "06_diplomacy",
       "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1779223172149,
+      "captured_ms": 1779225117147,
       "ocr_text": null,
       "crops": [
         {
@@ -144,7 +144,7 @@
     {
       "label": "07_scoreboard",
       "full_path": "full/07_scoreboard.png",
-      "captured_ms": 1779223172195,
+      "captured_ms": 1779225117182,
       "ocr_text": null,
       "crops": [
         {
@@ -164,7 +164,7 @@
     {
       "label": "08_esc_menu",
       "full_path": "full/08_esc_menu.png",
-      "captured_ms": 1779223172239,
+      "captured_ms": 1779225117216,
       "ocr_text": null,
       "crops": [
         {
@@ -184,7 +184,7 @@
     {
       "label": "09_endgame",
       "full_path": "full/09_endgame.png",
-      "captured_ms": 1779223172445,
+      "captured_ms": 1779225117390,
       "ocr_text": null,
       "crops": [
         {

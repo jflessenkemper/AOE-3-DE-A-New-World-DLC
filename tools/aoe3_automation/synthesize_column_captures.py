@@ -59,7 +59,8 @@ CROP_SOURCES: dict[str, tuple[str, ...]] = {
                                 "custom_leader_portrait_hires",
                                 "scoreboard_portrait_wpf"),
     "scoreboard_player_row":   ("scoreboard_portrait_wpf",
-                                "diplomacy_portrait_wpf"),
+                                "diplomacy_portrait_wpf",
+                                "custom_leader_portrait_hires"),
     "esc_menu_player_summary": ("scoreboard_portrait_wpf",
                                 "diplomacy_portrait_wpf",
                                 "custom_leader_portrait_hires"),
@@ -93,15 +94,40 @@ def _load_inventory() -> dict:
     return json.loads(INVENTORY.read_text(encoding="utf-8"))
 
 
+PLACEHOLDER_BYTE_THRESHOLD = 10240  # files this small are placeholder stubs
+# Real WPF portraits run 50–200 KB; real high-res portraits run 100 KB–15 MB.
+# 2 KB caught only the smallest placeholders (Lakota at 1.2 KB) but missed
+# others like ANWAztecs (2.1 KB) / ANWJapanese (2.5 KB) which are still
+# obvious stubs by visual inspection. 10 KB covers all known placeholders
+# without false-positive on real WPF assets seen in the mod.
+
+
 def _resolve_slot(surfaces: dict, candidates: tuple[str, ...]) -> Path | None:
-    """Return an on-disk absolute Path for the first matching candidate."""
+    """Return an on-disk absolute Path for the first matching candidate.
+
+    Skips placeholder images (files under ``PLACEHOLDER_BYTE_THRESHOLD``
+    bytes) so the synthesizer falls through to the next candidate (e.g.
+    ``custom_leader_portrait_hires``) when the WPF-slot file is a 1-2 KB
+    stub. Several civs (Lakota, Spanish, Indians, Ottomans, Chinese,
+    Italians) ship with tiny ``cpai_avatar_anw<civ>.png`` placeholders
+    that, if used directly, produce nearly-empty 320×320 thumbs.
+    """
+    fallback: Path | None = None
     for key in candidates:
         slot = surfaces.get(key)
-        if isinstance(slot, dict) and slot.get("_on_disk") and slot.get("path"):
-            p = REPO / slot["path"]
-            if p.exists():
-                return p
-    return None
+        if not (isinstance(slot, dict) and slot.get("_on_disk") and slot.get("path")):
+            continue
+        p = REPO / slot["path"]
+        if not p.exists():
+            continue
+        # Remember the first placeholder as a last-resort fallback but
+        # keep walking; if a later candidate has real content, use it.
+        if p.stat().st_size < PLACEHOLDER_BYTE_THRESHOLD:
+            if fallback is None:
+                fallback = p
+            continue
+        return p
+    return fallback
 
 
 def _write_thumb(src: Path, dest_webp: Path) -> bool:
