@@ -4,7 +4,7 @@
   "civs": {
     "Argentines San Martin Revolution": {
       "civ_label": "Argentines",
-      "leader_label": "San Martin Revolution",
+      "leader_label": "José de San Martín",
       "data_name": "Argentines San Martin Revolution",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Granadero shock-cavalry liberation",
@@ -45,7 +45,7 @@
     },
     "Barbary Barbarossa Corsair Revolution": {
       "civ_label": "Barbary",
-      "leader_label": "Barbarossa Corsair Revolution",
+      "leader_label": "Hayreddin Barbarossa",
       "data_name": "Barbary Barbarossa Corsair Revolution",
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Corsair raider economy",
@@ -66,7 +66,7 @@
     },
     "Brazil Pedro Revolution": {
       "civ_label": "Brazil",
-      "leader_label": "Pedro Revolution",
+      "leader_label": "Pedro I of Brazil",
       "data_name": "Brazil Pedro Revolution",
       "doctrine_label": "Distributed Economic Network",
       "doctrine_summary": "Imperial line and Hessian reserve",
@@ -125,7 +125,7 @@
     },
     "Canadians Brock Revolution": {
       "civ_label": "Canadians",
-      "leader_label": "Brock Revolution",
+      "leader_label": "Isaac Brock",
       "data_name": "Canadians Brock Revolution",
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Blockhouse infantry frontier",
@@ -163,7 +163,7 @@
     },
     "Chileans OHiggins Revolution": {
       "civ_label": "Chileans",
-      "leader_label": "OHiggins Revolution",
+      "leader_label": "Bernardo O'Higgins",
       "data_name": "Chileans OHiggins Revolution",
       "doctrine_label": "Andean Terrace Fortress",
       "doctrine_summary": "Balanced Republican infantry",
@@ -201,7 +201,7 @@
     },
     "Columbians Bolivar Colombia Revolution": {
       "civ_label": "Columbians",
-      "leader_label": "Bolivar Colombia Revolution",
+      "leader_label": "Simón Bolívar",
       "data_name": "Columbians Bolivar Colombia Revolution",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Llanero liberation sweeps",
@@ -222,7 +222,7 @@
     },
     "Dutch Maurice Nassau": {
       "civ_label": "Dutch",
-      "leader_label": "Maurice Nassau",
+      "leader_label": "Maurice of Nassau",
       "data_name": "Dutch Maurice Nassau",
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Stadtholder drill-and-bank",
@@ -243,7 +243,7 @@
     },
     "Egyptians Muhammad Ali Revolution": {
       "civ_label": "Egyptians",
-      "leader_label": "Muhammad Ali Revolution",
+      "leader_label": "Muhammad Ali Pasha",
       "data_name": "Egyptians Muhammad Ali Revolution",
       "doctrine_label": "Highland Citadel",
       "doctrine_summary": "Nizam-i Cedid modernization",
@@ -283,7 +283,7 @@
     },
     "Finnish Mannerheim Revolution": {
       "civ_label": "Finnish",
-      "leader_label": "Mannerheim Revolution",
+      "leader_label": "Carl Gustaf Emil Mannerheim",
       "data_name": "Finnish Mannerheim Revolution",
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Mannerheim-line ski infantry",
@@ -321,7 +321,7 @@
     },
     "French Louis XVIII Bourbon": {
       "civ_label": "French Louis",
-      "leader_label": "XVIII Bourbon",
+      "leader_label": "Louis XVIII",
       "data_name": "French Louis XVIII Bourbon",
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Bourbon Restoration court army",
@@ -340,7 +340,7 @@
     },
     "Germans Frederick Great": {
       "civ_label": "Germans",
-      "leader_label": "Frederick Great",
+      "leader_label": "Frederick the Great",
       "data_name": "Germans Frederick Great",
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Hohenzollern oblique-order shock",
@@ -361,7 +361,7 @@
     },
     "Haitians Louverture Revolution": {
       "civ_label": "Haitians",
-      "leader_label": "Louverture Revolution",
+      "leader_label": "Toussaint Louverture",
       "data_name": "Haitians Louverture Revolution",
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Mass infantry insurrection",
@@ -381,7 +381,7 @@
     },
     "Haudenosaunee Hiawatha Iroquois": {
       "civ_label": "Haudenosaunee",
-      "leader_label": "Hiawatha Iroquois",
+      "leader_label": "Hiawatha",
       "data_name": "Haudenosaunee Hiawatha Iroquois",
       "doctrine_label": "Shrine or Trade Node Spread",
       "doctrine_summary": "Confederacy forest warfare",
@@ -419,7 +419,7 @@
     },
     "Hungarians Kossuth Revolution": {
       "civ_label": "Hungarians",
-      "leader_label": "Kossuth Revolution",
+      "leader_label": "Lajos Kossuth",
       "data_name": "Hungarians Kossuth Revolution",
       "doctrine_label": "Steppe Cavalry Wedge",
       "doctrine_summary": "Honved hussar uprising",
@@ -478,7 +478,7 @@
     },
     "Indonesians Diponegoro Revolution": {
       "civ_label": "Indonesians",
-      "leader_label": "Diponegoro Revolution",
+      "leader_label": "Prince Diponegoro",
       "data_name": "Indonesians Diponegoro Revolution",
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Java War guerrilla and kraton fort",
@@ -578,7 +578,7 @@
     },
     "Mayans Canek Maya Revolution": {
       "civ_label": "Mayans",
-      "leader_label": "Canek Maya Revolution",
+      "leader_label": "Jacinto Canek",
       "data_name": "Mayans Canek Maya Revolution",
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Indigenous insurrection mass",
@@ -598,7 +598,7 @@
     },
     "Mexicans Hidalgo Standard": {
       "civ_label": "Mexicans",
-      "leader_label": "Hidalgo Standard",
+      "leader_label": "Miguel Hidalgo y Costilla",
       "data_name": "Mexicans Hidalgo Standard",
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Grito de Dolores levée",
@@ -619,7 +619,7 @@
     },
     "Napoleonic France Napoleon Bonaparte Revolution": {
       "civ_label": "Napoleonic France",
-      "leader_label": "Napoleon Bonaparte Revolution",
+      "leader_label": "Napoleon Bonaparte",
       "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Grande Armée Grand Battery empire",
@@ -659,7 +659,7 @@
     },
     "Peruvians Santa Cruz Peru Revolution": {
       "civ_label": "Peruvians",
-      "leader_label": "Santa Cruz Peru Revolution",
+      "leader_label": "Andrés de Santa Cruz",
       "data_name": "Peruvians Santa Cruz Peru Revolution",
       "doctrine_label": "Andean Terrace Fortress",
       "doctrine_summary": "Andean fort line and native levy",
@@ -678,7 +678,7 @@
     },
     "Portuguese Henry Navigator": {
       "civ_label": "Portuguese",
-      "leader_label": "Henry Navigator",
+      "leader_label": "Prince Henry the Navigator",
       "data_name": "Portuguese Henry Navigator",
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Sagres carrack-and-padrao empire",
@@ -699,7 +699,7 @@
     },
     "Revolutionary France Robespierre Revolution": {
       "civ_label": "Revolutionary France",
-      "leader_label": "Robespierre Revolution",
+      "leader_label": "Maximilien Robespierre",
       "data_name": "Revolutionary France Robespierre Revolution",
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Levée-en-masse Republic",
@@ -740,7 +740,7 @@
     },
     "Romanians Cuza Revolution": {
       "civ_label": "Romanians",
-      "leader_label": "Cuza Revolution",
+      "leader_label": "Alexandru Ioan Cuza",
       "data_name": "Romanians Cuza Revolution",
       "doctrine_label": "Civic Militia Center",
       "doctrine_summary": "Danubian Principalities consolidation",
@@ -782,7 +782,7 @@
     },
     "South Africans Kruger Boer Revolution": {
       "civ_label": "South Africans",
-      "leader_label": "Kruger Boer Revolution",
+      "leader_label": "Paul Kruger",
       "data_name": "South Africans Kruger Boer Revolution",
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Boer commando trader-cavalry",
@@ -824,7 +824,7 @@
     },
     "Swedes Gustavus Adolphus Swedish": {
       "civ_label": "Swedes",
-      "leader_label": "Gustavus Adolphus Swedish",
+      "leader_label": "Gustavus Adolphus",
       "data_name": "Swedes Gustavus Adolphus Swedish",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Lion of the North combined arms",

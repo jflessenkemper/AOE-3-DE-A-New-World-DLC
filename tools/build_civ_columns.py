@@ -161,10 +161,16 @@ def load_strings_by_civ():
     return result
 
 def load_civmods():
+    # The game-canonical civmods.xml uses CamelCase tags (<Civ>, <Name>,
+    # <HomeCityFlagIconWPF>, …). The rest of this script assumes lowercase
+    # field names, so we normalize every tag to lowercase up front.
     path = os.path.join(DATA_DIR, "civmods.xml")
     tree = ET.parse(path)
+    root = tree.getroot()
+    for el in root.iter():
+        el.tag = el.tag.lower()
     civs = {}
-    for civ in tree.getroot().findall(".//civ"):
+    for civ in root.findall(".//civ"):
         name = civ.findtext("name")
         if name:
             civs[name] = civ
@@ -409,17 +415,17 @@ _CPAI_PORTRAIT = {
     "French":              "french_bourbon.png",
     "British":             "british.png",
     "Germans":             "germans_frederick.png",
-    "Russians":            "russians_ivan.png",
+    "Russians":            "russians_catherine.png",
     "Spanish":             "spanish_isabella.png",
     "Ottomans":            "ottomans_suleiman.png",
     "Portuguese":          "portuguese_henry.png",
-    "Dutch":               "dutch.png",
+    "Dutch":               "dutch_maurice.png",
     "DEItalians":          "italians_garibaldi.png",
     "DEMaltese":           "maltese_valette.png",
     "DESwedish":           "swedes_gustavus.png",
     "Chinese":             "chinese_kangxi.png",
     "Japanese":            "japanese_tokugawa.png",
-    "Indians":             "indians_shivaji.png",
+    "Indians":             "indians.png",
     "XPAztec":             "aztecs_montezuma.png",
     "XPIroquois":          "haudenosaunee_hiawatha.png",
     "DEInca":              "inca_pachacuti.png",
