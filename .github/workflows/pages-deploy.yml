@@ -6,9 +6,9 @@ on:
     paths:
       - "a_new_world.html"
       - "a_new_world_columns.html"
-      - "map_3d.html"
       - "resources/images/icons/**"
-      - "resources/3d/**"
+      - "artifacts/validation/visual_art/**/crops/**"
+      - "artifacts/validation/visual_art/**/thumbs/**"
       - ".github/workflows/pages-deploy.yml"
   workflow_dispatch:
 
@@ -32,21 +32,9 @@ jobs:
           mkdir -p _site/resources/images/icons _site/resources/images/textures
           cp a_new_world.html _site/index.html
           cp a_new_world.html _site/a_new_world.html
-          # Legacy URL alias — keep the old filename serving so external
-          # links to /LEGENDARY_LEADERS_TREE.html don't 404.
-          cp a_new_world.html _site/LEGENDARY_LEADERS_TREE.html
           # Civ review column view (horizontal-scroll one-column-per-civ).
           if [ -f a_new_world_columns.html ]; then
             cp a_new_world_columns.html _site/a_new_world_columns.html
-          fi
-          # 3D viewer
-          if [ -f map_3d.html ]; then
-            cp map_3d.html _site/map_3d.html
-          fi
-          # 3D asset directory (CC0 models, textures) — only if present.
-          if [ -d resources/3d ]; then
-            mkdir -p _site/resources/3d
-            cp -r resources/3d/. _site/resources/3d/
           fi
           # Only the icon trees the HTML references — keeps the artifact small.
           for d in cards flags singleplayer units; do
@@ -57,6 +45,13 @@ jobs:
           # Page background (Poly Haven CC0 wood panel) — referenced by a_new_world.html.
           if [ -d resources/images/textures ]; then
             cp -r resources/images/textures/. _site/resources/images/textures/
+          fi
+          # Visual capture thumbnails and crops for the lightbox modal.
+          # Deployed URL base: /artifacts/visual_art/<civ>/thumbs/ and .../crops/
+          # Generator references these as artifacts/visual_art/... (relative to _site root).
+          if [ -d artifacts/validation/visual_art ]; then
+            mkdir -p _site/artifacts
+            cp -r artifacts/validation/visual_art _site/artifacts/visual_art
           fi
           # A tiny .nojekyll so Pages doesn't try to process the tree.
           touch _site/.nojekyll

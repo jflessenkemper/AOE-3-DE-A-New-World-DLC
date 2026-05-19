@@ -30,7 +30,7 @@
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Flower War tribute aggression",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png",
-      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
       "claims": {
         "wall_strategy": 1,
         "first_military_building": "barracks_or_stable",
@@ -43,25 +43,6 @@
       },
       "prose_overrides": []
     },
-    "Baja Californians Pineda Revolution": {
-      "civ_label": "Baja Californians",
-      "leader_label": "Pineda Revolution",
-      "data_name": "Baja Californians Pineda Revolution",
-      "doctrine_label": "Mobile Frontier Scatter",
-      "doctrine_summary": "Californio defence of La Paz and San Jos&eacute; del Cabo",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_baja_californians_alvarado.png",
-      "doctrine_prose": "Spreads buildings far and wide, plants extra Town Centers and Trading Posts on the map perimeter, and skips walls almost entirely. Built for raid-economy and map control rather than turtling.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ]
-      },
-      "prose_overrides": []
-    },
     "Barbary Barbarossa Corsair Revolution": {
       "civ_label": "Barbary",
       "leader_label": "Barbarossa Corsair Revolution",
@@ -69,7 +50,7 @@
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Corsair raider economy",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
       "claims": {
         "wall_strategy": 2,
         "first_military_building": "dock",
@@ -97,7 +78,8 @@
         "military_distance_band": [
           1.1,
           1.3
-        ]
+        ],
+        "wall_strategy": 3
       },
       "prose_overrides": []
     },
@@ -108,7 +90,7 @@
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Tudor naval and mercantile",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
       "claims": {
         "wall_strategy": 2,
         "first_military_building": "dock",
@@ -127,10 +109,11 @@
       "leader_label": "Vallejo Revolution",
       "data_name": "Californians Vallejo Revolution",
       "doctrine_label": "Distributed Economic Network",
-      "doctrine_summary": "Ranchero defense and trade",
+      "doctrine_summary": "Hacienda-cattle ranch economy",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_californians_vallejo.png",
       "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
       "claims": {
+        "wall_strategy": 3,
         "first_military_building": "trading_post_or_market",
         "expects_treaty": true,
         "military_distance_band": [
@@ -147,7 +130,7 @@
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Blockhouse infantry frontier",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
       "claims": {
         "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
@@ -164,10 +147,11 @@
       "leader_label": "Morazan Revolution",
       "data_name": "Central Americans Morazan Revolution",
       "doctrine_label": "Distributed Economic Network",
-      "doctrine_summary": "Federal Republic native muster",
+      "doctrine_summary": "Federal Republic frontier militia",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_central_americans_morazan.png",
       "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
       "claims": {
+        "wall_strategy": 3,
         "first_military_building": "trading_post_or_market",
         "expects_treaty": true,
         "military_distance_band": [
@@ -186,7 +170,7 @@
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png",
       "doctrine_prose": "Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
       "claims": {
-        "wall_strategy": 1,
+        "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
         "first_wall_before_ms": 720000,
         "military_distance_band": [
@@ -203,7 +187,7 @@
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Eight-Banner pacification macro",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
       "claims": {
         "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
@@ -243,7 +227,7 @@
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Stadtholder drill-and-bank",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
       "claims": {
         "wall_strategy": 2,
         "first_military_building": "dock",
@@ -304,7 +288,7 @@
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Mannerheim-line ski infantry",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
       "claims": {
         "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
@@ -321,15 +305,15 @@
       "leader_label": "Papineau Revolution",
       "data_name": "French Canadians Papineau Revolution",
       "doctrine_label": "Civic Militia Center",
-      "doctrine_summary": "Patriote militia and Iroquois levy",
+      "doctrine_summary": "Patriote militia and outpost line",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png",
-      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses \u2014 Town Centers and Outposts that summon militia \u2014 rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
+      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
       "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
+        "wall_strategy": 3,
+        "first_military_building": "outpost",
+        "expects_forward": false,
         "military_distance_band": [
-          0.8,
+          0.85,
           1.1
         ]
       },
@@ -342,7 +326,7 @@
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Bourbon Restoration court army",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
       "claims": {
         "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
@@ -361,7 +345,7 @@
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Hohenzollern oblique-order shock",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,
         "first_military_building": "barracks_or_stable",
@@ -382,7 +366,7 @@
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Mass infantry insurrection",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png",
-      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
       "claims": {
         "wall_strategy": 1,
         "first_military_building": "barracks_or_stable",
@@ -404,6 +388,7 @@
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png",
       "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
       "claims": {
+        "wall_strategy": 5,
         "first_military_building": "trading_post_or_market",
         "expects_treaty": true,
         "military_distance_band": [
@@ -413,10 +398,10 @@
       },
       "prose_overrides": []
     },
-    "Hausa Muhammadu Kanta": {
+    "Hausa Usman dan Fodio": {
       "civ_label": "Hausa",
-      "leader_label": "Muhammadu Kanta",
-      "data_name": "Hausa Muhammadu Kanta",
+      "leader_label": "Usman dan Fodio",
+      "data_name": "Hausa Usman dan Fodio",
       "doctrine_label": "Distributed Economic Network",
       "doctrine_summary": "Surame fortress and trans-Saharan caravan lattice",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_hausa_usman.png",
@@ -427,7 +412,8 @@
         "military_distance_band": [
           1.1,
           1.3
-        ]
+        ],
+        "wall_strategy": 3
       },
       "prose_overrides": []
     },
@@ -460,7 +446,7 @@
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png",
       "doctrine_prose": "Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
       "claims": {
-        "wall_strategy": 1,
+        "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
         "first_wall_before_ms": 720000,
         "military_distance_band": [
@@ -470,10 +456,10 @@
       },
       "prose_overrides": []
     },
-    "Indians Shivaji Maharaj Maratha": {
+    "Indians Akbar": {
       "civ_label": "Indians",
-      "leader_label": "Shivaji Maharaj Maratha",
-      "data_name": "Indians Shivaji Maharaj Maratha",
+      "leader_label": "Akbar",
+      "data_name": "Indians Akbar",
       "doctrine_label": "Highland Citadel",
       "doctrine_summary": "Maratha Ganimi Kava raid",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png",
@@ -517,7 +503,7 @@
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Risorgimento volunteer columns",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,
         "first_military_building": "barracks_or_stable",
@@ -540,6 +526,7 @@
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png",
       "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
       "claims": {
+        "wall_strategy": 5,
         "first_military_building": "trading_post_or_market",
         "expects_treaty": true,
         "military_distance_band": [
@@ -549,13 +536,13 @@
       },
       "prose_overrides": []
     },
-    "Lakota Gall Sioux": {
+    "Lakota Crazy Horse": {
       "civ_label": "Lakota",
-      "leader_label": "Gall Sioux",
-      "data_name": "Lakota Gall Sioux",
-      "doctrine_label": "Plains Cavalry Wedge",
+      "leader_label": "Crazy Horse",
+      "data_name": "Lakota Crazy Horse",
+      "doctrine_label": "Steppe Cavalry Wedge",
       "doctrine_summary": "Little Bighorn envelopment",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_gall.png",
+      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png",
       "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
       "claims": {
         "wall_strategy": 5,
@@ -596,7 +583,7 @@
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Indigenous insurrection mass",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png",
-      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
       "claims": {
         "wall_strategy": 1,
         "first_military_building": "barracks_or_stable",
@@ -614,9 +601,9 @@
       "leader_label": "Hidalgo Standard",
       "data_name": "Mexicans Hidalgo Standard",
       "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Grito de Dolores lev\u00e9e",
+      "doctrine_summary": "Grito de Dolores levée",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,
         "first_military_building": "barracks_or_stable",
@@ -635,8 +622,8 @@
       "leader_label": "Napoleon Bonaparte Revolution",
       "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
       "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Grande Arm\u00e9e Grand Battery empire",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png",
+      "doctrine_summary": "Grande Armée Grand Battery empire",
+      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png",
       "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
       "claims": {
         "wall_strategy": 5,
@@ -679,7 +666,7 @@
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png",
       "doctrine_prose": "Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
       "claims": {
-        "wall_strategy": 1,
+        "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
         "first_wall_before_ms": 720000,
         "military_distance_band": [
@@ -696,7 +683,7 @@
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Sagres carrack-and-padrao empire",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
       "claims": {
         "wall_strategy": 2,
         "first_military_building": "dock",
@@ -715,9 +702,9 @@
       "leader_label": "Robespierre Revolution",
       "data_name": "Revolutionary France Robespierre Revolution",
       "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Lev\u00e9e-en-masse Republic",
+      "doctrine_summary": "Levée-en-masse Republic",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,
         "first_military_building": "barracks_or_stable",
@@ -735,16 +722,17 @@
       "civ_label": "Rio Grande",
       "leader_label": "Canales Rosillo Revolution",
       "data_name": "Rio Grande Canales Rosillo Revolution",
-      "doctrine_label": "Mobile Frontier Scatter",
-      "doctrine_summary": "Rio Grande Republic horse",
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Norteno raid-republic on the frontier",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_rio_grande_canales_rosillo.png",
       "doctrine_prose": "Spreads buildings far and wide, plants extra Town Centers and Trading Posts on the map perimeter, and skips walls almost entirely. Built for raid-economy and map control rather than turtling.",
       "claims": {
         "wall_strategy": 5,
         "first_military_building": "barracks_or_stable",
         "expects_forward": true,
+        "first_barracks_before_ms": 360000,
         "military_distance_band": [
-          1.1,
+          0.85,
           1.3
         ]
       },
@@ -757,10 +745,10 @@
       "doctrine_label": "Civic Militia Center",
       "doctrine_summary": "Danubian Principalities consolidation",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png",
-      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses \u2014 Town Centers and Outposts that summon militia \u2014 rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
+      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
       "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
+        "wall_strategy": 3,
+        "first_military_building": "outpost",
         "expects_infantry": true,
         "military_distance_band": [
           0.8,
@@ -769,16 +757,16 @@
       },
       "prose_overrides": []
     },
-    "Russians Ivan Terrible": {
+    "Russians Catherine": {
       "civ_label": "Russians",
-      "leader_label": "Ivan Terrible",
-      "data_name": "Russians Ivan Terrible",
-      "doctrine_label": "Streltsy siege",
+      "leader_label": "Catherine",
+      "data_name": "Russians Catherine",
+      "doctrine_label": "Cossack Voisko",
       "doctrine_summary": "Oprichnik terror",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png",
       "doctrine_prose": "Plays a wide, mobile game: cheap horsemen raid in roving bands, the home base leans on Blockhouses rather than full stone walls, and the AI rushes to a third Town Center to fuel the cavalry stream.",
       "claims": {
-        "wall_strategy": 0,
+        "wall_strategy": 3,
         "first_military_building": "barracks_or_stable",
         "expects_infantry": true,
         "expects_artillery": true,
@@ -799,7 +787,7 @@
       "doctrine_label": "Naval Mercantile Compound",
       "doctrine_summary": "Boer commando trader-cavalry",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
       "claims": {
         "wall_strategy": 2,
         "first_military_building": "dock",
@@ -883,7 +871,7 @@
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Continental Army Fabian-to-Yorktown",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,
         "first_military_building": "barracks_or_stable",
@@ -902,9 +890,9 @@
       "leader_label": "Pat Revolution",
       "data_name": "Yucatan Pat Revolution",
       "doctrine_label": "Jungle Guerrilla Network",
-      "doctrine_summary": "Caste War Maya levy uprising",
+      "doctrine_summary": "Maya Caste War jungle insurgency",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_yucatan_carrillo_puerto.png",
-      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
       "claims": {
         "wall_strategy": 1,
         "first_military_building": "barracks_or_stable",
