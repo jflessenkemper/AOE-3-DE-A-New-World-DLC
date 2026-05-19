@@ -73,18 +73,8 @@ h1{font-family:'Cinzel','Trajan Pro','Palatino Linotype',serif;font-size:2.6rem;
 .az-strip button{background:transparent;color:var(--dim);border:1px solid transparent;padding:2px 6px;border-radius:3px;font-family:'Cinzel','Trajan Pro',serif;font-size:.82rem;font-weight:600;cursor:pointer;min-width:24px;letter-spacing:.04em}
 .az-strip button:not(:disabled):hover{color:var(--accent);border-color:var(--border);background:var(--accent2)}
 .az-strip button:disabled{opacity:.28;cursor:default}
-.review-counter{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:4px;color:var(--accent);font-family:'Cinzel','Trajan Pro',serif;font-size:.78rem;letter-spacing:.06em;font-variant-numeric:tabular-nums}
-.review-counter .rc-bar{display:inline-block;width:60px;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-left:4px}
-.review-counter .rc-fill{display:block;height:100%;width:0%;background:var(--accent);transition:width .25s ease}
 .toolbar .toggle-btn{position:relative}
 .toolbar .toggle-btn[aria-pressed="true"]{background:var(--accent);color:#160d04;border-color:var(--accent-bright)}
-.review-check{display:inline-flex;align-items:center;gap:4px;margin-left:10px;padding:1px 6px;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:3px;cursor:pointer;user-select:none;font-size:.7rem;color:var(--dim);letter-spacing:.04em;font-family:'EB Garamond',Georgia,serif;vertical-align:middle}
-.review-check input{margin:0;accent-color:var(--accent);cursor:pointer}
-.review-check:hover{color:var(--accent);border-color:var(--accent)}
-.nation-node.is-reviewed>summary .review-check{color:#7ee787;border-color:#7ee787;background:rgba(126,231,135,0.08)}
-.nation-node.is-reviewed>summary{opacity:.62}
-.nation-node.is-reviewed>summary:hover{opacity:.9}
-body.hide-reviewed .nation-node.is-reviewed{display:none}
 body.compact-mode .dev-table,body.compact-mode .deck-grid,body.compact-mode .explorer-block{display:none}
 body.compact-mode .nation-node>details:not(.explorer-block){display:none}
 body.compact-mode .nation-node>summary+details[open]>summary{font-size:.95rem}
@@ -281,9 +271,6 @@ html.is-loading body>:not(#preloader){visibility:hidden}
 <button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Collapse All</button>
 <button onclick="(()=>{document.querySelectorAll('.nation-node details').forEach(d=>{const isDevSection=d.querySelector('summary .cat-label')?.textContent.trim()==='Development';d.open=isDevSection})})()">Dev Trees Only</button>
 <button type="button" class="toggle-btn" id="toggle-compact" aria-pressed="false">Compact</button>
-<button type="button" class="toggle-btn" id="toggle-hide-reviewed" aria-pressed="false">Hide reviewed</button>
-<button type="button" id="reset-reviewed" title="Clear all reviewed marks">Reset</button>
-<span class="review-counter" id="review-counter" title="Reviewed civs">0 / 45 reviewed<span class="rc-bar"><span class="rc-fill" id="rc-fill"></span></span></span>
 <input type="search" class="search" id="nation-search" placeholder="Search nations, leaders, units, cards…  (press /)" autocomplete="off"
        oninput="(()=&gt;{const q=this.value.trim().toLowerCase();const tokens=q.split(/\s+/).filter(Boolean);const nodes=document.querySelectorAll(&#x27;.nation-node&#x27;);nodes.forEach(n=&gt;{const blob=(n.dataset.search||n.dataset.name||&#x27;&#x27;).toLowerCase();const hit=!tokens.length||tokens.every(t=&gt;blob.includes(t));n.classList.toggle(&#x27;is-hidden&#x27;,!hit);if(q&amp;&amp;hit)n.open=true});document.querySelectorAll(&#x27;.section-head&#x27;).forEach(s=&gt;{const visible=s.querySelectorAll(&#x27;.nation-node:not(.is-hidden)&#x27;).length;s.classList.toggle(&#x27;is-empty&#x27;,q&amp;&amp;visible===0)})}).call(this)">
 </div>
@@ -5478,81 +5465,9 @@ window.NATION_PLAYSTYLE = {
 <script>
 (function(){
   "use strict";
-  var STORE_KEY = "anw_reviewed_v1";
   var COMPACT_KEY = "anw_compact_v1";
-  var HIDE_REV_KEY = "anw_hide_reviewed_v1";
-
-  function loadSet(key){
-    try { var raw = localStorage.getItem(key); if(!raw) return new Set(); var arr = JSON.parse(raw); return new Set(Array.isArray(arr)?arr:[]); }
-    catch(e){ return new Set(); }
-  }
-  function saveSet(key, set){
-    try { localStorage.setItem(key, JSON.stringify(Array.from(set))); } catch(e){}
-  }
-
-  var reviewed = loadSet(STORE_KEY);
   var nodes = Array.prototype.slice.call(document.querySelectorAll(".nation-node"));
-  var counterText = document.querySelector("#review-counter");
-  var counterFill = document.querySelector("#rc-fill");
 
-  function updateCounter(){
-    var done = 0;
-    nodes.forEach(function(n){ if(n.classList.contains("is-reviewed")) done++; });
-    var total = nodes.length;
-    if(counterText){
-      counterText.firstChild.nodeValue = done + " / " + total + " reviewed";
-    }
-    if(counterFill){
-      counterFill.style.width = (total ? (100*done/total) : 0) + "%";
-    }
-  }
-
-  // Inject reviewed checkbox into each nation-node summary
-  nodes.forEach(function(node){
-    var name = node.getAttribute("data-name") || "";
-    var summary = node.querySelector("summary");
-    if(!summary) return;
-    var label = document.createElement("label");
-    label.className = "review-check";
-    label.title = "Mark this civ as reviewed";
-    var cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.checked = reviewed.has(name);
-    if(cb.checked) node.classList.add("is-reviewed");
-    cb.addEventListener("click", function(e){ e.stopPropagation(); });
-    cb.addEventListener("change", function(){
-      if(cb.checked){ reviewed.add(name); node.classList.add("is-reviewed"); }
-      else { reviewed.delete(name); node.classList.remove("is-reviewed"); }
-      saveSet(STORE_KEY, reviewed);
-      updateCounter();
-    });
-    var txt = document.createElement("span");
-    txt.textContent = "reviewed";
-    label.appendChild(cb);
-    label.appendChild(txt);
-    // Stop the click on the label from toggling the <details> open/close
-    label.addEventListener("click", function(e){ e.stopPropagation(); });
-    var header = summary.querySelector(".nation-header") || summary;
-    header.appendChild(label);
-  });
-  updateCounter();
-
-  // Hide-reviewed toggle
-  var hideBtn = document.querySelector("#toggle-hide-reviewed");
-  function applyHideReviewed(on){
-    document.body.classList.toggle("hide-reviewed", !!on);
-    if(hideBtn) hideBtn.setAttribute("aria-pressed", on ? "true" : "false");
-    try { localStorage.setItem(HIDE_REV_KEY, on ? "1" : "0"); } catch(e){}
-  }
-  if(hideBtn){
-    hideBtn.addEventListener("click", function(){
-      var on = hideBtn.getAttribute("aria-pressed") !== "true";
-      applyHideReviewed(on);
-    });
-  }
-  applyHideReviewed(localStorage.getItem(HIDE_REV_KEY) === "1");
-
-  // Compact mode toggle
   var compactBtn = document.querySelector("#toggle-compact");
   function applyCompact(on){
     document.body.classList.toggle("compact-mode", !!on);
@@ -5567,27 +5482,8 @@ window.NATION_PLAYSTYLE = {
   }
   applyCompact(localStorage.getItem(COMPACT_KEY) === "1");
 
-  // Reset reviewed
-  var resetBtn = document.querySelector("#reset-reviewed");
-  if(resetBtn){
-    resetBtn.addEventListener("click", function(){
-      if(!reviewed.size) return;
-      if(!confirm("Clear all " + reviewed.size + " reviewed marks?")) return;
-      reviewed.clear();
-      saveSet(STORE_KEY, reviewed);
-      nodes.forEach(function(n){
-        n.classList.remove("is-reviewed");
-        var cb = n.querySelector(".review-check input");
-        if(cb) cb.checked = false;
-      });
-      updateCounter();
-    });
-  }
-
-  // A-Z jump strip: one button per first-letter that exists
   var azStrip = document.querySelector("#az-strip");
   if(azStrip){
-    // Map letter -> first node starting with that letter (by data-name).
     var firstByLetter = {};
     nodes.forEach(function(n){
       var name = (n.getAttribute("data-name") || "").trim();
@@ -5596,8 +5492,7 @@ window.NATION_PLAYSTYLE = {
       if(!/[A-Z]/.test(letter)) return;
       if(!(letter in firstByLetter)) firstByLetter[letter] = n;
     });
-    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    letters.forEach(function(L){
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(function(L){
       var btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = L;
@@ -5606,11 +5501,9 @@ window.NATION_PLAYSTYLE = {
         btn.disabled = true;
       } else {
         btn.addEventListener("click", function(){
-          // Make sure the target is visible: clear search, ensure section open
           var section = target.closest(".section-head");
           if(section) section.open = true;
           target.scrollIntoView({behavior:"smooth", block:"start"});
-          // Visually pulse
           target.style.transition = "outline-color .6s ease";
           target.style.outline = "2px solid var(--accent)";
           target.style.outlineOffset = "2px";
@@ -5621,7 +5514,6 @@ window.NATION_PLAYSTYLE = {
     });
   }
 
-  // Keyboard: "/" focuses search, "Esc" clears it
   var searchInput = document.querySelector("#nation-search");
   document.addEventListener("keydown", function(e){
     if(e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")){
