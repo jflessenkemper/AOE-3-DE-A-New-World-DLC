@@ -413,7 +413,7 @@ def blurb_key(civ_token):
 # ── Reference-site portrait map (token → cpai_avatar_*.png filename) ──────────
 _CPAI_PORTRAIT = {
     "French":              "french_bourbon.png",
-    "British":             "british.png",
+    "British":             "british_elizabeth.png",
     "Germans":             "germans_frederick.png",
     "Russians":            "russians_catherine.png",
     "Spanish":             "spanish_isabella.png",
