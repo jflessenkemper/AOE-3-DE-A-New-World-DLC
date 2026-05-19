@@ -22,7 +22,7 @@ bool gMontezumaRulesEnabled = false;
 
 void initLeaderMontezuma(void)
 {
-   llVerboseEcho("Legendary Leaders: activating Motecuhzoma II personality.");
+   llVerboseEcho("A New World: activating Motecuhzoma II personality.");
 
    llSetAggressivePersonality();
    btRushBoom = 0.55;          // Boom first, Flower War second.
@@ -33,6 +33,11 @@ void initLeaderMontezuma(void)
 
    // LL-BUILD-STYLE-BEGIN
    llUseJungleGuerrillaNetworkStyle(0);   // War Huts + chokes; no perimeter wall.
+   // Spec override: Aztecs Montezuma doctrine — wall the chokes (Tlaxcala
+   // border + causeway entries). The Jungle Guerrilla helper assigns
+   // MobileNoWalls(5) by default; spec/playstyle_spec.json wants
+   // ChokepointSegments(1) to lock down causeway approaches.
+   gLLWallStrategy = cLLWallStrategyChokepointSegments;
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.7, 0.3, 1, 3.0);
 

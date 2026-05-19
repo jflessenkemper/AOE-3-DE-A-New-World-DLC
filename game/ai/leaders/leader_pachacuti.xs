@@ -39,6 +39,12 @@ void initLeaderPachacuti(void)
    llUseAndeanTerraceFortressStyle(4);
    gLLHouseDistanceMultiplier = 0.75;
    llSetBuildStrongpointProfile(3, 3, 2, false);
+   // Spec override: Inca Pachacuti doctrine — Sacsayhuamán concentric
+   // ring fortress (Tier-walls the high ground in two or three concentric
+   // rings — see playstyle_spec.json "Inca Pachacuti".doctrine_prose).
+   // Andean Terrace helper defaults to ChokepointSegments(1); override
+   // to FortressRing(0) to match the spec.
+   gLLWallStrategy = cLLWallStrategyFortressRing;
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
 
