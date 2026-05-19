@@ -428,7 +428,7 @@ _CPAI_PORTRAIT = {
     "DEMexicans":          "mexicans_hidalgo.png",
     "DEEthiopians":        "ethiopians_menelik.png",
     "DEHausa":             "hausa_usman.png",
-    "ANWNapoleonicFrance": "napoleonic_france_napoleon.png",
+    "ANWNapoleonicFrance": "napoleonic_france.png",
     "ANWRevFrance":        "revolutionary_france.png",
     "ANWCanadians":        "canadians_brock.png",
     "ANWBrazil":           "brazil_pedro_i.png",
