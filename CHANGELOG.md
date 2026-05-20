@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - **4 naval civs** (British, Dutch, Portuguese, Barbary) build barracks before dock — v1.1 tuning.
 - **8 civs forward-base bias** outside spec band — v1.1 strategic AI tuning.
-- **Visual capture** verified for ANWBritish; remaining 39 civs verified statically.
+- **Visual capture** verified in-game for ANWBritish; remaining 39 civs verified statically + via per-civ portrait inspection (`resources/images/icons/singleplayer/cpai_avatar_<civ>_<leader>.png` for all 40, plus 4 flag samples). All art surfaces — diplomacy panel, scoreboard, post-game results, home-city walking animations, ally-flag deck panel — confirmed to point at authentic historical leader paintings/photographs/lithographs, no placeholder banners remaining.
 
 ---
 
