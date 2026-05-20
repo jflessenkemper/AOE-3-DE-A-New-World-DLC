@@ -7,7 +7,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494001</displaynameid>
-		<rollovernameid>490240</rollovernameid>
+		<rollovernameid>400020</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -274,7 +274,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494002</displaynameid>
-		<rollovernameid>490242</rollovernameid>
+		<rollovernameid>400020</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -541,7 +541,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494005</displaynameid>
-		<rollovernameid>490228</rollovernameid>
+		<rollovernameid>400005</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -811,7 +811,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494007</displaynameid>
-		<rollovernameid>490226</rollovernameid>
+		<rollovernameid>400003</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -1083,7 +1083,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494008</displaynameid>
-		<rollovernameid>490223</rollovernameid>
+		<rollovernameid>400001</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -1339,7 +1339,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494009</displaynameid>
-		<rollovernameid>490230</rollovernameid>
+		<rollovernameid>400007</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -1595,7 +1595,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494010</displaynameid>
-		<rollovernameid>490241</rollovernameid>
+		<rollovernameid>400018</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -1857,7 +1857,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494011</displaynameid>
-		<rollovernameid>490231</rollovernameid>
+		<rollovernameid>400008</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -2113,7 +2113,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494012</displaynameid>
-		<rollovernameid>490235</rollovernameid>
+		<rollovernameid>400014</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -2395,7 +2395,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494013</displaynameid>
-		<rollovernameid>490237</rollovernameid>
+		<rollovernameid>400016</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -2665,7 +2665,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494014</displaynameid>
-		<rollovernameid>490245</rollovernameid>
+		<rollovernameid>400024</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -2934,7 +2934,7 @@
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494015</displaynameid>
-		<rollovernameid>490233</rollovernameid>
+		<rollovernameid>400011</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -3193,7 +3193,7 @@
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494016</displaynameid>
-		<rollovernameid>490236</rollovernameid>
+		<rollovernameid>400015</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -3453,7 +3453,7 @@
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494017</displaynameid>
-		<rollovernameid>490244</rollovernameid>
+		<rollovernameid>400023</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -3713,7 +3713,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494018</displaynameid>
-		<rollovernameid>490225</rollovernameid>
+		<rollovernameid>400002</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -3959,7 +3959,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494019</displaynameid>
-		<rollovernameid>490232</rollovernameid>
+		<rollovernameid>400009</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -4207,7 +4207,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494024</displaynameid>
-		<rollovernameid>490238</rollovernameid>
+		<rollovernameid>400017</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -4660,7 +4660,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494026</displaynameid>
-		<rollovernameid>490246</rollovernameid>
+		<rollovernameid>400025</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -5122,7 +5122,7 @@
 		<culture>Aztec</culture>
 		<settlerprotoname>SettlerNative</settlerprotoname>
 		<displaynameid>410000</displaynameid>
-		<rollovernameid>490200</rollovernameid>
+		<rollovernameid>490213</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -5659,7 +5659,7 @@
 		<culture>Chinese</culture>
 		<settlerprotoname>ypSettlerAsian</settlerprotoname>
 		<displaynameid>410002</displaynameid>
-		<rollovernameid>490202</rollovernameid>
+		<rollovernameid>490233</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -7188,7 +7188,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410003</displaynameid>
-		<rollovernameid>490203</rollovernameid>
+		<rollovernameid>490207</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -7454,7 +7454,7 @@
 		<culture>AfricaEast</culture>
 		<settlerprotoname>deSettlerAfrican</settlerprotoname>
 		<displaynameid>410004</displaynameid>
-		<rollovernameid>490204</rollovernameid>
+		<rollovernameid>490209</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -7765,7 +7765,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410005</displaynameid>
-		<rollovernameid>490205</rollovernameid>
+		<rollovernameid>490219</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -8036,7 +8036,7 @@
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410006</displaynameid>
-		<rollovernameid>490206</rollovernameid>
+		<rollovernameid>490243</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -8283,7 +8283,7 @@
 		<culture>Iroquois</culture>
 		<settlerprotoname>SettlerNative</settlerprotoname>
 		<displaynameid>410007</displaynameid>
-		<rollovernameid>490207</rollovernameid>
+		<rollovernameid>490239</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -8538,7 +8538,7 @@
 		<culture>AfricaWest</culture>
 		<settlerprotoname>deSettlerAfrican</settlerprotoname>
 		<displaynameid>410008</displaynameid>
-		<rollovernameid>490208</rollovernameid>
+		<rollovernameid>490203</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -8826,7 +8826,7 @@
 		<culture>Inca</culture>
 		<settlerprotoname>SettlerNative</settlerprotoname>
 		<displaynameid>410009</displaynameid>
-		<rollovernameid>490209</rollovernameid>
+		<rollovernameid>490215</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -9081,7 +9081,7 @@
 		<culture>Indian</culture>
 		<settlerprotoname>ypSettlerIndian</settlerprotoname>
 		<displaynameid>410010</displaynameid>
-		<rollovernameid>490210</rollovernameid>
+		<rollovernameid>490211</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -9531,7 +9531,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410011</displaynameid>
-		<rollovernameid>490211</rollovernameid>
+		<rollovernameid>490227</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -9801,7 +9801,7 @@
 		<culture>Japanese</culture>
 		<settlerprotoname>ypSettlerJapanese</settlerprotoname>
 		<displaynameid>410012</displaynameid>
-		<rollovernameid>490212</rollovernameid>
+		<rollovernameid>490237</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -10319,7 +10319,7 @@
 		<culture>Sioux</culture>
 		<settlerprotoname>SettlerNative</settlerprotoname>
 		<displaynameid>410013</displaynameid>
-		<rollovernameid>490213</rollovernameid>
+		<rollovernameid>490241</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -10572,7 +10572,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410014</displaynameid>
-		<rollovernameid>490214</rollovernameid>
+		<rollovernameid>490231</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -10850,7 +10850,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410015</displaynameid>
-		<rollovernameid>490215</rollovernameid>
+		<rollovernameid>490221</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -11300,7 +11300,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410016</displaynameid>
-		<rollovernameid>490216</rollovernameid>
+		<rollovernameid>490235</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -11550,7 +11550,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410017</displaynameid>
-		<rollovernameid>490217</rollovernameid>
+		<rollovernameid>490225</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -11815,7 +11815,7 @@
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410018</displaynameid>
-		<rollovernameid>490218</rollovernameid>
+		<rollovernameid>490205</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -12100,7 +12100,7 @@
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410019</displaynameid>
-		<rollovernameid>490219</rollovernameid>
+		<rollovernameid>490217</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -12361,7 +12361,7 @@
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410020</displaynameid>
-		<rollovernameid>490220</rollovernameid>
+		<rollovernameid>490229</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
@@ -12624,7 +12624,7 @@
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>410021</displaynameid>
-		<rollovernameid>490221</rollovernameid>
+		<rollovernameid>490223</rollovernameid>
 		<alliedid>26446</alliedid>
 		<alliedotherid>26445</alliedotherid>
 		<unalliedid>26444</unalliedid>
