@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - **4 naval civs** (British, Dutch, Portuguese, Barbary) build barracks before dock — v1.1 tuning.
 - **8 civs forward-base bias** outside spec band — v1.1 strategic AI tuning.
-- **Visual capture** verified in-game for ANWBritish; remaining 39 civs verified statically + via per-civ portrait inspection (`resources/images/icons/singleplayer/cpai_avatar_<civ>_<leader>.png` for all 40, plus 4 flag samples). All art surfaces — diplomacy panel, scoreboard, post-game results, home-city walking animations, ally-flag deck panel — confirmed to point at authentic historical leader paintings/photographs/lithographs, no placeholder banners remaining.
+- **Visual capture** verified in-game for ANWBritish; all 40 picker civ leader portraits independently visually inspected at the pixel level (`resources/images/icons/singleplayer/cpai_avatar_<civ>_<leader>.png`) and confirmed to depict the correct historical figure in period-appropriate art — Tudor court paintings (Elizabeth I), Qing scrolls (Kangxi), Ottoman miniatures (Suleiman), 19th-century photographs (Mannerheim, Kruger, Cuza, Kossuth), Cuzco-school colonial paintings (Pachacuti), period sketches (Crazy Horse), Javanese lithographs (Diponegoro), and so on across every region/era represented. Plus revolution-variant Papineau daguerreotype confirmed. All art surfaces — diplomacy panel, scoreboard, post-game results, home-city walking animations, ally-flag deck panel — point at authentic historical leader artwork, with no placeholder banners or generic civ-flag fallbacks remaining.
 
 ---
 
