@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- **Lobby picker double-up** — the 22 base picker civs (British, XPAztec, DEItalians, …) used to render alongside their ANW counterparts in both the Skirmish "Select Civilization" picker and the "Select Home City" picker, producing 44 rows with visually-duplicate names and a tail of raw engine tokens (DEItalians, XPSioux) where the base stringtable didn't resolve. Fixed by adding 22 `<civ>` suppression entries to `data/civmods.xml` that override each base picker civ with `<main>0</main>` + `<visible>0</visible>` + empty `<homecityfilename></homecityfilename>`. Mirrors the engine's own hide-civ pattern (TheCircle, SPCBarbaryPirates). Caught locally by new validators `validate_offline_picker.py` (now `<visible>`-aware) and `validate_no_homecity_doubles.py`.
 - **9 wall_strategy spec mismatches** via leader-file overrides (Montezuma, Pachacuti, Catherine, Haitians, Chileans/Indonesians/Mayans/Peruvians/Yucatan revolutions). South Africans is correct from the `llUseNavalMercantileCompoundStyle` helper default (`cLLWallStrategyCoastalBatteries`), not an override.
 - **`validate_leader_vs_spec.py`** — position-aware override detection (no false-positives on helper vs. spec-override).
 - **`audit_engine_vs_spec.py`** — override-aware logic plus brace-counted block extraction.
@@ -93,11 +94,17 @@ captured a clean resign on every match.
   `data/anwhomecity*.xml` Land deck and verified against `cards.json`.
 
 ### Civmods.xml strategy change (2026-05-20)
-- The mod now **adds** the 22 base ANW civs alongside the base-game civs
-  rather than overriding them — `ANW_TOKEN_TO_ENGINE_TOKEN` is now empty
-  and every ANW token maps to itself in civmods.xml `<name>` entries
-  and decks_anw.json keys. Restores access to vanilla civs for players
-  who want both gameplay sets available.
+- The mod ships 40 ANW civs as **additive** entries (every ANW token maps
+  to itself in `civmods.xml` `<name>` entries and `decks_anw.json` keys;
+  `ANW_TOKEN_TO_ENGINE_TOKEN` is empty). The base picker civs that ANW
+  re-implements (British, XPAztec, DEItalians, …) are then **suppressed**
+  in the picker via 22 hide-base entries that set `<main>0</main>` +
+  `<visible>0</visible>` + empty `<homecityfilename></homecityfilename>`.
+  Net effect: the Skirmish "Select Civilization" picker shows exactly the
+  40 ANW civs, no double-ups, no raw engine tokens. The base civ
+  definitions remain intact in the engine for save / replay
+  compatibility, scenarios, and other game modes that reference them by
+  token (e.g. `British`, `XPSioux`).
 
 ### Added
 - **40 ANW civilizations** in the lobby picker (`data/civmods.xml`) —
