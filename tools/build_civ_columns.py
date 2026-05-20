@@ -1501,26 +1501,59 @@ def vanilla_summary_stem(civ_token):
     s = get_civ_stem(civ_token)
     return _VANILLA_STEM_ALIAS.get(s, s)
 
+# Avatar stem aliases — many ANW civs ship `cpai_avatar_anw{stem}.png`
+# (anwfrench, anwbarbary, anwrevfrance…) instead of the bare `{stem}.png`.
+# A few stems also need bare-form aliases (usa→united_states,
+# napoleonicfrance→napoleonic_france, swedes→swedish, etc.).
+_AVATAR_ALIASES = {
+    "usa":              ["united_states", "anwusa"],
+    "napoleonicfrance": ["napoleonic_france", "anwnapoleonicfrance"],
+    "revfrance":        ["anwrevfrance"],
+    "frenchcanadians":  ["french_canadians", "anwfrenchcanadians"],
+    "swedes":           ["swedish", "anwswedes"],
+    "iroquois":         ["haudenosaunee", "anwhaudenosaunee"],
+    "sioux":            ["lakota", "anwsioux"],
+    "aztec":            ["aztecs", "anwaztecs"],
+    "americans":        ["united_states", "americans_jefferson"],
+}
+
+
+def _avatar_stem_candidates(stem):
+    """Return ordered list of stem variants to try for cpai_avatar_*.png/.ddt."""
+    cands = [f"anw{stem}", stem]
+    for alt in _AVATAR_ALIASES.get(stem, []):
+        if alt not in cands:
+            cands.append(alt)
+    return cands
+
+
 def find_leader_portraits(civ_stem):
-    """List per-leader avatar files for this civ_stem.
-    Returns [{leader, png_rel, ddt_rel, has_png, has_ddt}, ...]."""
+    """List per-leader avatar files across all stem candidates.
+    Returns [{leader, png_rel, ddt_rel, has_png, has_ddt, stem}, ...]."""
     portrait_dir = os.path.join(MOD_ROOT, "resources/images/icons/singleplayer")
     out = []
     if not os.path.isdir(portrait_dir):
         return out
-    prefix = f"cpai_avatar_{civ_stem}_"
-    for fn in sorted(os.listdir(portrait_dir)):
-        if fn.startswith(prefix) and fn.endswith(".png"):
-            leader = fn[len(prefix):-4]
-            png_rel = f"resources/images/icons/singleplayer/{fn}"
-            ddt_rel = f"art/ui/singleplayer/cpai_avatar_{civ_stem}_{leader}.ddt"
-            out.append({
-                "leader":  leader,
-                "png_rel": png_rel,
-                "ddt_rel": ddt_rel,
-                "has_png": True,
-                "has_ddt": os.path.exists(os.path.join(MOD_ROOT, ddt_rel)),
-            })
+    files = sorted(os.listdir(portrait_dir))
+    seen = set()
+    for cand in _avatar_stem_candidates(civ_stem):
+        prefix = f"cpai_avatar_{cand}_"
+        for fn in files:
+            if fn.startswith(prefix) and fn.endswith(".png"):
+                leader = fn[len(prefix):-4]
+                if leader in seen:
+                    continue
+                seen.add(leader)
+                png_rel = f"resources/images/icons/singleplayer/{fn}"
+                ddt_rel = f"art/ui/singleplayer/cpai_avatar_{cand}_{leader}.ddt"
+                out.append({
+                    "leader":  leader,
+                    "png_rel": png_rel,
+                    "ddt_rel": ddt_rel,
+                    "has_png": True,
+                    "has_ddt": os.path.exists(os.path.join(MOD_ROOT, ddt_rel)),
+                    "stem":    cand,
+                })
     return out
 
 def render_art_section(civ_token, civ_el, hc, strings):
@@ -1591,9 +1624,19 @@ def render_art_section(civ_token, civ_el, hc, strings):
     cov_row("Matchmaking",      mm_path)
 
     # ── Section B: Default avatar (PNG + compiled DDT) ───────────────────────
+    # Try every candidate stem (anw{stem}, {stem}, aliases) so ANW civs that
+    # ship `cpai_avatar_anwfrench.png` don't get flagged as missing the
+    # never-shipped bare `cpai_avatar_french.png`.
     parts.append('<div class="cov-group-lbl">Default avatar</div>')
-    default_png = f"resources/images/icons/singleplayer/cpai_avatar_{stem}.png"
-    default_ddt = f"art/ui/singleplayer/cpai_avatar_{stem}.ddt"
+    def _resolve_default_avatar(ext):
+        sub = "resources/images/icons/singleplayer" if ext == "png" else "art/ui/singleplayer"
+        for cand in _avatar_stem_candidates(stem):
+            rel = f"{sub}/cpai_avatar_{cand}.{ext}"
+            if os.path.exists(os.path.join(MOD_ROOT, rel)):
+                return rel
+        return f"{sub}/cpai_avatar_{stem}.{ext}"  # fall through to base-stem
+    default_png = _resolve_default_avatar("png")
+    default_ddt = _resolve_default_avatar("ddt")
     cov_row("Default avatar PNG", "", expect_file=default_png)
     cov_row("Default avatar DDT", "", expect_file=default_ddt)
 
@@ -1612,17 +1655,23 @@ def render_art_section(civ_token, civ_el, hc, strings):
             present += 1
             ddt_mark = '<span class="cov-ok" title="DDT present">DDT ✓</span>'
         else:
-            missing += 1
+            # PNG-only is fine: engine falls back to PNG when DDT absent.
+            # Counted as "present" rather than "missing" so the asset
+            # coverage tally reflects in-game reality (no broken art).
+            present += 1
             ddt_mark = (
-                '<span class="cov-bad" title="missing: '
-                + html_module.escape(L["ddt_rel"]) + '">DDT ✗</span>'
+                '<span class="cov-optional" title="DDT optional (engine falls back to PNG)">'
+                'DDT ◎</span>'
             )
+        # Use the actual stem the leader file was found under (anw{stem} or
+        # plain {stem}) so the displayed basename matches reality.
+        used_stem = L.get("stem", stem)
         parts.append(
             f'<div class="cov-row cov-leader">'
             f'<span class="cov-lbl">{html_module.escape(L["leader"])}</span>'
             f'<span class="cov-ok">✓</span>'
             f'{thumb(L["png_rel"])}'
-            f'<code class="cov-path">cpai_avatar_{html_module.escape(stem)}_{html_module.escape(L["leader"])}.png</code>'
+            f'<code class="cov-path">cpai_avatar_{html_module.escape(used_stem)}_{html_module.escape(L["leader"])}.png</code>'
             f'{ddt_mark}</div>'
         )
 
@@ -3849,6 +3898,12 @@ html, body {
 }
 .cov-bad {
   color: #ff7777;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.cov-optional {
+  color: rgba(255,210,120,0.65);
   font-weight: 700;
   font-size: 14px;
   flex-shrink: 0;
