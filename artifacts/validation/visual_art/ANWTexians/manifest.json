@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWTexians",
   "civ_label": "Texians",
-  "captured_at": "2026-05-20T00:41:56Z",
+  "captured_at": "2026-05-20T01:09:30Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwtexians_synth_1779237716",
+  "match_id": "anwtexians_synth_1779239370",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237716221,
+      "captured_ms": 1779239370301,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237716327,
+      "captured_ms": 1779239370314,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779237716355,
+      "captured_ms": 1779239370320,
       "ocr_text": null,
       "crops": [
         {
@@ -72,7 +72,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237716403,
+      "captured_ms": 1779239370329,
       "ocr_text": null,
       "crops": [
         {

@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWMaltese",
   "civ_label": "Maltese",
-  "captured_at": "2026-05-20T00:41:46Z",
+  "captured_at": "2026-05-20T01:09:08Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwmaltese_synth_1779237706",
+  "match_id": "anwmaltese_synth_1779239348",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237705760,
+      "captured_ms": 1779239348914,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237705884,
+      "captured_ms": 1779239348926,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779237706036,
+      "captured_ms": 1779239348943,
       "ocr_text": null,
       "crops": [
         {
@@ -84,7 +84,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237706066,
+      "captured_ms": 1779239348952,
       "ocr_text": null,
       "crops": [
         {
@@ -104,7 +104,7 @@
     {
       "label": "06_diplomacy",
       "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1779237706071,
+      "captured_ms": 1779239348955,
       "ocr_text": null,
       "crops": [
         {

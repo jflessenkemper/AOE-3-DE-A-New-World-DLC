@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWSouthAfricans",
   "civ_label": "SouthAfricans",
-  "captured_at": "2026-05-20T00:41:54Z",
+  "captured_at": "2026-05-20T01:09:28Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwsouthafricans_synth_1779237714",
+  "match_id": "anwsouthafricans_synth_1779239368",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237713818,
+      "captured_ms": 1779239368297,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237714018,
+      "captured_ms": 1779239368312,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779237714050,
+      "captured_ms": 1779239368319,
       "ocr_text": null,
       "crops": [
         {
@@ -72,7 +72,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237714098,
+      "captured_ms": 1779239368328,
       "ocr_text": null,
       "crops": [
         {

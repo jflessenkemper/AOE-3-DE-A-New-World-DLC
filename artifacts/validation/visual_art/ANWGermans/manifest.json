@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWGermans",
   "civ_label": "Germans",
-  "captured_at": "2026-05-20T00:41:39Z",
+  "captured_at": "2026-05-20T01:09:00Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwgermans_synth_1779237699",
+  "match_id": "anwgermans_synth_1779239340",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237699047,
+      "captured_ms": 1779239340099,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237699213,
+      "captured_ms": 1779239340115,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779237699401,
+      "captured_ms": 1779239340136,
       "ocr_text": null,
       "crops": [
         {
@@ -84,7 +84,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237699437,
+      "captured_ms": 1779239340145,
       "ocr_text": null,
       "crops": [
         {
@@ -104,7 +104,7 @@
     {
       "label": "06_diplomacy",
       "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1779237699441,
+      "captured_ms": 1779239340149,
       "ocr_text": null,
       "crops": [
         {

@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWChileans",
   "civ_label": "Chileans",
-  "captured_at": "2026-05-20T00:41:34Z",
+  "captured_at": "2026-05-20T01:08:50Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwchileans_synth_1779237694",
+  "match_id": "anwchileans_synth_1779239330",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237693727,
+      "captured_ms": 1779239330513,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237693940,
+      "captured_ms": 1779239330528,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779237693968,
+      "captured_ms": 1779239330534,
       "ocr_text": null,
       "crops": [
         {
@@ -72,7 +72,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237694003,
+      "captured_ms": 1779239330544,
       "ocr_text": null,
       "crops": [
         {

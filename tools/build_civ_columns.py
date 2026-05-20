@@ -2041,12 +2041,6 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
       {captures_html}
       {doctrine_html}
     </div>
-    <div class="art-section">
-      <div class="section-label">Data Review</div>
-      {strings_html}
-      {art_refs_html}
-      {techtree_html}
-    </div>
   </div>
 </section>
 """

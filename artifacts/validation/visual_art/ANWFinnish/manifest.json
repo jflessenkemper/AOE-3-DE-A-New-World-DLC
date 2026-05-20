@@ -3,16 +3,16 @@
   "status": "complete",
   "civ_token": "ANWFinnish",
   "civ_label": "Finnish",
-  "captured_at": "2026-05-20T00:41:37Z",
+  "captured_at": "2026-05-20T01:08:52Z",
   "host_perspective": true,
   "host_civ_token": null,
   "synthesised": true,
-  "match_id": "anwfinnish_synth_1779237697",
+  "match_id": "anwfinnish_synth_1779239332",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237697233,
+      "captured_ms": 1779239332015,
       "ocr_text": null,
       "crops": [
         {
@@ -32,7 +32,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237697414,
+      "captured_ms": 1779239332029,
       "ocr_text": null,
       "crops": [
         {
@@ -52,7 +52,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779237697438,
+      "captured_ms": 1779239332035,
       "ocr_text": null,
       "crops": [
         {
@@ -72,7 +72,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237697481,
+      "captured_ms": 1779239332043,
       "ocr_text": null,
       "crops": [
         {

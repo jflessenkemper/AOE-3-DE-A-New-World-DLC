@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -83,11 +84,12 @@ CAPTURE_GROUPS: list[tuple[str, str, tuple[str, ...]]] = [
     ("09_endgame",        "09_endgame.png",        ("endgame_flag",)),
 ]
 
-THUMB_MAX = 320  # px on longest edge — matches what the column site renders
-CROP_MAX  = 800  # px on longest edge — for lightbox click-through PNGs
-FULL_MAX  = 800  # px on longest edge — full-capture stand-in
-# Without these caps a high-res leader portrait can balloon synth crops/full
-# past 30 MB per civ (× 40 civs = 1+ GB of redundant data committed to git).
+THUMB_MAX = 320  # px on longest edge — only the grid thumbnail; the
+# crops/<name>.png that the lightbox opens is now a verbatim copy of
+# the source art file (no downscale, no recompression). User feedback:
+# "the screenshot crops are horrible, can you not crop them and just
+# take a full screenshot for every visual confirmation required" —
+# so the lightbox shows the FULL source, not a downscaled stand-in.
 
 
 def _load_inventory() -> dict:
@@ -165,14 +167,21 @@ def _write_thumb(src: Path, dest_webp: Path) -> bool:
         return False
 
 
-def _copy_crop_png(src: Path, dest_png: Path, max_dim: int = CROP_MAX) -> bool:
-    """Save src as PNG, downscaled if any dimension exceeds max_dim."""
+def _copy_crop_png(src: Path, dest_png: Path) -> bool:
+    """Copy src to dest_png as-is — no downscale, no recompression.
+
+    Earlier passes wrote a downscaled-to-800px PNG into crops/, which made
+    the lightbox "Visual confirmation" image a blurry slice of the source.
+    The user explicitly asked for full-resolution images, so we copy the
+    source bytes through verbatim. For non-PNG sources (rare; some flags
+    are JPG), we still go via Pillow to ensure a valid PNG on disk.
+    """
     try:
-        with Image.open(src) as im:
-            im = im.convert("RGBA")
-            if max(im.size) > max_dim:
-                im.thumbnail((max_dim, max_dim), Image.LANCZOS)
-            im.save(dest_png, format="PNG", optimize=True)
+        if src.suffix.lower() == ".png":
+            shutil.copyfile(src, dest_png)
+        else:
+            with Image.open(src) as im:
+                im.convert("RGBA").save(dest_png, format="PNG", optimize=True)
         return True
     except Exception as exc:  # noqa: BLE001
         print(f"  WARN: crop write failed for {src}: {exc}", file=sys.stderr)
