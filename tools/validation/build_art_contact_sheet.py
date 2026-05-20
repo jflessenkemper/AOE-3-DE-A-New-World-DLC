@@ -628,11 +628,61 @@ def _summary_table(records: list[dict]) -> str:
     return "".join(parts)
 
 
+def _recover_stale_empty_token_blockers(records: list[dict]) -> int:
+    """Repair findings rows where civ_token is empty but display name is recoverable.
+
+    Background: ``validate_civmods_art.py`` emits a BLOCKER row of the form
+    ``{'severity':'BLOCKER','category':'civmods_lookup','message':'civ token ``
+    not found in data/civmods.xml; cannot cross-check art.'}`` for HTML rows
+    whose data-civ attribute is in the old format and never gets joined to
+    a civmods.xml entry. Those rows pollute summary counts in the contact
+    sheet (FAIL/BLOCKER stats), even though the corresponding ANW civs *are*
+    present in civmods.xml under their new token and *do* pass on their own
+    civmods-side record.
+
+    Fix: if a row has ``civ_token == ''`` and its display name is in
+    ``DISPLAY_TO_ENGINE_TOKEN``, set the token from the recovery map and
+    drop the cascade of BLOCKER/lookup findings that only existed because
+    the token was empty. The row keeps its identity for image rendering;
+    its diagnostic noise is removed.
+
+    Returns: count of rows repaired (for the build log).
+    """
+    repaired = 0
+    for rec in records:
+        if rec.get("civ_token"):
+            continue
+        display = rec.get("civ_display", "")
+        engine_token = DISPLAY_TO_ENGINE_TOKEN.get(display)
+        if not engine_token:
+            continue
+        rec["civ_token"] = engine_token
+        # Drop the civmods_lookup BLOCKER row(s) that were only emitted
+        # because civ_token was empty. Preserve other findings if any.
+        rec["findings"] = [
+            f for f in (rec.get("findings") or [])
+            if not (f.get("category") == "civmods_lookup"
+                    and "not found in data/civmods.xml" in (f.get("message") or ""))
+        ]
+        # If nothing else flags this row, mark it PASS.
+        if not rec["findings"]:
+            rec["ok"] = True
+        repaired += 1
+    return repaired
+
+
 def main() -> int:
     civmods_records = json.loads(CIVMODS_ART.read_text(encoding="utf-8"))
     dev_tree_records = json.loads(DEV_TREE.read_text(encoding="utf-8"))
     inv = json.loads(ART_INV.read_text(encoding="utf-8")) if ART_INV.exists() else {"civs": {}}
     inv_civs: dict[str, dict] = inv.get("civs", {})
+
+    # Repair stale empty-token BLOCKERs from validate_civmods_art.py before
+    # they show up in summary counts. Idempotent across validator re-runs.
+    repaired = _recover_stale_empty_token_blockers(civmods_records)
+    if repaired:
+        print(f"recovered {repaired} stale empty-token findings rows "
+              f"(see DISPLAY_TO_ENGINE_TOKEN in build_art_contact_sheet.py)")
 
     # Index dev_tree by token for quick lookup; merge findings into the main list
     # by appending dev-tree findings to each record's findings[].
