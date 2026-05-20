@@ -1829,8 +1829,36 @@ def render_captures_section(civ_token, display_name, manifest, ally_manifest):
         )
 
     figures_html = "\n      ".join(figure_parts)
+
+    # Provenance meta: synth vs real capture, freshness timestamp, count.
+    # Reviewer needs to know whether a thumb is a real in-game capture
+    # (gold standard) or a synthesised stand-in from art_inventory.
+    _meta_bits = [f"{len(thumbs)} surfaces"]
+    if manifest:
+        if manifest.get("synthesised"):
+            _meta_bits.append(
+                '<span style="color:#ffd980;" title="Synthesised from static '
+                'art assets — not a real in-game capture. Run the capture '
+                'runner against a live match for the gold-standard set.">'
+                '◇ synthesised</span>'
+            )
+        else:
+            _meta_bits.append(
+                '<span style="color:#9fe39f;" title="Real in-game capture '
+                'via gamescopectl / X11 fallback.">● in-game capture</span>'
+            )
+        captured_at = manifest.get("captured_at") or ""
+        if captured_at:
+            _meta_bits.append(f'<span style="opacity:.7;">captured {html_module.escape(captured_at)}</span>')
+    meta_html = " · ".join(_meta_bits)
+
     return f"""<div class="captures-section">
-  <div class="section-label">Visual confirmation</div>
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      {meta_html}
+    </span>
+  </div>
   <div class="captures-grid">
       {figures_html}
   </div>
@@ -2759,6 +2787,7 @@ def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
     if spec_entry:
         doctrine_label   = spec_entry.get("doctrine_label",   "") or ""
         doctrine_summary = spec_entry.get("doctrine_summary", "") or ""
+        doctrine_prose   = spec_entry.get("doctrine_prose",   "") or ""
         playstyle        = spec_entry.get("playstyle",        "") or ""
         wall_strategy    = spec_entry.get("wall_strategy",    "") or ""
         rush_or_boom     = spec_entry.get("rush_or_boom",     "") or ""
@@ -2777,6 +2806,53 @@ def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
         _spec_row("Playstyle",      playstyle)
         _spec_row("Wall strategy",  wall_strategy)
         _spec_row("Rush/Boom",      rush_or_boom)
+
+        # Decode the wall_strategy enum to its name + tactical summary
+        # (canonical values from game/ai/aiHeader.xs:202-207). Reviewers
+        # comparing in-game behaviour to spec want to see "Coastal Batteries
+        # — land-side ring, gun towers at coast" not the bare integer "2".
+        _WALL_STRAT = {
+            0: ("Fortress Ring",        "Full double ring, all sides"),
+            1: ("Chokepoint Segments",  "Segment walls at terrain pinches"),
+            2: ("Coastal Batteries",    "Land-side ring, gun towers at coast"),
+            3: ("Frontier Palisades",   "Quick wooden ring + blockhouses"),
+            4: ("Urban Barricade",      "Tight compact inner ring + towers"),
+            5: ("Mobile / No Walls",    "Scouts + outposts, no walls"),
+        }
+
+        # ── Spec claims: the canonical "what should this AI do" fingerprint
+        # the reviewer should be able to check off while watching a match.
+        # Renders ms timings as readable mm:ss and bands as "[lo–hi]".
+        claims = spec_entry.get("claims") or {}
+        def _fmt_claim(k, v):
+            if isinstance(v, bool):
+                return ("yes" if v else "no")
+            if isinstance(v, list) and len(v) == 2:
+                lo, hi = v
+                return f"[{lo:g} – {hi:g}]"
+            if isinstance(v, (int, float)) and k.endswith("_ms"):
+                secs = int(v) // 1000
+                return f"≤ {secs // 60}m {secs % 60:02d}s"
+            if k == "wall_strategy" and isinstance(v, int) and v in _WALL_STRAT:
+                name, blurb = _WALL_STRAT[v]
+                return f"{v} — {name} ({blurb})"
+            return str(v)
+        if claims:
+            for ck, cv in claims.items():
+                # Pretty label: snake_case → "Snake case"
+                pretty = ck.replace("_", " ").capitalize()
+                _spec_row(pretty, _fmt_claim(ck, cv))
+
+        # Long-form doctrine prose at the bottom of the table — narrative
+        # description the reviewer reads to understand the civ's intent.
+        if doctrine_prose:
+            spec_rows.append(
+                f'<tr><td class="lbl">Intent</td>'
+                f'<td class="blurb-cell" style="font-size:11.5px;line-height:1.45;'
+                f'font-style:italic;color:rgba(255,255,255,0.88);">'
+                f'{html_module.escape(doctrine_prose[:600])}</td></tr>'
+            )
+
         if spec_rows:
             parts.append(
                 '<div class="section-label">AI Doctrine</div>'
