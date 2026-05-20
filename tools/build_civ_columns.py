@@ -1888,6 +1888,624 @@ def render_doctrine_section(civ_token, display_name):
 """
 
 
+# ── Age-up choices collector ───────────────────────────────────────────────────
+# Politician tech names that contain these keywords → age tier
+_POLITICIAN_AGE_KEYWORDS = [
+    # (keyword_in_techname_lower, age_label)
+    ("colonial",   "Age II — Colonial"),
+    ("fortress",   "Age III — Fortress"),
+    ("industrial", "Age IV — Industrial"),
+    ("imperial",   "Age V — Imperial"),
+]
+# Basenames that are shared generic politicians, not civ-specific unlocks
+_POLITICIAN_GENERIC_PREFIXES = (
+    "Politician", "DEPolitician", "UnlockPolitician",
+)
+
+
+def _politician_age_tier(tech_name: str) -> str:
+    """Guess the age tier of a politician tech from its tech name."""
+    n = tech_name.lower()
+    for keyword, label in _POLITICIAN_AGE_KEYWORDS:
+        if keyword in n:
+            return label
+    # Fallback: generals / viceroys / black duke are Industrial+
+    if any(x in n for x in ("viceroy", "general", "blackduke", "kingsmusketeer")):
+        return "Age IV — Industrial"
+    # Mohawk, Engineer, Bishop, Admiral → Fortress
+    if any(x in n for x in ("mohawk", "engineer", "bishop", "admiral", "merccontractor")):
+        return "Age III — Fortress"
+    # Logistician, PhilosopherPrince, Naturalist, Governor → Colonial
+    if any(x in n for x in ("logistician", "philosopher", "naturalist", "governor", "inventor")):
+        return "Age II — Colonial"
+    return "Age II — Colonial"  # safe default
+
+
+def _politician_display_name(tech_name: str) -> str:
+    """Convert a politician tech name to a human-readable label.
+
+    Strips common prefixes and the civ-specific suffix, then title-cases.
+    E.g. DEPoliticianLogisticianColonialBritish -> Logistician (Colonial)
+         UnlockPoliticianMohawkStatesmanBritish -> Mohawk Statesman
+         PoliticianViceroyBritish               -> Viceroy
+    """
+    n = tech_name
+    for prefix in ("DEPolitician", "UnlockPolitician", "Politician"):
+        if n.startswith(prefix):
+            n = n[len(prefix):]
+            break
+    # Strip civ-specific suffix (British, French, Spanish, etc.)
+    for civ_suffix in (
+        "British", "French", "Spanish", "Portuguese", "Dutch", "Germans",
+        "Russians", "Ottomans", "Italians", "Maltese", "Swedish", "Chinese",
+        "Japanese", "Indians", "Aztec", "Iroquois", "Inca", "Sioux",
+        "Americans", "Mexicans", "Ethiopians", "Hausa",
+    ):
+        if n.endswith(civ_suffix):
+            n = n[: -len(civ_suffix)]
+            break
+    # Insert spaces before capital letters (CamelCase -> words)
+    words = re.sub(r"([A-Z][a-z])", r" \1", n).strip()
+    # Collapse double spaces
+    words = re.sub(r"\s+", " ", words).strip()
+    return words if words else tech_name
+
+
+def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
+    """Parse techtreemods.xml and return age-up politician entries for a civ.
+
+    Returns a list of dicts: {tech_name, display_name, age_tier}.
+
+    Strategy
+    --------
+    1. Primary: scan ALL Tech elements for TechStatus=obtainable effects
+       whose text (a) contains "Politician" and (b) ends with the civ stem
+       (e.g. "British" → DEPoliticianLogisticianColonialBritish).
+       These are civ-specific politician unlocks.
+    2. Fallback: if the civ has no civ-specific politicians, look for techs
+       that activate Colonialize<Stem>, Fortressize<Stem>, Industrialize<Stem>
+       and harvest the generic Politician entries in those same techs.
+    """
+    # Derive the civ base stem (e.g. "British" from "ANWBritish")
+    civ_stem = civ_token
+    for prefix in ("ANW", "DE", "XP"):
+        if civ_stem.startswith(prefix):
+            civ_stem = civ_stem[len(prefix):]
+            break
+    civ_stem_lower = civ_stem.lower()
+
+    try:
+        tree = ET.parse(techtree_xml_path)
+        root = tree.getroot()
+    except Exception:
+        return []
+
+    politicians: list = []
+    seen: set = set()
+
+    techs = root.findall(".//Tech") + root.findall(".//tech")
+
+    # Pass 1: civ-specific politician entries (tech name ends with civ stem)
+    for tech in techs:
+        for child in tech:
+            if child.tag.lower() != "effects":
+                continue
+            for e in child:
+                if (e.get("type") or e.get("Type") or "").lower() != "techstatus":
+                    continue
+                status = (e.get("status") or e.get("Status") or "").lower()
+                if status != "obtainable":
+                    continue
+                t = (e.text or "").strip()
+                t_lower = t.lower()
+                # Must contain "politician" and end with the civ stem
+                if "politician" in t_lower and t_lower.endswith(civ_stem_lower) and t not in seen:
+                    seen.add(t)
+                    politicians.append({
+                        "tech_name":    t,
+                        "display_name": _politician_display_name(t),
+                        "age_tier":     _politician_age_tier(t),
+                    })
+
+    if politicians:
+        return politicians
+
+    # Pass 2 fallback: find activator techs and harvest generic politician entries
+    # (useful for civs that use vanilla politician menu unchanged)
+    for tech in techs:
+        activates_this_civ = False
+        effects_el = None
+        for child in tech:
+            if child.tag.lower() == "effects":
+                effects_el = child
+                break
+        if effects_el is None:
+            continue
+        for e in effects_el:
+            if (e.get("type") or e.get("Type") or "").lower() == "techstatus":
+                t = (e.text or "").strip()
+                if t.lower() in (
+                    f"colonialize{civ_stem_lower}",
+                    f"fortressize{civ_stem_lower}",
+                    f"industrialize{civ_stem_lower}",
+                ):
+                    activates_this_civ = True
+                    break
+        if not activates_this_civ:
+            continue
+        for e in effects_el:
+            if (e.get("type") or e.get("Type") or "").lower() != "techstatus":
+                continue
+            status = (e.get("status") or e.get("Status") or "").lower()
+            if status != "obtainable":
+                continue
+            t = (e.text or "").strip()
+            t_lower = t.lower()
+            if "politician" in t_lower and t not in seen:
+                seen.add(t)
+                politicians.append({
+                    "tech_name":    t,
+                    "display_name": _politician_display_name(t),
+                    "age_tier":     _politician_age_tier(t),
+                })
+
+    return politicians
+
+
+def render_age_ups_section(civ_token: str, techtree_xml_path: str) -> str:
+    """Render the 'Age-up choices' collapsible section for the Mod Changes panel."""
+    pols = collect_age_ups_for_civ(civ_token, techtree_xml_path)
+
+    # Group by age tier
+    age_order = [
+        "Age II — Colonial",
+        "Age III — Fortress",
+        "Age IV — Industrial",
+        "Age V — Imperial",
+    ]
+    by_age: dict = {a: [] for a in age_order}
+    for p in pols:
+        tier = p["age_tier"]
+        if tier not in by_age:
+            by_age[tier] = []
+        by_age[tier].append(p)
+
+    total = len(pols)
+    parts = [
+        f'<details class="cov-details cov-details-outer">'
+        f'<summary class="cov-group-lbl cov-summary-row">'
+        f'Age-up choices (politicians)'
+        f'<span class="cov-count-pill">{total}</span></summary>'
+    ]
+
+    if not pols:
+        parts.append(
+            '<div class="cov-row"><em class="cov-empty">(none found in techtreemods.xml)</em></div>'
+        )
+    else:
+        parts.append(
+            '<table class="info-table" style="font-size:12px;">'
+            '<thead><tr>'
+            '<th style="padding:2px 6px;">Age</th>'
+            '<th style="padding:2px 6px;">Politician</th>'
+            '<th style="padding:2px 6px;">Tech name</th>'
+            '</tr></thead><tbody>'
+        )
+        for tier in age_order:
+            for p in by_age.get(tier, []):
+                dn  = html_module.escape(p["display_name"])
+                tn  = html_module.escape(p["tech_name"])
+                # Shorten tier label for table
+                tier_short = tier.replace("Age II — ", "II ").replace(
+                    "Age III — ", "III ").replace(
+                    "Age IV — ", "IV ").replace(
+                    "Age V — ", "V ")
+                ts = html_module.escape(tier_short)
+                parts.append(
+                    f'<tr>'
+                    f'<td style="padding:2px 6px;white-space:nowrap;font-size:11px;">{ts}</td>'
+                    f'<td style="padding:2px 6px;">{dn}</td>'
+                    f'<td style="padding:2px 6px;font-size:10px;opacity:0.7;"><code>{tn}</code></td>'
+                    f'</tr>'
+                )
+        parts.append('</tbody></table>')
+
+    parts.append('</details>')
+    return "".join(parts)
+
+
+# ── Unique units collector ─────────────────────────────────────────────────────
+def collect_unique_units_for_civ(civ_token: str, blurbs: dict) -> list:
+    """Return list of unique unit names for this civ.
+
+    Data source: blurbs JSON unique_units list (the authoritative source for
+    the mod; vanilla proto.xml is not in this repo so full stat tables cannot
+    be generated from mod data alone).
+
+    Returns list of str (unit names).
+    """
+    bk = blurb_key(civ_token)
+    blurb = blurbs.get(bk, {})
+    return list(blurb.get("unique_units") or [])
+
+
+def render_unique_units_section(civ_token: str, blurbs: dict) -> str:
+    """Render the 'Unique units' collapsible section for the Mod Changes panel."""
+    units = collect_unique_units_for_civ(civ_token, blurbs)
+
+    parts = [
+        f'<details class="cov-details cov-details-outer">'
+        f'<summary class="cov-group-lbl cov-summary-row">'
+        f'Unique units'
+        f'<span class="cov-count-pill">{len(units)}</span></summary>'
+    ]
+
+    if not units:
+        parts.append(
+            '<div class="cov-row"><em class="cov-empty">(none listed in civ blurbs)</em></div>'
+        )
+    else:
+        parts.append(
+            '<table class="info-table" style="font-size:12px;">'
+            '<thead><tr>'
+            '<th style="padding:2px 6px;">#</th>'
+            '<th style="padding:2px 6px;">Unit</th>'
+            '<th style="padding:2px 6px;">Notes</th>'
+            '</tr></thead><tbody>'
+        )
+        for i, unit_name in enumerate(units, 1):
+            un  = html_module.escape(unit_name)
+            note = html_module.escape(
+                "(see vanilla proto.xml for full stats — not in mod repo)"
+            )
+            parts.append(
+                f'<tr>'
+                f'<td style="padding:2px 6px;">{i}</td>'
+                f'<td style="padding:2px 6px;font-weight:600;">{un}</td>'
+                f'<td style="padding:2px 6px;font-size:10px;opacity:0.7;">{note}</td>'
+                f'</tr>'
+            )
+        parts.append('</tbody></table>')
+        parts.append(
+            '<div class="cov-row" style="font-size:10px;opacity:0.6;padding:4px 6px;">'
+            'Full HP/attack/cost stats require vanilla proto.xml (not in mod repo). '
+            'Source: data/anw_civ_blurbs.json unique_units.'
+            '</div>'
+        )
+
+    parts.append('</details>')
+    return "".join(parts)
+
+
+# ── AI leader XS knob collector ────────────────────────────────────────────────
+# Maps civ_token -> leader key (the part of the filename after "leader_").
+# Derived from leaderCommon.xs gLLLeaderKey assignments.
+_CIV_LEADER_KEY: dict = {
+    # Base civs (non-ANW tokens)
+    "French":       "bourbon",
+    "British":      "wellington",
+    "Germans":      "frederick",
+    "Russians":     "catherine",
+    "Spanish":      "isabella",
+    "Ottomans":     "suleiman",
+    "Portuguese":   "henry",
+    "Dutch":        "maurice",
+    "DEAmericans":  "washington",
+    "DEMexicans":   "hidalgo",
+    "DEItalians":   "garibaldi",
+    "DEMaltese":    "valette",
+    "XPAztec":      "montezuma",
+    "Chinese":      "kangxi",
+    "DEEthiopians": "menelik",
+    "XPIroquois":   "hiawatha",
+    "DEHausa":      "usman",
+    "DEInca":       "pachacuti",
+    "Indians":      "shivaji",
+    "Japanese":     "tokugawa",
+    "XPSioux":      "crazy_horse",
+    "DESwedish":    "gustavus",
+    # ANW civs share their base-civ leader files
+    "ANWFrench":        "bourbon",
+    "ANWBritish":       "wellington",
+    "ANWGermans":       "frederick",
+    "ANWRussians":      "catherine",
+    "ANWSpanish":       "isabella",
+    "ANWOttomans":      "suleiman",
+    "ANWPortuguese":    "henry",
+    "ANWDutch":         "maurice",
+    "ANWUSA":           "washington",
+    "ANWMexicans":      "hidalgo",
+    "ANWItalians":      "garibaldi",
+    "ANWMaltese":       "valette",
+    "ANWAztecs":        "montezuma",
+    "ANWChinese":       "kangxi",
+    "ANWEthiopians":    "menelik",
+    "ANWHaudenosaunee": "hiawatha",
+    "ANWHausa":         "usman",
+    "ANWInca":          "pachacuti",
+    "ANWIndians":       "shivaji",
+    "ANWJapanese":      "tokugawa",
+    "ANWLakota":        "crazy_horse",
+    "ANWSwedes":        "gustavus",
+    # ANW-only civs with napoleon XS
+    "ANWNapoleonicFrance": "napoleon",
+    "ANWRevFrance":        "napoleon",
+}
+
+# Pattern to extract numeric float / boolean values from XS code
+_XS_ASSIGN_RE = re.compile(
+    r'\b([\w\.]+)\s*=\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|"[^"]*")\s*;',
+    re.IGNORECASE,
+)
+_XS_FUNC_CALL_RE = re.compile(
+    r'\b(ll\w+|bt\w+|cv\w+|gLL\w+)\s*\(([^)]*)\)\s*;',
+    re.IGNORECASE,
+)
+
+
+def _leader_xs_path(civ_token: str) -> str | None:
+    """Return the absolute path to the leader XS file for this civ, or None."""
+    leader_key = _CIV_LEADER_KEY.get(civ_token)
+    if not leader_key:
+        return None
+    # Try direct key as filename suffix
+    candidates = [
+        os.path.join(GAME_DIR, "ai", "leaders", f"leader_{leader_key}.xs"),
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return p
+    return None
+
+
+def collect_leader_ai_for_civ(civ_token: str) -> dict:
+    """Extract AI personality knobs from the leader XS file for this civ.
+
+    Returns a dict with:
+      - 'xs_file': relative path (str) or None
+      - 'lore_comment': the top-of-file comment block (str) or ""
+      - 'personality_style': e.g. "llSetDefensivePersonality()" (str) or ""
+      - 'knobs': list of {name, value, comment} dicts
+      - 'build_style': the llUseXxxStyle() call (str) or ""
+      - 'cvars': list of {name, value, comment} dicts (cvOk*, cvMax*, cvDef*)
+    """
+    result = {
+        "xs_file":          None,
+        "lore_comment":     "",
+        "personality_style": "",
+        "knobs":            [],
+        "build_style":      "",
+        "cvars":            [],
+    }
+
+    xs_path = _leader_xs_path(civ_token)
+    if xs_path is None:
+        return result
+
+    result["xs_file"] = os.path.relpath(xs_path, MOD_ROOT)
+
+    try:
+        with open(xs_path, encoding="utf-8") as f:
+            content = f.read()
+    except OSError:
+        return result
+
+    # ── Extract top-of-file lore comment (/* ... */) ───────────────────────────
+    lore_m = re.search(r'/\*\s*(.*?)\s*\*/', content, re.DOTALL)
+    if lore_m:
+        raw_comment = lore_m.group(1)
+        # Strip leading // from each line and normalise whitespace
+        lines = []
+        for line in raw_comment.splitlines():
+            stripped = line.strip().lstrip("/").strip()
+            if stripped or lines:  # skip leading blank lines
+                lines.append(stripped)
+        # Trim trailing blanks
+        while lines and not lines[-1]:
+            lines.pop()
+        result["lore_comment"] = "\n".join(lines)
+
+    # ── Find the initLeader<Name>() function body ──────────────────────────────
+    init_fn_m = re.search(
+        r'void\s+initLeader\w+\s*\(\s*void\s*\)\s*\{(.*?)\n\}',
+        content,
+        re.DOTALL,
+    )
+    if init_fn_m is None:
+        return result
+
+    fn_body = init_fn_m.group(1)
+
+    # ── Personality style ──────────────────────────────────────────────────────
+    ps_m = re.search(r'\b(ll(?:Set|Use)\w+Personality\s*\([^)]*\))\s*;', fn_body)
+    if ps_m:
+        result["personality_style"] = ps_m.group(1)
+
+    # ── Military focus call ────────────────────────────────────────────────────
+    mf_m = re.search(
+        r'llSetMilitaryFocus\s*\(([^)]+)\)',
+        fn_body,
+    )
+    if mf_m:
+        result["knobs"].append({
+            "name":    "llSetMilitaryFocus(inf,cav,art)",
+            "value":   mf_m.group(1).strip(),
+            "comment": "infantry / cavalry / artillery share",
+        })
+
+    # ── btXxx float assignments ────────────────────────────────────────────────
+    _BT_COMMENTS = {
+        "btRushBoom":       "negative = boom, positive = rush",
+        "btOffenseDefense": "negative = offensive, positive = defensive",
+        "btBiasTrade":      "0-1 trade route emphasis",
+        "btBiasNative":     "native ally usage",
+        "btBiasInf":        "infantry focus (per-age)",
+        "btBiasCav":        "cavalry focus (per-age)",
+        "btBiasArt":        "artillery focus (per-age)",
+    }
+    seen_bt: set = set()
+    for m in _XS_ASSIGN_RE.finditer(fn_body):
+        varname = m.group(1)
+        val     = m.group(2)
+        if varname.startswith("bt") and varname not in seen_bt:
+            seen_bt.add(varname)
+            result["knobs"].append({
+                "name":    varname,
+                "value":   val,
+                "comment": _BT_COMMENTS.get(varname, ""),
+            })
+
+    # ── Build style call ───────────────────────────────────────────────────────
+    bs_m = re.search(r'\b(llUse\w+Style\s*\([^)]*\))\s*;', fn_body)
+    if bs_m:
+        result["build_style"] = bs_m.group(1)
+
+    # ── gLL* and cv* assignments ───────────────────────────────────────────────
+    _CVAR_COMMENTS = {
+        "gLLEconomicDistanceMultiplier":   "eco network spread multiplier",
+        "gLLTownCenterDistanceMultiplier": "TC placement spread",
+        "gLLEarlyWallingEnabled":          "enable early wall rings",
+        "cvOkToBuildForts":                "allow fort construction",
+        "cvOkToFish":                      "enable fishing fleet",
+        "cvMaxTowers":                     "max towers to build",
+        "cvMaxArmyPop":                    "army population cap",
+        "cvMaxCivPop":                     "civilian population cap",
+        "cvDefenseReflexRadiusActive":     "active defense perimeter",
+        "cvDefenseReflexRadiusPassive":    "passive regroup radius",
+        "cvDefenseReflexSearchRadius":     "threat detection radius",
+    }
+    seen_cv: set = set()
+    for m in _XS_ASSIGN_RE.finditer(fn_body):
+        varname = m.group(1)
+        val     = m.group(2)
+        if (varname.startswith("gLL") or varname.startswith("cv")) and varname not in seen_cv:
+            seen_cv.add(varname)
+            result["cvars"].append({
+                "name":    varname,
+                "value":   val,
+                "comment": _CVAR_COMMENTS.get(varname, ""),
+            })
+
+    # ── llSetLeaderTacticalDoctrine ────────────────────────────────────────────
+    td_m = re.search(r'llSetLeaderTacticalDoctrine\s*\(([^)]+)\)', fn_body)
+    if td_m:
+        result["cvars"].append({
+            "name":    "llSetLeaderTacticalDoctrine(...)",
+            "value":   td_m.group(1).strip(),
+            "comment": "aggression, caution, echelon, spacing",
+        })
+
+    return result
+
+
+def render_ai_knobs_section(civ_token: str) -> str:
+    """Render the 'AI personality knobs' collapsible section for the Mod Changes panel."""
+    data = collect_leader_ai_for_civ(civ_token)
+
+    xs_file    = data.get("xs_file") or ""
+    lore       = data.get("lore_comment", "")
+    pers       = data.get("personality_style", "")
+    knobs      = data.get("knobs", [])
+    build_sty  = data.get("build_style", "")
+    cvars      = data.get("cvars", [])
+
+    total_knobs = len(knobs) + (1 if pers else 0) + (1 if build_sty else 0) + len(cvars)
+
+    parts = [
+        f'<details class="cov-details cov-details-outer">'
+        f'<summary class="cov-group-lbl cov-summary-row">'
+        f'AI personality knobs'
+        f'<span class="cov-count-pill">{total_knobs}</span></summary>'
+    ]
+
+    if not xs_file:
+        parts.append(
+            '<div class="cov-row"><em class="cov-empty">'
+            '(no leader XS file mapped for this civ)</em></div>'
+        )
+        parts.append('</details>')
+        return "".join(parts)
+
+    xs_esc = html_module.escape(xs_file)
+    parts.append(
+        f'<div class="cov-row" style="font-size:10px;opacity:0.6;padding:2px 6px;">'
+        f'Source: <code>{xs_esc}</code></div>'
+    )
+
+    # Lore blockquote
+    if lore:
+        lore_esc = html_module.escape(lore)
+        parts.append(
+            f'<blockquote style="'
+            f'margin:4px 6px 6px;padding:6px 10px;'
+            f'border-left:3px solid rgba(255,255,255,0.3);'
+            f'background:rgba(0,0,0,0.18);border-radius:3px;'
+            f'font-size:11px;line-height:1.5;white-space:pre-line;opacity:0.85;">'
+            f'{lore_esc}'
+            f'</blockquote>'
+        )
+
+    # Knob table
+    if pers or knobs or build_sty or cvars:
+        parts.append(
+            '<table class="info-table" style="font-size:12px;">'
+            '<thead><tr>'
+            '<th style="padding:2px 6px;">Knob</th>'
+            '<th style="padding:2px 6px;">Value</th>'
+            '<th style="padding:2px 6px;">Note</th>'
+            '</tr></thead><tbody>'
+        )
+        if pers:
+            parts.append(
+                f'<tr>'
+                f'<td style="padding:2px 6px;">Personality</td>'
+                f'<td style="padding:2px 6px;font-weight:600;">'
+                f'{html_module.escape(pers)}</td>'
+                f'<td style="padding:2px 6px;opacity:0.7;font-size:10px;">base style</td>'
+                f'</tr>'
+            )
+        for k in knobs:
+            kn  = html_module.escape(k["name"])
+            kv  = html_module.escape(str(k["value"]))
+            kc  = html_module.escape(k.get("comment", ""))
+            parts.append(
+                f'<tr>'
+                f'<td style="padding:2px 6px;"><code>{kn}</code></td>'
+                f'<td style="padding:2px 6px;font-weight:600;">{kv}</td>'
+                f'<td style="padding:2px 6px;opacity:0.7;font-size:10px;">{kc}</td>'
+                f'</tr>'
+            )
+        if build_sty:
+            parts.append(
+                f'<tr>'
+                f'<td style="padding:2px 6px;">Build style</td>'
+                f'<td style="padding:2px 6px;font-weight:600;">'
+                f'{html_module.escape(build_sty)}</td>'
+                f'<td style="padding:2px 6px;opacity:0.7;font-size:10px;">compound/economy layout</td>'
+                f'</tr>'
+            )
+        for c in cvars:
+            cn  = html_module.escape(c["name"])
+            cv  = html_module.escape(str(c["value"]))
+            cc  = html_module.escape(c.get("comment", ""))
+            parts.append(
+                f'<tr>'
+                f'<td style="padding:2px 6px;"><code>{cn}</code></td>'
+                f'<td style="padding:2px 6px;font-weight:600;">{cv}</td>'
+                f'<td style="padding:2px 6px;opacity:0.7;font-size:10px;">{cc}</td>'
+                f'</tr>'
+            )
+        parts.append('</tbody></table>')
+    else:
+        parts.append(
+            '<div class="cov-row"><em class="cov-empty">'
+            '(no initLeader() function found or no knobs parsed)</em></div>'
+        )
+
+    parts.append('</details>')
+    return "".join(parts)
+
+
 def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
                               decks, cards, techtree_by_civ):
     """Render the 'Mod Changes' panel (panel 3 of the 4-panel grid).
@@ -2036,6 +2654,19 @@ def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
         parts.append("\n".join(card_rows))
     else:
         parts.append('<span class="empty">No AI deck defined</span>')
+
+    # ── Age-up choices ─────────────────────────────────────────────────────────
+    _techtree_path = os.path.join(DATA_DIR, "techtreemods.xml")
+    age_ups_html = render_age_ups_section(civ_token, _techtree_path)
+    parts.append(age_ups_html)
+
+    # ── Unique units ───────────────────────────────────────────────────────────
+    unique_units_html = render_unique_units_section(civ_token, blurbs)
+    parts.append(unique_units_html)
+
+    # ── AI personality knobs ───────────────────────────────────────────────────
+    ai_knobs_html = render_ai_knobs_section(civ_token)
+    parts.append(ai_knobs_html)
 
     # ── Tech tree entries ──────────────────────────────────────────────────────
     if techtree_by_civ:
