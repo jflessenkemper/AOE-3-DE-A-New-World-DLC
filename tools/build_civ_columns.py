@@ -1945,12 +1945,22 @@ def _politician_display_name(tech_name: str) -> str:
         if n.startswith(prefix):
             n = n[len(prefix):]
             break
-    # Strip civ-specific suffix (British, French, Spanish, etc.)
+    # Strip civ-specific suffix (British, French, Spanish, etc.).
+    # Order longest-first so "Ottomans" wins over "Ottoman" when present.
     for civ_suffix in (
+        "FederalMX", "SouthAfricans", "FrenchCanadians",
         "British", "French", "Spanish", "Portuguese", "Dutch", "Germans",
-        "Russians", "Ottomans", "Italians", "Maltese", "Swedish", "Chinese",
-        "Japanese", "Indians", "Aztec", "Iroquois", "Inca", "Sioux",
-        "Americans", "Mexicans", "Ethiopians", "Hausa",
+        "German", "Russians", "Russian", "Ottomans", "Ottoman",
+        "Italians", "Italian", "Maltese", "Swedish", "Swedes", "Chinese",
+        "Japanese", "Indians", "Indian", "Aztecs", "Aztec", "Iroquois",
+        "Inca", "Sioux", "Lakota",
+        "Americans", "American", "Mexicans", "Mexican", "Ethiopians",
+        "Ethiopian", "Hausa", "Egyptians", "Egyptian", "Brazilians",
+        "Brazilian", "Brazil",
+        "Argentines", "Chileans", "Peruvians", "Columbians", "Haitians",
+        "Indonesians", "Finnish", "Mayans", "Barbary", "Canadians",
+        "Hungarians", "Romanians", "Texians",
+        "MX",
     ):
         if n.endswith(civ_suffix):
             n = n[: -len(civ_suffix)]
@@ -1985,6 +1995,27 @@ def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
             break
     civ_stem_lower = civ_stem.lower()
 
+    # Allow alternative stems where the tech_name suffix differs from the
+    # token stem (e.g. ANWOttomans → tech names end with "Ottoman" singular,
+    # ANWSwedes → "Swedish" adjective, ANWMexicans → "MX" / "FederalMX",
+    # ANWEthiopians → "Ethiopian" singular). The parser accepts a match
+    # against any stem alias.
+    _STEM_ALIASES = {
+        "ottomans":   ["ottoman"],
+        "italians":   ["italian"],
+        "swedes":     ["swedish"],
+        "germans":    ["german"],
+        "russians":   ["russian"],
+        "mexicans":   ["mx", "federalmx", "mexican"],
+        "ethiopians": ["ethiopian"],
+        "americans":  ["american"],
+        "egyptians":  ["egyptian"],
+        "brazilians": ["brazilian", "brazil"],
+        "indians":    ["indian"],
+        "aztecs":     ["aztec"],
+    }
+    civ_stems_lower = [civ_stem_lower] + _STEM_ALIASES.get(civ_stem_lower, [])
+
     try:
         tree = ET.parse(techtree_xml_path)
         root = tree.getroot()
@@ -2009,8 +2040,12 @@ def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
                     continue
                 t = (e.text or "").strip()
                 t_lower = t.lower()
-                # Must contain "politician" and end with the civ stem
-                if "politician" in t_lower and t_lower.endswith(civ_stem_lower) and t not in seen:
+                # Must contain "politician" and end with the civ stem (or alias)
+                if (
+                    "politician" in t_lower
+                    and any(t_lower.endswith(s) for s in civ_stems_lower)
+                    and t not in seen
+                ):
                     seen.add(t)
                     politicians.append({
                         "tech_name":    t,
@@ -2022,7 +2057,29 @@ def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
         return politicians
 
     # Pass 2 fallback: find activator techs and harvest generic politician entries
-    # (useful for civs that use vanilla politician menu unchanged)
+    # (useful for civs that use vanilla politician menu unchanged). Accept the
+    # `DEColonialize<Stem>` / `ANWColonialize<Stem>` prefixes as well — many
+    # ANW/DLC civs use those variants for their age-up activator tech names.
+    # Activator base names. We match by substring (case-insensitive) so that
+    # variants like "ANWFortressizeEgyptiansShadow" or "ANWAge0Maya" still
+    # register. Also include "age0", "age2", … pattern for ANW start techs.
+    _ACTIVATOR_VERBS = ("colonialize", "fortressize", "industrialize",
+                        "age0", "age2", "age3", "age4", "age5")
+    # Special token stems for civs whose internal naming differs from the
+    # civ_token stem (e.g. ANWMayans → "maya", ANWTexians → "texas").
+    _ANW_INTERNAL_STEM = {
+        "mayans":  ["maya"],
+        "texians": ["texas"],
+        "barbary": ["morocco"],
+    }
+    extra_stems = _ANW_INTERNAL_STEM.get(civ_stem_lower, [])
+    all_stems = civ_stems_lower + extra_stems
+
+    activator_substrings = set()
+    for stem in all_stems:
+        for verb in _ACTIVATOR_VERBS:
+            activator_substrings.add(f"{verb}{stem}")
+
     for tech in techs:
         activates_this_civ = False
         effects_el = None
@@ -2032,16 +2089,18 @@ def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
                 break
         if effects_el is None:
             continue
-        for e in effects_el:
-            if (e.get("type") or e.get("Type") or "").lower() == "techstatus":
-                t = (e.text or "").strip()
-                if t.lower() in (
-                    f"colonialize{civ_stem_lower}",
-                    f"fortressize{civ_stem_lower}",
-                    f"industrialize{civ_stem_lower}",
-                ):
-                    activates_this_civ = True
-                    break
+        # Match against either: (a) effect text equals an activator name, or
+        # (b) the parent tech's own name contains an activator substring.
+        tech_name_lower = (tech.get("name") or tech.get("Name") or "").lower()
+        if any(sub in tech_name_lower for sub in activator_substrings):
+            activates_this_civ = True
+        if not activates_this_civ:
+            for e in effects_el:
+                if (e.get("type") or e.get("Type") or "").lower() == "techstatus":
+                    t = (e.text or "").strip().lower()
+                    if any(sub in t for sub in activator_substrings):
+                        activates_this_civ = True
+                        break
         if not activates_this_civ:
             continue
         for e in effects_el:
@@ -2059,6 +2118,27 @@ def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
                     "display_name": _politician_display_name(t),
                     "age_tier":     _politician_age_tier(t),
                 })
+
+    # Pass 3 fallback: federal politicians keyed by prefix rather than suffix
+    # (e.g. DEPoliticianFederalMX* are Mexican federal politicians keyed by
+    # state name, not by a "Mexican" suffix).
+    _PREFIX_BUCKETS = {
+        "mexicans": "DEPoliticianFederalMX",
+    }
+    if not politicians:
+        bucket_prefix = _PREFIX_BUCKETS.get(civ_stem_lower)
+        if bucket_prefix:
+            for tech in techs:
+                tname = tech.get("name") or tech.get("Name") or ""
+                if not tname.startswith(bucket_prefix):
+                    continue
+                if tname not in seen:
+                    seen.add(tname)
+                    politicians.append({
+                        "tech_name":    tname,
+                        "display_name": _politician_display_name(tname),
+                        "age_tier":     _politician_age_tier(tname),
+                    })
 
     return politicians
 
