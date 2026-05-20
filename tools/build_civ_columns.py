@@ -413,7 +413,7 @@ def blurb_key(civ_token):
 # ── Reference-site portrait map (token → cpai_avatar_*.png filename) ──────────
 _CPAI_PORTRAIT = {
     "French":              "french_bourbon.png",
-    "British":             "british_elizabeth.png",
+    "British":             "british.png",  # base-game matchmaking portrait (user pref)
     "Germans":             "germans_frederick.png",
     "Russians":            "russians_catherine.png",
     "Spanish":             "spanish_isabella.png",
@@ -1888,11 +1888,169 @@ def render_doctrine_section(civ_token, display_name):
 """
 
 
+def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
+                              decks, cards, techtree_by_civ):
+    """Render the 'Mod Changes' panel (panel 3 of the 4-panel grid).
+
+    Contains: core civ data (display name, stats, culture, allied IDs),
+    civ bonus, playstyle, age-up, doctrine, unique units, AI deck cards,
+    and per-civ tech tree entries.
+    """
+    bk = blurb_key(civ_token)
+    blurb = blurbs.get(bk, {})
+    spec_entry, _spec_key = find_spec_entry(civ_token, spec)
+
+    parts = []
+
+    # ── Core civ data ──────────────────────────────────────────────────────────
+    if civ_el is not None:
+        display_id   = civ_el.findtext("displaynameid") or ""
+        rollover_id  = civ_el.findtext("rollovernameid") or ""
+        statsid      = civ_el.findtext("statsid") or ""
+        culture      = civ_el.findtext("culture") or ""
+        allied_id    = civ_el.findtext("alliedid") or ""
+        unallied_id  = civ_el.findtext("unalliedid") or ""
+        display_name = strings.get(display_id, civ_token)
+
+        rows = []
+        def _row(lbl, val):
+            if val:
+                rows.append(
+                    f'<tr><td class="lbl">{html_module.escape(lbl)}</td>'
+                    f'<td><code>{html_module.escape(val)}</code></td></tr>'
+                )
+        _row("Civ token",    civ_token)
+        _row("Stats ID",     statsid)
+        _row("Culture",      culture)
+        _row("Allied ID",    allied_id)
+        _row("Unallied ID",  unallied_id)
+        _row("Display locID", display_id)
+        _row("Rollover locID", rollover_id)
+        if rows:
+            parts.append(
+                '<div class="section-label">Core data</div>'
+                '<table class="info-table"><tbody>'
+                + "".join(rows)
+                + '</tbody></table>'
+            )
+
+    # ── Doctrine / Playstyle from spec ─────────────────────────────────────────
+    if spec_entry:
+        doctrine_label   = spec_entry.get("doctrine_label",   "") or ""
+        doctrine_summary = spec_entry.get("doctrine_summary", "") or ""
+        playstyle        = spec_entry.get("playstyle",        "") or ""
+        wall_strategy    = spec_entry.get("wall_strategy",    "") or ""
+        rush_or_boom     = spec_entry.get("rush_or_boom",     "") or ""
+        leader_label     = spec_entry.get("leader_label",     "") or ""
+        spec_rows = []
+        def _spec_row(lbl, val):
+            if val:
+                spec_rows.append(
+                    f'<tr><td class="lbl">{html_module.escape(lbl)}</td>'
+                    f'<td class="blurb-cell" style="font-size:12px;">'
+                    f'{html_module.escape(val[:300])}</td></tr>'
+                )
+        _spec_row("Leader",         leader_label)
+        _spec_row("Doctrine",       doctrine_label)
+        _spec_row("Doctrine sum.",  doctrine_summary)
+        _spec_row("Playstyle",      playstyle)
+        _spec_row("Wall strategy",  wall_strategy)
+        _spec_row("Rush/Boom",      rush_or_boom)
+        if spec_rows:
+            parts.append(
+                '<div class="section-label">AI Doctrine</div>'
+                '<table class="info-table"><tbody>'
+                + "".join(spec_rows)
+                + '</tbody></table>'
+            )
+
+    # ── Blurb data (civ bonus, age-up, unique units) ───────────────────────────
+    if blurb:
+        blurb_rows = []
+        def _blurb_row(lbl, val):
+            if val:
+                blurb_rows.append(
+                    f'<tr><td class="lbl">{html_module.escape(lbl)}</td>'
+                    f'<td class="blurb-cell">{html_module.escape(str(val)[:350])}</td></tr>'
+                )
+        _blurb_row("Civ bonus",    blurb.get("civ_bonus", ""))
+        _blurb_row("Age-up",       blurb.get("age_up", ""))
+        _blurb_row("Playstyle",    blurb.get("playstyle", ""))
+        _blurb_row("Unique units", ", ".join(blurb.get("unique_units") or []))
+        if blurb_rows:
+            parts.append(
+                '<div class="section-label">Civ bonus &amp; units</div>'
+                '<table class="info-table"><tbody>'
+                + "".join(blurb_rows)
+                + '</tbody></table>'
+            )
+
+    # ── AI Deck cards by age ───────────────────────────────────────────────────
+    dk = deck_key(civ_token)
+    deck_data = decks.get(dk, {})
+    age_labels = {
+        "0": "Discovery", "1": "Colonial",
+        "2": "Fortress",  "3": "Industrial", "4": "Imperial"
+    }
+    total_cards = sum(len(deck_data.get(a, [])) for a in age_labels)
+    parts.append(
+        f'<div class="section-label">AI Deck ({total_cards} cards)</div>'
+    )
+    if deck_data:
+        card_rows = []
+        for age_key in ["0", "1", "2", "3", "4"]:
+            age_cards = deck_data.get(age_key, [])
+            if not age_cards:
+                continue
+            card_html_items = []
+            for card_id in age_cards:
+                card_info = cards.get(card_id, {})
+                card_name = card_info.get("name") or card_id
+                card_desc = card_info.get("desc") or ""
+                card_icon = card_info.get("icon") or ""
+                tooltip = card_name + (f"\n\n{card_desc}" if card_desc else "")
+                tooltip_attr = html_module.escape(tooltip[:400], quote=True)
+                icon_rendered = False
+                if card_icon:
+                    icon_rel = f"resources/images/icons/cards/{card_icon}"
+                    if os.path.exists(os.path.join(MOD_ROOT, icon_rel)):
+                        card_html_items.append(
+                            f'<img class="card-img" loading="lazy" '
+                            f'src="{html_module.escape(icon_rel)}" '
+                            f'alt="{html_module.escape(card_name)}" '
+                            f'title="{tooltip_attr}">'
+                        )
+                        icon_rendered = True
+                if not icon_rendered:
+                    card_html_items.append(
+                        f'<span class="card-text" title="{tooltip_attr}">'
+                        f'{html_module.escape(card_name)}</span>'
+                    )
+            age_lbl = age_labels.get(age_key, f"Age {age_key}")
+            card_rows.append(
+                f'<div class="age-row age-{age_key}">'
+                f'<span class="age-lbl">{age_lbl}</span>'
+                f'<span class="age-cards">{"".join(card_html_items)}</span>'
+                f'</div>'
+            )
+        parts.append("\n".join(card_rows))
+    else:
+        parts.append('<span class="empty">No AI deck defined</span>')
+
+    # ── Tech tree entries ──────────────────────────────────────────────────────
+    if techtree_by_civ:
+        techtree_html, _tc = render_techtree_section(civ_token, techtree_by_civ, strings)
+        parts.append(techtree_html)
+
+    return f'<div class="panel panel-mod">' + "\n".join(parts) + '</div>'
+
+
 # ── Main column renderer ───────────────────────────────────────────────────────
 def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, cards,
                   strings_by_civ=None, techtree_by_civ=None, art_inventory=None):
     civ_el = civmods.get(civ_token)
     if civ_el is None:
+        # Base/DLC civ with no civmods.xml entry — show AI deck + note
         _stub_img = ""
         _cpai_fn = _CPAI_PORTRAIT.get(civ_token)
         if _cpai_fn:
@@ -1903,10 +2061,53 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
         _sub = (f'<div class="col-sub"><span class="hdr-doctrine">{html_module.escape(_doc_lbl)}</span></div>'
                 if _doc_lbl else "")
         _tok = html_module.escape(civ_token)
-        return (f'<section class="civ-col" id="{_tok}" data-civ="{_tok}" style="background:#333;color:#fff;">'
-                f'<div class="col-header">{_stub_img}<div class="hdr-text">'
-                f'<span class="col-name">{_tok}</span>{_sub}</div></div>'
-                f'<p style="padding:8px;opacity:.7">No civmods data</p></section>'), 0, 0
+        # Build an AI deck panel for this base civ
+        _deck_parts = []
+        _dk = deck_key(civ_token)
+        _deck_data = decks.get(_dk, {})
+        _age_labels = {"0": "Discovery", "1": "Colonial", "2": "Fortress",
+                       "3": "Industrial", "4": "Imperial"}
+        _total_c = sum(len(_deck_data.get(a, [])) for a in _age_labels)
+        if _deck_data:
+            _deck_parts.append(f'<div class="section-label">AI Deck ({_total_c} cards) — base civ modified by mod</div>')
+            for _ak in ["0", "1", "2", "3", "4"]:
+                _ac = _deck_data.get(_ak, [])
+                if not _ac:
+                    continue
+                _items = []
+                for _cid in _ac:
+                    _ci = cards.get(_cid, {})
+                    _cn = _ci.get("name") or _cid
+                    _cd = _ci.get("desc") or ""
+                    _ico = _ci.get("icon") or ""
+                    _tip = html_module.escape((_cn + ("\n\n" + _cd if _cd else ""))[:400], quote=True)
+                    _rendered = False
+                    if _ico:
+                        _rel = f"resources/images/icons/cards/{_ico}"
+                        if os.path.exists(os.path.join(MOD_ROOT, _rel)):
+                            _items.append(f'<img class="card-img" loading="lazy" src="{html_module.escape(_rel)}" alt="{html_module.escape(_cn)}" title="{_tip}">')
+                            _rendered = True
+                    if not _rendered:
+                        _items.append(f'<span class="card-text" title="{_tip}">{html_module.escape(_cn)}</span>')
+                _al = _age_labels.get(_ak, f"Age {_ak}")
+                _deck_parts.append(f'<div class="age-row age-{_ak}"><span class="age-lbl">{_al}</span><span class="age-cards">{"".join(_items)}</span></div>')
+        else:
+            _deck_parts.append('<span class="empty">No AI deck defined</span>')
+        _deck_html = "\n".join(_deck_parts)
+        return (
+            f'<section class="civ-col" id="{_tok}" data-civ="{_tok}" style="background:#2a2a3a;color:#fff;">'
+            f'<div class="col-header">{_stub_img}<div class="hdr-text">'
+            f'<span class="col-name">{_tok}</span>'
+            f'<div class="col-sub">Base/DLC civ — no ANW civmods.xml entry</div>'
+            f'{_sub}</div></div>'
+            f'<div class="col-body">'
+            f'<div class="panel panel-strings"><span class="empty" style="padding:8px;">No civmods data</span></div>'
+            f'<div class="panel panel-paths"><span class="empty" style="padding:8px;">No civmods data</span></div>'
+            f'<div class="panel panel-mod">{_deck_html}</div>'
+            f'<div class="panel panel-art"><span class="empty" style="padding:8px;">No art data</span></div>'
+            f'</div>'
+            f'</section>'
+        ), 0, 0
 
     color_entry = colors.get(civ_token, {"r": 60, "g": 60, "b": 80})
     r, g, b = color_entry["r"], color_entry["g"], color_entry["b"]
@@ -1944,32 +2145,27 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
         leader_name_hdr = spec_entry["leader_label"]
     doctrine_label_hdr = spec_entry.get("doctrine_label", "") if spec_entry else ""
 
-    # Cards section (only the cards, info-table is replaced by Strings + Paths)
-    cards_html = render_text_section(
-        civ_token, civ_el, strings, hc, blurbs, spec, decks, cards, colors
-    )
     art_html, resolved, missing = render_art_section(civ_token, civ_el, hc, strings)
 
-    # ── New Strings + Paths sections (replace the old info-table) ─────────────
+    # ── Panel 1: Strings ───────────────────────────────────────────────────────
     _inv = art_inventory if art_inventory is not None else {}
     _str_rows = collect_strings_for_civ(
         civ_token, civ_el, hc, strings, blurbs, spec, decks, cards,
         strings_by_civ if strings_by_civ is not None else {}
     )
-    _path_rows = collect_paths_for_civ(civ_token, civ_el, hc, _inv)
     new_strings_html = render_strings_table(_str_rows)
-    new_paths_html   = render_paths_table(_path_rows)
 
-    # Sections J / K / L (Data Review column — unchanged)
-    strings_html, _sc = render_strings_section(
-        civ_token, strings_by_civ if strings_by_civ is not None else {}
-    )
-    art_refs_html, _arc = render_art_refs_section(civ_token, civ_el)
-    techtree_html, _tc = render_techtree_section(
-        civ_token, techtree_by_civ if techtree_by_civ is not None else {}, strings
+    # ── Panel 2: Paths ────────────────────────────────────────────────────────
+    _path_rows = collect_paths_for_civ(civ_token, civ_el, hc, _inv)
+    new_paths_html = render_paths_table(_path_rows)
+
+    # ── Panel 3: Mod Changes (cards + doctrine + tech tree) ───────────────────
+    mod_changes_html = render_mod_changes_panel(
+        civ_token, civ_el, strings, hc, blurbs, spec, decks, cards,
+        techtree_by_civ if techtree_by_civ is not None else {}
     )
 
-    # Load capture manifests (host + ally perspectives)
+    # ── Panel 4: Art + Captures ───────────────────────────────────────────────
     host_manifest  = load_capture_manifest(civ_token, ally=False)
     ally_manifest  = load_capture_manifest(civ_token, ally=True)
     captures_html  = render_captures_section(civ_token, display_name, host_manifest, ally_manifest)
@@ -1999,8 +2195,7 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     if sub_parts:
         sub_line = f'<div class="col-sub">{" · ".join(sub_parts)}</div>'
 
-    # ── "Needs full custom art" banner: civ has zero vanilla content AND
-    # very little mod-managed content. Pulled from VANILLA_SUMMARY digest.
+    # ── "Needs full custom art" banner ────────────────────────────────────────
     summary_stem = vanilla_summary_stem(civ_token)
     van_summary = VANILLA_SUMMARY.get(summary_stem, {}) if VANILLA_SUMMARY else {}
     van_total   = van_summary.get("_total", 0) if van_summary else 0
@@ -2020,6 +2215,7 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
             '</div>'
         )
 
+    # ── 4-panel grid layout ───────────────────────────────────────────────────
     col = f"""<section class="civ-col" id="{html_module.escape(civ_token)}" data-civ="{html_module.escape(civ_token)}" style="{bg}color:{tc}">
   {empty_banner}
   <div class="col-header">
@@ -2030,12 +2226,14 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     </div>
   </div>
   <div class="col-body">
-    <div class="text-section">
+    <div class="panel panel-strings">
       {new_strings_html}
-      {new_paths_html}
-      {cards_html}
     </div>
-    <div class="art-section">
+    <div class="panel panel-paths">
+      {new_paths_html}
+    </div>
+    {mod_changes_html}
+    <div class="panel panel-art">
       <div class="section-label">Art &amp; Assets</div>
       {art_html}
       {captures_html}
@@ -2266,57 +2464,39 @@ html, body {
   color: rgba(255,220,130,0.92);
 }
 
-/* ── Body: text left / art right (side-by-side, internal vertical scroll) ── */
+/* ── Body: 4-panel horizontal grid, each panel independently scrollable ── */
 .col-body {
   flex: 1 1 0;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 22% 20% 28% 30%;
   min-height: 0;
   overflow: hidden;
 }
 
-/* Left: text/doctrine/cards section */
-.text-section {
-  flex: 1 1 50%;
+/* Each panel: full height, independent vertical scroll */
+.panel {
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 14px 20px;
-  background: rgba(0,0,0,0.44);
-  border-right: 1px solid rgba(255,255,255,0.12);
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  border-right: 1px solid rgba(255,255,255,0.10);
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.35) rgba(0,0,0,0.30);
+  scrollbar-color: rgba(255,255,255,0.30) rgba(0,0,0,0.25);
 }
-.text-section::-webkit-scrollbar {
-  width: 8px;
-}
-.text-section::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.35);
-  border-radius: 4px;
+.panel:last-child { border-right: none; }
+.panel::-webkit-scrollbar { width: 6px; }
+.panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.30);
+  border-radius: 3px;
 }
 
-/* Right: art & assets section */
-.art-section {
-  flex: 1 1 50%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 14px 20px;
-  background: rgba(0,0,0,0.30);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.35) rgba(0,0,0,0.30);
-}
-.art-section::-webkit-scrollbar {
-  width: 8px;
-}
-.art-section::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.35);
-  border-radius: 4px;
-}
+/* Panel-specific backgrounds */
+.panel-strings { background: rgba(0,0,0,0.46); }
+.panel-paths   { background: rgba(0,0,0,0.40); }
+.panel-mod     { background: rgba(0,0,0,0.34); }
+.panel-art     { background: rgba(0,0,0,0.28); }
 
 /* ── Info table ── */
 .info-table {
@@ -3479,11 +3659,49 @@ def build_civ_display_map(civ_order, civmods, strings):
     return "{\n" + ",\n".join(pairs) + "\n}"
 
 
-# ── CIV order (playercolors.xml = 40 civs with civmods data) ─────────────────
+# ── CIV order: all nations the mod touches ────────────────────────────────────
+# Primary: 40 ANW civs from playercolors.xml (have full civmods.xml entries).
+# Secondary: base/DLC civs that have entries in decks_anw.json — the mod
+# modifies their AI decks. These appear at the end, grouped separately.
+_BASE_CIV_ORDER = [
+    # European base civs
+    "British", "French", "Germans", "Russians", "Spanish", "Ottomans",
+    "Portuguese", "Dutch",
+    # DE civs
+    "DEItalians", "DEMaltese", "DESwedish", "DEAmericans", "DEMexicans",
+    "DEEthiopians", "DEHausa", "DEInca",
+    # XP/Warchiefs civs
+    "XPAztec", "XPIroquois", "XPSioux",
+    # Base civs without ANW prefix
+    "Chinese", "Japanese", "Indians",
+]
+
 def get_civ_order():
-    path = os.path.join(DATA_DIR, "playercolors.xml")
-    tree = ET.parse(path)
-    return [c.get("civ") for c in tree.getroot().findall(".//Color") if c.get("civ")]
+    # 1. ANW civs from playercolors.xml
+    pc_path = os.path.join(DATA_DIR, "playercolors.xml")
+    tree = ET.parse(pc_path)
+    anw_order = [c.get("civ") for c in tree.getroot().findall(".//Color") if c.get("civ")]
+
+    # 2. Add base civs that have deck entries in decks_anw.json (mod modifies their AI)
+    decks_path = os.path.join(DATA_DIR, "decks_anw.json")
+    try:
+        with open(decks_path) as f:
+            all_deck_keys = set(json.load(f).keys())
+    except Exception:
+        all_deck_keys = set()
+
+    seen = set(anw_order)
+    # Use the canonical order defined above, then any remaining deck keys
+    extra = []
+    for tok in _BASE_CIV_ORDER:
+        if tok in all_deck_keys and tok not in seen:
+            extra.append(tok)
+            seen.add(tok)
+    # Append any deck keys not yet covered (future-proofing)
+    for tok in sorted(all_deck_keys - seen):
+        extra.append(tok)
+
+    return anw_order + extra
 
 # ── Build ──────────────────────────────────────────────────────────────────────
 def build():
