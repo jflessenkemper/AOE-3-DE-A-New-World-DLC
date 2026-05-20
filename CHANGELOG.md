@@ -4,6 +4,41 @@ All notable changes to **AOE 3 DE - A New World** are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.0.0] — 2026-05-20 (Public Release)
+
+### Added
+
+- **40 playable ANW civilizations**: Argentines, Aztecs, Barbary, Brazil, British, Canadians, Chileans, Chinese, Columbians, Dutch, Egyptians, Ethiopians, Finnish, French, Germans, Haitians, Haudenosaunee, Hausa, Hungarians, Inca, Indians, Indonesians, Italians, Japanese, Lakota, Maltese, Mayans, Mexicans, Napoleonic France, Ottomans, Peruvians, Portuguese, Revolutionary France, Romanians, Russians, South Africans, Spanish, Swedes, Texians, USA.
+- **Home City & Deck systems** for every civ — fully wired into the home city picker and deck loader.
+- **Smart-walls AI system** in `game/ai/core/aiBuildingsWalls.xs`: real chokepoint detection, water/cliff-aware placement, age-tiered radius and gate count, gap-closure verification.
+- **Per-civilization build-style helpers** (`game/ai/leaders/leaderCommon.xs`): Naval Mercantile, Highland Citadel, Jungle Guerrilla, Cossack Voisko, Nomadic Raiding, and 14+ more strategic profiles.
+- **In-game visual capture pipeline** (`tools/aoe3_automation/anw_visual_capture_runner.py`) — automated Workshop visual QA with diplomacy panel flag inspection.
+- **41-validator static QA suite** (`tools/validation/run_all_validators.py`) — XS parsing, terrain heading, leader spec compliance, wall strategy audit, art coverage, civ crossref validation.
+- **Static art contact sheet** (`artifacts/validation/visual_art/static_contact_sheet.html`) — visual reference for all 40 civs.
+- **Per-civ column review site** (`a_new_world_columns.html`, 3.6 MB) — 62-column 4-panel grid (Strings · Paths · Mod Changes · Art+Captures) with 4-state path badges (mod ✓ / vanilla ⊙ / engine ◆ / missing ✗), AI Doctrine block with wall-strategy decode and prose, and per-civ asset-coverage audit. ANWBritish is the gold-standard review surface (53 paths, 39 asset rows, 28 in-game captures, 0 misses).
+- **ANW Hub Test random map** (`RandMaps/anwHubTest.xs` + `.xml`) — 8-player AI doctrine test arena: 1 observer + 7 AIs in wedge compartments around a central naval sea, with chat-marker triggers at T+15/30/60/90s and auto-end via "Set Player Defeated" on the observer. Single-knob `gHubTestEndSeconds` (120s fast cycle / 1200s extended) gates four additional milestone window markers (T+240/360/600/960).
+
+### Changed
+
+- **Wall strategy enforcement** via spec-override pattern: `gLLWallStrategy = cLLWallStrategy<Spec>;` after helper call prevents defaults from overriding explicit specs.
+- **ESC menu coordinates** re-verified at 1920×1080: gears (1860, 30), Resign (1830, 365), Diplomacy (1691, 35).
+- **19 ANW civs newly wired** into `llApplyBuildStyleForActiveCiv()`.
+
+### Fixed
+
+- **9 wall_strategy spec mismatches** via leader-file overrides (Montezuma, Pachacuti, Catherine, Haitians, South Africans, Chileans/Indonesians/Mayans/Peruvians/Yucatan revolutions).
+- **`validate_leader_vs_spec.py`** — position-aware override detection (no false-positives on helper vs. spec-override).
+- **`audit_engine_vs_spec.py`** — override-aware logic plus brace-counted block extraction.
+- **`validate_art_coverage.py`** — lowercase regex for `<name>` tags + base-game avatar allowlist.
+
+### Known Issues
+
+- **4 naval civs** (British, Dutch, Portuguese, Barbary) build barracks before dock — v1.1 tuning.
+- **8 civs forward-base bias** outside spec band — v1.1 strategic AI tuning.
+- **Visual capture** verified for ANWBritish; remaining 39 civs verified statically.
+
+---
+
 ## [1.0.0] — 2026-05-20
 
 First public release. The mod is now `status: release` and has been verified
