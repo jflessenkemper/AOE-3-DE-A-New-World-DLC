@@ -2928,6 +2928,29 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
         else:
             _deck_parts.append('<span class="empty">No AI deck defined</span>')
         _deck_html = "\n".join(_deck_parts)
+
+        # Pull the captures section from the remapped ANW manifest (blurb_key
+        # routes British→ANWBritish, XPAztec→ANWAztecs, etc.) so the base/DLC
+        # columns still render Visual Confirmation thumbs instead of "No art
+        # data". This is what the user asked for — every nation visually
+        # confirmed, including the unmodded base civs.
+        _stub_host_mf  = load_capture_manifest(civ_token, ally=False)
+        _stub_ally_mf  = load_capture_manifest(civ_token, ally=True)
+        _stub_caps_html = render_captures_section(civ_token, civ_token,
+                                                  _stub_host_mf, _stub_ally_mf)
+        _stub_doc_html  = render_doctrine_section(civ_token, civ_token)
+        if _stub_caps_html or _stub_doc_html:
+            _stub_art_panel = (
+                '<div class="panel panel-art">'
+                '<div class="section-label">Art &amp; Assets</div>'
+                f'{_stub_caps_html}{_stub_doc_html}'
+                '</div>'
+            )
+        else:
+            _stub_art_panel = ('<div class="panel panel-art">'
+                               '<span class="empty" style="padding:8px;">'
+                               'No art data</span></div>')
+
         return (
             f'<section class="civ-col" id="{_tok}" data-civ="{_tok}" style="background:#2a2a3a;color:#fff;">'
             f'<div class="col-header">{_stub_img}<div class="hdr-text">'
@@ -2938,7 +2961,7 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
             f'<div class="panel panel-strings"><span class="empty" style="padding:8px;">No civmods data</span></div>'
             f'<div class="panel panel-paths"><span class="empty" style="padding:8px;">No civmods data</span></div>'
             f'<div class="panel panel-mod">{_deck_html}</div>'
-            f'<div class="panel panel-art"><span class="empty" style="padding:8px;">No art data</span></div>'
+            f'{_stub_art_panel}'
             f'</div>'
             f'</section>'
         ), 0, 0
