@@ -1,16 +1,29 @@
 # A New World DLC — Mod History & Current State
 
-> Hand this file to a new Claude Code session along with `~/.claude/SESSION_KICKOFF.md`.
-> Command: `Read MOD_HISTORY.md and ~/.claude/SESSION_KICKOFF.md, follow both, then ask me what to tackle.`
+> **⚠ ARCHIVED — pre-v1.0 snapshot.**
+> This file was the kickoff brief for the in-progress ANW migration. The
+> migration has since completed and the mod shipped as **v1.0.0** on
+> **2026-05-20** with **40 playable civs** (37 lobby-pickable + 3
+> revolution-trigger), not the 48 pre-cull count described below.
+>
+> **For current release state, read these instead:**
+> - `CHANGELOG.md` — release notes (authoritative for shipped scope)
+> - `a_new_world_columns.html` — 62-column review surface (40 ANW + 22 base/DLC)
+> - `artifacts/validation/v1_0_release_readiness.md` — release-gate report (local, gitignored)
+>
+> The body below is left intact as historical context for the migration
+> work that produced v1.0. The "v1.0 release checklist" section is no
+> longer the source of truth — all B1–B7 gates were satisfied or
+> superseded; see CHANGELOG §[1.0.0] for what actually shipped.
 
 ---
 
 ## Mod identity
 
 - **Name:** AOE 3 DE — A New World
-- **File:** `modinfo.json` → `version: 1.0.0` (version string is set but the release checklist is not yet complete — see below)
-- **HTML reference:** `a_new_world.html` (renamed from `LEGENDARY_LEADERS_TREE.html`)
-- **Repo root:** `/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/`
+- **File:** `modinfo.json` → `version: 1.0.0` *(shipped 2026-05-20; the "checklist not yet complete" line below is historical)*
+- **HTML reference:** `a_new_world.html` (renamed from `LEGENDARY_LEADERS_TREE.html`); the per-civ column review surface is `a_new_world_columns.html`
+- **Repo root:** `/var/home/jflessenkemper/AOE-3-DE-A-New-World/`
 
 ---
 

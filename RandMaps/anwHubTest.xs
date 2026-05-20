@@ -641,8 +641,15 @@ void main(void)
     rmSetStatusText("", 0.45);
 
     // ---- Place TC + resources per player ----
+    // Skip player 1 (the observer at map center, 0.5/0.5 on a 220-tile
+    // island). Placing TC + gold + trees + hunt + berries + nugget at
+    // the observer's compartment is wasteful (most fail the
+    // avoidImpassableLand/avoidCliffClass constraints silently) and
+    // gold mines that did land could obstruct overhead spectator view.
+    // Start at i=2 so only the 7 AI compartments get resource
+    // placement. cNumberNonGaiaPlayers is still the upper bound.
     int loopMax = cNumberNonGaiaPlayers + 1;
-    for (i = 1; < loopMax)
+    for (i = 2; < loopMax)
     {
         rmPlaceObjectDefAtLoc(TCID, i, rmPlayerLocXFraction(i), rmPlayerLocZFraction(i));
         rmPlaceObjectDefAtLoc(startingUnits, i, rmPlayerLocXFraction(i), rmPlayerLocZFraction(i));

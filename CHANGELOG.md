@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
-- **9 wall_strategy spec mismatches** via leader-file overrides (Montezuma, Pachacuti, Catherine, Haitians, South Africans, Chileans/Indonesians/Mayans/Peruvians/Yucatan revolutions).
+- **9 wall_strategy spec mismatches** via leader-file overrides (Montezuma, Pachacuti, Catherine, Haitians, Chileans/Indonesians/Mayans/Peruvians/Yucatan revolutions). South Africans is correct from the `llUseNavalMercantileCompoundStyle` helper default (`cLLWallStrategyCoastalBatteries`), not an override.
 - **`validate_leader_vs_spec.py`** — position-aware override detection (no false-positives on helper vs. spec-override).
 - **`audit_engine_vs_spec.py`** — override-aware logic plus brace-counted block extraction.
 - **`validate_art_coverage.py`** — lowercase regex for `<name>` tags + base-game avatar allowlist.
