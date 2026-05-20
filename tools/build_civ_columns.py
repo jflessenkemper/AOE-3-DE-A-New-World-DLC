@@ -1011,8 +1011,43 @@ def render_strings_table(rows):
     return "".join(parts)
 
 
+_VANILLA_ASSET_PREFIXES = (
+    # Per-civ vanilla AoE3 DE data/ dirs (each holds *_homecity.xml + scene refs)
+    "british/", "french/", "german/", "russian/", "spanish/", "ottoman/",
+    "portuguese/", "dutch/", "italian/", "maltese/", "swedish/", "american/",
+    "mexican/", "ethiopian/", "hausa/", "inca/", "aztec/", "iroquois/",
+    "sioux/", "chinese/", "japanese/", "indian/", "indians/",
+    # Vanilla UI / homecity asset dirs shared across civs
+    "ui/home_city/", "homecity/buildings_west/", "homecity/buildings_east/",
+    "homecity/buildings_central/", "homecity/buildings_north/",
+    "homecity/buildings_south/", "homecity/british",
+    "homecity/french", "homecity/german", "homecity/dutch",
+    "homecity/spanish", "homecity/ottoman", "homecity/portuguese",
+    "homecity/russian", "homecity/italian", "homecity/maltese",
+    "homecity/swedish", "homecity/american", "homecity/mexican",
+    "homecity/ethiopian", "homecity/hausa", "homecity/inca",
+    "homecity/aztec", "homecity/iroquois", "homecity/sioux",
+    "homecity/chinese", "homecity/japanese", "homecity/indian",
+    "objects/flags/",
+    # WPF surfaces that ship with vanilla AoE3 DE (not in mod tree)
+    "ui/ingame/", "ui/lobby/", "ui/postgame/",
+)
+
+
+def _is_vanilla_asset_path(path):
+    """True for paths that live in vanilla AoE3 DE's data/ tree (not in mod)."""
+    p = (path or "").replace("\\", "/").lower().lstrip("/")
+    return p.startswith(_VANILLA_ASSET_PREFIXES)
+
+
 def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
     """Return list of {label, path, exists} for every path declared for this civ.
+
+    `exists` can be:
+        True       — file shipped by this mod (green ✓)
+        False      — declared but not found anywhere (red ✗ — real problem)
+        "vanilla"  — vanilla AoE3 DE engine reference; not a mod file (gray ⊙)
+        "engine"   — engine identifier (lightset / watertype / xsai), not a path
 
     Sources:
     1. civmods.xml: portrait/wpf/texture fields
@@ -1039,14 +1074,25 @@ def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
                 os.path.join(MOD_ROOT, "data", path),
             ]
             exists = any(os.path.exists(c) for c in candidates)
+            # If still not found in mod, classify as vanilla reference if the
+            # path is a known vanilla AoE3 DE asset prefix.
+            if exists is False and _is_vanilla_asset_path(path):
+                exists = "vanilla"
         rows.append({"label": label, "path": path, "exists": exists})
 
     # ── 1. civmods.xml path fields ─────────────────────────────────────────────
     if civ_el is not None:
         add("HC flag (large WPF)",     civ_el.findtext("homecityflagiconwpf") or "")
         add("HC flag button",          civ_el.findtext("homecityflagbuttonwpf") or "")
-        add("HC flag button set (large)", civ_el.findtext("homecityflagbuttonsetlarge") or "")
-        add("HC flag button set",      civ_el.findtext("homecityflagbuttonset") or "")
+        # homecityflagbuttonset(large) hold WPF resource-dictionary keys
+        # (camelCase identifiers like "britishFlagBtn"), not file paths.
+        for lbl, key in [
+            ("HC flag button set (large)", "homecityflagbuttonsetlarge"),
+            ("HC flag button set",         "homecityflagbuttonset"),
+        ]:
+            v = (civ_el.findtext(key) or "").strip()
+            if v:
+                add(lbl, v, exists="engine")
         add("HC flag texture (DDT)",   civ_el.findtext("homecityflagtexture") or "")
         add("HC lobby preview / portrait", civ_el.findtext("homecitypreviewwpf") or "")
         add("Postgame flag texture",   civ_el.findtext("postgameflagtexture") or "")
@@ -1084,7 +1130,8 @@ def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
 
     # ── 3. homecity XML: scene + camera + audio + building paths ──────────────
     if hc is not None:
-        scene_fields = [
+        # File-path fields (actually point to XML / .gr2 / .cam files on disk)
+        scene_path_fields = [
             ("HC scene visual",      "visual"),
             ("HC water visual",      "watervisual"),
             ("HC background visual", "backgroundvisual"),
@@ -1092,18 +1139,29 @@ def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
             ("HC camera (.cam)",     "camera"),
             ("HC widescreen camera", "widescreencamera"),
             ("HC ambient sounds",    "ambientsounds"),
-            ("HC light set",         "lightset"),
-            ("HC water type",        "watertype"),
-            ("HC AI personality (xsai)", "xsai"),
         ]
-        for label_text, key in scene_fields:
+        for label_text, key in scene_path_fields:
             val = hc.get(key, "").strip()
             if val:
-                # These are engine references, not necessarily file paths on disk.
-                # Mark exists based on whether the file lives in data/
+                # File-path fields. Mod-side disk check first; if missing AND
+                # the path is a known vanilla prefix, fall back to "vanilla".
                 disk_path = os.path.join(DATA_DIR, val.replace("\\", "/"))
                 on_disk = os.path.exists(disk_path)
-                add(label_text, val, exists=on_disk)
+                if not on_disk and _is_vanilla_asset_path(val):
+                    add(label_text, val, exists="vanilla")
+                else:
+                    add(label_text, val, exists=on_disk)
+
+        # Engine identifier fields (NOT file paths — declarations like "London")
+        engine_id_fields = [
+            ("HC light set",             "lightset"),
+            ("HC water type",            "watertype"),
+            ("HC AI personality (xsai)", "xsai"),
+        ]
+        for label_text, key in engine_id_fields:
+            val = hc.get(key, "").strip()
+            if val:
+                add(label_text, val, exists="engine")
 
     # HC buildings (portrait icons) — re-parse HC XML
     if civ_el is not None:
@@ -1118,15 +1176,24 @@ def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
                         bname = b.findtext("name") or "?"
                         portrait = b.findtext("portrait") or ""
                         if portrait:
+                            # Building portraits are usually ui/home_city/* — vanilla refs
                             add(f"HC building portrait — {bname}", portrait)
                         cam = b.findtext("camera") or ""
                         if cam:
-                            add(f"HC building camera — {bname}", cam,
-                                exists=os.path.exists(os.path.join(DATA_DIR, cam.replace("\\","/"))))
+                            cam_disk = os.path.join(DATA_DIR, cam.replace("\\","/"))
+                            cam_exists = os.path.exists(cam_disk)
+                            if not cam_exists and _is_vanilla_asset_path(cam):
+                                add(f"HC building camera — {bname}", cam, exists="vanilla")
+                            else:
+                                add(f"HC building camera — {bname}", cam, exists=cam_exists)
                         wcam = b.findtext("widescreencamera") or ""
                         if wcam and wcam != cam:
-                            add(f"HC building widescreen cam — {bname}", wcam,
-                                exists=os.path.exists(os.path.join(DATA_DIR, wcam.replace("\\","/"))))
+                            wcam_disk = os.path.join(DATA_DIR, wcam.replace("\\","/"))
+                            wcam_exists = os.path.exists(wcam_disk)
+                            if not wcam_exists and _is_vanilla_asset_path(wcam):
+                                add(f"HC building widescreen cam — {bname}", wcam, exists="vanilla")
+                            else:
+                                add(f"HC building widescreen cam — {bname}", wcam, exists=wcam_exists)
                 except ET.ParseError:
                     pass
 
@@ -1186,9 +1253,13 @@ def render_paths_table(rows):
             path_esc = html_module.escape(path)
             # Badge
             if exists is True:
-                badge = '<span class="path-ok">&#10003;</span> '
+                badge = '<span class="path-ok" title="shipped by this mod">&#10003;</span> '
+            elif exists == "vanilla":
+                badge = '<span class="path-vanilla" title="vanilla AoE3 DE engine reference; not shipped by this mod">&#9678;</span> '
+            elif exists == "engine":
+                badge = '<span class="path-engine" title="engine identifier (light set / water type / xsai), not a file path">&#9670;</span> '
             elif exists is False:
-                badge = '<span class="path-missing-badge">&#10007;</span> '
+                badge = '<span class="path-missing-badge" title="declared but not found anywhere">&#10007;</span> '
             else:
                 badge = ''
             parts.append(
@@ -3523,6 +3594,16 @@ html, body {
 .path-missing-badge {
   color: #ff7777;
   font-weight: 700;
+  margin-right: 2px;
+}
+.path-vanilla {
+  color: rgba(255,255,255,0.45);
+  font-weight: 600;
+  margin-right: 2px;
+}
+.path-engine {
+  color: #b8d6ff;
+  font-weight: 600;
   margin-right: 2px;
 }
 /* Standalone cards section (outside text-section wrapper) */
