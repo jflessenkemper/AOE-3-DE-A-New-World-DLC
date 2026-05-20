@@ -757,6 +757,439 @@ def render_techtree_section(civ_token, techtree_by_civ, strings):
     return "".join(parts), count
 
 
+# ── Strings + Paths collectors ────────────────────────────────────────────────
+
+# Label derivation rules from comment patterns like
+# "proto-Caravel civ-ANWFoo type-title"
+_PROTO_LABELS = {
+    "Caravel":          "Ship name (Caravel)",
+    "Galleon":          "Ship name (Galleon)",
+    "Frigate":          "Ship name (Frigate)",
+    "Monitor":          "Ship name (Monitor)",
+    "xpIronclad":       "Ship name (Ironclad)",
+    "deMercBattleship": "Ship name (Battleship)",
+    "Explorer":         "Explorer variant name",
+    "Saloon":           "Tavern / Saloon name",
+    "Tavern":           "Tavern / Saloon name",
+    "FortFrontier":     "Fort name",
+    "Settler":          "Settler unit name",
+    "Outlaw":           "Outlaw unit name",
+    "Villager":         "Villager name",
+    "Chasqui":          "Chasqui name",
+}
+
+def _derive_string_label(comment):
+    """Given a string comment like 'proto-Caravel civ-ANWFoo type-title',
+    return a short location label (under 60 chars)."""
+    proto = ""
+    typ   = ""
+    for part in comment.split():
+        if part.startswith("proto-"):
+            proto = part[6:]
+        if part.startswith("type-"):
+            typ = part[5:]
+
+    # proto may contain slashes for shared strings: "xpIronclad/FortFrontier"
+    proto_primary = proto.split("/")[0] if proto else ""
+
+    label = _PROTO_LABELS.get(proto_primary, proto_primary if proto_primary else "Unit string")
+    if typ and typ != "title":
+        label = f"{label} ({typ})"
+    # Cap length
+    return label[:60]
+
+
+def collect_strings_for_civ(civ_token, civ_el, hc, strings, blurbs, spec, decks, cards,
+                             strings_by_civ):
+    """Return list of {location_label, string_text, source_hint} for this civ.
+
+    Sources:
+    1. civmods.xml display name / rollover / hero name (from homecity)
+    2. stringmods.xml civ-tagged lowercase entries
+    3. playstyle spec: doctrine label/summary
+    4. blurbs: civ_bonus, playstyle, age_up
+    5. cards: each card's name + desc for this civ's deck
+    6. homecity buildings: display name strings
+    """
+    rows = []
+
+    def add(label, text, hint=""):
+        if text:
+            rows.append({"location_label": label, "string_text": text, "source_hint": hint})
+
+    # ── 1. civmods.xml string IDs ──────────────────────────────────────────────
+    if civ_el is not None:
+        display_id = civ_el.findtext("displaynameid") or ""
+        if display_id:
+            add("Lobby picker — civ name",
+                strings.get(display_id, ""),
+                f"civmods.xml displaynameid={display_id}")
+
+        rollover_id = civ_el.findtext("rollovernameid") or ""
+        if rollover_id:
+            add("Lobby picker — rollover description",
+                strings.get(rollover_id, ""),
+                f"civmods.xml rollovernameid={rollover_id}")
+
+    # ── 2. Homecity hero name ──────────────────────────────────────────────────
+    if hc:
+        hero_raw = hc.get("heroname", "")
+        if hero_raw.startswith("$$") and hero_raw.endswith("$$"):
+            loc_id = hero_raw[2:-2]
+            add("Loading screen — leader name",
+                strings.get(loc_id, ""),
+                f"homecity heroname $$locid={loc_id}$$")
+
+        hc_name_raw = hc.get("name", "")
+        if hc_name_raw.startswith("$$") and hc_name_raw.endswith("$$"):
+            loc_id = hc_name_raw[2:-2]
+            add("Home City — HC title",
+                strings.get(loc_id, ""),
+                f"homecity name $$locid={loc_id}$$")
+
+    # ── 3. Loading screen civ description (400001-style — key in civmods?) ─────
+    # The 400001 ID is assigned per-civ based on doc order. Look for it in the
+    # strings dict under any ID whose text contains the civ's display-name stub.
+    # More robustly: walk the uppercase String entries looking for rollover content.
+    # (Already covered by rollover_id above for most civs.)
+
+    # ── 4. Playstyle spec strings ──────────────────────────────────────────────
+    spec_entry, _ = find_spec_entry(civ_token, spec)
+    if spec_entry:
+        add("Tech tree — doctrine name",
+            spec_entry.get("doctrine_label", ""),
+            "playstyle_spec.json doctrine_label")
+        add("Tech tree — doctrine summary",
+            spec_entry.get("doctrine_summary", ""),
+            "playstyle_spec.json doctrine_summary")
+        add("Leader name (canonical)",
+            spec_entry.get("leader_label", ""),
+            "playstyle_spec.json leader_label")
+
+    # ── 5. Blurb strings ──────────────────────────────────────────────────────
+    bk = blurb_key(civ_token)
+    blurb = blurbs.get(bk, {})
+    if blurb:
+        add("Civ bonus tooltip",
+            blurb.get("civ_bonus", ""),
+            "anw_civ_blurbs.json civ_bonus")
+        add("Playstyle description",
+            blurb.get("playstyle", ""),
+            "anw_civ_blurbs.json playstyle")
+        add("Age up method",
+            blurb.get("age_up", ""),
+            "anw_civ_blurbs.json age_up")
+        for u in (blurb.get("unique_units") or []):
+            add("Unique unit name", u, "anw_civ_blurbs.json unique_units")
+
+    # ── 6. Card names + descriptions ──────────────────────────────────────────
+    dk = deck_key(civ_token)
+    deck_data = decks.get(dk, {})
+    age_labels = {"0": "Discovery", "1": "Colonial", "2": "Fortress",
+                  "3": "Industrial", "4": "Imperial"}
+    for age_key, age_label in sorted(age_labels.items()):
+        age_cards = deck_data.get(age_key, [])
+        for card_id in age_cards:
+            card_info = cards.get(card_id, {})
+            card_name = card_info.get("name") or card_id
+            card_desc = card_info.get("desc") or ""
+            add(f"Cards > {age_label} — {card_name[:35]} title",
+                card_name,
+                f"cards.json key={card_id}")
+            if card_desc:
+                add(f"Cards > {age_label} — {card_name[:25]} description",
+                    card_desc,
+                    f"cards.json key={card_id}")
+
+    # ── 7. Homecity building names / rollovers ─────────────────────────────────
+    if hc:
+        # Re-parse the homecity XML directly to get building string IDs
+        hc_file = (civ_el.findtext("homecityfilename") or "") if civ_el is not None else ""
+        if hc_file:
+            hc_path = os.path.join(DATA_DIR, hc_file)
+            if os.path.exists(hc_path):
+                try:
+                    hc_tree = ET.parse(hc_path)
+                    hc_root = hc_tree.getroot()
+                    for b in hc_root.findall("./building"):
+                        bname = b.findtext("name") or "?"
+                        dn_id = b.findtext("displaynamestringid") or ""
+                        ro_id = b.findtext("rolloverstringid") or ""
+                        if dn_id and strings.get(dn_id):
+                            add(f"HC building — {bname} name",
+                                strings[dn_id],
+                                f"homecity building displaynamestringid={dn_id}")
+                        if ro_id and strings.get(ro_id):
+                            add(f"HC building — {bname} rollover",
+                                strings[ro_id],
+                                f"homecity building rolloverstringid={ro_id}")
+                except ET.ParseError:
+                    pass
+
+    # ── 8. Per-civ tagged strings from stringmods.xml ─────────────────────────
+    tagged = strings_by_civ.get(civ_token, [])
+    if not tagged:
+        bare = civ_token[3:] if civ_token.startswith("ANW") else civ_token
+        tagged = strings_by_civ.get(bare, [])
+    # We need the comment to derive the label, so re-read with comments
+    # (the existing load_strings_by_civ only stores (loc_id, text)).
+    # Build a quick map: loc_id -> comment from raw XML (lazy parse once).
+    _hc_comment_cache = {}
+
+    def _get_tagged_with_comments():
+        path = os.path.join(DATA_DIR, "strings", "english", "stringmods.xml")
+        civ_re = re.compile(r'civ-([A-Za-z0-9/]+)')
+        result = []
+        try:
+            tree = ET.parse(path)
+            root_el = tree.getroot()
+            for elem in root_el.iter("string"):
+                comment = elem.get("comment", "")
+                loc_id  = elem.get("_locid") or elem.get("_locID") or ""
+                text    = (elem.text or "").strip()
+                if not loc_id or not text:
+                    continue
+                m = civ_re.search(comment)
+                if not m:
+                    continue
+                raw_civs = m.group(1)
+                civ_tokens_list = [t.strip() for t in raw_civs.split("/") if t.strip()]
+                if civ_token in civ_tokens_list:
+                    result.append((loc_id, text, comment))
+        except Exception:
+            pass
+        return result
+
+    tagged_with_comments = _get_tagged_with_comments()
+    for loc_id, text, comment in tagged_with_comments:
+        label = _derive_string_label(comment)
+        add(label, text, f"stringmods.xml _locid={loc_id}")
+
+    return rows
+
+
+def render_strings_table(rows):
+    """Render the Strings section as a two-column table."""
+    parts = [
+        f'<div class="strings-section">',
+        f'<div class="section-label">Strings ({len(rows)})</div>',
+        f'<table class="info-table str-table">',
+        f'<tbody>',
+    ]
+    if not rows:
+        parts.append('<tr><td colspan="2"><span class="empty">No strings found</span></td></tr>')
+    else:
+        for r in rows:
+            lbl_esc  = html_module.escape(r["location_label"])
+            text     = r["string_text"]
+            hint     = r.get("source_hint", "")
+            # Truncate long text for display; full text in title
+            display  = text if len(text) <= 200 else text[:197] + "..."
+            text_esc = html_module.escape(display)
+            title_esc = html_module.escape(
+                (text if len(text) <= 600 else text[:597] + "...")
+                + (f"\n\n({hint})" if hint else "")
+            )
+            parts.append(
+                f'<tr>'
+                f'<td class="lbl" title="{html_module.escape(hint)}">{lbl_esc}</td>'
+                f'<td title="{title_esc}">{text_esc}</td>'
+                f'</tr>'
+            )
+    parts += ['</tbody>', '</table>', '</div>']
+    return "".join(parts)
+
+
+def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
+    """Return list of {label, path, exists} for every path declared for this civ.
+
+    Sources:
+    1. civmods.xml: portrait/wpf/texture fields
+    2. anwhomecity*.xml: scene, camera, sounds, lightset, watertype, buildings
+    3. art_inventory.json art_surfaces
+    4. AI personality file
+    """
+    rows = []
+    seen_paths = set()
+
+    def add(label, path, exists=None):
+        if not path:
+            return
+        path = path.replace("\\", "/")
+        key = (label, path)
+        if key in seen_paths:
+            return
+        seen_paths.add(key)
+        if exists is None:
+            # Check on disk
+            candidates = [
+                os.path.join(MOD_ROOT, path),
+                os.path.join(MOD_ROOT, "resources", path),
+                os.path.join(MOD_ROOT, "data", path),
+            ]
+            exists = any(os.path.exists(c) for c in candidates)
+        rows.append({"label": label, "path": path, "exists": exists})
+
+    # ── 1. civmods.xml path fields ─────────────────────────────────────────────
+    if civ_el is not None:
+        add("HC flag (large WPF)",     civ_el.findtext("homecityflagiconwpf") or "")
+        add("HC flag button",          civ_el.findtext("homecityflagbuttonwpf") or "")
+        add("HC flag button set (large)", civ_el.findtext("homecityflagbuttonsetlarge") or "")
+        add("HC flag button set",      civ_el.findtext("homecityflagbuttonset") or "")
+        add("HC flag texture (DDT)",   civ_el.findtext("homecityflagtexture") or "")
+        add("HC lobby preview / portrait", civ_el.findtext("homecitypreviewwpf") or "")
+        add("Postgame flag texture",   civ_el.findtext("postgameflagtexture") or "")
+        add("Postgame flag WPF",       civ_el.findtext("postgameflagiconwpf") or "")
+        add("Portrait object (world)", civ_el.findtext("portrait") or "")
+
+        # HC XML filename
+        hc_file = civ_el.findtext("homecityfilename") or ""
+        if hc_file:
+            add("HC XML", f"data/{hc_file}")
+
+    # ── 2. art_inventory art_surfaces ─────────────────────────────────────────
+    _SURFACE_LABELS = {
+        "diplomacy_portrait_wpf":   "Diplomacy panel portrait",
+        "scoreboard_portrait_wpf":  "Scoreboard portrait",
+        "postgame_flag_wpf":        "Postgame flag WPF (art_inv)",
+        "homecity_preview_wpf":     "HC preview portrait",
+        "homecity_flag_icon_wpf":   "HC flag icon WPF (art_inv)",
+        "homecity_flag_button_wpf": "HC flag button WPF (art_inv)",
+        "homecity_filename":        "HC XML (art_inv)",
+        "homecity_visual_scene":    "HC visual scene (art_inv)",
+        "custom_leader_portrait_hires": "Leader high-res portrait",
+    }
+    inv_civ = art_inventory.get("civs", {}).get(civ_token, {})
+    surfaces = inv_civ.get("art_surfaces", {})
+    if isinstance(surfaces, dict):
+        for surf_key, surf_val in surfaces.items():
+            surf_path = ""
+            if isinstance(surf_val, dict):
+                surf_path = surf_val.get("path", "")
+            elif isinstance(surf_val, str):
+                surf_path = surf_val
+            label_text = _SURFACE_LABELS.get(surf_key, surf_key.replace("_", " ").title())
+            add(label_text, surf_path)
+
+    # ── 3. homecity XML: scene + camera + audio + building paths ──────────────
+    if hc is not None:
+        scene_fields = [
+            ("HC scene visual",      "visual"),
+            ("HC water visual",      "watervisual"),
+            ("HC background visual", "backgroundvisual"),
+            ("HC path data (.gr2)",  "pathdata"),
+            ("HC camera (.cam)",     "camera"),
+            ("HC widescreen camera", "widescreencamera"),
+            ("HC ambient sounds",    "ambientsounds"),
+            ("HC light set",         "lightset"),
+            ("HC water type",        "watertype"),
+            ("HC AI personality (xsai)", "xsai"),
+        ]
+        for label_text, key in scene_fields:
+            val = hc.get(key, "").strip()
+            if val:
+                # These are engine references, not necessarily file paths on disk.
+                # Mark exists based on whether the file lives in data/
+                disk_path = os.path.join(DATA_DIR, val.replace("\\", "/"))
+                on_disk = os.path.exists(disk_path)
+                add(label_text, val, exists=on_disk)
+
+    # HC buildings (portrait icons) — re-parse HC XML
+    if civ_el is not None:
+        hc_file = civ_el.findtext("homecityfilename") or ""
+        if hc_file:
+            hc_path = os.path.join(DATA_DIR, hc_file)
+            if os.path.exists(hc_path):
+                try:
+                    hc_tree = ET.parse(hc_path)
+                    hc_root = hc_tree.getroot()
+                    for b in hc_root.findall("./building"):
+                        bname = b.findtext("name") or "?"
+                        portrait = b.findtext("portrait") or ""
+                        if portrait:
+                            add(f"HC building portrait — {bname}", portrait)
+                        cam = b.findtext("camera") or ""
+                        if cam:
+                            add(f"HC building camera — {bname}", cam,
+                                exists=os.path.exists(os.path.join(DATA_DIR, cam.replace("\\","/"))))
+                        wcam = b.findtext("widescreencamera") or ""
+                        if wcam and wcam != cam:
+                            add(f"HC building widescreen cam — {bname}", wcam,
+                                exists=os.path.exists(os.path.join(DATA_DIR, wcam.replace("\\","/"))))
+                except ET.ParseError:
+                    pass
+
+    # ── 4. AI personality file ─────────────────────────────────────────────────
+    stem = get_civ_stem(civ_token)
+    pers_rel = f"game/ai/anw{stem}.personality"
+    pers_full = os.path.join(MOD_ROOT, pers_rel)
+    if os.path.exists(pers_full):
+        add("AI personality file", pers_rel, exists=True)
+    else:
+        # Try the non-anw prefix variant
+        for alias in _VANILLA_STEM_ALIAS.get(stem, [stem]):
+            pers_alt = f"game/ai/anw{alias}.personality"
+            if os.path.exists(os.path.join(MOD_ROOT, pers_alt)):
+                add("AI personality file", pers_alt, exists=True)
+                break
+        else:
+            add("AI personality file", pers_rel, exists=False)
+
+    # ── 5. cpai_avatar portrait paths (PNG + DDT) ─────────────────────────────
+    default_png = f"resources/images/icons/singleplayer/cpai_avatar_{stem}.png"
+    add("Default avatar PNG", default_png)
+    default_ddt = f"art/ui/singleplayer/cpai_avatar_{stem}.ddt"
+    add("Default avatar DDT (compiled)", default_ddt)
+
+    # Per-leader variants
+    portrait_dir = os.path.join(MOD_ROOT, "resources/images/icons/singleplayer")
+    if os.path.isdir(portrait_dir):
+        prefix = f"cpai_avatar_{stem}_"
+        for fn in sorted(os.listdir(portrait_dir)):
+            if fn.startswith(prefix) and fn.endswith(".png"):
+                leader = fn[len(prefix):-4]
+                add(f"Leader portrait PNG — {leader}",
+                    f"resources/images/icons/singleplayer/{fn}",
+                    exists=True)
+                ddt_rel = f"art/ui/singleplayer/cpai_avatar_{stem}_{leader}.ddt"
+                add(f"Leader portrait DDT — {leader}", ddt_rel)
+
+    return rows
+
+
+def render_paths_table(rows):
+    """Render the Paths section as a two-column table."""
+    parts = [
+        f'<div class="paths-section">',
+        f'<div class="section-label">Paths ({len(rows)})</div>',
+        f'<table class="info-table path-table">',
+        f'<tbody>',
+    ]
+    if not rows:
+        parts.append('<tr><td colspan="2"><span class="empty">No paths found</span></td></tr>')
+    else:
+        for r in rows:
+            lbl_esc  = html_module.escape(r["label"])
+            path     = r["path"]
+            exists   = r.get("exists", None)
+            path_esc = html_module.escape(path)
+            # Badge
+            if exists is True:
+                badge = '<span class="path-ok">&#10003;</span> '
+            elif exists is False:
+                badge = '<span class="path-missing-badge">&#10007;</span> '
+            else:
+                badge = ''
+            parts.append(
+                f'<tr>'
+                f'<td class="lbl">{lbl_esc}</td>'
+                f'<td class="mono"><code title="{path_esc}">{badge}{path_esc}</code></td>'
+                f'</tr>'
+            )
+    parts += ['</tbody>', '</table>', '</div>']
+    return "".join(parts)
+
+
 # ── Section renderers ──────────────────────────────────────────────────────────
 def render_text_section(civ_token, civ_el, strings, hc, blurbs, spec, decks, cards, colors):
     bk = blurb_key(civ_token)
@@ -899,18 +1332,14 @@ def render_text_section(civ_token, civ_el, strings, hc, blurbs, spec, decks, car
     if unique_units:
         row("Unique units", html_module.escape(", ".join(unique_units)))
 
-    rows_html = "\n".join(rows)
     cards_html = "\n".join(cards_html_parts) if cards_html_parts else '<span class="empty">No deck data</span>'
 
-    return f"""
-<div class="text-section">
-  <table class="info-table">
-    <tbody>{rows_html}</tbody>
-  </table>
-  <div class="cards-section">
-    <div class="section-label">Cards</div>
-    {cards_html}
-  </div>
+    # NOTE: The info-table rows are no longer rendered here — they are replaced
+    # by the Strings and Paths sections generated by collect_strings_for_civ /
+    # collect_paths_for_civ. Only the cards section is returned from this function.
+    return f"""<div class="cards-section standalone-cards">
+  <div class="section-label">Cards</div>
+  {cards_html}
 </div>
 """
 
@@ -1461,7 +1890,7 @@ def render_doctrine_section(civ_token, display_name):
 
 # ── Main column renderer ───────────────────────────────────────────────────────
 def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, cards,
-                  strings_by_civ=None, techtree_by_civ=None):
+                  strings_by_civ=None, techtree_by_civ=None, art_inventory=None):
     civ_el = civmods.get(civ_token)
     if civ_el is None:
         _stub_img = ""
@@ -1515,12 +1944,23 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
         leader_name_hdr = spec_entry["leader_label"]
     doctrine_label_hdr = spec_entry.get("doctrine_label", "") if spec_entry else ""
 
-    text_html = render_text_section(
+    # Cards section (only the cards, info-table is replaced by Strings + Paths)
+    cards_html = render_text_section(
         civ_token, civ_el, strings, hc, blurbs, spec, decks, cards, colors
     )
     art_html, resolved, missing = render_art_section(civ_token, civ_el, hc, strings)
 
-    # Sections J / K / L
+    # ── New Strings + Paths sections (replace the old info-table) ─────────────
+    _inv = art_inventory if art_inventory is not None else {}
+    _str_rows = collect_strings_for_civ(
+        civ_token, civ_el, hc, strings, blurbs, spec, decks, cards,
+        strings_by_civ if strings_by_civ is not None else {}
+    )
+    _path_rows = collect_paths_for_civ(civ_token, civ_el, hc, _inv)
+    new_strings_html = render_strings_table(_str_rows)
+    new_paths_html   = render_paths_table(_path_rows)
+
+    # Sections J / K / L (Data Review column — unchanged)
     strings_html, _sc = render_strings_section(
         civ_token, strings_by_civ if strings_by_civ is not None else {}
     )
@@ -1590,7 +2030,11 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     </div>
   </div>
   <div class="col-body">
-    {text_html}
+    <div class="text-section">
+      {new_strings_html}
+      {new_paths_html}
+      {cards_html}
+    </div>
     <div class="art-section">
       <div class="section-label">Art &amp; Assets</div>
       {art_html}
@@ -1912,6 +2356,74 @@ html, body {
   font-size: 13px;
   line-height: 1.45;
   color: rgba(255,255,255,0.90);
+}
+
+/* ── Strings section ── */
+.strings-section, .paths-section {
+  flex: 0 0 auto;
+}
+.strings-section .section-label,
+.paths-section .section-label {
+  margin-top: 4px;
+}
+.str-table .lbl {
+  width: 40%;
+  color: rgba(255,255,255,0.60);
+  font-weight: 600;
+  font-size: 11px;
+  padding-right: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+.str-table td:nth-child(2) {
+  font-size: 12px;
+  color: rgba(255,255,255,0.88);
+  word-break: break-word;
+  line-height: 1.35;
+}
+/* Paths table: monospace right column */
+.path-table .lbl {
+  width: 42%;
+  color: rgba(255,255,255,0.60);
+  font-weight: 600;
+  font-size: 11px;
+  padding-right: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+.path-table td:nth-child(2) code {
+  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+  font-size: 11px;
+  color: rgba(200,220,255,0.82);
+  background: rgba(0,0,0,0.28);
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
+}
+.path-ok {
+  color: #6ee07a;
+  font-weight: 700;
+  margin-right: 2px;
+}
+.path-missing-badge {
+  color: #ff7777;
+  font-weight: 700;
+  margin-right: 2px;
+}
+/* Standalone cards section (outside text-section wrapper) */
+.standalone-cards {
+  flex: 0 0 auto;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  padding-top: 6px;
+  margin-top: 4px;
 }
 
 /* ── Cards section ── */
@@ -2995,6 +3507,16 @@ def build():
     print(f"  strings_by_civ: {len(strings_by_civ)} civ buckets")
     print(f"  techtree_by_civ: {len(techtree_by_civ)} civ buckets")
 
+    # Load art inventory for the new Paths section
+    _art_inv_path = os.path.join(SCRIPT_DIR, "validation", "art_inventory.json")
+    art_inventory = {}
+    try:
+        with open(_art_inv_path, encoding="utf-8") as _f:
+            art_inventory = json.load(_f)
+        print(f"  art_inventory: {len(art_inventory.get('civs', {}))} civs")
+    except Exception as _e:
+        print(f"  art_inventory: unavailable ({_e})")
+
     civ_order = get_civ_order()
     print(f"Building {len(civ_order)} columns...")
 
@@ -3006,6 +3528,7 @@ def build():
         col_html, resolved, missing = render_column(
             civ_token, civmods, strings, colors, blurbs, spec, decks, cards,
             strings_by_civ=strings_by_civ, techtree_by_civ=techtree_by_civ,
+            art_inventory=art_inventory,
         )
         columns_html.append(col_html)
         total_resolved += resolved
