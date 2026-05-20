@@ -60,6 +60,17 @@ CROP_SURFACE_LABELS = {
     "esc_menu_player_summary": "ESC menu summary",
     "endgame_flag":            "Endgame flag",
     "diplomacy_ally_portrait": "Ally portrait",
+    # British review-template extras (anw_british_extras_capture.py):
+    "age_up_colonial_select":       "Age II \u2014 Colonial politicians",
+    "age_up_fortress_select":       "Age III \u2014 Fortress politicians",
+    "age_up_industrial_select":     "Age IV \u2014 Industrial politicians",
+    "age_up_imperial_select":       "Age V \u2014 Imperial politicians",
+    "age_advancement_banner":       "Age advancement banner",
+    "hero_tooltip":                 "Hero / Explorer tooltip",
+    "saloon_menu":                  "Saloon mercenaries",
+    "town_center_under_construction": "Town Center under construction",
+    "treaty_lobby_pregame":         "Treaty lobby (pre-game)",
+    "deck_builder_lobby_decks":     "Deck builder (lobby)",
 }
 
 def surface_label(crop_name):
@@ -3899,17 +3910,27 @@ LIGHTBOX_JS = r"""
 
   // Surface labels matching CROP_SURFACE_LABELS in the Python generator
   var SURFACE_LABELS = {
-    lobby_portrait:          'Lobby portrait',
-    loading_flag:            'Loading flag',
-    home_city_button:        'Home City button',
-    hud_flag_corner:         'HUD flag corner',
-    home_city_scene:         'Home City scene',
-    tech_tree_overview:      'Tech tree overview',
-    diplomacy_panel:         'Diplomacy panel',
-    scoreboard_player_row:   'Scoreboard row',
-    esc_menu_player_summary: 'ESC menu summary',
-    endgame_flag:            'Endgame flag',
-    diplomacy_ally_portrait: 'Ally portrait'
+    lobby_portrait:                  'Lobby portrait',
+    loading_flag:                    'Loading flag',
+    home_city_button:                'Home City button',
+    hud_flag_corner:                 'HUD flag corner',
+    home_city_scene:                 'Home City scene',
+    tech_tree_overview:              'Tech tree overview',
+    diplomacy_panel:                 'Diplomacy panel',
+    scoreboard_player_row:           'Scoreboard row',
+    esc_menu_player_summary:         'ESC menu summary',
+    endgame_flag:                    'Endgame flag',
+    diplomacy_ally_portrait:         'Ally portrait',
+    age_up_colonial_select:          'Age II \u2014 Colonial politicians',
+    age_up_fortress_select:          'Age III \u2014 Fortress politicians',
+    age_up_industrial_select:        'Age IV \u2014 Industrial politicians',
+    age_up_imperial_select:          'Age V \u2014 Imperial politicians',
+    age_advancement_banner:          'Age advancement banner',
+    hero_tooltip:                    'Hero / Explorer tooltip',
+    saloon_menu:                     'Saloon mercenaries',
+    town_center_under_construction:  'Town Center under construction',
+    treaty_lobby_pregame:            'Treaty lobby (pre-game)',
+    deck_builder_lobby_decks:        'Deck builder (lobby)'
   };
 
   function surfaceLabel(name) {
