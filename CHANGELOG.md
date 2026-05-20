@@ -39,7 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [1.0.0] — 2026-05-20
+### Detailed engineering log (1.0.0)
+
+The high-level §1.0.0 entry above is the user-facing release note;
+this section is the deeper engineering trail for the same release —
+subsystem-by-subsystem notes, dated as the work happened.
 
 First public release. The mod is now `status: release` and has been verified
 end-to-end through the in-engine automated test harness — every one of the 40
