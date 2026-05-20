@@ -1013,21 +1013,20 @@ def render_strings_table(rows):
 
 _VANILLA_ASSET_PREFIXES = (
     # Per-civ vanilla AoE3 DE data/ dirs (each holds *_homecity.xml + scene refs)
+    # Two flavours: -an/-ish adjective form and the bare country/region form.
     "british/", "french/", "german/", "russian/", "spanish/", "ottoman/",
     "portuguese/", "dutch/", "italian/", "maltese/", "swedish/", "american/",
     "mexican/", "ethiopian/", "hausa/", "inca/", "aztec/", "iroquois/",
     "sioux/", "chinese/", "japanese/", "indian/", "indians/",
-    # Vanilla UI / homecity asset dirs shared across civs
-    "ui/home_city/", "homecity/buildings_west/", "homecity/buildings_east/",
-    "homecity/buildings_central/", "homecity/buildings_north/",
-    "homecity/buildings_south/", "homecity/british",
-    "homecity/french", "homecity/german", "homecity/dutch",
-    "homecity/spanish", "homecity/ottoman", "homecity/portuguese",
-    "homecity/russian", "homecity/italian", "homecity/maltese",
-    "homecity/swedish", "homecity/american", "homecity/mexican",
-    "homecity/ethiopian", "homecity/hausa", "homecity/inca",
-    "homecity/aztec", "homecity/iroquois", "homecity/sioux",
-    "homecity/chinese", "homecity/japanese", "homecity/indian",
+    # DLC / vanilla bare-country roots (Asian Dynasties + 2021 DLCs)
+    "japan/", "china/", "india/", "mexico/", "italy/", "malta/",
+    "ethiopia/", "sweden/", "usa/", "germany/", "russia/", "spain/",
+    "britain/", "france/", "portugal/", "netherlands/", "ottomanempire/",
+    # Vanilla UI / homecity asset dirs shared across civs.
+    # `homecity/` is broad on purpose: the mod ships NO files under that
+    # directory — every `homecity/*` reference resolves to a vanilla engine
+    # path (revolution ambient sounds, scenic act loops, building modules).
+    "ui/home_city/", "homecity/",
     "objects/flags/",
     # WPF surfaces that ship with vanilla AoE3 DE (not in mod tree)
     "ui/ingame/", "ui/lobby/", "ui/postgame/",
@@ -1214,23 +1213,70 @@ def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
             add("AI personality file", pers_rel, exists=False)
 
     # ── 5. cpai_avatar portrait paths (PNG + DDT) ─────────────────────────────
-    default_png = f"resources/images/icons/singleplayer/cpai_avatar_{stem}.png"
-    add("Default avatar PNG", default_png)
-    default_ddt = f"art/ui/singleplayer/cpai_avatar_{stem}.ddt"
-    add("Default avatar DDT (compiled)", default_ddt)
+    # The mod ships avatars under several stem flavours:
+    #   - `cpai_avatar_anw{stem}.png` (most ANW civs: anwfrench, anwbarbary…)
+    #   - `cpai_avatar_{stem}.png`    (historic bases: hausa, napoleonic_france…)
+    #   - `cpai_avatar_{alias}.png`   (renamed stems: usa→united_states,
+    #                                  napoleonicfrance→napoleonic_france)
+    # We try every candidate stem; if any matches, mark green ✓. Otherwise
+    # the path stays red ✗ so we can fix the underlying civmods reference.
+    avatar_aliases = {
+        "usa":              ["united_states", "anwusa"],
+        "napoleonicfrance": ["napoleonic_france", "anwnapoleonicfrance"],
+        "revfrance":        ["anwrevfrance"],
+        "frenchcanadians":  ["french_canadians", "anwfrenchcanadians"],
+        "swedes":           ["swedish", "anwswedes"],
+        "iroquois":         ["haudenosaunee", "anwhaudenosaunee"],
+        "sioux":            ["lakota", "anwsioux"],
+        "aztec":            ["aztecs", "anwaztecs"],
+        "americans":        ["united_states", "americans_jefferson"],
+    }
+    base_stem = stem
+    stem_candidates = [f"anw{base_stem}", base_stem]
+    for alt in avatar_aliases.get(base_stem, []):
+        if alt not in stem_candidates:
+            stem_candidates.append(alt)
 
-    # Per-leader variants
+    def _resolve_avatar(ext):
+        for cand in stem_candidates:
+            rel = f"{'resources/images/icons/singleplayer' if ext == 'png' else 'art/ui/singleplayer'}/cpai_avatar_{cand}.{ext}"
+            if os.path.exists(os.path.join(MOD_ROOT, rel)):
+                return rel, True
+        # Default to the base-stem path so the "missing" label points at the
+        # most-likely-expected filename.
+        rel = f"{'resources/images/icons/singleplayer' if ext == 'png' else 'art/ui/singleplayer'}/cpai_avatar_{base_stem}.{ext}"
+        return rel, False
+
+    png_rel, png_found = _resolve_avatar("png")
+    add("Default avatar PNG", png_rel, exists=png_found)
+    ddt_rel, ddt_found = _resolve_avatar("ddt")
+    add("Default avatar DDT (compiled)", ddt_rel, exists=ddt_found)
+
+    # Per-leader variants — search across every candidate stem.
+    # DDT is the compiled hot-path texture; the engine falls back to the PNG
+    # if the DDT is absent, so a missing DDT alongside an existing PNG is
+    # *cosmetic* (no in-game impact). We mark those rows as "optional"
+    # rather than missing so the column report stays signal-only.
     portrait_dir = os.path.join(MOD_ROOT, "resources/images/icons/singleplayer")
+    seen_leader = set()
     if os.path.isdir(portrait_dir):
-        prefix = f"cpai_avatar_{stem}_"
-        for fn in sorted(os.listdir(portrait_dir)):
-            if fn.startswith(prefix) and fn.endswith(".png"):
-                leader = fn[len(prefix):-4]
-                add(f"Leader portrait PNG — {leader}",
-                    f"resources/images/icons/singleplayer/{fn}",
-                    exists=True)
-                ddt_rel = f"art/ui/singleplayer/cpai_avatar_{stem}_{leader}.ddt"
-                add(f"Leader portrait DDT — {leader}", ddt_rel)
+        for cand in stem_candidates:
+            prefix = f"cpai_avatar_{cand}_"
+            for fn in sorted(os.listdir(portrait_dir)):
+                if fn.startswith(prefix) and fn.endswith(".png"):
+                    leader = fn[len(prefix):-4]
+                    if leader in seen_leader:
+                        continue
+                    seen_leader.add(leader)
+                    add(f"Leader portrait PNG — {leader}",
+                        f"resources/images/icons/singleplayer/{fn}",
+                        exists=True)
+                    ddt_leader = f"art/ui/singleplayer/cpai_avatar_{cand}_{leader}.ddt"
+                    ddt_full = os.path.join(MOD_ROOT, ddt_leader)
+                    if os.path.exists(ddt_full):
+                        add(f"Leader portrait DDT — {leader}", ddt_leader, exists=True)
+                    else:
+                        add(f"Leader portrait DDT — {leader}", ddt_leader, exists="optional")
 
     return rows
 
@@ -1258,6 +1304,8 @@ def render_paths_table(rows):
                 badge = '<span class="path-vanilla" title="vanilla AoE3 DE engine reference; not shipped by this mod">&#9678;</span> '
             elif exists == "engine":
                 badge = '<span class="path-engine" title="engine identifier (light set / water type / xsai), not a file path">&#9670;</span> '
+            elif exists == "optional":
+                badge = '<span class="path-optional" title="optional compiled-format companion (engine falls back to PNG)">&#9678;</span> '
             elif exists is False:
                 badge = '<span class="path-missing-badge" title="declared but not found anywhere">&#10007;</span> '
             else:
@@ -3603,6 +3651,11 @@ html, body {
 }
 .path-engine {
   color: #b8d6ff;
+  font-weight: 600;
+  margin-right: 2px;
+}
+.path-optional {
+  color: rgba(255,210,120,0.55);
   font-weight: 600;
   margin-right: 2px;
 }
