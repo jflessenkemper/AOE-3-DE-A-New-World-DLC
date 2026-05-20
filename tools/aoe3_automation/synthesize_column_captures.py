@@ -102,7 +102,11 @@ PLACEHOLDER_BYTE_THRESHOLD = 10240  # files this small are placeholder stubs
 # without false-positive on real WPF assets seen in the mod.
 
 
-def _resolve_slot(surfaces: dict, candidates: tuple[str, ...]) -> Path | None:
+def _resolve_slot(
+    surfaces: dict,
+    candidates: tuple[str, ...],
+    used: set[Path] | None = None,
+) -> Path | None:
     """Return an on-disk absolute Path for the first matching candidate.
 
     Skips placeholder images (files under ``PLACEHOLDER_BYTE_THRESHOLD``
@@ -111,6 +115,16 @@ def _resolve_slot(surfaces: dict, candidates: tuple[str, ...]) -> Path | None:
     stub. Several civs (Lakota, Spanish, Indians, Ottomans, Chinese,
     Italians) ship with tiny ``cpai_avatar_anw<civ>.png`` placeholders
     that, if used directly, produce nearly-empty 320×320 thumbs.
+
+    When ``used`` is supplied, any candidate that resolves to a path
+    already consumed by an earlier slot is skipped. This keeps the
+    column-site "Visual confirmation" section from showing the same
+    flag PNG repeated across loading_flag / hud_flag_corner /
+    tech_tree_overview / endgame_flag and the same singleplayer-icon
+    PNG repeated across diplomacy_panel / scoreboard_player_row /
+    esc_menu_player_summary / home_city_scene — instead each surface
+    shows a visually-distinct image (fewer total surfaces, but every
+    one of them is unique).
     """
     fallback: Path | None = None
     for key in candidates:
@@ -120,6 +134,12 @@ def _resolve_slot(surfaces: dict, candidates: tuple[str, ...]) -> Path | None:
         p = REPO / slot["path"]
         if not p.exists():
             continue
+        # If a previous slot already consumed this exact file, keep walking
+        # so we surface a *different* image where one exists. We deliberately
+        # do NOT treat duplicates as fallbacks — emitting nothing is better
+        # than emitting "look, the same flag again."
+        if used is not None and p in used:
+            continue
         # Remember the first placeholder as a last-resort fallback but
         # keep walking; if a later candidate has real content, use it.
         if p.stat().st_size < PLACEHOLDER_BYTE_THRESHOLD:
@@ -127,6 +147,8 @@ def _resolve_slot(surfaces: dict, candidates: tuple[str, ...]) -> Path | None:
                 fallback = p
             continue
         return p
+    if fallback is not None and used is not None and fallback in used:
+        return None
     return fallback
 
 
@@ -194,6 +216,9 @@ def synthesize_civ(civ: str, inv: dict, *, force: bool = False) -> dict:
     captures = []
     crops_written = 0
     crops_skipped = 0
+    # Track on-disk source paths already consumed by this civ so each
+    # rendered slot shows a visually-distinct image (see _resolve_slot).
+    used_sources: set[Path] = set()
     for label, full_name, crop_names in CAPTURE_GROUPS:
         full_path_rel = f"full/{full_name}"
         full_abs = out_dir / "full" / full_name
@@ -201,10 +226,11 @@ def synthesize_civ(civ: str, inv: dict, *, force: bool = False) -> dict:
         crop_records = []
         primary_for_full: Path | None = None
         for crop_name in crop_names:
-            src = _resolve_slot(surfaces, CROP_SOURCES[crop_name])
+            src = _resolve_slot(surfaces, CROP_SOURCES[crop_name], used=used_sources)
             if not src:
                 crops_skipped += 1
                 continue
+            used_sources.add(src)
             primary_for_full = primary_for_full or src
 
             crop_rel = f"crops/{crop_name}.png"
