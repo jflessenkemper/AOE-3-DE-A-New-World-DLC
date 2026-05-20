@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>First Mexican Empire — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(0,153,51),rgb(0,123,21));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png" alt="First Mexican Empire">
+  <div class="head-meta">
+    <h1 class="civ-name">First Mexican Empire</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Miguel Hidalgo y Costilla</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Republican Levee</span>
+    </div>
+    <div class="civ-bonus">Can build Haciendas and a Cathedral with unique upgrades.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">First Mexican Empire</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Miguel Hidalgo y Costilla (1753-1811) raised the Grito de Dolores in 1810 against Spain, igniting the Mexican War of Independence — though executed before its 1821 victory.
+The First Mexican Empire rose from Hidalgo and Iturbide&#x27;s revolt, oscillating between centralist conservative and liberal-federal regimes through Texas, the Mexican-American War, and Maximilian.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Montezuma II</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Republican Levee</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Grito de Dolores levée</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Can build Haciendas and a Cathedral with unique upgrades.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Multi-barracks Insurgente + Chinaco levy spam; General heroes inspire lines; Hacienda eco sustains continuous production.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Hacienda wagon politicians</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Padre</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Insurgente</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Salteador</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Soldado</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Chinaco</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(4)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/alhondiga_de_granaditas.png" alt="Alhóndiga de Granaditas"><div class="card-text"><div class="card-name">Alhóndiga de Granaditas</div><div class="card-desc">Ships 1 Hacienda Wagon and 2 Settlers.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/barbacoa.png" alt="Barbacoa"><div class="card-text"><div class="card-name">Barbacoa</div><div class="card-desc">Haciendas fatten Livestock faster and will automatically harvest them when fully-fattened.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/comandante.png" alt="Comandante"><div class="card-text"><div class="card-name">Comandante</div><div class="card-desc">Improves your Mexican General and Padre in combat. Enables their Saber Strike charged ability early.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/cathedral_construction.png" alt="Cathedral Construction"><div class="card-text"><div class="card-name">Cathedral Construction</div><div class="card-desc">Ships 1 Cathedral Wagon. Cathedrals train units and research technologies significantly faster.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(6)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/du_fortified_haciendas.png" alt="Fortified Haciendas"><div class="card-text"><div class="card-name">Fortified Haciendas</div><div class="card-desc">Ships 1 Hacienda Wagon. Haciendas gain a ranged attack when Villagers are garrisoned inside them.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/chipotle_tactics.png" alt="Chipotle Tactics"><div class="card-text"><div class="card-name">Chipotle Tactics</div><div class="card-desc">Ships 500 Food. Destroyed buildings grant you Food, including your own.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/criollos.png" alt="Criollos"><div class="card-text"><div class="card-name">Criollos</div><div class="card-desc">Ships a number of powerful Musketeers and enables them to be trained at Forts.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_royal_decree.png" alt="Plan of Iguala"><div class="card-text"><div class="card-name">Plan of Iguala</div><div class="card-desc">Provides your Cathedral with unique Mexican improvements.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_insurgente_icon.png" alt="10 Insurgentes"><div class="card-text"><div class="card-name">10 Insurgentes</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_galleon_icon.png" alt="2 Captured Galleons"><div class="card-text"><div class="card-name">2 Captured Galleons</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cavalry_combat.png" alt="Cavalry Combat"><div class="card-text"><div class="card-name">Cavalry Combat</div><div class="card-desc">All cavalry attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/mexican_mint.png" alt="Mexican Mint"><div class="card-text"><div class="card-name">Mexican Mint</div><div class="card-desc">Ships 500 Coin. Villagers gather coin from all sources faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/mexican_standoff.png" alt="Mexican Standoff"><div class="card-text"><div class="card-name">Mexican Standoff</div><div class="card-desc">Outlaw ranged attacks gain a chance to CRITICAL HIT, but will also slightly damage themselves.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_hand_infantry_combat.png" alt="Insurgente Combat"><div class="card-text"><div class="card-name">Insurgente Combat</div><div class="card-desc">Insurgente attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_soldado_icon.png" alt="6 Soldados"><div class="card-text"><div class="card-name">6 Soldados</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_soldado_icon.png" alt="5 Soldados"><div class="card-text"><div class="card-name">5 Soldados</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/us_regular_icon.png" alt="15 Regulars"><div class="card-text"><div class="card-name">15 Regulars</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_galleon_icon.png" alt="3 Captured Galleons"><div class="card-text"><div class="card-name">3 Captured Galleons</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_ironclad.png" alt="1 Ironclad"><div class="card-text"><div class="card-name">1 Ironclad</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/ambuscade.png" alt="Guerilla Tactics"><div class="card-text"><div class="card-name">Guerilla Tactics</div><div class="card-desc">Improves Salteadores in combat and grants them the &quot;Guerilla Tactics&quot; Big Ability Button.
+ • Big Ability Button: If not in combat, Salteadores will automatically be stealthy with no speed penalty - for a short duration.</div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/charreada.png" alt="Charreada"><div class="card-text"><div class="card-name">Charreada</div><div class="card-desc">Enables Haciendas to spawn Chinacos.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/land_of_hidalgo.png" alt="Land of Hidalgo"><div class="card-text"><div class="card-name">Land of Hidalgo</div><div class="card-desc">Significantly improves the Padre&#x27;s healing speed and range, including his abilities.
+ • Padre: Heal Rate +100%</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/indian_friendship.png" alt="Chimayó Genizarios"><div class="card-text"><div class="card-name">Chimayó Genizarios</div><div class="card-desc">Native Warriors are trained 10% faster and shipped 50% faster. You get a large Shipment of upgraded Native Warriors from each different allied tribe.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_insurgente_icon.png" alt="33 Insurgentes"><div class="card-text"><div class="card-name">33 Insurgentes</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_frigate.png" alt="1 Frigate"><div class="card-text"><div class="card-name">1 Frigate</div><div class="card-desc"></div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Mexican.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_mexican.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/postgame_flag_mexican.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      6 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:09:17Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWMexicans/crops/lobby_portrait.png" data-civ="ANWMexicans" data-surface="lobby_portrait" aria-label="Open First Mexican Empire Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWMexicans/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWMexicans/crops/loading_flag.png" data-civ="ANWMexicans" data-surface="loading_flag" aria-label="Open First Mexican Empire Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWMexicans/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWMexicans/crops/home_city_button.png" data-civ="ANWMexicans" data-surface="home_city_button" aria-label="Open First Mexican Empire Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWMexicans/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWMexicans/crops/hud_flag_corner.png" data-civ="ANWMexicans" data-surface="hud_flag_corner" aria-label="Open First Mexican Empire HUD flag corner full size"><img loading="lazy" src="artifacts/visual_art/ANWMexicans/thumbs/hud_flag_corner.webp" alt="HUD flag corner"><figcaption>HUD flag corner</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWMexicans/crops/home_city_scene.png" data-civ="ANWMexicans" data-surface="home_city_scene" aria-label="Open First Mexican Empire Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWMexicans/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWMexicans/crops/diplomacy_panel.png" data-civ="ANWMexicans" data-surface="diplomacy_panel" aria-label="Open First Mexican Empire Diplomacy panel full size"><img loading="lazy" src="artifacts/visual_art/ANWMexicans/thumbs/diplomacy_panel.webp" alt="Diplomacy panel"><figcaption>Diplomacy panel</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

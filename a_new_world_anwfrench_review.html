@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Bourbon France — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(0,51,102),rgb(0,21,72));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_french_napoleon.png" alt="Bourbon France">
+  <div class="head-meta">
+    <h1 class="civ-name">Bourbon France</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Louis XVIII</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Compact Fortified Core</span>
+    </div>
+    <div class="civ-bonus">Home City Shipments arrive slightly faster; Coureur des Bois gather faster than Settlers.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Bourbon France</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Louis XVIII (r. 1814-1815, 1815-1824) reclaimed the Bourbon throne after Napoleon&#x27;s fall, balancing Restoration legitimism with grudging concessions to revolutionary reforms.
+Bourbon France revolved around the Sun King&#x27;s grand court, the dragoon and gendarmerie tradition, and the Catholic Ancien Régime that the Revolution would later overthrow.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Louis XVIII</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Compact Fortified Core</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Bourbon Restoration court army</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Home City Shipments arrive slightly faster; Coureur des Bois gather faster than Settlers.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Coureur des Bois boom; quick mass eco; Wall TC core early; Cuirassier + Skirmisher flexible army; shipment-heavy push.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wagon politicians</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Coureur des Bois</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Cuirassier</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Skirmisher</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(2)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_coureur.png" alt="2 Coureurs"><div class="card-text"><div class="card-name">2 Coureurs</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/ancien_regime.png" alt="Ancien Régime"><div class="card-text"><div class="card-name">Ancien Régime</div><div class="card-desc">Ships 1 Royal Embassy in which the House of Bourbon grants access to its royal units, upgrades, and two technologies. Bourbon units now cost population when acquired from the Royal Embassy or the home city.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_fencing_school_french.png" alt="Royal Fencing School"><div class="card-text"><div class="card-name">Royal Fencing School</div><div class="card-desc">Sends 3 Royal Musketeers. All infantry train faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_explorer_french.png" alt="Voyageur"><div class="card-text"><div class="card-name">Voyageur</div><div class="card-desc">Improves your French Explorer in combat, allows him to heal units and gives him a powerful canine companion.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_extensive_fortifications.png" alt="Extensive Fortifications"><div class="card-text"><div class="card-name">Extensive Fortifications</div><div class="card-desc">Enables you to construct twice as many Outposts and increases the hitpoints of ALL fortifications!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/centsuisses.png" alt="Cent-Suisses"><div class="card-text"><div class="card-name">Cent-Suisses</div><div class="card-desc">Increases armor and hitpoints of Pikemen, Halberdiers, and Crossbowmen.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/team_pizza.png" alt="TEAM Quiche"><div class="card-text"><div class="card-name">TEAM Quiche</div><div class="card-desc">For the rest of the game, a small trickle of Food enriches you.</div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/french_royal_army.png" alt="French Royal Army"><div class="card-text"><div class="card-name">French Royal Army</div><div class="card-desc">Enables your Musketeers and Halberdiers to benefit from Combat promotions to receive extra hitpoints and damage for each defeated enemy military unit.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cavalry_combat.png" alt="Cavalry Combat"><div class="card-text"><div class="card-name">Cavalry Combat</div><div class="card-desc">All cavalry attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/team_ranged_infantry_damage.png" alt="TEAM Senegalese Riflemen"><div class="card-text"><div class="card-name">TEAM Senegalese Riflemen</div><div class="card-desc">TEAM Ranged infantry attack increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/cuirassier_icon_64x64.png" alt="2 Cuirassiers"><div class="card-text"><div class="card-name">2 Cuirassiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/cuirassier_icon_64x64.png" alt="3 Cuirassiers"><div class="card-text"><div class="card-name">3 Cuirassiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_light_cavalry_icon.png" alt="4 Hussars"><div class="card-text"><div class="card-name">4 Hussars</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_skirmisher_icon.png" alt="7 Skirmishers"><div class="card-text"><div class="card-name">7 Skirmishers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_skirmisher_icon.png" alt="8 Skirmishers"><div class="card-text"><div class="card-name">8 Skirmishers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/tirailleurs.png" alt="Tirailleurs"><div class="card-text"><div class="card-name">Tirailleurs</div><div class="card-desc">All your Crossbowmen transform into Skirmishers.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_giant_grenadier_icon.png" alt="Hire Giant Grenadiers"><div class="card-text"><div class="card-name">Hire Giant Grenadiers</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(8)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_royal_musketeer_icon.png" alt="25 Bourbon Allies"><div class="card-text"><div class="card-name">25 Bourbon Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_royal_horseman_icon.png" alt="Hire Royal Horsemen"><div class="card-text"><div class="card-name">Hire Royal Horsemen</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/french_battleship.png" alt="Valmy"><div class="card-text"><div class="card-name">Valmy</div><div class="card-desc">Ships a mighty Battleship! French Battleships now benefit from Defence Promotions, improving their hitpoints.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_balloons_french.png" alt="Aerostatic Corps"><div class="card-text"><div class="card-name">Aerostatic Corps</div><div class="card-desc">Your explorer gains the ability to use a temporary Hot Air Balloon for reconnaissance. Hot Air Balloons can be called more often and stay longer in the air.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/coureur_du_bois_icon_64x64.png" alt="10 Coureurs"><div class="card-text"><div class="card-name">10 Coureurs</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/cuirassier_icon_64x64.png" alt="5 Cuirassiers"><div class="card-text"><div class="card-name">5 Cuirassiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/cuirassier_icon_64x64.png" alt="6 Cuirassiers"><div class="card-text"><div class="card-name">6 Cuirassiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_light_cavalry_icon.png" alt="7 Hussars"><div class="card-text"><div class="card-name">7 Hussars</div><div class="card-desc"></div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_french_napoleon.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_French.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_french.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/postgame_flag_french.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      6 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:08:58Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWFrench/crops/lobby_portrait.png" data-civ="ANWFrench" data-surface="lobby_portrait" aria-label="Open Bourbon France Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWFrench/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWFrench/crops/loading_flag.png" data-civ="ANWFrench" data-surface="loading_flag" aria-label="Open Bourbon France Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWFrench/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWFrench/crops/home_city_button.png" data-civ="ANWFrench" data-surface="home_city_button" aria-label="Open Bourbon France Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWFrench/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWFrench/crops/hud_flag_corner.png" data-civ="ANWFrench" data-surface="hud_flag_corner" aria-label="Open Bourbon France HUD flag corner full size"><img loading="lazy" src="artifacts/visual_art/ANWFrench/thumbs/hud_flag_corner.webp" alt="HUD flag corner"><figcaption>HUD flag corner</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWFrench/crops/home_city_scene.png" data-civ="ANWFrench" data-surface="home_city_scene" aria-label="Open Bourbon France Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWFrench/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWFrench/crops/diplomacy_panel.png" data-civ="ANWFrench" data-surface="diplomacy_panel" aria-label="Open Bourbon France Diplomacy panel full size"><img loading="lazy" src="artifacts/visual_art/ANWFrench/thumbs/diplomacy_panel.webp" alt="Diplomacy panel"><figcaption>Diplomacy panel</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

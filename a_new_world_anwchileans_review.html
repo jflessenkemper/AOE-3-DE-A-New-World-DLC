@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Republic of Chile — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(213,43,30),rgb(183,13,0));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png" alt="Republic of Chile">
+  <div class="head-meta">
+    <h1 class="civ-name">Republic of Chile</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Bernardo O&#x27;Higgins</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Andean Terrace Fortress</span>
+    </div>
+    <div class="civ-bonus">Home City Shipments arrive slightly faster; elite infantry never rout.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Republic of Chile</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Bernardo O&#x27;Higgins (1778-1842) co-led the Andean campaign with San Martín and served as Chile&#x27;s Supreme Director (1817-1823), instituting the new republic&#x27;s military and constitution.
+The Republic of Chile defended itself from royalist counter-attacks and, in the 1879-83 War of the Pacific, seized the nitrate-rich Atacama from Bolivia and Peru.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Bernardo O&#x27;Higgins</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Andean Terrace Fortress</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Balanced Republican infantry</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Home City Shipments arrive slightly faster; elite infantry never rout.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Wall high ground in rings; steady Republican infantry + Lancer push; slow snowball to defended Industrial timing rather than early rush.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wagon politicians (Citizens)</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Rodelero</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Lancer</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">War Dog</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Gatling Gun</div></div>
+</div>
+<div class="quote-group"><h3>Other in-game strings</h3>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">La Fortuna</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Minerva</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Congreso</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Furioso</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Lautaro</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">San Martín</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Galvarino</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Moctezuma</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Bárbara</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Golondrina</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Diligente</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Ancud</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Santiago Bueras</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">El Chileno</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Maipú</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Águila</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Chacabuco</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Araucano</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Independencia</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Colo Colo</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Salvador</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Joven Daniel</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Meteoro</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Infatigable</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">O&#x27;Higgins</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Valdivia</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">María</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Dolores</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Elena</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Hércules</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Trujillana</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Carmen</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Chile</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Lota</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Inspector</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Monteagudo</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Condell</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Lynch</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Cochrane</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Blanco Encalada</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Janequeo</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Guacolda</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Vedette</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Fresia</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Esmeralda</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Battleship)</div><div class="quote-text">Prat</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Battleship)</div><div class="quote-text">Presidente Pinto</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort San Felipe de Araucan</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Colcura</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Chivicura</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Espíritu Santo</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Chepe</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort de la Encarnación</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Paicaví</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Tauco</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Livén</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort San Fabián de Conuco</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Tolpán</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Virguenco</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Santa Fe</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fuerte Bulnes</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Lambert</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">The O&#x27;Higgins Pub</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Cafe de Araucanía</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Valdivia Beer Hall</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">La Piojera</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pedro de Valdivia</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Alonso de Alvarado</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Roberto Simpson</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Bernhard Eunom Philippi</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">John Williams Wilson</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Diego de Almagro</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Juan Fernández</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Juan Bautista Pastene</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Bartolomé Gallardo</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Alonso de Góngora Marmolejo</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Francisco Hudson</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pedro Mariño de Lobera</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">José de Moraleda y Montero</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Enrique Simpson</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Antonio de Vea</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Francisco Vidal Gormaz</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Bernardo O&#x27;Higgins</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Manuel Blanco Encalada</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">José Miguel Carrera</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Francisco de la Lastra</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Joaquín Prieto</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Manuel García Banqueda</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Manuel Bulnes</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">José Ignacio Zenteno</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Gregorio Urrutia</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Justo Arteaga Cuevas</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Erasmo Escala</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Juan Williams Rebolledo</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Victorino Garrido</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pedro Lagos</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Cornelio Saavedra Rodríguez</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Eulogio Robles Pinochet</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">José Velásquez Bórquez</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">José Miguel Alcérreca</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Emil Körner</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Orozimbo Barbosa</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Estanislao del Canto</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Hernán Trizano</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(2)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_stone_masons.png" alt="Stonemasons"><div class="card-text"><div class="card-name">Stonemasons</div><div class="card-desc">Settlers construct buildings much faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_exotic_hardwoods.png" alt="Exotic Hardwoods"><div class="card-text"><div class="card-name">Exotic Hardwoods</div><div class="card-desc">Villagers gather Wood faster.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_extensive_fortifications.png" alt="Extensive Fortifications"><div class="card-text"><div class="card-name">Extensive Fortifications</div><div class="card-desc">Enables you to construct twice as many Outposts and increases the hitpoints of ALL fortifications!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/immigrants_german.png" alt="German Settlements"><div class="card-text"><div class="card-name">German Settlements</div><div class="card-desc">Enables the training of Settler Wagons from Mills and Citizens at Town Centers, +2 Settler Wagons.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_portuguese_white_fleet.png" alt="Fishing Fleet"><div class="card-text"><div class="card-name">Fishing Fleet</div><div class="card-desc">Ships 1 Dock Wagon. Ships an additional Fishing Boat for each shipment sent so far this game.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_irish_brigade_icon.png" alt="Hire Irish Brigadiers"><div class="card-text"><div class="card-name">Hire Irish Brigadiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/theaters.png" alt="Theaters"><div class="card-text"><div class="card-name">Theaters</div><div class="card-desc">Upgrades Taverns to Theaters, which have Ronin, and outlaw-type units cost less population.</div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(9)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_reclaimed_land.png" alt="Salitrera"><div class="card-text"><div class="card-name">Salitrera</div><div class="card-desc">Estates generate a small trickle of Coin, +3 Estate Wagons.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_armored_pistoleer_icon.png" alt="Hire Armored Pistoleers"><div class="card-text"><div class="card-name">Hire Armored Pistoleers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/fort_icon.png" alt="Fort"><div class="card-text"><div class="card-name">Fort</div><div class="card-desc">Ships a Fort Wagon to your town, allowing you to construct a mighty Fort.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_highlander_icon.png" alt="Hire Scottish Highlanders"><div class="card-text"><div class="card-name">Hire Scottish Highlanders</div><div class="card-desc">Ships a number of Scottish Highlander mercenaries.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_mounted_infantry_icon.png" alt="9 Habsburg Allies"><div class="card-text"><div class="card-name">9 Habsburg Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/grenade_launcher.png" alt="Grenade Launchers"><div class="card-text"><div class="card-name">Grenade Launchers</div><div class="card-desc">Enables Grenadiers to be trained and equips them with a hand mortar, which quickly propels explosives and increases their range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/liberation_march.png" alt="Liberation March"><div class="card-text"><div class="card-name">Liberation March</div><div class="card-desc">All infantry and cavalry train and move faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/marvelous_year.png" alt="Marvelous Year"><div class="card-text"><div class="card-name">Marvelous Year</div><div class="card-desc">Settlers train and work significantly faster for 365 seconds. A marvelous year, Viva España!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/gatling_gun_icon.png" alt="3 Gatling Guns"><div class="card-text"><div class="card-name">3 Gatling Guns</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(8)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/germany_brigade.png" alt="Military Parade"><div class="card-text"><div class="card-name">Military Parade</div><div class="card-desc">The Great Military Parade of Chile sends a large number of soldiers marching in Prussian uniforms.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_heavy_fortifications.png" alt="Heavy Fortifications"><div class="card-text"><div class="card-name">Heavy Fortifications</div><div class="card-desc">Grants free improvements that increase the combat ability of Walls, Outposts, Blockhouses, Forts, War Huts, and Nobles&#x27; Huts.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hire_highland_merc_army_infinite.png" alt="Hire Highland Mercenary Army"><div class="card-text"><div class="card-name">Hire Highland Mercenary Army</div><div class="card-desc">Ships an army of Highland mercenaries: Highlanders, Swiss Pikemen and Harquebusiers.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_battleship.png" alt="1 Battleship"><div class="card-text"><div class="card-name">1 Battleship</div><div class="card-desc">Ships a mighty Battleship!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_royal_musketeer_icon.png" alt="25 Bourbon Allies"><div class="card-text"><div class="card-name">25 Bourbon Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_mapuche_bolas_rider.png" alt="10 Mapuche Allies"><div class="card-text"><div class="card-name">10 Mapuche Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/team_heavy_cannon.png" alt="TEAM 1 Heavy Cannon"><div class="card-text"><div class="card-name">TEAM 1 Heavy Cannon</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/nuestras_senoras.png" alt="Nuestras Señoras"><div class="card-text"><div class="card-name">Nuestras Señoras</div><div class="card-desc">Ships 2 mighty Battleships.</div></div></article>
+</div></div>
+<div class="age-block age-4">
+<h3>Imperial <span class="age-count">(1)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/industrial_rev.png" alt="Industrial Revolution"><div class="card-text"><div class="card-name">Industrial Revolution</div><div class="card-desc">Ships a Factory Wagon to your town, allowing you to construct a powerful Factory to produce resources or heavy artillery.</div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Chilean.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_chilean.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Chilean.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      4 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:08:50Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWChileans/crops/lobby_portrait.png" data-civ="ANWChileans" data-surface="lobby_portrait" aria-label="Open Republic of Chile Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWChileans/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWChileans/crops/loading_flag.png" data-civ="ANWChileans" data-surface="loading_flag" aria-label="Open Republic of Chile Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWChileans/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWChileans/crops/home_city_button.png" data-civ="ANWChileans" data-surface="home_city_button" aria-label="Open Republic of Chile Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWChileans/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWChileans/crops/home_city_scene.png" data-civ="ANWChileans" data-surface="home_city_scene" aria-label="Open Republic of Chile Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWChileans/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

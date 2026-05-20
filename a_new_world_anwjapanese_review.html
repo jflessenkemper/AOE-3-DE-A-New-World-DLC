@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tokugawa Shogunate — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(139,0,0),rgb(109,0,0));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png" alt="Tokugawa Shogunate">
+  <div class="head-meta">
+    <h1 class="civ-name">Tokugawa Shogunate</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Tokugawa Ieyasu</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Shrine or Trade Node Spread</span>
+    </div>
+    <div class="civ-bonus">Shrines auto-generate resources; can train Daimyo and Shogun hero units.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Tokugawa Shogunate</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Tokugawa Ieyasu (r. 1603-1605 as shogun) ended the Sengoku wars at Sekigahara in 1600 and founded the Tokugawa shogunate, which closed Japan to most foreigners for 250 years.
+Edo-period Japan was Sakoku — peace under the Tokugawa shogunate, samurai-bureaucrat governance, and the rising chonin merchant culture of Edo and Osaka.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Tokugawa</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Shrine or Trade Node Spread</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Bakufu shrine-and-musket order</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Shrines auto-generate resources; can train Daimyo and Shogun hero units.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Plant Shrines everywhere for passive resource trickle; defend with isolated towers and cavalry; tech deep via Wonders; Yumi + Samurai army.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wonders (Torii, Dojo, etc.)</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Yumi Archer</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Naginata Rider</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Samurai</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Flaming Arrow</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(4)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/advanced_consulate.png" alt="Good Faith Agreements"><div class="card-text"><div class="card-name">Good Faith Agreements</div><div class="card-desc">Consulate armies and improvements arrive 50% faster. Improvements cost less, and brigade Shipments receive a moderate discount.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_2x_shrine_wagon_shipment_icon_64.png" alt="2 Shrine Wagons"><div class="card-text"><div class="card-name">2 Shrine Wagons</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/shrine_hitpoints.png" alt="Azekura"><div class="card-text"><div class="card-name">Azekura</div><div class="card-desc">Sends 4 Shrine Rickshaws, improves Shrine gather rates and enables them to slowly repair themselves.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_2x_shrine_wagon_shipment_icon_64.png" alt="5 Shrine Wagons"><div class="card-text"><div class="card-name">5 Shrine Wagons</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_armed_fisherman.png" alt="Armed Fishermen"><div class="card-text"><div class="card-name">Armed Fishermen</div><div class="card-desc">Fishing Boats gain an attack and get a small boost to hitpoints and line of sight.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_gunpowder_infantry_damage.png" alt="Ashigaru Musketeer Attack"><div class="card-text"><div class="card-name">Ashigaru Musketeer Attack</div><div class="card-desc">Ashigaru Musketeer attack increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_atonement.png" alt="Atonement"><div class="card-text"><div class="card-name">Atonement</div><div class="card-desc">Outlaw-type units cost less population. Train Repentant Yojimbo mercenaries at the monastery once you reach the Fortress Age.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/team_japanese_artillery_damage.png" alt="TEAM Odzutsu Mortars"><div class="card-text"><div class="card-name">TEAM Odzutsu Mortars</div><div class="card-desc">Increases the damage of artillery and equips Samurai with a small siege mortar.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/advanced_consulate.png" alt="YPHCConsulateRelations"><div class="card-text"><div class="card-name">YPHCConsulateRelations</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_artillary_hitpoints.png" alt="Flaming Arrow Hitpoints"><div class="card-text"><div class="card-name">Flaming Arrow Hitpoints</div><div class="card-desc">Flaming Arrow hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_ashigaru_anti_cavalry_damage.png" alt="Close Combat"><div class="card-text"><div class="card-name">Close Combat</div><div class="card-desc">Ashigaru Musketeer hitpoints increased and they do extra damage against cavalry.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_bakufu.png" alt="Bakufu"><div class="card-text"><div class="card-name">Bakufu</div><div class="card-desc">Japanese leadership enables all military units to be trained more quickly. Daimyo and Shoguns train units faster than buildings. Daimyo and Shoguns move faster and have a greater line of sight.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_japanese_monk_scare.png" alt="Stream of Enlightenment"><div class="card-text"><div class="card-name">Stream of Enlightenment</div><div class="card-desc">Enemy units nearby Japanese Monks have less attack.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_japanese_mercenary_army.png" alt="Hire Japanese Mercenary Army"><div class="card-text"><div class="card-name">Hire Japanese Mercenary Army</div><div class="card-desc">Ships a number of Ronin mercenaries and Yojimbo Horse Archer mercenaries.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_flaming_arrow_cost.png" alt="Veteran Battery"><div class="card-text"><div class="card-name">Veteran Battery</div><div class="card-desc">Flaming Arrow cost and train time decreased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_morutaru_upgrade.png" alt="Morutaru Range"><div class="card-text"><div class="card-name">Morutaru Range</div><div class="card-desc">Morutaru attack, range, and line of sight increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_2x_ashigaru_shipment_icon_64.png" alt="14 Ashigaru Musketeers"><div class="card-text"><div class="card-name">14 Ashigaru Musketeers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_infinite_naginata_rider.png" alt="6 Naginata Riders"><div class="card-text"><div class="card-name">6 Naginata Riders</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_seven_lucky_gods.png" alt="Seven Lucky Gods"><div class="card-text"><div class="card-name">Seven Lucky Gods</div><div class="card-desc">Unlocks experience point generation from Shrines. Increases build bounty for constructing Shrines.</div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(6)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_naginata_anti_infantry_damage.png" alt="Bloody Harvest"><div class="card-text"><div class="card-name">Bloody Harvest</div><div class="card-desc">Naginata Riders do more damage against archers and skirmishers.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_samurai_speed.png" alt="Sword Saint"><div class="card-text"><div class="card-name">Sword Saint</div><div class="card-desc">Samurai speed, damage and hitpoints increased at the expense of higher costs.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_2x_ashigaru_shipment_icon_64.png" alt="7 Ashigaru Musketeers"><div class="card-text"><div class="card-name">7 Ashigaru Musketeers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_2x_ashigaru_shipment_icon_64.png" alt="8 Ashigaru Musketeers"><div class="card-text"><div class="card-name">8 Ashigaru Musketeers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_2x_town_center_wagon.png" alt="Town Rickshaw"><div class="card-text"><div class="card-name">Town Rickshaw</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/daimyo_kiyomasa_icon_64.png" alt="Daimyo Kiyomasa"><div class="card-text"><div class="card-name">Daimyo Kiyomasa</div><div class="card-desc">Ships a powerful Daimyo. Daimyos receives Shipments, can train infantry and cavalry and boost the attack of nearby allies.</div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Japanese.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_japanese.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/postgame_flag_japanese.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      6 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:09:01Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWJapanese/crops/lobby_portrait.png" data-civ="ANWJapanese" data-surface="lobby_portrait" aria-label="Open Tokugawa Shogunate Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWJapanese/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWJapanese/crops/loading_flag.png" data-civ="ANWJapanese" data-surface="loading_flag" aria-label="Open Tokugawa Shogunate Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWJapanese/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWJapanese/crops/home_city_button.png" data-civ="ANWJapanese" data-surface="home_city_button" aria-label="Open Tokugawa Shogunate Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWJapanese/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWJapanese/crops/hud_flag_corner.png" data-civ="ANWJapanese" data-surface="hud_flag_corner" aria-label="Open Tokugawa Shogunate HUD flag corner full size"><img loading="lazy" src="artifacts/visual_art/ANWJapanese/thumbs/hud_flag_corner.webp" alt="HUD flag corner"><figcaption>HUD flag corner</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWJapanese/crops/home_city_scene.png" data-civ="ANWJapanese" data-surface="home_city_scene" aria-label="Open Tokugawa Shogunate Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWJapanese/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWJapanese/crops/diplomacy_panel.png" data-civ="ANWJapanese" data-surface="diplomacy_panel" aria-label="Open Tokugawa Shogunate Diplomacy panel full size"><img loading="lazy" src="artifacts/visual_art/ANWJapanese/thumbs/diplomacy_panel.webp" alt="Diplomacy panel"><figcaption>Diplomacy panel</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

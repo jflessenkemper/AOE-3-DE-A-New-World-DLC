@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kingdom of Hungary — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(120,0,0),rgb(90,0,0));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png" alt="Kingdom of Hungary">
+  <div class="head-meta">
+    <h1 class="civ-name">Kingdom of Hungary</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Lajos Kossuth</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Steppe Cavalry Wedge</span>
+    </div>
+    <div class="civ-bonus">Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Kingdom of Hungary</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Lajos Kossuth (1802-1894), governor-president of revolutionary Hungary in 1848-49, led the brief independence war against Habsburg Austria before defeat by Russian intervention.
+The Kingdom of Hungary endured Ottoman partition, Habsburg Compromise (1867), and the post-Trianon truncation — built on Magyar nobility, Pannonian agriculture, and the hussar tradition.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Kossuth</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Steppe Cavalry Wedge</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Honved hussar uprising</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Over-build Stables; Hussar cavalry pressure continuously; Outpost militia supplementss army; loose base for fast cavalry egress.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Covered Wagon with each Outpost shipment</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Hussar</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Grenzer</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Hajduk</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Pandour</div></div>
+</div>
+<div class="quote-group"><h3>Other in-game strings</h3>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Granz Tschaika</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Halb Tschaika</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Narenta</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Kerka</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Hum</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Vellebich</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Dalmat</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Seehund</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Wal</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Streiter</div></div>
+<div class="quote-row"><div class="quote-label">Galley</div><div class="quote-text">Reka</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Viribus Unitis</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Diana</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Minerva</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Carolina</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Pylades</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Hussar</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Camaeleon</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Donau</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Bellona</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Kaiser</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Radetzky</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Novara</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Aria</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Schwarzenberg</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Paix</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Aigle</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Tigre</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Lion</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Viper</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Condor</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Körös</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Leitha</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Pelikan</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Nautilus</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Drache</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Salamander</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Habsburg</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Ironclad)</div><div class="quote-text">Prinz Eugen</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Battleship)</div><div class="quote-text">Budapest</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Bran Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Corvin Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Timișoara Fortress</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Szolnok Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Sárospatak Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Castle of Simontornya</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Monostor</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Csillag</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Buda Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Citadella</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Eger Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Jurisics Castle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Castle of Diósgyőr</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Castle of Sümeg</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Tata Castle</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Pilvax Café</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Centrál Café</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Nemesvámos Csárda</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Hullám Csárda</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Eugene von Savoy</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Vlad Tepes</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Julius von Payer</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Karl Weyprecht</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Béla Széchenyi</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Sámuel Teleki</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Maurice Benyovszky</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Stephanus Parmenius</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Francis II Rákóczi</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Sándor Károlyi</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">János Bottyán</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Emeric Thököly</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">János Hrabovszky</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Ernő Kiss</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Antal Vetter</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Károly Leiningen-Westerburg</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Lajos Aulich</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Artúr Görgei</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">György Klapka</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(3)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/master_surgeons.png" alt="Master Surgeons"><div class="card-text"><div class="card-name">Master Surgeons</div><div class="card-desc">Unlocks the ability to train Surgeons from churches and hospitals. Increases the amount Surgeons can heal.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/advancedwhaling.png" alt="Whale Oil"><div class="card-text"><div class="card-name">Whale Oil</div><div class="card-desc">New methods of rendering Whale oil at sea allow your Fishing Boats to gather from Whales significantly faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/land_grab.png" alt="Land Grab"><div class="card-text"><div class="card-name">Land Grab</div><div class="card-desc">Rice Paddies, Farms, Mills, Livestock Pens, Sacred Fields, Villages, Estates and Haciendas are cheaper, and build much more quickly.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(7)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_light_cavalry_icon.png" alt="3 Hussars"><div class="card-text"><div class="card-name">3 Hussars</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hajduks.png" alt="Hajduks"><div class="card-text"><div class="card-name">Hajduks</div><div class="card-desc">All existing Outposts and Blockhouses spawn a Hajduk. Enables Hajduks at Taverns, Barracks, Forts, Galleons, Outposts, and Blockhouses.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/garde_imperial_2_icon_64x64.png" alt="Hungarian Grenadiers"><div class="card-text"><div class="card-name">Hungarian Grenadiers</div><div class="card-desc">All existing Outposts and Blockhouses spawn a Hungarian Grenadier.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/military_frontier.png" alt="Military Frontier"><div class="card-text"><div class="card-name">Military Frontier</div><div class="card-desc">All existing Outposts spawn a Grenzer. Allows Grenzers to build Outposts and Outposts to train Grenzers.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_extensive_fortifications.png" alt="Extensive Fortifications"><div class="card-text"><div class="card-name">Extensive Fortifications</div><div class="card-desc">Enables you to construct twice as many Outposts and increases the hitpoints of ALL fortifications!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_ranged_infantry_hitpoints.png" alt="Infantry Hitpoints"><div class="card-text"><div class="card-name">Infantry Hitpoints</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/theaters.png" alt="Theaters"><div class="card-text"><div class="card-name">Theaters</div><div class="card-desc">Upgrades Taverns to Theaters, which have Ronin, and outlaw-type units cost less population.</div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(9)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hungarian_hussars.png" alt="Magyar Hussars"><div class="card-text"><div class="card-name">Magyar Hussars</div><div class="card-desc">All existing Outposts and Blockhouses spawn a Magyar Hussar.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_gunpowder_infantry_combat.png" alt="Outlaw Combat"><div class="card-text"><div class="card-name">Outlaw Combat</div><div class="card-desc">Outlaw and Mercenary units hitpoints and damage increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_giant_grenadier_icon.png" alt="Hire Giant Grenadiers"><div class="card-text"><div class="card-name">Hire Giant Grenadiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_black_rider_icon.png" alt="Hire German Black Riders"><div class="card-text"><div class="card-name">Hire German Black Riders</div><div class="card-desc">Ships a number of German Black Rider mercenaries.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_mounted_infantry_icon.png" alt="9 Habsburg Allies"><div class="card-text"><div class="card-name">9 Habsburg Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/grenade_launcher.png" alt="Grenade Launchers"><div class="card-text"><div class="card-name">Grenade Launchers</div><div class="card-desc">Enables Grenadiers to be trained and equips them with a hand mortar, which quickly propels explosives and increases their range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cavalry_combat.png" alt="Cavalry Combat"><div class="card-text"><div class="card-name">Cavalry Combat</div><div class="card-desc">All cavalry attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_dragoon_icon.png" alt="4 Dragoons"><div class="card-text"><div class="card-name">4 Dragoons</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_dragoon_icon.png" alt="5 Dragoons"><div class="card-text"><div class="card-name">5 Dragoons</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_falconet.png" alt="3 Falconets"><div class="card-text"><div class="card-name">3 Falconets</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_light_cavalry_icon.png" alt="7 Hussars"><div class="card-text"><div class="card-name">7 Hussars</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_pandour_icon.png" alt="10 Pandours"><div class="card-text"><div class="card-name">10 Pandours</div><div class="card-desc">Ships 10 Pandours. Enables Pandours at Taverns, Barracks, Forts, Galleons, Outposts, and Blockhouses.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_line_infantry.png" alt="17 Habsburg Allies"><div class="card-text"><div class="card-name">17 Habsburg Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/legion_kovat.png" alt="Hungarian Legion"><div class="card-text"><div class="card-name">Hungarian Legion</div><div class="card-desc">Hussar train time, cost, and hitpoints enhanced for Hungarian cavalry legion.</div></div></article>
+</div></div>
+<div class="age-block age-4">
+<h3>Imperial <span class="age-count">(1)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/industrial_rev.png" alt="Industrial Revolution"><div class="card-text"><div class="card-name">Industrial Revolution</div><div class="card-desc">Ships a Factory Wagon to your town, allowing you to construct a powerful Factory to produce resources or heavy artillery.</div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Hungarian.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_hungarian.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Hungarian.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      4 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:09:00Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWHungarians/crops/lobby_portrait.png" data-civ="ANWHungarians" data-surface="lobby_portrait" aria-label="Open Kingdom of Hungary Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWHungarians/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWHungarians/crops/loading_flag.png" data-civ="ANWHungarians" data-surface="loading_flag" aria-label="Open Kingdom of Hungary Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWHungarians/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWHungarians/crops/home_city_button.png" data-civ="ANWHungarians" data-surface="home_city_button" aria-label="Open Kingdom of Hungary Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWHungarians/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWHungarians/crops/home_city_scene.png" data-civ="ANWHungarians" data-surface="home_city_scene" aria-label="Open Kingdom of Hungary Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWHungarians/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

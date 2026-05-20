@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sultanate of Yogyakarta — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(0,110,84),rgb(0,80,54));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png" alt="Sultanate of Yogyakarta">
+  <div class="head-meta">
+    <h1 class="civ-name">Sultanate of Yogyakarta</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Prince Diponegoro</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Jungle Guerrilla Network</span>
+    </div>
+    <div class="civ-bonus">Can train Wokou Junks; Ruyter and Halberdier get unique skins.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Sultanate of Yogyakarta</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Prince Diponegoro (1785-1855), Javanese aristocrat and Sufi mystic, led the 1825-30 Java War against Dutch colonial rule that killed perhaps 200,000 Javanese.
+The Sultanate of Yogyakarta — central court of Java — preserved royal Mataram-Sultanate culture under Dutch suzerainty, with kris, gamelan, and the dual sultan-and-pangeran nobility.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Soekarno</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Jungle Guerrilla Network</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Java War guerrilla and kraton fort</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Can train Wokou Junks; Ruyter and Halberdier get unique skins.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Wokou Junk naval pressure; choke-hug with Javanese Spearman + Cetbang Cannon on land; guerrilla infantry strikes avoid open fights.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wagon politicians (Dutch-style)</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Javanese Spearman</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Cetbang Cannon</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Ruyter</div></div>
+</div>
+<div class="quote-group"><h3>Other in-game strings</h3>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Mauritius</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Hollandia</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Amsterdam</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Zeelandia</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Geldria</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Utrecht</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Vriesland</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Ram</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Schaap</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Lam</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Aeolus</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Tahula</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Henricus</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort der Wrake</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Nassau</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Oranje</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Tolukko</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Kastela</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Kalamata</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Belgica</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Batavia Castle</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">The Batavian</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Hendrik Brouwer</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jacob Corneliszoon van Neck</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jacob van Heemskerck</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Willem Janszoon</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pieter Both</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jan Pieterszoon Coen</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Cornelis Speelman</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Anthonio Hurdt</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">François Tack</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">George Frederik Willem Borel</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Johan Harmen Rudolf Köhler</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Sultan Agung</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Trunajaya</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Karaeng Galesong</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Amangkurat</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pakubuwana</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Untung Surapati</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Hamengkubuwono</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Nuku</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Diponegoro</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Teuku Umar</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Teungku Chik di Tiro</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(2)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_team_spice_trade.png" alt="TEAM Spice Trade"><div class="card-text"><div class="card-name">TEAM Spice Trade</div><div class="card-desc">TEAM Villagers gather Food from hunted animals, berries, and cherry orchards faster. Berries and hunted animals resources last longer.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/house_braganca.png" alt="Feitorias"><div class="card-text"><div class="card-name">Feitorias</div><div class="card-desc">Your Town Centers now slowly trickle all resources.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_irish_brigade_icon.png" alt="Hire Irish Brigadiers"><div class="card-text"><div class="card-name">Hire Irish Brigadiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_extensive_fortifications.png" alt="Extensive Fortifications"><div class="card-text"><div class="card-name">Extensive Fortifications</div><div class="card-desc">Enables you to construct twice as many Outposts and increases the hitpoints of ALL fortifications!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/theaters.png" alt="Theaters"><div class="card-text"><div class="card-name">Theaters</div><div class="card-desc">Upgrades Taverns to Theaters, which have Ronin, and outlaw-type units cost less population.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_advanced_arsenal.png" alt="Advanced Arsenal"><div class="card-text"><div class="card-name">Advanced Arsenal</div><div class="card-desc">Moves the Arsenal to the Commerce Age and enables more powerful Arsenal improvements.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_outpost.png" alt="Frontier Defenses"><div class="card-text"><div class="card-name">Frontier Defenses</div><div class="card-desc">Ships 2 Outpost Wagons that can transform into Outposts.</div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(8)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/aceh_pepper_exports.png" alt="Aceh Pepper Exports"><div class="card-text"><div class="card-name">Aceh Pepper Exports</div><div class="card-desc">Allows Settler training at the Town Center and grants a steady trickle of Food.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/swivel_guns.png" alt="Lantakas"><div class="card-text"><div class="card-name">Lantakas</div><div class="card-desc">Improves attacks of ships, buildings and artillery.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/mercenary_army.png" alt="Dutch States Army"><div class="card-text"><div class="card-name">Dutch States Army</div><div class="card-desc">Mercenaries arrive, train and move faster, but Dutch infantry and cavalry is now more expensive. Enables Highlanders in Barracks, Royal Horsemen in Stables, and both in Taverns.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_bosniak_rider_icon.png" alt="Hire Bosniaks"><div class="card-text"><div class="card-name">Hire Bosniaks</div><div class="card-desc">Ships a number of Bosniak mercenaries.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/nassau_regiment.png" alt="Nassau Regiment"><div class="card-text"><div class="card-name">Nassau Regiment</div><div class="card-desc">Ships a regiment of musket-armed Blue Guards from the homeland and enables them in Forts.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_mounted_infantry_icon.png" alt="9 Habsburg Allies"><div class="card-text"><div class="card-name">9 Habsburg Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/grenade_launcher.png" alt="Grenade Launchers"><div class="card-text"><div class="card-name">Grenade Launchers</div><div class="card-desc">Enables Grenadiers to be trained and equips them with a hand mortar, which quickly propels explosives and increases their range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_light_cavalry_icon.png" alt="5 Hussars"><div class="card-text"><div class="card-name">5 Hussars</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/kraton_guards.png" alt="Kraton Guards"><div class="card-text"><div class="card-name">Kraton Guards</div><div class="card-desc">Improves Revolutionaries and Pikemen units in combat.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_java_spearman.png" alt="16 Javanese Spearmen"><div class="card-text"><div class="card-name">16 Javanese Spearmen</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_cetbang.png" alt="4 Cetbang Cannons"><div class="card-text"><div class="card-name">4 Cetbang Cannons</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_wokou_ronin.png" alt="2 Wokou Junks"><div class="card-text"><div class="card-name">2 Wokou Junks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/ottoman_army.png" alt="Ottoman Expeditionary Army"><div class="card-text"><div class="card-name">Ottoman Expeditionary Army</div><div class="card-desc">An army of Ottoman Janissaries and Great Bombards.
+12 Janissary: powerful heavy ranged infantry that are good at melee against cavalry and good at range against hand infantry.
+2 Great Bombards: super-heavy artillery that moves and fires slowly, but does tremendous damage against infantry or buildings.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_mounted_rifleman_icon.png" alt="Hire Mounted Riflemen"><div class="card-text"><div class="card-name">Hire Mounted Riflemen</div><div class="card-desc">Ships a number of Mounted Rifleman mercenaries.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/dutch_battleship.png" alt="Willem"><div class="card-text"><div class="card-name">Willem</div><div class="card-desc">Ships a mighty Battleship! Dutch Battleships now move faster and damage ALL surrounding units upon detonation.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_battleship.png" alt="1 Battleship"><div class="card-text"><div class="card-name">1 Battleship</div><div class="card-desc">Ships a mighty Battleship!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/belanda_hitam.png" alt="Belanda Hitam"><div class="card-text"><div class="card-name">Belanda Hitam</div><div class="card-desc">Sends some Akan Ankobias and allows you to train them in Native Embassies, +3 Native Embassy Travois.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_saxon_cuirassier_icon.png" alt="9 Wettin Allies"><div class="card-text"><div class="card-name">9 Wettin Allies</div><div class="card-desc"></div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Indonesian.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_indonesian.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Indonesian.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      4 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:09:00Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWIndonesians/crops/lobby_portrait.png" data-civ="ANWIndonesians" data-surface="lobby_portrait" aria-label="Open Sultanate of Yogyakarta Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWIndonesians/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWIndonesians/crops/loading_flag.png" data-civ="ANWIndonesians" data-surface="loading_flag" aria-label="Open Sultanate of Yogyakarta Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWIndonesians/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWIndonesians/crops/home_city_button.png" data-civ="ANWIndonesians" data-surface="home_city_button" aria-label="Open Sultanate of Yogyakarta Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWIndonesians/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWIndonesians/crops/home_city_scene.png" data-civ="ANWIndonesians" data-surface="home_city_scene" aria-label="Open Sultanate of Yogyakarta Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWIndonesians/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

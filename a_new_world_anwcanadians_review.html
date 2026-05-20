@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Province of Canada — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(187,0,0),rgb(157,0,0));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png" alt="Province of Canada">
+  <div class="head-meta">
+    <h1 class="civ-name">Province of Canada</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Isaac Brock</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Compact Fortified Core</span>
+    </div>
+    <div class="civ-bonus">Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age; starts with a Native Scout and trains Metis Voyageurs alongside Settlers.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Province of Canada</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Louis-Joseph Papineau (1786-1871) led the Patriote movement in Lower Canada, demanding responsible government from the British colonial administration in the 1830s.
+The Province of Canada (1841-1867) merged Upper and Lower Canada after the 1837-1838 rebellions, paving the road toward Confederation and the Dominion of Canada.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Louis-Joseph Papineau</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Compact Fortified Core</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Blockhouse infantry frontier</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age; starts with a Native Scout and trains Metis Voyageurs alongside Settlers.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress; Lower-Canada Patriote doctrine adds a tight civic core with reactive counter-punch instead of open aggression.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wagon politicians with Blockhouse (Brock) or tight-core civic politicians (Papineau / Lower Canada)</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Ranger</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Congreve Rocket</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Metis Pathfinder</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Metis Voyageur</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Cuirassier</div></div>
+</div>
+<div class="quote-group"><h3>Other in-game strings</h3>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Seneca</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Hope</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Lady Prevost</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Queen Charlotte</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Chippawa</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Little Belt</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Wolfe</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Magnet</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Royal George</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Earl of Moira</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Beresford</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Sir Sydney Smith</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Murray</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Huron</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Michigan</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Hunter</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Mohawk</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Nancy</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Tecumseth</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Chubb</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Finch</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Cockburn</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Speedy</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Halifax</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Pélican</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Carcajou</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Martre</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Brune</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Comète</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Caravel)</div><div class="quote-text">Hermione</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Detroit</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Caledonia</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">General Hunter</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Duke of Gloucester</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Netley</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Lord Melville</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Linnet</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Charybdis</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Montague</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Outaouaise</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Iroquoise</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Fochine</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Fleur-de-Lys</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Galleon)</div><div class="quote-text">Superbe</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Burlington</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Prince Regent</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Psyche</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Canada</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Lowestoffe</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Diana</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Vanguard</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Shannon</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Aeolus</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Belvidera</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Guerriere</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Canada</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Machault</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Atlante</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Pomone</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Vigilant</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Mars</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Raphael</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Brézé</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Algonquin</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Castor</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Frigate)</div><div class="quote-text">Abénaquise</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Swift</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Confiance</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Surprise</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Crystler</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Queenston</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Buffalo</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Kingston</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Bee</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Wasp</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Mosquito</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Minos</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Glorieux</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Célèbre</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Vaillant</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Monitor)</div><div class="quote-text">Sage</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Battleship)</div><div class="quote-text">St Lawrence</div></div>
+<div class="quote-row"><div class="quote-label">Ship name (Battleship)</div><div class="quote-text">Tonnant</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Niagra</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort St. Joseph</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort St. Louis</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Frontenac</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Michilimackinac</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Amherstburg</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Malden</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Erie</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort George</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Garry</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort York</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Gibraltar</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Douglas</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Lac la Pluie</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Oswegatchie</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Oswego</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Sturgeon</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Cumberland</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Edward</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort William</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Chipewyan</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Frances</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Charlotte</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Clarence</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Needham</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Citadel Hill</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Wellington</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Rouillé</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Saint Pierre</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Kaministiquia</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Saint Charles</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Détroit</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort de La Présentation</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Lévis</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Carillon</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Saint-Frédéric</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Forteresse de Louisbourg</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Sainte Anne</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Dauphin</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Machault</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Le Boeuf</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort de Chartres</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort de Buade</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Maurepas</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Rouge</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort La Reine</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Bourbon</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Paskoya</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort de la Corne</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort La Jonquière</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Beauséjour</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Conti</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Denonville</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">La Citadelle</div></div>
+<div class="quote-row"><div class="quote-label">Fort name</div><div class="quote-text">Fort Plaisance</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">The Harmonious Coach House</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">The Olde Angel Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Bell Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Sinclair Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Lennox Tavern</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Old Post Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">D&#x27;Aubigny Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Furry Tavern</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">South Landing Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">Chesley&#x27;s Inn</div></div>
+<div class="quote-row"><div class="quote-label">Tavern / Saloon name</div><div class="quote-text">L’Oncle Antoine</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Henry Kelsey</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Anthony Henday</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Samuel Hearne</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Alexander Mackenzie</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">David Thompson</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Isaac Brock</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Gordon Drummond</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Hercules Scott</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">William Hamilton Merritt</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">John Bradstreet</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Frederick Haldimand</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Robert Dickson</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">George Prévost</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">James Givins</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Aeneas Shaw</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">&quot;Red George&quot; MacDonell</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">J. Stoughton Dennis</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">William O. Smith</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Roderick Mackenzie</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Charles de Salaberry</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Louis Jolliet</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jacques Marquette</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">René-Robert Cavelier</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Samuel de Champlain</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Louis de Buade de Frontenac</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pierre Gaultier de Varennes, sieur de La Vérendrye</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jean-Baptiste Hertel de Rouville</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jacques de Noyon</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Antoine de la Mothe Cadillac</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Étienne de Veniard, Sieur de Bourgmont</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jean-Baptiste Bissot, Sieur de Vincennes</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Zacharie Robutel de La Noue</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jacques Legardeur de Saint-Pierre</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jean Nicolet</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Louis-Joseph Gaultier de La Vérendrye</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Charles-René Dejordy de Villebon</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Nicolas-Joseph de Noyelles de Fleurimont</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Louis de la Corne, Chevalier de la Corne</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Christopher Dufrost de La Jemeraye</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Jean Baptiste de La Vérendrye</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pierre Gaultier de La Vérendrye</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">François de La Vérendrye</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Pierre de Troyes, Chevalier de Troyes</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Louis-Thomas Chabert de Joncaire</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Gaspard-Joseph Chaussegros de Léry</div></div>
+<div class="quote-row"><div class="quote-label">Explorer variant name</div><div class="quote-text">Daniel Liénard de Beaujeu</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(2)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/fur_trade.png" alt="Fur Trade"><div class="card-text"><div class="card-name">Fur Trade</div><div class="card-desc">When this Shipment arrives, all of your current Food is exchanged for a greater amount of Coin.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/greenwich_time.png" alt="Greenwich Time"><div class="card-text"><div class="card-name">Greenwich Time</div><div class="card-desc">Arrives fast! Ships 1 Trading Post Wagon. Each of your Trading Posts improve Politician and Technology research time by -20%.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/canadian_officer_icon.png" alt="Militia Officer"><div class="card-text"><div class="card-name">Militia Officer</div><div class="card-desc">Sends a Canadian Militia Officer who can improve the fighting spirit of Villagers, Militiamen and Native Warriors.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/great_buffalo_hunt.png" alt="TEAM Great Buffalo Hunt"><div class="card-text"><div class="card-name">TEAM Great Buffalo Hunt</div><div class="card-desc">TEAM Ships 10 Bison and improves gathering rate from hunted animals</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_extensive_fortifications.png" alt="Extensive Fortifications"><div class="card-text"><div class="card-name">Extensive Fortifications</div><div class="card-desc">Enables you to construct twice as many Outposts and increases the hitpoints of ALL fortifications!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_irish_brigade_icon.png" alt="Hire Irish Brigadiers"><div class="card-text"><div class="card-name">Hire Irish Brigadiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_totenkopf_hussar_icon.png" alt="7 Hanover Allies"><div class="card-text"><div class="card-name">7 Hanover Allies</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(6)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/az_war_canoe_icon.png" alt="4 War Canoes"><div class="card-text"><div class="card-name">4 War Canoes</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_giant_grenadier_icon.png" alt="Hire Giant Grenadiers"><div class="card-text"><div class="card-name">Hire Giant Grenadiers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/fort_icon.png" alt="Fort"><div class="card-text"><div class="card-name">Fort</div><div class="card-desc">Ships a Fort Wagon to your town, allowing you to construct a mighty Fort.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_drummer_icon.png" alt="4 Hanover Allies"><div class="card-text"><div class="card-name">4 Hanover Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_british_rifleman_icon.png" alt="8 Rangers"><div class="card-text"><div class="card-name">8 Rangers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/siege_archery.png" alt="Siege Archery"><div class="card-text"><div class="card-name">Siege Archery</div><div class="card-desc">Enables Longbowmen to siege buildings from a long-range with fire arrows, which inflict burning damage over time.</div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/fencibles.png" alt="Fencibles"><div class="card-text"><div class="card-name">Fencibles</div><div class="card-desc">Musketeers are upgraded to Fencibles that are stronger, cheaper and have higher range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/canadian_conscription.png" alt="Permanent Active Militia"><div class="card-text"><div class="card-name">Permanent Active Militia</div><div class="card-desc">Sends 16 Militiamen and Militiamen no longer lose hitpoints.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/nat_nootka_warchief.png" alt="Native American Allies"><div class="card-text"><div class="card-name">Native American Allies</div><div class="card-desc">3 Native Embassy Travois. Allows the recruitment of Cree Coureurs, Cree Trackers, Huron Mantlets and Nootka Clubmen at Native Embassies.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_dragoon.png" alt="Canadian Loyalists"><div class="card-text"><div class="card-name">Canadian Loyalists</div><div class="card-desc">Ships a number of powerful Dragoons.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_highlander.png" alt="14 Blackwatch Highlanders"><div class="card-text"><div class="card-name">14 Blackwatch Highlanders</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hudson_bay_company.png" alt="Hudson Bay Company"><div class="card-text"><div class="card-name">Hudson Bay Company</div><div class="card-desc">Villagers now earn extra Coin whilst gathering natural resources, particularly from animals.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/quebec.png" alt="Quebec"><div class="card-text"><div class="card-name">Quebec</div><div class="card-desc">Arrives fast! Ships 1 Fort Wagon and allows Militiamen to be called from Outposts and Forts.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_elk.png" alt="15 Elk"><div class="card-text"><div class="card-name">15 Elk</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_grizzly.png" alt="7 Grizzlies"><div class="card-text"><div class="card-name">7 Grizzlies</div><div class="card-desc">Ships 7 dangerous Grizzly Bears. O Canada!</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_musketeer.png" alt="16 Musketeers"><div class="card-text"><div class="card-name">16 Musketeers</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-4">
+<h3>Imperial <span class="age-count">(2)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_british_rifleman.png" alt="13 Rangers"><div class="card-text"><div class="card-name">13 Rangers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_metis_pathfinder.png" alt="Métis Pathfinders"><div class="card-text"><div class="card-name">Métis Pathfinders</div><div class="card-desc">Ships 12 Métis Pathfinders.</div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Canadians.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_canadian.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Canadians.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      4 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:08:50Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWCanadians/crops/lobby_portrait.png" data-civ="ANWCanadians" data-surface="lobby_portrait" aria-label="Open Province of Canada Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWCanadians/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWCanadians/crops/loading_flag.png" data-civ="ANWCanadians" data-surface="loading_flag" aria-label="Open Province of Canada Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWCanadians/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWCanadians/crops/home_city_button.png" data-civ="ANWCanadians" data-surface="home_city_button" aria-label="Open Province of Canada Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWCanadians/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWCanadians/crops/home_city_scene.png" data-civ="ANWCanadians" data-surface="home_city_scene" aria-label="Open Province of Canada Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWCanadians/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

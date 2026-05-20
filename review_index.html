@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ANW v1.0 — civ review index</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+  padding: 0;
+}
+.index-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.10);
+  text-decoration: none;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.index-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+.index-portrait {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.index-meta { flex: 1; min-width: 0; }
+.index-name { font-size: 17px; font-weight: 600; margin-bottom: 2px; }
+.index-sub  { font-size: 13px; opacity: 0.9; margin-bottom: 6px; }
+.index-sub .doctrine { font-weight: 600; }
+.index-bonus {
+  font-size: 12px;
+  opacity: 0.85;
+  background: rgba(0,0,0,0.30);
+  padding: 4px 8px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.index-intro {
+  max-width: 920px;
+  margin: 0 0 24px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.04);
+  border-left: 3px solid rgba(255,255,255,0.30);
+  border-radius: 3px;
+  font-size: 14px;
+  color: #c8c8e0;
+}
+</style>
+</head>
+<body>
+<header class="review-header" style="background:linear-gradient(160deg,#262638,#1a1a28);color:#fff;">
+  <div class="head-meta">
+    <h1 class="civ-name">A New World — civ review</h1>
+    <div class="civ-leader-line">
+      <span class="leader">40 picker civs</span>
+      <span class="sep">·</span>
+      <span class="doctrine">v1.0 release readiness</span>
+    </div>
+  </div>
+</header>
+<main>
+<div class="index-intro">
+Every card below opens a stripped-down per-civ review page: in-game strings,
+home-city deck, art surfaces, and real in-game capture thumbnails — no
+locIDs, no file paths, no engineering metadata. Pick a civ to start.
+</div>
+<div class="index-grid">
+<a class="index-card" href="a_new_world_anwargentines_review.html" style="background:linear-gradient(160deg,rgb(102,178,255),rgb(72,148,225));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png" alt="Argentine Confederation"><div class="index-meta"><div class="index-name">Argentine Confederation</div><div class="index-sub">José de San Martín · <span class="doctrine">Forward Operational Line</span></div><div class="index-bonus">Home City Shipments arrive slightly faster; elite infantry never rout.</div></div></a><a class="index-card" href="a_new_world_anwaztecs_review.html" style="background:linear-gradient(160deg,rgb(0,204,153),rgb(0,174,123));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png" alt="Aztec Triple Alliance"><div class="index-meta"><div class="index-name">Aztec Triple Alliance</div><div class="index-sub">Montezuma · <span class="doctrine">Jungle Guerrilla Network</span></div><div class="index-bonus">Builds Warchief units and earns XP through Tribute; no Colonial age-up cost.</div></div></a><a class="index-card" href="a_new_world_anwbarbary_review.html" style="background:linear-gradient(160deg,rgb(0,122,92),rgb(0,92,62));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png" alt="Regency of Algiers"><div class="index-meta"><div class="index-name">Regency of Algiers</div><div class="index-sub">Hayreddin Barbarossa · <span class="doctrine">Naval Mercantile Compound</span></div><div class="index-bonus">Can train Privateers with increased build limit, which can train additional units.</div></div></a><a class="index-card" href="a_new_world_anwbrazil_review.html" style="background:linear-gradient(160deg,rgb(0,122,61),rgb(0,92,31));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png" alt="Empire of Brazil"><div class="index-meta"><div class="index-name">Empire of Brazil</div><div class="index-sub">Pedro I of Brazil · <span class="doctrine">Distributed Economic Network</span></div><div class="index-bonus">Receives a free Covered Wagon with every Age; starts with 7 Citizens.</div></div></a><a class="index-card" href="a_new_world_anwbritish_review.html" style="background:linear-gradient(160deg,rgb(153,0,0),rgb(123,0,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_british.png" alt="British Empire"><div class="index-meta"><div class="index-name">British Empire</div><div class="index-sub">Elizabeth · <span class="doctrine">Naval Mercantile Compound</span></div><div class="index-bonus">Manors automatically spawn a Settler when built.</div></div></a><a class="index-card" href="a_new_world_anwcanadians_review.html" style="background:linear-gradient(160deg,rgb(187,0,0),rgb(157,0,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png" alt="Province of Canada"><div class="index-meta"><div class="index-name">Province of Canada</div><div class="index-sub">Isaac Brock · <span class="doctrine">Compact Fortified Core</span></div><div class="index-bonus">Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age; starts with a Native Scout and trains Metis Voyageurs alongside Settlers.</div></div></a><a class="index-card" href="a_new_world_anwchileans_review.html" style="background:linear-gradient(160deg,rgb(213,43,30),rgb(183,13,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png" alt="Republic of Chile"><div class="index-meta"><div class="index-name">Republic of Chile</div><div class="index-sub">Bernardo O&#x27;Higgins · <span class="doctrine">Andean Terrace Fortress</span></div><div class="index-bonus">Home City Shipments arrive slightly faster; elite infantry never rout.</div></div></a><a class="index-card" href="a_new_world_anwchinese_review.html" style="background:linear-gradient(160deg,rgb(204,153,0),rgb(174,123,0));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png" alt="Qing Dynasty"><div class="index-meta"><div class="index-name">Qing Dynasty</div><div class="index-sub">Kangxi · <span class="doctrine">Compact Fortified Core</span></div><div class="index-bonus">Starts with a Flail Elephant; Banner Armies train multiple unit types at once.</div></div></a><a class="index-card" href="a_new_world_anwcolumbians_review.html" style="background:linear-gradient(160deg,rgb(255,204,0),rgb(225,174,0));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png" alt="Gran Colombia"><div class="index-meta"><div class="index-name">Gran Colombia</div><div class="index-sub">Simón Bolívar · <span class="doctrine">Forward Operational Line</span></div><div class="index-bonus">Shipments arrive faster; gains Simón Bolívar hero at Fortress Age.</div></div></a><a class="index-card" href="a_new_world_anwdutch_review.html" style="background:linear-gradient(160deg,rgb(255,140,0),rgb(225,110,0));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png" alt="Dutch Republic"><div class="index-meta"><div class="index-name">Dutch Republic</div><div class="index-sub">Maurice of Nassau · <span class="doctrine">Naval Mercantile Compound</span></div><div class="index-bonus">Banks automatically generate coin without villagers.</div></div></a><a class="index-card" href="a_new_world_anwegyptians_review.html" style="background:linear-gradient(160deg,rgb(196,154,55),rgb(166,124,25));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png" alt="Khedivate of Egypt"><div class="index-meta"><div class="index-name">Khedivate of Egypt</div><div class="index-sub">Muhammad Ali Pasha · <span class="doctrine">Highland Citadel</span></div><div class="index-bonus">Trains Citizens (70 coin); free Mameluke per shipment from Fortress Age; Khevite Fusiliers replace Revolutionaries.</div></div></a><a class="index-card" href="a_new_world_anwethiopians_review.html" style="background:linear-gradient(160deg,rgb(0,128,0),rgb(0,98,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png" alt="Ethiopian Empire"><div class="index-meta"><div class="index-name">Ethiopian Empire</div><div class="index-sub">Menelik · <span class="doctrine">Highland Citadel</span></div><div class="index-bonus">Neftenya units gain attack with each Age; unique Royal units from Ras.</div></div></a><a class="index-card" href="a_new_world_anwfinnish_review.html" style="background:linear-gradient(160deg,rgb(0,53,128),rgb(0,23,98));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png" alt="Grand Duchy of Finland"><div class="index-meta"><div class="index-name">Grand Duchy of Finland</div><div class="index-sub">Carl Gustaf Emil Mannerheim · <span class="doctrine">Compact Fortified Core</span></div><div class="index-bonus">Torps gather nearby resources; advanced Arsenal upgrades; Karelian Jaegers as alternative Settlers.</div></div></a><a class="index-card" href="a_new_world_anwfrench_review.html" style="background:linear-gradient(160deg,rgb(0,51,102),rgb(0,21,72));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_french_napoleon.png" alt="Bourbon France"><div class="index-meta"><div class="index-name">Bourbon France</div><div class="index-sub">Louis XVIII · <span class="doctrine">Compact Fortified Core</span></div><div class="index-bonus">Home City Shipments arrive slightly faster; Coureur des Bois gather faster than Settlers.</div></div></a><a class="index-card" href="a_new_world_anwgermans_review.html" style="background:linear-gradient(160deg,rgb(25,25,112),rgb(0,0,82));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png" alt="German Empire"><div class="index-meta"><div class="index-name">German Empire</div><div class="index-sub">Frederick the Great · <span class="doctrine">Republican Levee</span></div><div class="index-bonus">Starts with 2 free Uhlans per card shipped; Settler Wagons replace standard Settlers.</div></div></a><a class="index-card" href="a_new_world_anwhaitians_review.html" style="background:linear-gradient(160deg,rgb(0,51,153),rgb(0,21,123));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png" alt="First Empire of Haiti"><div class="index-meta"><div class="index-name">First Empire of Haiti</div><div class="index-sub">Toussaint Louverture · <span class="doctrine">Jungle Guerrilla Network</span></div><div class="index-bonus">Town Centers and Taverns slowly spawn Pirates for free; Maroons replace Revolutionaries.</div></div></a><a class="index-card" href="a_new_world_anwhaudenosaunee_review.html" style="background:linear-gradient(160deg,rgb(139,0,0),rgb(109,0,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png" alt="Haudenosaunee Confederacy"><div class="index-meta"><div class="index-name">Haudenosaunee Confederacy</div><div class="index-sub">Hiawatha · <span class="doctrine">Shrine or Trade Node Spread</span></div><div class="index-bonus">Builds Longhouses that train infantry and can garrison; unique War Chief unit.</div></div></a><a class="index-card" href="a_new_world_anwhausa_review.html" style="background:linear-gradient(160deg,rgb(153,102,0),rgb(123,72,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_hausa_usman_dan_fodio.png" alt="Sokoto Caliphate"><div class="index-meta"><div class="index-name">Sokoto Caliphate</div><div class="index-sub">Usman dan Fodio · <span class="doctrine">Distributed Economic Network</span></div><div class="index-bonus">Griot aura boosts nearby units; unique Lifidi Knight heavy cavalry.</div></div></a><a class="index-card" href="a_new_world_anwhungarians_review.html" style="background:linear-gradient(160deg,rgb(120,0,0),rgb(90,0,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png" alt="Kingdom of Hungary"><div class="index-meta"><div class="index-name">Kingdom of Hungary</div><div class="index-sub">Lajos Kossuth · <span class="doctrine">Steppe Cavalry Wedge</span></div><div class="index-bonus">Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.</div></div></a><a class="index-card" href="a_new_world_anwinca_review.html" style="background:linear-gradient(160deg,rgb(204,172,0),rgb(174,142,0));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png" alt="Inca Empire"><div class="index-meta"><div class="index-name">Inca Empire</div><div class="index-sub">Pachacuti · <span class="doctrine">Andean Terrace Fortress</span></div><div class="index-bonus">Inca buildings require no wood; Kallanka trains several unit types simultaneously.</div></div></a><a class="index-card" href="a_new_world_anwindians_review.html" style="background:linear-gradient(160deg,rgb(255,153,51),rgb(225,123,21));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png" alt="Maratha Empire"><div class="index-meta"><div class="index-name">Maratha Empire</div><div class="index-sub">Akbar · <span class="doctrine">Highland Citadel</span></div><div class="index-bonus">Elephant units get bonus from nearby Consulate upgrades; Urumi Swordsman unique melee unit.</div></div></a><a class="index-card" href="a_new_world_anwindonesians_review.html" style="background:linear-gradient(160deg,rgb(0,110,84),rgb(0,80,54));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png" alt="Sultanate of Yogyakarta"><div class="index-meta"><div class="index-name">Sultanate of Yogyakarta</div><div class="index-sub">Prince Diponegoro · <span class="doctrine">Jungle Guerrilla Network</span></div><div class="index-bonus">Can train Wokou Junks; Ruyter and Halberdier get unique skins.</div></div></a><a class="index-card" href="a_new_world_anwitalians_review.html" style="background:linear-gradient(160deg,rgb(0,140,0),rgb(0,110,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png" alt="Kingdom of Italy"><div class="index-meta"><div class="index-name">Kingdom of Italy</div><div class="index-sub">Garibaldi · <span class="doctrine">Republican Levee</span></div><div class="index-bonus">Lombardy Banks auto-generate coin; Papal Guard unique heavy infantry.</div></div></a><a class="index-card" href="a_new_world_anwjapanese_review.html" style="background:linear-gradient(160deg,rgb(139,0,0),rgb(109,0,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png" alt="Tokugawa Shogunate"><div class="index-meta"><div class="index-name">Tokugawa Shogunate</div><div class="index-sub">Tokugawa Ieyasu · <span class="doctrine">Shrine or Trade Node Spread</span></div><div class="index-bonus">Shrines auto-generate resources; can train Daimyo and Shogun hero units.</div></div></a><a class="index-card" href="a_new_world_anwlakota_review.html" style="background:linear-gradient(160deg,rgb(240,240,240),rgb(210,210,210));color:#111;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png" alt="Lakota Sioux"><div class="index-meta"><div class="index-name">Lakota Sioux</div><div class="index-sub">Crazy Horse · <span class="doctrine">Steppe Cavalry Wedge</span></div><div class="index-bonus">Cannot build standard walls or Forts; Teepee auras boost nearby units.</div></div></a><a class="index-card" href="a_new_world_anwmaltese_review.html" style="background:linear-gradient(160deg,rgb(178,34,34),rgb(148,4,4));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png" alt="Knights of Malta"><div class="index-meta"><div class="index-name">Knights of Malta</div><div class="index-sub">Valette · <span class="doctrine">Highland Citadel</span></div><div class="index-bonus">Towers and Outposts cost no wood; Sacre Infermeria heals nearby units.</div></div></a><a class="index-card" href="a_new_world_anwmayans_review.html" style="background:linear-gradient(160deg,rgb(22,148,125),rgb(0,118,95));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png" alt="Cruzob Maya"><div class="index-meta"><div class="index-name">Cruzob Maya</div><div class="index-sub">Jacinto Canek · <span class="doctrine">Jungle Guerrilla Network</span></div><div class="index-bonus">Holcan Javelineer build limit grows each shipment; 2 bonus cards on Imperial Age.</div></div></a><a class="index-card" href="a_new_world_anwmexicans_review.html" style="background:linear-gradient(160deg,rgb(0,153,51),rgb(0,123,21));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png" alt="First Mexican Empire"><div class="index-meta"><div class="index-name">First Mexican Empire</div><div class="index-sub">Miguel Hidalgo y Costilla · <span class="doctrine">Republican Levee</span></div><div class="index-bonus">Can build Haciendas and a Cathedral with unique upgrades.</div></div></a><a class="index-card" href="a_new_world_anwnapoleonicfrance_review.html" style="background:linear-gradient(160deg,rgb(0,43,92),rgb(0,13,62));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png" alt="France (Napoleonic Era)"><div class="index-meta"><div class="index-name">France (Napoleonic Era)</div><div class="index-sub">Napoleon Bonaparte · <span class="doctrine">Forward Operational Line</span></div><div class="index-bonus">Starts with Cuirassier hero; Grande Armée cards ship large infantry formations.</div></div></a><a class="index-card" href="a_new_world_anwottomans_review.html" style="background:linear-gradient(160deg,rgb(0,153,76),rgb(0,123,46));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png" alt="Ottoman Empire"><div class="index-meta"><div class="index-name">Ottoman Empire</div><div class="index-sub">Suleiman · <span class="doctrine">Siege Train Concentration</span></div><div class="index-bonus">Town Center automatically trains Settlers for free over time.</div></div></a><a class="index-card" href="a_new_world_anwperuvians_review.html" style="background:linear-gradient(160deg,rgb(186,0,0),rgb(156,0,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png" alt="Republic of Peru"><div class="index-meta"><div class="index-name">Republic of Peru</div><div class="index-sub">Andrés de Santa Cruz · <span class="doctrine">Andean Terrace Fortress</span></div><div class="index-bonus">Shipments arrive slightly faster; gains bonus from Simón Bolívar ally at Fortress.</div></div></a><a class="index-card" href="a_new_world_anwportuguese_review.html" style="background:linear-gradient(160deg,rgb(0,102,204),rgb(0,72,174));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png" alt="Portuguese Empire"><div class="index-meta"><div class="index-name">Portuguese Empire</div><div class="index-sub">Prince Henry the Navigator · <span class="doctrine">Naval Mercantile Compound</span></div><div class="index-bonus">Gets 1 free Covered Wagon with each Age-up.</div></div></a><a class="index-card" href="a_new_world_anwrevfrance_review.html" style="background:linear-gradient(160deg,rgb(18,62,140),rgb(0,32,110));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png" alt="France"><div class="index-meta"><div class="index-name">France</div><div class="index-sub">Maximilien Robespierre · <span class="doctrine">Republican Levee</span></div><div class="index-bonus">Trains Sans Culottes instead of Settlers (stronger fighters, slower gatherers); gains Eclaireur scout at Commerce Age.</div></div></a><a class="index-card" href="a_new_world_anwromanians_review.html" style="background:linear-gradient(160deg,rgb(0,43,127),rgb(0,13,97));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png" alt="United Romanian Principalities"><div class="index-meta"><div class="index-name">United Romanian Principalities</div><div class="index-sub">Alexandru Ioan Cuza · <span class="doctrine">Civic Militia Center</span></div><div class="index-bonus">Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.</div></div></a><a class="index-card" href="a_new_world_anwrussians_review.html" style="background:linear-gradient(160deg,rgb(0,100,0),rgb(0,70,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png" alt="Russian Empire"><div class="index-meta"><div class="index-name">Russian Empire</div><div class="index-sub">Catherine · <span class="doctrine">Cossack Voisko</span></div><div class="index-bonus">Trains cheap Strelet infantry in batches; Cossacks available from Stables.</div></div></a><a class="index-card" href="a_new_world_anwsouthafricans_review.html" style="background:linear-gradient(160deg,rgb(0,96,56),rgb(0,66,26));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png" alt="South African Republic"><div class="index-meta"><div class="index-name">South African Republic</div><div class="index-sub">Paul Kruger · <span class="doctrine">Naval Mercantile Compound</span></div><div class="index-bonus">Villagers and Banks gather faster; receives a free Trek Wagon each Age.</div></div></a><a class="index-card" href="a_new_world_anwspanish_review.html" style="background:linear-gradient(160deg,rgb(204,51,0),rgb(174,21,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png" alt="Spanish Empire"><div class="index-meta"><div class="index-name">Spanish Empire</div><div class="index-sub">Isabella I of Castile · <span class="doctrine">Forward Operational Line</span></div><div class="index-bonus">Starts with Missionaries that can convert Treasures; Unction upgrade buffs all units.</div></div></a><a class="index-card" href="a_new_world_anwswedes_review.html" style="background:linear-gradient(160deg,rgb(0,102,204),rgb(0,72,174));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus_adolphus.png" alt="Swedish Empire"><div class="index-meta"><div class="index-name">Swedish Empire</div><div class="index-sub">Gustavus Adolphus · <span class="doctrine">Forward Operational Line</span></div><div class="index-bonus">Torp buildings passively gather nearby resources.</div></div></a><a class="index-card" href="a_new_world_anwtexians_review.html" style="background:linear-gradient(160deg,rgb(104,66,27),rgb(74,36,0));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png" alt="Republic of Texas"><div class="index-meta"><div class="index-name">Republic of Texas</div><div class="index-sub">Sam Houston · <span class="doctrine">Forward Operational Line</span></div><div class="index-bonus">Minutemen levies can be called repeatedly from Town Centers and Outposts; 2 bonus cards on Industrial Age.</div></div></a><a class="index-card" href="a_new_world_anwusa_review.html" style="background:linear-gradient(160deg,rgb(0,51,102),rgb(0,21,72));color:#fff;"><img class="index-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_americans_washington.png" alt="United States"><div class="index-meta"><div class="index-name">United States</div><div class="index-sub">Washington · <span class="doctrine">Republican Levee</span></div><div class="index-bonus">Starts with a free Covered Wagon; Federal Politicians ship powerful unique wagons.</div></div></a>
+</div>
+</main>
+</body>
+</html>

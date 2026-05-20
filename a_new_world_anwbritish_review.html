@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>British Empire — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(153,0,0),rgb(123,0,0));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_british.png" alt="British Empire">
+  <div class="head-meta">
+    <h1 class="civ-name">British Empire</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Elizabeth</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Naval Mercantile Compound</span>
+    </div>
+    <div class="civ-bonus">Manors automatically spawn a Settler when built.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">British Empire</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Reigned 1558-1603 as Queen of England and Ireland. Defeated the Spanish Armada in 1588 and presided over an Elizabethan Golden Age of exploration, theatre, and Atlantic privateering.
+The British Empire grew on Royal Navy supremacy, the East India Company, and global mercantile colonies. Wool, sugar and tea built the world&#x27;s largest 19th-century imperium.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Queen Elizabeth I</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Naval Mercantile Compound</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Tudor naval and mercantile</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Manors automatically spawn a Settler when built.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Boom via Manor-spawned Settlers; wall harbor early; Musketeer + Longbow lines; strong navy; land army funded by naval shipments and mercenary contracts.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wagon politicians (Trading Post, Bank, etc.)</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Longbowman</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Congreve Rocket</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Ranger</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(4)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/team_whaling.png" alt="TEAM Whale Oil"><div class="card-text"><div class="card-name">TEAM Whale Oil</div><div class="card-desc">New methods of rendering Whale oil at sea allow your Fishing Boats to gather from Whales significantly faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/greenwich_time.png" alt="Greenwich Time"><div class="card-text"><div class="card-name">Greenwich Time</div><div class="card-desc">Arrives fast! Ships 1 Trading Post Wagon. Each of your Trading Posts improve Politician and Technology research time by -20%.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/sc_marions_diversions.png" alt="Marion&#x27;s Diversions"><div class="card-text"><div class="card-name">Marion&#x27;s Diversions</div><div class="card-desc">Ships 2 Quaker Guns, decoy units which deal no damage but can look like any artillery unit. Enables them at the Artillery Foundry. Artillery moves slightly faster.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_royal_musketeer_icon.png" alt="25 Bourbon Allies"><div class="card-text"><div class="card-name">25 Bourbon Allies</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_explorer_british.png" alt="Captain"><div class="card-text"><div class="card-name">Captain</div><div class="card-desc">Improves your British Explorer in combat, gives him a powerful Swashbuckler attack and canine companion.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_team_musketeer_grenadier_hitpoints.png" alt="TEAM Grenadier Guards"><div class="card-text"><div class="card-name">TEAM Grenadier Guards</div><div class="card-desc">TEAM Musketeer and Grenade Trooper hitpoints increased. Units classed as both a Musketeer and Grenade Trooper will only receive the effect once.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_musketeer_grenadier_damage.png" alt="Scots Guards"><div class="card-text"><div class="card-name">Scots Guards</div><div class="card-desc">Musketeer and Grenadier attack increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cavalry_damage.png" alt="Cavalry Damage"><div class="card-text"><div class="card-name">Cavalry Damage</div><div class="card-desc">Hussar and Dragoon attack increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_totenkopf_hussar_icon.png" alt="7 Hanover Allies"><div class="card-text"><div class="card-name">7 Hanover Allies</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_musketeer_grenadier_combat.png" alt="Coldstream Guards"><div class="card-text"><div class="card-name">Coldstream Guards</div><div class="card-desc">Musketeer and Grenadier attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/siege_archery.png" alt="Siege Archery"><div class="card-text"><div class="card-name">Siege Archery</div><div class="card-desc">Enables Longbowmen to siege buildings from a long-range with fire arrows, which inflict burning damage over time.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_dragoon.png" alt="Canadian Loyalists"><div class="card-text"><div class="card-name">Canadian Loyalists</div><div class="card-desc">Ships a number of powerful Dragoons.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_british_rifleman_icon.png" alt="8 Rangers"><div class="card-text"><div class="card-name">8 Rangers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_frigate_icon.png" alt="1 Frigate"><div class="card-text"><div class="card-name">1 Frigate</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_highlander_icon.png" alt="Hire Scottish Highlanders"><div class="card-text"><div class="card-name">Hire Scottish Highlanders</div><div class="card-desc">Ships a number of Scottish Highlander mercenaries.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cavalry_combat.png" alt="Cavalry Combat"><div class="card-text"><div class="card-name">Cavalry Combat</div><div class="card-desc">All cavalry attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_yeoman.png" alt="Yeomen"><div class="card-text"><div class="card-name">Yeomen</div><div class="card-desc">Longbowman inflict more damage to Heavy Infantry and gain more range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_longbow_icon.png" alt="10 Longbowmen"><div class="card-text"><div class="card-name">10 Longbowmen</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_longbow.png" alt="8 Longbowmen"><div class="card-text"><div class="card-name">8 Longbowmen</div><div class="card-desc"></div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(6)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/infinite_battleship.png" alt="Rule, Britannia"><div class="card-text"><div class="card-name">Rule, Britannia</div><div class="card-desc">Ships a mighty Battleship! This card costs 1000 Coin the next time you send it.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/rangers.png" alt="Rangers"><div class="card-text"><div class="card-name">Rangers</div><div class="card-desc">Longbowmen are fully replaced with Rangers at the Barracks, Homecity, and on the map. Rangers use a rifle instead of a bow to counter Heavy Infantry more effectively, but have less range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_british_rifleman_icon.png" alt="13 Rangers"><div class="card-text"><div class="card-name">13 Rangers</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/pike_gentlemen.png" alt="Gentlemen of the Pike"><div class="card-text"><div class="card-name">Gentlemen of the Pike</div><div class="card-desc">Ships 17 Guard Pikemen and allows researching Imperial Pikemen for a reduced cost.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/horse_artillery_icon.png" alt="2 Horse Artillery"><div class="card-text"><div class="card-name">2 Horse Artillery</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_drummer_icon.png" alt="4 Hanover Allies"><div class="card-text"><div class="card-name">4 Hanover Allies</div><div class="card-desc"></div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_british.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_British.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_british.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/postgame_flag_british.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      14 surfaces · <span style="color:#9fe39f;" title="Real in-game capture via gamescopectl / X11 fallback.">● in-game capture</span> · <span style="opacity:.7;">captured 2026-05-20T00:35:37Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/lobby_portrait.png" data-civ="ANWBritish" data-surface="lobby_portrait" aria-label="Open British Empire Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/loading_flag.png" data-civ="ANWBritish" data-surface="loading_flag" aria-label="Open British Empire Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/home_city_button.png" data-civ="ANWBritish" data-surface="home_city_button" aria-label="Open British Empire Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/hud_flag_corner.png" data-civ="ANWBritish" data-surface="hud_flag_corner" aria-label="Open British Empire HUD flag corner full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/hud_flag_corner.webp" alt="HUD flag corner"><figcaption>HUD flag corner</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/home_city_scene.png" data-civ="ANWBritish" data-surface="home_city_scene" aria-label="Open British Empire Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/tech_tree_overview.png" data-civ="ANWBritish" data-surface="tech_tree_overview" aria-label="Open British Empire Tech tree overview full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/tech_tree_overview.webp" alt="Tech tree overview"><figcaption>Tech tree overview</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/diplomacy_panel.png" data-civ="ANWBritish" data-surface="diplomacy_panel" aria-label="Open British Empire Diplomacy panel full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/diplomacy_panel.webp" alt="Diplomacy panel"><figcaption>Diplomacy panel</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/diplomacy_ally_portrait.png" data-civ="ANWBritish" data-surface="diplomacy_ally_portrait" aria-label="Open British Empire Ally portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/diplomacy_ally_portrait.webp" alt="Ally portrait"><figcaption>Ally portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/ai_home_city_scene.png" data-civ="ANWBritish" data-surface="ai_home_city_scene" aria-label="Open British Empire Ai Home City Scene full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/ai_home_city_scene.webp" alt="Ai Home City Scene"><figcaption>Ai Home City Scene</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/ai_deck_view.png" data-civ="ANWBritish" data-surface="ai_deck_view" aria-label="Open British Empire Ai Deck View full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/ai_deck_view.webp" alt="Ai Deck View"><figcaption>Ai Deck View</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/scoreboard_player_row.png" data-civ="ANWBritish" data-surface="scoreboard_player_row" aria-label="Open British Empire Scoreboard row full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/scoreboard_player_row.webp" alt="Scoreboard row"><figcaption>Scoreboard row</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/endgame_flag.png" data-civ="ANWBritish" data-surface="endgame_flag" aria-label="Open British Empire Endgame flag full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/endgame_flag.webp" alt="Endgame flag"><figcaption>Endgame flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/wall_playstyle_visual.png" data-civ="ANWBritish" data-surface="wall_playstyle_visual" aria-label="Open British Empire Wall Playstyle Visual full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/wall_playstyle_visual.webp" alt="Wall Playstyle Visual"><figcaption>Wall Playstyle Visual</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWBritish/crops/wall_segment_close.png" data-civ="ANWBritish" data-surface="wall_segment_close" aria-label="Open British Empire Wall Segment Close full size"><img loading="lazy" src="artifacts/visual_art/ANWBritish/thumbs/wall_segment_close.webp" alt="Wall Segment Close"><figcaption>Wall Segment Close</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>

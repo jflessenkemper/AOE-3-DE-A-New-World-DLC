@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Russian Empire — review</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #15151c;
+  color: #e8e8ee;
+  line-height: 1.5;
+}
+.review-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 36px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.review-header .hero-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+.review-header .civ-name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+.review-header .civ-leader-line {
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.review-header .civ-leader-line .sep { margin: 0 8px; opacity: 0.5; }
+.review-header .civ-leader-line .doctrine { font-weight: 600; }
+.review-header .civ-bonus {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0,0,0,0.30);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 32px 80px; }
+section { margin-top: 36px; }
+section > h2 {
+  font-size: 22px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+section > h2::before {
+  content: "▸";
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.quote-group h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9090b0;
+  margin: 18px 0 6px;
+}
+.quote-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.quote-label { color: #b8b8d0; font-size: 13px; }
+.quote-text { color: #fff; font-size: 14px; white-space: pre-wrap; }
+.age-block { margin-bottom: 24px; }
+.age-block h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  border-left: 4px solid currentColor;
+  padding-left: 8px;
+}
+.age-block.age-0 h3 { color: #9aa9ff; }
+.age-block.age-1 h3 { color: #62c46c; }
+.age-block.age-2 h3 { color: #d3b855; }
+.age-block.age-3 h3 { color: #c97c46; }
+.age-block.age-4 h3 { color: #cf5b5b; }
+.age-count { opacity: 0.6; font-weight: 400; font-size: 13px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 10px;
+}
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 3px;
+  object-fit: cover;
+  background: rgba(0,0,0,0.4);
+}
+.card-icon.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.card-desc { font-size: 12.5px; color: #d0d0e0; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.art-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.art-thumb figcaption {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+/* Visual-confirmation grid (reuses captures-grid from main columns CSS) */
+.visual-confirmation .captures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.visual-confirmation .capture-thumb {
+  margin: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 6px;
+}
+.visual-confirmation .capture-thumb img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.visual-confirmation .capture-thumb figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #b0b0c8;
+}
+.visual-confirmation .captures-section .section-label {
+  display: none;  /* "Visual confirmation" already shown by our h2 */
+}
+.empty { color: rgba(255,255,255,0.5); font-style: italic; }
+.review-nav {
+  padding: 10px 36px;
+  background: #1a1a24;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.review-nav a {
+  color: #9aa9ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.review-nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+
+<header class="review-header" style="background:linear-gradient(160deg,rgb(0,100,0),rgb(0,70,0));color:#fff">
+  <img class="hero-portrait" loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png" alt="Russian Empire">
+  <div class="head-meta">
+    <h1 class="civ-name">Russian Empire</h1>
+    <div class="civ-leader-line">
+      <span class="leader">Catherine</span>
+      <span class="sep">·</span>
+      <span class="doctrine">Cossack Voisko</span>
+    </div>
+    <div class="civ-bonus">Trains cheap Strelet infantry in batches; Cossacks available from Stables.</div>
+  </div>
+</header>
+
+<main>
+<section class="quotes"><h2>Text the player sees</h2>
+<div class="quote-group"><h3>Lobby &amp; loading screens</h3>
+<div class="quote-row"><div class="quote-label">Lobby picker — civ name</div><div class="quote-text">Russian Empire</div></div>
+<div class="quote-row"><div class="quote-label">Lobby picker — rollover description</div><div class="quote-text">Ivan IV the Terrible (r. 1547-1584) crowned himself first Tsar of All Rus&#x27;, conquered Kazan and Astrakhan, and unleashed the Oprichnik terror to break the boyars.
+Tsarist Russia welded together the Streltsy musketeer corps, vast peasant levies, and Orthodox missionary expansion across the Eurasian frontier.</div></div>
+<div class="quote-row"><div class="quote-label">Loading screen — leader name</div><div class="quote-text">Ivan the Terrible</div></div>
+</div>
+<div class="quote-group"><h3>Tech tree / picker tooltip</h3>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine name</div><div class="quote-text">Cossack Voisko</div></div>
+<div class="quote-row"><div class="quote-label">Tech tree — doctrine summary</div><div class="quote-text">Oprichnik terror</div></div>
+</div>
+<div class="quote-group"><h3>Playstyle blurbs (in-picker)</h3>
+<div class="quote-row"><div class="quote-label">Civ bonus tooltip</div><div class="quote-text">Trains cheap Strelet infantry in batches; Cossacks available from Stables.</div></div>
+<div class="quote-row"><div class="quote-label">Playstyle description</div><div class="quote-text">Wide Cossack raid bands keep enemy occupied; cheap Strelet batches fill lines; rush to third Town Center; Blockhouses replace stone walls.</div></div>
+<div class="quote-row"><div class="quote-label">Age up method</div><div class="quote-text">Wagon politicians</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Strelet</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Cossack</div></div>
+<div class="quote-row"><div class="quote-label">Unique unit name</div><div class="quote-text">Oprichnik</div></div>
+</div>
+</section>
+<section class="cards"><h2>Home City Cards (25)</h2>
+<div class="age-block age-0">
+<h3>Discovery <span class="age-count">(2)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/landed_gentry.png" alt="Landed Gentry"><div class="card-text"><div class="card-name">Landed Gentry</div><div class="card-desc">Enables Cavalry Archers to be trained in the Commerce Age and replaces their coin costs with slightly reduced wood costs.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/allotment_system.png" alt="Allotment System"><div class="card-text"><div class="card-name">Allotment System</div><div class="card-desc">Ships 1 Carolean for each Torp you have on the map. Enables Torps to be sold to recover some of their resource cost.</div></div></article>
+</div></div>
+<div class="age-block age-1">
+<h3>Colonial <span class="age-count">(5)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/new_order_regiments.png" alt="New Order Regiments"><div class="card-text"><div class="card-name">New Order Regiments</div><div class="card-desc">Poruchik, Rekrut and Strelet attack and hitpoints increased.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_poruchik_icon.png" alt="6 Poruchiks"><div class="card-text"><div class="card-name">6 Poruchiks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cossack_icon.png" alt="4 Cossacks"><div class="card-text"><div class="card-name">4 Cossacks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cossack_icon.png" alt="5 Cossacks"><div class="card-text"><div class="card-name">5 Cossacks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/detinets.png" alt="Detinets"><div class="card-text"><div class="card-name">Detinets</div><div class="card-desc">Ships 2 Blockhouse Wagons and increases Blockhouse hitpoints.</div></div></article>
+</div></div>
+<div class="age-block age-2">
+<h3>Fortress <span class="age-count">(10)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/bashkir_rebellion.png" alt="Bashkir Rebellion"><div class="card-text"><div class="card-name">Bashkir Rebellion</div><div class="card-desc">All your Cossacks become Tatar Archers! Allows their training in Native Embassies and upgrades them into more powerful Bashkir Archers that now cost population space.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cossack_icon.png" alt="6 Cossacks"><div class="card-text"><div class="card-name">6 Cossacks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_rekrut_icon.png" alt="13 Rekruts"><div class="card-text"><div class="card-name">13 Rekruts</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_oprichnik_icon.png" alt="5 Oprichniks"><div class="card-text"><div class="card-name">5 Oprichniks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_oprichnik_icon.png" alt="6 Oprichniks"><div class="card-text"><div class="card-name">6 Oprichniks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_strelet_icon.png" alt="19 Streltsy"><div class="card-text"><div class="card-name">19 Streltsy</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_boyar_icon.png" alt="7 Phanar Allies"><div class="card-text"><div class="card-name">7 Phanar Allies</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_pandour_icon.png" alt="Hire Pandours"><div class="card-text"><div class="card-name">Hire Pandours</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/grenade_launcher.png" alt="Grenade Launchers"><div class="card-text"><div class="card-name">Grenade Launchers</div><div class="card-desc">Enables Grenadiers to be trained and equips them with a hand mortar, which quickly propels explosives and increases their range.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_strelet_combat.png" alt="Strelet Combat"><div class="card-text"><div class="card-name">Strelet Combat</div><div class="card-desc">Strelet attack and hitpoints increased.</div></div></article>
+</div></div>
+<div class="age-block age-3">
+<h3>Industrial <span class="age-count">(8)</span></h3>
+<div class="card-grid">
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_strelet_icon.png" alt="24 Streltsy"><div class="card-text"><div class="card-name">24 Streltsy</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_cossack_icon.png" alt="9 Cossacks"><div class="card-text"><div class="card-name">9 Cossacks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/russian_battleship.png" alt="Imperator"><div class="card-text"><div class="card-name">Imperator</div><div class="card-desc">Ships a mighty Battleship! Russian Battleships inflict more damage and are cheaper, but now have less hitpoints.</div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_poruchik_icon.png" alt="13 Poruchiks"><div class="card-text"><div class="card-name">13 Poruchiks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_poruchik_icon.png" alt="15 Poruchiks"><div class="card-text"><div class="card-name">15 Poruchiks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_rekrut_icon.png" alt="16 Rekruts"><div class="card-text"><div class="card-name">16 Rekruts</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_oprichnik_icon.png" alt="9 Oprichniks"><div class="card-text"><div class="card-name">9 Oprichniks</div><div class="card-desc"></div></div></article>
+<article class="card"><img class="card-icon" loading="lazy" src="resources/images/icons/cards/hc_giant_grenadier_icon.png" alt="Hire Giant Grenadiers"><div class="card-text"><div class="card-name">Hire Giant Grenadiers</div><div class="card-desc"></div></div></article>
+</div></div>
+</section>
+<section class="art"><h2>Art surfaces (what shows on screen)</h2>
+<div class="art-grid">
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png" alt="Leader portrait (CPAI)"><figcaption>Leader portrait (CPAI)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/Flag_Russian.png" alt="Home City flag (large)"><figcaption>Home City flag (large)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/flag_hc_russian.png" alt="Home City flag (button)"><figcaption>Home City flag (button)</figcaption></figure>
+<figure class="art-thumb"><img loading="lazy" src="resources/images/icons/flags/postgame_flag_russian.png" alt="Post-game flag"><figcaption>Post-game flag</figcaption></figure>
+</div></section>
+<section class="visual-confirmation"><h2>Visual confirmation (real in-game captures)</h2><div class="captures-section">
+  <div class="section-label">Visual confirmation
+    <span class="capture-meta" style="font-size:11px;font-weight:400;
+                                       margin-left:8px;opacity:.85;">
+      6 surfaces · <span style="color:#ffd980;" title="Synthesised from static art assets — not a real in-game capture. Run the capture runner against a live match for the gold-standard set.">◇ synthesised</span> · <span style="opacity:.7;">captured 2026-05-20T01:09:28Z</span>
+    </span>
+  </div>
+  <div class="captures-grid">
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWRussians/crops/lobby_portrait.png" data-civ="ANWRussians" data-surface="lobby_portrait" aria-label="Open Russian Empire Lobby portrait full size"><img loading="lazy" src="artifacts/visual_art/ANWRussians/thumbs/lobby_portrait.webp" alt="Lobby portrait"><figcaption>Lobby portrait</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWRussians/crops/loading_flag.png" data-civ="ANWRussians" data-surface="loading_flag" aria-label="Open Russian Empire Loading flag full size"><img loading="lazy" src="artifacts/visual_art/ANWRussians/thumbs/loading_flag.webp" alt="Loading flag"><figcaption>Loading flag</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWRussians/crops/home_city_button.png" data-civ="ANWRussians" data-surface="home_city_button" aria-label="Open Russian Empire Home City button full size"><img loading="lazy" src="artifacts/visual_art/ANWRussians/thumbs/home_city_button.webp" alt="Home City button"><figcaption>Home City button</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWRussians/crops/hud_flag_corner.png" data-civ="ANWRussians" data-surface="hud_flag_corner" aria-label="Open Russian Empire HUD flag corner full size"><img loading="lazy" src="artifacts/visual_art/ANWRussians/thumbs/hud_flag_corner.webp" alt="HUD flag corner"><figcaption>HUD flag corner</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWRussians/crops/home_city_scene.png" data-civ="ANWRussians" data-surface="home_city_scene" aria-label="Open Russian Empire Home City scene full size"><img loading="lazy" src="artifacts/visual_art/ANWRussians/thumbs/home_city_scene.webp" alt="Home City scene"><figcaption>Home City scene</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/visual_art/ANWRussians/crops/diplomacy_panel.png" data-civ="ANWRussians" data-surface="diplomacy_panel" aria-label="Open Russian Empire Diplomacy panel full size"><img loading="lazy" src="artifacts/visual_art/ANWRussians/thumbs/diplomacy_panel.webp" alt="Diplomacy panel"><figcaption>Diplomacy panel</figcaption></figure>
+  </div>
+</div>
+</section>
+</main>
+<nav class="review-nav"><a href="review_index.html">← back to all civs</a></nav>
+</body>
+</html>
