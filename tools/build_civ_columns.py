@@ -2241,6 +2241,48 @@ _CIV_LEADER_KEY: dict = {
     # ANW-only civs with napoleon XS
     "ANWNapoleonicFrance": "napoleon",
     "ANWRevFrance":        "napoleon",
+    # ANW revolution civs handled inside leader_revolution_commanders.xs.
+    # The shared file dispatches per-civ via `if (rvltName == "RvltMod<X>")`;
+    # collect_leader_ai_for_civ uses _REVOLUTION_BRANCH below to extract
+    # just that civ's branch body.
+    "ANWArgentines":     "revolution_commanders",
+    "ANWBarbary":        "revolution_commanders",
+    "ANWBrazil":         "revolution_commanders",
+    "ANWCanadians":      "revolution_commanders",
+    "ANWChileans":       "revolution_commanders",
+    "ANWColumbians":     "revolution_commanders",
+    "ANWEgyptians":      "revolution_commanders",
+    "ANWFinnish":        "revolution_commanders",
+    "ANWHaitians":       "revolution_commanders",
+    "ANWHungarians":     "revolution_commanders",
+    "ANWIndonesians":    "revolution_commanders",
+    "ANWMayans":         "revolution_commanders",
+    "ANWPeruvians":      "revolution_commanders",
+    "ANWRomanians":      "revolution_commanders",
+    "ANWSouthAfricans":  "revolution_commanders",
+    "ANWTexians":        "revolution_commanders",
+}
+
+# Map civ_token -> "RvltMod<X>" branch name for civs handled inside
+# leader_revolution_commanders.xs. Used by collect_leader_ai_for_civ to
+# locate the per-civ `else if (rvltName == "RvltMod<X>") { … }` block.
+_REVOLUTION_BRANCH: dict = {
+    "ANWArgentines":     "RvltModArgentines",
+    "ANWBarbary":        "RvltModBarbary",
+    "ANWBrazil":         "RvltModBrazil",
+    "ANWCanadians":      "RvltModCanadians",
+    "ANWChileans":       "RvltModChileans",
+    "ANWColumbians":     "RvltModColumbians",
+    "ANWEgyptians":      "RvltModEgyptians",
+    "ANWFinnish":        "RvltModFinnish",
+    "ANWHaitians":       "RvltModHaitians",
+    "ANWHungarians":     "RvltModHungarians",
+    "ANWIndonesians":    "RvltModIndonesians",
+    "ANWMayans":         "RvltModMayans",
+    "ANWPeruvians":      "RvltModPeruvians",
+    "ANWRomanians":      "RvltModRomanians",
+    "ANWSouthAfricans":  "RvltModSouthAfricans",
+    "ANWTexians":        "RvltModTexians",
 }
 
 # Pattern to extract numeric float / boolean values from XS code
@@ -2316,16 +2358,55 @@ def collect_leader_ai_for_civ(civ_token: str) -> dict:
             lines.pop()
         result["lore_comment"] = "\n".join(lines)
 
-    # ── Find the initLeader<Name>() function body ──────────────────────────────
-    init_fn_m = re.search(
-        r'void\s+initLeader\w+\s*\(\s*void\s*\)\s*\{(.*?)\n\}',
-        content,
-        re.DOTALL,
-    )
-    if init_fn_m is None:
-        return result
-
-    fn_body = init_fn_m.group(1)
+    # ── Find the function body to parse ────────────────────────────────────────
+    # For most civs we want the initLeader<Name>() body. For ANW revolution
+    # civs sharing leader_revolution_commanders.xs we extract just that civ's
+    # `if/else if (rvltName == "RvltMod<X>") { ... }` branch instead.
+    rvlt_branch = _REVOLUTION_BRANCH.get(civ_token)
+    if rvlt_branch:
+        # Locate `(rvltName == "<branch>")` then walk forward to the matching
+        # opening brace and balance braces to the close. Pattern works for
+        # both the leading `if` and the chained `else if` form.
+        anchor_m = re.search(
+            r'\(\s*rvltName\s*==\s*"' + re.escape(rvlt_branch) + r'"\s*\)',
+            content,
+        )
+        if anchor_m is None:
+            return result
+        i = anchor_m.end()
+        # Skip whitespace until '{'
+        while i < len(content) and content[i] != '{':
+            i += 1
+        if i >= len(content):
+            return result
+        depth = 0
+        start = i + 1
+        while i < len(content):
+            ch = content[i]
+            if ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 0:
+                    fn_body = content[start:i]
+                    break
+            i += 1
+        else:
+            return result
+        # Override the source-file display so the user sees the branch context
+        result["xs_file"] = (
+            os.path.relpath(xs_path, MOD_ROOT)
+            + f"  (branch: {rvlt_branch})"
+        )
+    else:
+        init_fn_m = re.search(
+            r'void\s+initLeader\w+\s*\(\s*void\s*\)\s*\{(.*?)\n\}',
+            content,
+            re.DOTALL,
+        )
+        if init_fn_m is None:
+            return result
+        fn_body = init_fn_m.group(1)
 
     # ── Personality style ──────────────────────────────────────────────────────
     ps_m = re.search(r'\b(ll(?:Set|Use)\w+Personality\s*\([^)]*\))\s*;', fn_body)
