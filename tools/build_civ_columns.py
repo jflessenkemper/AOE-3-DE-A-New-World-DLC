@@ -2171,7 +2171,38 @@ def render_age_ups_section(civ_token: str, techtree_xml_path: str) -> str:
 
     if not pols:
         parts.append(
-            '<div class="cov-row"><em class="cov-empty">(none found in techtreemods.xml)</em></div>'
+            '<div class="cov-row" style="padding:4px 6px;">'
+            '<em class="cov-empty">Unmodified \u2014 this civ uses the '
+            'vanilla politician menu (no civ-specific entries in '
+            '<code>techtreemods.xml</code>).</em></div>'
+        )
+        # Show the standard vanilla pool so reviewers know what politicians
+        # this civ will offer in-game (not data-sourced from the mod; this
+        # is the engine default).
+        _VANILLA_POOL = [
+            ("Age II \u2014 Colonial",  ["Governor", "Naturalist", "Quartermaster", "Philosopher Prince"]),
+            ("Age III \u2014 Fortress", ["Bishop", "Marksman", "Engineer", "Mercenary Contractor"]),
+            ("Age IV \u2014 Industrial",["Tycoon", "General", "Admiral", "Inventor"]),
+        ]
+        parts.append(
+            '<table class="info-table" style="font-size:12px;opacity:0.7;">'
+            '<thead><tr>'
+            '<th style="padding:2px 6px;">Age</th>'
+            '<th style="padding:2px 6px;">Standard vanilla pool</th>'
+            '</tr></thead><tbody>'
+        )
+        for age_label, pool in _VANILLA_POOL:
+            parts.append(
+                f'<tr><td style="padding:2px 6px;font-size:11px;">{html_module.escape(age_label)}</td>'
+                f'<td style="padding:2px 6px;font-size:11px;">'
+                f'{html_module.escape(", ".join(pool))}</td></tr>'
+            )
+        parts.append('</tbody></table>')
+        parts.append(
+            '<div class="cov-row" style="font-size:10px;opacity:0.5;padding:4px 6px;">'
+            'Source: vanilla AoE3 DE politician pool (engine default, '
+            'not mod-supplied).'
+            '</div>'
         )
     else:
         parts.append(
