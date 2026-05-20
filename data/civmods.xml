@@ -5224,7 +5224,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_aztec</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_aztec.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwaztecs.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -5771,7 +5771,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_chinese</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_chinese.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwchinese.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -7562,7 +7562,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_portuguese</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_ethiopian.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwethiopians.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -7857,7 +7857,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_french</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_french.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwfrench.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_french_napoleon.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -8121,7 +8121,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_german</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_german.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwgermans.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -8378,7 +8378,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_iroquois</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_iroquois.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwhaudenosaunee.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -8644,7 +8644,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_ottoman</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_hausa.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwhausa.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_hausa_usman_dan_fodio.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -8919,7 +8919,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_aztec</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_inca.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwinca.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -9193,7 +9193,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_indian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_indian.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwindians.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -9624,7 +9624,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_spanish</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_italian.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwitalians.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -9920,7 +9920,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_japanese</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_japanese.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwjapanese.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -10413,7 +10413,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_sioux</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_sioux.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwlakota.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -10670,7 +10670,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_spanish</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_maltese.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwmaltese.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>LogicalTypeMalteseCivBonusHealsWhenIdle</unittype>
@@ -10951,7 +10951,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_mexican</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_mexican.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwmexicans.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -11391,7 +11391,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_ottoman</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_ottoman.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwottomans.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -11646,7 +11646,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_portuguese</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_portuguese.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwportuguese.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -11911,7 +11911,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_russian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_russian.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwrussians.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -12196,7 +12196,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_spanish</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_spanish.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwspanish.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -12454,7 +12454,7 @@
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_russian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_swedish.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_anwswedes.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus_adolphus.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
