@@ -1,0 +1,14 @@
+{
+  "batch_id": "03",
+  "civs": [
+    "ANWFrench"
+  ],
+  "ok": false,
+  "started_at": "2026-05-10T15:39:44Z",
+  "completed_at": "2026-05-10T15:45:27Z",
+  "observed_seconds": 15,
+  "screenshots": {},
+  "errors": [
+    "set_civ_verified:ANWFrench:not_ok:[{'attempt': 1, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 2, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 3, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 4, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 5, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 6, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 7, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}, {'attempt': 8, 'try_idx': 'ocr_find', 'error': 'civ not found in picker via OCR'}]"
+  ]
+}

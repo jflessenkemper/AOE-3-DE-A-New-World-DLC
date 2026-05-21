@@ -1,0 +1,19 @@
+2026-05-18 01:14:12,962 INFO runner_start  mode=host n_civs=2 smoke=True resume=False host_civ=ANWBritish
+2026-05-18 01:14:12,964 INFO civ_start  civ=ANWBritish mode=host
+[gamescope_detect] AoE3 detected: DISPLAY=:1  GAMESCOPE_WAYLAND_DISPLAY=gamescope-0
+2026-05-18 01:15:54,766 INFO in_game  civ=ANWBritish settling_s=20
+[ally_all] focusing window 31457281
+[ally_all] opening diplomacy panel (Alt+D)
+[ally_all] clicking Ally on 1 opponent rows
+[ally_all] confirming + closing panel
+[ally_all] done — verify diplomacy state in HUD
+2026-05-18 01:17:15,405 INFO civ_done  civ=ANWBritish status=complete elapsed_s=182.4 n_captures=9 n_warnings=0
+2026-05-18 01:17:15,405 INFO civ_start  civ=ANWFrench mode=host
+2026-05-18 01:18:56,055 INFO in_game  civ=ANWFrench settling_s=20
+[ally_all] focusing window 31457281
+[ally_all] opening diplomacy panel (Alt+D)
+[ally_all] clicking Ally on 1 opponent rows
+[ally_all] confirming + closing panel
+[ally_all] done — verify diplomacy state in HUD
+2026-05-18 01:20:16,709 INFO civ_done  civ=ANWFrench status=complete elapsed_s=181.3 n_captures=9 n_warnings=0
+[capture] done: complete=2 partial=0 failed=0 skipped=0 total_civs=2 elapsed=364s  out=/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation/visual_art

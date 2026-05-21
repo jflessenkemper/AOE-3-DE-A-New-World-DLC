@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "civ_token": "ANWFrench",
+  "civ_label": "French",
+  "captured_at": "2026-05-18T01:17:57Z",
+  "host_perspective": false,
+  "host_civ_token": "ANWBritish",
+  "match_id": "ally_anwfrench_2026-05-18_011757",
+  "captures": [],
+  "status": "failed",
+  "warnings": [
+    "click_skirmish:RuntimeError('command failed (rc=1):\\n  cmd: DISPLAY=:1 xdotool mousemove --window 31457281 130 482\\n  stderr: Failed creating new xdo instance.\\n')"
+  ]
+}

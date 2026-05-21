@@ -1,0 +1,37 @@
+2026-05-18 01:04:08,934 INFO runner_start  mode=host n_civs=2 smoke=True resume=False host_civ=ANWBritish
+2026-05-18 01:04:08,936 INFO civ_start  civ=ANWBritish mode=host
+[gamescope_detect] AoE3 detected: DISPLAY=:2  GAMESCOPE_WAYLAND_DISPLAY=gamescope-1
+2026-05-18 01:05:50,711 INFO in_game  civ=ANWBritish settling_s=20
+[XDO] mousemove 1850 80 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] mousemove 1750 145 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[err] no AoE3 window found via xdotool. Is the game running and in-game (not at the menu)?
+[XDO] key F4 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Tab rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Tab rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] mousemove 1750 358 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] mousemove 762 595 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] mousemove 762 595 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] mousemove 1128 729 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] mousemove 50 20 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] click 1 rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+[XDO] key Escape rc=1 stderr='Failed creating new xdo instance.' stdout=''
+2026-05-18 01:07:23,316 INFO civ_done  civ=ANWBritish status=partial elapsed_s=194.4 n_captures=2 n_warnings=8
+2026-05-18 01:07:23,316 INFO civ_start  civ=ANWFrench mode=host
+2026-05-18 01:08:23,333 WARNING civ_failed  civ=ANWFrench reason=click_skirmish elapsed_s=60.0
+[capture] done: complete=0 partial=1 failed=1 skipped=0 total_civs=2 elapsed=254s  out=/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation/visual_art

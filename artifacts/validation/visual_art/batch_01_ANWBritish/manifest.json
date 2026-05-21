@@ -1,0 +1,21 @@
+{
+  "batch_id": "01",
+  "civs": [
+    "ANWBritish"
+  ],
+  "ok": true,
+  "started_at": "2026-05-10T15:34:42Z",
+  "completed_at": "2026-05-10T15:37:11Z",
+  "observed_seconds": 15,
+  "screenshots": {
+    "01_lobby": "01_lobby.png",
+    "02_hud_default": "02_hud_default.png",
+    "03_scoreboard": "03_scoreboard.png",
+    "04_diplomacy": "04_diplomacy.png",
+    "05_homecity_panel": "05_homecity_panel.png",
+    "06_esc_menu": "06_esc_menu.png",
+    "07a_abandon_screen": "07a_abandon_screen.png",
+    "07_endgame_screen": "07_endgame_screen.png"
+  },
+  "errors": []
+}
