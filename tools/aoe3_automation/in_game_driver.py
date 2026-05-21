@@ -13,21 +13,12 @@ Environment facts (discovered empirically on Bazzite/Proton rig, verified 2026-0
     _NET_ACTIVE_WINDOW, so `xdotool getactivewindow` always fails.  Use
     `xdotool search --name "Age of Empires" windowactivate` unconditionally
     (no --sync; that flag also fails on gamescope).
-  - SCREENSHOTS ARE NOT AVAILABLE via any external tool on this rig:
-      * gamescopectl on Bazzite lacks the `screenshot` subcommand
-      * xwd/ImageMagick `import`/ffmpeg `x11grab` against the gamescope
-        Xwayland (:1) all return uniformly black frames — gamescope renders
-        directly to the GPU presentation queue and never paints to the
-        Xwayland root window
-      * spectacle / KWin ScreenShot2 capture only the host KDE compositor
-        which has no visibility into gamescope's output
-      * Result: this driver runs BLIND.  Coordinates are correct on the
-        nested Xwayland (game window IS at 0,0 1920x1080 on :1) so click /
-        key input lands precisely; we just can't observe the result via pixels.
-    Workaround: AoE3's own in-game screenshot binding writes PNGs to
-    <profile>/Screenshots/ — those work because they're rendered by the
-    game itself.  Use ``screenshot()`` to fire that via xdotool (PrintScreen).
-    For state detection we use TIME-BASED waits instead of pixel detection.
+  - SCREENSHOTS: gamescopectl screenshot works reliably (confirmed 2026-05-07).
+    Use: GAMESCOPE_WAYLAND_DISPLAY=gamescope-0 gamescopectl screenshot <path>
+    Polls up to 5s for async file write. Integrated in aoe3_ui_automation.py
+    capture_screen() and called via this driver's screenshot() method.
+    For rapid polling (state detection), also supports game's internal
+    PrintScreen → <profile>/Screenshots/ but gamescopectl is preferred.
   - Game speed: click the gold bar at the bottom-right of the HUD
     Bar x-range: ~1620-1900, y≈1058.  Left=slow, Right=fast.
     Predefined click positions (5 speed ticks): 1635, 1685, 1760, 1835, 1895
@@ -204,34 +195,55 @@ MAP_OK       = (240, 976)    # confirm selection inside modal
 PLAY_BTN     = (1646, 1030)
 
 # ESC menu (right panel, opened by pressing Escape in-game).
-# 2026-04-29 RE-VERIFIED via cropped screenshot of menu in matrix_runner state:
-# Menu order top→bottom (8 items): Photo Mode (y≈97), Tech Tree (y≈148),
-# Save (y≈197), Load (y≈242), Restart (y≈287), Options (y≈332),
-# RESIGN (y≈377), Quit (y≈422).  Previous y=350 was hitting OPTIONS, which
-# opens a submenu that consumed all subsequent clicks — leaving the player
-# trapped in-game.  Y=377 hits RESIGN cleanly.
-ESC_MENU_X   = 1750
-ESC_RESIGN   = (ESC_MENU_X, 377)
-ESC_QUIT     = (ESC_MENU_X, 422)
-# Abandon-screen ESC menu has only 4 items (VIEW POSTGAME, RESTART, OPTIONS,
-# QUIT). QUIT is the 4th item at y≈225 (bands found via pixel-scan: button
-# centers are ~92, 135, 180, 225).
-ABANDON_QUIT = (ESC_MENU_X, 225)
+# 2026-05-20 RE-CALIBRATED via verified British capture session
+# (see tools/aoe3_automation/verified_coords_british.md):
+# Menu lives on the RIGHT side at x=1830 (not 1750). New row centers:
+#   Photo Mode (y=90),  Tech Tree (y=140), Save (y=185), Load (y=230),
+#   Restart   (y=275),  Options   (y=320), RESIGN (y=365), Quit (y=410).
+# The gears icon to OPEN the menu lives at (1860, 30) in HUD; this is the
+# preferred entry instead of the Escape key (Escape is unreliable in this
+# build).
+GEARS_BTN    = (1860, 30)
+ESC_MENU_X   = 1830
+ESC_RESIGN   = (ESC_MENU_X, 365)
+ESC_QUIT     = (ESC_MENU_X, 410)
+ESC_TECH_TREE = (ESC_MENU_X, 140)
+# Legacy abandon coord (unused in current skirmish flow, kept for safety):
+ABANDON_QUIT = (ESC_MENU_X, 206)
 
-# Resign confirmation dialog (centered)
-# Verified via pixel-scan of confirm dialog: YES button spans roughly
-# x∈[660,870], y∈[596,628]; NO button spans x∈[1060,1280] same y. Center
-# of YES = (760, 610). The earlier value (750, 540) hit the dialog title
-# bar area and only worked occasionally via cursor-state side-effects.
-RESIGN_YES   = (760, 610)
-RESIGN_NO    = (1170, 610)
+# Resign/quit confirmation dialog (centered).
+# 2026-05-20 RE-VERIFIED in British session: YES (760, 605), NO (1080, 605).
+RESIGN_YES   = (760, 605)
+RESIGN_NO    = (1080, 605)
 
-# Post-resign / abandon screen
-VIEW_MAP      = (680, 729)
-VIEW_POSTGAME = (1128, 729)
+# Post-resign / "You Abandon Your Town" abandon screen
+# 2026-05-20 RE-VERIFIED: VIEW MAP (810, 737), VIEW POSTGAME (1145, 737).
+VIEW_MAP      = (810, 737)
+VIEW_POSTGAME = (1145, 737)
 
 # Post-game screen
 POSTGAME_QUIT = (50, 20)
+
+# Diplomacy panel: opens via the inkwell+red-quill icon top-right of HUD.
+# Verified at (1691, 35). F-keys (F3/F4) do NOT open diplomacy in this build.
+DIPLOMACY_BTN = (1691, 35)
+
+# Diplomacy panel — PLAYER SUMMARY layout (1920x1080).
+# Player row spacing is fixed 40px starting at P1=385.
+DIPLOMACY_ROW_Y0 = 385   # y of P1
+DIPLOMACY_ROW_DY = 40
+DIPLOMACY_FLAG_X = 380   # clicking flag opens that player's HC view
+DIPLOMACY_ALLY_X = 970   # ALLY radio column
+DIPLOMACY_NEUTRAL_X = 1080
+DIPLOMACY_ENEMY_X = 1190
+DIPLOMACY_APPLY    = (510, 815)
+DIPLOMACY_CLOSE    = (1410, 815)
+
+def diplomacy_row_y(player_index: int) -> int:
+    """Return y-coord for player N's row (N=1..8). P1=385, P2=425, ... P8=665."""
+    if not 1 <= player_index <= 8:
+        raise ValueError(f"player_index out of range: {player_index!r}")
+    return DIPLOMACY_ROW_Y0 + (player_index - 1) * DIPLOMACY_ROW_DY
 
 # Speed bar: gold horizontal bar bottom-right of HUD.
 # Five click positions for 5 speed tiers (1=slowest … 5=fastest).
@@ -247,9 +259,28 @@ HUD_THRESHOLD = 280
 # ---------------------------------------------------------------------------
 
 def _xdo(*args: str) -> None:
-    """Run an xdotool command on the dynamically-detected AoE3 display."""
-    r = subprocess.run(["xdotool", *args], env=_get_xdo_env(),
+    """Run an xdotool command on the dynamically-detected AoE3 display.
+
+    If the first attempt fails with "Failed creating new xdo instance" or
+    "Can't open display", the gamescope_detect cache is stale (the Xwayland
+    we cached died). Invalidate and retry once before giving up.
+    """
+    env = _get_xdo_env()
+    r = subprocess.run(["xdotool", *args], env=env,
                        capture_output=True, check=False, text=True)
+    stale = ("Failed creating new xdo instance" in (r.stderr or "")
+             or "Can't open display" in (r.stderr or ""))
+    if stale:
+        try:
+            from tools.aoe3_automation import gamescope_detect
+            gamescope_detect.invalidate_cache()
+            env2 = _get_xdo_env()
+            print(f"[XDO] retry after invalidate_cache: "
+                  f"DISPLAY={env2.get('DISPLAY')!r}", flush=True)
+            r = subprocess.run(["xdotool", *args], env=env2,
+                               capture_output=True, check=False, text=True)
+        except Exception as exc:
+            print(f"[XDO] invalidate_cache retry failed: {exc!r}", flush=True)
     if r.returncode != 0 or r.stderr.strip():
         print(f"[XDO] {' '.join(args)} rc={r.returncode} "
               f"stderr={r.stderr.strip()!r} stdout={r.stdout.strip()!r}",
@@ -310,7 +341,7 @@ def _esc_menu_open() -> bool:
     import tempfile
     probe = "/tmp/.aoe3_menu_probe.png"
     try:
-        env = {**os.environ, "DISPLAY": _FALLBACK_DISPLAY}
+        env = _get_gs_env()
         subprocess.run(["gamescopectl", "screenshot", probe],
                        env=env, capture_output=True, check=False, timeout=8)
         from PIL import Image
@@ -448,18 +479,89 @@ class GameDriver:
         ).returncode
         return rc == 0
 
-    def wait_for_main_menu(self, timeout: int = 60) -> bool:
-        """Wait for the main menu to be ready for input.
+    def wait_for_main_menu(self, timeout: int = 180) -> bool:
+        """Wait for the main menu to be ready for input by polling Age3Log.
 
-        We can't see the screen (no external screenshot path on this rig),
-        so this is a TIME-BASED wait: simply sleep ``timeout`` seconds, then
-        verify the AoE3 window is still alive on the expected display.
-        Empirically the AoE3 main menu becomes click-responsive ~30 s after
-        cold launch; default timeout=60 leaves comfortable headroom.
+        Cold-boot startup takes 90-100s on this hardware (measured: 94.75 s
+        in one run).  A pure time-based sleep is unreliable — the launcher
+        sometimes warms caches in 30 s, sometimes spends 90 s on first-time
+        shader compilation.  The deterministic signal is in the engine log:
 
-        Returns True if the AoE3 X window still exists at end of wait.
+          - ``Game startup complete`` — emitted once startup finishes
+          - ``ModeTrack -- entering mode 1 (Pregame)`` — emitted when the
+            main menu UI takes over input.  This is the marker we use.
+
+        After mode 1 enters, we settle 6 s for the UI to become input-ready.
+        We deliberately do NOT press Return here — empirical evidence
+        (engine log diff between dismissed and non-dismissed runs) shows
+        that the AoE3 main menu has keyboard focus on the "Continue"
+        button by default, and pressing Return TRIGGERS the auto-load of
+        the last-played scenario (typically ``ANEWWORLD.age3Yscn``).  The
+        engine then briefly enters mode 9 (ScenarioGame), hits the Arxan
+        inventory gate, and renders the "Scenario: ANEWWORLD failed to
+        load." popup which we cannot reliably dismiss via xdotool under
+        gamescope (no ``_NET_ACTIVE_WINDOW`` → clicks don't route to the
+        Wine modal).  The fix is therefore to never press Return during
+        startup at all; the menu sidebar (Skirmish/Single Player/etc.)
+        is click-responsive without any prior key press.
+
+        Args:
+            timeout: max seconds to wait for ``entering mode 1`` marker.
+                Default 180 gives ~85 s of headroom past worst observed
+                cold-boot timing.
+
+        Returns True if the marker was observed AND the AoE3 X window
+        is still alive at the end of the settle phase.
+        Returns False on timeout or window disappearance.
         """
-        time.sleep(min(timeout, 60))
+        # NOTE: AoE3 DE *truncates* Age3Log.txt on every cold launch (the
+        # file starts fresh with "File 'Age3Log.txt' opened at <timestamp>"
+        # as its first line).  If we capture ``start_offset`` from a stale
+        # pre-launch file, then seek past EOF in the freshly-truncated log
+        # and never find the marker.  We detect this by re-checking file
+        # size on every poll: if it has SHRUNK below our cached offset,
+        # the engine truncated the file under us and we reset to 0.
+        try:
+            start_offset = AGE3_LOG_PATH.stat().st_size
+        except OSError:
+            start_offset = 0
+        deadline = time.time() + timeout
+        marker_seen = False
+        content = ""
+        while time.time() < deadline:
+            # Truncation-aware offset.  If file shrank, reset.
+            try:
+                current_size = AGE3_LOG_PATH.stat().st_size
+                if current_size < start_offset:
+                    start_offset = 0
+            except OSError:
+                pass
+            try:
+                with open(AGE3_LOG_PATH, encoding="utf-8",
+                          errors="replace") as f:
+                    f.seek(start_offset)
+                    content = f.read()
+            except OSError:
+                content = ""
+            if "entering mode 1 (Pregame)" in content:
+                marker_seen = True
+                break
+            # Fast-fail on engine crash signatures.
+            if "D3D11 Error" in content or "is forced to terminate" in content:
+                return False
+            time.sleep(2.0)
+
+        if not marker_seen:
+            return False
+
+        # Marker observed — main menu UI is now live.  Settle 6 s for the
+        # UI to become input-ready.  DO NOT press Return here: the engine's
+        # default focus is on "Continue", and Return triggers an auto-load
+        # of the last-played scenario which on the ANW mod hits the Arxan
+        # gate and renders an undismissable popup over the menu.
+        time.sleep(6.0)
+
+        # Confirm the window still exists.
         env = _get_xdo_env()
         res = subprocess.run(
             ["xdotool", "search", "--name", "Age of Empires"],
@@ -468,7 +570,8 @@ class GameDriver:
         return bool(res.stdout.strip())
 
     def wait_for_in_game(self, timeout: int = 180, dismiss_errors: bool = True,
-                         log_mirror: "Optional['LogMirror']" = None) -> bool:
+                         log_mirror: "Optional['LogMirror']" = None,
+                         diagnostic_dir: "Optional[Path]" = None) -> bool:
         """Wait for the loading screen to finish and the match to be running.
 
         Strategy: poll Age3Log.txt for the engine's own readiness markers.
@@ -497,20 +600,52 @@ class GameDriver:
         Returns True once ``WorldAssetPreloadingTime`` is observed; False on
         timeout.
         """
+        # 2026-05-07: CRITICAL — capture starting log offset so we don't
+        # false-trigger on a prior match's "entering mode 27" marker still
+        # present in Age3Log.txt (which is append-only across the session).
+        # Without this, every match after the first one returns True instantly
+        # while the engine is still on the loading screen, producing fake
+        # passes for the entire validation run.
+        if log_mirror is not None:
+            start_offset = len(log_mirror.current_content())
+        else:
+            try:
+                start_offset = AGE3_LOG_PATH.stat().st_size
+            except OSError:
+                start_offset = 0
+
         deadline = time.time() + timeout
         last_size = -1
         nudged = False
         while time.time() < deadline:
             if log_mirror is not None:
-                content = log_mirror.current_content()
+                content = log_mirror.current_content()[start_offset:]
             else:
                 try:
-                    content = AGE3_LOG_PATH.read_text(encoding="utf-8",
-                                                      errors="replace")
+                    with open(AGE3_LOG_PATH, encoding="utf-8",
+                              errors="replace") as f:
+                        f.seek(start_offset)
+                        content = f.read()
                 except OSError:
                     content = ""
+            # 2026-05-07: Prefer the mode-27 marker over WorldAssetPreloadingTime.
+            # The latter is not always emitted (depends on engine logging level
+            # and asset-load path); the former is emitted by ModeTrack on every
+            # transition and confirmed to fire reliably ~150s after PLAY click
+            # for the ANW mod with 8 AIs.
+            if "entering mode 27 (SinglePlayer)" in content:
+                return True
+            # Keep WorldAssetPreloadingTime as a fallback in case the build
+            # emits it but elides the mode marker.
             if "WorldAssetPreloadingTime" in content:
                 return True
+            # 2026-05-07: Fast-fail on engine crash. The D3D11/Proton stack
+            # occasionally fatals during match-load with a generic E_FAIL.
+            # Without this check we'd burn the full 360s timeout on a known-
+            # dead game. Bail immediately so cycle-on-failure recovery can
+            # kick in and the next civ can proceed.
+            if "D3D11 Error" in content or "is forced to terminate" in content:
+                return False
             # If we appear to have stalled (no log growth for 20 s past the
             # half-way point), do ONE Return press in case a dialog is blocking
             # the loader.  This is a single targeted nudge, not a spam loop.
@@ -522,6 +657,39 @@ class GameDriver:
                 _key("Return")
             last_size = len(content)
             time.sleep(2.0)
+        # 2026-05-11: on timeout, dump diagnostic state when caller passed a
+        # diagnostic_dir. Saves a screenshot of whatever's on screen (loading
+        # bar? error dialog? frozen lobby?) plus a tail of the post-marker
+        # Age3Log content. Lets the next-iteration human / agent inspect the
+        # failure without re-running the match. Cheap (~1 MB per timeout) and
+        # invaluable for diagnosing harness-vs-engine failures.
+        if diagnostic_dir is not None:
+            try:
+                diagnostic_dir.mkdir(parents=True, exist_ok=True)
+                shot_path = diagnostic_dir / "wait_for_in_game_timeout.png"
+                _screenshot_raw(shot_path)
+                log_tail_path = diagnostic_dir / "wait_for_in_game_log_tail.txt"
+                log_tail_path.write_text(
+                    content[-20000:] if content else "(empty log slice)",
+                    encoding="utf-8",
+                )
+                meta = {
+                    "timeout_s": timeout,
+                    "content_bytes": len(content),
+                    "nudged": nudged,
+                    "shot": str(shot_path.name),
+                    "log_tail": str(log_tail_path.name),
+                    "had_mode27": "entering mode 27 (SinglePlayer)" in content,
+                    "had_preload": "WorldAssetPreloadingTime" in content,
+                    "had_d3d11_err": "D3D11 Error" in content,
+                }
+                import json as _json
+                (diagnostic_dir / "wait_for_in_game_timeout.json").write_text(
+                    _json.dumps(meta, indent=2), encoding="utf-8"
+                )
+            except Exception:
+                # Diagnostic-only; don't let dump failure mask the timeout itself.
+                pass
         return False
 
     # ------------------------------------------------------------------ #
@@ -532,7 +700,12 @@ class GameDriver:
         """Return True if HUD is visible (resource bar at top), i.e. we are
         inside an active match (whether running or paused). Uses the same
         gamescopectl pixel probe as _esc_menu_open. Best-effort — returns
-        False on probe failure (caller treats as 'not in game')."""
+        False on probe failure (caller treats as 'not in game').
+
+        Multi-point sampling along the resource bar makes this resilient to
+        per-civ HUD theme variations. Polls until the file is stable
+        (gamescopectl writes async) before reading pixels.
+        """
         probe = "/tmp/.aoe3_hud_probe.png"
         try:
             env = {**os.environ, "DISPLAY": _FALLBACK_DISPLAY}
@@ -542,12 +715,40 @@ class GameDriver:
                 pass
             subprocess.run(["gamescopectl", "screenshot", probe],
                            env=env, capture_output=True, check=False, timeout=8)
-            time.sleep(0.4)  # gamescopectl writes async
+            # Wait for file to be fully written (gamescopectl is async).
+            # Poll size stability — file is done when size stops growing.
+            deadline = time.time() + 3.0
+            last_size = -1
+            stable_count = 0
+            while time.time() < deadline:
+                try:
+                    sz = os.path.getsize(probe)
+                except OSError:
+                    sz = 0
+                if sz > 100_000 and sz == last_size:
+                    stable_count += 1
+                    if stable_count >= 2:
+                        break
+                else:
+                    stable_count = 0
+                last_size = sz
+                time.sleep(0.15)
             from PIL import Image
-            with Image.open(probe) as im:
-                px = im.getpixel(HUD_PROBE_XY)
-                r, g, b = px[:3]
-                return (r + g + b) > HUD_THRESHOLD
+            try:
+                with Image.open(probe) as im:
+                    im.load()  # force full decode, raise if truncated
+                    px = im.getpixel(HUD_PROBE_XY)
+                    return sum(px[:3]) > HUD_THRESHOLD
+            except (OSError, SyntaxError):
+                # Truncated/corrupt PNG — gamescopectl raced us. Retry once.
+                time.sleep(0.6)
+                try:
+                    with Image.open(probe) as im:
+                        im.load()
+                        px = im.getpixel(HUD_PROBE_XY)
+                        return sum(px[:3]) > HUD_THRESHOLD
+                except Exception:
+                    return False
         except Exception:
             return False
 
@@ -562,6 +763,17 @@ class GameDriver:
         full sequence of Escape keys; if we were anywhere in the menu tree
         or post-game flow, this gets us back to the root menu.  Caller
         should pair this with a fixed sleep before clicking menu buttons.
+
+        We deliberately do NOT press Return at startup — the main menu's
+        default keyboard focus is on the "Continue" button.  Return on
+        cold boot triggers an auto-load of the last-played scenario,
+        which on the ANW mod fails with the Arxan inventory gate and
+        renders an undismissable popup over the menu.  See
+        ``wait_for_main_menu`` for the full explanation.
+
+        If you need to dismiss a stuck OK-modal mid-session (rare), call
+        ``self._dismiss_ok_modal()`` explicitly rather than wiring it
+        into the cold-boot path.
         """
         _focus_window()
         for _ in range(retries):
@@ -675,7 +887,7 @@ class GameDriver:
     # Resignation / return to menu                                         #
     # ------------------------------------------------------------------ #
 
-    def resign(self) -> bool:
+    def resign(self, *, verify_lobby: bool = False) -> bool:
         """Open ESC menu → click Resign → confirm Yes → navigate to main menu.
 
         Returns True if we successfully returned to the main menu.
@@ -688,6 +900,19 @@ class GameDriver:
           5. "You Abandon Your Town" screen appears with View Postgame button.
           6. Click View Postgame at (1128, 729).
           7. Click Quit (back button) at (50, 20) to return to main menu.
+
+        2026-05-10: optional ``verify_lobby`` post-flight check. When True,
+        the method calls
+        ``tools.aoe3_automation.lobby_driver.verify_match_setup_screen``
+        AFTER the blind escape-out and uses its OCR result as the return
+        value. This catches the case where the resign click sequence lands
+        but the engine stalls on the abandon-town overlay (observed twice
+        on 2026-05-08), which previously returned ``True`` from a blind
+        ``ensure_main_menu`` even though the screen was wrong. With OCR
+        the caller gets a structured no-go result (the OCR dict is logged
+        via the resign printout). Defaults to False to preserve the legacy
+        blind contract for callers that don't want to pay the screenshot
+        + tesseract cost.
         """
         # 2026-04-29: ESC menu has 8 rows; RESIGN is row 7 at y=377 (NOT 350,
         # which is row 6 = OPTIONS — that row opens a submenu and steals
@@ -723,14 +948,17 @@ class GameDriver:
         # the XS compile error fix, a single Escape press reliably opens
         # the menu (the original "first Escape eaten" symptom was caused
         # by the XS error dialog consuming input, not a flaky Escape key).
+        # 2026-05-07: _dbg_shot fires gamescopectl 7× per resign (~7s wasted).
+        # Gated behind RESIGN_DEBUG=1 — set when actually debugging the flow.
+        DBG = os.environ.get("RESIGN_DEBUG") == "1"
         def _dbg_shot(label):
+            if not DBG:
+                return
             try:
                 p = f"/tmp/resign_dbg_{label}.png"
                 env = {**os.environ, "DISPLAY": _FALLBACK_DISPLAY}
                 subprocess.run(["gamescopectl", "screenshot", p],
                                env=env, capture_output=True, check=False, timeout=8)
-                # Probe pixel: ESC menu brown at (1750,100), abandon-screen
-                # button area at (760,610), and HUD probe.
                 from PIL import Image
                 with Image.open(p) as im:
                     menu = im.getpixel((1750, 100))[:3]
@@ -740,41 +968,55 @@ class GameDriver:
             except Exception as e:
                 print(f"[DBG {label}] error: {e}", flush=True)
 
+        # 2026-05-07: Skirmish resign goes DIRECTLY to main menu — no abandon
+        # screen / View Postgame intermediate. Flow is now 3 clicks total:
+        #   1. Esc → 8-item ESC menu
+        #   2. Click RESIGN at (1750, 358) → opens Quit confirmation
+        #   3. Click YES at (762, 595) → returns to main menu in <3s
+        # Total resign time: ~5s (was 22.5s+ before).
         print("[RESIGN] step 1: focus + Escape", flush=True)
         _focus_window()
         _dbg_shot("00_pre")
 
         # Step 1: open ESC menu, click RESIGN.
         _xdo("key", "Escape")
-        time.sleep(1.5)
+        time.sleep(0.8)
         _dbg_shot("01_post_esc")
         print(f"[RESIGN] step 2: click RESIGN at {ESC_RESIGN}", flush=True)
-        _click(*ESC_RESIGN, delay=1.5)
+        _click(*ESC_RESIGN, delay=0.5)
         _dbg_shot("02_post_resign_click")
 
-        # Step 2: confirm RESIGN (click YES). Retry in case first click misses.
-        print(f"[RESIGN] step 3: click YES at {RESIGN_YES} x3", flush=True)
-        for _ in range(3):
-            _click(*RESIGN_YES, delay=1.5)
+        # Step 2: confirm via YES. 2 retries in case dialog still fading in.
+        print(f"[RESIGN] step 3: click YES at {RESIGN_YES} x2", flush=True)
+        for _ in range(2):
+            _click(*RESIGN_YES, delay=0.4)
         _dbg_shot("03_post_yes")
 
-        time.sleep(4.0)  # let engine flush replay + transition to abandon screen
-        _dbg_shot("04_pre_esc2")
+        # Engine returns to main menu in 1-3s after YES. No second Esc cycle.
+        time.sleep(2.5)
+        _dbg_shot("04_post_mainmenu")
 
-        # Step 3: open ESC menu again (4-item now), click QUIT.
-        print("[RESIGN] step 4: Escape (4-item menu)", flush=True)
-        _xdo("key", "Escape")
-        time.sleep(1.5)
-        _dbg_shot("05_post_esc2")
-        print(f"[RESIGN] step 5: click QUIT at {ABANDON_QUIT} x3", flush=True)
-        for _ in range(3):
-            _click(*ABANDON_QUIT, delay=1.5)
-        _dbg_shot("06_post_quit")
-
-        time.sleep(5.0)  # let main menu render
-
-        print("[RESIGN] step 6: ensure_main_menu", flush=True)
-        return self.ensure_main_menu()
+        print("[RESIGN] step 4: verify_main_menu", flush=True)
+        ok = self.ensure_main_menu(retries=2)
+        if verify_lobby:
+            # Lazy import — keeps the in-game driver usable on hosts
+            # without pytesseract / tesseract installed (resign() is
+            # itself called from many places). Local import path mirrors
+            # the rest of the module's relative-import style.
+            try:
+                from tools.aoe3_automation.lobby_driver import verify_match_setup_screen  # noqa: WPS433
+            except ImportError as exc:
+                print(f"[RESIGN] verify_lobby requested but lobby_driver unavailable: {exc}", flush=True)
+                return ok
+            result = verify_match_setup_screen(retries=3, settle=1.5)
+            print(
+                f"[RESIGN] verify_lobby ok={result['ok']} "
+                f"ms_seen={result['match_setup_seen']} go_seen={result['game_options_seen']} "
+                f"ms_text={result['match_setup_text']!r} go_text={result['game_options_text']!r}",
+                flush=True,
+            )
+            return ok and result["ok"]
+        return ok
 
     def return_to_main_menu(self) -> bool:
         """From any state, attempt to return to the main menu.
