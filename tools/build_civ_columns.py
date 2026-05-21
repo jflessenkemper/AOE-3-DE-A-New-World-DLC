@@ -979,8 +979,32 @@ def collect_strings_for_civ(civ_token, civ_el, hc, strings, blurbs, spec, decks,
     return rows
 
 
-def render_strings_table(rows):
-    """Render the Strings section as a two-column table."""
+# Labels already shown in the panel-narrative block (or civ col-header) are
+# redundant in the secondary strings table when lean=True.
+_SKIP_LEAN_LABELS = {
+    "Lobby picker — civ name",
+    "Lobby picker — rollover description",
+    "Loading screen — leader name",
+    "Tech tree — doctrine name",
+    "Tech tree — doctrine summary",
+    "Leader name (canonical)",
+    "Civ bonus tooltip",
+    "Playstyle description",
+    "Age up method",
+}
+
+
+def render_strings_table(rows, *, lean=False):
+    """Render the Strings section as a two-column table.
+
+    When lean=True (review mode): suppress source-hint annotations entirely —
+    show only the resolved string value.  The title tooltip still contains the
+    full text when it is truncated for display.  Rows whose label is in
+    _SKIP_LEAN_LABELS are also omitted (they are already shown in the
+    panel-narrative block above the table).
+    """
+    if lean:
+        rows = [r for r in rows if r["location_label"] not in _SKIP_LEAN_LABELS]
     parts = [
         f'<div class="strings-section">',
         f'<div class="section-label">Strings ({len(rows)})</div>',
@@ -997,17 +1021,168 @@ def render_strings_table(rows):
             # Truncate long text for display; full text in title
             display  = text if len(text) <= 200 else text[:197] + "..."
             text_esc = html_module.escape(display)
-            title_esc = html_module.escape(
-                (text if len(text) <= 600 else text[:597] + "...")
-                + (f"\n\n({hint})" if hint else "")
-            )
-            parts.append(
-                f'<tr>'
-                f'<td class="lbl" title="{html_module.escape(hint)}">{lbl_esc}</td>'
-                f'<td title="{title_esc}">{text_esc}</td>'
-                f'</tr>'
-            )
+            if lean:
+                # No source-hint exposure in review mode
+                title_esc = html_module.escape(
+                    text if len(text) <= 600 else text[:597] + "..."
+                )
+                parts.append(
+                    f'<tr>'
+                    f'<td class="lbl">{lbl_esc}</td>'
+                    f'<td title="{title_esc}">{text_esc}</td>'
+                    f'</tr>'
+                )
+            else:
+                title_esc = html_module.escape(
+                    (text if len(text) <= 600 else text[:597] + "...")
+                    + (f"\n\n({hint})" if hint else "")
+                )
+                parts.append(
+                    f'<tr>'
+                    f'<td class="lbl" title="{html_module.escape(hint)}">{lbl_esc}</td>'
+                    f'<td title="{title_esc}">{text_esc}</td>'
+                    f'</tr>'
+                )
     parts += ['</tbody>', '</table>', '</div>']
+    return "".join(parts)
+
+
+# ── Grouped strings section (replaces flat render_strings_table in review mode) ─
+def render_strings_grouped(rows):
+    """Render the Strings section as collapsible groups by card surface.
+
+    Groups:
+      Unique units / Discovery cards / Colonial cards / Fortress cards /
+      Industrial cards / Imperial cards / Other
+
+    Each group is a <details> block. Inside: 2-col grid of name → effect,
+    truncated to 2 lines with full text on hover (title attr).
+    Per-age groups are color-coded via the existing age-row CSS palette.
+    """
+    # Filter out rows already shown in the narrative panel
+    rows = [r for r in rows if r["location_label"] not in _SKIP_LEAN_LABELS]
+
+    # Build groups based on location_label prefix
+    _AGE_KEY_MAP = {
+        "Cards > Discovery":  ("0", "Discovery cards"),
+        "Cards > Colonial":   ("1", "Colonial cards"),
+        "Cards > Fortress":   ("2", "Fortress cards"),
+        "Cards > Industrial": ("3", "Industrial cards"),
+        "Cards > Imperial":   ("4", "Imperial cards"),
+    }
+    # Detect unique-unit rows
+    _UNIT_PREFIX = "Unique unit"
+
+    groups: dict = {}
+    group_order = [
+        ("units",   "Unique units"),
+        ("age-0",   "Discovery cards"),
+        ("age-1",   "Colonial cards"),
+        ("age-2",   "Fortress cards"),
+        ("age-3",   "Industrial cards"),
+        ("age-4",   "Imperial cards"),
+        ("other",   "Other strings"),
+    ]
+    for gid, glabel in group_order:
+        groups[gid] = {"label": glabel, "rows": []}
+
+    for r in rows:
+        lbl = r["location_label"]
+        placed = False
+        if lbl.startswith(_UNIT_PREFIX):
+            groups["units"]["rows"].append(r)
+            placed = True
+        else:
+            for prefix, (age_key, _) in _AGE_KEY_MAP.items():
+                if lbl.startswith(prefix):
+                    groups[f"age-{age_key}"]["rows"].append(r)
+                    placed = True
+                    break
+        if not placed:
+            groups["other"]["rows"].append(r)
+
+    # Age-group background colors matching .age-row palette
+    _AGE_BG = {
+        "age-0": "rgba(130,130,130,0.18)",
+        "age-1": "rgba(160,130,70,0.18)",
+        "age-2": "rgba(60,100,180,0.20)",
+        "age-3": "rgba(180,130,20,0.20)",
+        "age-4": "rgba(160,40,40,0.20)",
+    }
+    _AGE_BORDER = {
+        "age-0": "rgba(180,180,180,0.35)",
+        "age-1": "rgba(200,170,100,0.45)",
+        "age-2": "rgba(100,150,240,0.45)",
+        "age-3": "rgba(230,180,40,0.45)",
+        "age-4": "rgba(220,80,80,0.45)",
+    }
+
+    total = len(rows)
+    parts = [
+        f'<div class="strings-section">',
+        f'<div class="section-label">Strings ({total})</div>',
+    ]
+
+    for gid, ginfo in groups.items():
+        group_rows = ginfo["rows"]
+        if not group_rows:
+            continue
+        glabel = ginfo["label"]
+        bg = _AGE_BG.get(gid, "rgba(0,0,0,0.18)")
+        bdr = _AGE_BORDER.get(gid, "rgba(255,255,255,0.15)")
+
+        # Build card grid rows
+        grid_items = []
+        for r in group_rows:
+            lbl_raw = r["location_label"]
+            # Strip group prefix to get short card name
+            short_lbl = lbl_raw
+            for prefix, _ in _AGE_KEY_MAP.items():
+                if lbl_raw.startswith(prefix + " — "):
+                    short_lbl = lbl_raw[len(prefix) + 3:]
+                    break
+            text = r["string_text"]
+            # Card icon lookup — only for card rows that have icon in source_hint
+            # source_hint format: "cards.json key=<id>"
+            icon_html = ""
+            hint = r.get("source_hint", "")
+            if hint.startswith("cards.json key="):
+                card_id = hint[len("cards.json key="):]
+                # We can't call load_cards() here again so skip icon — handled
+                # at render_column level already
+
+            display_text = text if len(text) <= 120 else text[:117] + "..."
+            title_attr = html_module.escape(text[:600], quote=True)
+            # Determine if this is a title or desc entry for the card name
+            is_title = lbl_raw.endswith("title") or not lbl_raw.endswith("description")
+
+            grid_items.append(
+                f'<div class="str-grid-item '
+                + ('str-grid-title' if is_title else 'str-grid-desc')
+                + f'" title="{title_attr}">'
+                + f'<span class="str-grid-lbl">{html_module.escape(short_lbl[:40])}</span>'
+                + f'<span class="str-grid-val">{html_module.escape(display_text)}</span>'
+                + '</div>'
+            )
+
+        parts.append(
+            f'<details class="cov-details cov-details-outer str-group-details" '
+            f'style="border-left:2px solid {html_module.escape(bdr)};">'
+            f'<summary class="cov-group-lbl cov-summary-row str-group-summary" '
+            f'style="background:{html_module.escape(bg)};">'
+            f'{html_module.escape(glabel)}'
+            f'<span class="cov-count-pill">{len(group_rows)}</span>'
+            f'</summary>'
+            f'<div class="str-grid">'
+            + "".join(grid_items)
+            + '</div>'
+            + '</details>'
+        )
+
+    if not any(groups[gid]["rows"] for gid, _ in group_order):
+        parts.append('<div class="cov-row"><em class="cov-empty">No strings found</em></div>')
+
+    parts.append('</div>')
     return "".join(parts)
 
 
@@ -2339,6 +2514,100 @@ def collect_age_ups_for_civ(civ_token: str, techtree_xml_path: str) -> list:
     return politicians
 
 
+def render_politician_gallery(civ_token: str, techtree_xml_path: str) -> str:
+    """Render a visual politician gallery (4 age rows) replacing the old dropdown.
+
+    Each row shows the age band label + politician names in a horizontal grid.
+    No icon extraction — uses text-only tiles color-coded by age band (Option B).
+    """
+    pols = collect_age_ups_for_civ(civ_token, techtree_xml_path)
+
+    age_order = [
+        "Age II — Colonial",
+        "Age III — Fortress",
+        "Age IV — Industrial",
+        "Age V — Imperial",
+    ]
+    age_short = {
+        "Age II — Colonial":   "Colonial",
+        "Age III — Fortress":  "Fortress",
+        "Age IV — Industrial": "Industrial",
+        "Age V — Imperial":    "Imperial",
+    }
+    # age-band CSS colours matching the existing .age-row palette
+    age_colors = {
+        "Age II — Colonial":   "rgba(160,130,70,0.55)",
+        "Age III — Fortress":  "rgba(60,100,180,0.55)",
+        "Age IV — Industrial": "rgba(180,130,20,0.55)",
+        "Age V — Imperial":    "rgba(160,40,40,0.55)",
+    }
+    age_border = {
+        "Age II — Colonial":   "rgba(200,170,100,0.55)",
+        "Age III — Fortress":  "rgba(100,150,240,0.55)",
+        "Age IV — Industrial": "rgba(230,180,40,0.55)",
+        "Age V — Imperial":    "rgba(220,80,80,0.55)",
+    }
+
+    by_age: dict = {a: [] for a in age_order}
+    for p in pols:
+        tier = p["age_tier"]
+        if tier not in by_age:
+            by_age[tier] = []
+        by_age[tier].append(p)
+
+    # If no civ-specific politicians found, fall back to vanilla pool
+    if not pols:
+        _VANILLA_POOL_GALLERY = {
+            "Age II — Colonial":   ["Governor", "Naturalist", "Quartermaster", "Philosopher Prince"],
+            "Age III — Fortress":  ["Bishop", "Marksman", "Engineer", "Mercenary Contractor"],
+            "Age IV — Industrial": ["Tycoon", "General", "Admiral", "Inventor"],
+            "Age V — Imperial":    [],
+        }
+        by_age = _VANILLA_POOL_GALLERY
+        vanilla_note = (
+            '<div style="font-size:10px;opacity:0.55;margin-bottom:6px;font-style:italic;">'
+            'Standard vanilla pool (no civ-specific politicians in techtreemods.xml)</div>'
+        )
+    else:
+        vanilla_note = ""
+
+    parts = [
+        '<div class="section-label">Age-up Politicians</div>',
+        vanilla_note,
+        '<div class="pol-gallery">',
+    ]
+
+    for tier in age_order:
+        tier_pols = by_age.get(tier, [])
+        short = age_short[tier]
+        bg = age_colors[tier]
+        bdr = age_border[tier]
+        row_tiles = ""
+        for p in tier_pols:
+            dn = p if isinstance(p, str) else p.get("display_name", "?")
+            tn = "" if isinstance(p, str) else p.get("tech_name", "")
+            title_attr = html_module.escape(tn, quote=True)
+            row_tiles += (
+                f'<div class="pol-tile" title="{title_attr}" '
+                f'style="border-color:{html_module.escape(bdr)};">'
+                f'<span class="pol-name">{html_module.escape(dn)}</span>'
+                + (f'<code class="pol-id">{html_module.escape(tn)}</code>' if tn else "")
+                + f'</div>'
+            )
+        if not tier_pols:
+            row_tiles = '<span style="opacity:0.35;font-size:11px;font-style:italic;">—</span>'
+
+        parts.append(
+            f'<div class="pol-row" style="background:{html_module.escape(bg)};">'
+            f'<span class="pol-age-lbl">{html_module.escape(short)}</span>'
+            f'<div class="pol-tiles">{row_tiles}</div>'
+            f'</div>'
+        )
+
+    parts.append('</div>')
+    return "".join(parts)
+
+
 def render_age_ups_section(civ_token: str, techtree_xml_path: str) -> str:
     """Render the 'Age-up choices' collapsible section for the Mod Changes panel."""
     pols = collect_age_ups_for_civ(civ_token, techtree_xml_path)
@@ -2905,51 +3174,302 @@ def render_ai_knobs_section(civ_token: str) -> str:
     return "".join(parts)
 
 
+# ── Radar chart (SVG) for AI personality knobs ────────────────────────────────
+# Maps leader XS suffix -> knob key in leader_xs_knobs.json
+_LEADER_KEY_TO_KNOBS_KEY: dict = {
+    "wellington":     "Queen Elizabeth I",
+    "bourbon":        "Louis XVIII Bourbon",
+    "catherine":      "Catherine the Great",
+    "frederick":      "Frederick the Great",
+    "garibaldi":      "Garibaldi",
+    "washington":     "George Washington",
+    "gustavus":       "Gustavus Adolphus",
+    "henry":          "Henry the Navigator",
+    "hiawatha":       "Hiawatha",
+    "hidalgo":        "Hidalgo",
+    "isabella":       "Isabella I of Castile",
+    "kangxi":         "Kangxi",
+    "maurice":        "Maurice of Nassau",
+    "menelik":        "Menelik II",
+    "montezuma":      "Montezuma II",
+    "napoleon":       "Napoleon Bonaparte",
+    "pachacuti":      "Pachacuti",
+    "shivaji":        "Shivaji",
+    "suleiman":       "Suleiman the Magnificent",
+    "tokugawa":       "Tokugawa",
+    "usman":          "Usman dan Fodio",
+    "valette":        "Jean Parisot de Valette",
+    "crazy_horse":    "Chief Gall",
+}
+
+# Load knobs once at module level
+_LEADER_XS_KNOBS: dict = {}
+try:
+    _knobs_path = os.path.join(RESOURCES, "leader_xs_knobs.json")
+    with open(_knobs_path, encoding="utf-8") as _kf:
+        _LEADER_XS_KNOBS = json.load(_kf)
+except Exception:
+    pass
+
+
+def _get_radar_knob_values(civ_token: str) -> dict:
+    """Return normalized 0-1 knob values for the 8 radar spokes.
+
+    Spoke normalization:
+      aggression     = (-btOffenseDefense + 1) / 2  (positive=aggressive, flipped)
+      boom           = (-btRushBoom + 1) / 2         (positive=boom-heavy, flipped)
+      trade          = btBiasTrade                   (already 0-1)
+      native_ally    = (btBiasNative + 1) / 2        (can be negative)
+      infantry       = llSetMilitaryFocus[0]         (0-1)
+      cavalry        = llSetMilitaryFocus[1]         (0-1)
+      artillery      = llSetMilitaryFocus[2]         (0-1)
+      wall_priority  = 0.5 * gLLEarlyWallingEnabled  +  0.5 * cvMaxTowers/15
+    """
+    leader_xs_key = _CIV_LEADER_KEY.get(civ_token)
+    knob_key = _LEADER_KEY_TO_KNOBS_KEY.get(leader_xs_key or "") if leader_xs_key else None
+
+    # If not in knobs JSON, try parsing from the XS file live
+    if knob_key and knob_key in _LEADER_XS_KNOBS:
+        k = _LEADER_XS_KNOBS[knob_key]
+    else:
+        # Fall back to live-parse of the XS data collected earlier
+        ai_data = collect_leader_ai_for_civ(civ_token)
+        knob_list = ai_data.get("knobs", [])
+        cvar_list = ai_data.get("cvars", [])
+        k = {}
+        for item in knob_list + cvar_list:
+            n = item["name"]
+            v = item["value"]
+            try:
+                k[n] = float(v)
+            except (ValueError, TypeError):
+                if str(v).lower() == "true":
+                    k[n] = 1.0
+                elif str(v).lower() == "false":
+                    k[n] = 0.0
+
+    def _f(key, default=0.0):
+        v = k.get(key, default)
+        try:
+            return float(v)
+        except (ValueError, TypeError):
+            return default
+
+    # Parse llSetMilitaryFocus tuple if present as string "0.75, 0.10, 0.15"
+    inf_share = cav_share = art_share = 0.0
+    mf_raw = k.get("llSetMilitaryFocus(inf,cav,art)", "")
+    if isinstance(mf_raw, str) and "," in mf_raw:
+        parts_mf = mf_raw.split(",")
+        try:
+            inf_share = float(parts_mf[0])
+            cav_share = float(parts_mf[1])
+            art_share = float(parts_mf[2])
+        except (ValueError, IndexError):
+            pass
+    else:
+        # Fallback to btBiasInf/Cav/Art
+        inf_share = _f("btBiasInf", 0.0)
+        cav_share = _f("btBiasCav", 0.0)
+        art_share = _f("btBiasArt", 0.0)
+        # Normalize so they sum to 1 if nonzero
+        total_bias = abs(inf_share) + abs(cav_share) + abs(art_share)
+        if total_bias > 0:
+            inf_share /= total_bias
+            cav_share /= total_bias
+            art_share /= total_bias
+
+    offense_defense = _f("btOffenseDefense", 0.0)
+    rush_boom       = _f("btRushBoom", 0.0)
+    bias_trade      = _f("btBiasTrade", 0.0)
+    bias_native     = _f("btBiasNative", 0.0)
+    early_walling   = _f("gLLEarlyWallingEnabled", 0.0)
+    max_towers      = _f("cvMaxTowers", 0.0)
+
+    def clamp(v): return max(0.0, min(1.0, v))
+
+    return {
+        "Aggression":   clamp((-offense_defense + 1.0) / 2.0),
+        "Boom":         clamp((-rush_boom + 1.0) / 2.0),
+        "Trade":        clamp(bias_trade),
+        "Native ally":  clamp((bias_native + 1.0) / 2.0),
+        "Infantry":     clamp(inf_share),
+        "Cavalry":      clamp(cav_share),
+        "Artillery":    clamp(art_share),
+        "Walls":        clamp(0.5 * (1.0 if early_walling >= 0.5 else 0.0)
+                              + 0.5 * max_towers / 15.0),
+    }
+
+
+def render_radar_chart(civ_token: str, r: int, g: int, b: int) -> str:
+    """Render an inline SVG radar/spider chart for the AI personality knobs.
+
+    Args:
+        civ_token: e.g. 'British'
+        r, g, b: civ primary colour (0-255)
+
+    Returns an HTML string containing the SVG + a small legend table.
+    """
+    import math
+
+    knobs = _get_radar_knob_values(civ_token)
+    spoke_labels = list(knobs.keys())
+    values = list(knobs.values())
+    n = len(spoke_labels)
+
+    cx = cy = 140          # centre
+    radius = 110           # outer ring radius
+    rings = [0.25, 0.5, 0.75, 1.0]
+
+    def polar(angle_deg, mag):
+        angle_rad = math.radians(angle_deg - 90)  # start at top
+        return (
+            cx + mag * radius * math.cos(angle_rad),
+            cy + mag * radius * math.sin(angle_rad),
+        )
+
+    spoke_angles = [360 * i / n for i in range(n)]
+
+    civ_color    = f"rgb({r},{g},{b})"
+    civ_color_40 = f"rgba({r},{g},{b},0.40)"
+    civ_stroke   = f"rgba({r},{g},{b},0.85)"
+    # Choose text color for labels: force white-ish for legibility
+    label_color  = "rgba(255,255,255,0.85)"
+
+    svg_parts = [
+        f'<svg class="radar-chart" viewBox="0 0 280 280" '
+        f'xmlns="http://www.w3.org/2000/svg" '
+        f'style="width:280px;height:280px;overflow:visible;">',
+    ]
+
+    # Background
+    svg_parts.append(
+        f'<rect x="0" y="0" width="280" height="280" rx="6" '
+        f'fill="rgba(0,0,0,0.28)"/>'
+    )
+
+    # Concentric rings
+    for ring_pct in rings:
+        ring_pts = [polar(a, ring_pct) for a in spoke_angles]
+        ring_path = "M " + " L ".join(f"{x:.2f},{y:.2f}" for x, y in ring_pts) + " Z"
+        svg_parts.append(
+            f'<path d="{ring_path}" '
+            f'fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>'
+        )
+
+    # Spokes
+    for a in spoke_angles:
+        ox, oy = polar(a, 0.0)
+        ix, iy = polar(a, 1.0)
+        svg_parts.append(
+            f'<line x1="{cx:.2f}" y1="{cy:.2f}" '
+            f'x2="{ix:.2f}" y2="{iy:.2f}" '
+            f'stroke="rgba(255,255,255,0.18)" stroke-width="1"/>'
+        )
+
+    # Data polygon
+    data_pts = [polar(spoke_angles[i], values[i]) for i in range(n)]
+    data_path = "M " + " L ".join(f"{x:.2f},{y:.2f}" for x, y in data_pts) + " Z"
+    svg_parts.append(
+        f'<path d="{data_path}" '
+        f'fill="{civ_color_40}" '
+        f'stroke="{civ_stroke}" stroke-width="1.5"/>'
+    )
+
+    # Data points
+    for x, y in data_pts:
+        svg_parts.append(
+            f'<circle cx="{x:.2f}" cy="{y:.2f}" r="3" '
+            f'fill="{civ_color}" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>'
+        )
+
+    # Spoke labels
+    for i, (label, angle) in enumerate(zip(spoke_labels, spoke_angles)):
+        lx, ly = polar(angle, 1.18)
+        anchor = "middle"
+        if lx < cx - 10:
+            anchor = "end"
+        elif lx > cx + 10:
+            anchor = "start"
+        baseline = "middle"
+        if ly < cy - 10:
+            baseline = "auto"
+        elif ly > cy + 10:
+            baseline = "hanging"
+        svg_parts.append(
+            f'<text x="{lx:.2f}" y="{ly:.2f}" '
+            f'font-family="ui-sans-serif,sans-serif" font-size="10" '
+            f'fill="{html_module.escape(label_color)}" '
+            f'text-anchor="{anchor}" dominant-baseline="{baseline}">'
+            f'{html_module.escape(label)}</text>'
+        )
+
+    # Ring % labels at 3 o'clock (rightmost spoke vicinity)
+    for ring_pct in rings:
+        rx, ry = polar(0 - 90 + 90, ring_pct)  # same formula: angle 0 = top
+        # Use a fixed spot: right side at each ring
+        rx_lbl, ry_lbl = polar(0, ring_pct)     # straight right
+        svg_parts.append(
+            f'<text x="{rx_lbl:.2f}" y="{ry_lbl:.2f}" '
+            f'font-family="ui-sans-serif,sans-serif" font-size="8" '
+            f'fill="rgba(255,255,255,0.35)" '
+            f'text-anchor="start" dominant-baseline="middle">'
+            f'{int(ring_pct*100)}%</text>'
+        )
+
+    svg_parts.append('</svg>')
+
+    # Legend table below chart
+    legend_rows = []
+    for label, val in knobs.items():
+        pct = int(round(val * 100))
+        bar_width = max(2, pct)
+        legend_rows.append(
+            f'<tr>'
+            f'<td style="padding:1px 6px;font-size:10px;color:rgba(255,255,255,0.70);'
+            f'white-space:nowrap;">{html_module.escape(label)}</td>'
+            f'<td style="padding:1px 4px;width:80px;">'
+            f'<div style="background:rgba(255,255,255,0.12);border-radius:2px;height:6px;">'
+            f'<div style="width:{bar_width}%;background:{civ_color};'
+            f'border-radius:2px;height:6px;"></div></div></td>'
+            f'<td style="padding:1px 4px;font-size:10px;color:rgba(255,255,255,0.55);">'
+            f'{pct}%</td>'
+            f'</tr>'
+        )
+    legend_html = (
+        '<table style="width:100%;margin-top:6px;border-collapse:collapse;">'
+        '<tbody>' + "".join(legend_rows) + '</tbody></table>'
+    )
+
+    return (
+        '<div class="section-label">AI Personality Radar</div>'
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">'
+        + "".join(svg_parts)
+        + legend_html
+        + '</div>'
+    )
+
+
 def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
-                              decks, cards, techtree_by_civ):
+                              decks, cards, techtree_by_civ, colors=None):
     """Render the 'Mod Changes' panel (panel 3 of the 4-panel grid).
 
     Contains: core civ data (display name, stats, culture, allied IDs),
     civ bonus, playstyle, age-up, doctrine, unique units, AI deck cards,
     and per-civ tech tree entries.
     """
+    if colors is None:
+        colors = {}
     bk = blurb_key(civ_token)
     blurb = blurbs.get(bk, {})
     spec_entry, _spec_key = find_spec_entry(civ_token, spec)
 
     parts = []
 
-    # ── Core civ data ──────────────────────────────────────────────────────────
+    # Core civ data (engineering IDs) — omitted from review layout; kept only
+    # as local variables for use below where display_name is needed.
     if civ_el is not None:
         display_id   = civ_el.findtext("displaynameid") or ""
-        rollover_id  = civ_el.findtext("rollovernameid") or ""
-        statsid      = civ_el.findtext("statsid") or ""
-        culture      = civ_el.findtext("culture") or ""
-        allied_id    = civ_el.findtext("alliedid") or ""
-        unallied_id  = civ_el.findtext("unalliedid") or ""
         display_name = strings.get(display_id, civ_token)
-
-        rows = []
-        def _row(lbl, val):
-            if val:
-                rows.append(
-                    f'<tr><td class="lbl">{html_module.escape(lbl)}</td>'
-                    f'<td><code>{html_module.escape(val)}</code></td></tr>'
-                )
-        _row("Civ token",    civ_token)
-        _row("Stats ID",     statsid)
-        _row("Culture",      culture)
-        _row("Allied ID",    allied_id)
-        _row("Unallied ID",  unallied_id)
-        _row("Display locID", display_id)
-        _row("Rollover locID", rollover_id)
-        if rows:
-            parts.append(
-                '<div class="section-label">Core data</div>'
-                '<table class="info-table"><tbody>'
-                + "".join(rows)
-                + '</tbody></table>'
-            )
 
     # ── Doctrine / Playstyle from spec ─────────────────────────────────────────
     if spec_entry:
@@ -3102,23 +3622,22 @@ def render_mod_changes_panel(civ_token, civ_el, strings, hc, blurbs, spec,
     else:
         parts.append('<span class="empty">No AI deck defined</span>')
 
-    # ── Age-up choices ─────────────────────────────────────────────────────────
+    # ── Age-up politician gallery (replaces old dropdown) ─────────────────────
     _techtree_path = os.path.join(DATA_DIR, "techtreemods.xml")
-    age_ups_html = render_age_ups_section(civ_token, _techtree_path)
-    parts.append(age_ups_html)
+    pol_gallery_html = render_politician_gallery(civ_token, _techtree_path)
+    parts.append(pol_gallery_html)
 
-    # ── Unique units ───────────────────────────────────────────────────────────
-    unique_units_html = render_unique_units_section(civ_token, blurbs)
-    parts.append(unique_units_html)
-
-    # ── AI personality knobs ───────────────────────────────────────────────────
-    ai_knobs_html = render_ai_knobs_section(civ_token)
-    parts.append(ai_knobs_html)
-
-    # ── Tech tree entries ──────────────────────────────────────────────────────
-    if techtree_by_civ:
-        techtree_html, _tc = render_techtree_section(civ_token, techtree_by_civ, strings)
-        parts.append(techtree_html)
+    # ── AI personality radar chart (replaces old knob table) ──────────────────
+    # Unique units section removed (names already visible in narrative panel)
+    # Tech tree section removed (adds no review value for most civs)
+    _civ_color = colors.get(civ_token, {"r": 80, "g": 100, "b": 160})
+    radar_html = render_radar_chart(
+        civ_token,
+        _civ_color.get("r", 80),
+        _civ_color.get("g", 100),
+        _civ_color.get("b", 160),
+    )
+    parts.append(radar_html)
 
     return f'<div class="panel panel-mod">' + "\n".join(parts) + '</div>'
 
@@ -3202,8 +3721,6 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
             f'<div class="col-sub">Base/DLC civ — ANW modifies AI deck, leader &amp; doctrine; visual identity shared with {html_module.escape(capture_dir_key(civ_token))}</div>'
             f'{_sub}</div></div>'
             f'<div class="col-body">'
-            f'<div class="panel panel-strings"><span class="empty" style="padding:8px;">Base-game strings (unchanged by mod)</span></div>'
-            f'<div class="panel panel-paths"><span class="empty" style="padding:8px;">Base-game paths (unchanged by mod)</span></div>'
             f'<div class="panel panel-mod">{_deck_html}</div>'
             f'{_stub_art_panel}'
             f'</div>'
@@ -3246,31 +3763,207 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
         leader_name_hdr = spec_entry["leader_label"]
     doctrine_label_hdr = spec_entry.get("doctrine_label", "") if spec_entry else ""
 
-    art_html, resolved, missing = render_art_section(civ_token, civ_el, hc, strings)
+    # art_html is no longer emitted directly in review mode — we keep only the
+    # player-visible captures + doctrine images.  We still call render_art_section
+    # so we get the resolved/missing counts for the return value.
+    _art_html_unused, resolved, missing = render_art_section(civ_token, civ_el, hc, strings)
 
-    # ── Panel 1: Strings ───────────────────────────────────────────────────────
+    # ── Panel 1: Strings (lean — no source-hint annotations) ──────────────────
     _inv = art_inventory if art_inventory is not None else {}
     _str_rows = collect_strings_for_civ(
         civ_token, civ_el, hc, strings, blurbs, spec, decks, cards,
         strings_by_civ if strings_by_civ is not None else {}
     )
-    new_strings_html = render_strings_table(_str_rows)
+    new_strings_html = render_strings_grouped(_str_rows)
 
-    # ── Panel 2: Paths ────────────────────────────────────────────────────────
-    _path_rows = collect_paths_for_civ(civ_token, civ_el, hc, _inv)
-    new_paths_html = render_paths_table(_path_rows)
+    # Panel 2 (paths) is engineering noise — skip entirely in review mode.
 
     # ── Panel 3: Mod Changes (cards + doctrine + tech tree) ───────────────────
     mod_changes_html = render_mod_changes_panel(
         civ_token, civ_el, strings, hc, blurbs, spec, decks, cards,
-        techtree_by_civ if techtree_by_civ is not None else {}
+        techtree_by_civ if techtree_by_civ is not None else {},
+        colors=colors,
     )
 
-    # ── Panel 4: Art + Captures ───────────────────────────────────────────────
+    # ── Panel 4: Art + Captures (player-visible only) ─────────────────────────
     host_manifest  = load_capture_manifest(civ_token, ally=False)
     ally_manifest  = load_capture_manifest(civ_token, ally=True)
     captures_html  = render_captures_section(civ_token, display_name, host_manifest, ally_manifest)
     doctrine_html  = render_doctrine_section(civ_token, display_name)
+
+    # ── Narrative / quote blurb section ───────────────────────────────────────
+    bk_narr = blurb_key(civ_token)
+    blurb_narr = blurbs.get(bk_narr, {})
+    rollover_id_narr = civ_el.findtext("rollovernameid") or "" if civ_el is not None else ""
+    rollover_text = strings.get(rollover_id_narr, "") if rollover_id_narr else ""
+    civ_bonus_text   = blurb_narr.get("civ_bonus", "")
+    playstyle_text   = blurb_narr.get("playstyle", "")
+    age_up_text      = blurb_narr.get("age_up", "")
+    unique_units_list = list(blurb_narr.get("unique_units") or [])
+
+    def _esc_ingame_local(s: str) -> str:
+        """Escape for HTML; convert engine literal \\n to real newline for pre-wrap."""
+        s = (s or "").replace("\\n", "\n").replace("\\r", "")
+        return html_module.escape(s)
+
+    # Collect additional narrative data from spec and leader XS
+    spec_entry_narr, _ = find_spec_entry(civ_token, spec)
+    doctrine_label_narr   = spec_entry_narr.get("doctrine_label",   "") if spec_entry_narr else ""
+    doctrine_prose_narr   = spec_entry_narr.get("doctrine_prose",   "") if spec_entry_narr else ""
+    doctrine_summary_narr = spec_entry_narr.get("doctrine_summary", "") if spec_entry_narr else ""
+    build_style_narr      = spec_entry_narr.get("build_style",      "") if spec_entry_narr else ""
+    leader_label_narr     = spec_entry_narr.get("leader_label",     "") if spec_entry_narr else ""
+    claims_narr           = (spec_entry_narr.get("claims") or {}) if spec_entry_narr else {}
+
+    # Leader XS lore comment
+    ai_data_narr   = collect_leader_ai_for_civ(civ_token)
+    lore_comment   = ai_data_narr.get("lore_comment", "")
+    xs_file_narr   = ai_data_narr.get("xs_file", "")
+
+    narrative_parts = []
+
+    # ── Leader bio (rollover description = lobby description) ─────────────────
+    if rollover_text:
+        narrative_parts.append(
+            f'<div class="narr-block narr-rollover">'
+            f'<span class="narr-label">Lobby description</span>'
+            f'<div class="narr-text">{_esc_ingame_local(rollover_text)}</div>'
+            f'</div>'
+        )
+
+    # ── Civ bonus ─────────────────────────────────────────────────────────────
+    if civ_bonus_text:
+        narrative_parts.append(
+            f'<div class="narr-block narr-bonus">'
+            f'<span class="narr-label">Civ bonus</span>'
+            f'<div class="narr-text">{_esc_ingame_local(civ_bonus_text)}</div>'
+            f'</div>'
+        )
+
+    # ── Civ bonus & units mini-table ──────────────────────────────────────────
+    if unique_units_list:
+        unit_items = "".join(
+            f'<span class="narr-unit-pill">{html_module.escape(u)}</span>'
+            for u in unique_units_list
+        )
+        narrative_parts.append(
+            f'<div class="narr-block narr-units">'
+            f'<span class="narr-label">Unique units</span>'
+            f'<div class="narr-text">{unit_items}</div>'
+            f'</div>'
+        )
+
+    # ── Strategic identity (playstyle with concrete numbers) ──────────────────
+    # Use the blurb playstyle + doctrine prose for a fuller description
+    strat_parts = []
+    if playstyle_text:
+        strat_parts.append(playstyle_text)
+    if doctrine_prose_narr and doctrine_prose_narr != playstyle_text:
+        strat_parts.append(doctrine_prose_narr)
+    strat_text = "  ".join(strat_parts)
+    if strat_text:
+        narrative_parts.append(
+            f'<div class="narr-block narr-playstyle">'
+            f'<span class="narr-label">Strategic identity</span>'
+            f'<div class="narr-text">{_esc_ingame_local(strat_text)}</div>'
+            f'</div>'
+        )
+
+    # ── Age-up method ─────────────────────────────────────────────────────────
+    if age_up_text:
+        narrative_parts.append(
+            f'<div class="narr-block narr-ageup">'
+            f'<span class="narr-label">Age-up method</span>'
+            f'<div class="narr-text">{_esc_ingame_local(age_up_text)}</div>'
+            f'</div>'
+        )
+
+    # ── Power spike timing (from claims) ─────────────────────────────────────
+    spike_lines = []
+    if claims_narr:
+        _WALL_STRAT = {
+            0: "Fortress Ring",
+            1: "Chokepoint Segments",
+            2: "Coastal Batteries",
+            3: "Frontier Palisades",
+            4: "Urban Barricade",
+            5: "Mobile / No Walls",
+        }
+        for ck, cv in claims_narr.items():
+            if isinstance(cv, (int, float)) and ck.endswith("_ms"):
+                secs = int(cv) // 1000
+                pretty = ck.replace("_", " ").replace(" ms", "").capitalize()
+                spike_lines.append(f"{pretty}: \u2264\u202f{secs // 60}m\u202f{secs % 60:02d}s")
+            elif ck == "wall_strategy" and isinstance(cv, int):
+                wname = _WALL_STRAT.get(cv, str(cv))
+                spike_lines.append(f"Wall strategy: {cv} \u2014 {wname}")
+            elif ck == "first_military_building" and cv:
+                spike_lines.append(f"First military building: {cv}")
+        if doctrine_label_narr:
+            spike_lines.insert(0, f"Doctrine: {doctrine_label_narr}")
+    if spike_lines:
+        spike_html = "\n".join(f"\u2022 {html_module.escape(l)}" for l in spike_lines)
+        narrative_parts.append(
+            f'<div class="narr-block narr-spike">'
+            f'<span class="narr-label">Power spike &amp; timing</span>'
+            f'<div class="narr-text">{spike_html}</div>'
+            f'</div>'
+        )
+
+    # ── Counter-strategy (derived from doctrine posture) ─────────────────────
+    # Build a short heuristic counter-guide from the spec fields
+    counter_lines = []
+    if spec_entry_narr:
+        d_off = spec_entry_narr.get("doctrine_offense", 0.5)
+        d_def = spec_entry_narr.get("doctrine_defense", 0.5)
+        rush_boom_val = _LEADER_XS_KNOBS.get(
+            _LEADER_KEY_TO_KNOBS_KEY.get(_CIV_LEADER_KEY.get(civ_token) or "", "") or "",
+            {}
+        ).get("btRushBoom", 0.0)
+        trade_val = _LEADER_XS_KNOBS.get(
+            _LEADER_KEY_TO_KNOBS_KEY.get(_CIV_LEADER_KEY.get(civ_token) or "", "") or "",
+            {}
+        ).get("btBiasTrade", 0.0)
+
+        if isinstance(rush_boom_val, (int, float)) and rush_boom_val < -0.2:
+            counter_lines.append("Pressure early: this civ booms; deny key resources before Fortress age.")
+        elif isinstance(rush_boom_val, (int, float)) and rush_boom_val > 0.2:
+            counter_lines.append("Avoid open-field fights in Colonial age; turtle and boom past the rush window.")
+        if isinstance(trade_val, (int, float)) and trade_val > 0.5:
+            counter_lines.append("Contest Trade Routes: high trade-bias means crippling trade cuts long-term income.")
+        if isinstance(d_off, (int, float)) and d_off > 0.65:
+            counter_lines.append("Exploit aggressive overextension: bait the forward army then counter-attack the undefended base.")
+        elif isinstance(d_def, (int, float)) and d_def > 0.65:
+            counter_lines.append("Force engagement: defensive posture means drawing out the AI and attacking on your terms.")
+        claims_naval = (claims_narr or {}).get("expects_naval", False)
+        if claims_naval:
+            counter_lines.append("Blockade or destroy docks early — naval economy is key to this civ\u2019s mid-game shipments.")
+    if counter_lines:
+        counter_html = "\n".join(f"\u2022 {html_module.escape(l)}" for l in counter_lines)
+        narrative_parts.append(
+            f'<div class="narr-block narr-counter">'
+            f'<span class="narr-label">Counter-strategy</span>'
+            f'<div class="narr-text">{counter_html}</div>'
+            f'</div>'
+        )
+
+    # ── Lore quote (leader XS doctrine comment block) ─────────────────────────
+    if lore_comment:
+        xs_attr = html_module.escape(xs_file_narr or "leader XS", quote=True)
+        narrative_parts.append(
+            f'<div class="narr-block narr-lore">'
+            f'<span class="narr-label">Historical context</span>'
+            f'<blockquote class="narr-lore-quote" title="{xs_attr}">'
+            f'{_esc_ingame_local(lore_comment)}'
+            f'</blockquote>'
+            f'</div>'
+        )
+
+    narrative_html = (
+        '<div class="panel panel-narrative">'
+        + "".join(narrative_parts)
+        + '</div>'
+    ) if narrative_parts else ""
 
     # Use reference-site portrait when available; fall back to homecitypreviewwpf
     header_img = ""
@@ -3316,7 +4009,7 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
             '</div>'
         )
 
-    # ── 4-panel grid layout ───────────────────────────────────────────────────
+    # ── Review-friendly lean layout ───────────────────────────────────────────
     col = f"""<section class="civ-col" id="{html_module.escape(civ_token)}" data-civ="{html_module.escape(civ_token)}" style="{bg}color:{tc}">
   {empty_banner}
   <div class="col-header">
@@ -3327,16 +4020,13 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     </div>
   </div>
   <div class="col-body">
+    {narrative_html}
     <div class="panel panel-strings">
       {new_strings_html}
-    </div>
-    <div class="panel panel-paths">
-      {new_paths_html}
     </div>
     {mod_changes_html}
     <div class="panel panel-art">
       <div class="section-label">Art &amp; Assets</div>
-      {art_html}
       {captures_html}
       {doctrine_html}
     </div>
@@ -3594,10 +4284,174 @@ html, body {
 }
 
 /* Panel-specific backgrounds */
+.panel-narrative { background: rgba(0,0,0,0.52); padding: 10px 14px; }
 .panel-strings { background: rgba(0,0,0,0.46); }
 .panel-paths   { background: rgba(0,0,0,0.40); }
 .panel-mod     { background: rgba(0,0,0,0.34); }
 .panel-art     { background: rgba(0,0,0,0.28); }
+
+/* ── Narrative / quote blurbs ── */
+.narr-block {
+  margin-bottom: 10px;
+}
+.narr-block:last-child { margin-bottom: 0; }
+.narr-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 3px;
+}
+.narr-text {
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  opacity: 0.92;
+}
+.narr-rollover .narr-text {
+  font-style: italic;
+  font-size: 12.5px;
+  opacity: 0.82;
+}
+.narr-unit-pill {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 2px 2px 2px 0;
+  color: rgba(255,255,255,0.90);
+}
+.narr-lore-quote {
+  margin: 4px 0 0 0;
+  padding: 6px 10px;
+  border-left: 3px solid rgba(255,255,255,0.30);
+  background: rgba(0,0,0,0.20);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+/* ── Politician gallery ── */
+.pol-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.pol-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.pol-age-lbl {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.28);
+  flex-shrink: 0;
+  min-width: 70px;
+  text-align: center;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.pol-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.pol-tile {
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: help;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.pol-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.90);
+  line-height: 1.3;
+}
+.pol-id {
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.38);
+  line-height: 1.2;
+}
+
+/* ── SVG radar chart ── */
+.radar-chart {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ── Grouped strings section ── */
+.str-group-details {
+  border-left: 2px solid rgba(255,255,255,0.18);
+  padding-left: 4px;
+  margin-bottom: 4px;
+}
+.str-group-summary {
+  padding: 3px 6px !important;
+  border-radius: 3px;
+}
+.str-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 4px 2px;
+}
+.str-grid-item {
+  background: rgba(255,255,255,0.04);
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: help;
+  overflow: hidden;
+}
+.str-grid-item:hover {
+  background: rgba(255,255,255,0.10);
+}
+.str-grid-lbl {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.str-grid-val {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.35;
+}
+.str-grid-title .str-grid-val {
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
+}
 
 /* ── Info table ── */
 .info-table {
