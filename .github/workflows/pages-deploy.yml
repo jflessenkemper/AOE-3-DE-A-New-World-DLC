@@ -47,11 +47,11 @@ jobs:
             cp -r resources/images/textures/. _site/resources/images/textures/
           fi
           # Visual capture thumbnails and crops for the lightbox modal.
-          # Deployed URL base: /artifacts/visual_art/<civ>/thumbs/ and .../crops/
-          # Generator references these as artifacts/visual_art/... (relative to _site root).
+          # HTML references artifacts/validation/visual_art/... (matches on-disk path,
+          # works for local file:// access and python -m http.server too).
           if [ -d artifacts/validation/visual_art ]; then
-            mkdir -p _site/artifacts
-            cp -r artifacts/validation/visual_art _site/artifacts/visual_art
+            mkdir -p _site/artifacts/validation
+            cp -r artifacts/validation/visual_art _site/artifacts/validation/visual_art
           fi
           # A tiny .nojekyll so Pages doesn't try to process the tree.
           touch _site/.nojekyll

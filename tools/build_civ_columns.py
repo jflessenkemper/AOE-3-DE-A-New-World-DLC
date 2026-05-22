@@ -19,9 +19,10 @@ OUTPUT_HTML  = os.path.join(MOD_ROOT, "a_new_world_columns.html")
 # Capture artifacts root (host-perspective manifests live here)
 VISUAL_ART_DIR = os.path.join(MOD_ROOT, "artifacts", "validation", "visual_art")
 
-# URL base used in the generated HTML — maps to the staging step in pages-deploy.yml:
-#   cp -r artifacts/validation/visual_art _site/artifacts/visual_art
-VISUAL_ART_URL_BASE = "artifacts/visual_art"
+# URL base used in the generated HTML.  Matches the actual on-disk path so the
+# file works when opened locally (file:// or python -m http.server) as well as
+# on GitHub Pages (pages-deploy.yml stages the same path unchanged).
+VISUAL_ART_URL_BASE = "artifacts/validation/visual_art"
 
 # Manifest schema version this generator understands
 MANIFEST_SCHEMA_VERSION = 1
