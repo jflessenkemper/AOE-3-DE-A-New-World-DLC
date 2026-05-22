@@ -95,7 +95,7 @@
 		<homecityflagbuttonset>frenchFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>frenchFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_french</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_French_Revolution_NE.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_french_revolution_ne.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_French_Revolution_NE.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_french_revolution_ne.png</homecityflagbuttonwpf>
@@ -362,7 +362,7 @@
 		<homecityflagbuttonset>frenchFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>frenchFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_french</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_French_Revolution.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_french_revolution.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_French_Revolution.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_french_robespierre.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources/images/icons/flags/flag_hc_french_revolution.png</homecityflagbuttonwpf>
@@ -632,7 +632,7 @@
 		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_canadian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Canadians.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_canadian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Canadians.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_canadian.png</homecityflagbuttonwpf>
@@ -904,7 +904,7 @@
 		<homecityflagbuttonset>bonifacioFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>bonifacioFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_brazilian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Brazilian.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_brazilian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Brazilian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_brazilian.png</homecityflagbuttonwpf>
@@ -1175,7 +1175,7 @@
 		<homecityflagbuttonset>sanMartinFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>sanMartinFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_argentinian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Argentinian.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_argentinian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Argentinian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_argentinian.png</homecityflagbuttonwpf>
@@ -1431,7 +1431,7 @@
 		<homecityflagbuttonset>oHigginsFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>oHigginsFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_chilean</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Chilean.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_chilean.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Chilean.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_chilean.png</homecityflagbuttonwpf>
@@ -1687,7 +1687,7 @@
 		<homecityflagbuttonset>bolivarFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>bolivarFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_peruvian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Peruvian.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_peruvian.png</postgameflagiconwpf>
 		<revolutionflagwpf>resources/images/icons/flags/Flag_Peruvian.png</revolutionflagwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Peruvian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png</homecitypreviewwpf>
@@ -1949,7 +1949,7 @@
 		<homecityflagbuttonset>santanderFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>santanderFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_colombian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Colombian.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_colombian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Colombian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_colombian.png</homecityflagbuttonwpf>
@@ -2206,7 +2206,7 @@
 		<homecityflagbuttonset>louvertureFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>louvertureFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_haitian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Haitian.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_haitian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Haitian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_haitian.png</homecityflagbuttonwpf>
@@ -2486,7 +2486,7 @@
 		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_indonesian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Indonesian.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_indonesian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Indonesian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_indonesian.png</homecityflagbuttonwpf>
@@ -3544,7 +3544,7 @@
 		<homecityflagbuttonset>russianFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>russianFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_romanian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Romanians.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_romanian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Romanians.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_romanian.png</homecityflagbuttonwpf>
@@ -4306,7 +4306,7 @@
 		<homecityflagbuttonset>hidalgoFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>hidalgoFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_aztec</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_mayan.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_mayan.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_mayan.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources/images/icons/flags/flag_hc_mayan.png</homecityflagbuttonwpf>
@@ -4760,7 +4760,7 @@
 		<homecityflagbuttonset>washingtonFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>washingtonFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_usa</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_texan.png</postgameflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_texan.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_texan.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources/images/icons/flags/flag_hc_texan.png</homecityflagbuttonwpf>
