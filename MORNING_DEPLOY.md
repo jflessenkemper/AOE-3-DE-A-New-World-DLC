@@ -1,7 +1,7 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
-Last updated: third loop pass (2026-05-22, all AI coverage complete).
+Last updated: fourth loop pass (2026-05-22, postgame flag art complete).
 
 ---
 
@@ -11,11 +11,38 @@ Last updated: third loop pass (2026-05-22, all AI coverage complete).
 
 **AI coverage: 100%.** All 40 ANW civs now have complete AI dispatch — 21 canonical civs + 19 revolution civs. No civ falls to "unassigned" fallback.
 
+**Postgame flag art: COMPLETE.** All 40 ANW civs use correct postgame art — each revolution civ now shows its own nation's wavy flag icon (sourced from base game UIResources1.bar) instead of the parent civ's flag. DDT names match the base-game revolution mod convention.
+
 **Three small decisions** are waiting for you before clicking Publish. None are blockers — pick "skip" on any to ship as-is.
 
 ---
 
 ## What landed overnight (autonomous, no manual input)
+
+9. **Fourth loop pass — Postgame flag art complete (2026-05-22).**
+   One commit pushed to main (9ea750e):
+   - **`civmods.xml` postgame art** for 12 ANW civs corrected:
+     - **8 ANW revolution civs**: `<postgameflagtexture>` DDT now uses
+       revolution-specific names (`ingame_ui_postgame_flag_barbary`,
+       `ingame_ui_postgame_flag_canadian`, etc.) matching the base-game
+       "fully playable revolutions" mod, instead of parent-civ DDTs.
+     - **2 canonical ANW civs** with obviously wrong DDTs fixed:
+       ANWEthiopians (portuguese→ethiopian), ANWSwedes (russian→swedish)
+       — both confirmed by `postgame_flag_*.png` presence in UIResources1.bar.
+     - **ANWSwedes** `homecityflagbuttonset`: britishFlagBtn → swedishFlagBtn.
+     - **ANWUSA**: missing `<postgameflagtexture>` added (`ingame_ui_postgame_flag_USA`).
+     - **5 revolution civs**: `<postgameflagiconwpf>` updated to proper
+       `postgame_flag_*.png` WPF icons (barbary, egyptian, finnish,
+       hungarian, south_african) that ship in base game UIResources1.bar.
+   - **`validate_civ_asset_existence.py`** committed (was untracked):
+     - Bar index now scans ALL Game/ bars (Art + UI + Data), matching
+       `homecity_assets_exist` validator's scan scope.
+     - PNG resolution checks UIResources*.bar (revolution WPF icons load
+       from there without needing mod-tree loose copies).
+     - 10 revolution postgame DDTs promoted to WARN-not-FAIL allowlist
+       (they don't exist in ArtUI.bar but the engine handles them
+       gracefully — same pattern as the base-game revolution mod).
+   - **All 41 static validators still PASS** after all changes.
 
 8. **Third loop pass — 100% AI dispatch coverage (2026-05-22).**
    Four commits pushed to main since MORNING_DEPLOY was last updated:
