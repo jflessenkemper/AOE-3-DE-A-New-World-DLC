@@ -112,11 +112,14 @@ All three default to "skip" and are independently overridable later.
 
 There are exactly two sites — everything else was consolidated or deleted.
 
-| Surface | URL |
+| Surface | How to open |
 |---|---|
-| Column site (40 ANW civs, 10–14 visual confirmation thumbs each, full text + cards) | `a_new_world_columns.html` |
-| User reference (A-Z searchable browse, decks, lore) | `a_new_world.html` |
-| Per-civ confirmation report (Claude's portrait-by-portrait review) | `artifacts/validation/visual_confirmation_report.md` |
+| **Column site** (40 ANW civs, 10–14 thumbs each, full text + cards) | Open `a_new_world_columns.html` locally in your browser — drag the file from the repo root into a browser window. Thumbnails resolve relative to the file, so this works offline. |
+| **User reference** (A-Z searchable browse, decks, lore) | `a_new_world.html` locally, or GitHub Pages (if billing resolved) |
+| **Per-civ confirmation report** | `artifacts/validation/visual_confirmation_report.md` |
+
+> ⚠️ **GitHub Pages billing issue**: The Actions workflow is showing "account locked due to billing issue" as of 2026-05-22. The column site changes (3-panel layout, 40 civs, screenshots-first) are committed to `main` but not yet live on Pages. To publish the Pages site: fix billing at https://github.com/settings/billing → then run the workflow manually at https://github.com/jflessenkemper/AOE-3-DE-A-New-World-DLC/actions/workflows/pages-deploy.yml → "Run workflow".
+> **This does NOT affect Workshop deploy.** The mod files (game/, data/, art/) are fully committed and Workshop publishing goes through AoE3 DE's Steam mod browser, not GitHub Actions.
 
 ---
 
