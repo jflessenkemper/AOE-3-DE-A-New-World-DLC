@@ -3763,27 +3763,8 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
         leader_name_hdr = spec_entry["leader_label"]
     doctrine_label_hdr = spec_entry.get("doctrine_label", "") if spec_entry else ""
 
-    # art_html is no longer emitted directly in review mode — we keep only the
-    # player-visible captures + doctrine images.  We still call render_art_section
-    # so we get the resolved/missing counts for the return value.
-    _art_html_unused, resolved, missing = render_art_section(civ_token, civ_el, hc, strings)
-
-    # ── Panel 1: Strings (lean — no source-hint annotations) ──────────────────
-    _inv = art_inventory if art_inventory is not None else {}
-    _str_rows = collect_strings_for_civ(
-        civ_token, civ_el, hc, strings, blurbs, spec, decks, cards,
-        strings_by_civ if strings_by_civ is not None else {}
-    )
-    new_strings_html = render_strings_grouped(_str_rows)
-
-    # Panel 2 (paths) is engineering noise — skip entirely in review mode.
-
-    # ── Panel 3: Mod Changes (cards + doctrine + tech tree) ───────────────────
-    mod_changes_html = render_mod_changes_panel(
-        civ_token, civ_el, strings, hc, blurbs, spec, decks, cards,
-        techtree_by_civ if techtree_by_civ is not None else {},
-        colors=colors,
-    )
+    # Resolved/missing counts (used only for return value — art section not rendered)
+    resolved, missing = 0, 0
 
     # ── Panel 4: Art + Captures (player-visible only) ─────────────────────────
     host_manifest  = load_capture_manifest(civ_token, ally=False)
@@ -4147,11 +4128,11 @@ html, body {
   color: rgba(255,220,130,0.92);
 }
 
-/* ── Body: 4-panel horizontal grid, each panel independently scrollable ── */
+/* ── Body: 3-panel horizontal grid — screenshots wide, info compact, cards right ── */
 .col-body {
   flex: 1 1 0;
   display: grid;
-  grid-template-columns: 22% 20% 28% 30%;
+  grid-template-columns: 50% 22% 28%;
   min-height: 0;
   overflow: hidden;
 }
@@ -4471,11 +4452,11 @@ html, body {
 .age-row {
   margin-bottom: 3px;
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 4px;
-  padding: 2px 3px;
+  padding: 3px 4px;
   border-radius: 3px;
-  overflow: hidden;
 }
 /* Age-band colour coding */
 .age-row.age-0 { background: rgba(130,130,130,0.22); }  /* Discovery — gray  */
@@ -4516,8 +4497,8 @@ html, body {
   vertical-align: middle;
 }
 .card-img {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
   border: 1px solid rgba(255,255,255,0.20);
   border-radius: 3px;
