@@ -19,17 +19,26 @@ Last updated: fifth loop pass (2026-05-22, homecityflagbuttonset cleanup).
 
 ## What landed overnight (autonomous, no manual input)
 
-10. **Fifth loop pass — Home-city flag button cleanup (2026-05-22).**
-   One commit:
-   - **`civmods.xml` `homecityflagbuttonset`** fixed for 4 civs that referenced
-     `swedishFlagBtn`/`swedishFlagBtnLarge` — confirmed absent from every base-game
-     .bar archive and not defined in civs.xml.xmb:
-     - **ANWFinnish**: `swedishFlagBtn` → `russianFlagBtn` (Finland was a Russian Grand Duchy)
-     - **ANWHungarians**: `swedishFlagBtn` → `germanFlagBtn` (Hungary under Habsburg rule)
-     - **ANWRomanians**: `swedishFlagBtn` → `russianFlagBtn` (Romanian revolution, Russian sphere)
-     - **ANWSwedes**: `swedishFlagBtn` → `britishFlagBtn` (reverted to prior working value;
-       no `swedishFlagBtn` exists anywhere in the game files)
-   - **All 41 static validators still PASS** after the fix.
+10. **Fifth loop pass — Flag art audit complete (2026-05-22/23).**
+   Two commits:
+   - **`homecityflagbuttonset` fix** for 4 civs that referenced non-existent
+     `swedishFlagBtn`/`swedishFlagBtnLarge` (confirmed absent from all bars):
+     - **ANWFinnish**: → `russianFlagBtn` (Finland was a Russian Grand Duchy)
+     - **ANWHungarians**: → `germanFlagBtn` (Hungary under Habsburg rule)
+     - **ANWRomanians**: → `russianFlagBtn` (Romanian revolution, Russian sphere)
+     - **ANWSwedes**: reverted to `britishFlagBtn` (original; no `swedishFlagBtn` exists)
+   - **`postgameflagiconwpf` upgrade** for 13 civs: replaced loose mod-tree
+     `Flag_xxx.png` files with base-game `postgame_flag_*.png` PNGs from
+     UIResources1.bar (proper postgame-screen-sized icons):
+     ANWNapoleonicFrance→french_revolution_ne, ANWRevFrance→french_revolution,
+     ANWCanadians, ANWBrazil, ANWArgentines, ANWChileans, ANWPeruvians,
+     ANWColumbians, ANWHaitians, ANWIndonesians, ANWRomanians, ANWMayans, ANWTexians.
+   - Full audit of all 40 civs' `homecityflagbuttonset`,
+     `postgameflagtexture`, and `postgameflagiconwpf` fields — all now using
+     confirmed-existing assets.  Only 23 DDTs exist in ArtUI.bar (base civs);
+     the 10 WARN civs use the allowlisted revolution DDT names that the engine
+     handles gracefully.
+   - **All 41 static validators still PASS** after all changes.
 
 9. **Fourth loop pass — Postgame flag art complete (2026-05-22).**
    One commit pushed to main (9ea750e):
