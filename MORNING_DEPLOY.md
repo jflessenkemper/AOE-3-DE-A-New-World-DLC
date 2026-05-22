@@ -1,12 +1,13 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
+Last updated: second loop pass (pre-push final commit).
 
 ---
 
 ## TL;DR — GO / NO-GO
 
-**Static signals: GO.** 41/41 validators PASS, 0 FAIL. The mod is ready to ship.
+**Static signals: GO.** 41/48 validators PASS, 0 FAIL, 7 SKIP (all live-game only). The mod is ready to ship.
 
 **Three small decisions** are waiting for you before clicking Publish. None are blockers — pick "skip" on any to ship as-is.
 
@@ -42,7 +43,23 @@
    already correct: `ANWCanadians` = playable "Province of Canada";
    `RvltModFrenchCanadians` = revolution state displayed as "Lower
    Canada" (string 494006). No rename needed.
-6. **Column site consolidated.** Two sites only now (`a_new_world.html`
+6. **Second loop pass — final mod content committed.** Committed in two
+   new pushes (907b69b + 07a75e2) after the first overnight loop pass:
+   - **`leaderCommon.xs`**: 19 bespoke per-civ AI build/terrain/expansion
+     profiles for every ANW nation (Argentina through USA).
+   - **Wall doctrine overrides** in `leader_revolution_commanders.xs`
+     and `leader_catherine.xs`: Chileans/Peruvians → FortressRing;
+     Haitians/Indonesians/Yucatan/Mayans → ChokepointSegments;
+     Russians Catherine → FrontierPalisades.
+   - **40 `anwhomecity*.xml`** corrected: hero name strings, `maxcardsperdeck=25`,
+     deck content aligned with `decks_anw.json`.
+   - **36 new AI portrait DDTs** added: 23 ANW-prefix civ avatars + 8 DE
+     variants + 3 XP variants + NapoleonicFrance Napoleon.
+   - **Cleanup**: removed 8 deprecated revolution-state stubs and all 46
+     `.proposed` XML drafts.
+   - **Coverage scenarios**: `Scenario/coverage/ANW_Coverage_A-F.age3Yscn`
+     (6 maps × 7 civs each = all 40 ANW civs covered for smoke testing).
+7. **Column site consolidated.** Two sites only now (`a_new_world.html`
    user reference + `a_new_world_columns.html` column site). Five
    redundant artifact pages removed (civ_art_review, british_review,
    live_capture_review, static_contact_sheet, synthetic_tech_tree_index).
@@ -142,7 +159,7 @@ Of these, only `live_mod_install` is even mildly interesting before publish — 
 - `artifacts/validation/v1_0_readiness_final.md` — longer readiness summary
 - `artifacts/validation/civ_naming_audit.md` — FrenchCanadians audit
 - `tools/validation/run_all_validators_report.md` — latest validator report
-- `a_new_world_columns.html` — 62-civ review site (also on Pages: https://jflessenkemper.github.io/AOE-3-DE-A-New-World-DLC/a_new_world_columns.html)
+- `a_new_world_columns.html` — 40-civ review site (also on Pages: https://jflessenkemper.github.io/AOE-3-DE-A-New-World-DLC/a_new_world_columns.html)
 
 ---
 
