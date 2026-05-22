@@ -1,7 +1,7 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
-Last updated: fifth loop pass (2026-05-22, homecityflagbuttonset cleanup).
+Last updated: fifth loop pass (2026-05-23, complete flag art audit — all 40 civs clean).
 
 ---
 
@@ -11,7 +11,10 @@ Last updated: fifth loop pass (2026-05-22, homecityflagbuttonset cleanup).
 
 **AI coverage: 100%.** All 40 ANW civs now have complete AI dispatch — 21 canonical civs + 19 revolution civs. No civ falls to "unassigned" fallback.
 
-**Postgame flag art: COMPLETE.** All 40 ANW civs use correct postgame art — each revolution civ now shows its own nation's wavy flag icon (sourced from base game UIResources1.bar) instead of the parent civ's flag. DDT names match the base-game revolution mod convention.
+**Flag art: FULLY AUDITED.** All 40 ANW civs' flag fields have been cross-checked against the base game's bar archives and corrected:
+- `postgameflagtexture` DDTs: correct for all 40 civs (10 revolution civs use allowlisted DDTs that the engine handles gracefully, identical to the base-game revolution mod).
+- `postgameflagiconwpf` PNGs: all 40 now use the proper `postgame_flag_*.png` icons from UIResources1.bar (proper postgame-screen-sized wavy icons).
+- `homecityflagbuttonset`: all 40 use confirmed-existing button set keys from civs.xml.xmb.
 
 **Three small decisions** are waiting for you before clicking Publish. None are blockers — pick "skip" on any to ship as-is.
 
