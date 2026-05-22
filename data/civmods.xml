@@ -3021,8 +3021,8 @@
 		<randomstartingunits>0</randomstartingunits>
 		<homecityfilename>anwhomecityfinnish.xml</homecityfilename>
 		<homecityflagtexture>objects\flags\finnish</homecityflagtexture>
-		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
-		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
+		<homecityflagbuttonset>russianFlagBtn</homecityflagbuttonset>
+		<homecityflagbuttonsetlarge>russianFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_finnish</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_finnish.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Finnish.png</homecityflagiconwpf>
@@ -3281,8 +3281,8 @@
 		<randomstartingunits>0</randomstartingunits>
 		<homecityfilename>anwhomecityhungarians.xml</homecityfilename>
 		<homecityflagtexture>objects\flags\hungarian</homecityflagtexture>
-		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
-		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
+		<homecityflagbuttonset>germanFlagBtn</homecityflagbuttonset>
+		<homecityflagbuttonsetlarge>germanFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_hungarian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_hungarian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Hungarian.png</homecityflagiconwpf>
@@ -3541,8 +3541,8 @@
 		<randomstartingunits>0</randomstartingunits>
 		<homecityfilename>anwhomecityromanians.xml</homecityfilename>
 		<homecityflagtexture>objects\flags\romanian</homecityflagtexture>
-		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
-		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
+		<homecityflagbuttonset>russianFlagBtn</homecityflagbuttonset>
+		<homecityflagbuttonsetlarge>russianFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_romanian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/Flag_Romanians.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Romanians.png</homecityflagiconwpf>
@@ -12451,8 +12451,8 @@
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Swedish.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus_adolphus.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_swedish.png</homecityflagbuttonwpf>
-		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
-		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
+		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
+		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_swedish</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_swedish.png</postgameflagiconwpf>
 		<matchmakingtextures>

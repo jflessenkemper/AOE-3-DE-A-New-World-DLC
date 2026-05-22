@@ -1,7 +1,7 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
-Last updated: fourth loop pass (2026-05-22, postgame flag art complete).
+Last updated: fifth loop pass (2026-05-22, homecityflagbuttonset cleanup).
 
 ---
 
@@ -18,6 +18,18 @@ Last updated: fourth loop pass (2026-05-22, postgame flag art complete).
 ---
 
 ## What landed overnight (autonomous, no manual input)
+
+10. **Fifth loop pass — Home-city flag button cleanup (2026-05-22).**
+   One commit:
+   - **`civmods.xml` `homecityflagbuttonset`** fixed for 4 civs that referenced
+     `swedishFlagBtn`/`swedishFlagBtnLarge` — confirmed absent from every base-game
+     .bar archive and not defined in civs.xml.xmb:
+     - **ANWFinnish**: `swedishFlagBtn` → `russianFlagBtn` (Finland was a Russian Grand Duchy)
+     - **ANWHungarians**: `swedishFlagBtn` → `germanFlagBtn` (Hungary under Habsburg rule)
+     - **ANWRomanians**: `swedishFlagBtn` → `russianFlagBtn` (Romanian revolution, Russian sphere)
+     - **ANWSwedes**: `swedishFlagBtn` → `britishFlagBtn` (reverted to prior working value;
+       no `swedishFlagBtn` exists anywhere in the game files)
+   - **All 41 static validators still PASS** after the fix.
 
 9. **Fourth loop pass — Postgame flag art complete (2026-05-22).**
    One commit pushed to main (9ea750e):
