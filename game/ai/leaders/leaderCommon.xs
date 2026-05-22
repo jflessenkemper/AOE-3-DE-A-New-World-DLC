@@ -515,6 +515,26 @@ void llAssignLeaderIdentity(void)
    else if (rvltName == "RvltModSouthAfricans")      { gLLLeaderKey = "rvltmodsouthafricans";      gLLChatsetKey = "rvltmodsouthafricans"; }
    else if (rvltName == "RvltModTexians")            { gLLLeaderKey = "rvltmodtexians";            gLLChatsetKey = "rvltmodtexians"; }
    else if (rvltName == "RvltModYucatan")            { gLLLeaderKey = "rvltmodyucatan";            gLLChatsetKey = "rvltmodyucatan"; }
+   // ANW revolution civs (19)
+   else if (rvltName == "ANWArgentines")          { gLLLeaderKey = "anw_argentines";          gLLChatsetKey = "anw_argentines"; }
+   else if (rvltName == "ANWBarbary")             { gLLLeaderKey = "anw_barbary";             gLLChatsetKey = "anw_barbary"; }
+   else if (rvltName == "ANWBrazil")              { gLLLeaderKey = "anw_brazil";              gLLChatsetKey = "anw_brazil"; }
+   else if (rvltName == "ANWCanadians")           { gLLLeaderKey = "anw_canadians";           gLLChatsetKey = "anw_canadians"; }
+   else if (rvltName == "ANWChileans")            { gLLLeaderKey = "anw_chileans";            gLLChatsetKey = "anw_chileans"; }
+   else if (rvltName == "ANWColumbians")          { gLLLeaderKey = "anw_columbians";          gLLChatsetKey = "anw_columbians"; }
+   else if (rvltName == "ANWEgyptians")           { gLLLeaderKey = "anw_egyptians";           gLLChatsetKey = "anw_egyptians"; }
+   else if (rvltName == "ANWFinnish")             { gLLLeaderKey = "anw_finnish";             gLLChatsetKey = "anw_finnish"; }
+   else if (rvltName == "ANWHaitians")            { gLLLeaderKey = "anw_haitians";            gLLChatsetKey = "anw_haitians"; }
+   else if (rvltName == "ANWHungarians")          { gLLLeaderKey = "anw_hungarians";          gLLChatsetKey = "anw_hungarians"; }
+   else if (rvltName == "ANWIndonesians")         { gLLLeaderKey = "anw_indonesians";         gLLChatsetKey = "anw_indonesians"; }
+   else if (rvltName == "ANWMayans")              { gLLLeaderKey = "anw_mayans";              gLLChatsetKey = "anw_mayans"; }
+   else if (rvltName == "ANWMexicans")            { gLLLeaderKey = "anw_mexicans";            gLLChatsetKey = "anw_mexicans"; }
+   else if (rvltName == "ANWNapoleonicFrance")    { gLLLeaderKey = "anw_napoleonicfrance";    gLLChatsetKey = "anw_napoleonicfrance"; }
+   else if (rvltName == "ANWPeruvians")           { gLLLeaderKey = "anw_peruvians";           gLLChatsetKey = "anw_peruvians"; }
+   else if (rvltName == "ANWRevFrance")           { gLLLeaderKey = "anw_revfrance";           gLLChatsetKey = "anw_revfrance"; }
+   else if (rvltName == "ANWRomanians")           { gLLLeaderKey = "anw_romanians";           gLLChatsetKey = "anw_romanians"; }
+   else if (rvltName == "ANWSouthAfricans")       { gLLLeaderKey = "anw_southafricans";       gLLChatsetKey = "anw_southafricans"; }
+   else if (rvltName == "ANWTexians")             { gLLLeaderKey = "anw_texians";             gLLChatsetKey = "anw_texians"; }
    else
    {
       gLLLeaderKey = "unassigned-" + rvltName;

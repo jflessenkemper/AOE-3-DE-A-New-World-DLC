@@ -3,7 +3,7 @@
 		<name>ANWNapoleonicFrance</name>
 		<main>1</main>
 		<statsid>FR</statsid>
-		<portrait>objects\flags\french</portrait>
+		<portrait>objects\flags\french_revolution_ne</portrait>
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494001</displaynameid>
@@ -104,7 +104,7 @@
 			<bannertexturecoords>0 0.125 0.78125 0.25</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.005859375 0.00390625 0.396484375 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_french</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwnapoleonicfrance</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -270,7 +270,7 @@
 		<name>ANWRevFrance</name>
 		<main>1</main>
 		<statsid>RF</statsid>
-		<portrait>objects\flags/french</portrait>
+		<portrait>objects\flags\french</portrait>
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494002</displaynameid>
@@ -371,7 +371,7 @@
 			<bannertexturecoords>0 0.125 0.78125 0.25</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.005859375 0.00390625 0.396484375 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_french</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwrevfrance</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_french_robespierre.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -537,7 +537,7 @@
 		<name>ANWCanadians</name>
 		<main>1</main>
 		<statsid>BR</statsid>
-		<portrait>objects\flags\british</portrait>
+		<portrait>objects\flags\canadian</portrait>
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494005</displaynameid>
@@ -641,7 +641,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_british</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwcanadians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -807,7 +807,7 @@
 		<name>ANWBrazil</name>
 		<main>1</main>
 		<statsid>PT</statsid>
-		<portrait>objects\flags\portuguese</portrait>
+		<portrait>objects\flags\brazilian</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494007</displaynameid>
@@ -913,7 +913,7 @@
 			<bannertexturecoords>0 0.625 0.78125 0.75</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_01</portraittexture>
 			<portraittexturecoords>0.005859375 0.4296875 0.396484375 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_portuguese</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwbrazil</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -1079,7 +1079,7 @@
 		<name>ANWArgentines</name>
 		<main>1</main>
 		<statsid>SP</statsid>
-		<portrait>objects\flags\spanish</portrait>
+		<portrait>objects\flags\argentinian</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494008</displaynameid>
@@ -1184,7 +1184,7 @@
 			<bannertexturecoords>0 0 0.78125 0.125</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.4296875 0.830078125 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_spanish</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwargentines</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -1335,7 +1335,7 @@
 		<name>ANWChileans</name>
 		<main>1</main>
 		<statsid>SP</statsid>
-		<portrait>objects\flags\spanish</portrait>
+		<portrait>objects\flags\chilean</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494009</displaynameid>
@@ -1440,7 +1440,7 @@
 			<bannertexturecoords>0 0 0.78125 0.125</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.4296875 0.830078125 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_spanish</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwchileans</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -1591,7 +1591,7 @@
 		<name>ANWPeruvians</name>
 		<main>1</main>
 		<statsid>SP</statsid>
-		<portrait>objects\flags\spanish</portrait>
+		<portrait>objects\flags\peruvian</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494010</displaynameid>
@@ -1697,7 +1697,7 @@
 			<bannertexturecoords>0 0 0.78125 0.125</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.4296875 0.830078125 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_spanish</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwperuvians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -1853,7 +1853,7 @@
 		<name>ANWColumbians</name>
 		<main>1</main>
 		<statsid>SP</statsid>
-		<portrait>objects\flags\spanish</portrait>
+		<portrait>objects\flags\colombian</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494011</displaynameid>
@@ -1958,7 +1958,7 @@
 			<bannertexturecoords>0 0 0.78125 0.125</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.4296875 0.830078125 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_spanish</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwcolumbians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -2109,7 +2109,7 @@
 		<name>ANWHaitians</name>
 		<main>1</main>
 		<statsid>BR</statsid>
-		<portrait>objects\flags\british</portrait>
+		<portrait>objects\flags\haitian</portrait>
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494012</displaynameid>
@@ -2215,7 +2215,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_british</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwhaitians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -2391,7 +2391,7 @@
 		<name>ANWIndonesians</name>
 		<main>1</main>
 		<statsid>BR</statsid>
-		<portrait>objects\flags\british</portrait>
+		<portrait>objects\flags\indonesian</portrait>
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494013</displaynameid>
@@ -2495,7 +2495,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_british</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwindonesians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -2661,7 +2661,7 @@
 		<name>ANWSouthAfricans</name>
 		<main>1</main>
 		<statsid>BR</statsid>
-		<portrait>objects\flags\british</portrait>
+		<portrait>objects\flags\south_african</portrait>
 		<culture>WesternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494014</displaynameid>
@@ -2764,7 +2764,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_british</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwsouthafricans</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -2930,7 +2930,7 @@
 		<name>ANWFinnish</name>
 		<main>1</main>
 		<statsid>SW</statsid>
-		<portrait>objects\flags\swedish</portrait>
+		<portrait>objects\flags\finnish</portrait>
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494015</displaynameid>
@@ -3033,7 +3033,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_swedes</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwfinnish</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -3189,7 +3189,7 @@
 		<name>ANWHungarians</name>
 		<main>1</main>
 		<statsid>SW</statsid>
-		<portrait>objects\flags\swedish</portrait>
+		<portrait>objects\flags\hungarian</portrait>
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494016</displaynameid>
@@ -3293,7 +3293,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_swedes</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwhungarians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -3449,7 +3449,7 @@
 		<name>ANWRomanians</name>
 		<main>1</main>
 		<statsid>SW</statsid>
-		<portrait>objects\flags\swedish</portrait>
+		<portrait>objects\flags\romanian</portrait>
 		<culture>EasternEurope</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494017</displaynameid>
@@ -3553,7 +3553,7 @@
 			<bannertexturecoords>0 0.75 0.78125 0.875</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.00390625 0.830078125 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_swedes</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwromanians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -3709,7 +3709,7 @@
 		<name>ANWBarbary</name>
 		<main>1</main>
 		<statsid>OT</statsid>
-		<portrait>objects\flags\ottomans</portrait>
+		<portrait>objects\flags\spc_barbary</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494018</displaynameid>
@@ -3809,7 +3809,7 @@
 			<bannertexturecoords>0 0.375 0.78125 0.50</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.005859375 0.4296875 0.396484375 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_ottomans</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwbarbary</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -3955,7 +3955,7 @@
 		<name>ANWEgyptians</name>
 		<main>1</main>
 		<statsid>OT</statsid>
-		<portrait>objects\flags\ottomans</portrait>
+		<portrait>objects\flags\egyptian</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494019</displaynameid>
@@ -4056,7 +4056,7 @@
 			<bannertexturecoords>0 0.375 0.78125 0.50</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.005859375 0.4296875 0.396484375 0.814453125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_ottomans</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwegyptians</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png</smallportraittexturewpf>
 		</matchmakingtextures>
@@ -4203,7 +4203,7 @@
 		<main>1</main>
 		<statsid>MX</statsid>
 		<civtype>7</civtype>
-		<portrait>objects\flags\mx_central_american</portrait>
+		<portrait>objects\flags\mx_mayan</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494024</displaynameid>
@@ -4315,6 +4315,7 @@
 			<bannertexturecoords>0 0 0.78125 0.125</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.4296875 0.830078125 0.814453125</portraittexturecoords>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwmayans</smallportraittexture>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
@@ -4656,7 +4657,7 @@
 		<main>1</main>
 		<statsid>MX</statsid>
 		<civtype>7</civtype>
-		<portrait>objects\flags\mx_central_american</portrait>
+		<portrait>objects\flags\us_texan</portrait>
 		<culture>Mediterranean</culture>
 		<settlerprotoname>Settler</settlerprotoname>
 		<displaynameid>494026</displaynameid>
@@ -4768,6 +4769,7 @@
 			<bannertexturecoords>0 0 0.78125 0.125</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.4375 0.4296875 0.830078125 0.814453125</portraittexturecoords>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_anwtexians</smallportraittexture>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
