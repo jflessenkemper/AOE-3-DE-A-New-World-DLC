@@ -1,0 +1,402 @@
+{
+  "ANWArgentines": {
+    "strategy_overview": "Granadero shock-cavalry liberation doctrine: push a forward Barracks and Stables near the contested edge early, ship reinforcements to the front, and re-wall lost ground rather than retreat. Sustained forward pressure with Granaderos a Caballo and Lancers backed by a Musketeer screen.",
+    "ages": {
+      "0": "Explore aggressively to locate the contested map edge. Send Lombardy and Cheap Barracks cards; begin gathering food and wood for a fast Colonial push while keeping Villager count climbing.",
+      "1": "Build a forward Barracks and Stable toward the enemy; ship Mercenary Irish Brigaders and Frontier Defenses cards to fortify the advance post. Begin walling the forward position by the 12-minute mark while massing Musketeers and Rodeleros.",
+      "2": "Unlock a Fort at the forward base; ship Liberation March and Flying Battery cards to reinforce the column. Transition the army to Granaderos a Caballo and Lancers, supported by War Dogs, for shock charges into enemy lines.",
+      "3": "Send San Martín, Blandengues, and Argentine Mortars cards for a full siege push. Mass Granadero cavalry with mortar support and advance wall-to-wall toward the enemy Town Center.",
+      "4": "Ship Battleship and food-crate cards to sustain continuous production. Deploy supreme Granadero and Gatling Gun columns for a final unstoppable imperial push."
+    }
+  },
+  "ANWAztecs": {
+    "strategy_overview": "Flower War tribute aggression using jungle chokes and War Huts instead of walls. Tribute boom to a large Villager count, then sustain repeated infantry strikes with Macehualtin and Coyote Runners before transitioning to Jaguar and Eagle Knights.",
+    "ages": {
+      "0": "Plant Skull Walls at natural chokes and send Calendar Ceremony and Calmecac cards to boost XP and eco. Prioritize Tribute trickle and build a War Hut near chokepoints before advancing.",
+      "1": "Ship Jaguar Knights and Macehualtin reinforcements; build War Huts forward to control jungle lanes. Harass the enemy economy with Macehualtin mass and Coyote Runner raids rather than fighting in the open.",
+      "2": "Advance Warchief and ship Eagle Knights and more Jaguars. Use Chinampas for eco; place Skull Walls at the approach to the base. Mass Eagle Runner Knights for fast-moving harassment columns.",
+      "3": "Send Great Temple Huitzilopochtli, Aztec Mining, and Jaguar Knight repeats for late-game power. Field a mixed elite army of Jaguar and Eagle Knights backed by Medicine Men for sustained engagements.",
+      "4": "No dedicated Imperial cards; sustain with Jaguar Knight shipments and upgrade cards for a final overwhelming Flower War assault."
+    }
+  },
+  "ANWBarbary": {
+    "strategy_overview": "Corsair raider naval-first economy: build Docks before a second Barracks, fill the harbor with Xebecs, then fund a land army through naval shipments and mercenary contracts. Wall the harbor ring once the fleet is established.",
+    "ages": {
+      "0": "Send Ottoman Colonial Militia and Saharan Trade cards; begin gathering coin for a Dock on any accessible water. Prioritize shore economy over land expansion.",
+      "1": "Rush the first Dock and ship Galleons; send Corsair Captain and Dhimma cards. Build Barbary Warriors to defend the dock perimeter and begin Corsair Marksman raids on enemy trade routes.",
+      "2": "Add a second Dock and ship Sale Rovers, Berber Nomads, and Loyal Warriors. Hire Bosniaks mercenaries for land reinforcement; Xebecs should dominate coastal waters by now.",
+      "3": "Ship Barbary Warriors, Barbary Marksmen, Falconets, and Xebec repeats for a combined naval-land push. Begin walling the harbor and stage a land assault behind Great Bombard artillery.",
+      "4": "No Imperial cards; sustain with Askari and Ottoman mercs plus Battleship repeats for overwhelming coastal dominance."
+    }
+  },
+  "ANWBrazil": {
+    "strategy_overview": "Distributed economic network with free Covered Wagons each Age. Scatter Mills and Plantations across multiple resource patches, keep a villager trickle to under-worked nodes, and fund forward bases through Covered Wagon placement rather than Home City rushes.",
+    "ages": {
+      "0": "Send Bonifacio and Exotic Hardwoods cards; plant the starting Citizens on separate food and wood patches. Use the free Covered Wagon to claim a second gather site early.",
+      "1": "Ship Bandeirantes, Theaters, and Wettın Allies for eco momentum. Build a Market and upgrade gather rates; light walls around the TC while Voluntarios from Town Centers begin appearing.",
+      "2": "Send Amazonia, Cattle Delivery, and Minas Gerais cards for multi-node economy. Build a second TC with the Age-up Covered Wagon; deploy Armored Pistoleer mercs and Gatlings for defense.",
+      "3": "Ship Importers, Cácadores, Soldados, and Ironclads; unlock the Factory. Transition to a Voluntario and Lancer strike force backed by ironclade river control.",
+      "4": "Use Battleship and Portuguese Battleship cards for naval supremacy; mass Gatling Guns and elite infantry for the final ground push."
+    }
+  },
+  "ANWBritish": {
+    "strategy_overview": "Tudor naval-mercantile compound: Manor-boom Settlers, build Docks before the second Barracks, wall the harbor, and fund the land army via naval shipments and mercenary contracts. Longbowmen and Musketeers hold the line while the fleet projects power.",
+    "ages": {
+      "0": "Send Whale Oil, Greenwich Time, and Fort Marion Diversions cards. Build the first Manor immediately to spawn a free Settler; begin scouting for water to site the Dock.",
+      "1": "Rush the first Dock and ship Galleons; send musketeer damage and cavalry damage cards. Build one more Manor for Settlers while Colonial defenses go up near the harbor.",
+      "2": "Add a second Dock; ship Frigates, Improved Longbows, Longbowmen, and Rangers. Build a Fort if accessible; deploy Musketeer + Longbowman lines behind harbor walls with Highlander mercs in reserve.",
+      "3": "Send Rule Britannia, Rangers, and Pikemen cards; ship Monitors for naval superiority. Land army transitions to veteran Longbowmen and Ranger skirmishers backed by Queen's Dragoon cavalry.",
+      "4": "No Imperial cards; sustain with Cheap Docks and Monitor repeats for endgame naval dominance and a massed Ranger-Longbow ground assault."
+    }
+  },
+  "ANWCanadians": {
+    "strategy_overview": "Compact fortified core with Blockhouse frontier: Manor-boom Metis Pathfinders, turtle the home base with stone walls and Outpost militia, and counter-attack from a hardened core with Rangers and Cuirassiers rather than fighting at range.",
+    "ages": {
+      "0": "Send Fur Trade and Greenwich Time cards. Build Manors close to the TC to spawn Metis Pathfinders; wall the home perimeter before Age 2 using stone.",
+      "1": "Ship Canadian Officer, Buffalo Hunt, Extensive Fortifications, and Irish Brigaders. Begin stone walls; Outpost militia augments the early defense; Rangers provide skirmish pressure at the perimeter.",
+      "2": "Ship War Canoes, Giant Grenadiers, and Rangers for a combined assault. Unlock a Fort at the fortified core; Cuirassier cavalry stands ready for counter-attacks when the enemy pushes walls.",
+      "3": "Send Fencibles, Conscription, Native Allies, and Quebec cards for a full Industrial mobilization. Metis Pathfinder screen and Cuirassier charge form the counter-punch to any siege.",
+      "4": "No Imperial cards; sustain with Grizzly and Elk beast support and Musketeer mass shipments for a final hardened-core breakout."
+    }
+  },
+  "ANWChileans": {
+    "strategy_overview": "Andean Terrace Fortress doctrine: wall high ground in concentric rings and build slowly toward a defended Industrial timing. Republican infantry and Lancer cavalry form a methodical push rather than an early rush.",
+    "ages": {
+      "0": "Send Stonemasons and Exotic Hardwoods cards for early stone and wood income. Scout for high ground and begin placing walls by the 12-minute mark.",
+      "1": "Ship Extensive Fortifications, Citizenship, and Fishing Fleet; hire Irish Brigaders. Build a Barracks near the TC for steady Republican infantry and begin the second wall ring.",
+      "2": "Send Salitrera, Armored Pistoleers, and unlock a Fort; hire Highlanders. Begin the outer wall ring; Lancer + Rodelero force grows as Gatling Guns arrive to anchor defensive chokepoints.",
+      "3": "Send Military Parade, Heavy Fortifications, Mapuche Allies, and Battleship repeats. Snowball into an Industrial strike force of Lancers, artillery, and allied infantry for a coordinated push.",
+      "4": "Ship Bourbon Allies and food crates for a sustained imperial army; mass Lancers and Gatling Guns for the final siege of the enemy base."
+    }
+  },
+  "ANWChinese": {
+    "strategy_overview": "Eight-Banner pacification macro: cluster all production buildings around the TC, wall early with stone via the Great Wall card, and macro Banner Armies for a counter-attack from a hardened core. Chu Ko Nu and Iron Flail form the backbone of the mid-game force.",
+    "ages": {
+      "0": "Send Advanced Wonders, Village Wagon, Chinese Monk, and Bridges cards. Plant the first Wonder; begin gathering stone for early walls and keep Villagers near the TC.",
+      "1": "Ship Rattan Shield, Artillery Damage, and Manchu mercs. Invest in Banner Army upgrades and begin stone walling; Chu Ko Nu garrison the inner ring while Banner training ramps up.",
+      "2": "Send Arquebusiers, Manchu Team, Great Wall, and Mandarin Army cards. Finalize the stone wall perimeter; produce mixed Banner Armies of Chu Ko Nu, Iron Flail, and Fire Lancers for the first counter-push.",
+      "3": "Ship Shaolin Master, Wokou, Banner Reforms, and Banner School. Field a deep Banner Army of elite Chu Ko Nu and Iron Flail backed by Flamethrowers for siege duty.",
+      "4": "No Imperial cards; sustain with Atonement and late-game mercs; deploy supreme Eight-Banner host for the final pacification push."
+    }
+  },
+  "ANWColumbians": {
+    "strategy_overview": "Llanero liberation sweeps with a forward operational base: push Barracks and Stables toward the contested edge from Colonial Age, ship reinforcements to the front, and keep sustained pressure with Llanero and Lancer shock cavalry flanks and Pikeman anchors.",
+    "ages": {
+      "0": "Send National Hero and Cheap Barracks cards. Explore to find the contested map edge; position the first Barracks forward before 6 minutes while Villagers boom back home.",
+      "1": "Ship Extensive Fortifications, Irish Brigaders, Frontier Defenses, and Theaters. Build a forward Stable and begin walling the advance post; Rodeleros and Llaneros start flowing from the forward production.",
+      "2": "Send Liberation March, Cattle Delivery, Llaneros card, and unlock a Fort. Push the forward wall; Llanero cavalry sweeps flanks while Pikemen hold the center against counter-attacks.",
+      "3": "Ship Colombian Navy, Colombian Revolutionaries, Ironclads, and Albion Legion for a decisive Fortress-to-Industrial surge. Mass Lancers and Llaneros for a final liberating push.",
+      "4": "Use Battleship repeats and Bourbon Allies for naval and allied support; mass Lancer + Llanero cavalry for an unstoppable final sweep."
+    }
+  },
+  "ANWDutch": {
+    "strategy_overview": "Stadtholder drill-and-bank: passive Bank coin fuels a dock-first fishing economy; Ruyter + Halberdier mid-game army; Fluyt shipments supplement. Build Docks before the second Barracks and wall the harbor before expanding.",
+    "ages": {
+      "0": "Send Dutch Paintings, Settler wagons, and Advanced Envoy cards. Rush Bank placement near the TC for passive coin; site the first Dock as early as possible on any water access.",
+      "1": "Ship Bank Wagon, Settler, infantry damage, and Buckriders. Add a second Bank; Dock fishing fleet grows; first Ruyters begin training while Halberdier shipments cover ground defense.",
+      "2": "Send Ruyters, Halberdiers, Fluyt, Blue Guards, and Flemish Revolution cards. Finalize harbor walls; combine Ruyter cavalry harassment with Halberdier infantry for a balanced mid-game push.",
+      "3": "Ship Better Banks, Dutch Battleship, Raiding Fleet, and Halberdiers 5. Begin the economic endgame — Bank output sustains continuous Ruyter production for relentless pressure.",
+      "4": "No Imperial cards; sustain with East India Company and Battleship repeats for naval supremacy and Ruyter mass for the final ground push."
+    }
+  },
+  "ANWEgyptians": {
+    "strategy_overview": "Nizam-i Cedid modernization with a Highland Citadel doctrine: fortify a single stone-walled high-ground position, grow a free Mameluke cavalry force from shipments, and expand only once the citadel is truly unbreakable.",
+    "ages": {
+      "0": "Send Ottoman Colonial Militia and Stonemasons cards. Gather stone immediately; place the first TC wall segment on high ground before 8 minutes. Citizens provide affordable early eco.",
+      "1": "Ship Nile Flood, Suez Canal, Extensive Fortifications, and Azap infantry. Begin the stone wall ring; Azaps defend the perimeter while the economy grows behind walls.",
+      "2": "Send Nizam modernization, Ranged Combat, Sudanese Allies, and free Mamelukes; unlock a Fort. The citadel should now be fully enclosed; Mameluke cavalry sortie from the gate to raid exposed enemies.",
+      "3": "Ship Egyptian Fleet, Gatling Camels, Horse Artillery, and Stratiots. Deploy a late-game combined arms force of Mameluke cavalry, Humbaraci artillery, and Gatling Camels for the breakout push.",
+      "4": "Use Ottoman Battleship and Battleship repeats; mass Great Bombards and Mamelukes for a crushing imperial siege column."
+    }
+  },
+  "ANWEthiopians": {
+    "strategy_overview": "Solomonic highland modernization with a citadel doctrine: fortify high ground with stone walls and a Ras, strengthen Neftenya marksmen with each Age, and hold until the fortified line is unbreakable before pushing out.",
+    "ages": {
+      "0": "Send Indian Trade and Ironmonger cards for early eco; also ship Gascenya Damage and Hitpoints to pre-buff troops. Site the base on high ground and begin wall planning.",
+      "1": "Ship Lalibela Rock Church, Gascenya, and Cannoneers; build the Ras. Begin stone walls; Neftenya marksmen grow stronger entering Colonial — use them to defend the wall line against early pushes.",
+      "2": "Send Neftenya repeats, Heavy Fortifications, and Sennar Horsemen. Finalize the citadel wall ring; Shotel Warriors raid enemy eco while Neftenya lines hold the walls.",
+      "3": "Ship Mer War Dhows, Askaris, Gatling Camels, and Balambaras. Now push out from the hardened citadel with a combined force of elite Neftenya, Shotel Warriors, and mercenary cavalry.",
+      "4": "No Imperial cards; sustain with mercenary and Canoe Crafting cards for naval reach; mass Neftenya and Sebastopol Mortars for a final highland siege push."
+    }
+  },
+  "ANWFinnish": {
+    "strategy_overview": "Mannerheim-line ski infantry behind a compact fortified core: Torps passively gather nearby resources while stone walls go up early; Karelian Jaegers gather and fight; tech into Hakkapelit cavalry and Grenadier walls for the counter-attack.",
+    "ages": {
+      "0": "Send Tree Spawn and Torp Team cards. Place Torps immediately on nearby wood and food for passive gathering; wall planning begins around the TC perimeter.",
+      "1": "Ship Northern Wilderness, Strelet spawn, Turku Academy, and mercenary contracts. Build Torps out to secondary patches; Karelian Jaegers defend while walls go up in stone.",
+      "2": "Send Finnish Counter Army, Jaeger Combat, Savolax Jaegers, Blockhouse Cannon, and Finnhorses. Fortify the Blockhouse cannon positions; Hakkapelit cavalry prepares to spill out for counter-attacks.",
+      "3": "Ship Gunboats, Baltic Fleet, Blockhouses, Hakkapelit, and Soldier Torps. Push out from the hardened Mannerheim line with Hakkapelit cavalry and Grenadier columns backed by river gunboats.",
+      "4": "No Imperial cards; sustain with Copper Mines and wood crates; mass Hakkapelit and Grenadiers for the final assault."
+    }
+  },
+  "ANWFrench": {
+    "strategy_overview": "Bourbon Restoration compact fortified core: Coureur des Bois eco boom, quick wall the TC, then field a flexible Cuirassier + Skirmisher army funded by fast shipments. Walls go up early and the army pushes only after the core is secure.",
+    "ages": {
+      "0": "Send Coureurs du Bois and Ancien Régime cards. Train Coureurs immediately for faster gather rates; site the TC for stone walling as you enter Colonial.",
+      "1": "Ship Fencing School, Extensive Fortifications, Cent Suisses, and Colbertism. Begin stone walls; Coureur boom continues; first Skirmishers and Cuirassiers flow from the Barracks and Stables.",
+      "2": "Send Royal Army, Cuirassiers, Skirmishers, Hussar, and Giant Grenadier cards. Finalize walls; field a balanced Cuirassier shock + Skirmisher ranged army for mid-game engagements.",
+      "3": "Ship Bourbon Allies, Royal Horseman mercs, Cuirassier 4+5, and Hussar 3. Mass Cuirassiers and Hussars for a powerful cavalry surge; Balloons provide vision support.",
+      "4": "No Imperial cards; sustain with Coureur shipments and Cuirassier repeats for an endgame cavalry-heavy push."
+    }
+  },
+  "ANWGermans": {
+    "strategy_overview": "Hohenzollern oblique-order shock: mass Uhlans from Home City cards, boom with Settler Wagons, run multi-barracks line infantry, and combine Doppelsoldner melee with Uhlan cavalry charges. Production hugs the TC with outpost militia.",
+    "ages": {
+      "0": "Send German Tongue and Master Surgeons cards. Train the first Settler Wagons; plan for two Barracks near the TC as soon as Colonial is reached.",
+      "1": "Ship Royal Decree, Landsnecht 1, Irish Brigaders, and Wettın Allies 1. Begin multi-barracks spam; Uhlans from cards supplement the line; a Caravelle provides early shipment reach.",
+      "2": "Send War Wagons, Habsburg Allies, Hessian mercs, Hand Mortar, and German Chevaulegers. Field a combined Musketeer-Uhlan-Doppelsoldner army; begin light outpost walling around production.",
+      "3": "Ship Uhlans 3, Uhlan Combat, Giant Grenadiers, Habsburg Allies 2, and Advanced Artillery. Massed Uhlan cavalry charges alongside Doppelsoldner shock infantry and artillery for a decisive Industrial push.",
+      "4": "No Imperial cards; sustain with Wettın Allies and Cannon shipments; deploy supreme Uhlan + War Wagon columns for the final oblique assault."
+    }
+  },
+  "ANWHaitians": {
+    "strategy_overview": "Mass infantry insurrection with free Pirate stream from TCs and Taverns: hug jungle chokes with Maroon infantry mass, stage repeated forward warband strikes, and keep walls minimal in favor of speed and numbers.",
+    "ages": {
+      "0": "Send Vodou Ceremonies and Sevites cards for XP and population; ship 1 Settler crate. Build a Tavern near the TC immediately to begin the Pirate trickle.",
+      "1": "Ship Letter of Marque, Irish Brigaders, Cent Suisses, Colbertism, and Theaters. Position a forward Barracks at a jungle choke; Maroons and Pirates combine for the first harassment push.",
+      "2": "Send Dahomey Amazons, African Allies, Citizenship, Armored Pistoleers, Giant Grenadiers, and Assassins. Grow the Maroon mass and add mercenary depth; Pirates continue spawning passively.",
+      "3": "Ship Pickets, Haitian Battleship, Privateers, Falconets, Royal Horseman, and Zouaves. Full insurrection force: Maroon infantry backed by Falconets and Zouave mercs makes the final push.",
+      "4": "No Imperial cards; sustain with Battleship and merc repeats for a final overwhelming mass infantry and naval assault."
+    }
+  },
+  "ANWHaudenosaunee": {
+    "strategy_overview": "Confederacy forest warfare through Trading Post XP trickle: claim posts immediately, produce from Longhouses, and either rush with Mohawk Warriors or Fast Fortress into Aenna Shotgun Rider mass supported by Mantlet siege.",
+    "ages": {
+      "0": "Send Tomahawk Warriors, Warchief 1, Forest Mother, and Warchief 2 cards. Claim the nearest Trading Post on turn one; Longhouse construction begins for multi-unit training.",
+      "1": "Ship Extensive Fortifications Warchief, Battlefield Construction, infantry damage and hitpoints, and Mantlet Team. Use Trading Post XP income to fuel colonial warband raids from a forward War Hut.",
+      "2": "Send Wampum, cavalry combat, infantry combat, Mohawk and Cayuga support cards. Transition to an Aenna + Mohawk Warrior army; Mantlets provide siege pressure at chokepoints.",
+      "3": "Ship Oneida, Onondaga, Seneca, and Tuscarora support; send Woodworking and Mantlets. Full Confederacy muster: Aenna Shotgun Riders backed by all-nation support cards overrun the enemy.",
+      "4": "No Imperial cards; sustain with Old Ways and Mantlet repeats for a final forest-siege push."
+    }
+  },
+  "ANWHausa": {
+    "strategy_overview": "Surame fortress and trans-Saharan caravan lattice: scatter Granaries and Markets across resource nodes, grow a passive Griot-boosted economy, then field Lifidi Knight heavy cavalry from Industrial Age shipments.",
+    "ages": {
+      "0": "Send Hausa Kingdom, Emir Katsina, Early Lifidi, and Fulani Cattle Fertilizer cards. Place a Granary on the richest food node immediately; begin Market upgrades for Fulani trade income.",
+      "1": "Ship Fulani Crossing Festival, cavalry damage and hitpoints, Sennar Horsemen, and Emir Kano. Spread additional Granaries to secondary patches; Fulani Archers defend while the caravan economy grows.",
+      "2": "Send Fulani Archer Combat, Outlaws, Sahelian Kingdoms, and Lifidi Knights 1–2 cards. First Lifidi Knight cavalry arrive; begin light Kano Wall fortifications around the market cluster.",
+      "3": "Ship Lifidi repeat, Raiders repeat, Sokoto Chronicle, Katsina Fortifications, and Marabout Network. Mass Lifidi Knights supported by Griot auras for a powerful cavalry strike force.",
+      "4": "No Imperial cards; sustain with Lifidi and Palace of Amina cards for an endgame Lifidi Knight + Fulani Archer sweep."
+    }
+  },
+  "ANWHungarians": {
+    "strategy_overview": "Honved hussar uprising with a Steppe Cavalry Wedge doctrine: over-build Stables, keep Hussar pressure continuous from Colonial Age, and use free Outpost-spawned Hajduks and Grenadiers to supplement the cavalry stream.",
+    "ages": {
+      "0": "Send Master Surgeons, Whale Oil, and Land Grab cards for early eco and XP. Scout the enemy edge; plan the first Stable near the TC before advancing.",
+      "1": "Ship Hussars 1, Hajduks, Magyar Grenadiers, Military Frontier, and Theaters. Build two Stables; Hussar raids begin immediately while Hajduk infantry defends the Outpost perimeter.",
+      "2": "Send Magyar Hussars alt, Outlaw Combat, Giant Grenadiers, Black Riders, and Dragoons. Field a Hussar + Pandour combined arms force; Outpost militia pads headcount against infantry counters.",
+      "3": "Ship Hussar 3, Pandours, Habsburg Allies 2, and Hungarian Legion. Massed Hussar wedge with Grenzer infantry support delivers the decisive Industrial cavalry push.",
+      "4": "No Imperial cards; sustain with wood crates and Falconet artillery to back the final Hussar charge."
+    }
+  },
+  "ANWInca": {
+    "strategy_overview": "Tawantinsuyu mass infantry behind Andean Terrace Fortress walls: use free-wood Inca buildings to erect Tambos and Kallankas quickly, wall high ground in concentric rings, and snowball a Huaraca ranged + Chimu Runner force into an Industrial push.",
+    "ages": {
+      "0": "Send Advanced Tambos, Inca Walls Team, Early Kallanka, and Extensive Fortifications cards. Place Tambos on high ground immediately as free-wood buildings; begin the outer wall ring.",
+      "1": "Ship Tambo Travois, Kallanka, Armed Fishermen, Chimu Support, and Melee Inf Combat. A second wall ring goes up; Bolas Warriors and Plumed Spearmen staff the Kallanka while Chimu Runners scout aggressively.",
+      "2": "Send Bolas Warriors, Covered Wagons, Chimu Runners, Heavy Fortifications, and Inca Fortifications. Finalize concentric walls; produce a deep ranged infantry mass from Kallankas for first offensive probes.",
+      "3": "Ship Inca Runners repeat, Plumed Spearmen 3, Villagers, and Warchief. Full Industrial Inca army: Huaraca artillery barrage from safety of walls while Chimu Runners envelop flanks.",
+      "4": "No Imperial cards; sustain with ranged infantry damage cards; deploy supreme Huaraca + Bolas Warrior host for the final terrace-siege assault."
+    }
+  },
+  "ANWIndians": {
+    "strategy_overview": "Maratha Ganimi Kava highland citadel: fortify a single stone-walled high-ground position with Consulate allies, grow Elephant and Howdah forces from the Consulate, and hold the citadel until the Sepoy musket line can escort Elephants in a breakout push.",
+    "ages": {
+      "0": "Send Advanced Consulate, Advanced Wonders, Extensive Fortifications, and Admiralty cards. Establish the Consulate on a high-ground TC position; begin stone wall planning before Age 2.",
+      "1": "Ship Armed Fishermen, Atonement, Camel Damage, Consulate Relations, and Monk Frighten. Build the Consulate; Sepoys and Camels defend the walls while Consulate relations develop.",
+      "2": "Send East India Company, Mercs Indian Army, Export Trade, Cheap Sepoys, Frigate, and Monitor cards. Citadel walls finalize; Elephants and Howdahs begin training — pair them with Sepoy screens behind stone walls.",
+      "3": "Ship Elephant Combat, Gurkha Aid, Native Hitpoints, and Expanded Trading Post. Full Elephant + Sepoy breakout from the hardened citadel; Urumi Swordsmen screen against cavalry.",
+      "4": "No Imperial cards; sustain with mercenary and naval cards; deploy supreme Elephant-Howdah columns for an unstoppable imperial advance."
+    }
+  },
+  "ANWIndonesians": {
+    "strategy_overview": "Java War guerrilla and kraton fort: Wokou Junk naval pressure combined with Javanese Spearman + Cetbang Cannon chokepoint control; quick repeated infantry strikes from forward warbands while avoiding open field battles.",
+    "ages": {
+      "0": "Send Spice Trade Team and Feitorias cards. Build a Dock as early as possible to begin Wokou Junk production; position the first Barracks near a jungle or river choke.",
+      "1": "Ship Irish Brigaders, Extensive Fortifications, Theaters, Arsenal, and Frontier Defenses. Forward Barracks at a choke; Javanese Spearmen hold the approach while Wokou Junks raid coastal trade.",
+      "2": "Send Aceh Exports, Lantakas, Dutch Merc Army, Bosniaks, Blue Guards, and Hussars. Expand Cetbang Cannon coverage at chokepoints; mercenary depth supplements the Javanese Spearman core.",
+      "3": "Ship Kraton Guards, Java Spearmen, Cetbang, Wokou Junk, Ottoman Army, Blanda Hitam, and Battleship. Full combined-arms chokepoint siege: Cetbang Cannons blast gaps while Javanese Spearmen advance.",
+      "4": "No Imperial cards; sustain with Battleship and Dutch merc repeats for endgame naval and land dominance."
+    }
+  },
+  "ANWItalians": {
+    "strategy_overview": "Risorgimento volunteer columns: Lombard Banks passively generate coin, mass Papal Guard and Bersagliere infantry from multi-barracks, train General heroes to inspire the levy, and push a civic layout with Outpost militia backing the main line.",
+    "ages": {
+      "0": "Send Explorer, Lombardy, Infantry Hitpoints, and Cavalry Damage Team cards. Rush a Lombard Bank next to the TC for passive coin; plan two Barracks before Colonial ends.",
+      "1": "Ship Royal Decree, Schiavoni Swords, Pavisiers 1, Advanced Lombard, and Cavalry Combat. Multi-barracks infantry production begins; General units inspire lines from the TC cluster.",
+      "2": "Send Improved Crossbows, Pavisiers 2, Papal Arsenal, Redshirts, Bersaglieri 1, and Italian Battleship. Papal Guard + Bersagliere combined columns advance; Lombard coin funds continuous recruitment.",
+      "3": "Ship Papal Bombards, Pavisiers 4, Venetian Arsenal, Pioneers, and Frontier Defenses. Deploy supreme Papal Guard mass with Papal Bombard siege support for the final Risorgimento push.",
+      "4": "No Imperial cards; sustain with Lombard coin and Bersagliere repeats for an endgame massed infantry-artillery advance."
+    }
+  },
+  "ANWJapanese": {
+    "strategy_overview": "Bakufu shrine-and-musket order: plant Shrines everywhere for a passive multi-resource trickle, defend them with isolated towers and Naginata Rider cavalry response, and tech deep through Wonders into an elite Yumi Archer + Samurai endgame army.",
+    "ages": {
+      "0": "Send Advanced Consulate, Shrine Wagon, Shrine Hitpoints, and second Shrine Wagon cards. Build two Shrines immediately on the nearest resource patches; the Consulate prepares for allied research.",
+      "1": "Ship Armed Fishermen, Ashigaru Damage, Atonement, Artillery Damage Team, and Consulate Relations. Add more Shrines; Ashigaru defend shrine networks while the first Wonder advances the age.",
+      "2": "Send Artillery Hitpoints, Ashigaru Anti-Cavalry, Bakufu, Monk Aura, Mercs Japanese Army, and Naginata Riders. Field a Yumi Archer ranged line backed by Naginata Rider cavalry and Samurai shock troops.",
+      "3": "Ship Naginata Anti-Infantry, Samurai Speed, Ashigaru 1+4, Covered Wagons, and Daimyo Aizu. Mass Samurai + Naginata Rider elite columns supported by mortar artillery for the final push.",
+      "4": "No Imperial cards; sustain with Shrine income and Mercs Japanese Army repeats for a supreme Samurai + Flaming Arrow endgame."
+    }
+  },
+  "ANWLakota": {
+    "strategy_overview": "Little Bighorn all-cavalry envelopment: over-build Stables from the start, drive Axe Rider and Tokala Soldier charges continuously, raid the enemy economy with superior speed, and deny any static defense with perpetual cavalry pressure.",
+    "ages": {
+      "0": "Send Dog Soldiers 3, Rifle Riders 3, Axe Riders 3, and Warchief 1 cards. Build two Stables immediately; Teepee auras placed near production boost unit output from turn one.",
+      "1": "Ship Buffalo 3+4, Extensive Fortifications Warchief, cavalry damage, Axe Riders 1. Keep two Stables running; Axe Riders raid constantly while Wakina Rifles provide ranged cover.",
+      "2": "Send Lakota-Sioux Support, Warchief 2, Improved Siege, cavalry combat, and Axe Rider mass cards. Deep cavalry force: Tokala Soldiers + Axe Riders envelop the enemy in a two-pronged charge.",
+      "3": "Ship Axe Riders 4+5, Rifle Riders 2+4, Dog Soldiers Team, and War Rifles. Supreme cavalry host — Dog Soldiers, Axe Riders, and Tokala Soldiers sweep in simultaneous waves from multiple angles.",
+      "4": "No Imperial cards; sustain with Burnt Thigh Support and Axe Rider repeats for the final unstoppable cavalry envelopment."
+    }
+  },
+  "ANWMaltese": {
+    "strategy_overview": "Great Siege bastion defense: erect a single stone-walled citadel with free-wood Towers and Outposts, sortie Hospitaller Knights behind those walls, and expand only once the bastion is fully unbreakable.",
+    "ages": {
+      "0": "Send Knights of Malta, Knights of Rhodes, Knights Bodrum, and Auberges cards. Place free Outposts on all access routes immediately; begin stone wall ring around the TC.",
+      "1": "Ship British Tongue, French Tongue, Spanish Tongue, German Tongue, and Wall Guns. Multiple wall upgrades from Alliance cards; Hospitaller Knights begin training behind the gate.",
+      "2": "Send Explorer, Heavy Fortifications, Extensive Fortifications, Hospitaller 1+2, and Maltese Combat. The bastion is sealed; Hospitaller Knight sorties raid anything that approaches the walls.",
+      "3": "Ship Hospitaller 4, Unlock Fort 3, Maltese Battleship, Russian Tongue, and Rolling Wood. Deploy supreme Hospitaller Knights and Fire Throwers behind a Fort for a near-impenetrable endgame position.",
+      "4": "No Imperial cards; sustain with Unlock Fort and Battleship repeats; Hospitaller Knight mass makes the bastion offensive-capable at last."
+    }
+  },
+  "ANWMayans": {
+    "strategy_overview": "Indigenous insurrection mass through Jungle Guerrilla Network: exploit chokes with growing Holcan Javelineer swarms (build limit scales with shipments), strike from forward warbands, and reach Imperial Age for two bonus cards.",
+    "ages": {
+      "0": "Send Maya Jungle Villages, Kowoj Traditions, Maria Uicab, Solis Shredders, and Food Silos cards. Build in a jungle choke; Holcan Javelineers begin populating from the Native Embassy while the Cathedral eco grows.",
+      "1": "Ship Noj Petén, Jungle Warfare, Ballcourts, Cenotes, and Mayan Allies 1. Forward warbands of Holcan Javelineers harass constantly; jungle paths replace formal walls.",
+      "2": "Send Poot's Plan, Yalain Traditions, Mayan Supporters, Amparo, and Frontier Defenses repeat. Holcan swarm size keeps growing from each shipment; Cruzob Infantry core advances at chokepoints.",
+      "3": "Ship Maya Architecture, Ceramics, Henequen Industry, Yucatecan, Kinship Ties, Kuchkabal, and Cruzob Infantry. Peak insurrection mass: Holcan Javelineers + Cruzob Avengers + Yucateco Insurgentes flood every chokepoint.",
+      "4": "Use Mayan Allies 2 and two bonus Imperial cards for a supreme final Holcan swarm assault."
+    }
+  },
+  "ANWMexicans": {
+    "strategy_overview": "Grito de Dolores levée: multi-barracks Insurgente and Chinaco levy spam from Hacienda eco, General heroes inspire lines, and light walls from Fortified Haciendas before the outpost line pushes forward.",
+    "ages": {
+      "0": "Send Alhóndiga de Granaditas, Barbacoa, General Mexicans, and Cathedral Construction cards. Build the first Hacienda immediately for eco bonus; Cathedral construction begins the religious eco branch.",
+      "1": "Ship Fortified Haciendas, Chipotles, Criollos, Royal Decree, and Insurgentes 1. Multi-barracks opens with Insurgente spam; General units inspire from Town Center while light Hacienda walls go up.",
+      "2": "Send Cavalry Combat, Mexican Mint, Mexican Standoff, Insurgente Combat, Soldado, and Guerilla Tactics. Transition to a Soldado + Chinaco elite army; Galleon shipments bring naval support.",
+      "3": "Ship Charreada, Hidalgo Land, Indian Friendship, Insurgentes 2, and Frigate repeat. Full civic-levée force: Chinaco cavalry and Padre-supported Soldados backed by Frigate naval fire.",
+      "4": "No Imperial cards; sustain with Insurgente and Frigate repeats for a final mass-levy push."
+    }
+  },
+  "ANWNapoleonicFrance": {
+    "strategy_overview": "Grande Armée forward operational push: advance Barracks and Stables toward the contested edge immediately, ship large infantry formations to the front, and sustain relentless column pressure with Cuirassier + Voltigeur combined arms.",
+    "ages": {
+      "0": "Send Balloons, food crates, Land Grab, and wood crates cards. Explore quickly; the first Barracks goes forward near the map's contested zone before 6 minutes.",
+      "1": "Ship Napoleonic Warfare, Cent Suisses, Theaters, Wittelsbach Allies, and Colbertism. Multi-barracks levy of Voltigeurs begins at the forward base; Cuirassier hero leads raids.",
+      "2": "Send Hundred Days, Flying Battery, Sister Republics, Génie Troops, and French Royal Army. Forward wall segments protect the advance base; the Grande Armée column — Cuirassier + Voltigeur + horse artillery — drives into enemy territory.",
+      "3": "Ship Imperial Old Guard, Grand Battery, Horse Hunters, Rustam's Regiment, Client States, and Bosniak+Mounted Riflemen repeats. Unstoppable combined arms column: Old Guard elite infantry, Horse Artillery, and Cuirassier shock.",
+      "4": "No Imperial cards; sustain with Wittelsbach repeats and Horse Artillery 3 for a final Grand Battery imperial siege."
+    }
+  },
+  "ANWOttomans": {
+    "strategy_overview": "Sublime Porte gunpowder empire: free TC Settler trickle removes the eco bottleneck; over-build Artillery Foundries and stock Abus Guns and Great Bombards; advance as a slow siege column with Janissary escort behind stone-and-forward walls.",
+    "ages": {
+      "0": "Send Ottoman Explorer, Colonial Militia, and Settler 1 + Settler repeat cards. Let the TC train free Settlers; gather wood for both a Barracks and first Foundry placement near the TC.",
+      "1": "Ship Fencing School, Settlers 2, Spies 1, and Light Artillery Hitpoints; reduce Janissary cost. The eco base grows passively; Abus Guns begin production once the Foundry is built.",
+      "2": "Send Spahis 3, Hand Mortar, Janissary Combat, Berber Allies, Spies 2, Artillery Combat, and Abus Guns 1. Stone walls go up around the Foundry cluster; first siege column of Janissaries and Abus Guns begins advancing.",
+      "3": "Ship Janissaries 3, Great Bombards 1+2, Ottoman Mercs, Xebec, Battleship, and Abus Guns 3. Supreme siege column: Great Bombards blast walls while Janissaries guard the flanks.",
+      "4": "No Imperial cards; sustain with Flight Archery and mercs for an endgame all-artillery smash."
+    }
+  },
+  "ANWPeruvians": {
+    "strategy_overview": "Andean fort line and native levy: wall high ground in rings with Kallankas, grow a Lancer and Rodelero combined-arms push, receive a Bolívar ally bonus at Fortress, and never overextend from the defended wall line.",
+    "ages": {
+      "0": "Send American Allies, Alpaca Wool, and Ranching Llama cards. Plant the base on high ground; Chasqui runner scouts aggressively while stone wall planning begins.",
+      "1": "Ship Extensive Fortifications, Junín Hussars, Lima, Irish Brigaders, Theaters, and Tercio Tactics. First wall ring closes; Lancers and Rodeleros train while the Bolívar hero event prepares for Fortress.",
+      "2": "Send Peruvian Guard, Cattle Delivery, Cowboys, Guano, Bolas Warrior, and unlock a Fort. Receive Bolívar ally at Fortress; Lancer + Rodelero push begins from behind the second wall ring.",
+      "3": "Ship Manco Inca, Fat Llamas, Heavy Fortifications, Highland mercs, Battleship, and food crates. Full Andean industrial push: Lancer cavalry flanks while Bolas Warriors and artillery breach the enemy wall.",
+      "4": "No Imperial cards; sustain with Battleship and Highland Merc repeats; mass Lancer + artillery for the final Andean liberation sweep."
+    }
+  },
+  "ANWPortuguese": {
+    "strategy_overview": "Sagres carrack-and-padrão naval empire: dock-first fishing fleet, free Covered Wagons each Age fund forward expansion, Cassadores and Organ Guns form the mid-game strike force, with strong naval Battleship support throughout.",
+    "ages": {
+      "0": "Send Feitorias, Explorer, and Naval Infantry cards. Rush the first Dock and fishing boats; the Age-up Covered Wagon claims a secondary gather site.",
+      "1": "Ship Royal Decree, Ranged Infantry Damage, Cannoneers, and House of Bragança. Naval fleet grows with Carracks; first Cassadores begin production behind the dock walls.",
+      "2": "Send Cassadores, Dragoons, Carracks, Hand Combat, Organ Guns 1, Estremoz Guns, and Hand Mortar. Organ Gun + Cassador mid-game army pushes forward; Covered Wagons continue expanding the eco network.",
+      "3": "Ship Portuguese Battleship, Dragoons 2+4, Organ Guns 2+3, Grapeshot, and Machu Picchu. Elite Organ Gun + Cassador force with Battleship naval fire delivers the decisive Industrial push.",
+      "4": "No Imperial cards; sustain with Battleship repeats and Organ Gun shipments for a supreme naval-land combined arms finale."
+    }
+  },
+  "ANWRevFrance": {
+    "strategy_overview": "Levée-en-masse Republic: Sans Culottes replace Settlers (stronger fighters, slower gatherers), mass them from multi-barracks, use Eclaireur scouts to flank, and field Cuirassier cavalry at Fortress backed by Outpost civic militia.",
+    "ages": {
+      "0": "Send Guillotine, Robespierre, Cantinières, Balloons, and Colbertism cards. Begin training Sans Culottes immediately as the eco/military hybrid workforce; Balloon provides map vision.",
+      "1": "Ship Bastille Storming, Cult Supreme Being, Irish Brigaders, Cent Suisses, and Colbertism Team. Multi-barracks Sans Culottes levy begins; Eclaireur scouts flank enemy outposts; civic core with Outpost militia forms.",
+      "2": "Send Revolutionary shipments, Skirmishers 1+3, Tirailleurs, Armored Pistoleers, and Giant Grenadiers. Cuirassier cavalry arrives and combines with Sans Culottes for a balanced push; Outpost militia supplements headcount.",
+      "3": "Ship Horse Hunters, Client States, Horse Artillery 3, Skirmishers 2+4+5, Royal Horseman, Zouaves, and Battleship. Peak Levée force: Cuirassiers, Horse Artillery, and massive Skirmisher ranged lines overwhelm the enemy.",
+      "4": "No Imperial cards; sustain with French Battleship and Zouave repeats for an endgame revolutionary naval-land assault."
+    }
+  },
+  "ANWRomanians": {
+    "strategy_overview": "Danubian Principalities civic militia center: tight TC cluster with Outpost militia, Rosior Dragoon cavalry from every Outpost, reactive defense that counter-punches hard rather than pushing aggressively.",
+    "ages": {
+      "0": "Send Landed Gentry and Colonial Militia cards. Place the TC in a defensible cluster position; plan Outpost rings — every Outpost will spawn Rosior Dragoons.",
+      "1": "Ship Extensive Fortifications, Infantry Hitpoints, Phanar Allies 2, Theaters, and Arsenal. Begin the Outpost ring; Rosior Dragoons accumulate from each built post; infantry anchors the civic core.",
+      "2": "Send Sovnya Romanian, Wallachian Archers, Giant Grenadiers, Hand Mortar, Phanar Allies 1, Royal Mint, unlock Fort, and Black Riders. Outpost-spawned Dragoon + Dorabant infantry counter-attacks anything that pushes the perimeter.",
+      "3": "Ship Horse Artillery 3, Flight Archery, Battleship, Heavy Fortifications, unlock Factory, Fort Wagon, Hessians, and wood crates. Full Industrial Rosior Dragoon + Wallachian Archer mass backed by artillery for a decisive push.",
+      "4": "No Imperial cards; sustain with Fort Wagon and Battleship repeats; Rosior Dragoon + artillery column makes the final push."
+    }
+  },
+  "ANWRussians": {
+    "strategy_overview": "Cossack Voisko wide mobile game: cheap Strelet batches fill lines while roving Cossack bands raid, Blockhouses replace stone walls, and a third TC fuels the cavalry stream alongside Oprichnik shock troops.",
+    "ages": {
+      "0": "Send Landed Gentry and Soldier Torps cards. Scout aggressively in all directions; begin TC expansion planning since a third TC is the key milestone. Place Blockhouses at key chokepoints.",
+      "1": "Ship Infantry Combat, Halberdiers 1, Cossacks 1+4, and Frontier Defenses Russian. Cossack raids begin immediately; cheap Strelet batches pad headcount; Blockhouses hold key passes.",
+      "2": "Send Bashkir Rebellion, Cossacks 2, Musket 2, Oprichniks 1+2, Strelets 2, Phanar, Pandours, Hand Mortar, and Snaplocks. Deep combined arms: Cossack + Oprichnik cavalry charges backed by Strelet firelock lines.",
+      "3": "Ship Strelets 3, Cossacks 3, Russian Battleship, Halberdiers 2+3, Musket 3, Oprichniks 3, and Giant Grenadiers. Full Industrial Cossack surge with artillery support and a Russian Battleship naval flank.",
+      "4": "No Imperial cards; sustain with Oprichnik and Strelet repeats for an endgame wide-front Cossack sweep."
+    }
+  },
+  "ANWSouthAfricans": {
+    "strategy_overview": "Boer commando trader-cavalry with dock-first naval economy: Bank coin boom, free Trek Wagons each Age fund expansion, Ruyter cavalry controls mid-game, and Fluyts provide strong naval presence on water maps.",
+    "ages": {
+      "0": "Send South Sea Bubble and Feitorias cards. Rush a Dock on any water for Fluyt naval presence; build the first Bank for passive coin. Trek Wagon Age-up funds the second TC site.",
+      "1": "Ship Wanderlust, Irish Brigaders, Caravel 1+2, and Buckriders. Bank economy accelerates; first Ruyters start from Stables; Fluyt ships begin patrolling coastal trade routes.",
+      "2": "Send Bank Wagons, Homestead Wagons, Military Wagons, Outpost Wagons, Bosniaks, Pandours, Frigates, Blue Guards, and Habsburg Allies. Wave of Trek Wagons plants new Banks and TC positions; Ruyter cavalry force grows to mid-game dominance.",
+      "3": "Ship Diamond Rush, Huguenots, Xhosa Foods, Dutch Battleship, Askaris, Mounted Riflemen, Monitors, and Monitor Team. Trek Wagon network complete; Ruyter + Monitor ironclad endgame begins.",
+      "4": "No Imperial cards; sustain with Battleship and Monitor repeats for absolute naval dominance and Ruyter ground superiority."
+    }
+  },
+  "ANWSpanish": {
+    "strategy_overview": "Reconquista Tercio precursor with a forward operational doctrine: push Barracks and Stables toward the contested edge from Colonial, send Missionaries to convert Treasures, and sustain relentless Rodelero + Lancer column pressure with Unction buffs on all units.",
+    "ages": {
+      "0": "Send Alpaca Wool and Charreada cards. Use Missionary Explorer to collect nearby Treasures early; plan the first Barracks forward before leaving the Discovery Age.",
+      "1": "Ship Inquisition, Royal Decree, Reconquista, Extensive Fortifications, Cavalry Hitpoints, and Tercio Tactics. Forward Barracks and Stable established; Rodelero + Lancer first push rolls out from the advance position.",
+      "2": "Send Habsburg Allies, Lancers 1+3, Rodeleros 2+4, Spanish Gold, and Armored Pistoleers. Lancer cavalry sweeps flanks while Rodelero melee infantry advances; Missionary heal support follows the column.",
+      "3": "Ship Rodeleros 3, Peninsular Guerrillas, Lancers 4+5, Bourbon Allies, and Machu Picchu. Peak Tercio: Rodelero + Lancer Spanish Square formation backed by War Dogs and artillery.",
+      "4": "No Imperial cards; sustain with Lancer and Spanish Treasure Fleet cards for an endgame unstoppable Reconquista push."
+    }
+  },
+  "ANWSwedes": {
+    "strategy_overview": "Lion of the North combined arms with a forward operational doctrine: Torp passive eco funds early aggression; push Barracks and Stables forward from Colonial; Carolean + Hakkapelit combined arms delivers relentless pressure backed by Leather Cannon artillery.",
+    "ages": {
+      "0": "Send Explorer, Torp Team, Leather Cannons Foundry, and Leather Cannons 1 cards. Build Torps on nearby wood and food immediately; plan the first Barracks at the contested map edge.",
+      "1": "Ship Royal Decree, Irish Brigaders, Landsnechts, Leather Cannons 3, and Leather Cannon repeat. Forward Barracks and Stable established; Leather Cannons support the advance column from turn one.",
+      "2": "Send Caroleans 1+2, Hand Mortar, Black Riders, Leather Cannons 2, Carolean 3, Carolean repeat, Soldier Torps, and Falconet-Culverin 1+2. Carolean + Hakkapelit combined arms column advances with full artillery backing.",
+      "3": "Ship Giant Grenadiers, Hessian mercs, Swiss Pikemen, German Merc Contracts, Royal Horseman, and Battleship repeat. Massed Carolean elite infantry + Hakkapelit cavalry with merc depth delivers the final combined arms push.",
+      "4": "No Imperial cards; sustain with merc contracts and Battleship repeats for a supreme Carolean + cavalry endgame advance."
+    }
+  },
+  "ANWTexians": {
+    "strategy_overview": "Republic of Texas forward militia: push Barracks and Outposts forward with Hacienda eco backing; Minuteman swarms defend while Regulars train; reach Industrial for two bonus cards and a Sharpshooter + Texas Army finish.",
+    "ages": {
+      "0": "Send Burnet Land and Hacienda Wagon cards. Build the first Hacienda immediately for eco bonus; plan a forward Outpost near the contested map edge before Age 2.",
+      "1": "Ship Frontier Defenses, Fortified Haciendas, Captured Galleons, Chipotles, and Copper Canyon. Forward Barracks and Outpost planted; Minuteman levies spring from both TC and Outposts to defend the advance.",
+      "2": "Send Gonzales Guns, Frontier Defenses repeat, Texas Statehood, unlock Fort, Captured Galleons 2, and Presidios. Fort at the forward position; Regular + Sharpshooter transition begins as the Minuteman screen holds.",
+      "3": "Ship Texas Army, Texas Lancers, Texas Navy, Empressario Contracts, Sharpshooters, Heavy Fortifications, Fort Wagon, and Ironclad-Steamers. Two Industrial bonus cards deliver overwhelming firepower; Sharpshooter + Lancer elite force makes the decisive push.",
+      "4": "No Imperial cards; sustain with Ironclad, Hacienda Wagon, and Texas Marines repeats for an endgame naval-land Texian assault."
+    }
+  },
+  "ANWUSA": {
+    "strategy_overview": "Continental Army Fabian-to-Yorktown Republican Levee: multi-barracks line infantry boom with Federal State politician wagons, Minuteman TC-militia defends the civic core, and Regular + Sharpshooter mid-game leads into a Gatling Gun and Ironclad Industrial finish.",
+    "ages": {
+      "0": "Send Pioneers and Advanced Saloon cards. Build a Saloon for Outlaw mercenaries; the first Barracks goes up near the TC before Colonial to enable immediate Minuteman calls.",
+      "1": "Ship General Americans, Arkansas Post, Regulars 1, Frontier Defenses, and Federal General Assembly. Multi-barracks levy of Regulars begins; Federal State politician wagon powers the age-up and boosts the civic core.",
+      "2": "Send Continental Rangers, Regulars 3, Carbine Cav 3, Regular Combat, Louisiana Purchase, Apache Scouts, Black Mesa, and Buffalo Soldiers. Regular + Sharpshooter mid-game force pushes forward; Carbine Cavalry screens flanks.",
+      "3": "Ship Minutemen Companies, Kosciuszko Fortifications, Regulars 4, Legion Washington, Carbine Cav 1, Gatlings Team, and Ironclads-Steamers. Peak Continental Army: Sharpshooters + Gatling Guns + Ironclade river support deliver the Yorktown breakthrough.",
+      "4": "No Imperial cards; sustain with Ironclad and Gatling repeats for a supreme industrial-era Union assault."
+    }
+  }
+}

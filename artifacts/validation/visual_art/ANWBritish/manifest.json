@@ -249,6 +249,234 @@
           "thumb_path": "thumbs/wall_segment_close.webp"
         }
       ]
+    },
+    {
+      "label": "15_age_up_colonial",
+      "full_path": "full/15_age_up_colonial.png",
+      "captured_ms": 1779237337710,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "age_up_colonial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/age_up_colonial.png",
+          "thumb_path": "thumbs/age_up_colonial.webp"
+        }
+      ]
+    },
+    {
+      "label": "16_age_up_fortress",
+      "full_path": "full/16_age_up_fortress.png",
+      "captured_ms": 1779237337710,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "age_up_fortress",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/age_up_fortress.png",
+          "thumb_path": "thumbs/age_up_fortress.webp"
+        }
+      ]
+    },
+    {
+      "label": "17_age_up_industrial",
+      "full_path": "full/17_age_up_industrial.png",
+      "captured_ms": 1779237337710,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "age_up_industrial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/age_up_industrial.png",
+          "thumb_path": "thumbs/age_up_industrial.webp"
+        }
+      ]
+    },
+    {
+      "label": "18_age_up_imperial",
+      "full_path": "full/18_age_up_imperial.png",
+      "captured_ms": 1779237337710,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "age_up_imperial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/age_up_imperial.png",
+          "thumb_path": "thumbs/age_up_imperial.webp"
+        }
+      ]
+    },
+    {
+      "label": "20_postgame_awards",
+      "full_path": "full/20_postgame_awards.png",
+      "captured_ms": 1779237337710,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "postgame_awards",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/postgame_awards.png",
+          "thumb_path": "thumbs/postgame_awards.webp"
+        }
+      ]
+    },
+    {
+      "label": "base_overview_colonial",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "base_overview_colonial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/base_overview_colonial.png",
+          "thumb_path": "thumbs/base_overview_colonial.webp"
+        }
+      ]
+    },
+    {
+      "label": "army_composition_colonial",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "army_composition_colonial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/army_composition_colonial.png",
+          "thumb_path": "thumbs/army_composition_colonial.webp"
+        }
+      ]
+    },
+    {
+      "label": "base_overview_fortress",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "base_overview_fortress",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/base_overview_fortress.png",
+          "thumb_path": "thumbs/base_overview_fortress.webp"
+        }
+      ]
+    },
+    {
+      "label": "army_composition_fortress",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "army_composition_fortress",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/army_composition_fortress.png",
+          "thumb_path": "thumbs/army_composition_fortress.webp"
+        }
+      ]
+    },
+    {
+      "label": "base_overview_industrial",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "base_overview_industrial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/base_overview_industrial.png",
+          "thumb_path": "thumbs/base_overview_industrial.webp"
+        }
+      ]
+    },
+    {
+      "label": "army_composition_imperial",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "army_composition_imperial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/army_composition_imperial.png",
+          "thumb_path": "thumbs/army_composition_imperial.webp"
+        }
+      ]
+    },
+    {
+      "label": "base_overview_imperial",
+      "full_path": null,
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "base_overview_imperial",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "crops/base_overview_imperial.png",
+          "thumb_path": "thumbs/base_overview_imperial.webp"
+        }
+      ]
     }
   ]
 }

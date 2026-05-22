@@ -1132,6 +1132,129 @@ html, body {
   line-height: 1.2;
 }
 
+/* ── Tech tree section (collapsible <details>) ── */
+.tech-tree-details {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255,220,140,0.22);
+}
+
+.tech-tree-summary {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,220,140,0.90);
+  cursor: pointer;
+  user-select: none;
+  padding: 3px 0 5px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tech-tree-summary::before {
+  content: "▶";
+  font-size: 9px;
+  transition: transform 120ms ease;
+}
+
+.tech-tree-details[open] > .tech-tree-summary::before {
+  transform: rotate(90deg);
+}
+
+.tech-tree-summary::-webkit-details-marker { display: none; }
+
+.tech-tree-frame {
+  width: 100%;
+  height: 460px;
+  border: 1px solid rgba(255,220,140,0.28);
+  border-radius: 4px;
+  background: #1c1410;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ── Build strategy per-age section ── */
+.bsnote-details {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255,220,140,0.22);
+}
+
+.bsnote-summary {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,220,140,0.90);
+  cursor: pointer;
+  user-select: none;
+  padding: 3px 0 5px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bsnote-summary::before {
+  content: "▶";
+  font-size: 9px;
+  transition: transform 120ms ease;
+}
+
+.bsnote-details[open] > .bsnote-summary::before {
+  transform: rotate(90deg);
+}
+
+.bsnote-summary::-webkit-details-marker { display: none; }
+
+.bsnote-overview {
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(255,235,180,0.90);
+  margin: 0 0 6px;
+  padding: 6px 8px;
+  background: rgba(0,0,0,0.22);
+  border-radius: 3px;
+  border-left: 3px solid rgba(255,220,140,0.45);
+}
+
+.bsnote-ages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bsnote-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 4px 6px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.18);
+}
+
+.bsnote-age {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: rgba(255,200,80,0.95);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 1px;
+}
+
+.bsnote-text {
+  color: rgba(220,205,170,0.92);
+}
+
 /* ── Lightbox modal ── */
 .capture-modal {
   position: fixed;
@@ -1245,6 +1368,29 @@ html, body {
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Bourbon Restoration compact fortified core: Coureur des Bois eco boom, quick wall the TC, then field a flexible Cuirassier + Skirmisher army funded by fast shipments. Walls go up early and the army pushes only after the core is secure.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Coureurs du Bois and Ancien Régime cards. Train Coureurs immediately for faster gather rates; site the TC for stone walling as you enter Colonial.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Fencing School, Extensive Fortifications, Cent Suisses, and Colbertism. Begin stone walls; Coureur boom continues; first Skirmishers and Cuirassiers flow from the Barracks and Stables.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Royal Army, Cuirassiers, Skirmishers, Hussar, and Giant Grenadier cards. Finalize walls; field a balanced Cuirassier shock + Skirmisher ranged army for mid-game engagements.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Bourbon Allies, Royal Horseman mercs, Cuirassier 4+5, and Hussar 3. Mass Cuirassiers and Hussars for a powerful cavalry surge; Balloons provide vision support.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Coureur shipments and Cuirassier repeats for an endgame cavalry-heavy push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWFrench/synthetic_tech_tree.html"
+    title="Bourbon France Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Home City Shipments arrive slightly faster; Coureur des Bois gather faster than Settlers.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Coureur des Bois</span><span class="narr-unit-pill">Cuirassier</span><span class="narr-unit-pill">Skirmisher</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Coureur des Bois boom; quick mass eco; Wall TC core early; Cuirassier + Skirmisher flexible army; shipment-heavy push.  Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1296,7 +1442,7 @@ Your explorer gains the ability to use a temporary Hot Air Balloon for reconnais
   <div class="section-label">Visual confirmation
     <span class="capture-meta" style="font-size:11px;font-weight:400;
                                        margin-left:8px;opacity:.85;">
-      14 surfaces · <span style="color:#9fe39f;" title="Real in-game capture via gamescopectl / X11 fallback.">● in-game capture</span> · <span style="opacity:.7;">captured 2026-05-20T00:35:37Z</span>
+      26 surfaces · <span style="color:#9fe39f;" title="Real in-game capture via gamescopectl / X11 fallback.">● in-game capture</span> · <span style="opacity:.7;">captured 2026-05-20T00:35:37Z</span>
     </span>
   </div>
   <div class="captures-grid">
@@ -1314,10 +1460,45 @@ Your explorer gains the ability to use a temporary Hot Air Balloon for reconnais
       <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/endgame_flag.png" data-civ="ANWBritish" data-surface="endgame_flag" aria-label="Open British Empire Endgame flag full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/endgame_flag.webp" alt="Endgame flag"><figcaption>Endgame flag</figcaption></figure>
       <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/wall_playstyle_visual.png" data-civ="ANWBritish" data-surface="wall_playstyle_visual" aria-label="Open British Empire Wall Playstyle Visual full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/wall_playstyle_visual.webp" alt="Wall Playstyle Visual"><figcaption>Wall Playstyle Visual</figcaption></figure>
       <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/wall_segment_close.png" data-civ="ANWBritish" data-surface="wall_segment_close" aria-label="Open British Empire Wall Segment Close full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/wall_segment_close.webp" alt="Wall Segment Close"><figcaption>Wall Segment Close</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/age_up_colonial.png" data-civ="ANWBritish" data-surface="age_up_colonial" aria-label="Open British Empire Age Up Colonial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/age_up_colonial.webp" alt="Age Up Colonial"><figcaption>Age Up Colonial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/age_up_fortress.png" data-civ="ANWBritish" data-surface="age_up_fortress" aria-label="Open British Empire Age Up Fortress full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/age_up_fortress.webp" alt="Age Up Fortress"><figcaption>Age Up Fortress</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/age_up_industrial.png" data-civ="ANWBritish" data-surface="age_up_industrial" aria-label="Open British Empire Age Up Industrial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/age_up_industrial.webp" alt="Age Up Industrial"><figcaption>Age Up Industrial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/age_up_imperial.png" data-civ="ANWBritish" data-surface="age_up_imperial" aria-label="Open British Empire Age Up Imperial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/age_up_imperial.webp" alt="Age Up Imperial"><figcaption>Age Up Imperial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/postgame_awards.png" data-civ="ANWBritish" data-surface="postgame_awards" aria-label="Open British Empire Postgame Awards full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/postgame_awards.webp" alt="Postgame Awards"><figcaption>Postgame Awards</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/base_overview_colonial.png" data-civ="ANWBritish" data-surface="base_overview_colonial" aria-label="Open British Empire Base Overview Colonial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/base_overview_colonial.webp" alt="Base Overview Colonial"><figcaption>Base Overview Colonial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/army_composition_colonial.png" data-civ="ANWBritish" data-surface="army_composition_colonial" aria-label="Open British Empire Army Composition Colonial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/army_composition_colonial.webp" alt="Army Composition Colonial"><figcaption>Army Composition Colonial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/base_overview_fortress.png" data-civ="ANWBritish" data-surface="base_overview_fortress" aria-label="Open British Empire Base Overview Fortress full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/base_overview_fortress.webp" alt="Base Overview Fortress"><figcaption>Base Overview Fortress</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/army_composition_fortress.png" data-civ="ANWBritish" data-surface="army_composition_fortress" aria-label="Open British Empire Army Composition Fortress full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/army_composition_fortress.webp" alt="Army Composition Fortress"><figcaption>Army Composition Fortress</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/base_overview_industrial.png" data-civ="ANWBritish" data-surface="base_overview_industrial" aria-label="Open British Empire Base Overview Industrial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/base_overview_industrial.webp" alt="Base Overview Industrial"><figcaption>Base Overview Industrial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/army_composition_imperial.png" data-civ="ANWBritish" data-surface="army_composition_imperial" aria-label="Open British Empire Army Composition Imperial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/army_composition_imperial.webp" alt="Army Composition Imperial"><figcaption>Army Composition Imperial</figcaption></figure>
+      <figure class="capture-thumb" tabindex="0" data-full-src="artifacts/validation/visual_art/ANWBritish/crops/base_overview_imperial.png" data-civ="ANWBritish" data-surface="base_overview_imperial" aria-label="Open British Empire Base Overview Imperial full size"><img loading="lazy" src="artifacts/validation/visual_art/ANWBritish/thumbs/base_overview_imperial.webp" alt="Base Overview Imperial"><figcaption>Base Overview Imperial</figcaption></figure>
   </div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Tudor naval-mercantile compound: Manor-boom Settlers, build Docks before the second Barracks, wall the harbor, and fund the land army via naval shipments and mercenary contracts. Longbowmen and Musketeers hold the line while the fleet projects power.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Whale Oil, Greenwich Time, and Fort Marion Diversions cards. Build the first Manor immediately to spawn a free Settler; begin scouting for water to site the Dock.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Rush the first Dock and ship Galleons; send musketeer damage and cavalry damage cards. Build one more Manor for Settlers while Colonial defenses go up near the harbor.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Add a second Dock; ship Frigates, Improved Longbows, Longbowmen, and Rangers. Build a Fort if accessible; deploy Musketeer + Longbowman lines behind harbor walls with Highlander mercs in reserve.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Send Rule Britannia, Rangers, and Pikemen cards; ship Monitors for naval superiority. Land army transitions to veteran Longbowmen and Ranger skirmishers backed by Queen&#x27;s Dragoon cavalry.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Cheap Docks and Monitor repeats for endgame naval dominance and a massed Ranger-Longbow ground assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWBritish/synthetic_tech_tree.html"
+    title="British Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Manors automatically spawn a Settler when built.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Longbowman</span><span class="narr-unit-pill">Congreve Rocket</span><span class="narr-unit-pill">Ranger</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Boom via Manor-spawned Settlers; wall harbor early; Musketeer + Longbow lines; strong navy; land army funded by naval shipments and mercenary contracts.  Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Trading Post, Bank, etc.)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1328,7 +1509,7 @@ New methods of rendering Whale oil at sea allow your Fishing Boats to gather fro
 
 Arrives fast! Ships 1 Trading Post Wagon. Each of your Trading Posts improve Politician and Technology research time by -20%."><img class="card-img" loading="lazy" src="resources/images/icons/cards/sc_marions_diversions.png" alt="Marion&#x27;s Diversions" title="Marion&#x27;s Diversions
 
-Ships 2 Quaker Guns, decoy units which deal no damage but can look like any artillery unit. Enables them at the Artillery Foundry. Artillery moves slightly faster."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_royal_musketeer_icon.png" alt="25 Bourbon Allies" title="25 Bourbon Allies"></span></div>
+Ships 2 Quaker Guns, decoy units which deal no damage but can look like any artillery unit. Enables them at the Artillery Foundry. Artillery moves slightly faster."></span></div>
 <div class="age-row age-1"><span class="age-lbl">Colonial</span><span class="age-cards"><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_explorer_british.png" alt="Captain" title="Captain
 
 Improves your British Explorer in combat, gives him a powerful Swashbuckler attack and canine companion."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_team_musketeer_grenadier_hitpoints.png" alt="TEAM Grenadier Guards" title="TEAM Grenadier Guards
@@ -1337,7 +1518,7 @@ TEAM Musketeer and Grenade Trooper hitpoints increased. Units classed as both a 
 
 Musketeer and Grenadier attack increased."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_cavalry_damage.png" alt="Cavalry Damage" title="Cavalry Damage
 
-Hussar and Dragoon attack increased."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_totenkopf_hussar_icon.png" alt="7 Hanover Allies" title="7 Hanover Allies"></span></div>
+Hussar and Dragoon attack increased."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_galleon_icon.png" alt="1 Galleon" title="1 Galleon"></span></div>
 <div class="age-row age-2"><span class="age-lbl">Fortress</span><span class="age-cards"><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_musketeer_grenadier_combat.png" alt="Coldstream Guards" title="Coldstream Guards
 
 Musketeer and Grenadier attack and hitpoints increased."><img class="card-img" loading="lazy" src="resources/images/icons/cards/siege_archery.png" alt="Siege Archery" title="Siege Archery
@@ -1350,14 +1531,20 @@ Ships a number of Scottish Highlander mercenaries."><img class="card-img" loadin
 
 All cavalry attack and hitpoints increased."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_yeoman.png" alt="Yeomen" title="Yeomen
 
-Longbowman inflict more damage to Heavy Infantry and gain more range."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_longbow_icon.png" alt="10 Longbowmen" title="10 Longbowmen"><img class="card-img" loading="lazy" src="resources/images/icons/cards/infinite_longbow.png" alt="8 Longbowmen" title="8 Longbowmen"></span></div>
+Longbowman inflict more damage to Heavy Infantry and gain more range."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_longbow_icon.png" alt="10 Longbowmen" title="10 Longbowmen"><img class="card-img" loading="lazy" src="resources/images/icons/cards/infinite_longbow.png" alt="8 Longbowmen" title="8 Longbowmen"><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_naval_gunners.png" alt="Naval Gunners" title="Naval Gunners
+
+Warships attack increased."></span></div>
 <div class="age-row age-3"><span class="age-lbl">Industrial</span><span class="age-cards"><img class="card-img" loading="lazy" src="resources/images/icons/cards/infinite_battleship.png" alt="Rule, Britannia" title="Rule, Britannia
 
 Ships a mighty Battleship! This card costs 1000 Coin the next time you send it."><img class="card-img" loading="lazy" src="resources/images/icons/cards/rangers.png" alt="Rangers" title="Rangers
 
 Longbowmen are fully replaced with Rangers at the Barracks, Homecity, and on the map. Rangers use a rifle instead of a bow to counter Heavy Infantry more effectively, but have less range."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_british_rifleman_icon.png" alt="13 Rangers" title="13 Rangers"><img class="card-img" loading="lazy" src="resources/images/icons/cards/pike_gentlemen.png" alt="Gentlemen of the Pike" title="Gentlemen of the Pike
 
-Ships 17 Guard Pikemen and allows researching Imperial Pikemen for a reduced cost."><img class="card-img" loading="lazy" src="resources/images/icons/cards/horse_artillery_icon.png" alt="2 Horse Artillery" title="2 Horse Artillery"><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_drummer_icon.png" alt="4 Hanover Allies" title="4 Hanover Allies"></span></div>
+Ships 17 Guard Pikemen and allows researching Imperial Pikemen for a reduced cost."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_team_monitor_combat.png" alt="TEAM Monitor Combat" title="TEAM Monitor Combat
+
+TEAM Monitor attack and hitpoints increased."><img class="card-img" loading="lazy" src="resources/images/icons/cards/hc_team_cheap_docks.png" alt="TEAM Great Lakes" title="TEAM Great Lakes
+
+TEAM Docks and Dock upgrades are 30% cheaper. Naval Big Button upgrades are 50% cheaper."></span></div>
 </div>
 
   </div>
@@ -1395,6 +1582,29 @@ Ships 17 Guard Pikemen and allows researching Imperial Pikemen for a reduced cos
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Hohenzollern oblique-order shock: mass Uhlans from Home City cards, boom with Settler Wagons, run multi-barracks line infantry, and combine Doppelsoldner melee with Uhlan cavalry charges. Production hugs the TC with outpost militia.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send German Tongue and Master Surgeons cards. Train the first Settler Wagons; plan for two Barracks near the TC as soon as Colonial is reached.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Royal Decree, Landsnecht 1, Irish Brigaders, and Wettın Allies 1. Begin multi-barracks spam; Uhlans from cards supplement the line; a Caravelle provides early shipment reach.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send War Wagons, Habsburg Allies, Hessian mercs, Hand Mortar, and German Chevaulegers. Field a combined Musketeer-Uhlan-Doppelsoldner army; begin light outpost walling around production.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Uhlans 3, Uhlan Combat, Giant Grenadiers, Habsburg Allies 2, and Advanced Artillery. Massed Uhlan cavalry charges alongside Doppelsoldner shock infantry and artillery for a decisive Industrial push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Wettın Allies and Cannon shipments; deploy supreme Uhlan + War Wagon columns for the final oblique assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWGermans/synthetic_tech_tree.html"
+    title="German Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Starts with 2 free Uhlans per card shipped; Settler Wagons replace standard Settlers.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Uhlan</span><span class="narr-unit-pill">Doppelsoldner</span><span class="narr-unit-pill">War Wagon</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Mass Uhlans from home city cards; Settler Wagon eco; multi-barracks infantry boom; Doppelsoldner + Uhlan combo overwhelms.  Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Settler Wagon)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1468,6 +1678,29 @@ Ships 1 Mortar. Moves Horse Artillery and Mortars to the Fortress Age, +3 Uhlans
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Cossack Voisko wide mobile game: cheap Strelet batches fill lines while roving Cossack bands raid, Blockhouses replace stone walls, and a third TC fuels the cavalry stream alongside Oprichnik shock troops.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Landed Gentry and Soldier Torps cards. Scout aggressively in all directions; begin TC expansion planning since a third TC is the key milestone. Place Blockhouses at key chokepoints.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Infantry Combat, Halberdiers 1, Cossacks 1+4, and Frontier Defenses Russian. Cossack raids begin immediately; cheap Strelet batches pad headcount; Blockhouses hold key passes.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Bashkir Rebellion, Cossacks 2, Musket 2, Oprichniks 1+2, Strelets 2, Phanar, Pandours, Hand Mortar, and Snaplocks. Deep combined arms: Cossack + Oprichnik cavalry charges backed by Strelet firelock lines.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Strelets 3, Cossacks 3, Russian Battleship, Halberdiers 2+3, Musket 3, Oprichniks 3, and Giant Grenadiers. Full Industrial Cossack surge with artillery support and a Russian Battleship naval flank.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Oprichnik and Strelet repeats for an endgame wide-front Cossack sweep.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWRussians/synthetic_tech_tree.html"
+    title="Russian Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Trains cheap Strelet infantry in batches; Cossacks available from Stables.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Strelet</span><span class="narr-unit-pill">Cossack</span><span class="narr-unit-pill">Oprichnik</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Wide Cossack raid bands keep enemy occupied; cheap Strelet batches fill lines; rush to third Town Center; Blockhouses replace stone walls.  Plays a wide, mobile game: cheap horsemen raid in roving bands, the home base leans on Blockhouses rather than full stone walls, and the AI rushes to a third Town Center to fuel the cavalry stream.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1529,6 +1762,29 @@ Ships a mighty Battleship! Russian Battleships inflict more damage and are cheap
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Reconquista Tercio precursor with a forward operational doctrine: push Barracks and Stables toward the contested edge from Colonial, send Missionaries to convert Treasures, and sustain relentless Rodelero + Lancer column pressure with Unction buffs on all units.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Alpaca Wool and Charreada cards. Use Missionary Explorer to collect nearby Treasures early; plan the first Barracks forward before leaving the Discovery Age.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Inquisition, Royal Decree, Reconquista, Extensive Fortifications, Cavalry Hitpoints, and Tercio Tactics. Forward Barracks and Stable established; Rodelero + Lancer first push rolls out from the advance position.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Habsburg Allies, Lancers 1+3, Rodeleros 2+4, Spanish Gold, and Armored Pistoleers. Lancer cavalry sweeps flanks while Rodelero melee infantry advances; Missionary heal support follows the column.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Rodeleros 3, Peninsular Guerrillas, Lancers 4+5, Bourbon Allies, and Machu Picchu. Peak Tercio: Rodelero + Lancer Spanish Square formation backed by War Dogs and artillery.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Lancer and Spanish Treasure Fleet cards for an endgame unstoppable Reconquista push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWSpanish/synthetic_tech_tree.html"
+    title="Spanish Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Starts with Missionaries that can convert Treasures; Unction upgrade buffs all units.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Rodelero</span><span class="narr-unit-pill">Lancer</span><span class="narr-unit-pill">War Dog</span><span class="narr-unit-pill">Missionary</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Forward barracks + stables pressure from Colonial; Rodelero + Lancer push with Missionary heal support; sustained forward-base doctrine.  Pushes barracks, stables, and outposts up toward the map&amp;#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1604,6 +1860,29 @@ Sends a Stronghold Travois allowing you to construct another mighty Stronghold."
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Sublime Porte gunpowder empire: free TC Settler trickle removes the eco bottleneck; over-build Artillery Foundries and stock Abus Guns and Great Bombards; advance as a slow siege column with Janissary escort behind stone-and-forward walls.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Ottoman Explorer, Colonial Militia, and Settler 1 + Settler repeat cards. Let the TC train free Settlers; gather wood for both a Barracks and first Foundry placement near the TC.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Fencing School, Settlers 2, Spies 1, and Light Artillery Hitpoints; reduce Janissary cost. The eco base grows passively; Abus Guns begin production once the Foundry is built.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Spahis 3, Hand Mortar, Janissary Combat, Berber Allies, Spies 2, Artillery Combat, and Abus Guns 1. Stone walls go up around the Foundry cluster; first siege column of Janissaries and Abus Guns begins advancing.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Janissaries 3, Great Bombards 1+2, Ottoman Mercs, Xebec, Battleship, and Abus Guns 3. Supreme siege column: Great Bombards blast walls while Janissaries guard the flanks.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Flight Archery and mercs for an endgame all-artillery smash.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWOttomans/synthetic_tech_tree.html"
+    title="Ottoman Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Town Center automatically trains Settlers for free over time.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Janissary</span><span class="narr-unit-pill">Spahi</span><span class="narr-unit-pill">Abus Gun</span><span class="narr-unit-pill">Great Bombard</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Free Settler trickle removes eco bottleneck; over-build Artillery Foundries; slow siege-column with Janissary escort; stone-and-forward walls.  Over-builds Artillery Foundries and stockpiles cannons. Every push is a slow siege column with infantry escort, and walls are stone-and-forward to give the guns a safe staging line.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Ottoman-style)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1679,6 +1958,29 @@ The Ottoman Flight Archery technique improves the damage and attack speed of you
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Sagres carrack-and-padrão naval empire: dock-first fishing fleet, free Covered Wagons each Age fund forward expansion, Cassadores and Organ Guns form the mid-game strike force, with strong naval Battleship support throughout.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Feitorias, Explorer, and Naval Infantry cards. Rush the first Dock and fishing boats; the Age-up Covered Wagon claims a secondary gather site.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Royal Decree, Ranged Infantry Damage, Cannoneers, and House of Bragança. Naval fleet grows with Carracks; first Cassadores begin production behind the dock walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Cassadores, Dragoons, Carracks, Hand Combat, Organ Guns 1, Estremoz Guns, and Hand Mortar. Organ Gun + Cassador mid-game army pushes forward; Covered Wagons continue expanding the eco network.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Portuguese Battleship, Dragoons 2+4, Organ Guns 2+3, Grapeshot, and Machu Picchu. Elite Organ Gun + Cassador force with Battleship naval fire delivers the decisive Industrial push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Battleship repeats and Organ Gun shipments for a supreme naval-land combined arms finale.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWPortuguese/synthetic_tech_tree.html"
+    title="Portuguese Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Gets 1 free Covered Wagon with each Age-up.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Cassador</span><span class="narr-unit-pill">Organ Gun</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Dock-first fishing fleet; Covered Wagons fund forward expansion; Cassador + Organ Gun mid-game; strong naval support throughout.  Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Covered Wagon with each Age-up</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1754,6 +2056,29 @@ Sends a Stronghold Travois allowing you to construct another mighty Stronghold."
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Stadtholder drill-and-bank: passive Bank coin fuels a dock-first fishing economy; Ruyter + Halberdier mid-game army; Fluyt shipments supplement. Build Docks before the second Barracks and wall the harbor before expanding.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Dutch Paintings, Settler wagons, and Advanced Envoy cards. Rush Bank placement near the TC for passive coin; site the first Dock as early as possible on any water access.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Bank Wagon, Settler, infantry damage, and Buckriders. Add a second Bank; Dock fishing fleet grows; first Ruyters begin training while Halberdier shipments cover ground defense.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Ruyters, Halberdiers, Fluyt, Blue Guards, and Flemish Revolution cards. Finalize harbor walls; combine Ruyter cavalry harassment with Halberdier infantry for a balanced mid-game push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Better Banks, Dutch Battleship, Raiding Fleet, and Halberdiers 5. Begin the economic endgame — Bank output sustains continuous Ruyter production for relentless pressure.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with East India Company and Battleship repeats for naval supremacy and Ruyter mass for the final ground push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWDutch/synthetic_tech_tree.html"
+    title="Dutch Republic Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Banks automatically generate coin without villagers.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Ruyter</span><span class="narr-unit-pill">Halberdier</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Boom Banks for passive coin, dock-first fishing fleet; tech into Ruyter + Halberdier army; Fluyt shipments supplement; strong navy.  Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Bank wagon)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1837,6 +2162,29 @@ Banks cost less and have more hitpoints. Envoys can now construct Banks."></span
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Risorgimento volunteer columns: Lombard Banks passively generate coin, mass Papal Guard and Bersagliere infantry from multi-barracks, train General heroes to inspire the levy, and push a civic layout with Outpost militia backing the main line.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Explorer, Lombardy, Infantry Hitpoints, and Cavalry Damage Team cards. Rush a Lombard Bank next to the TC for passive coin; plan two Barracks before Colonial ends.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Royal Decree, Schiavoni Swords, Pavisiers 1, Advanced Lombard, and Cavalry Combat. Multi-barracks infantry production begins; General units inspire lines from the TC cluster.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Improved Crossbows, Pavisiers 2, Papal Arsenal, Redshirts, Bersaglieri 1, and Italian Battleship. Papal Guard + Bersagliere combined columns advance; Lombard coin funds continuous recruitment.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Papal Bombards, Pavisiers 4, Venetian Arsenal, Pioneers, and Frontier Defenses. Deploy supreme Papal Guard mass with Papal Bombard siege support for the final Risorgimento push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Lombard coin and Bersagliere repeats for an endgame massed infantry-artillery advance.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWItalians/synthetic_tech_tree.html"
+    title="Kingdom of Italy Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Lombardy Banks auto-generate coin; Papal Guard unique heavy infantry.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Papal Guard</span><span class="narr-unit-pill">Papal Lancer</span><span class="narr-unit-pill">Bersagliere</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Lombard coin boom; mass Papal Guard + Bersagliere infantry columns; General units inspire levy; multi-barracks civic layout.  Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Lombard wagon)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1910,6 +2258,29 @@ Italian Settler hitpoints, movement speed, and melee damage are increased by thi
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Great Siege bastion defense: erect a single stone-walled citadel with free-wood Towers and Outposts, sortie Hospitaller Knights behind those walls, and expand only once the bastion is fully unbreakable.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Knights of Malta, Knights of Rhodes, Knights Bodrum, and Auberges cards. Place free Outposts on all access routes immediately; begin stone wall ring around the TC.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship British Tongue, French Tongue, Spanish Tongue, German Tongue, and Wall Guns. Multiple wall upgrades from Alliance cards; Hospitaller Knights begin training behind the gate.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Explorer, Heavy Fortifications, Extensive Fortifications, Hospitaller 1+2, and Maltese Combat. The bastion is sealed; Hospitaller Knight sorties raid anything that approaches the walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Hospitaller 4, Unlock Fort 3, Maltese Battleship, Russian Tongue, and Rolling Wood. Deploy supreme Hospitaller Knights and Fire Throwers behind a Fort for a near-impenetrable endgame position.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Unlock Fort and Battleship repeats; Hospitaller Knight mass makes the bastion offensive-capable at last.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWMaltese/synthetic_tech_tree.html"
+    title="Knights of Malta Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Towers and Outposts cost no wood; Sacre Infermeria heals nearby units.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Hospitaller Knight</span><span class="narr-unit-pill">Fire Thrower</span><span class="narr-unit-pill">Sentinel</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">FF into single fortified bastion position; Hospitaller Knights sortie from walls; very hard to dislodge; expand only after citadel is secure.  Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Banco)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -1997,6 +2368,29 @@ Ships a Fort Wagon to your town, allowing you to construct a mighty Fort."></spa
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Lion of the North combined arms with a forward operational doctrine: Torp passive eco funds early aggression; push Barracks and Stables forward from Colonial; Carolean + Hakkapelit combined arms delivers relentless pressure backed by Leather Cannon artillery.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Explorer, Torp Team, Leather Cannons Foundry, and Leather Cannons 1 cards. Build Torps on nearby wood and food immediately; plan the first Barracks at the contested map edge.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Royal Decree, Irish Brigaders, Landsnechts, Leather Cannons 3, and Leather Cannon repeat. Forward Barracks and Stable established; Leather Cannons support the advance column from turn one.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Caroleans 1+2, Hand Mortar, Black Riders, Leather Cannons 2, Carolean 3, Carolean repeat, Soldier Torps, and Falconet-Culverin 1+2. Carolean + Hakkapelit combined arms column advances with full artillery backing.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Giant Grenadiers, Hessian mercs, Swiss Pikemen, German Merc Contracts, Royal Horseman, and Battleship repeat. Massed Carolean elite infantry + Hakkapelit cavalry with merc depth delivers the final combined arms push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with merc contracts and Battleship repeats for a supreme Carolean + cavalry endgame advance.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWSwedes/synthetic_tech_tree.html"
+    title="Swedish Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Torp buildings passively gather nearby resources.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Carolean</span><span class="narr-unit-pill">Hakkapelit</span><span class="narr-unit-pill">Horse Artillery</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Torp passive eco; push forward barracks and stables early; Carolean + Hakkapelit combined arms; relentless forward pressure.  Pushes barracks, stables, and outposts up toward the map&amp;#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Torp wagon)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2068,6 +2462,29 @@ Ships a mighty Battleship!"></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Eight-Banner pacification macro: cluster all production buildings around the TC, wall early with stone via the Great Wall card, and macro Banner Armies for a counter-attack from a hardened core. Chu Ko Nu and Iron Flail form the backbone of the mid-game force.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Advanced Wonders, Village Wagon, Chinese Monk, and Bridges cards. Plant the first Wonder; begin gathering stone for early walls and keep Villagers near the TC.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Rattan Shield, Artillery Damage, and Manchu mercs. Invest in Banner Army upgrades and begin stone walling; Chu Ko Nu garrison the inner ring while Banner training ramps up.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Arquebusiers, Manchu Team, Great Wall, and Mandarin Army cards. Finalize the stone wall perimeter; produce mixed Banner Armies of Chu Ko Nu, Iron Flail, and Fire Lancers for the first counter-push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Shaolin Master, Wokou, Banner Reforms, and Banner School. Field a deep Banner Army of elite Chu Ko Nu and Iron Flail backed by Flamethrowers for siege duty.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Atonement and late-game mercs; deploy supreme Eight-Banner host for the final pacification push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWChinese/synthetic_tech_tree.html"
+    title="Qing Dynasty Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Starts with a Flail Elephant; Banner Armies train multiple unit types at once.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Chu Ko Nu</span><span class="narr-unit-pill">Iron Flail</span><span class="narr-unit-pill">Fire Lancer</span><span class="narr-unit-pill">Flamethrower</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Eight-Banner macro — cluster buildings near TC, wall early with stone, macro Banner Armies, counter-attack from hardened core.  Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wonders (Summer Palace, etc.)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2153,6 +2570,29 @@ All Banner Armies train faster. Free Banner Armies created by the Summer Palace 
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Bakufu shrine-and-musket order: plant Shrines everywhere for a passive multi-resource trickle, defend them with isolated towers and Naginata Rider cavalry response, and tech deep through Wonders into an elite Yumi Archer + Samurai endgame army.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Advanced Consulate, Shrine Wagon, Shrine Hitpoints, and second Shrine Wagon cards. Build two Shrines immediately on the nearest resource patches; the Consulate prepares for allied research.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Armed Fishermen, Ashigaru Damage, Atonement, Artillery Damage Team, and Consulate Relations. Add more Shrines; Ashigaru defend shrine networks while the first Wonder advances the age.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Artillery Hitpoints, Ashigaru Anti-Cavalry, Bakufu, Monk Aura, Mercs Japanese Army, and Naginata Riders. Field a Yumi Archer ranged line backed by Naginata Rider cavalry and Samurai shock troops.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Naginata Anti-Infantry, Samurai Speed, Ashigaru 1+4, Covered Wagons, and Daimyo Aizu. Mass Samurai + Naginata Rider elite columns supported by mortar artillery for the final push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Shrine income and Mercs Japanese Army repeats for a supreme Samurai + Flaming Arrow endgame.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWJapanese/synthetic_tech_tree.html"
+    title="Tokugawa Shogunate Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Shrines auto-generate resources; can train Daimyo and Shogun hero units.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Yumi Archer</span><span class="narr-unit-pill">Naginata Rider</span><span class="narr-unit-pill">Samurai</span><span class="narr-unit-pill">Flaming Arrow</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Plant Shrines everywhere for passive resource trickle; defend with isolated towers and cavalry; tech deep via Wonders; Yumi + Samurai army.  Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wonders (Torii, Dojo, etc.)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2232,6 +2672,29 @@ Ships a powerful Daimyo. Daimyos receives Shipments, can train infantry and cava
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Maratha Ganimi Kava highland citadel: fortify a single stone-walled high-ground position with Consulate allies, grow Elephant and Howdah forces from the Consulate, and hold the citadel until the Sepoy musket line can escort Elephants in a breakout push.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Advanced Consulate, Advanced Wonders, Extensive Fortifications, and Admiralty cards. Establish the Consulate on a high-ground TC position; begin stone wall planning before Age 2.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Armed Fishermen, Atonement, Camel Damage, Consulate Relations, and Monk Frighten. Build the Consulate; Sepoys and Camels defend the walls while Consulate relations develop.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send East India Company, Mercs Indian Army, Export Trade, Cheap Sepoys, Frigate, and Monitor cards. Citadel walls finalize; Elephants and Howdahs begin training — pair them with Sepoy screens behind stone walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Elephant Combat, Gurkha Aid, Native Hitpoints, and Expanded Trading Post. Full Elephant + Sepoy breakout from the hardened citadel; Urumi Swordsmen screen against cavalry.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with mercenary and naval cards; deploy supreme Elephant-Howdah columns for an unstoppable imperial advance.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWIndians/synthetic_tech_tree.html"
+    title="Maratha Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Elephant units get bonus from nearby Consulate upgrades; Urumi Swordsman unique melee unit.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Urumi Swordsman</span><span class="narr-unit-pill">Sepoy</span><span class="narr-unit-pill">Zamburak</span><span class="narr-unit-pill">Howdah</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Fortify high-ground citadel; grow Elephant/Howdah army via Consulate allies; Sepoy musket line holds while Elephants close.  Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wonders (Taj Mahal, etc.)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2319,6 +2782,29 @@ You get Export from each different allied tribe, +1 Villager."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Flower War tribute aggression using jungle chokes and War Huts instead of walls. Tribute boom to a large Villager count, then sustain repeated infantry strikes with Macehualtin and Coyote Runners before transitioning to Jaguar and Eagle Knights.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Plant Skull Walls at natural chokes and send Calendar Ceremony and Calmecac cards to boost XP and eco. Prioritize Tribute trickle and build a War Hut near chokepoints before advancing.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Jaguar Knights and Macehualtin reinforcements; build War Huts forward to control jungle lanes. Harass the enemy economy with Macehualtin mass and Coyote Runner raids rather than fighting in the open.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Advance Warchief and ship Eagle Knights and more Jaguars. Use Chinampas for eco; place Skull Walls at the approach to the base. Mass Eagle Runner Knights for fast-moving harassment columns.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Send Great Temple Huitzilopochtli, Aztec Mining, and Jaguar Knight repeats for late-game power. Field a mixed elite army of Jaguar and Eagle Knights backed by Medicine Men for sustained engagements.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No dedicated Imperial cards; sustain with Jaguar Knight shipments and upgrade cards for a final overwhelming Flower War assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWAztecs/synthetic_tech_tree.html"
+    title="Aztec Triple Alliance Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Builds Warchief units and earns XP through Tribute; no Colonial age-up cost.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Jaguar Knight</span><span class="narr-unit-pill">Eagle Runner Knight</span><span class="narr-unit-pill">Skull Knight</span><span class="narr-unit-pill">Coyote Runner</span><span class="narr-unit-pill">Macehualtin</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Tribute boom to 18+ villagers, harass with Macehualtin + Coyote Runners in Colonial, FF to Jaguar/Eagle Knight mass; hug chokes, avoid open fights.  Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Temples (Teocalli wonders)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2394,6 +2880,29 @@ The priests of Centeotl send 12 Otontin Slingers and boost all Otontin Slinger h
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Confederacy forest warfare through Trading Post XP trickle: claim posts immediately, produce from Longhouses, and either rush with Mohawk Warriors or Fast Fortress into Aenna Shotgun Rider mass supported by Mantlet siege.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Tomahawk Warriors, Warchief 1, Forest Mother, and Warchief 2 cards. Claim the nearest Trading Post on turn one; Longhouse construction begins for multi-unit training.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Extensive Fortifications Warchief, Battlefield Construction, infantry damage and hitpoints, and Mantlet Team. Use Trading Post XP income to fuel colonial warband raids from a forward War Hut.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Wampum, cavalry combat, infantry combat, Mohawk and Cayuga support cards. Transition to an Aenna + Mohawk Warrior army; Mantlets provide siege pressure at chokepoints.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Oneida, Onondaga, Seneca, and Tuscarora support; send Woodworking and Mantlets. Full Confederacy muster: Aenna Shotgun Riders backed by all-nation support cards overrun the enemy.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Old Ways and Mantlet repeats for a final forest-siege push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWHaudenosaunee/synthetic_tech_tree.html"
+    title="Haudenosaunee Confederacy Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Builds Longhouses that train infantry and can garrison; unique War Chief unit.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Mohawk Warrior</span><span class="narr-unit-pill">Aenna Shotgun Rider</span><span class="narr-unit-pill">Mantlet</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Claim Trading Posts for XP trickle; Longhouse multi-unit production; fast Mohawk Warrior rush or FF into Aenna mass.  Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Tribal Council (Community Plaza)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2477,6 +2986,29 @@ Receive for free all Market woodcutting upgrades."><img class="card-img" loading
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Tawantinsuyu mass infantry behind Andean Terrace Fortress walls: use free-wood Inca buildings to erect Tambos and Kallankas quickly, wall high ground in concentric rings, and snowball a Huaraca ranged + Chimu Runner force into an Industrial push.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Advanced Tambos, Inca Walls Team, Early Kallanka, and Extensive Fortifications cards. Place Tambos on high ground immediately as free-wood buildings; begin the outer wall ring.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Tambo Travois, Kallanka, Armed Fishermen, Chimu Support, and Melee Inf Combat. A second wall ring goes up; Bolas Warriors and Plumed Spearmen staff the Kallanka while Chimu Runners scout aggressively.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Bolas Warriors, Covered Wagons, Chimu Runners, Heavy Fortifications, and Inca Fortifications. Finalize concentric walls; produce a deep ranged infantry mass from Kallankas for first offensive probes.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Inca Runners repeat, Plumed Spearmen 3, Villagers, and Warchief. Full Industrial Inca army: Huaraca artillery barrage from safety of walls while Chimu Runners envelop flanks.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with ranged infantry damage cards; deploy supreme Huaraca + Bolas Warrior host for the final terrace-siege assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWInca/synthetic_tech_tree.html"
+    title="Inca Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Inca buildings require no wood; Kallanka trains several unit types simultaneously.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Bolas Warrior</span><span class="narr-unit-pill">Huaraca</span><span class="narr-unit-pill">Chimu Runner</span><span class="narr-unit-pill">Plumed Spearman</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Wall high ground in concentric rings with Tambos and Kallankas; slow Industrial snowball; Huaraca ranged mass + Chimu speed harass.  Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wonders (Andean monuments)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2552,6 +3084,29 @@ Huaracas, Bolas Warriors and Jungle Bowmen hitpoints increased."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Little Bighorn all-cavalry envelopment: over-build Stables from the start, drive Axe Rider and Tokala Soldier charges continuously, raid the enemy economy with superior speed, and deny any static defense with perpetual cavalry pressure.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Dog Soldiers 3, Rifle Riders 3, Axe Riders 3, and Warchief 1 cards. Build two Stables immediately; Teepee auras placed near production boost unit output from turn one.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Buffalo 3+4, Extensive Fortifications Warchief, cavalry damage, Axe Riders 1. Keep two Stables running; Axe Riders raid constantly while Wakina Rifles provide ranged cover.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Lakota-Sioux Support, Warchief 2, Improved Siege, cavalry combat, and Axe Rider mass cards. Deep cavalry force: Tokala Soldiers + Axe Riders envelop the enemy in a two-pronged charge.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Axe Riders 4+5, Rifle Riders 2+4, Dog Soldiers Team, and War Rifles. Supreme cavalry host — Dog Soldiers, Axe Riders, and Tokala Soldiers sweep in simultaneous waves from multiple angles.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Burnt Thigh Support and Axe Rider repeats for the final unstoppable cavalry envelopment.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWLakota/synthetic_tech_tree.html"
+    title="Lakota Sioux Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Cannot build standard walls or Forts; Teepee auras boost nearby units.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Wakina Rifle</span><span class="narr-unit-pill">Axe Rider</span><span class="narr-unit-pill">Dog Soldier</span><span class="narr-unit-pill">Tokala Soldier</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Over-build Stables; all-cavalry Axe Rider + Tokala rush; raid economy and map control; punish any exposed eco with speed.  Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Tribal Council (Community Plaza)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2615,6 +3170,29 @@ The Burnt Thigh council sends 7 Rifle Riders and 2 Healers."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Continental Army Fabian-to-Yorktown Republican Levee: multi-barracks line infantry boom with Federal State politician wagons, Minuteman TC-militia defends the civic core, and Regular + Sharpshooter mid-game leads into a Gatling Gun and Ironclad Industrial finish.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Pioneers and Advanced Saloon cards. Build a Saloon for Outlaw mercenaries; the first Barracks goes up near the TC before Colonial to enable immediate Minuteman calls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship General Americans, Arkansas Post, Regulars 1, Frontier Defenses, and Federal General Assembly. Multi-barracks levy of Regulars begins; Federal State politician wagon powers the age-up and boosts the civic core.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Continental Rangers, Regulars 3, Carbine Cav 3, Regular Combat, Louisiana Purchase, Apache Scouts, Black Mesa, and Buffalo Soldiers. Regular + Sharpshooter mid-game force pushes forward; Carbine Cavalry screens flanks.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Minutemen Companies, Kosciuszko Fortifications, Regulars 4, Legion Washington, Carbine Cav 1, Gatlings Team, and Ironclads-Steamers. Peak Continental Army: Sharpshooters + Gatling Guns + Ironclade river support deliver the Yorktown breakthrough.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Ironclad and Gatling repeats for a supreme industrial-era Union assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWUSA/synthetic_tech_tree.html"
+    title="United States Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Starts with a free Covered Wagon; Federal Politicians ship powerful unique wagons.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Minuteman</span><span class="narr-unit-pill">State Militia</span><span class="narr-unit-pill">Regular</span><span class="narr-unit-pill">Sharpshooter</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Multi-barracks line infantry boom with Outpost militia; Federal State cards provide powerful wagons; Minutemen defend early; Regular + Sharpshooter mid-game.  Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Federal States politicians</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2690,6 +3268,29 @@ Ships a number of powerful Grenadiers equipped with Grenade Launchers and enable
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Grito de Dolores levée: multi-barracks Insurgente and Chinaco levy spam from Hacienda eco, General heroes inspire lines, and light walls from Fortified Haciendas before the outpost line pushes forward.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Alhóndiga de Granaditas, Barbacoa, General Mexicans, and Cathedral Construction cards. Build the first Hacienda immediately for eco bonus; Cathedral construction begins the religious eco branch.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Fortified Haciendas, Chipotles, Criollos, Royal Decree, and Insurgentes 1. Multi-barracks opens with Insurgente spam; General units inspire from Town Center while light Hacienda walls go up.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Cavalry Combat, Mexican Mint, Mexican Standoff, Insurgente Combat, Soldado, and Guerilla Tactics. Transition to a Soldado + Chinaco elite army; Galleon shipments bring naval support.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Charreada, Hidalgo Land, Indian Friendship, Insurgentes 2, and Frigate repeat. Full civic-levée force: Chinaco cavalry and Padre-supported Soldados backed by Frigate naval fire.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Insurgente and Frigate repeats for a final mass-levy push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWMexicans/synthetic_tech_tree.html"
+    title="First Mexican Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Can build Haciendas and a Cathedral with unique upgrades.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Padre</span><span class="narr-unit-pill">Insurgente</span><span class="narr-unit-pill">Salteador</span><span class="narr-unit-pill">Soldado</span><span class="narr-unit-pill">Chinaco</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Multi-barracks Insurgente + Chinaco levy spam; General heroes inspire lines; Hacienda eco sustains continuous production.  Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Hacienda wagon politicians</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2767,6 +3368,29 @@ Native Warriors are trained 10% faster and shipped 50% faster. You get a large S
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Solomonic highland modernization with a citadel doctrine: fortify high ground with stone walls and a Ras, strengthen Neftenya marksmen with each Age, and hold until the fortified line is unbreakable before pushing out.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Indian Trade and Ironmonger cards for early eco; also ship Gascenya Damage and Hitpoints to pre-buff troops. Site the base on high ground and begin wall planning.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Lalibela Rock Church, Gascenya, and Cannoneers; build the Ras. Begin stone walls; Neftenya marksmen grow stronger entering Colonial — use them to defend the wall line against early pushes.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Neftenya repeats, Heavy Fortifications, and Sennar Horsemen. Finalize the citadel wall ring; Shotel Warriors raid enemy eco while Neftenya lines hold the walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Mer War Dhows, Askaris, Gatling Camels, and Balambaras. Now push out from the hardened citadel with a combined force of elite Neftenya, Shotel Warriors, and mercenary cavalry.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with mercenary and Canoe Crafting cards for naval reach; mass Neftenya and Sebastopol Mortars for a final highland siege push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWEthiopians/synthetic_tech_tree.html"
+    title="Ethiopian Empire Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Neftenya units gain attack with each Age; unique Royal units from Ras.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Neftenya</span><span class="narr-unit-pill">Shotel Warrior</span><span class="narr-unit-pill">Oromo Warrior</span><span class="narr-unit-pill">Sebastopol Mortar</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Fortify high ground with stone walls; Neftenya marksman line grows stronger with each Age; Shotel Warriors raid; hold citadel then push.  Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Council members at Community Plaza</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2832,6 +3456,29 @@ African canoes cost less resources."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Surame fortress and trans-Saharan caravan lattice: scatter Granaries and Markets across resource nodes, grow a passive Griot-boosted economy, then field Lifidi Knight heavy cavalry from Industrial Age shipments.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Hausa Kingdom, Emir Katsina, Early Lifidi, and Fulani Cattle Fertilizer cards. Place a Granary on the richest food node immediately; begin Market upgrades for Fulani trade income.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Fulani Crossing Festival, cavalry damage and hitpoints, Sennar Horsemen, and Emir Kano. Spread additional Granaries to secondary patches; Fulani Archers defend while the caravan economy grows.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Fulani Archer Combat, Outlaws, Sahelian Kingdoms, and Lifidi Knights 1–2 cards. First Lifidi Knight cavalry arrive; begin light Kano Wall fortifications around the market cluster.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Lifidi repeat, Raiders repeat, Sokoto Chronicle, Katsina Fortifications, and Marabout Network. Mass Lifidi Knights supported by Griot auras for a powerful cavalry strike force.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Lifidi and Palace of Amina cards for an endgame Lifidi Knight + Fulani Archer sweep.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWHausa/synthetic_tech_tree.html"
+    title="Sokoto Caliphate Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Griot aura boosts nearby units; unique Lifidi Knight heavy cavalry.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Lifidi Knight</span><span class="narr-unit-pill">Musketeer (Jarma)</span><span class="narr-unit-pill">Fulani Archer</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Scatter Markets and Granaries across resource nodes; Griot support + Lifidi Knight cavalry; boom then FI trade-route economy.  Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Council members at Community Plaza</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2911,6 +3558,29 @@ Ships 1 Palace Wagon and tokens of 300 Influence. Increases Palace build limit b
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Grande Armée forward operational push: advance Barracks and Stables toward the contested edge immediately, ship large infantry formations to the front, and sustain relentless column pressure with Cuirassier + Voltigeur combined arms.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Balloons, food crates, Land Grab, and wood crates cards. Explore quickly; the first Barracks goes forward near the map&#x27;s contested zone before 6 minutes.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Napoleonic Warfare, Cent Suisses, Theaters, Wittelsbach Allies, and Colbertism. Multi-barracks levy of Voltigeurs begins at the forward base; Cuirassier hero leads raids.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Hundred Days, Flying Battery, Sister Republics, Génie Troops, and French Royal Army. Forward wall segments protect the advance base; the Grande Armée column — Cuirassier + Voltigeur + horse artillery — drives into enemy territory.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Imperial Old Guard, Grand Battery, Horse Hunters, Rustam&#x27;s Regiment, Client States, and Bosniak+Mounted Riflemen repeats. Unstoppable combined arms column: Old Guard elite infantry, Horse Artillery, and Cuirassier shock.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Wittelsbach repeats and Horse Artillery 3 for a final Grand Battery imperial siege.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWNapoleonicFrance/synthetic_tech_tree.html"
+    title="France (Napoleonic Era) Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Starts with Cuirassier hero; Grande Armée cards ship large infantry formations.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Cuirassier</span><span class="narr-unit-pill">Voltigeur</span><span class="narr-unit-pill">Old Guard</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Push forward barracks and stables; Cuirassier + Voltigeur column advances; sustained forward pressure with rally-to-front-base shipments.  Pushes barracks, stables, and outposts up toward the map&amp;#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (French-style)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -2998,6 +3668,29 @@ Ships a number of Mounted Rifleman mercenaries."><img class="card-img" loading="
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Levée-en-masse Republic: Sans Culottes replace Settlers (stronger fighters, slower gatherers), mass them from multi-barracks, use Eclaireur scouts to flank, and field Cuirassier cavalry at Fortress backed by Outpost civic militia.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Guillotine, Robespierre, Cantinières, Balloons, and Colbertism cards. Begin training Sans Culottes immediately as the eco/military hybrid workforce; Balloon provides map vision.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Bastille Storming, Cult Supreme Being, Irish Brigaders, Cent Suisses, and Colbertism Team. Multi-barracks Sans Culottes levy begins; Eclaireur scouts flank enemy outposts; civic core with Outpost militia forms.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Revolutionary shipments, Skirmishers 1+3, Tirailleurs, Armored Pistoleers, and Giant Grenadiers. Cuirassier cavalry arrives and combines with Sans Culottes for a balanced push; Outpost militia supplements headcount.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Horse Hunters, Client States, Horse Artillery 3, Skirmishers 2+4+5, Royal Horseman, Zouaves, and Battleship. Peak Levée force: Cuirassiers, Horse Artillery, and massive Skirmisher ranged lines overwhelm the enemy.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with French Battleship and Zouave repeats for an endgame revolutionary naval-land assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWRevFrance/synthetic_tech_tree.html"
+    title="France Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Trains Sans Culottes instead of Settlers (stronger fighters, slower gatherers); gains Eclaireur scout at Commerce Age.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Sans Culottes</span><span class="narr-unit-pill">Eclaireur</span><span class="narr-unit-pill">Cuirassier</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Multi-barracks Sans Culottes levy spam; Eclaireur scout flanks; Cuirassier cavalry arrives at Fortress; civic core with Outpost militia.  Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (French-style)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3071,6 +3764,29 @@ Ships a mighty Battleship! French Battleships now benefit from Defence Promotion
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Compact fortified core with Blockhouse frontier: Manor-boom Metis Pathfinders, turtle the home base with stone walls and Outpost militia, and counter-attack from a hardened core with Rangers and Cuirassiers rather than fighting at range.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Fur Trade and Greenwich Time cards. Build Manors close to the TC to spawn Metis Pathfinders; wall the home perimeter before Age 2 using stone.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Canadian Officer, Buffalo Hunt, Extensive Fortifications, and Irish Brigaders. Begin stone walls; Outpost militia augments the early defense; Rangers provide skirmish pressure at the perimeter.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Ship War Canoes, Giant Grenadiers, and Rangers for a combined assault. Unlock a Fort at the fortified core; Cuirassier cavalry stands ready for counter-attacks when the enemy pushes walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Send Fencibles, Conscription, Native Allies, and Quebec cards for a full Industrial mobilization. Metis Pathfinder screen and Cuirassier charge form the counter-punch to any siege.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Grizzly and Elk beast support and Musketeer mass shipments for a final hardened-core breakout.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWCanadians/synthetic_tech_tree.html"
+    title="Province of Canada Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age; starts with a Native Scout and trains Metis Voyageurs alongside Settlers.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Ranger</span><span class="narr-unit-pill">Congreve Rocket</span><span class="narr-unit-pill">Metis Pathfinder</span><span class="narr-unit-pill">Metis Voyageur</span><span class="narr-unit-pill">Cuirassier</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress; Lower-Canada Patriote doctrine adds a tight civic core with reactive counter-punch instead of open aggression.  Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians with Blockhouse (Brock) or tight-core civic politicians (Papineau / Lower Canada)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3146,6 +3862,29 @@ Ships 12 Métis Pathfinders."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Distributed economic network with free Covered Wagons each Age. Scatter Mills and Plantations across multiple resource patches, keep a villager trickle to under-worked nodes, and fund forward bases through Covered Wagon placement rather than Home City rushes.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Bonifacio and Exotic Hardwoods cards; plant the starting Citizens on separate food and wood patches. Use the free Covered Wagon to claim a second gather site early.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Bandeirantes, Theaters, and Wettın Allies for eco momentum. Build a Market and upgrade gather rates; light walls around the TC while Voluntarios from Town Centers begin appearing.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Amazonia, Cattle Delivery, and Minas Gerais cards for multi-node economy. Build a second TC with the Age-up Covered Wagon; deploy Armored Pistoleer mercs and Gatlings for defense.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Importers, Cácadores, Soldados, and Ironclads; unlock the Factory. Transition to a Voluntario and Lancer strike force backed by ironclade river control.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">Use Battleship and Portuguese Battleship cards for naval supremacy; mass Gatling Guns and elite infantry for the final ground push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWBrazil/synthetic_tech_tree.html"
+    title="Empire of Brazil Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Receives a free Covered Wagon with every Age; starts with 7 Citizens.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Voluntario Da Patria</span><span class="narr-unit-pill">Gatling Gun</span><span class="narr-unit-pill">Lancer</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Spread Mills and Plantations for multi-node economy; steady Covered Wagon trickle keeps forward bases funded; Voluntarios from Town Centers.  Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Covered Wagon with each Age-up</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3223,6 +3962,29 @@ Ships a mighty Battleship!"><img class="card-img" loading="lazy" src="resources/
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Granadero shock-cavalry liberation doctrine: push a forward Barracks and Stables near the contested edge early, ship reinforcements to the front, and re-wall lost ground rather than retreat. Sustained forward pressure with Granaderos a Caballo and Lancers backed by a Musketeer screen.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Explore aggressively to locate the contested map edge. Send Lombardy and Cheap Barracks cards; begin gathering food and wood for a fast Colonial push while keeping Villager count climbing.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Build a forward Barracks and Stable toward the enemy; ship Mercenary Irish Brigaders and Frontier Defenses cards to fortify the advance post. Begin walling the forward position by the 12-minute mark while massing Musketeers and Rodeleros.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Unlock a Fort at the forward base; ship Liberation March and Flying Battery cards to reinforce the column. Transition the army to Granaderos a Caballo and Lancers, supported by War Dogs, for shock charges into enemy lines.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Send San Martín, Blandengues, and Argentine Mortars cards for a full siege push. Mass Granadero cavalry with mortar support and advance wall-to-wall toward the enemy Town Center.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">Ship Battleship and food-crate cards to sustain continuous production. Deploy supreme Granadero and Gatling Gun columns for a final unstoppable imperial push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWArgentines/synthetic_tech_tree.html"
+    title="Argentine Confederation Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Home City Shipments arrive slightly faster; elite infantry never rout.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Granadero a Caballo</span><span class="narr-unit-pill">Lancer</span><span class="narr-unit-pill">Rodelero</span><span class="narr-unit-pill">War Dog</span><span class="narr-unit-pill">Gatling Gun</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Rush forward base, mass Granaderos and Lancers with Musketeer screen; push and re-wall rather than defend home base.  Pushes barracks, stables, and outposts up toward the map&amp;#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Citizens)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3306,6 +4068,29 @@ Food source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Andean Terrace Fortress doctrine: wall high ground in concentric rings and build slowly toward a defended Industrial timing. Republican infantry and Lancer cavalry form a methodical push rather than an early rush.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Stonemasons and Exotic Hardwoods cards for early stone and wood income. Scout for high ground and begin placing walls by the 12-minute mark.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Extensive Fortifications, Citizenship, and Fishing Fleet; hire Irish Brigaders. Build a Barracks near the TC for steady Republican infantry and begin the second wall ring.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Salitrera, Armored Pistoleers, and unlock a Fort; hire Highlanders. Begin the outer wall ring; Lancer + Rodelero force grows as Gatling Guns arrive to anchor defensive chokepoints.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Send Military Parade, Heavy Fortifications, Mapuche Allies, and Battleship repeats. Snowball into an Industrial strike force of Lancers, artillery, and allied infantry for a coordinated push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">Ship Bourbon Allies and food crates for a sustained imperial army; mass Lancers and Gatling Guns for the final siege of the enemy base.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWChileans/synthetic_tech_tree.html"
+    title="Republic of Chile Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Home City Shipments arrive slightly faster; elite infantry never rout.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Rodelero</span><span class="narr-unit-pill">Lancer</span><span class="narr-unit-pill">War Dog</span><span class="narr-unit-pill">Gatling Gun</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Wall high ground in rings; steady Republican infantry + Lancer push; slow snowball to defended Industrial timing rather than early rush.  Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Citizens)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3387,6 +4172,29 @@ Food source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Andean fort line and native levy: wall high ground in rings with Kallankas, grow a Lancer and Rodelero combined-arms push, receive a Bolívar ally bonus at Fortress, and never overextend from the defended wall line.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send American Allies, Alpaca Wool, and Ranching Llama cards. Plant the base on high ground; Chasqui runner scouts aggressively while stone wall planning begins.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Extensive Fortifications, Junín Hussars, Lima, Irish Brigaders, Theaters, and Tercio Tactics. First wall ring closes; Lancers and Rodeleros train while the Bolívar hero event prepares for Fortress.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Peruvian Guard, Cattle Delivery, Cowboys, Guano, Bolas Warrior, and unlock a Fort. Receive Bolívar ally at Fortress; Lancer + Rodelero push begins from behind the second wall ring.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Manco Inca, Fat Llamas, Heavy Fortifications, Highland mercs, Battleship, and food crates. Full Andean industrial push: Lancer cavalry flanks while Bolas Warriors and artillery breach the enemy wall.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Battleship and Highland Merc repeats; mass Lancer + artillery for the final Andean liberation sweep.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWPeruvians/synthetic_tech_tree.html"
+    title="Republic of Peru Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Shipments arrive slightly faster; gains bonus from Simón Bolívar ally at Fortress.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Lancer</span><span class="narr-unit-pill">Rodelero</span><span class="narr-unit-pill">War Dog</span><span class="narr-unit-pill">Chasqui</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Wall high ground in rings with Kallankas; Lancer + Rodelero push; slow Industrial snowball; never overextend from fortified line.  Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Citizens)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3472,6 +4280,29 @@ Food source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Llanero liberation sweeps with a forward operational base: push Barracks and Stables toward the contested edge from Colonial Age, ship reinforcements to the front, and keep sustained pressure with Llanero and Lancer shock cavalry flanks and Pikeman anchors.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send National Hero and Cheap Barracks cards. Explore to find the contested map edge; position the first Barracks forward before 6 minutes while Villagers boom back home.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Extensive Fortifications, Irish Brigaders, Frontier Defenses, and Theaters. Build a forward Stable and begin walling the advance post; Rodeleros and Llaneros start flowing from the forward production.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Liberation March, Cattle Delivery, Llaneros card, and unlock a Fort. Push the forward wall; Llanero cavalry sweeps flanks while Pikemen hold the center against counter-attacks.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Colombian Navy, Colombian Revolutionaries, Ironclads, and Albion Legion for a decisive Fortress-to-Industrial surge. Mass Lancers and Llaneros for a final liberating push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">Use Battleship repeats and Bourbon Allies for naval and allied support; mass Lancer + Llanero cavalry for an unstoppable final sweep.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWColumbians/synthetic_tech_tree.html"
+    title="Gran Colombia Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Shipments arrive faster; gains Simón Bolívar hero at Fortress Age.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Lancer</span><span class="narr-unit-pill">Rodelero</span><span class="narr-unit-pill">War Dog</span><span class="narr-unit-pill">Llanero</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Forward base pressure from Colonial; Llanero and Lancer shock cavalry sweep flanks; sustained column push with Pikeman anchor.  Pushes barracks, stables, and outposts up toward the map&amp;#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Citizens)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3553,6 +4384,29 @@ Food source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Mass infantry insurrection with free Pirate stream from TCs and Taverns: hug jungle chokes with Maroon infantry mass, stage repeated forward warband strikes, and keep walls minimal in favor of speed and numbers.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Vodou Ceremonies and Sevites cards for XP and population; ship 1 Settler crate. Build a Tavern near the TC immediately to begin the Pirate trickle.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Letter of Marque, Irish Brigaders, Cent Suisses, Colbertism, and Theaters. Position a forward Barracks at a jungle choke; Maroons and Pirates combine for the first harassment push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Dahomey Amazons, African Allies, Citizenship, Armored Pistoleers, Giant Grenadiers, and Assassins. Grow the Maroon mass and add mercenary depth; Pirates continue spawning passively.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Pickets, Haitian Battleship, Privateers, Falconets, Royal Horseman, and Zouaves. Full insurrection force: Maroon infantry backed by Falconets and Zouave mercs makes the final push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Battleship and merc repeats for a final overwhelming mass infantry and naval assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWHaitians/synthetic_tech_tree.html"
+    title="First Empire of Haiti Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Town Centers and Taverns slowly spawn Pirates for free; Maroons replace Revolutionaries.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Maroon</span><span class="narr-unit-pill">Pirate</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Free Pirate stream from TC + Taverns; choke-hug with Maroon infantry mass; quick harass from forward warbands; minimal walls.  Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3630,6 +4484,29 @@ Ships a mighty Battleship!"></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Java War guerrilla and kraton fort: Wokou Junk naval pressure combined with Javanese Spearman + Cetbang Cannon chokepoint control; quick repeated infantry strikes from forward warbands while avoiding open field battles.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Spice Trade Team and Feitorias cards. Build a Dock as early as possible to begin Wokou Junk production; position the first Barracks near a jungle or river choke.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Irish Brigaders, Extensive Fortifications, Theaters, Arsenal, and Frontier Defenses. Forward Barracks at a choke; Javanese Spearmen hold the approach while Wokou Junks raid coastal trade.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Aceh Exports, Lantakas, Dutch Merc Army, Bosniaks, Blue Guards, and Hussars. Expand Cetbang Cannon coverage at chokepoints; mercenary depth supplements the Javanese Spearman core.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Kraton Guards, Java Spearmen, Cetbang, Wokou Junk, Ottoman Army, Blanda Hitam, and Battleship. Full combined-arms chokepoint siege: Cetbang Cannons blast gaps while Javanese Spearmen advance.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Battleship and Dutch merc repeats for endgame naval and land dominance.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWIndonesians/synthetic_tech_tree.html"
+    title="Sultanate of Yogyakarta Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Can train Wokou Junks; Ruyter and Halberdier get unique skins.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Javanese Spearman</span><span class="narr-unit-pill">Cetbang Cannon</span><span class="narr-unit-pill">Ruyter</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Wokou Junk naval pressure; choke-hug with Javanese Spearman + Cetbang Cannon on land; guerrilla infantry strikes avoid open fights.  Hugs natural chokes &amp;mdash; cliffs, jungle, river bends &amp;mdash; and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Dutch-style)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3711,6 +4588,29 @@ Sends some Akan Ankobias and allows you to train them in Native Embassies, +3 Na
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Boer commando trader-cavalry with dock-first naval economy: Bank coin boom, free Trek Wagons each Age fund expansion, Ruyter cavalry controls mid-game, and Fluyts provide strong naval presence on water maps.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send South Sea Bubble and Feitorias cards. Rush a Dock on any water for Fluyt naval presence; build the first Bank for passive coin. Trek Wagon Age-up funds the second TC site.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Wanderlust, Irish Brigaders, Caravel 1+2, and Buckriders. Bank economy accelerates; first Ruyters start from Stables; Fluyt ships begin patrolling coastal trade routes.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Bank Wagons, Homestead Wagons, Military Wagons, Outpost Wagons, Bosniaks, Pandours, Frigates, Blue Guards, and Habsburg Allies. Wave of Trek Wagons plants new Banks and TC positions; Ruyter cavalry force grows to mid-game dominance.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Diamond Rush, Huguenots, Xhosa Foods, Dutch Battleship, Askaris, Mounted Riflemen, Monitors, and Monitor Team. Trek Wagon network complete; Ruyter + Monitor ironclad endgame begins.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Battleship and Monitor repeats for absolute naval dominance and Ruyter ground superiority.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWSouthAfricans/synthetic_tech_tree.html"
+    title="South African Republic Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Villagers and Banks gather faster; receives a free Trek Wagon each Age.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Ruyter</span><span class="narr-unit-pill">Trek Wagon</span><span class="narr-unit-pill">Fluyt</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Bank coin boom + Trek Wagon expansion; dock-first on water; Ruyter cavalry control the mid-game; strong naval with Fluyt.  Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Trek Wagon with each Age-up</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3782,6 +4682,29 @@ Ships a number of Mounted Rifleman mercenaries."><img class="card-img" loading="
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Mannerheim-line ski infantry behind a compact fortified core: Torps passively gather nearby resources while stone walls go up early; Karelian Jaegers gather and fight; tech into Hakkapelit cavalry and Grenadier walls for the counter-attack.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Tree Spawn and Torp Team cards. Place Torps immediately on nearby wood and food for passive gathering; wall planning begins around the TC perimeter.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Northern Wilderness, Strelet spawn, Turku Academy, and mercenary contracts. Build Torps out to secondary patches; Karelian Jaegers defend while walls go up in stone.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Finnish Counter Army, Jaeger Combat, Savolax Jaegers, Blockhouse Cannon, and Finnhorses. Fortify the Blockhouse cannon positions; Hakkapelit cavalry prepares to spill out for counter-attacks.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Gunboats, Baltic Fleet, Blockhouses, Hakkapelit, and Soldier Torps. Push out from the hardened Mannerheim line with Hakkapelit cavalry and Grenadier columns backed by river gunboats.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Copper Mines and wood crates; mass Hakkapelit and Grenadiers for the final assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWFinnish/synthetic_tech_tree.html"
+    title="Grand Duchy of Finland Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Torps gather nearby resources; advanced Arsenal upgrades; Karelian Jaegers as alternative Settlers.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Karelian Jaeger</span><span class="narr-unit-pill">Hakkapelit</span><span class="narr-unit-pill">Grenadier</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Torp-boom for passive food/wood; turtle with stone walls; Jaegers gather and fight; tech into Hakkapelit cavalry + Grenadier wall.  Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Swedish-style)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3867,6 +4790,29 @@ Wood source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Honved hussar uprising with a Steppe Cavalry Wedge doctrine: over-build Stables, keep Hussar pressure continuous from Colonial Age, and use free Outpost-spawned Hajduks and Grenadiers to supplement the cavalry stream.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Master Surgeons, Whale Oil, and Land Grab cards for early eco and XP. Scout the enemy edge; plan the first Stable near the TC before advancing.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Hussars 1, Hajduks, Magyar Grenadiers, Military Frontier, and Theaters. Build two Stables; Hussar raids begin immediately while Hajduk infantry defends the Outpost perimeter.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Magyar Hussars alt, Outlaw Combat, Giant Grenadiers, Black Riders, and Dragoons. Field a Hussar + Pandour combined arms force; Outpost militia pads headcount against infantry counters.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Hussar 3, Pandours, Habsburg Allies 2, and Hungarian Legion. Massed Hussar wedge with Grenzer infantry support delivers the decisive Industrial cavalry push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with wood crates and Falconet artillery to back the final Hussar charge.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWHungarians/synthetic_tech_tree.html"
+    title="Kingdom of Hungary Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Hussar</span><span class="narr-unit-pill">Grenzer</span><span class="narr-unit-pill">Hajduk</span><span class="narr-unit-pill">Pandour</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Over-build Stables; Hussar cavalry pressure continuously; Outpost militia supplementss army; loose base for fast cavalry egress.  Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Covered Wagon with each Outpost shipment</div></div></div>
     <div class="cards-section standalone-cards">
@@ -3944,6 +4890,29 @@ Wood source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Danubian Principalities civic militia center: tight TC cluster with Outpost militia, Rosior Dragoon cavalry from every Outpost, reactive defense that counter-punches hard rather than pushing aggressively.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Landed Gentry and Colonial Militia cards. Place the TC in a defensible cluster position; plan Outpost rings — every Outpost will spawn Rosior Dragoons.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Extensive Fortifications, Infantry Hitpoints, Phanar Allies 2, Theaters, and Arsenal. Begin the Outpost ring; Rosior Dragoons accumulate from each built post; infantry anchors the civic core.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Sovnya Romanian, Wallachian Archers, Giant Grenadiers, Hand Mortar, Phanar Allies 1, Royal Mint, unlock Fort, and Black Riders. Outpost-spawned Dragoon + Dorabant infantry counter-attacks anything that pushes the perimeter.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Horse Artillery 3, Flight Archery, Battleship, Heavy Fortifications, unlock Factory, Fort Wagon, Hessians, and wood crates. Full Industrial Rosior Dragoon + Wallachian Archer mass backed by artillery for a decisive push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Fort Wagon and Battleship repeats; Rosior Dragoon + artillery column makes the final push.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWRomanians/synthetic_tech_tree.html"
+    title="United Romanian Principalities Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Rosior Dragoon</span><span class="narr-unit-pill">Dorabant</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Tight civic core with Outpost militia; Rosior Dragoon cavalry from every Outpost; reactive defense that counter-punches hard.  Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Covered Wagon per Outpost shipment</div></div></div>
     <div class="cards-section standalone-cards">
@@ -4027,6 +4996,29 @@ Wood source."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Corsair raider naval-first economy: build Docks before a second Barracks, fill the harbor with Xebecs, then fund a land army through naval shipments and mercenary contracts. Wall the harbor ring once the fleet is established.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Ottoman Colonial Militia and Saharan Trade cards; begin gathering coin for a Dock on any accessible water. Prioritize shore economy over land expansion.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Rush the first Dock and ship Galleons; send Corsair Captain and Dhimma cards. Build Barbary Warriors to defend the dock perimeter and begin Corsair Marksman raids on enemy trade routes.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Add a second Dock and ship Sale Rovers, Berber Nomads, and Loyal Warriors. Hire Bosniaks mercenaries for land reinforcement; Xebecs should dominate coastal waters by now.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Barbary Warriors, Barbary Marksmen, Falconets, and Xebec repeats for a combined naval-land push. Begin walling the harbor and stage a land assault behind Great Bombard artillery.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Askari and Ottoman mercs plus Battleship repeats for overwhelming coastal dominance.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWBarbary/synthetic_tech_tree.html"
+    title="Regency of Algiers Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Can train Privateers with increased build limit, which can train additional units.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Barbary Warrior</span><span class="narr-unit-pill">Corsair Marksman</span><span class="narr-unit-pill">Tribal Horseman</span><span class="narr-unit-pill">Bedouin Horse Archer</span><span class="narr-unit-pill">Great Bombard</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Dock-first naval economy; Corsair raids deny enemy trade; Barbary Warriors and mercs close land fights; Xebecs dominate water maps.  Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Ottoman-style Wagon shipments</div></div></div>
     <div class="cards-section standalone-cards">
@@ -4102,6 +5094,29 @@ Ships a number of Ottoman mercenaries: Stradiots, Mamelukes and Corsairs."></spa
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Nizam-i Cedid modernization with a Highland Citadel doctrine: fortify a single stone-walled high-ground position, grow a free Mameluke cavalry force from shipments, and expand only once the citadel is truly unbreakable.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Ottoman Colonial Militia and Stonemasons cards. Gather stone immediately; place the first TC wall segment on high ground before 8 minutes. Citizens provide affordable early eco.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Nile Flood, Suez Canal, Extensive Fortifications, and Azap infantry. Begin the stone wall ring; Azaps defend the perimeter while the economy grows behind walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Nizam modernization, Ranged Combat, Sudanese Allies, and free Mamelukes; unlock a Fort. The citadel should now be fully enclosed; Mameluke cavalry sortie from the gate to raid exposed enemies.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Egyptian Fleet, Gatling Camels, Horse Artillery, and Stratiots. Deploy a late-game combined arms force of Mameluke cavalry, Humbaraci artillery, and Gatling Camels for the breakout push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">Use Ottoman Battleship and Battleship repeats; mass Great Bombards and Mamelukes for a crushing imperial siege column.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWEgyptians/synthetic_tech_tree.html"
+    title="Khedivate of Egypt Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Trains Citizens (70 coin); free Mameluke per shipment from Fortress Age; Khevite Fusiliers replace Revolutionaries.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Mameluke</span><span class="narr-unit-pill">Deli</span><span class="narr-unit-pill">Humbaraci</span><span class="narr-unit-pill">Azap</span><span class="narr-unit-pill">Khevite Fusilier</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Fortify high ground then snowball; Mameluke cavalry per shipment grows a dangerous force; hard to dislodge once entrenched.  Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Ottoman-style Wagon shipments</div></div></div>
     <div class="cards-section standalone-cards">
@@ -4177,6 +5192,29 @@ Ships a mighty Battleship!"></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Indigenous insurrection mass through Jungle Guerrilla Network: exploit chokes with growing Holcan Javelineer swarms (build limit scales with shipments), strike from forward warbands, and reach Imperial Age for two bonus cards.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Maya Jungle Villages, Kowoj Traditions, Maria Uicab, Solis Shredders, and Food Silos cards. Build in a jungle choke; Holcan Javelineers begin populating from the Native Embassy while the Cathedral eco grows.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Noj Petén, Jungle Warfare, Ballcourts, Cenotes, and Mayan Allies 1. Forward warbands of Holcan Javelineers harass constantly; jungle paths replace formal walls.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Poot&#x27;s Plan, Yalain Traditions, Mayan Supporters, Amparo, and Frontier Defenses repeat. Holcan swarm size keeps growing from each shipment; Cruzob Infantry core advances at chokepoints.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Maya Architecture, Ceramics, Henequen Industry, Yucatecan, Kinship Ties, Kuchkabal, and Cruzob Infantry. Peak insurrection mass: Holcan Javelineers + Cruzob Avengers + Yucateco Insurgentes flood every chokepoint.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">Use Mayan Allies 2 and two bonus Imperial cards for a supreme final Holcan swarm assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWMayans/synthetic_tech_tree.html"
+    title="Cruzob Maya Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Holcan Javelineer build limit grows each shipment; 2 bonus cards on Imperial Age.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Holcan Javelineer</span><span class="narr-unit-pill">Cruzob Avenger</span><span class="narr-unit-pill">Cruzob Infantry</span><span class="narr-unit-pill">Yucateco Insurgente</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Choke-hug with Holcan Javelineer + Cruzob Infantry mass; harass from forward warbands; scaling Holcan swarm from shipments.  Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Wagon politicians (Mexican-style)</div></div></div>
     <div class="cards-section standalone-cards">
@@ -4262,6 +5300,29 @@ Sends Mayan warriors and also upgrades them to Elite."></span></div>
 </div>
 
       
+      <details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  <p class="bsnote-overview">Republic of Texas forward militia: push Barracks and Outposts forward with Hacienda eco backing; Minuteman swarms defend while Regulars train; reach Industrial for two bonus cards and a Sharpshooter + Texas Army finish.</p>
+  <div class="bsnote-ages">
+<div class="bsnote-row"><span class="bsnote-age">Age I · Discovery</span><span class="bsnote-text">Send Burnet Land and Hacienda Wagon cards. Build the first Hacienda immediately for eco bonus; plan a forward Outpost near the contested map edge before Age 2.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age II · Colonial</span><span class="bsnote-text">Ship Frontier Defenses, Fortified Haciendas, Captured Galleons, Chipotles, and Copper Canyon. Forward Barracks and Outpost planted; Minuteman levies spring from both TC and Outposts to defend the advance.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age III · Fortress</span><span class="bsnote-text">Send Gonzales Guns, Frontier Defenses repeat, Texas Statehood, unlock Fort, Captured Galleons 2, and Presidios. Fort at the forward position; Regular + Sharpshooter transition begins as the Minuteman screen holds.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age IV · Industrial</span><span class="bsnote-text">Ship Texas Army, Texas Lancers, Texas Navy, Empressario Contracts, Sharpshooters, Heavy Fortifications, Fort Wagon, and Ironclad-Steamers. Two Industrial bonus cards deliver overwhelming firepower; Sharpshooter + Lancer elite force makes the decisive push.</span></div>
+<div class="bsnote-row"><span class="bsnote-age">Age V · Imperial</span><span class="bsnote-text">No Imperial cards; sustain with Ironclad, Hacienda Wagon, and Texas Marines repeats for an endgame naval-land Texian assault.</span></div>
+  </div>
+</details>
+
+      <details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="artifacts/validation/visual_art/ANWTexians/synthetic_tech_tree.html"
+    title="Republic of Texas Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+
     </div>
     <div class="panel panel-narrative"><div class="narr-block narr-bonus"><span class="narr-label">Civ bonus</span><div class="narr-text">Minutemen levies can be called repeatedly from Town Centers and Outposts; 2 bonus cards on Industrial Age.</div></div><div class="narr-block narr-units"><span class="narr-label">Unique units</span><div class="narr-text"><span class="narr-unit-pill">Minuteman</span><span class="narr-unit-pill">State Militia</span><span class="narr-unit-pill">Regular</span><span class="narr-unit-pill">Sharpshooter</span><span class="narr-unit-pill">Chinaco</span></div></div><div class="narr-block narr-playstyle"><span class="narr-label">Strategic identity</span><div class="narr-text">Push barracks and Outposts forward; Minuteman swarms defend while Regulars train; Republic militia mass into Sharpshooter FF timing.  Pushes barracks, stables, and outposts up toward the map&amp;#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.</div></div><div class="narr-block narr-ageup"><span class="narr-label">Age-up method</span><div class="narr-text">Federal States politicians</div></div></div>
     <div class="cards-section standalone-cards">

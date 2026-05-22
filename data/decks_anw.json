@@ -1436,15 +1436,15 @@
       "DEHCRangers",
       "DEHCShipRangers2",
       "DEHCShipPikemenBritish",
-      "HCXPShipHorseArtillery1",
-      "DEHCHanoverAllies2"
+      "HCMonitorCombatTeam",
+      "HCCheapDocksTeam"
     ],
     "1": [
       "HCExplorerBritish",
       "HCMusketeerGrenadierHitpointsBritishTeam",
       "HCMusketeerGrenadierDamageBritish",
       "HCCavalryDamageBritish",
-      "DEHCHanoverAllies1"
+      "HCShipGalleons"
     ],
     "2": [
       "HCMusketeerGrenadierCombatBritish",
@@ -1456,13 +1456,13 @@
       "HCCavalryCombatBritish",
       "HCImprovedLongbows",
       "HCShipLongbowmen4",
-      "HCShipLongbowmenRepeat"
+      "HCShipLongbowmenRepeat",
+      "HCNavalGunners"
     ],
     "0": [
       "DEHCWhaleOilTeam",
       "DEHCGreenwichTime",
-      "DEHCFedMarionsDiversions",
-      "DEHCBourbonAllies1"
+      "DEHCFedMarionsDiversions"
     ]
   },
   "ANWDutch": {

@@ -245,6 +245,22 @@ def load_playstyle_spec():
             result[key] = val
     return civs_raw
 
+_AGE_BUILD_NOTES_CACHE = None
+
+def load_age_build_notes():
+    """Load per-age build notes from data/age_build_notes.json (cached)."""
+    global _AGE_BUILD_NOTES_CACHE
+    if _AGE_BUILD_NOTES_CACHE is not None:
+        return _AGE_BUILD_NOTES_CACHE
+    path = os.path.join(DATA_DIR, "age_build_notes.json")
+    if not os.path.exists(path):
+        _AGE_BUILD_NOTES_CACHE = {}
+        return {}
+    with open(path) as f:
+        _AGE_BUILD_NOTES_CACHE = json.load(f)
+    return _AGE_BUILD_NOTES_CACHE
+
+
 def load_decks():
     path = os.path.join(DATA_DIR, "decks_anw.json")
     with open(path) as f:
@@ -2271,6 +2287,92 @@ def render_doctrine_section(civ_token, display_name):
 """
 
 
+# ── Tech tree section renderer ─────────────────────────────────────────────────
+def render_tech_tree_section(civ_token: str, display_name: str) -> str:
+    """Render a collapsible tech-tree iframe for a civ column.
+
+    The iframe src points to artifacts/validation/visual_art/<dir_key>/synthetic_tech_tree.html
+    which is a relative URL — works correctly both via python -m http.server and on GitHub Pages.
+
+    Returns "" if synthetic_tech_tree.html does not exist on disk for this civ.
+    """
+    dir_key   = capture_dir_key(civ_token)
+    html_path = os.path.join(VISUAL_ART_DIR, dir_key, "synthetic_tech_tree.html")
+    if not os.path.exists(html_path):
+        return ""
+
+    # Relative URL that works when served from the repo root
+    iframe_src = html_module.escape(
+        f"{VISUAL_ART_URL_BASE}/{dir_key}/synthetic_tech_tree.html"
+    )
+    dn_esc = html_module.escape(display_name)
+    return f"""<details class="tech-tree-details">
+  <summary class="tech-tree-summary">Tech Tree</summary>
+  <iframe
+    class="tech-tree-frame"
+    src="{iframe_src}"
+    title="{dn_esc} Tech Tree"
+    loading="lazy"
+    sandbox="allow-same-origin allow-scripts">
+  </iframe>
+</details>
+"""
+
+
+# ── Build strategy per-age section ────────────────────────────────────────────
+_AGE_LABELS = {
+    "0": "Age I · Discovery",
+    "1": "Age II · Colonial",
+    "2": "Age III · Fortress",
+    "3": "Age IV · Industrial",
+    "4": "Age V · Imperial",
+}
+
+def render_build_strategy_section(civ_token: str, display_name: str) -> str:
+    """Render a collapsible per-age build strategy section.
+
+    Data comes from data/age_build_notes.json.  Returns "" if the civ has
+    no entry in that file.
+    """
+    notes = load_age_build_notes()
+    entry = notes.get(civ_token)
+    if not entry:
+        return ""
+
+    overview = entry.get("strategy_overview", "")
+    ages     = entry.get("ages", {})
+
+    dn_esc = html_module.escape(display_name)
+
+    # Build per-age rows
+    rows_html = ""
+    for age_key in ["0", "1", "2", "3", "4"]:
+        note = ages.get(age_key, "")
+        if not note:
+            continue
+        label = _AGE_LABELS.get(age_key, f"Age {age_key}")
+        rows_html += (
+            f'<div class="bsnote-row">'
+            f'<span class="bsnote-age">{html_module.escape(label)}</span>'
+            f'<span class="bsnote-text">{html_module.escape(note)}</span>'
+            f'</div>\n'
+        )
+
+    overview_html = ""
+    if overview:
+        overview_html = (
+            f'<p class="bsnote-overview">{html_module.escape(overview)}</p>'
+        )
+
+    return f"""<details class="bsnote-details">
+  <summary class="bsnote-summary">Build Strategy per Age</summary>
+  {overview_html}
+  <div class="bsnote-ages">
+{rows_html}  </div>
+</details>
+"""
+
+
 # ── Age-up choices collector ───────────────────────────────────────────────────
 # Politician tech names that contain these keywords → age tier
 _POLITICIAN_AGE_KEYWORDS = [
@@ -3770,8 +3872,10 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     # ── Panel 4: Art + Captures (player-visible only) ─────────────────────────
     host_manifest  = load_capture_manifest(civ_token, ally=False)
     ally_manifest  = load_capture_manifest(civ_token, ally=True)
-    captures_html  = render_captures_section(civ_token, display_name, host_manifest, ally_manifest)
-    doctrine_html  = render_doctrine_section(civ_token, display_name)
+    captures_html       = render_captures_section(civ_token, display_name, host_manifest, ally_manifest)
+    doctrine_html       = render_doctrine_section(civ_token, display_name)
+    tech_tree_html      = render_tech_tree_section(civ_token, display_name)
+    build_strategy_html = render_build_strategy_section(civ_token, display_name)
 
     # ── Narrative / quote blurb section ───────────────────────────────────────
     bk_narr = blurb_key(civ_token)
@@ -3901,6 +4005,8 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
       <div class="section-label">Visual Confirmation</div>
       {captures_html}
       {doctrine_html}
+      {build_strategy_html}
+      {tech_tree_html}
     </div>
     {narrative_html}
     {cards_section_html}
@@ -5035,6 +5141,129 @@ html, body {
   text-overflow: ellipsis;
   max-width: 100%;
   line-height: 1.2;
+}
+
+/* ── Tech tree section (collapsible <details>) ── */
+.tech-tree-details {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255,220,140,0.22);
+}
+
+.tech-tree-summary {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,220,140,0.90);
+  cursor: pointer;
+  user-select: none;
+  padding: 3px 0 5px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tech-tree-summary::before {
+  content: "▶";
+  font-size: 9px;
+  transition: transform 120ms ease;
+}
+
+.tech-tree-details[open] > .tech-tree-summary::before {
+  transform: rotate(90deg);
+}
+
+.tech-tree-summary::-webkit-details-marker { display: none; }
+
+.tech-tree-frame {
+  width: 100%;
+  height: 460px;
+  border: 1px solid rgba(255,220,140,0.28);
+  border-radius: 4px;
+  background: #1c1410;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ── Build strategy per-age section ── */
+.bsnote-details {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255,220,140,0.22);
+}
+
+.bsnote-summary {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,220,140,0.90);
+  cursor: pointer;
+  user-select: none;
+  padding: 3px 0 5px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bsnote-summary::before {
+  content: "▶";
+  font-size: 9px;
+  transition: transform 120ms ease;
+}
+
+.bsnote-details[open] > .bsnote-summary::before {
+  transform: rotate(90deg);
+}
+
+.bsnote-summary::-webkit-details-marker { display: none; }
+
+.bsnote-overview {
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(255,235,180,0.90);
+  margin: 0 0 6px;
+  padding: 6px 8px;
+  background: rgba(0,0,0,0.22);
+  border-radius: 3px;
+  border-left: 3px solid rgba(255,220,140,0.45);
+}
+
+.bsnote-ages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bsnote-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 4px 6px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.18);
+}
+
+.bsnote-age {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: rgba(255,200,80,0.95);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 1px;
+}
+
+.bsnote-text {
+  color: rgba(220,205,170,0.92);
 }
 
 /* ── Lightbox modal ── */
