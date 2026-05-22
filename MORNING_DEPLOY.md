@@ -1,7 +1,7 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
-Last updated: second loop pass (pre-push final commit).
+Last updated: third loop pass (2026-05-22, all AI coverage complete).
 
 ---
 
@@ -9,11 +9,36 @@ Last updated: second loop pass (pre-push final commit).
 
 **Static signals: GO.** 41/48 validators PASS, 0 FAIL, 7 SKIP (all live-game only). The mod is ready to ship.
 
+**AI coverage: 100%.** All 40 ANW civs now have complete AI dispatch — 21 canonical civs + 19 revolution civs. No civ falls to "unassigned" fallback.
+
 **Three small decisions** are waiting for you before clicking Publish. None are blockers — pick "skip" on any to ship as-is.
 
 ---
 
 ## What landed overnight (autonomous, no manual input)
+
+8. **Third loop pass — 100% AI dispatch coverage (2026-05-22).**
+   Four commits pushed to main since MORNING_DEPLOY was last updated:
+   - **`civmods.xml` art fields** for all 18 ANW revolution civs corrected:
+     `<portrait>` now uses the civ's revolution-state flag DDT (e.g., argentinian,
+     haitian, indonesian) instead of the parent civ (spanish, british, ottomans).
+     `<smallportraittexture>` now uses the mod's own `cpai_avatar_anw*.ddt` (65KB
+     each) instead of the parent civ AI portrait DDT.
+     ANWMayans and ANWTexians had no `<smallportraittexture>` at all — now added.
+     ANWNapoleonicFrance portrait updated to `flags\french_revolution_ne`.
+     ANWRevFrance portrait forward-slash bug fixed (`flags/french` → `flags\french`).
+   - **`leaderCommon.xs` + `leader_revolution_commanders.xs`**: 19 ANW revolution
+     civs now dispatch in both `llAssignLeaderIdentity()` and
+     `initLegendaryRevolutionCommander()`. Previously all 19 fell to "unassigned".
+   - **21 canonical ANW civs** added to `llAssignLeaderIdentity()` AND
+     `llApplyBuildStyleForActiveCiv()` in `leaderCommon.xs`. These civs
+     (`ANWBritish`, `ANWFrench`, etc.) can only be identified by name via
+     `kbGetCivName()` — `cMyCiv` does not equal `cCivBritish` for mod-added civs.
+     Each gets a proper build profile matching the parent civ's doctrine.
+     ANWFrench uses Napoleon's ForwardOperationalLine (matching the Napoleon icon).
+   - **`validate_terrain_heading.py`** extended from 67 → 88 civs (21 canonical
+     ANW civs added to the known-good roster).
+   - **All 41 static validators still PASS** after all changes.
 
 1. **Visual confirmation — all 40 civs.** Built
    `artifacts/validation/visual_art/civ_art_review.html`: a static,
