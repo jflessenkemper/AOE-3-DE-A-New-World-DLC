@@ -72,7 +72,7 @@ If you want the cleanest first pass, use only one nation pair for the whole scen
 
 ## Editor Steps
 
-1. Open `Scenario/Legendary Leaders Test.age3Yscn` in the AoE3DE Scenario Editor.
+1. Open `Scenario/ANEWWORLD.age3Yscn` in the AoE3DE Scenario Editor.
 2. Set Player 1 to human and Player 2 to AI.
 3. Place one Town Center for each player first.
 4. Place explorers before placing combat groups so their behavior is easy to observe.
@@ -113,6 +113,9 @@ That keeps the scenario useful for the exact interactions the RMS cannot assert 
 
 ## Map Picker Notes
 
-- `Legendary Leaders Test.age3Yscn` is the Custom Maps or Scenario version and should appear in the in-game `Custom Maps` list.
-- `RandMaps/Legendary Leaders Test.xs` is the random-map version and should appear in the Skirmish picker under the `Legendary Leaders Test Maps` set.
+- `ANEWWORLD.age3Yscn` is the Custom Maps or Scenario version and should appear in the in-game `Custom Maps` list. The canonical staged copy lives at
+  `~/.local/share/Steam/userdata/209941315/933110/remote/scenario@ANEWWORLD.age3Yscn`
+  (Steam Cloud); the repo holds an identical-md5 copy at `Scenario/ANEWWORLD.age3Yscn`.
+- The legacy `Legendary Leaders Test.{age3Yscn,xs}` randmap was retired
+  on 2026-05-11. Use the ANEWWORLD scenario or any stock random map.
 - If the scenario entry itself still shows as `Unknown`, the remaining metadata is inside the binary `.age3Yscn` payload and must be refreshed by opening and re-saving that scenario in the AoE3DE Scenario Editor.

@@ -2,11 +2,18 @@
 
 This is the concrete RMS-side build spec for the combined commander and naval stress surface.
 
-The intent is not to create a second abstract plan. The intent is to define the next stronger version of the existing `Legendary Leaders Test` random map so land-command logic and naval behavior are stressed in the same match.
+The intent is not to create a second abstract plan. The intent is to
+define a new dedicated naval-stress random map so land-command logic and
+naval behavior are stressed in the same match. (Originally this spec
+proposed evolving the `Legendary Leaders Test` random map, but that map
+was retired on 2026-05-11 when ANEWWORLD became the canonical AI-testing
+scenario. The geometry targets below are still valid for a fresh RMS.)
 
 ## Recommended Implementation Path
 
-Use `RandMaps/Legendary Leaders Test.xs` as the base and evolve it into this profile rather than starting from an unrelated new map.
+Author a new RMS from scratch using the geometry targets below — they
+were validated against the legacy 2v2 west-vs-east layout and remain a
+good starting point.
 
 Reason:
 
@@ -145,7 +152,7 @@ Why:
 
 ## RMS Build Priorities
 
-If editing `Legendary Leaders Test.xs`, do the work in this order:
+When implementing the new RMS, do the work in this order:
 
 1. Keep the fixed west-east 2v2 placement unchanged.
 2. Strengthen the difference between the north and south water lanes.

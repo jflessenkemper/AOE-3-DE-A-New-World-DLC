@@ -24,7 +24,7 @@ That is a useful pattern for Legendary Leaders because this repo already has str
 
 Status: already partially present.
 
-Base this on `Scenario/Legendary Leaders Test.age3Yscn` and keep it focused on deterministic rule verification:
+Base this on `Scenario/ANEWWORLD.age3Yscn` and keep it focused on deterministic rule verification:
 
 - AI non-elite rout threshold
 - elite-support block
@@ -68,7 +68,10 @@ Why: this is better than separate commander-only and naval-only maps because it 
 
 Implementation note:
 
-- preferred first implementation is to evolve `RandMaps/Legendary Leaders Test.xs` toward this combined profile rather than starting a separate RMS immediately.
+- preferred first implementation is to evolve the ANEWWORLD scenario
+  toward this combined profile rather than starting a separate RMS
+  immediately. (The legacy `RandMaps/Legendary Leaders Test.xs` was
+  retired 2026-05-11.)
 
 ### 3. Personality Contrast Arena
 

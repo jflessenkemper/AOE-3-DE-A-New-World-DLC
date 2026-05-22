@@ -1,0 +1,960 @@
+A NEW WORLD — NATION REFERENCE
+Generated from README.md, data/civmods.xml, and game/ai/core/aiLeaderQuotes.xs on 2026-04-20
+(File renamed from LEGENDARY_LEADERS_NATION_REFERENCE.txt on 2026-05-11.)
+
+Shared tactical quotes used by every leader
+- Retreat: Fall back and close ranks. Our leader will not be lost today.
+- Rout taunt: Your broken soldiers are in full retreat now.
+- Bulk assault: Break their main line first. The army is the real prize.
+- Decapitation: Ignore the rabble. Bring down their leader.
+
+Flag note
+- Standard nations use base-game flag art, so this file records the in-game flag description from the README when no repo-owned path exists.
+- Revolution nations use repo-owned flag assets when civmods.xml exposes a Home City flag button path.
+
+Standard Nations
+================
+
+------------------------------------------------------------------------
+Nation: Aztecs
+Civilization ID: Aztecs
+Leader: Montezuma II
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png
+Portrait description: Montezuma II portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Stylized Mexica emblem
+Elite units: Jaguar Knight, Arrow Knight
+Non-elite units: Macehualtin, Coyote Runner, Puma Spearman, Eagle Runner, Skull Knight.
+Expected playstyle: Aggressive imperial warbands with fast infantry pressure and coyote mobility.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Hold the causeway and let them shatter on it.
+- Fight with ceremony and with teeth.
+Leader taunt quotes:
+- The omens condemn such disorder.
+- Even Tenochtitlan deserved a better foe.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: British
+Civilization ID: British
+Leader: Queen Elizabeth I
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png
+Portrait description: Queen Elizabeth I portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: United Kingdom flag
+Elite units: Musketeer
+Non-elite units: Longbowman, Hussar, Dragoon, Grenadier, Ranger, artillery.
+Expected playstyle: Tudor naval-mercantile boom; trained-bands Longbow and Musket line behind a coastal/Dock-first economy, privateer fleet on the flanks, restrained artillery.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Hold the line. After that, the rest is arithmetic.
+- Steady now. Disorder loses battles.
+Leader taunt quotes:
+- That advance would die nameless on a ridge in Spain.
+- You confuse obstinacy with discipline.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Chinese
+Civilization ID: Chinese
+Leader: Kangxi Emperor
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png
+Portrait description: Kangxi Emperor portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Qing dynasty flag
+Elite units: Arquebusier, Meteor Hammer
+Non-elite units: Chu Ko Nu, Changdao, Keshik, Steppe Rider, Iron Flail, Flying Crow.
+Expected playstyle: Balanced banner-army macro with layered armies and steady siege support.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Keep the banners aligned and the field is ours.
+- Discipline first. Triumph follows.
+Leader taunt quotes:
+- You bring disorder to a field that demands harmony.
+- Even frontier rebels show firmer order.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Dutch
+Civilization ID: Dutch
+Leader: Maurice of Nassau
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png
+Portrait description: Maurice of Nassau portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Prince's Flag
+Elite units: Halberdier, Ruyter
+Non-elite units: Pikeman, Skirmisher, Musketeer, Hussar, Grenadier, artillery.
+Expected playstyle: Defensive bank economy with skirmisher-ruyter control.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Dress the line and trust the drill.
+- Measure, volley, advance.
+Leader taunt quotes:
+- Your volley is late and your drill worse.
+- A republic deserves firmer drill than this.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Ethiopians
+Civilization ID: Ethiopians
+Leader: Menelik II
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png
+Portrait description: Menelik II portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Ethiopian Empire flag
+Elite units: Oromo Warrior, Shotel Warrior
+Non-elite units: Gascenya, Neftenya, Javelin Rider, mortar crews, support infantry.
+Expected playstyle: Aggressive modernization with strong infantry pressure and artillery follow-through.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Stand firm and let the high ground judge them.
+- Order the line. Let them spend themselves.
+Leader taunt quotes:
+- You climb these heights without judgment.
+- Adwa would have buried such ambition.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: French
+Civilization ID: French
+Leader: Louis XVIII
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png
+Portrait description: Louis XVIII portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Bourbon Restoration flag
+Elite units: Skirmisher, Cuirassier
+Non-elite units: Musketeer, Hussar, Dragoon, Grenadier, artillery.
+Expected playstyle: Defensive Bourbon restoration with cavalry reserves, trade emphasis, and fort-backed control.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Take the ground quickly, then make it ours.
+- Momentum, not hesitation, wins empires.
+Leader taunt quotes:
+- You maneuver like a clerk and expect empire to follow.
+- Even at Austerlitz I saw less confusion.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Germans
+Civilization ID: Germans
+Leader: Frederick the Great
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png
+Portrait description: Frederick the Great portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Prussian flag
+Elite units: Skirmisher, Uhlan
+Non-elite units: Doppelsoldner, War Wagon, Hussar, Crossbowman, artillery.
+Expected playstyle: Balanced cavalry-mercenary warfare with strong timing pushes.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Dress the ranks and fire by measure.
+- Speed and precision, nothing else.
+Leader taunt quotes:
+- Your line offends both reason and powder.
+- Leuthen required more nerve than this.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Haudenosaunee
+Civilization ID: Haudenosaunee
+Leader: Hiawatha
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png
+Portrait description: Hiawatha portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Haudenosaunee confederacy flag
+Elite units: Tomahawk, War Rifle
+Non-elite units: Aenna, Mantlet, Forest Prowler, Musket Rider, light cannon.
+Expected playstyle: Balanced confederacy warfare with early warband mass and siege pressure.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Stand together. A strong confederacy does not bend.
+- Let wisdom guide the first blow.
+Leader taunt quotes:
+- You break ranks as easily as broken councils.
+- A careless warrior shames his people twice.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Hausa
+Civilization ID: Hausa
+Leader: Usman dan Fodio
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_hausa_usman.png
+Portrait description: Usman dan Fodio portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Sokoto Caliphate flag
+Elite units: Fula Warrior, Raider
+Non-elite units: Maigadi, Lifidi Knight, Desert Archer, cannon and mortar crews.
+Expected playstyle: Aggressive influence-backed expansion with mobile raids.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Keep faith and order, and the day will answer.
+- Discipline first. Victory after.
+Leader taunt quotes:
+- You advance without justice or discipline.
+- A ruler without justice invites his own ruin.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Inca
+Civilization ID: Inca
+Leader: Pachacuti
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png
+Portrait description: Pachacuti portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Inca banner
+Elite units: Bolas Warrior, Jungle Bowman
+Non-elite units: Huaraca, Chimu Runner, Maceman, spearmen, support infantry.
+Expected playstyle: Defensive mountain empire with dense infantry and attritional control.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Hold the heights and let them climb to ruin.
+- Build the field as you would an empire.
+Leader taunt quotes:
+- You cannot build victory on such loose stones.
+- The mountain road would reject this army.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Indians
+Civilization ID: Indians
+Leader: Shivaji Maharaj
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png
+Portrait description: Shivaji Maharaj portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Maratha Empire flag
+Elite units: Sepoy, Sowar
+Non-elite units: Gurkha, Rajput, Zamburak, Howdah, Mahout, Urumi.
+Expected playstyle: Balanced flexibility with strong infantry cores and sharp transitions.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Strike fast, vanish faster.
+- Guard every pass. Yield none.
+Leader taunt quotes:
+- You guard no flank and deserve none.
+- Even a hill fort sees through this plan.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Italians
+Civilization ID: Italians
+Leader: Giuseppe Garibaldi
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png
+Portrait description: Giuseppe Garibaldi portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Kingdom of Italy flag
+Elite units: Bersagliere, Pavisier
+Non-elite units: Schiavone, Papal Zouave, mounted infantry, militia, artillery.
+Expected playstyle: Balanced architect-command economy with flexible infantry-artillery play.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Forward. Italy is made by those who move.
+- Keep the pressure. Do not give them breath.
+Leader taunt quotes:
+- You march like ceremony, not revolution.
+- Italy is not made by men who wait.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Japanese
+Civilization ID: Japanese
+Leader: Tokugawa Ieyasu
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png
+Portrait description: Tokugawa Ieyasu portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Tokugawa crest
+Elite units: Kensei, Ashigaru
+Non-elite units: Yumi, Samurai, Yabusame, Naginata Rider, Flaming Arrow.
+Expected playstyle: Defensive shrine economy with disciplined timing windows.
+Expected buildstyle: Shrine or Trade Node Spread
+Leader encouragement quotes:
+- Step slow and steady, then strike to finish it.
+- Keep order. Let them waste themselves.
+Leader taunt quotes:
+- The impatient commander defeats himself first.
+- Sekigahara was won with more patience than this.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Lakota
+Civilization ID: Lakota
+Leader: Chief Gall
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_lakota_gall.png
+Portrait description: Chief Gall portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Lakota banner
+Elite units: Axe Rider, Rifle Rider
+Non-elite units: Bow Rider, Wakina Rifle, Tashunke Prowler, Club Warrior.
+Expected playstyle: Little Bighorn envelopment - aggressive mounted mobility with coordinated mass-cavalry pressure and constant raiding.
+Expected buildstyle: Mobile Frontier Scatter
+Leader encouragement quotes:
+- Hit fast and keep moving.
+- Let the plains carry our courage.
+Leader taunt quotes:
+- You ride as if the plains forgive weakness.
+- A slow hunter does not return.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Maltese
+Civilization ID: Maltese
+Leader: Jean Parisot de Valette
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png
+Portrait description: Jean Parisot de Valette portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Order of Saint John flag
+Elite units: Hospitaller, Hoop Thrower
+Non-elite units: Crossbowman, Pikeman, Fire Thrower, Sentinel, artillery.
+Expected playstyle: Defensive fortress play with emplacements and stubborn infantry anchors.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Hold the walls and let faith harden them.
+- Make every step cost them blood.
+Leader taunt quotes:
+- You break on stone and call it valor.
+- Malta endured fiercer men than you.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Mexicans
+Civilization ID: Mexicans
+Leader: Miguel Hidalgo y Costilla
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo_base.png
+Portrait description: Miguel Hidalgo y Costilla portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Mexican flag
+Elite units: Soldado, Chinaco
+Non-elite units: Insurgente, Salteador, Cuatrero, Lancero, artillery.
+Expected playstyle: Balanced insurgent republic with adaptable armies and civic tempo.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Stand for the cause and the people will answer.
+- Let conviction hold where powder cannot.
+Leader taunt quotes:
+- A people do not stay quiet forever.
+- Your authority sounds louder than it stands.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Ottomans
+Civilization ID: Ottomans
+Leader: Suleiman the Magnificent
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png
+Portrait description: Suleiman the Magnificent portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Ottoman flag
+Elite units: Grenadier, Hussar
+Non-elite units: Janissary, Abus Gun, Nizam Fusilier, Spahi, artillery.
+Expected playstyle: Aggressive gunpowder tempo with Janissary pressure and artillery spikes.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Advance with order and with law.
+- Make the empire look inevitable.
+Leader taunt quotes:
+- You bring neither law nor strength.
+- Belgrade demanded more order than this.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Portuguese
+Civilization ID: Portuguese
+Leader: Prince Henry the Navigator
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png
+Portrait description: Prince Henry the Navigator portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Portuguese flag
+Elite units: Musketeer, Dragoon
+Non-elite units: Cassador, Hussar, Organ Gun, Pikeman, Crossbowman, artillery.
+Expected playstyle: Defensive town-center boom with strong ranged cores.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Chart the field, then claim it.
+- Let patience guide the expedition.
+Leader taunt quotes:
+- You mistake horizon for mastery.
+- Such seamanship would shame Sagres.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Russians
+Civilization ID: Russians
+Leader: Ivan the Terrible
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png
+Portrait description: Ivan the Terrible portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Russian flag
+Elite units: Grenadier, Cavalry Archer
+Non-elite units: Streltsy, Cossack, Oprichnik, Musketeer, artillery.
+Expected playstyle: Aggressive mass-army play with cheap infantry floods and blockhouse pressure.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Press on. Empire is not built timidly.
+- Stretch them until they break.
+Leader taunt quotes:
+- You have breadth but no design.
+- Even the frontier deserves a sharper will.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Spanish
+Civilization ID: Spanish
+Leader: Isabella I of Castile
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png
+Portrait description: Isabella I of Castile portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Cross of Burgundy
+Elite units: Rodelero, Lancer
+Non-elite units: Pikeman, Crossbowman, Musketeer, Dragoon, Hussar, artillery.
+Expected playstyle: Aggressive shipment-led conquest with fast timing attacks.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Press the matter and do not relent.
+- Faith and order. Keep both.
+Leader taunt quotes:
+- You squander zeal as well as steel.
+- Granada required sterner resolve than this.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Swedes
+Civilization ID: Swedes
+Leader: Gustavus Adolphus
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png
+Portrait description: Gustavus Adolphus portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: Swedish flag
+Elite units: Pikeman, Finnish Rider
+Non-elite units: Carolean, Hakkapelit, Leather Cannon, Hussar, artillery.
+Expected playstyle: Aggressive torp-and-timing warfare with Carolean mass.
+Expected buildstyle: Shrine or Trade Node Spread
+Leader encouragement quotes:
+- Keep the pace and the guns close.
+- Speed and discipline will break them.
+Leader taunt quotes:
+- You are too slow for modern war.
+- Breitenfeld punished lesser confusion.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: United States
+Civilization ID: UnitedStates
+Leader: George Washington
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png
+Portrait description: George Washington portrait
+Flag asset: base-game asset (not overridden in this repo)
+Flag description: United States flag
+Elite units: Rifleman, US Cavalry
+Non-elite units: Regular, State Militia, Sharpshooter, Carbine Cavalry, artillery.
+Expected playstyle: Balanced republican flexibility with broad card options and steady scaling.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Stand steady. Let the line prove the cause.
+- Hold fast. Resolve carries free men through.
+Leader taunt quotes:
+- Liberty is not defended by blundering in plain sight.
+- You would not survive a winter at Valley Forge.
+Shared tactical quote set: see the header of this document.
+
+Revolution Nations
+==================
+
+------------------------------------------------------------------------
+Nation: Americans
+Civilization ID: RvltModAmericans
+Leader: Thomas Jefferson
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_americans_jefferson.png
+Portrait description: Thomas Jefferson portrait
+Flag asset: resources/images/icons/flags/flag_hc_usa.png
+Flag description: United States flag
+Elite units: Gatling Gun, Congreve Rocket
+Non-elite units: Regulars, State Militia, Sharpshooters, volunteer cavalry, field guns.
+Expected playstyle: Balanced statesman-general play with flexible infantry and measured artillery scaling.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Hold firm. The line is our argument.
+- Resolve first. Victory after.
+Leader taunt quotes:
+- A republic cannot survive such command.
+- Your cause buckles under poor leadership.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Argentines
+Civilization ID: RvltModArgentines
+Leader: Jose de San Martin
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png
+Portrait description: Jose de San Martin portrait
+Flag asset: resources/images/icons/flags/flag_hc_argentinian.png
+Flag description: Argentine flag
+Elite units: Pikeman, Rodelero, Lancer
+Non-elite units: Musketeers, dragoons, grenadiers, militia, field guns.
+Expected playstyle: Aggressive liberation cavalry with fast campaigning and mobile strikes.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Keep the column lean and relentless.
+- Forward. The Andes taught us not to linger.
+Leader taunt quotes:
+- The Andes would laugh at such a march.
+- You spend men where nerve would suffice.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Barbary
+Civilization ID: RvltModBarbary
+Leader: Hayreddin Barbarossa
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png
+Portrait description: Hayreddin Barbarossa portrait
+Flag asset: resources/images/icons/flags/flag_hc_barbary.png
+Flag description: Algiers flag
+Elite units: Barbary Warrior, Tribal Horseman, Bedouin Horse Archer
+Non-elite units: Corsair infantry, camel riders, gunpowder troops, field guns.
+Expected playstyle: Aggressive corsair warfare with trade disruption and raids.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Strike boldly and leave them no harbor.
+- Let speed and nerve carry the day.
+Leader taunt quotes:
+- You sail and march with equal confusion.
+- The sea would have judged you already.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Brazil
+Civilization ID: RvltModBrazil
+Leader: Pedro I of Brazil
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png
+Portrait description: Pedro I of Brazil portrait
+Flag asset: resources/images/icons/flags/flag_hc_brazilian.png
+Flag description: Empire of Brazil flag
+Elite units: Musketeer, Dragoon, Crossbowman, Pikeman
+Non-elite units: Cassadors, Hussars, Organ Guns, militia, heavy cannons.
+Expected playstyle: Balanced imperial combined arms with reliable artillery support.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Advance with confidence. The crown must look certain.
+- Push on. Let them see a nation rising.
+Leader taunt quotes:
+- Empires are not born from such hesitation.
+- You bring pomp without vigor.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Californians
+Civilization ID: RvltModCalifornians
+Leader: Mariano Guadalupe Vallejo
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_californians_vallejo.png
+Portrait description: Mariano Guadalupe Vallejo portrait
+Flag asset: resources/images/icons/flags/flag_hc_californian.png
+Flag description: California flag
+Elite units: Chinaco, Salteador
+Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
+Expected playstyle: Defensive frontier administration with trade-rich economy and careful cavalry response.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Conserve strength and strike when it matters.
+- Hold the province together.
+Leader taunt quotes:
+- You threaten the province more than you command it.
+- That advance has no staying power.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Canadians
+Civilization ID: RvltModCanadians
+Leader: Isaac Brock
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png
+Portrait description: Isaac Brock portrait
+Flag asset: resources/images/icons/flags/flag_hc_canadian.png
+Flag description: British flag
+Elite units: Musketeer, Hussar
+Non-elite units: Longbowmen, Rangers, Dragoons, Grenadiers, field guns.
+Expected playstyle: Defensive frontier line with forts and disciplined infantry-artillery play.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Hold the frontier and let them come on.
+- Steady fire. Waste nothing.
+Leader taunt quotes:
+- This frontier has broken louder men than you.
+- You rush the woods and call it strategy.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Central Americans
+Civilization ID: RvltModCentralAmericans
+Leader: Francisco Morazan
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_central_americans_morazan.png
+Portrait description: Francisco Morazan portrait
+Flag asset: resources/images/icons/flags/flag_hc_central_american.png
+Flag description: Federal Republic of Central America flag
+Elite units: Chinaco, Salteador
+Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
+Expected playstyle: Balanced federalist warfare with native alliances and steady tempo.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Stand together. Federation is strength.
+- Keep formation and keep faith.
+Leader taunt quotes:
+- A divided command defeats itself.
+- You split what you are too weak to govern.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Chileans
+Civilization ID: RvltModChileans
+Leader: Bernardo O'Higgins
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png
+Portrait description: Bernardo O'Higgins portrait
+Flag asset: resources/images/icons/flags/flag_hc_chilean.png
+Flag description: Chilean flag
+Elite units: Pikeman, Rodelero, Lancer, Hussar
+Non-elite units: Musketeers, Dragoons, Grenadiers, militia, field guns.
+Expected playstyle: Balanced republican army with disciplined infantry and fort support.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Hold the republic together with steel.
+- Stay stubborn. Let them tire first.
+Leader taunt quotes:
+- A wavering hand cannot found a republic.
+- You attack without endurance.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Columbians
+Civilization ID: RvltModColumbians
+Leader: Simon Bolivar
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png
+Portrait description: Simon Bolivar portrait
+Flag asset: resources/images/icons/flags/flag_hc_colombian.png
+Flag description: Gran Colombia flag
+Elite units: Pikeman, Rodelero, Lancer
+Non-elite units: Musketeers, Dragoons, Grenadiers, militia, field guns.
+Expected playstyle: Aggressive liberator combined arms with forward bases and artillery pressure.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Strike hard. Let liberty outrun fatigue.
+- Carry the fire forward.
+Leader taunt quotes:
+- You dream of empire and cannot hold a ridge.
+- History does not wait for weaker men.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Egyptians
+Civilization ID: RvltModEgyptians
+Leader: Muhammad Ali Pasha
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png
+Portrait description: Muhammad Ali Pasha portrait
+Flag asset: resources/images/icons/flags/flag_hc_egyptian.png
+Flag description: Egyptian flag
+Elite units: Deli, Humbaraci
+Non-elite units: Janissaries, Abus Guns, Nizam Fusiliers, Spahi, artillery.
+Expected playstyle: Balanced reformer modernization with strong artillery and infrastructure.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Build pressure carefully and keep it there.
+- Advance in order. Let discipline carry the day.
+Leader taunt quotes:
+- You inherit strength and waste it.
+- Ambition without administration is just noise.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Finnish
+Civilization ID: RvltModFinnish
+Leader: Carl Gustaf Emil Mannerheim
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png
+Portrait description: Carl Gustaf Emil Mannerheim portrait
+Flag asset: resources/images/icons/flags/flag_hc_finnish.png
+Flag description: Finnish flag
+Elite units: Pikeman, Finnish Rider, Grenadier
+Non-elite units: Caroleans, Hakkapelit, Leather Cannons, Hussars, militia.
+Expected playstyle: Defensive marshal doctrine with entrenched infantry-artillery play.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Make the ground do half the work.
+- Order, cold nerve, and exact fire.
+Leader taunt quotes:
+- You waste terrain as if it were free.
+- Such a line would not survive a winter.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: French Canadians
+Civilization ID: RvltModFrenchCanadians
+Leader: Louis-Joseph Papineau
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png
+Portrait description: Louis-Joseph Papineau portrait
+Flag asset: resources/images/icons/flags/flag_hc_spc_canadian.png
+Flag description: Patriote movement flag
+Elite units: Skirmisher, Cuirassier
+Non-elite units: Musketeers, Hussars, Dragoons, Grenadiers, artillery.
+Expected playstyle: Defensive militia-reformer style with civic endurance and trade resilience.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Stand firm. Principle must not blink.
+- Give them resolve, not noise.
+Leader taunt quotes:
+- You govern by habit and expect obedience.
+- Even your victories sound like excuses.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Haitians
+Civilization ID: RvltModHaitians
+Leader: Toussaint Louverture
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png
+Portrait description: Toussaint Louverture portrait
+Flag asset: resources/images/icons/flags/flag_hc_haitian.png
+Flag description: Haitian flag
+Elite units: Maroon
+Non-elite units: Revolutionaries, Colonial Militia, dragoons, field guns.
+Expected playstyle: Aggressive revolutionary infantry with native-backed land pressure.
+Expected buildstyle: Mobile Frontier Scatter
+Leader encouragement quotes:
+- Stand unbroken. Liberty remembers courage.
+- Hold your ground with dignity and fire.
+Leader taunt quotes:
+- No army stands long upon the whip.
+- You command fear and mistake it for loyalty.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Hungarians
+Civilization ID: RvltModHungarians
+Leader: Lajos Kossuth
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png
+Portrait description: Lajos Kossuth portrait
+Flag asset: resources/images/icons/flags/flag_hc_hungarian.png
+Flag description: Hungarian tricolor
+Elite units: Hussar
+Non-elite units: Grensers, line infantry, uhlans, militia, field guns.
+Expected playstyle: Aggressive nationalist combined arms with strong cavalry commitment.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Fight as if the nation is watching.
+- Let resolve outrun their numbers.
+Leader taunt quotes:
+- A nation is not led by hesitation.
+- You bow to events before the battle is decided.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Indonesians
+Civilization ID: RvltModIndonesians
+Leader: Prince Diponegoro
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png
+Portrait description: Prince Diponegoro portrait
+Flag asset: resources/images/icons/flags/flag_hc_indonesian.png
+Flag description: Yogyakarta Sultanate flag
+Elite units: Halberdier, Ruyter
+Non-elite units: Skirmishers, Musketeers, Hussars, militia, field guns.
+Expected playstyle: Defensive resistance warfare with patient trade-backed play.
+Expected buildstyle: Distributed Economic Network
+Leader encouragement quotes:
+- Fight with patience and conviction.
+- Let the land fight beside us.
+Leader taunt quotes:
+- You occupy land you do not understand.
+- Java has buried stronger arrogance than this.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Mayans
+Civilization ID: RvltModMayans
+Leader: Jacinto Canek
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png
+Portrait description: Jacinto Canek portrait
+Flag asset: resources/images/icons/flags/flag_hc_mayan.png
+Flag description: Chan Santa Cruz flag
+Elite units: Salteador
+Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
+Expected playstyle: Aggressive indigenous uprising with infantry and native swarms.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Stand for the old ground and strike hard.
+- Hold the line with pride and fury.
+Leader taunt quotes:
+- Old ground does not honor cowards.
+- You mistake dominion for permanence.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Mexicans (Revolution)
+Civilization ID: RvltModMexicans
+Leader: Miguel Hidalgo y Costilla
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png
+Portrait description: Miguel Hidalgo y Costilla portrait
+Flag asset: resources/images/icons/flags/flag_hc_mexican_rev.png
+Flag description: Mexican flag
+Elite units: Pikeman, Rodelero, Chinaco
+Non-elite units: Insurgentes, Soldados, Salteadores, militia, field guns.
+Expected playstyle: Aggressive insurgent offense with infantry-led attacks and rising momentum.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Give them courage and they will give you a nation.
+- Push on. Let the cry for liberty answer with powder.
+Leader taunt quotes:
+- The people owe no loyalty to weakness.
+- Your rule shakes before a single volley.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Revolutionary France
+Civilization ID: RvltModRevolutionaryFrance
+Quote source civilization ID: French
+Leader: Maximilien Robespierre
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png
+Portrait description: Maximilien Robespierre portrait
+Flag asset: resources/images/icons/flags/flag_hc_french_revolution_ne.png
+Flag description: French tricolor
+Elite units: Skirmisher, Cuirassier
+Non-elite units: Musketeers, Hussars, Dragoons, Grenadiers, artillery.
+Expected playstyle: Aggressive republican terror-state play with zeal, militia pressure, and anti-elite momentum.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Take the ground quickly, then make it ours.
+- Momentum, not hesitation, wins empires.
+Leader taunt quotes:
+- You maneuver like a clerk and expect empire to follow.
+- Even at Austerlitz I saw less confusion.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Napoleonic France
+Civilization ID: RvltModNapoleonicFrance
+Leader: Napoleon Bonaparte
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png
+Portrait description: Napoleon I in coronation robes portrait
+Flag asset: resources/images/icons/flags/flag_hc_french_revolution_ne.png
+Flag description: First French Empire flag
+Elite units: Skirmisher, Cuirassier
+Non-elite units: Musketeers, Hussars, Dragoons, Grenadiers, artillery.
+Expected playstyle: Aggressive imperial tempo with heavy artillery, cavalry support, and forward-base escalation.
+Expected buildstyle: Forward Operational Line
+Leader encouragement quotes:
+- Take the center and dictate the day.
+- Push hard. Let them live in reaction.
+Leader taunt quotes:
+- Europe did not fear me for such maneuvers.
+- You waste the moment and the map.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Peruvians
+Civilization ID: RvltModPeruvians
+Leader: Andres de Santa Cruz
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png
+Portrait description: Andres de Santa Cruz portrait
+Flag asset: resources/images/icons/flags/flag_hc_peruvian.png
+Flag description: Peru-Bolivian Confederation flag
+Elite units: Pikeman, Rodelero, Lancer
+Non-elite units: Musketeers, Dragoons, Grenadiers, militia, field guns.
+Expected playstyle: Defensive Andean marshal play with infantry lines and fort-backed control.
+Expected buildstyle: Compact Fortified Core
+Leader encouragement quotes:
+- Keep the line measured and the heights ours.
+- Advance with order, and let the heights favor us.
+Leader taunt quotes:
+- You campaign without altitude or vision.
+- The Andes grant no pardon to such noise.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Rio Grande
+Civilization ID: RvltModRioGrande
+Leader: Antonio Canales Rosillo
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_rio_grande_canales_rosillo.png
+Portrait description: Antonio Canales Rosillo portrait
+Flag asset: resources/images/icons/flags/flag_hc_rio_grande.png
+Flag description: Republic of the Rio Grande flag
+Elite units: Chinaco, Salteador
+Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
+Expected playstyle: Aggressive border-war mobility with fast cavalry raids.
+Expected buildstyle: Mobile Frontier Scatter
+Leader encouragement quotes:
+- Hit first and keep them guessing.
+- Keep the border moving under them.
+Leader taunt quotes:
+- You were too slow for this border.
+- Your retreat started before your charge.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Romanians
+Civilization ID: RvltModRomanians
+Leader: Alexandru Ioan Cuza
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png
+Portrait description: Alexandru Ioan Cuza portrait
+Flag asset: resources/images/icons/flags/flag_hc_romanian.png
+Flag description: Romanian flag
+Elite units: Dorabant, Rosior Dragoon
+Non-elite units: Line infantry, Hussars, Skirmishers, militia, field guns.
+Expected playstyle: Defensive reformist combined arms with organized infantry-artillery pressure.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Keep the line ordered and the state intact.
+- Method first. Glory later.
+Leader taunt quotes:
+- You confuse disorder with liberty.
+- Your command lacks both nerve and order.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: South Africans
+Civilization ID: RvltModSouthAfricans
+Leader: Paul Kruger
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png
+Portrait description: Paul Kruger portrait
+Flag asset: resources/images/icons/flags/flag_hc_south_african.png
+Flag description: South African Republic flag
+Elite units: Halberdier, Ruyter
+Non-elite units: Skirmishers, Musketeers, Hussars, militia, field guns.
+Expected playstyle: Defensive frontier command with trade leverage and stubborn strongpoints.
+Expected buildstyle: Mobile Frontier Scatter
+Leader encouragement quotes:
+- Save your powder and make it count.
+- Hold steady. Stubborn men outlast empires.
+Leader taunt quotes:
+- You spend strength like a man with borrowed land.
+- Noise is not resolve.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Texians
+Civilization ID: RvltModTexians
+Leader: Sam Houston
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png
+Portrait description: Sam Houston portrait
+Flag asset: resources/images/icons/flags/flag_hc_texan.png
+Flag description: Texan flag
+Elite units: Chinaco, State Militia
+Non-elite units: Riflemen, Volunteers, Dragoons, militia, field guns.
+Expected playstyle: Defensive frontier counterpunch with fortified positions.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Wait for the opening and hit hard.
+- Make one blow decide it.
+Leader taunt quotes:
+- A loud charge is still a bad plan.
+- You forgot the ending before the first shot.
+Shared tactical quote set: see the header of this document.
+
+------------------------------------------------------------------------
+Nation: Yucatan
+Civilization ID: RvltModYucatan
+Leader: Felipe Carrillo Puerto
+Portrait asset: resources/images/icons/singleplayer/cpai_avatar_yucatan_carrillo_puerto.png
+Portrait description: Felipe Carrillo Puerto portrait
+Flag asset: resources/images/icons/flags/flag_hc_yucatan.png
+Flag description: Yucatan flag
+Elite units: Chinaco, Salteador
+Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
+Expected playstyle: Balanced regional resistance with native support and stubborn territorial play.
+Expected buildstyle: Civic Militia Center
+Leader encouragement quotes:
+- Hold the people close and the line closer.
+- Stand firm. The land remembers loyalty.
+Leader taunt quotes:
+- You rule without listening and fight the same way.
+- Even victory would not clean this disorder.
+Shared tactical quote set: see the header of this document.

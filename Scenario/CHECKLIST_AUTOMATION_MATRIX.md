@@ -103,9 +103,9 @@ These boxes are mostly style, timing, composition, or formation-judgment checks.
 
 ## Best Practical Workflow
 
-1. Use `Scenario/Legendary Leaders Test.age3Yscn` or the random-map test arena to force the mechanical cases.
+1. Use `Scenario/ANEWWORLD.age3Yscn` or a stock random map to force the mechanical cases.
 2. Add Scenario Editor triggers for reset, respawn, explorer teleport, and AI explorer kill.
-3. Run the match long enough to generate `Legendary Leaders:` markers in `Age3Log.txt`.
+3. Run the match long enough to generate `[LLP v=2]` probe markers in `Age3Log.txt`.
 4. Run `tools/validation/run_objective_runtime_checks.sh`.
 5. Use the checklist text file for the still-manual style and formation boxes.
 
