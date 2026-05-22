@@ -98,6 +98,7 @@
      <String _locID="400099">Observer: Repeat Fight</String>
      <String _locID="400100">Observer-only control. Grants the repeat-fight rebuild package early so the same engagement can be rerun after the first swing.</String>
      <String _locID="400101">Observer console: the repeat-fight window was triggered manually from the Town Center.</String>
+     <String _locID="400102">Maximilien Robespierre (1758-1794) led the Committee of Public Safety through the levée-en-masse mobilization and the Reign of Terror — toppled by Thermidorian reaction on 9 Thermidor Year II.\nThe First French Republic (1792-1804) transformed feudal armies into citizen-soldiers, fielding the largest force in European history through civic nationalism, forced requisition, and the principle that merit — not birth — was the path to command.</String>
 
     <string _locid="150070" comment="proto-Caravel civ-ANWArgentines type-title">Julietta</string>
     <string _locid="150071" comment="proto-Caravel civ-ANWArgentines type-title">Nancy</string>
