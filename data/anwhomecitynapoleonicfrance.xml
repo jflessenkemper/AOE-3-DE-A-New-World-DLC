@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWNapoleonicFrance</civ>
   <name>$$36885$$</name>
-  <heroname>$$43031$$</heroname>
+  <heroname>$$490353$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>french\french_homecity.xml</visual>
   <watervisual>french\french_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
@@ -1422,7 +1423,9 @@
     <deck>
 
 
-      <name>Napoleonic France</name>
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
 
@@ -1430,31 +1433,31 @@
 
 
       <cards>
-        <card>DEHCREVImperialOldGuard</card>
-        <card>DEHCREVNapoleonicWarfare</card>
-        <card>DEHCREVHundredDays</card>
-        <card>DEHCREVGrandBattery</card>
-        <card>DEHCREVFlyingBattery</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVContinentalBlockade</card>
-        <card>DEHCREVRustamsRegiment</card>
-        <card>DEHCREVClientStates</card>
-        <card>DEHCREVSisterRepublics</card>
         <card>DEHCShipBalloonsFrench</card>
         <card>HCExoticHardwoods</card>
+        <card>DEHCREVNapoleonicWarfare</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCTheaters</card>
         <card>DEHCWittelsbachAllies1</card>
         <card>HCFencingSchool</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
         <card>DEHCREVGenieTroops</card>
-        <card>DEHCFrenchRoyalArmy</card>
         <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCWittelsbachAllies2</card>
+        <card>HCNavalGunners</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVMercsBosniaksRepeat</card>
         <card>DEHCREVMercsMountedRiflemenRepeat</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>DEHCWittelsbachAllies2</card>
         <card>DEHCWittelsbachAlliesRepeat</card>
-        <card>HCNavalGunners</card>
+        <card>HCShipWoodCrates1</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1464,7 +1467,9 @@
     <deck>
 
 
-      <name>Napoleonic France</name>
+      <name>$$20310$$Land</name>
+
+
       <default>
 
 
@@ -1472,31 +1477,31 @@
 
 
       <cards>
-        <card>DEHCREVImperialOldGuard</card>
-        <card>DEHCREVNapoleonicWarfare</card>
-        <card>DEHCREVHundredDays</card>
-        <card>DEHCREVGrandBattery</card>
-        <card>DEHCREVFlyingBattery</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVContinentalBlockade</card>
-        <card>DEHCREVRustamsRegiment</card>
-        <card>DEHCREVClientStates</card>
-        <card>DEHCREVSisterRepublics</card>
         <card>DEHCShipBalloonsFrench</card>
         <card>HCExoticHardwoods</card>
+        <card>DEHCREVNapoleonicWarfare</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCTheaters</card>
         <card>DEHCWittelsbachAllies1</card>
         <card>HCFencingSchool</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
         <card>DEHCREVGenieTroops</card>
-        <card>DEHCFrenchRoyalArmy</card>
         <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCWittelsbachAllies2</card>
+        <card>HCNavalGunners</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVMercsBosniaksRepeat</card>
         <card>DEHCREVMercsMountedRiflemenRepeat</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>DEHCWittelsbachAllies2</card>
         <card>DEHCWittelsbachAlliesRepeat</card>
-        <card>HCNavalGunners</card>
+        <card>HCShipWoodCrates1</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1506,7 +1511,9 @@
     <deck>
 
 
-      <name>Napoleonic France</name>
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
 
@@ -1514,31 +1521,31 @@
 
 
       <cards>
-        <card>DEHCREVImperialOldGuard</card>
-        <card>DEHCREVNapoleonicWarfare</card>
-        <card>DEHCREVHundredDays</card>
-        <card>DEHCREVGrandBattery</card>
-        <card>DEHCREVFlyingBattery</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVContinentalBlockade</card>
-        <card>DEHCREVRustamsRegiment</card>
-        <card>DEHCREVClientStates</card>
-        <card>DEHCREVSisterRepublics</card>
         <card>DEHCShipBalloonsFrench</card>
         <card>HCExoticHardwoods</card>
+        <card>DEHCREVNapoleonicWarfare</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCTheaters</card>
         <card>DEHCWittelsbachAllies1</card>
         <card>HCFencingSchool</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
         <card>DEHCREVGenieTroops</card>
-        <card>DEHCFrenchRoyalArmy</card>
         <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCWittelsbachAllies2</card>
+        <card>HCNavalGunners</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVMercsBosniaksRepeat</card>
         <card>DEHCREVMercsMountedRiflemenRepeat</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>DEHCWittelsbachAllies2</card>
         <card>DEHCWittelsbachAlliesRepeat</card>
-        <card>HCNavalGunners</card>
+        <card>HCShipWoodCrates1</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1548,7 +1555,9 @@
     <deck>
 
 
-      <name>Napoleonic France</name>
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
 
@@ -1556,31 +1565,31 @@
 
 
       <cards>
-        <card>DEHCREVImperialOldGuard</card>
-        <card>DEHCREVNapoleonicWarfare</card>
-        <card>DEHCREVHundredDays</card>
-        <card>DEHCREVGrandBattery</card>
-        <card>DEHCREVFlyingBattery</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVContinentalBlockade</card>
-        <card>DEHCREVRustamsRegiment</card>
-        <card>DEHCREVClientStates</card>
-        <card>DEHCREVSisterRepublics</card>
         <card>DEHCShipBalloonsFrench</card>
         <card>HCExoticHardwoods</card>
+        <card>DEHCREVNapoleonicWarfare</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCTheaters</card>
         <card>DEHCWittelsbachAllies1</card>
         <card>HCFencingSchool</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
         <card>DEHCREVGenieTroops</card>
-        <card>DEHCFrenchRoyalArmy</card>
         <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCWittelsbachAllies2</card>
+        <card>HCNavalGunners</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVMercsBosniaksRepeat</card>
         <card>DEHCREVMercsMountedRiflemenRepeat</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>DEHCWittelsbachAllies2</card>
         <card>DEHCWittelsbachAlliesRepeat</card>
-        <card>HCNavalGunners</card>
+        <card>HCShipWoodCrates1</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1590,7 +1599,9 @@
     <deck>
 
 
-      <name>Napoleonic France</name>
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
 
@@ -1598,31 +1609,31 @@
 
 
       <cards>
-        <card>DEHCREVImperialOldGuard</card>
-        <card>DEHCREVNapoleonicWarfare</card>
-        <card>DEHCREVHundredDays</card>
-        <card>DEHCREVGrandBattery</card>
-        <card>DEHCREVFlyingBattery</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVContinentalBlockade</card>
-        <card>DEHCREVRustamsRegiment</card>
-        <card>DEHCREVClientStates</card>
-        <card>DEHCREVSisterRepublics</card>
         <card>DEHCShipBalloonsFrench</card>
         <card>HCExoticHardwoods</card>
+        <card>DEHCREVNapoleonicWarfare</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCTheaters</card>
         <card>DEHCWittelsbachAllies1</card>
         <card>HCFencingSchool</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
         <card>DEHCREVGenieTroops</card>
-        <card>DEHCFrenchRoyalArmy</card>
         <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCWittelsbachAllies2</card>
+        <card>HCNavalGunners</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVMercsBosniaksRepeat</card>
         <card>DEHCREVMercsMountedRiflemenRepeat</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>DEHCWittelsbachAllies2</card>
         <card>DEHCWittelsbachAlliesRepeat</card>
-        <card>HCNavalGunners</card>
+        <card>HCShipWoodCrates1</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1632,7 +1643,9 @@
     <deck>
 
 
-      <name>Napoleonic France</name>
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
 
@@ -1640,31 +1653,31 @@
 
 
       <cards>
-        <card>DEHCREVImperialOldGuard</card>
-        <card>DEHCREVNapoleonicWarfare</card>
-        <card>DEHCREVHundredDays</card>
-        <card>DEHCREVGrandBattery</card>
-        <card>DEHCREVFlyingBattery</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVContinentalBlockade</card>
-        <card>DEHCREVRustamsRegiment</card>
-        <card>DEHCREVClientStates</card>
-        <card>DEHCREVSisterRepublics</card>
         <card>DEHCShipBalloonsFrench</card>
         <card>HCExoticHardwoods</card>
+        <card>DEHCREVNapoleonicWarfare</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCTheaters</card>
         <card>DEHCWittelsbachAllies1</card>
         <card>HCFencingSchool</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
         <card>DEHCREVGenieTroops</card>
-        <card>DEHCFrenchRoyalArmy</card>
         <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCWittelsbachAllies2</card>
+        <card>HCNavalGunners</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVMercsBosniaksRepeat</card>
         <card>DEHCREVMercsMountedRiflemenRepeat</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>DEHCWittelsbachAllies2</card>
         <card>DEHCWittelsbachAlliesRepeat</card>
-        <card>HCNavalGunners</card>
+        <card>HCShipWoodCrates1</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 

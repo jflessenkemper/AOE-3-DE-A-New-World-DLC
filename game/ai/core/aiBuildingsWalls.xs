@@ -960,9 +960,13 @@ minInterval 60
       // by 1.0 forces float arithmetic.
       closure = (1.0 * actualPieces) / expectedPieces;
    }
+   int elapsedSec = xsGetTime() / 1000;
    llProbe("wall.closure", "expected=" + expectedPieces +
       " actual=" + actualPieces +
-      " closure=" + closure + " age=" + kbGetAge());
+      " closure=" + closure +
+      " strategy=" + gLLWallStrategy +
+      " elapsed=" + elapsedSec +
+      " age=" + kbGetAge());
 
    // <60% closure after 4 minutes of game time -> escalate.
    if ((closure < 0.6) && (xsGetTime() >= 240000))

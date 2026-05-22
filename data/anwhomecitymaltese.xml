@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWMaltese</civ>
+  <civ>DEMaltese</civ>
   <name>$$122012$$</name>
-  <heroname>$$122013$$</heroname>
+  <heroname>$$490344$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>malta\malta_homecity.xml</visual>
   <watervisual>malta\malta_homecity_water.xml</watervisual>
@@ -15,6 +15,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Malta</lightset>
   <watertype>Paris</watertype>
@@ -1587,9 +1588,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCKnightsMalta</card>
         <card>DEHCKnightsRhodes</card>
@@ -1617,6 +1628,228 @@
         <card>DEHCHospitality</card>
         <card>HCUnlockFort</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCKnightsMalta</card>
+        <card>DEHCKnightsRhodes</card>
+        <card>DEHCKnightsBodrum</card>
+        <card>DEHCAuberges</card>
+        <card>DEHCBritishTongue</card>
+        <card>DEHCFrenchTongue</card>
+        <card>DEHCSpanishTongue</card>
+        <card>DEHCGermanTongue</card>
+        <card>DEHCWallGuns</card>
+        <card>DEHCExplorerMaltese</card>
+        <card>HCHeavyFortifications</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCShipHospitaller1</card>
+        <card>DEHCShipHospitaller2</card>
+        <card>DEHCMalteseCombat</card>
+        <card>DEHCPortugueseTongue</card>
+        <card>DEHCShipHospitaller4</card>
+        <card>DEHCUnlockFort3</card>
+        <card>DEHCShipHospitallerTeam</card>
+        <card>DEHCEarlyFort</card>
+        <card>DEHCMalteseBattleshipCard</card>
+        <card>DEHCRussianTongue</card>
+        <card>DEHCShipRollingWoodMalta</card>
+        <card>DEHCHospitality</card>
+        <card>HCUnlockFort</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCKnightsMalta</card>
+        <card>DEHCKnightsRhodes</card>
+        <card>DEHCKnightsBodrum</card>
+        <card>DEHCAuberges</card>
+        <card>DEHCBritishTongue</card>
+        <card>DEHCFrenchTongue</card>
+        <card>DEHCSpanishTongue</card>
+        <card>DEHCGermanTongue</card>
+        <card>DEHCWallGuns</card>
+        <card>DEHCExplorerMaltese</card>
+        <card>HCHeavyFortifications</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCShipHospitaller1</card>
+        <card>DEHCShipHospitaller2</card>
+        <card>DEHCMalteseCombat</card>
+        <card>DEHCPortugueseTongue</card>
+        <card>DEHCShipHospitaller4</card>
+        <card>DEHCUnlockFort3</card>
+        <card>DEHCShipHospitallerTeam</card>
+        <card>DEHCEarlyFort</card>
+        <card>DEHCMalteseBattleshipCard</card>
+        <card>DEHCRussianTongue</card>
+        <card>DEHCShipRollingWoodMalta</card>
+        <card>DEHCHospitality</card>
+        <card>HCUnlockFort</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCKnightsMalta</card>
+        <card>DEHCKnightsRhodes</card>
+        <card>DEHCKnightsBodrum</card>
+        <card>DEHCAuberges</card>
+        <card>DEHCBritishTongue</card>
+        <card>DEHCFrenchTongue</card>
+        <card>DEHCSpanishTongue</card>
+        <card>DEHCGermanTongue</card>
+        <card>DEHCWallGuns</card>
+        <card>DEHCExplorerMaltese</card>
+        <card>HCHeavyFortifications</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCShipHospitaller1</card>
+        <card>DEHCShipHospitaller2</card>
+        <card>DEHCMalteseCombat</card>
+        <card>DEHCPortugueseTongue</card>
+        <card>DEHCShipHospitaller4</card>
+        <card>DEHCUnlockFort3</card>
+        <card>DEHCShipHospitallerTeam</card>
+        <card>DEHCEarlyFort</card>
+        <card>DEHCMalteseBattleshipCard</card>
+        <card>DEHCRussianTongue</card>
+        <card>DEHCShipRollingWoodMalta</card>
+        <card>DEHCHospitality</card>
+        <card>HCUnlockFort</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCKnightsMalta</card>
+        <card>DEHCKnightsRhodes</card>
+        <card>DEHCKnightsBodrum</card>
+        <card>DEHCAuberges</card>
+        <card>DEHCBritishTongue</card>
+        <card>DEHCFrenchTongue</card>
+        <card>DEHCSpanishTongue</card>
+        <card>DEHCGermanTongue</card>
+        <card>DEHCWallGuns</card>
+        <card>DEHCExplorerMaltese</card>
+        <card>HCHeavyFortifications</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCShipHospitaller1</card>
+        <card>DEHCShipHospitaller2</card>
+        <card>DEHCMalteseCombat</card>
+        <card>DEHCPortugueseTongue</card>
+        <card>DEHCShipHospitaller4</card>
+        <card>DEHCUnlockFort3</card>
+        <card>DEHCShipHospitallerTeam</card>
+        <card>DEHCEarlyFort</card>
+        <card>DEHCMalteseBattleshipCard</card>
+        <card>DEHCRussianTongue</card>
+        <card>DEHCShipRollingWoodMalta</card>
+        <card>DEHCHospitality</card>
+        <card>HCUnlockFort</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCKnightsMalta</card>
+        <card>DEHCKnightsRhodes</card>
+        <card>DEHCKnightsBodrum</card>
+        <card>DEHCAuberges</card>
+        <card>DEHCBritishTongue</card>
+        <card>DEHCFrenchTongue</card>
+        <card>DEHCSpanishTongue</card>
+        <card>DEHCGermanTongue</card>
+        <card>DEHCWallGuns</card>
+        <card>DEHCExplorerMaltese</card>
+        <card>HCHeavyFortifications</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCShipHospitaller1</card>
+        <card>DEHCShipHospitaller2</card>
+        <card>DEHCMalteseCombat</card>
+        <card>DEHCPortugueseTongue</card>
+        <card>DEHCShipHospitaller4</card>
+        <card>DEHCUnlockFort3</card>
+        <card>DEHCShipHospitallerTeam</card>
+        <card>DEHCEarlyFort</card>
+        <card>DEHCMalteseBattleshipCard</card>
+        <card>DEHCRussianTongue</card>
+        <card>DEHCShipRollingWoodMalta</card>
+        <card>DEHCHospitality</card>
+        <card>HCUnlockFort</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

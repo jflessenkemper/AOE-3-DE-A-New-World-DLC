@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWMexicans</civ>
+  <civ>DEMexicans</civ>
   <name>$$112002$$</name>
-  <heroname>$$112003$$</heroname>
+  <heroname>$$490220$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>mexico\mexico_homecity.xml</visual>
   <watervisual>mexico\mexico_homecity_water.xml</watervisual>
@@ -13,7 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
-  <maxcardsperdeck>21</maxcardsperdeck>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Mexico</lightset>
   <watertype>Seville</watertype>
@@ -2450,9 +2450,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCAlhondigaDeGranaditas</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
@@ -2480,6 +2490,228 @@
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCGuerillaTactics</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAlhondigaDeGranaditas</card>
+        <card>DEHCFedMXFortifiedHaciendas</card>
+        <card>DEHCCharreada</card>
+        <card>DEHCChipotles</card>
+        <card>DEHCBarbacoa</card>
+        <card>DEHCCriollos</card>
+        <card>DEHCGeneralMexicans</card>
+        <card>DEHCCavalryCombatMexican</card>
+        <card>DEHCCathedralConstruction</card>
+        <card>DEHCRoyalDecreeMexican</card>
+        <card>DEHCShipInsurgente1</card>
+        <card>DEHCMexicanMint</card>
+        <card>DEHCMexicanStandoff</card>
+        <card>DEHCSPCInsurgenteCombat</card>
+        <card>DEHCShipSoldado1</card>
+        <card>DEHCShipSoldado2</card>
+        <card>DEHCHidalgoLand</card>
+        <card>DEHCIndianFriendshipMexican</card>
+        <card>DEHCShipInsurgente2</card>
+        <card>DEHCShipFrigateRepeat</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipCapturedGalleons1</card>
+        <card>DEHCGuerillaTactics</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAlhondigaDeGranaditas</card>
+        <card>DEHCFedMXFortifiedHaciendas</card>
+        <card>DEHCCharreada</card>
+        <card>DEHCChipotles</card>
+        <card>DEHCBarbacoa</card>
+        <card>DEHCCriollos</card>
+        <card>DEHCGeneralMexicans</card>
+        <card>DEHCCavalryCombatMexican</card>
+        <card>DEHCCathedralConstruction</card>
+        <card>DEHCRoyalDecreeMexican</card>
+        <card>DEHCShipInsurgente1</card>
+        <card>DEHCMexicanMint</card>
+        <card>DEHCMexicanStandoff</card>
+        <card>DEHCSPCInsurgenteCombat</card>
+        <card>DEHCShipSoldado1</card>
+        <card>DEHCShipSoldado2</card>
+        <card>DEHCHidalgoLand</card>
+        <card>DEHCIndianFriendshipMexican</card>
+        <card>DEHCShipInsurgente2</card>
+        <card>DEHCShipFrigateRepeat</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipCapturedGalleons1</card>
+        <card>DEHCGuerillaTactics</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAlhondigaDeGranaditas</card>
+        <card>DEHCFedMXFortifiedHaciendas</card>
+        <card>DEHCCharreada</card>
+        <card>DEHCChipotles</card>
+        <card>DEHCBarbacoa</card>
+        <card>DEHCCriollos</card>
+        <card>DEHCGeneralMexicans</card>
+        <card>DEHCCavalryCombatMexican</card>
+        <card>DEHCCathedralConstruction</card>
+        <card>DEHCRoyalDecreeMexican</card>
+        <card>DEHCShipInsurgente1</card>
+        <card>DEHCMexicanMint</card>
+        <card>DEHCMexicanStandoff</card>
+        <card>DEHCSPCInsurgenteCombat</card>
+        <card>DEHCShipSoldado1</card>
+        <card>DEHCShipSoldado2</card>
+        <card>DEHCHidalgoLand</card>
+        <card>DEHCIndianFriendshipMexican</card>
+        <card>DEHCShipInsurgente2</card>
+        <card>DEHCShipFrigateRepeat</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipCapturedGalleons1</card>
+        <card>DEHCGuerillaTactics</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAlhondigaDeGranaditas</card>
+        <card>DEHCFedMXFortifiedHaciendas</card>
+        <card>DEHCCharreada</card>
+        <card>DEHCChipotles</card>
+        <card>DEHCBarbacoa</card>
+        <card>DEHCCriollos</card>
+        <card>DEHCGeneralMexicans</card>
+        <card>DEHCCavalryCombatMexican</card>
+        <card>DEHCCathedralConstruction</card>
+        <card>DEHCRoyalDecreeMexican</card>
+        <card>DEHCShipInsurgente1</card>
+        <card>DEHCMexicanMint</card>
+        <card>DEHCMexicanStandoff</card>
+        <card>DEHCSPCInsurgenteCombat</card>
+        <card>DEHCShipSoldado1</card>
+        <card>DEHCShipSoldado2</card>
+        <card>DEHCHidalgoLand</card>
+        <card>DEHCIndianFriendshipMexican</card>
+        <card>DEHCShipInsurgente2</card>
+        <card>DEHCShipFrigateRepeat</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipCapturedGalleons1</card>
+        <card>DEHCGuerillaTactics</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAlhondigaDeGranaditas</card>
+        <card>DEHCFedMXFortifiedHaciendas</card>
+        <card>DEHCCharreada</card>
+        <card>DEHCChipotles</card>
+        <card>DEHCBarbacoa</card>
+        <card>DEHCCriollos</card>
+        <card>DEHCGeneralMexicans</card>
+        <card>DEHCCavalryCombatMexican</card>
+        <card>DEHCCathedralConstruction</card>
+        <card>DEHCRoyalDecreeMexican</card>
+        <card>DEHCShipInsurgente1</card>
+        <card>DEHCMexicanMint</card>
+        <card>DEHCMexicanStandoff</card>
+        <card>DEHCSPCInsurgenteCombat</card>
+        <card>DEHCShipSoldado1</card>
+        <card>DEHCShipSoldado2</card>
+        <card>DEHCHidalgoLand</card>
+        <card>DEHCIndianFriendshipMexican</card>
+        <card>DEHCShipInsurgente2</card>
+        <card>DEHCShipFrigateRepeat</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipCapturedGalleons1</card>
+        <card>DEHCGuerillaTactics</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

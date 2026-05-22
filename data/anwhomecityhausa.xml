@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWHausa</civ>
+  <civ>DEHausa</civ>
   <name>$$101012$$</name>
-  <heroname>$$101013$$</heroname>
+  <heroname>$$490338$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>hausa\hausa_homecity.xml</visual>
   <watervisual>hausa\hausa_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hausa_homecity</lightset>
   <watertype>Constantinople</watertype>
@@ -1247,9 +1248,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCHausaKingdom</card>
         <card>DEHCEmirKatsina</card>
@@ -1277,6 +1288,228 @@
         <card>DEHCMaraboutNetwork</card>
         <card>DEHCPalaceAmina</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHausaKingdom</card>
+        <card>DEHCEmirKatsina</card>
+        <card>DEHCEarlyLifidi</card>
+        <card>DEHCFulaniCattleFertilizer</card>
+        <card>DEHCFulaniCrossingFestival</card>
+        <card>DEHCHandCavalryDamageHausa</card>
+        <card>DEHCHandCavalryHitpointsHausa</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCEmirKano</card>
+        <card>DEHCFulaniArcherCombat</card>
+        <card>DEHCOutlawsHausa</card>
+        <card>DEHCSahelianKingdoms</card>
+        <card>DEHCShipLifidiKnights1</card>
+        <card>DEHCAncientKanoWalls</card>
+        <card>DEHCExtensiveFortificationsHausa</card>
+        <card>DEHCFulaniInvasion</card>
+        <card>DEHCRedFulaniCattle</card>
+        <card>DEHCShipLifidiKnights3</card>
+        <card>DEHCShipLifidiKnights2</card>
+        <card>DEHCShipLifidiKnightsRepeat</card>
+        <card>DEHCShipRaidersRepeat</card>
+        <card>DEHCSokotoChronicle</card>
+        <card>DEHCKatsinaFortifications</card>
+        <card>DEHCMaraboutNetwork</card>
+        <card>DEHCPalaceAmina</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHausaKingdom</card>
+        <card>DEHCEmirKatsina</card>
+        <card>DEHCEarlyLifidi</card>
+        <card>DEHCFulaniCattleFertilizer</card>
+        <card>DEHCFulaniCrossingFestival</card>
+        <card>DEHCHandCavalryDamageHausa</card>
+        <card>DEHCHandCavalryHitpointsHausa</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCEmirKano</card>
+        <card>DEHCFulaniArcherCombat</card>
+        <card>DEHCOutlawsHausa</card>
+        <card>DEHCSahelianKingdoms</card>
+        <card>DEHCShipLifidiKnights1</card>
+        <card>DEHCAncientKanoWalls</card>
+        <card>DEHCExtensiveFortificationsHausa</card>
+        <card>DEHCFulaniInvasion</card>
+        <card>DEHCRedFulaniCattle</card>
+        <card>DEHCShipLifidiKnights3</card>
+        <card>DEHCShipLifidiKnights2</card>
+        <card>DEHCShipLifidiKnightsRepeat</card>
+        <card>DEHCShipRaidersRepeat</card>
+        <card>DEHCSokotoChronicle</card>
+        <card>DEHCKatsinaFortifications</card>
+        <card>DEHCMaraboutNetwork</card>
+        <card>DEHCPalaceAmina</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHausaKingdom</card>
+        <card>DEHCEmirKatsina</card>
+        <card>DEHCEarlyLifidi</card>
+        <card>DEHCFulaniCattleFertilizer</card>
+        <card>DEHCFulaniCrossingFestival</card>
+        <card>DEHCHandCavalryDamageHausa</card>
+        <card>DEHCHandCavalryHitpointsHausa</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCEmirKano</card>
+        <card>DEHCFulaniArcherCombat</card>
+        <card>DEHCOutlawsHausa</card>
+        <card>DEHCSahelianKingdoms</card>
+        <card>DEHCShipLifidiKnights1</card>
+        <card>DEHCAncientKanoWalls</card>
+        <card>DEHCExtensiveFortificationsHausa</card>
+        <card>DEHCFulaniInvasion</card>
+        <card>DEHCRedFulaniCattle</card>
+        <card>DEHCShipLifidiKnights3</card>
+        <card>DEHCShipLifidiKnights2</card>
+        <card>DEHCShipLifidiKnightsRepeat</card>
+        <card>DEHCShipRaidersRepeat</card>
+        <card>DEHCSokotoChronicle</card>
+        <card>DEHCKatsinaFortifications</card>
+        <card>DEHCMaraboutNetwork</card>
+        <card>DEHCPalaceAmina</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHausaKingdom</card>
+        <card>DEHCEmirKatsina</card>
+        <card>DEHCEarlyLifidi</card>
+        <card>DEHCFulaniCattleFertilizer</card>
+        <card>DEHCFulaniCrossingFestival</card>
+        <card>DEHCHandCavalryDamageHausa</card>
+        <card>DEHCHandCavalryHitpointsHausa</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCEmirKano</card>
+        <card>DEHCFulaniArcherCombat</card>
+        <card>DEHCOutlawsHausa</card>
+        <card>DEHCSahelianKingdoms</card>
+        <card>DEHCShipLifidiKnights1</card>
+        <card>DEHCAncientKanoWalls</card>
+        <card>DEHCExtensiveFortificationsHausa</card>
+        <card>DEHCFulaniInvasion</card>
+        <card>DEHCRedFulaniCattle</card>
+        <card>DEHCShipLifidiKnights3</card>
+        <card>DEHCShipLifidiKnights2</card>
+        <card>DEHCShipLifidiKnightsRepeat</card>
+        <card>DEHCShipRaidersRepeat</card>
+        <card>DEHCSokotoChronicle</card>
+        <card>DEHCKatsinaFortifications</card>
+        <card>DEHCMaraboutNetwork</card>
+        <card>DEHCPalaceAmina</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHausaKingdom</card>
+        <card>DEHCEmirKatsina</card>
+        <card>DEHCEarlyLifidi</card>
+        <card>DEHCFulaniCattleFertilizer</card>
+        <card>DEHCFulaniCrossingFestival</card>
+        <card>DEHCHandCavalryDamageHausa</card>
+        <card>DEHCHandCavalryHitpointsHausa</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCEmirKano</card>
+        <card>DEHCFulaniArcherCombat</card>
+        <card>DEHCOutlawsHausa</card>
+        <card>DEHCSahelianKingdoms</card>
+        <card>DEHCShipLifidiKnights1</card>
+        <card>DEHCAncientKanoWalls</card>
+        <card>DEHCExtensiveFortificationsHausa</card>
+        <card>DEHCFulaniInvasion</card>
+        <card>DEHCRedFulaniCattle</card>
+        <card>DEHCShipLifidiKnights3</card>
+        <card>DEHCShipLifidiKnights2</card>
+        <card>DEHCShipLifidiKnightsRepeat</card>
+        <card>DEHCShipRaidersRepeat</card>
+        <card>DEHCSokotoChronicle</card>
+        <card>DEHCKatsinaFortifications</card>
+        <card>DEHCMaraboutNetwork</card>
+        <card>DEHCPalaceAmina</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

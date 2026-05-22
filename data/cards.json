@@ -50,14 +50,14 @@
     "name": "7 Spies"
   },
   "DEHCAdvancedCommanderies": {
-    "desc": "Commanderies gain additional garrison space and may deploy Units more often.\\n \u2022 Deploy Ability: Cooldown time -50%",
+    "desc": "Commanderies gain additional garrison space and may deploy Units more often.\\n • Deploy Ability: Cooldown time -50%",
     "icon": "advanced_commandery.png",
     "name": "Advanced Commanderies"
   },
   "DEHCAdvancedEnvoy": {
     "desc": "Ships 2 Envoys. Allows your Envoy to build Trading Posts and military production buildings.",
     "icon": "peaceofmuenster.png",
-    "name": "Peace of M\u00fcnster"
+    "name": "Peace of Münster"
   },
   "DEHCAdvancedLivestockMarket": {
     "desc": "Animal exchange rates recover faster. Resource exchange rates improved.",
@@ -92,7 +92,7 @@
   "DEHCAlhondigaDeGranaditas": {
     "desc": "Ships 1 Hacienda Wagon and 2 Settlers.",
     "icon": "alhondiga_de_granaditas.png",
-    "name": "Alh\u00f3ndiga de Granaditas"
+    "name": "Alhóndiga de Granaditas"
   },
   "DEHCAlpacaWool": {
     "desc": "Villager hitpoints and armor increased.",
@@ -107,7 +107,7 @@
   "DEHCAncienRegime": {
     "desc": "Ships 1 Royal Embassy in which the House of Bourbon grants access to its royal units, upgrades, and two technologies. Bourbon units now cost population when acquired from the Royal Embassy or the home city.",
     "icon": "ancien_regime.png",
-    "name": "Ancien R\u00e9gime"
+    "name": "Ancien Régime"
   },
   "DEHCAncientKanoWalls": {
     "desc": "TEAM Wall hitpoints are improved by nearby military units.",
@@ -135,7 +135,7 @@
     "name": "TEAM Odzutsu Mortars"
   },
   "DEHCAuberges": {
-    "desc": "Commanderies now also support population and Order Units are less expensive.\\n \u2022 Commandery: Support Population +10\\n \u2022 Commandery: Unit cost -10%",
+    "desc": "Commanderies now also support population and Order Units are less expensive.\\n • Commandery: Support Population +10\\n • Commandery: Unit cost -10%",
     "icon": "auberges.png",
     "name": "Auberges"
   },
@@ -187,7 +187,7 @@
   "DEHCBerberNomads": {
     "desc": "Ships a Berber Nomad villager for each Trading Post and Town Center you control.",
     "icon": "air_nomads.png",
-    "name": "A\u00efr Berbers"
+    "name": "Aïr Berbers"
   },
   "DEHCBlackMesa": {
     "desc": "Ships 1 Coal Prospector Wagon and 5 Gunslingers. Enables Gunslingers to gather coin from Mines.",
@@ -205,7 +205,7 @@
     "name": "Nassau Regiment"
   },
   "DEHCBlueberries": {
-    "desc": "Torps now spawn Blueberry Bushes instead of Berry Bushes. Your Berry Bushes present on the map also become Blueberry Bushes and contain more food. Blueberries are gathered much faster by Torps. L\u00e4ckert!",
+    "desc": "Torps now spawn Blueberry Bushes instead of Berry Bushes. Your Berry Bushes present on the map also become Blueberry Bushes and contain more food. Blueberries are gathered much faster by Torps. Läckert!",
     "icon": "blueberries.png",
     "name": "Blueberries"
   },
@@ -335,7 +335,7 @@
     "name": "Indian Gunpowder"
   },
   "DEHCChichimecaRebellion": {
-    "desc": "Rebellion! The resistance of the Chichimeca ennobles your present War Hut warriors and turns them into Knights. Villagers become Warriors instead of dying.\\n \u2022 Puma Spearmen become Jaguar Prowl Knights\\n \u2022 Coyote Runners become Eagle Runner Knights\\n \u2022 Otontin Slingers become Arrow Knights.",
+    "desc": "Rebellion! The resistance of the Chichimeca ennobles your present War Hut warriors and turns them into Knights. Villagers become Warriors instead of dying.\\n • Puma Spearmen become Jaguar Prowl Knights\\n • Coyote Runners become Eagle Runner Knights\\n • Otontin Slingers become Arrow Knights.",
     "icon": "chichimeca_rebellion.png",
     "name": "Chichimeca Rebellion"
   },
@@ -570,7 +570,7 @@
     "name": "Fertile Lowlands"
   },
   "DEHCFedGeneralAssembly": {
-    "desc": "Ships 1 State Capitol Wagon and makes the next upgrade researched at the State Capitol FREE (excluding Spies and Blockade).\\n \u2022 Affects ONE upgrade",
+    "desc": "Ships 1 State Capitol Wagon and makes the next upgrade researched at the State Capitol FREE (excluding Spies and Blockade).\\n • Affects ONE upgrade",
     "icon": "vg_virginia_general_assembly.png",
     "name": "Virginia General Assembly"
   },
@@ -742,7 +742,7 @@
   "DEHCGermanBattleshipCard": {
     "desc": "Ships a mighty Battleship ahead of its time! German Battleships can train mercenaries. Instead of Uhlans, you get an extra Privateer.",
     "icon": "german_battleship.png",
-    "name": "Adler von L\u00fcbeck"
+    "name": "Adler von Lübeck"
   },
   "DEHCGermanChevaulegers": {
     "desc": "Replaces War Wagons in your Stable and Home city with naturalized Wittelsbach Chevaulegers, called Prinz Chevaulegers, that can be trained and upgraded. Also ships a number of Prinz Chevaulegers, +2 Prinz Chevaulegers.",
@@ -770,7 +770,7 @@
     "name": "Greenwich Time"
   },
   "DEHCGuerillaTactics": {
-    "desc": "Improves Salteadores in combat and grants them the \"Guerilla Tactics\" Big Ability Button.\\n \u2022 Big Ability Button: If not in combat, Salteadores will automatically be stealthy with no speed penalty - for a short duration.",
+    "desc": "Improves Salteadores in combat and grants them the \"Guerilla Tactics\" Big Ability Button.\\n • Big Ability Button: If not in combat, Salteadores will automatically be stealthy with no speed penalty - for a short duration.",
     "icon": "ambuscade.png",
     "name": "Guerilla Tactics"
   },
@@ -780,7 +780,7 @@
     "name": "TEAM Gulf of Mexico"
   },
   "DEHCHabaneroPeppers": {
-    "desc": "Arrives fast! For a brief period of time, Villagers gather resources significantly faster from Haciendas. Slightly improves rates permanently.\\n \u2022 Time limited Boost: Hacienda gathering +100% for 60 seconds",
+    "desc": "Arrives fast! For a brief period of time, Villagers gather resources significantly faster from Haciendas. Slightly improves rates permanently.\\n • Time limited Boost: Hacienda gathering +100% for 60 seconds",
     "icon": "habanero_peppers.png",
     "name": "Habanero Peppers"
   },
@@ -865,7 +865,7 @@
     "name": "4 Hanover Allies"
   },
   "DEHCHausaKingdom": {
-    "desc": "Ships all of the following Builders up until the reached age:\\n \u2022 Exploration Age: 1 University Builder \\n \u2022 Commerce Age: 1 Trade Builder\\n \u2022 Fortress Age: 1 Palace Builder\\n \u2022 Industrial Age: 1 Town Center Builder\\n \u2022 Imperial Age: 5 Camp Builders",
+    "desc": "Ships all of the following Builders up until the reached age:\\n • Exploration Age: 1 University Builder \\n • Commerce Age: 1 Trade Builder\\n • Fortress Age: 1 Palace Builder\\n • Industrial Age: 1 Town Center Builder\\n • Imperial Age: 5 Camp Builders",
     "icon": "university_icon.png",
     "name": "Hausa Kingdom"
   },
@@ -890,7 +890,7 @@
     "name": "TEAM House of Bernadotte"
   },
   "DEHCHidalgoLand": {
-    "desc": "Significantly improves the Padre's healing speed and range, including his abilities.\\n \u2022 Padre: Heal Rate +100%",
+    "desc": "Significantly improves the Padre's healing speed and range, including his abilities.\\n • Padre: Heal Rate +100%",
     "icon": "land_of_hidalgo.png",
     "name": "Land of Hidalgo"
   },
@@ -940,7 +940,7 @@
     "name": "Russian-American Company"
   },
   "DEHCImmigrantsSpanish": {
-    "desc": "Ships 1 Outpost Wagon. Spanish immigration boosts XP income, allowing you to earn shipments considerably faster. Upon reaching the Commerce Age, the \"Levy\" ability can also be used to call groups of powerful Pikemen.\\n \u2022 The Pikemen do not lose hitpoints.",
+    "desc": "Ships 1 Outpost Wagon. Spanish immigration boosts XP income, allowing you to earn shipments considerably faster. Upon reaching the Commerce Age, the \"Levy\" ability can also be used to call groups of powerful Pikemen.\\n • The Pikemen do not lose hitpoints.",
     "icon": "immigrants_spanish.png",
     "name": "Spanish Immigrants"
   },
@@ -972,7 +972,7 @@
   "DEHCIndianFriendshipMexican": {
     "desc": "Native Warriors are trained 10% faster and shipped 50% faster. You get a large Shipment of upgraded Native Warriors from each different allied tribe.",
     "icon": "indian_friendship.png",
-    "name": "Chimay\u00f3 Genizarios"
+    "name": "Chimayó Genizarios"
   },
   "DEHCIndianTradeEthiopia": {
     "desc": "Trade Routes supply more resources and Native Settlements trickle more Influence.",
@@ -1020,7 +1020,7 @@
     "name": "5 Jagiellon Allies"
   },
   "DEHCJalapenoPeppers": {
-    "desc": "Arrives fast! For a brief period of time, Villagers gather resources significantly faster from Haciendas. Slightly improves rates permanently.\\n \u2022 Timelimited Boost: Hacienda Gathering +250% for 30 seconds",
+    "desc": "Arrives fast! For a brief period of time, Villagers gather resources significantly faster from Haciendas. Slightly improves rates permanently.\\n • Timelimited Boost: Hacienda Gathering +250% for 30 seconds",
     "icon": "jalapeno_peppers.png",
     "name": "Jalapeno Peppers"
   },
@@ -1040,7 +1040,7 @@
     "name": "Katsina Fortifications"
   },
   "DEHCKingKings": {
-    "desc": "You receive a free pet Lion with all future shipments, starting with this one. Rases gains the \"Roar of the Lion!\" ability:\\n \u2022 Roar of the Lion: Increases the movement and attack speed of units nearby any Ras for a short duration.",
+    "desc": "You receive a free pet Lion with all future shipments, starting with this one. Rases gains the \"Roar of the Lion!\" ability:\\n • Roar of the Lion: Increases the movement and attack speed of units nearby any Ras for a short duration.",
     "icon": "king_of_kings.png",
     "name": "King of Kings"
   },
@@ -1145,7 +1145,7 @@
     "name": "Sovereign Order of Malta"
   },
   "DEHCManOfDestiny": {
-    "desc": "Your General now also boosts morale, like the Inspiring Flag. He may also receive Homecity shipments and slowly train Soldados.\\n \u2022 Inspiring Aura: Does not stack with flag",
+    "desc": "Your General now also boosts morale, like the Inspiring Flag. He may also receive Homecity shipments and slowly train Soldados.\\n • Inspiring Aura: Does not stack with flag",
     "icon": "man_of_destiny.png",
     "name": "Man of Destiny"
   },
@@ -1175,7 +1175,7 @@
     "name": "TEAM Mariachi"
   },
   "DEHCMarvelousYear": {
-    "desc": "Settlers train and work significantly faster for 365 seconds. A marvelous year, Viva Espa\u00f1a!",
+    "desc": "Settlers train and work significantly faster for 365 seconds. A marvelous year, Viva España!",
     "icon": "marvelous_year.png",
     "name": "Marvelous Year"
   },
@@ -1332,7 +1332,7 @@
   "DEHCNinosHeroes": {
     "desc": "Every time your General or Padre gets knocked out a Militiaman spawns.",
     "icon": "ninos_heroes.png",
-    "name": "Ni\u00f1os H\u00e9roes"
+    "name": "Niños Héroes"
   },
   "DEHCNorthernForests": {
     "desc": "Tremendously improves your Torps at gathering wood by enabling them to gather from more trees as well as further away trees. Also, all existing Torps spawn 3 Trees.",
@@ -1342,7 +1342,7 @@
   "DEHCNuevoMexico": {
     "desc": "TEAM Ships 1 Covered Wagon which can be built in any age. All existing and newly constructed TEAM Town Centers spawn 1 Post Wagon.",
     "icon": "team_nuevo_mexico_territory.png",
-    "name": "TEAM Nuevo M\u00e9xico Territory"
+    "name": "TEAM Nuevo México Territory"
   },
   "DEHCObservers": {
     "desc": "Salteadores are stronger when nearby natural resources (Trees, Mines, Huntables, etc) and their attacks reveal enemies for a longer duration.",
@@ -1410,9 +1410,9 @@
     "name": "9 Phanar Allies"
   },
   "DEHCPinatas": {
-    "desc": "Ships a random selection of resource crates to each member of your team. More resources are delivered if this card is sent in a later age.\\n \u2022 Age 1: 200 resources\\n \u2022 Age 2: 400 resources\\n \u2022 Age 3: 600 resources\\n \u2022 Age 4: 1000 resources\\n \u2022 Age 5: 1600 resources",
+    "desc": "Ships a random selection of resource crates to each member of your team. More resources are delivered if this card is sent in a later age.\\n • Age 1: 200 resources\\n • Age 2: 400 resources\\n • Age 3: 600 resources\\n • Age 4: 1000 resources\\n • Age 5: 1600 resources",
     "icon": "team_pinatas.png",
-    "name": "TEAM Pi\u00f1atas"
+    "name": "TEAM Piñatas"
   },
   "DEHCPioneersItalian": {
     "desc": "Italian Settler hitpoints, movement speed, and melee damage are increased by this rough type of play.",
@@ -1462,7 +1462,7 @@
   "DEHCPortugueseBattleshipCard": {
     "desc": "Ships a mighty Battleship! Portuguese Battleships can now heal other ships.",
     "icon": "portuguese_battleship.png",
-    "name": "Nossa Senhora da Concei\u00e7\u00e3o"
+    "name": "Nossa Senhora da Conceição"
   },
   "DEHCPortugueseTongue": {
     "desc": "Ships a Commandery Wagon and a number of powerful Order Cassador. Enables Commanderies to recruit them.",
@@ -1505,7 +1505,7 @@
     "name": "Amazonia"
   },
   "DEHCREVAmericanAlliesPeru": {
-    "desc": "Ships 1 Native Embassy Travois and enables you to choose a Native Ally at your Native Embassy. The chosen ally will allow you to recruit Native Warriors and research some of their unique upgrades at the Native Embassy.\\n \u2022 You may only pick ONE ally",
+    "desc": "Ships 1 Native Embassy Travois and enables you to choose a Native Ally at your Native Embassy. The chosen ally will allow you to recruit Native Warriors and research some of their unique upgrades at the Native Embassy.\\n • You may only pick ONE ally",
     "icon": "american_allies_inca.png",
     "name": "American Allies"
   },
@@ -1537,7 +1537,7 @@
   "DEHCREVBerberNomads": {
     "desc": "Ships a Berber Nomad villager for each Trading Post and Town Center you control.",
     "icon": "air_nomads.png",
-    "name": "A\u00efr Berbers"
+    "name": "Aïr Berbers"
   },
   "DEHCREVBlandengues": {
     "desc": "Hand cavalry is cheaper.",
@@ -1577,7 +1577,7 @@
   "DEHCREVCantinieres": {
     "desc": "Field Hospitals can be built in greater numbers and generate food. Improves the food gather rate of Sansculottes.",
     "icon": "cantinieres.png",
-    "name": "Cantini\u00e8res"
+    "name": "Cantinières"
   },
   "DEHCREVCattleDelivery": {
     "desc": "Ships 8 semi-fattened Cows, 1 Comanchero, and 1 Homestead Wagon.",
@@ -1590,7 +1590,7 @@
     "name": "Cattle Drivers"
   },
   "DEHCREVCattleDeliveryBrazil": {
-    "desc": "Ships 8 semi-fattened Cows, 1 Jagun\u00e7o and 1 Homestead Wagon",
+    "desc": "Ships 8 semi-fattened Cows, 1 Jagunço and 1 Homestead Wagon",
     "icon": "cattle_drivers.png",
     "name": "Cattle Drivers"
   },
@@ -1722,7 +1722,7 @@
   "DEHCREVFedMXSolisShredders": {
     "desc": "Haciendas gain a toggle that allows workers to gather Wood.",
     "icon": "solis_shredders.png",
-    "name": "Sol\u00eds Shredders"
+    "name": "Solís Shredders"
   },
   "DEHCREVFedMXTrickleEconomics": {
     "desc": "Trading Routes generate significantly more resources and Native Settlements now also trickle XP for the entire team.",
@@ -1767,7 +1767,7 @@
   "DEHCREVGenieTroops": {
     "desc": "Enables Grenadiers to mine, chop wood and construct a selection of buildings.",
     "icon": "genie_troops.png",
-    "name": "G\u00e9nie Troops"
+    "name": "Génie Troops"
   },
   "DEHCREVGrandBattery": {
     "desc": "Ships a battery of powerful artillery units.",
@@ -1832,7 +1832,7 @@
   "DEHCREVJuninHussars": {
     "desc": "Hand cavalry trains and moves faster.",
     "icon": "georgia_hussars.png",
-    "name": "Jun\u00edn Hussars"
+    "name": "Junín Hussars"
   },
   "DEHCREVKratonGuards": {
     "desc": "Improves Revolutionaries and Pikemen units in combat.",
@@ -1903,11 +1903,6 @@
     "desc": "Arrives fast! If you control a Trading Post majority, this card can be sent and begins a Trade Monopoly Victory countdown (if you maintain that majority for 5 minutes, you win the game!)",
     "icon": "annexation.png",
     "name": "Annexation"
-  },
-  "DEHCREVMXBajaCaliforniaTerritory": {
-    "desc": "Ships 3 Settlers. Haciendas attract nearby Huntable Animals to improve production rates.",
-    "icon": "baja_california_territory.png",
-    "name": "Baja California Territory"
   },
   "DEHCREVMXBallcourts": {
     "desc": "The famous ball game played in Maya ballcourts increases movement and train speed of your Infantry units.",
@@ -2040,7 +2035,7 @@
     "name": "Maya Architecture"
   },
   "DEHCREVMXMayaCeramics": {
-    "desc": "Researches Tonal\u00e1 Ceramics. Ships Chests of Coin for every shipment sent so far this game.",
+    "desc": "Researches Tonalá Ceramics. Ships Chests of Coin for every shipment sent so far this game.",
     "icon": "maya_ceramics.png",
     "name": "Maya Ceramics"
   },
@@ -2057,12 +2052,12 @@
   "DEHCREVMXMayaMariaUicab": {
     "desc": "Ships a Priestess with the ability to heal and convert units.",
     "icon": "maria_uicab.png",
-    "name": "Mar\u00eda Uicab"
+    "name": "María Uicab"
   },
   "DEHCREVMXMayaNojPeten": {
     "desc": "Fishing Boats are cheaper.",
     "icon": "nojpeten.png",
-    "name": "Nojpet\u00e9n"
+    "name": "Nojpetén"
   },
   "DEHCREVMXMayaPootsPlan": {
     "desc": "",
@@ -2092,7 +2087,7 @@
   "DEHCREVMXPlanMerida": {
     "desc": "Transforms all your Settlers into 2 Insurgentes. New Settlers respawn faster.",
     "icon": "plan_merida.png",
-    "name": "Plan of M\u00e9rida"
+    "name": "Plan of Mérida"
   },
   "DEHCREVMXRanchos": {
     "desc": "Allows Californios to harvest animals and work at Haciendas.",
@@ -2325,7 +2320,7 @@
     "name": "Napoleonic Warfare"
   },
   "DEHCREVNationalHero": {
-    "desc": "Sim\u00f3n Bol\u00edvar arrives to lead your revolutionary army!",
+    "desc": "Simón Bolívar arrives to lead your revolutionary army!",
     "icon": "bolivar_icon.png",
     "name": "National Hero"
   },
@@ -2407,7 +2402,7 @@
   "DEHCREVSaleRovers": {
     "desc": "Ships a powerful mercenary Xebec warship and a number of agile Corsair Marksmen good against heavy infantry and light ranged cavalry.",
     "icon": "sale_rovers.png",
-    "name": "Sal\u00e9 Rovers"
+    "name": "Salé Rovers"
   },
   "DEHCREVSalitrera": {
     "desc": "Estates generate a small trickle of Coin, +3 Estate Wagons.",
@@ -2810,7 +2805,7 @@
     "name": "Rockets"
   },
   "DEHCRollingArtillery": {
-    "desc": "Ships fewer Gatling Guns with each use, but resets after the third use.\\n \u2022 First time: 3 Gatling Guns\\n \u2022 Second time: 2 Gatling Guns\\n \u2022 Third time: 1 Gatling Gun",
+    "desc": "Ships fewer Gatling Guns with each use, but resets after the third use.\\n • First time: 3 Gatling Guns\\n • Second time: 2 Gatling Guns\\n • Third time: 1 Gatling Gun",
     "icon": "rolling_artillery.png",
     "name": "Rolling Artillery"
   },
@@ -3125,9 +3120,9 @@
     "name": "6 Fattened Llamas"
   },
   "DEHCShipFishCrate": {
-    "desc": "Ships 2 Crates of Surstr\u00f6mming, which provide more Food over time. You can have up to 10 Crates of Surstr\u00f6mming in play at any time.",
+    "desc": "Ships 2 Crates of Surströmming, which provide more Food over time. You can have up to 10 Crates of Surströmming in play at any time.",
     "icon": "cod_icon_infinite.png",
-    "name": "Surstr\u00f6mming"
+    "name": "Surströmming"
   },
   "DEHCShipFishingBoats1": {
     "desc": "",
@@ -3462,7 +3457,7 @@
   "DEHCShipNuestrasSenoras": {
     "desc": "Ships 2 mighty Battleships.",
     "icon": "nuestras_senoras.png",
-    "name": "Nuestras Se\u00f1oras"
+    "name": "Nuestras Señoras"
   },
   "DEHCShipPapalBombards": {
     "desc": "",
@@ -3607,17 +3602,17 @@
   "DEHCShipSettlersOttoman1": {
     "desc": "Villager that constructs buildings and gathers resources.",
     "icon": "hc_villager_ottoman_icon.png",
-    "name": "3 Y\u00f6r\u00fcks"
+    "name": "3 Yörüks"
   },
   "DEHCShipSettlersOttoman2": {
     "desc": "Villager that constructs buildings and gathers resources.",
     "icon": "hc_villager_ottoman_icon.png",
-    "name": "5 Y\u00f6r\u00fcks"
+    "name": "5 Yörüks"
   },
   "DEHCShipSettlersOttomanRepeat": {
     "desc": "Villager that constructs buildings and gathers resources.",
     "icon": "infinite_villager_ottoman.png",
-    "name": "2 Y\u00f6r\u00fcks"
+    "name": "2 Yörüks"
   },
   "DEHCShipShotel1": {
     "desc": "",
@@ -3850,7 +3845,7 @@
     "name": "Tulancingo Cuirassiers"
   },
   "DEHCTupacRebellion": {
-    "desc": "Rebellion! All trained units pick up European weaponry:\\n \u2022 Villagers become Revolutionaries\\n \u2022 Plumed Spearman become Guard Musketeers\\n \u2022 Bolas Warriors become Veteran Dragoons\\n \u2022 Chimu Runners become Guard Hussars\\n \u2022 Jungle Bowman become Guard Skirmishers\\n \u2022 Huaracas becomes Guard Grenadiers\\n \u2022 Macemen become Guard Soldados",
+    "desc": "Rebellion! All trained units pick up European weaponry:\\n • Villagers become Revolutionaries\\n • Plumed Spearman become Guard Musketeers\\n • Bolas Warriors become Veteran Dragoons\\n • Chimu Runners become Guard Hussars\\n • Jungle Bowman become Guard Skirmishers\\n • Huaracas becomes Guard Grenadiers\\n • Macemen become Guard Soldados",
     "icon": "revolution.png",
     "name": "Tupac Rebellion"
   },
@@ -3925,7 +3920,7 @@
     "name": "TEAM Whale Oil"
   },
   "DEHCWignacourtConstructions": {
-    "desc": "Settlers gather natural resources faster, especially when nearby a Town Center, Outpost or Commandery.\\n \u2022 Villager: Gather Work Rate +10%\\n \u2022 Villager: Gather Work Rate near Ranged Buildings +20%",
+    "desc": "Settlers gather natural resources faster, especially when nearby a Town Center, Outpost or Commandery.\\n • Villager: Gather Work Rate +10%\\n • Villager: Gather Work Rate near Ranged Buildings +20%",
     "icon": "wignacourt_constructions.png",
     "name": "Wignacourt Constructions"
   },
@@ -4037,7 +4032,7 @@
   "HCArtilleryCombatOttoman": {
     "desc": "Increases the attack and hitpoints of Ottoman artillery, Abus Gunners and Humbaracis.",
     "icon": "topcular.png",
-    "name": "Top\u00e7ular"
+    "name": "Topçular"
   },
   "HCArtilleryHitpointsPortugueseTeam": {
     "desc": "Artillery hitpoints increased.",
@@ -4850,7 +4845,7 @@
     "name": "12 Abus Gunners"
   },
   "HCShipAdvancedCapturedMortars": {
-    "desc": "Ships 3 Captured Mortars. Enables you to recruit them from your Embassy at a reduced resource and population cost.\\n \u2022 Captured Mortar: Population cost -1",
+    "desc": "Ships 3 Captured Mortars. Enables you to recruit them from your Embassy at a reduced resource and population cost.\\n • Captured Mortar: Population cost -1",
     "icon": "advanced_captured_mortars.png",
     "name": "Advanced Captured Mortars"
   },
@@ -5987,7 +5982,7 @@
   "HCXPCommandSkill": {
     "desc": "Your War Chief's aura now also boosts your units' attack.",
     "icon": "blotahunka.png",
-    "name": "Blot\u00e1hunka"
+    "name": "Blotáhunka"
   },
   "HCXPCoyoteCombat": {
     "desc": "Coyote Runner speed and hitpoints increased.",
@@ -6057,7 +6052,7 @@
   "HCXPHouseofBraganca": {
     "desc": "Trade Route upgrades are free and available in any age for the entire team.",
     "icon": "team_braganca.png",
-    "name": "TEAM House of Bragan\u00e7a"
+    "name": "TEAM House of Bragança"
   },
   "HCXPHuronAllies1": {
     "desc": "",
@@ -6695,7 +6690,7 @@
     "name": "Seven Council Fires"
   },
   "HCXPWarChiefAztec1": {
-    "desc": "Improves your War Chief\u00a0in combat. Warrior Priests are more effective at the Community Plaza.",
+    "desc": "Improves your War Chief in combat. Warrior Priests are more effective at the Community Plaza.",
     "icon": "high_priest_ixil.png",
     "name": "High Priest of Ixtlilton"
   },
@@ -6715,7 +6710,7 @@
     "name": "Town Destroyer"
   },
   "HCXPWarChiefSioux1": {
-    "desc": "Makes your War Chief deadlier in combat. His aura now also improves your units\u2019 siege attack damage.",
+    "desc": "Makes your War Chief deadlier in combat. His aura now also improves your units’ siege attack damage.",
     "icon": "high_chief.png",
     "name": "Ogle Tanka Un"
   },
@@ -6770,9 +6765,9 @@
     "name": "Hajduks"
   },
   "RvltModHCJaguncos": {
-    "desc": "10 Jagun\u00e7os and 10 Cows. Allows recruitment of Jagun\u00e7os at Taverns, Stables, Forts and Galleons.",
+    "desc": "10 Jagunços and 10 Cows. Allows recruitment of Jagunços at Taverns, Stables, Forts and Galleons.",
     "icon": "outlaw_rider_icon_64x64.png",
-    "name": "Jagun\u00e7os"
+    "name": "Jagunços"
   },
   "RvltModHCLegionHungarian": {
     "desc": "Ships a number of powerful Magyar Hussars and enables them to be trained at Forts (instead of ordinary Hussars).",
@@ -6805,14 +6800,14 @@
     "name": "Hire Mamelukes"
   },
   "RvltModHCMetis": {
-    "desc": "Ships 12 M\u00e9tis Pathfinders.",
+    "desc": "Ships 12 Métis Pathfinders.",
     "icon": "infinite_metis_pathfinder.png",
-    "name": "M\u00e9tis Pathfinders"
+    "name": "Métis Pathfinders"
   },
   "RvltModHCMetisFrench": {
-    "desc": "Ships 10 M\u00e9tis Voyageurs.",
+    "desc": "Ships 10 Métis Voyageurs.",
     "icon": "infinite_coureur.png",
-    "name": "M\u00e9tis Voyageurs"
+    "name": "Métis Voyageurs"
   },
   "RvltModHCMilitaryFrontier": {
     "desc": "All existing Outposts spawn a Grenzer. Allows Grenzers to build Outposts and Outposts to train Grenzers.",
@@ -6855,9 +6850,9 @@
     "name": "Wagon Warfare"
   },
   "RvltModHCRoshiorDragoons": {
-    "desc": "All existing Outposts and Blockhouses spawn a Ro\u0219ior Dragoon and Forts can now train Ro\u0219ior Dragoons.",
+    "desc": "All existing Outposts and Blockhouses spawn a Roșior Dragoon and Forts can now train Roșior Dragoons.",
     "icon": "rosior_dragoons.png",
-    "name": "Ro\u0219ior Dragoons"
+    "name": "Roșior Dragoons"
   },
   "RvltModHCRussianExpArmy": {
     "desc": "An army of Russian Counter Dragoons (Dragoons) and Culverins.\\n9 Counter Dragoons: ranged cavalry, good against cavalry.\\n3 Culverins: light artillery that is good against artillery.",
@@ -7593,5 +7588,190 @@
     "name": "French Royal Army",
     "desc": "Revolutionary France retains pre-Republic heavy infantry regiments.",
     "icon": "french_royal_army.png"
+  },
+  "DEHCHungarianHonvedRising": {
+    "name": "Honvéd Rising",
+    "desc": "The 1848 Honvéd volunteer army forms up — ships 8 Musketeers and enables the Veteran Musketeers upgrade.",
+    "icon": "hungarian_hussars.png"
+  },
+  "DEHCHungarianKossuthRifles": {
+    "name": "Kossuth Rifles",
+    "desc": "Kossuth's liberal recruits learn rapid-fire drill — Skirmisher and Musketeer ranged attack increased 10%.",
+    "icon": "hajduks.png"
+  },
+  "DEHCHungarianSzabalyos": {
+    "name": "Szabályos Discipline",
+    "desc": "Standing garrison drill forges tougher soldiers — all infantry hitpoints increased 10%.",
+    "icon": "garde_imperial_2_icon_64x64.png"
+  },
+  "DEHCHungarianPandourRaiders": {
+    "name": "Pandour Raiders",
+    "desc": "Irregular Pandour raiders strike from the frontier — ships 7 Pandours and enables Pandours in Barracks.",
+    "icon": "hc_pandour_icon.png"
+  },
+  "DEHCHungarianDanubianNavy": {
+    "name": "Danubian Flotilla",
+    "desc": "The Habsburg Danube flotilla extends Hungary's reach — ships 3 Galleys and raises their hitpoints 10%.",
+    "icon": "hungarian_hussars.png"
+  },
+  "DEHCHungarianHusariaCombat": {
+    "name": "Husaria Combat",
+    "desc": "Hungarian Hussar traditions hone the saber and the charge — Hussar attack and hitpoints each increased 10%.",
+    "icon": "hungarian_hussars.png"
+  },
+  "DEHCHungarianBudapestAcademy": {
+    "name": "Budapest Military Academy",
+    "desc": "TEAM The Ludovika Military Academy trains a generation of officers — TEAM all heavy infantry hitpoints increased 10%.",
+    "icon": "garde_imperial_2_icon_64x64.png"
+  },
+  "DEHCHungarianComitatus": {
+    "name": "Comitatus Uprising",
+    "desc": "The ancient noble levy musters again — ships 6 Hussars each time this card is played.",
+    "icon": "hungarian_hussars.png"
+  },
+  "DEHCRomanianBoiarDomain": {
+    "name": "Boiar Domain",
+    "desc": "The great Boiar estates provision the campaign — 600 food and 400 wood arrive from the principalities' heartland.",
+    "icon": "hc_landedgentry_icon.png"
+  },
+  "DEHCRomanianCalarasiRecruits": {
+    "name": "Călărași Recruits",
+    "desc": "Swift Călărași horsemen spur forward from the Wallachian plain — ships 5 Hussars trained to Veteran standard.",
+    "icon": "hc_ship_hussars_1_icon_64.png"
+  },
+  "DEHCRomanianDragosDrilling": {
+    "name": "Dragos Drilling",
+    "desc": "Boyar cavalry masters teach the mounted lance charge — Cavalry Archer attack increased 10% and train time reduced 15%.",
+    "icon": "hc_rosior_dragoons.png"
+  },
+  "DEHCRomanianDacianFortress": {
+    "name": "Dacian Fortress",
+    "desc": "Ancient Dacian hillforts inspire modern palisades — ships 1 Fort Wagon and increases Outpost build limit by 2.",
+    "icon": "hc_border_fortress.png"
+  },
+  "DEHCRomanianCurtinaArmy": {
+    "name": "Curtina Infantry",
+    "desc": "The Curtina standing army raises its standards — all ranged infantry hitpoints increased 10%.",
+    "icon": "garde_imperial_2_icon_64x64.png"
+  },
+  "DEHCRomanianOrthodoxChurch": {
+    "name": "Orthodox Church",
+    "desc": "TEAM The Orthodox churches sustain the faithful — TEAM settlers gather coin from mines 10% faster.",
+    "icon": "hc_church_reforms.png"
+  },
+  "DEHCRomanianPhanarioteSchool": {
+    "name": "Phanariot School",
+    "desc": "Phanariote scholars bring Byzantine military thought to Bucharest — cavalry LOS and speed each increased.",
+    "icon": "hc_boyar_icon.png"
+  },
+  "DEHCRomanianMunteanLancers": {
+    "name": "Muntean Lancers",
+    "desc": "Muntean lancer regiments strike hard and fast — ships 7 Cuirassiers and raises their attack 10%.",
+    "icon": "hc_rosior_dragoons.png"
+  },
+  "DEHCRomanianUnification": {
+    "name": "Romanian Unification",
+    "desc": "Wallachia and Moldavia unite — ships 10 Musketeers, 5 Hussars, and unlocks Imperial Musketeers and Imperial Hussars.",
+    "icon": "hc_danubian_principalities.png"
+  },
+  "DEHCSAVoortrekkerWagon": {
+    "name": "Voortrekker Trek",
+    "desc": "Boer families load their wagons and push into the interior — ships 2 Covered Wagons and grants +1 Outpost build limit.",
+    "icon": "hc_wanderlust.png"
+  },
+  "DEHCSAGreatTrek": {
+    "name": "Great Trek",
+    "desc": "Pioneering families settle new ground — ships 3 Settlers and raises their gather rate from Berry Bushes 10%.",
+    "icon": "hc_wanderlust.png"
+  },
+  "DEHCSABoerCommando": {
+    "name": "Boer Commando",
+    "desc": "Boer part-time riflemen drill in the veld — Skirmisher and Dragoon attack increased 10% and their LOS raised by 2.",
+    "icon": "hc_cavalry_combat.png"
+  },
+  "DEHCSAXhosaAllies": {
+    "name": "Xhosa Allies",
+    "desc": "Xhosa amabutho warriors join the frontier defence — ships 6 Skirmishers and enables Veteran Skirmishers.",
+    "icon": "hc_xhosa_foods.png"
+  },
+  "DEHCSACapeColony": {
+    "name": "Cape Colony Charter",
+    "desc": "TEAM The Cape Colony charter opens company trading rights — TEAM 500 coin delivered and Trading Post attack increased 10%.",
+    "icon": "hc_diamond_rush.png"
+  },
+  "DEHCSAOstrichFeathers": {
+    "name": "Ostrich Feather Trade",
+    "desc": "Ostrich feather exports fetch a high price in European fashion markets — delivers 800 coin.",
+    "icon": "hc_spice_trade.png"
+  },
+  "DEHCSABoerSharpshooter": {
+    "name": "Boer Sharpshooter",
+    "desc": "Veld marksmanship: ranged infantry attack and hitpoints each increased 10%.",
+    "icon": "hc_infantry_hitpoints.png"
+  },
+  "DEHCSAGoldFields": {
+    "name": "Witwatersrand Gold",
+    "desc": "The Witwatersrand gold rush transforms the Transvaal economy — coin gather rate from mines increased 15%.",
+    "icon": "hc_diamond_rush.png"
+  },
+  "DEHCSAMafekingGarrison": {
+    "name": "Mafeking Garrison",
+    "desc": "The siege of Mafeking hardens every defender — all infantry hitpoints increased 10% and Fort hitpoints increased 10%.",
+    "icon": "hc_border_fortress.png"
+  },
+  "DEHCSAFieldCornet": {
+    "name": "Field Cornet",
+    "desc": "Field cornets muster the district levy again and again — ships 5 Skirmishers each play.",
+    "icon": "hc_infantry_hitpoints.png"
+  },
+  "DEHCFinnishTarBurning": {
+    "name": "Tar Trade",
+    "desc": "Kajaani tar boats set off down the river — delivers 500 wood and 300 coin from Finland's most profitable export.",
+    "icon": "hc_carolean_icon.png"
+  },
+  "DEHCFinnishLakeDistrict": {
+    "name": "Lake District",
+    "desc": "TEAM Finland's vast lake network links settlements — TEAM fishing boats gather food 10% faster and gain 10% more hitpoints.",
+    "icon": "hc_falun_mine_team.png"
+  },
+  "DEHCFinnishWinterWar": {
+    "name": "Winter War Tactics",
+    "desc": "Finnish soldiers fight best in bitter cold — all hand infantry gain 10% attack and move 5% faster.",
+    "icon": "hc_hand_unit_damage.png"
+  },
+  "DEHCFinnishAboBurghers": {
+    "name": "Åbo Burghers",
+    "desc": "The merchant guild of Åbo opens its ledgers — delivers 600 food and 400 wood from the old Finnish capital's trade surplus.",
+    "icon": "hc_oxenstierna_reforms.png"
+  },
+  "DEHCFinnishSavolaxJaeger": {
+    "name": "Savolax Jaegers",
+    "desc": "Light Savolax Jaegers deploy from the forests — ships 7 Skirmishers and increases their LOS by 3.",
+    "icon": "hc_finnish_counter_army.png"
+  },
+  "DEHCFinnishKalevalaChant": {
+    "name": "Kalevala Chant",
+    "desc": "Ancient Kalevala battle-songs steel hearts and arms — Carolean and Finnish Rider hitpoints each increased 10%.",
+    "icon": "hc_svea_lifeguard.png"
+  },
+  "DEHCFinnishFinnhorse": {
+    "name": "Finnhorse Levy",
+    "desc": "Hardy Finnhorse cavalry mounts flood the staging ground — ships 6 Hussars.",
+    "icon": "hc_hakkapelit_march.png"
+  },
+  "DEHCFinnishIronMasters": {
+    "name": "Iron Masters of Tampere",
+    "desc": "Tampere's ironworks forge superior artillery barrels — Falconet attack increased 10% and artillery train time reduced 10%.",
+    "icon": "hc_engelsberg_ironworks.png"
+  },
+  "DEHCFinnishRaatajatRankkurit": {
+    "name": "Raatajat Rankkurit",
+    "desc": "The toiling workers of the Finnish countryside — settlers gather from mines, forests, and hunted animals 10% faster.",
+    "icon": "hc_allotment_system.png"
+  },
+  "DEHCFinnishSeinajokiline": {
+    "name": "Seinäjoki Line",
+    "desc": "Seinäjoki garrison pulls from an endless reserve — ships 5 Caroleans each play.",
+    "icon": "hc_infinite_carolean.png"
   }
 }

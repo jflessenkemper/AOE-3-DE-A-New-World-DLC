@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWAztecs</civ>
+  <civ>XPAztec</civ>
   <name>$$43640$$</name>
-  <heroname>$$48880$$</heroname>
+  <heroname>$$490330$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>aztec\aztec_homecity.xml</visual>
   <watervisual>aztec\aztec_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Tenochtitlan</lightset>
   <watertype>Seville</watertype>
@@ -1263,9 +1264,15 @@
     </card>
   </cards>
   <decks>
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+      <name>$$71332$$Beginner</name>
+
+      <default>
+
+      </default>
+
       <cards>
         <card>DEHCCalendarCeremony</card>
         <card>DEHCCalmecac</card>
@@ -1293,6 +1300,197 @@
         <card>HCXPShipJaguarKnights1</card>
         <card>HCXPShipJaguarKnights3</card>
       </cards>
+
+    </deck>
+
+    <deck>
+
+      <name>$$20310$$Land</name>
+
+      <default>
+
+      </default>
+
+      <cards>
+        <card>DEHCCalendarCeremony</card>
+        <card>DEHCCalmecac</card>
+        <card>DEHCSkullWall</card>
+        <card>DEHCRitualGladiators</card>
+        <card>DEHCShipJaguarKnights6</card>
+        <card>DEHCMacehualtinCombat</card>
+        <card>DEHCAztecFort</card>
+        <card>HCXPShipEagleKnights3</card>
+        <card>DEHCChichimecaRebellion</card>
+        <card>DEHCZapotecAlliesTeam</card>
+        <card>HCXPExtensiveFortificationsAztec</card>
+        <card>HCXPShipJaguars2</card>
+        <card>HCXPShipJaguarsTeam</card>
+        <card>HCXPShipMacehualtins1</card>
+        <card>HCXPShipMacehualtins3</card>
+        <card>HCXPWarChiefAztec2</card>
+        <card>DEHCShipMedicineMen3Aztec</card>
+        <card>HCXPChinampa2</card>
+        <card>HCXPWarChiefAztec1</card>
+        <card>HCXPGreatTempleHuitzilopochtli</card>
+        <card>HCXPAztecMining</card>
+        <card>HCXPTempleCenteotl</card>
+        <card>HCXPShipEagleKnights1</card>
+        <card>HCXPShipJaguarKnights1</card>
+        <card>HCXPShipJaguarKnights3</card>
+      </cards>
+
+    </deck>
+
+    <deck>
+
+      <name>$$71333$$Naval</name>
+
+      <default>
+
+      </default>
+
+      <cards>
+        <card>DEHCCalendarCeremony</card>
+        <card>DEHCCalmecac</card>
+        <card>DEHCSkullWall</card>
+        <card>DEHCRitualGladiators</card>
+        <card>DEHCShipJaguarKnights6</card>
+        <card>DEHCMacehualtinCombat</card>
+        <card>DEHCAztecFort</card>
+        <card>HCXPShipEagleKnights3</card>
+        <card>DEHCChichimecaRebellion</card>
+        <card>DEHCZapotecAlliesTeam</card>
+        <card>HCXPExtensiveFortificationsAztec</card>
+        <card>HCXPShipJaguars2</card>
+        <card>HCXPShipJaguarsTeam</card>
+        <card>HCXPShipMacehualtins1</card>
+        <card>HCXPShipMacehualtins3</card>
+        <card>HCXPWarChiefAztec2</card>
+        <card>DEHCShipMedicineMen3Aztec</card>
+        <card>HCXPChinampa2</card>
+        <card>HCXPWarChiefAztec1</card>
+        <card>HCXPGreatTempleHuitzilopochtli</card>
+        <card>HCXPAztecMining</card>
+        <card>HCXPTempleCenteotl</card>
+        <card>HCXPShipEagleKnights1</card>
+        <card>HCXPShipJaguarKnights1</card>
+        <card>HCXPShipJaguarKnights3</card>
+      </cards>
+
+    </deck>
+
+    <deck>
+
+      <name>$$55547$$Tycoon</name>
+
+      <default>
+
+      </default>
+
+      <cards>
+        <card>DEHCCalendarCeremony</card>
+        <card>DEHCCalmecac</card>
+        <card>DEHCSkullWall</card>
+        <card>DEHCRitualGladiators</card>
+        <card>DEHCShipJaguarKnights6</card>
+        <card>DEHCMacehualtinCombat</card>
+        <card>DEHCAztecFort</card>
+        <card>HCXPShipEagleKnights3</card>
+        <card>DEHCChichimecaRebellion</card>
+        <card>DEHCZapotecAlliesTeam</card>
+        <card>HCXPExtensiveFortificationsAztec</card>
+        <card>HCXPShipJaguars2</card>
+        <card>HCXPShipJaguarsTeam</card>
+        <card>HCXPShipMacehualtins1</card>
+        <card>HCXPShipMacehualtins3</card>
+        <card>HCXPWarChiefAztec2</card>
+        <card>DEHCShipMedicineMen3Aztec</card>
+        <card>HCXPChinampa2</card>
+        <card>HCXPWarChiefAztec1</card>
+        <card>HCXPGreatTempleHuitzilopochtli</card>
+        <card>HCXPAztecMining</card>
+        <card>HCXPTempleCenteotl</card>
+        <card>HCXPShipEagleKnights1</card>
+        <card>HCXPShipJaguarKnights1</card>
+        <card>HCXPShipJaguarKnights3</card>
+      </cards>
+
+    </deck>
+
+    <deck>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+      <default>
+
+      </default>
+
+      <cards>
+        <card>DEHCCalendarCeremony</card>
+        <card>DEHCCalmecac</card>
+        <card>DEHCSkullWall</card>
+        <card>DEHCRitualGladiators</card>
+        <card>DEHCShipJaguarKnights6</card>
+        <card>DEHCMacehualtinCombat</card>
+        <card>DEHCAztecFort</card>
+        <card>HCXPShipEagleKnights3</card>
+        <card>DEHCChichimecaRebellion</card>
+        <card>DEHCZapotecAlliesTeam</card>
+        <card>HCXPExtensiveFortificationsAztec</card>
+        <card>HCXPShipJaguars2</card>
+        <card>HCXPShipJaguarsTeam</card>
+        <card>HCXPShipMacehualtins1</card>
+        <card>HCXPShipMacehualtins3</card>
+        <card>HCXPWarChiefAztec2</card>
+        <card>DEHCShipMedicineMen3Aztec</card>
+        <card>HCXPChinampa2</card>
+        <card>HCXPWarChiefAztec1</card>
+        <card>HCXPGreatTempleHuitzilopochtli</card>
+        <card>HCXPAztecMining</card>
+        <card>HCXPTempleCenteotl</card>
+        <card>HCXPShipEagleKnights1</card>
+        <card>HCXPShipJaguarKnights1</card>
+        <card>HCXPShipJaguarKnights3</card>
+      </cards>
+
+    </deck>
+
+    <deck>
+
+      <name>$$90975$$TreatyNative</name>
+
+      <default>
+
+      </default>
+
+      <cards>
+        <card>DEHCCalendarCeremony</card>
+        <card>DEHCCalmecac</card>
+        <card>DEHCSkullWall</card>
+        <card>DEHCRitualGladiators</card>
+        <card>DEHCShipJaguarKnights6</card>
+        <card>DEHCMacehualtinCombat</card>
+        <card>DEHCAztecFort</card>
+        <card>HCXPShipEagleKnights3</card>
+        <card>DEHCChichimecaRebellion</card>
+        <card>DEHCZapotecAlliesTeam</card>
+        <card>HCXPExtensiveFortificationsAztec</card>
+        <card>HCXPShipJaguars2</card>
+        <card>HCXPShipJaguarsTeam</card>
+        <card>HCXPShipMacehualtins1</card>
+        <card>HCXPShipMacehualtins3</card>
+        <card>HCXPWarChiefAztec2</card>
+        <card>DEHCShipMedicineMen3Aztec</card>
+        <card>HCXPChinampa2</card>
+        <card>HCXPWarChiefAztec1</card>
+        <card>HCXPGreatTempleHuitzilopochtli</card>
+        <card>HCXPAztecMining</card>
+        <card>HCXPTempleCenteotl</card>
+        <card>HCXPShipEagleKnights1</card>
+        <card>HCXPShipJaguarKnights1</card>
+        <card>HCXPShipJaguarKnights3</card>
+      </cards>
+
     </deck>
   </decks>
   <building>

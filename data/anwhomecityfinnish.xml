@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWFinnish</civ>
   <name>$$80823$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490364$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>russian\russian_homecity.xml</visual>
   <watervisual>russian\russian_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1373,15 +1374,94 @@
       <age>3</age>
       <displayunitcount>1</displayunitcount>
     </card>
+    <!-- Card Pack 2026-05-17 — ANWFinnish 10 new cards -->
+    <card>
+      <name>DEHCFinnishTarBurning</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>0</age>
+    </card>
+    <card>
+      <name>DEHCFinnishLakeDistrict</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>0</age>
+    </card>
+    <card>
+      <name>DEHCFinnishWinterWar</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCFinnishAboBurghers</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCFinnishSavolaxJaeger</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCFinnishKalevalaChant</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCFinnishFinnhorse</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCFinnishIronMasters</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+    </card>
+    <card>
+      <name>DEHCFinnishRaatajatRankkurit</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+    </card>
+    <card>
+      <name>DEHCFinnishSeinajokiline</name>
+      <maxcount>-1</maxcount>
+      <level>10</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+      <displayunitcount>5</displayunitcount>
+      <infiniteinlastage>1</infiniteinlastage>
+    </card>
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Finland</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCREVTreeSpawn</card>
@@ -1397,28 +1477,35 @@
         <card>DEHCREVBlockhouseCannon</card>
         <card>DEHCREVCudgelWar</card>
         <card>DEHCREVFinnhorses</card>
+        <card>DEHCContractMercsBlackRiders</card>
         <card>DEHCREVGunboats</card>
         <card>DEHCREVShipBalticFleet</card>
         <card>DEHCREVShipBlockhouses</card>
         <card>DEHCREVShipCoinCrates</card>
         <card>DEHCREVShipCopperMines</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>DEHCREVShipElk</card>
         <card>DEHCREVShipFoodCrates</card>
         <card>DEHCREVShipHakkapelits</card>
         <card>DEHCSoldierTorps</card>
-        <card>HCHeavyFortifications</card>
-        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCNorthernForests</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Finland</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCREVTreeSpawn</card>
@@ -1434,28 +1521,35 @@
         <card>DEHCREVBlockhouseCannon</card>
         <card>DEHCREVCudgelWar</card>
         <card>DEHCREVFinnhorses</card>
+        <card>DEHCContractMercsBlackRiders</card>
         <card>DEHCREVGunboats</card>
         <card>DEHCREVShipBalticFleet</card>
         <card>DEHCREVShipBlockhouses</card>
         <card>DEHCREVShipCoinCrates</card>
         <card>DEHCREVShipCopperMines</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>DEHCREVShipElk</card>
         <card>DEHCREVShipFoodCrates</card>
         <card>DEHCREVShipHakkapelits</card>
         <card>DEHCSoldierTorps</card>
-        <card>HCHeavyFortifications</card>
-        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCNorthernForests</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Finland</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCREVTreeSpawn</card>
@@ -1471,28 +1565,35 @@
         <card>DEHCREVBlockhouseCannon</card>
         <card>DEHCREVCudgelWar</card>
         <card>DEHCREVFinnhorses</card>
+        <card>DEHCContractMercsBlackRiders</card>
         <card>DEHCREVGunboats</card>
         <card>DEHCREVShipBalticFleet</card>
         <card>DEHCREVShipBlockhouses</card>
         <card>DEHCREVShipCoinCrates</card>
         <card>DEHCREVShipCopperMines</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>DEHCREVShipElk</card>
         <card>DEHCREVShipFoodCrates</card>
         <card>DEHCREVShipHakkapelits</card>
         <card>DEHCSoldierTorps</card>
-        <card>HCHeavyFortifications</card>
-        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCNorthernForests</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Finland</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCREVTreeSpawn</card>
@@ -1508,28 +1609,35 @@
         <card>DEHCREVBlockhouseCannon</card>
         <card>DEHCREVCudgelWar</card>
         <card>DEHCREVFinnhorses</card>
+        <card>DEHCContractMercsBlackRiders</card>
         <card>DEHCREVGunboats</card>
         <card>DEHCREVShipBalticFleet</card>
         <card>DEHCREVShipBlockhouses</card>
         <card>DEHCREVShipCoinCrates</card>
         <card>DEHCREVShipCopperMines</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>DEHCREVShipElk</card>
         <card>DEHCREVShipFoodCrates</card>
         <card>DEHCREVShipHakkapelits</card>
         <card>DEHCSoldierTorps</card>
-        <card>HCHeavyFortifications</card>
-        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCNorthernForests</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Finland</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCREVTreeSpawn</card>
@@ -1545,28 +1653,35 @@
         <card>DEHCREVBlockhouseCannon</card>
         <card>DEHCREVCudgelWar</card>
         <card>DEHCREVFinnhorses</card>
+        <card>DEHCContractMercsBlackRiders</card>
         <card>DEHCREVGunboats</card>
         <card>DEHCREVShipBalticFleet</card>
         <card>DEHCREVShipBlockhouses</card>
         <card>DEHCREVShipCoinCrates</card>
         <card>DEHCREVShipCopperMines</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>DEHCREVShipElk</card>
         <card>DEHCREVShipFoodCrates</card>
         <card>DEHCREVShipHakkapelits</card>
         <card>DEHCSoldierTorps</card>
-        <card>HCHeavyFortifications</card>
-        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCNorthernForests</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Finland</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCREVTreeSpawn</card>
@@ -1582,19 +1697,20 @@
         <card>DEHCREVBlockhouseCannon</card>
         <card>DEHCREVCudgelWar</card>
         <card>DEHCREVFinnhorses</card>
+        <card>DEHCContractMercsBlackRiders</card>
         <card>DEHCREVGunboats</card>
         <card>DEHCREVShipBalticFleet</card>
         <card>DEHCREVShipBlockhouses</card>
         <card>DEHCREVShipCoinCrates</card>
         <card>DEHCREVShipCopperMines</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>DEHCREVShipElk</card>
         <card>DEHCREVShipFoodCrates</card>
         <card>DEHCREVShipHakkapelits</card>
         <card>DEHCSoldierTorps</card>
-        <card>HCHeavyFortifications</card>
-        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCNorthernForests</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
   </decks>
@@ -1626,13 +1742,13 @@
   <building>
     <name>Market</name>
     <visual>
-      <file>revolution\revolution_hall.xml</file>
+      <file>russian\russian_tradecenter.xml</file>
       <bone>bone_market</bone>
     </visual>
     <uix>250</uix>
     <uiy>375</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>russian\russian_homecity_market_camera.cam</camera>
+    <widescreencamera>russian\russian_homecity_market_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\nw_trading_company_icon</portrait>
     <displaynamestringid>24970</displaynamestringid>
@@ -1725,8 +1841,8 @@
     </visual>
     <uix>460</uix>
     <uiy>125</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>russian\russian_homecity_academy_camera.cam</camera>
+    <widescreencamera>russian\russian_homecity_academy_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\military_academy_icon</portrait>
     <displaynamestringid>24965</displaynamestringid>
@@ -1855,8 +1971,8 @@
     </visual>
     <uix>80</uix>
     <uiy>475</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>russian\russian_homecity_cathedral_camera.cam</camera>
+    <widescreencamera>russian\russian_homecity_cathedral_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\cathedral_icon</portrait>
     <displaynamestringid>24969</displaynamestringid>
@@ -1953,8 +2069,8 @@
     </visual>
     <uix>450</uix>
     <uiy>275</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>russian\russian_homecity_manufacturing_plant_camera.cam</camera>
+    <widescreencamera>russian\russian_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
@@ -2029,8 +2145,8 @@
     </visual>
     <uix>200</uix>
     <uiy>250</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>russian\russian_homecity_dock_camera.cam</camera>
+    <widescreencamera>russian\russian_homecity_dock_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\harbor_icon</portrait>
     <displaynamestringid>35745</displaynamestringid>
@@ -2125,8 +2241,8 @@
   </building>
   <building>
     <name>Customization</name>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>russian\russian_homecity_camera.cam</camera>
+    <widescreencamera>russian\russian_homecity_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>homecity\buildings_west\dock_icon</portrait>
     <displaynamestringid>24966</displaynamestringid>

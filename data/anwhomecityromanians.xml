@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWRomanians</civ>
   <name>$$80826$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490266$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>german\german_homecity.xml</visual>
   <watervisual>german\german_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1098,15 +1099,85 @@
       <age>3</age>
       <displayunitcount>1</displayunitcount>
     </card>
+    <!-- Card Pack 2026-05-17 — ANWRomanians 9 new cards -->
+    <card>
+      <name>DEHCRomanianBoiarDomain</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>0</age>
+    </card>
+    <card>
+      <name>DEHCRomanianCalarasiRecruits</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCRomanianDragosDrilling</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCRomanianDacianFortress</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCRomanianCurtinaArmy</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCRomanianOrthodoxChurch</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCRomanianPhanarioteSchool</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCRomanianMunteanLancers</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+    </card>
+    <card>
+      <name>DEHCRomanianUnification</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+    </card>
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Romania</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCLandedGentry</card>
@@ -1122,28 +1193,35 @@
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
         <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>HCUnlockFort</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>RvltModHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>HCRoyalMint</card>
-        <card>HCUnlockFort</card>
         <card>RvltModHCShipFortWagonOutpost</card>
-        <card>HCMercenaryLoyalty</card>
-        <card>HCMercsBlackRiders</card>
         <card>HCMercsHessians</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Romania</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCLandedGentry</card>
@@ -1159,28 +1237,35 @@
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
         <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>HCUnlockFort</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>RvltModHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>HCRoyalMint</card>
-        <card>HCUnlockFort</card>
         <card>RvltModHCShipFortWagonOutpost</card>
-        <card>HCMercenaryLoyalty</card>
-        <card>HCMercsBlackRiders</card>
         <card>HCMercsHessians</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Romania</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCLandedGentry</card>
@@ -1196,28 +1281,35 @@
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
         <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>HCUnlockFort</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>RvltModHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>HCRoyalMint</card>
-        <card>HCUnlockFort</card>
         <card>RvltModHCShipFortWagonOutpost</card>
-        <card>HCMercenaryLoyalty</card>
-        <card>HCMercsBlackRiders</card>
         <card>HCMercsHessians</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Romania</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCLandedGentry</card>
@@ -1233,28 +1325,35 @@
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
         <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>HCUnlockFort</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>RvltModHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>HCRoyalMint</card>
-        <card>HCUnlockFort</card>
         <card>RvltModHCShipFortWagonOutpost</card>
-        <card>HCMercenaryLoyalty</card>
-        <card>HCMercsBlackRiders</card>
         <card>HCMercsHessians</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Romania</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCLandedGentry</card>
@@ -1270,28 +1369,35 @@
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
         <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>HCUnlockFort</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>RvltModHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>HCRoyalMint</card>
-        <card>HCUnlockFort</card>
         <card>RvltModHCShipFortWagonOutpost</card>
-        <card>HCMercenaryLoyalty</card>
-        <card>HCMercsBlackRiders</card>
         <card>HCMercsHessians</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Romania</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCLandedGentry</card>
@@ -1307,19 +1413,20 @@
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
         <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>HCUnlockFort</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>RvltModHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>HCRoyalMint</card>
-        <card>HCUnlockFort</card>
         <card>RvltModHCShipFortWagonOutpost</card>
-        <card>HCMercenaryLoyalty</card>
-        <card>HCMercsBlackRiders</card>
         <card>HCMercsHessians</card>
+        <card>HCShipWoodCrates5</card>
       </cards>
+
 
     </deck>
   </decks>
@@ -1351,13 +1458,13 @@
   <building>
     <name>Market</name>
     <visual>
-      <file>revolution\revolution_hall.xml</file>
+      <file>german\german_tradecenter.xml</file>
       <bone>bone_market</bone>
     </visual>
     <uix>250</uix>
     <uiy>375</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_market_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_market_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\nw_trading_company_icon</portrait>
     <displaynamestringid>24970</displaynamestringid>
@@ -1430,8 +1537,8 @@
     </visual>
     <uix>460</uix>
     <uiy>125</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_academy_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_academy_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\military_academy_icon</portrait>
     <displaynamestringid>24965</displaynamestringid>
@@ -1518,8 +1625,8 @@
     </visual>
     <uix>80</uix>
     <uiy>475</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_cathedral_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_cathedral_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\cathedral_icon</portrait>
     <displaynamestringid>24969</displaynamestringid>
@@ -1592,8 +1699,8 @@
     </visual>
     <uix>450</uix>
     <uiy>275</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_manufacturing_plant_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
@@ -1656,8 +1763,8 @@
     </visual>
     <uix>200</uix>
     <uiy>250</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_dock_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_dock_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\harbor_icon</portrait>
     <displaynamestringid>35745</displaynamestringid>
@@ -1732,8 +1839,8 @@
   </building>
   <building>
     <name>Customization</name>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\german_homecity_camera.cam</camera>
+    <widescreencamera>german\german_homecity_camera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>homecity\buildings_west\dock_icon</portrait>
     <displaynamestringid>24966</displaynamestringid>

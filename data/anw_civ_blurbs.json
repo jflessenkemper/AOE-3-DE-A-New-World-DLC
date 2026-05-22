@@ -1,338 +1,526 @@
 {
-  "ANWAmericansRev": {
-    "civ_bonus": "Manors spawn a Citizen when built; Forts spawn 2 Gatling Guns when built.",
-    "unique_units": ["Gatling Gun", "Congreve Rocket", "Regular", "Minuteman"],
-    "unique_buildings": ["Manor"],
-    "playstyle": "Boom manors for Citizens, FF into Gatling Gun + Regular mass; Minutemen defend against early rushes; strong industrial-age timing attack.",
-    "age_up": "Federal States politicians"
-  },
   "ANWArgentines": {
     "civ_bonus": "Home City Shipments arrive slightly faster; elite infantry never rout.",
-    "unique_units": ["Granadero a Caballo", "Lancer", "Rodelero", "War Dog", "Gatling Gun"],
+    "unique_units": [
+      "Granadero a Caballo",
+      "Lancer",
+      "Rodelero",
+      "War Dog",
+      "Gatling Gun"
+    ],
     "unique_buildings": [],
     "playstyle": "Rush forward base, mass Granaderos and Lancers with Musketeer screen; push and re-wall rather than defend home base.",
     "age_up": "Wagon politicians (Citizens)"
   },
   "ANWAztecs": {
     "civ_bonus": "Builds Warchief units and earns XP through Tribute; no Colonial age-up cost.",
-    "unique_units": ["Jaguar Knight", "Eagle Runner Knight", "Skull Knight", "Coyote Runner", "Macehualtin"],
-    "unique_buildings": ["War Hut", "Skull Wall", "Tribal Marketplace"],
+    "unique_units": [
+      "Jaguar Knight",
+      "Eagle Runner Knight",
+      "Skull Knight",
+      "Coyote Runner",
+      "Macehualtin"
+    ],
+    "unique_buildings": [
+      "War Hut",
+      "Skull Wall",
+      "Tribal Marketplace"
+    ],
     "playstyle": "Tribute boom to 18+ villagers, harass with Macehualtin + Coyote Runners in Colonial, FF to Jaguar/Eagle Knight mass; hug chokes, avoid open fights.",
     "age_up": "Temples (Teocalli wonders)"
   },
-  "ANWBajaCalifornians": {
-    "civ_bonus": "Can build up to 7 Saloons; gains 2 bonus cards on Commerce Age.",
-    "unique_units": ["Filibuster", "Padre", "Insurgente", "Salteador", "Chinaco"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
-    "playstyle": "Spread Town Centers and Trading Posts for map control; Saloon Outlaws supplement an Insurgente/Chinaco army; raid-economy over turtling.",
-    "age_up": "Hacienda wagon politicians"
-  },
   "ANWBarbary": {
     "civ_bonus": "Can train Privateers with increased build limit, which can train additional units.",
-    "unique_units": ["Barbary Warrior", "Corsair Marksman", "Tribal Horseman", "Bedouin Horse Archer", "Great Bombard"],
+    "unique_units": [
+      "Barbary Warrior",
+      "Corsair Marksman",
+      "Tribal Horseman",
+      "Bedouin Horse Archer",
+      "Great Bombard"
+    ],
     "unique_buildings": [],
     "playstyle": "Dock-first naval economy; Corsair raids deny enemy trade; Barbary Warriors and mercs close land fights; Xebecs dominate water maps.",
     "age_up": "Ottoman-style Wagon shipments"
   },
   "ANWBrazil": {
     "civ_bonus": "Receives a free Covered Wagon with every Age; starts with 7 Citizens.",
-    "unique_units": ["Voluntario Da Patria", "Gatling Gun", "Lancer"],
+    "unique_units": [
+      "Voluntario Da Patria",
+      "Gatling Gun",
+      "Lancer"
+    ],
     "unique_buildings": [],
     "playstyle": "Spread Mills and Plantations for multi-node economy; steady Covered Wagon trickle keeps forward bases funded; Voluntarios from Town Centers.",
     "age_up": "Covered Wagon with each Age-up"
   },
   "ANWBritish": {
     "civ_bonus": "Manors automatically spawn a Settler when built.",
-    "unique_units": ["Longbowman", "Congreve Rocket", "Ranger"],
-    "unique_buildings": ["Manor"],
+    "unique_units": [
+      "Longbowman",
+      "Congreve Rocket",
+      "Ranger"
+    ],
+    "unique_buildings": [
+      "Manor"
+    ],
     "playstyle": "Boom via Manor-spawned Settlers; wall harbor early; Musketeer + Longbow lines; strong navy; land army funded by naval shipments and mercenary contracts.",
     "age_up": "Wagon politicians (Trading Post, Bank, etc.)"
   },
-  "ANWCalifornians": {
-    "civ_bonus": "Cows gather more from Haciendas; can keep 3x as many cows; 2 bonus cards on Industrial Age.",
-    "unique_units": ["Californio", "Padre", "Insurgente", "Salteador", "Soldado"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
-    "playstyle": "Hacienda cow-boom for food; spread resource patches with Markets; Californio cavalry + Insurgente infantry army; boom into FI timing.",
-    "age_up": "Hacienda wagon politicians"
-  },
   "ANWCanadians": {
-    "civ_bonus": "Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age.",
-    "unique_units": ["Ranger", "Congreve Rocket", "Metis Pathfinder"],
-    "unique_buildings": ["Manor"],
-    "playstyle": "Boom Manors for Metis Pathfinders; turtle home base with stone walls; counter-attack from hardened core; Ranger skirmish line.",
-    "age_up": "Wagon politicians with Blockhouse"
-  },
-  "ANWCentralAmericans": {
-    "civ_bonus": "Artillery trains early; Forts buildable in Commerce Age; 2 bonus cards on Commerce Age.",
-    "unique_units": ["Padre", "Insurgente", "Salteador", "Soldado", "Chinaco"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
-    "playstyle": "Fast Fortress via early Fort; Commerce Age Fort + artillery punishes passive opponents; mass Insurgente/Chinaco mid-game.",
-    "age_up": "Hacienda wagon politicians"
+    "civ_bonus": "Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age; starts with a Native Scout and trains Metis Voyageurs alongside Settlers.",
+    "unique_units": [
+      "Ranger",
+      "Congreve Rocket",
+      "Metis Pathfinder",
+      "Metis Voyageur",
+      "Cuirassier"
+    ],
+    "unique_buildings": [
+      "Manor"
+    ],
+    "playstyle": "Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress; Lower-Canada Patriote doctrine adds a tight civic core with reactive counter-punch instead of open aggression.",
+    "age_up": "Wagon politicians with Blockhouse (Brock) or tight-core civic politicians (Papineau / Lower Canada)"
   },
   "ANWChileans": {
     "civ_bonus": "Home City Shipments arrive slightly faster; elite infantry never rout.",
-    "unique_units": ["Rodelero", "Lancer", "War Dog", "Gatling Gun"],
+    "unique_units": [
+      "Rodelero",
+      "Lancer",
+      "War Dog",
+      "Gatling Gun"
+    ],
     "unique_buildings": [],
     "playstyle": "Wall high ground in rings; steady Republican infantry + Lancer push; slow snowball to defended Industrial timing rather than early rush.",
     "age_up": "Wagon politicians (Citizens)"
   },
   "ANWChinese": {
     "civ_bonus": "Starts with a Flail Elephant; Banner Armies train multiple unit types at once.",
-    "unique_units": ["Chu Ko Nu", "Iron Flail", "Fire Lancer", "Flamethrower"],
-    "unique_buildings": ["Summer Palace", "Porcelain Tower", "Old Summer Palace"],
+    "unique_units": [
+      "Chu Ko Nu",
+      "Iron Flail",
+      "Fire Lancer",
+      "Flamethrower"
+    ],
+    "unique_buildings": [
+      "Summer Palace",
+      "Porcelain Tower",
+      "Old Summer Palace"
+    ],
     "playstyle": "Eight-Banner macro — cluster buildings near TC, wall early with stone, macro Banner Armies, counter-attack from hardened core.",
     "age_up": "Wonders (Summer Palace, etc.)"
   },
   "ANWColumbians": {
     "civ_bonus": "Shipments arrive faster; gains Simón Bolívar hero at Fortress Age.",
-    "unique_units": ["Lancer", "Rodelero", "War Dog", "Llanero"],
+    "unique_units": [
+      "Lancer",
+      "Rodelero",
+      "War Dog",
+      "Llanero"
+    ],
     "unique_buildings": [],
     "playstyle": "Forward base pressure from Colonial; Llanero and Lancer shock cavalry sweep flanks; sustained column push with Pikeman anchor.",
     "age_up": "Wagon politicians (Citizens)"
   },
   "ANWDutch": {
     "civ_bonus": "Banks automatically generate coin without villagers.",
-    "unique_units": ["Ruyter", "Halberdier"],
-    "unique_buildings": ["Bank"],
+    "unique_units": [
+      "Ruyter",
+      "Halberdier"
+    ],
+    "unique_buildings": [
+      "Bank"
+    ],
     "playstyle": "Boom Banks for passive coin, dock-first fishing fleet; tech into Ruyter + Halberdier army; Fluyt shipments supplement; strong navy.",
     "age_up": "Wagon politicians (Bank wagon)"
   },
   "ANWEgyptians": {
     "civ_bonus": "Trains Citizens (70 coin); free Mameluke per shipment from Fortress Age; Khevite Fusiliers replace Revolutionaries.",
-    "unique_units": ["Mameluke", "Deli", "Humbaraci", "Azap", "Khevite Fusilier"],
+    "unique_units": [
+      "Mameluke",
+      "Deli",
+      "Humbaraci",
+      "Azap",
+      "Khevite Fusilier"
+    ],
     "unique_buildings": [],
     "playstyle": "Fortify high ground then snowball; Mameluke cavalry per shipment grows a dangerous force; hard to dislodge once entrenched.",
     "age_up": "Ottoman-style Wagon shipments"
   },
   "ANWEthiopians": {
     "civ_bonus": "Neftenya units gain attack with each Age; unique Royal units from Ras.",
-    "unique_units": ["Neftenya", "Shotel Warrior", "Oromo Warrior", "Sebastopol Mortar"],
-    "unique_buildings": ["Ras"],
+    "unique_units": [
+      "Neftenya",
+      "Shotel Warrior",
+      "Oromo Warrior",
+      "Sebastopol Mortar"
+    ],
+    "unique_buildings": [
+      "Ras"
+    ],
     "playstyle": "Fortify high ground with stone walls; Neftenya marksman line grows stronger with each Age; Shotel Warriors raid; hold citadel then push.",
     "age_up": "Council members at Community Plaza"
   },
   "ANWFinnish": {
     "civ_bonus": "Torps gather nearby resources; advanced Arsenal upgrades; Karelian Jaegers as alternative Settlers.",
-    "unique_units": ["Karelian Jaeger", "Hakkapelit", "Grenadier"],
-    "unique_buildings": ["Torp", "Tavern"],
+    "unique_units": [
+      "Karelian Jaeger",
+      "Hakkapelit",
+      "Grenadier"
+    ],
+    "unique_buildings": [
+      "Torp",
+      "Tavern"
+    ],
     "playstyle": "Torp-boom for passive food/wood; turtle with stone walls; Jaegers gather and fight; tech into Hakkapelit cavalry + Grenadier wall.",
     "age_up": "Wagon politicians (Swedish-style)"
   },
   "ANWFrench": {
     "civ_bonus": "Home City Shipments arrive slightly faster; Coureur des Bois gather faster than Settlers.",
-    "unique_units": ["Coureur des Bois", "Cuirassier", "Skirmisher"],
+    "unique_units": [
+      "Coureur des Bois",
+      "Cuirassier",
+      "Skirmisher"
+    ],
     "unique_buildings": [],
     "playstyle": "Coureur des Bois boom; quick mass eco; Wall TC core early; Cuirassier + Skirmisher flexible army; shipment-heavy push.",
     "age_up": "Wagon politicians"
   },
-  "ANWFrenchCanadians": {
-    "civ_bonus": "Starts with a Native Scout; trains Metis Voyageurs instead of Settlers.",
-    "unique_units": ["Metis Voyageur", "Cuirassier"],
-    "unique_buildings": [],
-    "playstyle": "Tight civic core; TC and Outpost militia defense; reactive counter-punch rather than open aggression; Cuirassier at Fortress.",
-    "age_up": "Wagon politicians"
-  },
   "ANWGermans": {
     "civ_bonus": "Starts with 2 free Uhlans per card shipped; Settler Wagons replace standard Settlers.",
-    "unique_units": ["Uhlan", "Doppelsoldner", "War Wagon"],
+    "unique_units": [
+      "Uhlan",
+      "Doppelsoldner",
+      "War Wagon"
+    ],
     "unique_buildings": [],
     "playstyle": "Mass Uhlans from home city cards; Settler Wagon eco; multi-barracks infantry boom; Doppelsoldner + Uhlan combo overwhelms.",
     "age_up": "Wagon politicians (Settler Wagon)"
   },
   "ANWHaitians": {
     "civ_bonus": "Town Centers and Taverns slowly spawn Pirates for free; Maroons replace Revolutionaries.",
-    "unique_units": ["Maroon", "Pirate"],
+    "unique_units": [
+      "Maroon",
+      "Pirate"
+    ],
     "unique_buildings": [],
     "playstyle": "Free Pirate stream from TC + Taverns; choke-hug with Maroon infantry mass; quick harass from forward warbands; minimal walls.",
     "age_up": "Wagon politicians"
   },
   "ANWHaudenosaunee": {
     "civ_bonus": "Builds Longhouses that train infantry and can garrison; unique War Chief unit.",
-    "unique_units": ["Mohawk Warrior", "Aenna Shotgun Rider", "Mantlet"],
-    "unique_buildings": ["Longhouse", "War Hut"],
+    "unique_units": [
+      "Mohawk Warrior",
+      "Aenna Shotgun Rider",
+      "Mantlet"
+    ],
+    "unique_buildings": [
+      "Longhouse",
+      "War Hut"
+    ],
     "playstyle": "Claim Trading Posts for XP trickle; Longhouse multi-unit production; fast Mohawk Warrior rush or FF into Aenna mass.",
     "age_up": "Tribal Council (Community Plaza)"
   },
   "ANWHausa": {
     "civ_bonus": "Griot aura boosts nearby units; unique Lifidi Knight heavy cavalry.",
-    "unique_units": ["Lifidi Knight", "Musketeer (Jarma)", "Fulani Archer"],
-    "unique_buildings": ["Granary"],
+    "unique_units": [
+      "Lifidi Knight",
+      "Musketeer (Jarma)",
+      "Fulani Archer"
+    ],
+    "unique_buildings": [
+      "Granary"
+    ],
     "playstyle": "Scatter Markets and Granaries across resource nodes; Griot support + Lifidi Knight cavalry; boom then FI trade-route economy.",
     "age_up": "Council members at Community Plaza"
   },
   "ANWHungarians": {
     "civ_bonus": "Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.",
-    "unique_units": ["Hussar", "Grenzer", "Hajduk", "Pandour"],
+    "unique_units": [
+      "Hussar",
+      "Grenzer",
+      "Hajduk",
+      "Pandour"
+    ],
     "unique_buildings": [],
     "playstyle": "Over-build Stables; Hussar cavalry pressure continuously; Outpost militia supplementss army; loose base for fast cavalry egress.",
     "age_up": "Covered Wagon with each Outpost shipment"
   },
   "ANWInca": {
     "civ_bonus": "Inca buildings require no wood; Kallanka trains several unit types simultaneously.",
-    "unique_units": ["Bolas Warrior", "Huaraca", "Chimu Runner", "Plumed Spearman"],
-    "unique_buildings": ["Kallanka", "Tambo", "Sun Temple"],
+    "unique_units": [
+      "Bolas Warrior",
+      "Huaraca",
+      "Chimu Runner",
+      "Plumed Spearman"
+    ],
+    "unique_buildings": [
+      "Kallanka",
+      "Tambo",
+      "Sun Temple"
+    ],
     "playstyle": "Wall high ground in concentric rings with Tambos and Kallankas; slow Industrial snowball; Huaraca ranged mass + Chimu speed harass.",
     "age_up": "Wonders (Andean monuments)"
   },
   "ANWIndians": {
     "civ_bonus": "Elephant units get bonus from nearby Consulate upgrades; Urumi Swordsman unique melee unit.",
-    "unique_units": ["Urumi Swordsman", "Sepoy", "Zamburak", "Howdah"],
-    "unique_buildings": ["Consulate"],
+    "unique_units": [
+      "Urumi Swordsman",
+      "Sepoy",
+      "Zamburak",
+      "Howdah"
+    ],
+    "unique_buildings": [
+      "Consulate"
+    ],
     "playstyle": "Fortify high-ground citadel; grow Elephant/Howdah army via Consulate allies; Sepoy musket line holds while Elephants close.",
     "age_up": "Wonders (Taj Mahal, etc.)"
   },
   "ANWIndonesians": {
     "civ_bonus": "Can train Wokou Junks; Ruyter and Halberdier get unique skins.",
-    "unique_units": ["Javanese Spearman", "Cetbang Cannon", "Ruyter"],
+    "unique_units": [
+      "Javanese Spearman",
+      "Cetbang Cannon",
+      "Ruyter"
+    ],
     "unique_buildings": [],
     "playstyle": "Wokou Junk naval pressure; choke-hug with Javanese Spearman + Cetbang Cannon on land; guerrilla infantry strikes avoid open fights.",
     "age_up": "Wagon politicians (Dutch-style)"
   },
   "ANWItalians": {
     "civ_bonus": "Lombardy Banks auto-generate coin; Papal Guard unique heavy infantry.",
-    "unique_units": ["Papal Guard", "Papal Lancer", "Bersagliere"],
-    "unique_buildings": ["Lombard"],
+    "unique_units": [
+      "Papal Guard",
+      "Papal Lancer",
+      "Bersagliere"
+    ],
+    "unique_buildings": [
+      "Lombard"
+    ],
     "playstyle": "Lombard coin boom; mass Papal Guard + Bersagliere infantry columns; General units inspire levy; multi-barracks civic layout.",
     "age_up": "Wagon politicians (Lombard wagon)"
   },
   "ANWJapanese": {
     "civ_bonus": "Shrines auto-generate resources; can train Daimyo and Shogun hero units.",
-    "unique_units": ["Yumi Archer", "Naginata Rider", "Samurai", "Flaming Arrow"],
-    "unique_buildings": ["Shrine", "Castle", "Buddhist Temple", "Shinto Shrine"],
+    "unique_units": [
+      "Yumi Archer",
+      "Naginata Rider",
+      "Samurai",
+      "Flaming Arrow"
+    ],
+    "unique_buildings": [
+      "Shrine",
+      "Castle",
+      "Buddhist Temple",
+      "Shinto Shrine"
+    ],
     "playstyle": "Plant Shrines everywhere for passive resource trickle; defend with isolated towers and cavalry; tech deep via Wonders; Yumi + Samurai army.",
     "age_up": "Wonders (Torii, Dojo, etc.)"
   },
   "ANWLakota": {
     "civ_bonus": "Cannot build standard walls or Forts; Teepee auras boost nearby units.",
-    "unique_units": ["Wakina Rifle", "Axe Rider", "Dog Soldier", "Tokala Soldier"],
-    "unique_buildings": ["Teepee", "Tribal Marketplace"],
+    "unique_units": [
+      "Wakina Rifle",
+      "Axe Rider",
+      "Dog Soldier",
+      "Tokala Soldier"
+    ],
+    "unique_buildings": [
+      "Teepee",
+      "Tribal Marketplace"
+    ],
     "playstyle": "Over-build Stables; all-cavalry Axe Rider + Tokala rush; raid economy and map control; punish any exposed eco with speed.",
     "age_up": "Tribal Council (Community Plaza)"
   },
   "ANWMaltese": {
     "civ_bonus": "Towers and Outposts cost no wood; Sacre Infermeria heals nearby units.",
-    "unique_units": ["Hospitaller Knight", "Fire Thrower", "Sentinel"],
-    "unique_buildings": ["Bastion", "Sacre Infermeria"],
+    "unique_units": [
+      "Hospitaller Knight",
+      "Fire Thrower",
+      "Sentinel"
+    ],
+    "unique_buildings": [
+      "Bastion",
+      "Sacre Infermeria"
+    ],
     "playstyle": "FF into single fortified bastion position; Hospitaller Knights sortie from walls; very hard to dislodge; expand only after citadel is secure.",
     "age_up": "Wagon politicians (Banco)"
   },
   "ANWMayans": {
     "civ_bonus": "Holcan Javelineer build limit grows each shipment; 2 bonus cards on Imperial Age.",
-    "unique_units": ["Holcan Javelineer", "Cruzob Avenger", "Cruzob Infantry", "Yucateco Insurgente"],
-    "unique_buildings": ["Native Embassy", "Cathedral"],
+    "unique_units": [
+      "Holcan Javelineer",
+      "Cruzob Avenger",
+      "Cruzob Infantry",
+      "Yucateco Insurgente"
+    ],
+    "unique_buildings": [
+      "Native Embassy",
+      "Cathedral"
+    ],
     "playstyle": "Choke-hug with Holcan Javelineer + Cruzob Infantry mass; harass from forward warbands; scaling Holcan swarm from shipments.",
     "age_up": "Wagon politicians (Mexican-style)"
   },
   "ANWMexicans": {
     "civ_bonus": "Can build Haciendas and a Cathedral with unique upgrades.",
-    "unique_units": ["Padre", "Insurgente", "Salteador", "Soldado", "Chinaco"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
+    "unique_units": [
+      "Padre",
+      "Insurgente",
+      "Salteador",
+      "Soldado",
+      "Chinaco"
+    ],
+    "unique_buildings": [
+      "Hacienda",
+      "Cathedral"
+    ],
     "playstyle": "Multi-barracks Insurgente + Chinaco levy spam; General heroes inspire lines; Hacienda eco sustains continuous production.",
     "age_up": "Hacienda wagon politicians"
   },
-  "ANWMexicansRev": {
-    "civ_bonus": "Can train Mexican Outlaws from Saloon in addition to local Outlaws.",
-    "unique_units": ["Cuerudo", "Rodelero", "Chinaco", "War Dog"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
-    "playstyle": "Outlaw supplement via Saloon; Chinaco cavalry + Insurgente infantry levy; civic core layout; shipments arrive slightly faster.",
-    "age_up": "Wagon politicians (Citizens)"
-  },
   "ANWNapoleonicFrance": {
     "civ_bonus": "Starts with Cuirassier hero; Grande Armée cards ship large infantry formations.",
-    "unique_units": ["Cuirassier", "Voltigeur", "Old Guard"],
+    "unique_units": [
+      "Cuirassier",
+      "Voltigeur",
+      "Old Guard"
+    ],
     "unique_buildings": [],
     "playstyle": "Push forward barracks and stables; Cuirassier + Voltigeur column advances; sustained forward pressure with rally-to-front-base shipments.",
     "age_up": "Wagon politicians (French-style)"
   },
   "ANWOttomans": {
     "civ_bonus": "Town Center automatically trains Settlers for free over time.",
-    "unique_units": ["Janissary", "Spahi", "Abus Gun", "Great Bombard"],
-    "unique_buildings": ["Artillery Foundry"],
+    "unique_units": [
+      "Janissary",
+      "Spahi",
+      "Abus Gun",
+      "Great Bombard"
+    ],
+    "unique_buildings": [
+      "Artillery Foundry"
+    ],
     "playstyle": "Free Settler trickle removes eco bottleneck; over-build Artillery Foundries; slow siege-column with Janissary escort; stone-and-forward walls.",
     "age_up": "Wagon politicians (Ottoman-style)"
   },
   "ANWPeruvians": {
     "civ_bonus": "Shipments arrive slightly faster; gains bonus from Simón Bolívar ally at Fortress.",
-    "unique_units": ["Lancer", "Rodelero", "War Dog", "Chasqui"],
+    "unique_units": [
+      "Lancer",
+      "Rodelero",
+      "War Dog",
+      "Chasqui"
+    ],
     "unique_buildings": [],
     "playstyle": "Wall high ground in rings with Kallankas; Lancer + Rodelero push; slow Industrial snowball; never overextend from fortified line.",
     "age_up": "Wagon politicians (Citizens)"
   },
   "ANWPortuguese": {
     "civ_bonus": "Gets 1 free Covered Wagon with each Age-up.",
-    "unique_units": ["Cassador", "Organ Gun"],
+    "unique_units": [
+      "Cassador",
+      "Organ Gun"
+    ],
     "unique_buildings": [],
     "playstyle": "Dock-first fishing fleet; Covered Wagons fund forward expansion; Cassador + Organ Gun mid-game; strong naval support throughout.",
     "age_up": "Covered Wagon with each Age-up"
   },
   "ANWRevFrance": {
     "civ_bonus": "Trains Sans Culottes instead of Settlers (stronger fighters, slower gatherers); gains Eclaireur scout at Commerce Age.",
-    "unique_units": ["Sans Culottes", "Eclaireur", "Cuirassier"],
+    "unique_units": [
+      "Sans Culottes",
+      "Eclaireur",
+      "Cuirassier"
+    ],
     "unique_buildings": [],
     "playstyle": "Multi-barracks Sans Culottes levy spam; Eclaireur scout flanks; Cuirassier cavalry arrives at Fortress; civic core with Outpost militia.",
     "age_up": "Wagon politicians (French-style)"
   },
-  "ANWRioGrande": {
-    "civ_bonus": "Can research Guard upgrades in Fortress Age; may train heavy artillery an age early; 2 bonus cards on Fortress Age.",
-    "unique_units": ["Padre", "Insurgente", "Salteador", "Chinaco", "Soldado"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
-    "playstyle": "Fast Fortress for early Guard + artillery; spread TCs and Trading Posts for map control; raid with Chinaco cavalry; skip turtle.",
-    "age_up": "Hacienda wagon politicians"
-  },
   "ANWRomanians": {
     "civ_bonus": "Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.",
-    "unique_units": ["Rosior Dragoon", "Dorabant"],
+    "unique_units": [
+      "Rosior Dragoon",
+      "Dorabant"
+    ],
     "unique_buildings": [],
     "playstyle": "Tight civic core with Outpost militia; Rosior Dragoon cavalry from every Outpost; reactive defense that counter-punches hard.",
     "age_up": "Covered Wagon per Outpost shipment"
   },
   "ANWRussians": {
     "civ_bonus": "Trains cheap Strelet infantry in batches; Cossacks available from Stables.",
-    "unique_units": ["Strelet", "Cossack", "Oprichnik"],
-    "unique_buildings": ["Blockhouse"],
+    "unique_units": [
+      "Strelet",
+      "Cossack",
+      "Oprichnik"
+    ],
+    "unique_buildings": [
+      "Blockhouse"
+    ],
     "playstyle": "Wide Cossack raid bands keep enemy occupied; cheap Strelet batches fill lines; rush to third Town Center; Blockhouses replace stone walls.",
     "age_up": "Wagon politicians"
   },
   "ANWSouthAfricans": {
     "civ_bonus": "Villagers and Banks gather faster; receives a free Trek Wagon each Age.",
-    "unique_units": ["Ruyter", "Trek Wagon", "Fluyt"],
-    "unique_buildings": ["Bank"],
+    "unique_units": [
+      "Ruyter",
+      "Trek Wagon",
+      "Fluyt"
+    ],
+    "unique_buildings": [
+      "Bank"
+    ],
     "playstyle": "Bank coin boom + Trek Wagon expansion; dock-first on water; Ruyter cavalry control the mid-game; strong naval with Fluyt.",
     "age_up": "Trek Wagon with each Age-up"
   },
   "ANWSpanish": {
     "civ_bonus": "Starts with Missionaries that can convert Treasures; Unction upgrade buffs all units.",
-    "unique_units": ["Rodelero", "Lancer", "War Dog", "Missionary"],
+    "unique_units": [
+      "Rodelero",
+      "Lancer",
+      "War Dog",
+      "Missionary"
+    ],
     "unique_buildings": [],
     "playstyle": "Forward barracks + stables pressure from Colonial; Rodelero + Lancer push with Missionary heal support; sustained forward-base doctrine.",
     "age_up": "Wagon politicians"
   },
   "ANWSwedes": {
     "civ_bonus": "Torp buildings passively gather nearby resources.",
-    "unique_units": ["Carolean", "Hakkapelit", "Horse Artillery"],
-    "unique_buildings": ["Torp"],
+    "unique_units": [
+      "Carolean",
+      "Hakkapelit",
+      "Horse Artillery"
+    ],
+    "unique_buildings": [
+      "Torp"
+    ],
     "playstyle": "Torp passive eco; push forward barracks and stables early; Carolean + Hakkapelit combined arms; relentless forward pressure.",
     "age_up": "Wagon politicians (Torp wagon)"
   },
   "ANWTexians": {
     "civ_bonus": "Minutemen levies can be called repeatedly from Town Centers and Outposts; 2 bonus cards on Industrial Age.",
-    "unique_units": ["Minuteman", "State Militia", "Regular", "Sharpshooter", "Chinaco"],
-    "unique_buildings": ["Hacienda", "Cathedral"],
+    "unique_units": [
+      "Minuteman",
+      "State Militia",
+      "Regular",
+      "Sharpshooter",
+      "Chinaco"
+    ],
+    "unique_buildings": [
+      "Hacienda",
+      "Cathedral"
+    ],
     "playstyle": "Push barracks and Outposts forward; Minuteman swarms defend while Regulars train; Republic militia mass into Sharpshooter FF timing.",
     "age_up": "Federal States politicians"
   },
   "ANWUSA": {
     "civ_bonus": "Starts with a free Covered Wagon; Federal Politicians ship powerful unique wagons.",
-    "unique_units": ["Minuteman", "State Militia", "Regular", "Sharpshooter"],
+    "unique_units": [
+      "Minuteman",
+      "State Militia",
+      "Regular",
+      "Sharpshooter"
+    ],
     "unique_buildings": [],
     "playstyle": "Multi-barracks line infantry boom with Outpost militia; Federal State cards provide powerful wagons; Minutemen defend early; Regular + Sharpshooter mid-game.",
     "age_up": "Federal States politicians"
-  },
-  "ANWYucatan": {
-    "civ_bonus": "Holcan Javelineer build limit grows with each shipment; 2 bonus cards on Fortress Age.",
-    "unique_units": ["Cruzob Avenger", "Cruzob Infantry", "Yucateco Insurgente", "Chaac Canoe"],
-    "unique_buildings": ["Native Embassy", "Cathedral"],
-    "playstyle": "Choke warfare with Yucateco Insurgentes and Cruzob mass; Mayan techs in Native Embassy scale the Holcan swarm; guerrilla strikes from jungle.",
-    "age_up": "Hacienda wagon politicians"
   }
 }

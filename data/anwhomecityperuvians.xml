@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWPeruvians</civ>
   <name>$$80849$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490259$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>spanish\spanish_homecity.xml</visual>
   <watervisual>spanish\spanish_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1342,17 +1343,23 @@
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Peru</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVAmericanAlliesPeru</card>
         <card>DEHCAlpacaWool</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVJuninHussars</card>
         <card>DEHCREVLima</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1363,33 +1370,40 @@
         <card>DEHCREVGuano</card>
         <card>DEHCREVShipBolasWarrior</card>
         <card>DEHCMercsArmoredPistoleers</card>
-        <card>DEHCREVMancoInca</card>
-        <card>DEHCREVShipFatLlamas</card>
-        <card>DEHCREVCuzco</card>
-        <card>HCHeavyFortifications</card>
-        <card>HCMercsHighland</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>HCUnlockFort</card>
-        <card>HCMercsHighlanders</card>
-        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCLiberationMarch</card>
+        <card>DEHCREVMancoInca</card>
+        <card>DEHCREVShipFatLlamas</card>
+        <card>HCHeavyFortifications</card>
+        <card>HCMercsHighland</card>
+        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCMachuPicchu</card>
+        <card>HCShipFoodCrates5</card>
+        <card>HCShipSettlers1</card>
+        <card>HCShipSettlers2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Peru</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVAmericanAlliesPeru</card>
         <card>DEHCAlpacaWool</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVJuninHussars</card>
         <card>DEHCREVLima</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1400,33 +1414,40 @@
         <card>DEHCREVGuano</card>
         <card>DEHCREVShipBolasWarrior</card>
         <card>DEHCMercsArmoredPistoleers</card>
-        <card>DEHCREVMancoInca</card>
-        <card>DEHCREVShipFatLlamas</card>
-        <card>DEHCREVCuzco</card>
-        <card>HCHeavyFortifications</card>
-        <card>HCMercsHighland</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>HCUnlockFort</card>
-        <card>HCMercsHighlanders</card>
-        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCLiberationMarch</card>
+        <card>DEHCREVMancoInca</card>
+        <card>DEHCREVShipFatLlamas</card>
+        <card>HCHeavyFortifications</card>
+        <card>HCMercsHighland</card>
+        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCMachuPicchu</card>
+        <card>HCShipFoodCrates5</card>
+        <card>HCShipSettlers1</card>
+        <card>HCShipSettlers2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Peru</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVAmericanAlliesPeru</card>
         <card>DEHCAlpacaWool</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVJuninHussars</card>
         <card>DEHCREVLima</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1437,33 +1458,40 @@
         <card>DEHCREVGuano</card>
         <card>DEHCREVShipBolasWarrior</card>
         <card>DEHCMercsArmoredPistoleers</card>
-        <card>DEHCREVMancoInca</card>
-        <card>DEHCREVShipFatLlamas</card>
-        <card>DEHCREVCuzco</card>
-        <card>HCHeavyFortifications</card>
-        <card>HCMercsHighland</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>HCUnlockFort</card>
-        <card>HCMercsHighlanders</card>
-        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCLiberationMarch</card>
+        <card>DEHCREVMancoInca</card>
+        <card>DEHCREVShipFatLlamas</card>
+        <card>HCHeavyFortifications</card>
+        <card>HCMercsHighland</card>
+        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCMachuPicchu</card>
+        <card>HCShipFoodCrates5</card>
+        <card>HCShipSettlers1</card>
+        <card>HCShipSettlers2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Peru</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVAmericanAlliesPeru</card>
         <card>DEHCAlpacaWool</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVJuninHussars</card>
         <card>DEHCREVLima</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1474,33 +1502,40 @@
         <card>DEHCREVGuano</card>
         <card>DEHCREVShipBolasWarrior</card>
         <card>DEHCMercsArmoredPistoleers</card>
-        <card>DEHCREVMancoInca</card>
-        <card>DEHCREVShipFatLlamas</card>
-        <card>DEHCREVCuzco</card>
-        <card>HCHeavyFortifications</card>
-        <card>HCMercsHighland</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>HCUnlockFort</card>
-        <card>HCMercsHighlanders</card>
-        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCLiberationMarch</card>
+        <card>DEHCREVMancoInca</card>
+        <card>DEHCREVShipFatLlamas</card>
+        <card>HCHeavyFortifications</card>
+        <card>HCMercsHighland</card>
+        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCMachuPicchu</card>
+        <card>HCShipFoodCrates5</card>
+        <card>HCShipSettlers1</card>
+        <card>HCShipSettlers2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Peru</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVAmericanAlliesPeru</card>
         <card>DEHCAlpacaWool</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVJuninHussars</card>
         <card>DEHCREVLima</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1511,33 +1546,40 @@
         <card>DEHCREVGuano</card>
         <card>DEHCREVShipBolasWarrior</card>
         <card>DEHCMercsArmoredPistoleers</card>
-        <card>DEHCREVMancoInca</card>
-        <card>DEHCREVShipFatLlamas</card>
-        <card>DEHCREVCuzco</card>
-        <card>HCHeavyFortifications</card>
-        <card>HCMercsHighland</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>HCUnlockFort</card>
-        <card>HCMercsHighlanders</card>
-        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCLiberationMarch</card>
+        <card>DEHCREVMancoInca</card>
+        <card>DEHCREVShipFatLlamas</card>
+        <card>HCHeavyFortifications</card>
+        <card>HCMercsHighland</card>
+        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCMachuPicchu</card>
+        <card>HCShipFoodCrates5</card>
+        <card>HCShipSettlers1</card>
+        <card>HCShipSettlers2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Peru</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVAmericanAlliesPeru</card>
         <card>DEHCAlpacaWool</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCREVJuninHussars</card>
         <card>DEHCREVLima</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1548,19 +1590,20 @@
         <card>DEHCREVGuano</card>
         <card>DEHCREVShipBolasWarrior</card>
         <card>DEHCMercsArmoredPistoleers</card>
-        <card>DEHCREVMancoInca</card>
-        <card>DEHCREVShipFatLlamas</card>
-        <card>DEHCREVCuzco</card>
-        <card>HCHeavyFortifications</card>
-        <card>HCMercsHighland</card>
-        <card>HCXPIndustrialRevolution</card>
         <card>HCUnlockFort</card>
-        <card>HCMercsHighlanders</card>
-        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCLiberationMarch</card>
+        <card>DEHCREVMancoInca</card>
+        <card>DEHCREVShipFatLlamas</card>
+        <card>HCHeavyFortifications</card>
+        <card>HCMercsHighland</card>
+        <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCMachuPicchu</card>
+        <card>HCShipFoodCrates5</card>
+        <card>HCShipSettlers1</card>
+        <card>HCShipSettlers2</card>
       </cards>
+
 
     </deck>
   </decks>
@@ -1592,13 +1635,13 @@
   <building>
     <name>Market</name>
     <visual>
-      <file>revolution\revolution_hall.xml</file>
+      <file>spanish\spanish_tradecenter.xml</file>
       <bone>bone_market</bone>
     </visual>
     <uix>250</uix>
     <uiy>375</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>spanish\spanish_homecity_market_camera.cam</camera>
+    <widescreencamera>spanish\spanish_homecity_market_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\nw_trading_company_icon</portrait>
     <displaynamestringid>24970</displaynamestringid>
@@ -1687,8 +1730,8 @@
     </visual>
     <uix>460</uix>
     <uiy>125</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>spanish\spanish_homecity_academy_camera.cam</camera>
+    <widescreencamera>spanish\spanish_homecity_academy_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\military_academy_icon</portrait>
     <displaynamestringid>24965</displaynamestringid>
@@ -1811,8 +1854,8 @@
     </visual>
     <uix>80</uix>
     <uiy>475</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>spanish\spanish_homecity_cathedral_camera.cam</camera>
+    <widescreencamera>spanish\spanish_homecity_cathedral_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\cathedral_icon</portrait>
     <displaynamestringid>24969</displaynamestringid>
@@ -1913,8 +1956,8 @@
     </visual>
     <uix>450</uix>
     <uiy>275</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>spanish\spanish_homecity_manufacturing_plant_camera.cam</camera>
+    <widescreencamera>spanish\spanish_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
@@ -1979,8 +2022,8 @@
     </visual>
     <uix>200</uix>
     <uiy>250</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>spanish\spanish_homecity_dock_camera.cam</camera>
+    <widescreencamera>spanish\spanish_homecity_dock_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\harbor_icon</portrait>
     <displaynamestringid>35745</displaynamestringid>
@@ -2059,8 +2102,8 @@
   </building>
   <building>
     <name>Customization</name>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>spanish\spanish_homecity_camera.cam</camera>
+    <widescreencamera>spanish\spanish_homecity_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>homecity\buildings_west\dock_icon</portrait>
     <displaynamestringid>24966</displaynamestringid>

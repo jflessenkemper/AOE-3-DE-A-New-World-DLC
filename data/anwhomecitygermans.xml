@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWGermans</civ>
+  <civ>Germans</civ>
   <name>$$36886$$</name>
-  <heroname>$$43033$$</heroname>
+  <heroname>$$490336$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>german\german_homecity.xml</visual>
   <watervisual>german\german_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Berlin</lightset>
   <watertype>Berlin</watertype>
@@ -1774,9 +1775,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>HCExplorerGerman</card>
         <card>HCShipUhlans3</card>
@@ -1804,6 +1815,228 @@
         <card>HCShipFalconets1German</card>
         <card>HCShipCannons1German</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCExplorerGerman</card>
+        <card>HCShipUhlans3</card>
+        <card>HCShipWarWagons1</card>
+        <card>HCShipSettlerWagons1</card>
+        <card>HCRoyalDecreeGerman</card>
+        <card>HCMercsLandsknecht1German</card>
+        <card>DEHCMercsIrishBrigadiersGerman</card>
+        <card>DEHCWettinAlliesGerman1</card>
+        <card>HCShipCaravels1German</card>
+        <card>DEHCHabsburgAlliesGerman</card>
+        <card>HCMercsHessiansGerman</card>
+        <card>HCMercsLandsknecht2German</card>
+        <card>DEHCHandMortarGerman</card>
+        <card>DEHCMercenaryCampsGerman</card>
+        <card>HCUhlanCombatGerman</card>
+        <card>DEHCMercsGiantGrenadiersGerman</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>DEHCWettinAlliesGerman2</card>
+        <card>DEHCMercsBosniaksGerman</card>
+        <card>DEHCMercsPandoursGerman</card>
+        <card>DEHCGermanBattleshipCard</card>
+        <card>DEHCGermanChevaulegers</card>
+        <card>HCAdvancedArtilleryGerman</card>
+        <card>HCShipFalconets1German</card>
+        <card>HCShipCannons1German</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCExplorerGerman</card>
+        <card>HCShipUhlans3</card>
+        <card>HCShipWarWagons1</card>
+        <card>HCShipSettlerWagons1</card>
+        <card>HCRoyalDecreeGerman</card>
+        <card>HCMercsLandsknecht1German</card>
+        <card>DEHCMercsIrishBrigadiersGerman</card>
+        <card>DEHCWettinAlliesGerman1</card>
+        <card>HCShipCaravels1German</card>
+        <card>DEHCHabsburgAlliesGerman</card>
+        <card>HCMercsHessiansGerman</card>
+        <card>HCMercsLandsknecht2German</card>
+        <card>DEHCHandMortarGerman</card>
+        <card>DEHCMercenaryCampsGerman</card>
+        <card>HCUhlanCombatGerman</card>
+        <card>DEHCMercsGiantGrenadiersGerman</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>DEHCWettinAlliesGerman2</card>
+        <card>DEHCMercsBosniaksGerman</card>
+        <card>DEHCMercsPandoursGerman</card>
+        <card>DEHCGermanBattleshipCard</card>
+        <card>DEHCGermanChevaulegers</card>
+        <card>HCAdvancedArtilleryGerman</card>
+        <card>HCShipFalconets1German</card>
+        <card>HCShipCannons1German</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCExplorerGerman</card>
+        <card>HCShipUhlans3</card>
+        <card>HCShipWarWagons1</card>
+        <card>HCShipSettlerWagons1</card>
+        <card>HCRoyalDecreeGerman</card>
+        <card>HCMercsLandsknecht1German</card>
+        <card>DEHCMercsIrishBrigadiersGerman</card>
+        <card>DEHCWettinAlliesGerman1</card>
+        <card>HCShipCaravels1German</card>
+        <card>DEHCHabsburgAlliesGerman</card>
+        <card>HCMercsHessiansGerman</card>
+        <card>HCMercsLandsknecht2German</card>
+        <card>DEHCHandMortarGerman</card>
+        <card>DEHCMercenaryCampsGerman</card>
+        <card>HCUhlanCombatGerman</card>
+        <card>DEHCMercsGiantGrenadiersGerman</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>DEHCWettinAlliesGerman2</card>
+        <card>DEHCMercsBosniaksGerman</card>
+        <card>DEHCMercsPandoursGerman</card>
+        <card>DEHCGermanBattleshipCard</card>
+        <card>DEHCGermanChevaulegers</card>
+        <card>HCAdvancedArtilleryGerman</card>
+        <card>HCShipFalconets1German</card>
+        <card>HCShipCannons1German</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCExplorerGerman</card>
+        <card>HCShipUhlans3</card>
+        <card>HCShipWarWagons1</card>
+        <card>HCShipSettlerWagons1</card>
+        <card>HCRoyalDecreeGerman</card>
+        <card>HCMercsLandsknecht1German</card>
+        <card>DEHCMercsIrishBrigadiersGerman</card>
+        <card>DEHCWettinAlliesGerman1</card>
+        <card>HCShipCaravels1German</card>
+        <card>DEHCHabsburgAlliesGerman</card>
+        <card>HCMercsHessiansGerman</card>
+        <card>HCMercsLandsknecht2German</card>
+        <card>DEHCHandMortarGerman</card>
+        <card>DEHCMercenaryCampsGerman</card>
+        <card>HCUhlanCombatGerman</card>
+        <card>DEHCMercsGiantGrenadiersGerman</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>DEHCWettinAlliesGerman2</card>
+        <card>DEHCMercsBosniaksGerman</card>
+        <card>DEHCMercsPandoursGerman</card>
+        <card>DEHCGermanBattleshipCard</card>
+        <card>DEHCGermanChevaulegers</card>
+        <card>HCAdvancedArtilleryGerman</card>
+        <card>HCShipFalconets1German</card>
+        <card>HCShipCannons1German</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCExplorerGerman</card>
+        <card>HCShipUhlans3</card>
+        <card>HCShipWarWagons1</card>
+        <card>HCShipSettlerWagons1</card>
+        <card>HCRoyalDecreeGerman</card>
+        <card>HCMercsLandsknecht1German</card>
+        <card>DEHCMercsIrishBrigadiersGerman</card>
+        <card>DEHCWettinAlliesGerman1</card>
+        <card>HCShipCaravels1German</card>
+        <card>DEHCHabsburgAlliesGerman</card>
+        <card>HCMercsHessiansGerman</card>
+        <card>HCMercsLandsknecht2German</card>
+        <card>DEHCHandMortarGerman</card>
+        <card>DEHCMercenaryCampsGerman</card>
+        <card>HCUhlanCombatGerman</card>
+        <card>DEHCMercsGiantGrenadiersGerman</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>DEHCWettinAlliesGerman2</card>
+        <card>DEHCMercsBosniaksGerman</card>
+        <card>DEHCMercsPandoursGerman</card>
+        <card>DEHCGermanBattleshipCard</card>
+        <card>DEHCGermanChevaulegers</card>
+        <card>HCAdvancedArtilleryGerman</card>
+        <card>HCShipFalconets1German</card>
+        <card>HCShipCannons1German</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

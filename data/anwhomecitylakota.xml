@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWLakota</civ>
+  <civ>XPSioux</civ>
   <name>$$43642$$</name>
-  <heroname>$$48879$$</heroname>
+  <heroname>$$490240$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>sioux\sioux_homecity.xml</visual>
   <watervisual>sioux\sioux_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>sioux_hc</lightset>
   <watertype>Seville</watertype>
@@ -1281,9 +1282,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>HCXPShipDogSoldiers3</card>
         <card>HCXPShipRifleRiders3</card>
@@ -1311,6 +1322,228 @@
         <card>HCXPShipWarRifles1</card>
         <card>HCXPSiouxBurntThighSupport</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipDogSoldiers3</card>
+        <card>HCXPShipRifleRiders3</card>
+        <card>HCXPShipAxeRiders3</card>
+        <card>HCXPWarChiefSioux1</card>
+        <card>HCXPBuffalo3</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPCavalryDamageSioux</card>
+        <card>HCXPShipAxeRiders1</card>
+        <card>HCXPBuffalo4</card>
+        <card>HCXPSiouxLakotaSupport</card>
+        <card>HCXPWarChiefSioux2</card>
+        <card>DEHCLakotaImprovedSiege</card>
+        <card>HCXPCavalryCombatSioux</card>
+        <card>HCXPWarChiefSioux3</card>
+        <card>HCXPShipAxeRiders5</card>
+        <card>HCXPShipAxeRidersRepeat</card>
+        <card>HCXPShipRifleRiders2</card>
+        <card>HCXPShipRifleRiders4</card>
+        <card>HCXPShipAxeRiders2</card>
+        <card>HCXPShipAxeRiders4</card>
+        <card>HCXPShipRifleRiders1</card>
+        <card>HCXPShipDogSoldiers1</card>
+        <card>HCXPShipDogSoldiersTeam1</card>
+        <card>HCXPShipWarRifles1</card>
+        <card>HCXPSiouxBurntThighSupport</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipDogSoldiers3</card>
+        <card>HCXPShipRifleRiders3</card>
+        <card>HCXPShipAxeRiders3</card>
+        <card>HCXPWarChiefSioux1</card>
+        <card>HCXPBuffalo3</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPCavalryDamageSioux</card>
+        <card>HCXPShipAxeRiders1</card>
+        <card>HCXPBuffalo4</card>
+        <card>HCXPSiouxLakotaSupport</card>
+        <card>HCXPWarChiefSioux2</card>
+        <card>DEHCLakotaImprovedSiege</card>
+        <card>HCXPCavalryCombatSioux</card>
+        <card>HCXPWarChiefSioux3</card>
+        <card>HCXPShipAxeRiders5</card>
+        <card>HCXPShipAxeRidersRepeat</card>
+        <card>HCXPShipRifleRiders2</card>
+        <card>HCXPShipRifleRiders4</card>
+        <card>HCXPShipAxeRiders2</card>
+        <card>HCXPShipAxeRiders4</card>
+        <card>HCXPShipRifleRiders1</card>
+        <card>HCXPShipDogSoldiers1</card>
+        <card>HCXPShipDogSoldiersTeam1</card>
+        <card>HCXPShipWarRifles1</card>
+        <card>HCXPSiouxBurntThighSupport</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipDogSoldiers3</card>
+        <card>HCXPShipRifleRiders3</card>
+        <card>HCXPShipAxeRiders3</card>
+        <card>HCXPWarChiefSioux1</card>
+        <card>HCXPBuffalo3</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPCavalryDamageSioux</card>
+        <card>HCXPShipAxeRiders1</card>
+        <card>HCXPBuffalo4</card>
+        <card>HCXPSiouxLakotaSupport</card>
+        <card>HCXPWarChiefSioux2</card>
+        <card>DEHCLakotaImprovedSiege</card>
+        <card>HCXPCavalryCombatSioux</card>
+        <card>HCXPWarChiefSioux3</card>
+        <card>HCXPShipAxeRiders5</card>
+        <card>HCXPShipAxeRidersRepeat</card>
+        <card>HCXPShipRifleRiders2</card>
+        <card>HCXPShipRifleRiders4</card>
+        <card>HCXPShipAxeRiders2</card>
+        <card>HCXPShipAxeRiders4</card>
+        <card>HCXPShipRifleRiders1</card>
+        <card>HCXPShipDogSoldiers1</card>
+        <card>HCXPShipDogSoldiersTeam1</card>
+        <card>HCXPShipWarRifles1</card>
+        <card>HCXPSiouxBurntThighSupport</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipDogSoldiers3</card>
+        <card>HCXPShipRifleRiders3</card>
+        <card>HCXPShipAxeRiders3</card>
+        <card>HCXPWarChiefSioux1</card>
+        <card>HCXPBuffalo3</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPCavalryDamageSioux</card>
+        <card>HCXPShipAxeRiders1</card>
+        <card>HCXPBuffalo4</card>
+        <card>HCXPSiouxLakotaSupport</card>
+        <card>HCXPWarChiefSioux2</card>
+        <card>DEHCLakotaImprovedSiege</card>
+        <card>HCXPCavalryCombatSioux</card>
+        <card>HCXPWarChiefSioux3</card>
+        <card>HCXPShipAxeRiders5</card>
+        <card>HCXPShipAxeRidersRepeat</card>
+        <card>HCXPShipRifleRiders2</card>
+        <card>HCXPShipRifleRiders4</card>
+        <card>HCXPShipAxeRiders2</card>
+        <card>HCXPShipAxeRiders4</card>
+        <card>HCXPShipRifleRiders1</card>
+        <card>HCXPShipDogSoldiers1</card>
+        <card>HCXPShipDogSoldiersTeam1</card>
+        <card>HCXPShipWarRifles1</card>
+        <card>HCXPSiouxBurntThighSupport</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipDogSoldiers3</card>
+        <card>HCXPShipRifleRiders3</card>
+        <card>HCXPShipAxeRiders3</card>
+        <card>HCXPWarChiefSioux1</card>
+        <card>HCXPBuffalo3</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPCavalryDamageSioux</card>
+        <card>HCXPShipAxeRiders1</card>
+        <card>HCXPBuffalo4</card>
+        <card>HCXPSiouxLakotaSupport</card>
+        <card>HCXPWarChiefSioux2</card>
+        <card>DEHCLakotaImprovedSiege</card>
+        <card>HCXPCavalryCombatSioux</card>
+        <card>HCXPWarChiefSioux3</card>
+        <card>HCXPShipAxeRiders5</card>
+        <card>HCXPShipAxeRidersRepeat</card>
+        <card>HCXPShipRifleRiders2</card>
+        <card>HCXPShipRifleRiders4</card>
+        <card>HCXPShipAxeRiders2</card>
+        <card>HCXPShipAxeRiders4</card>
+        <card>HCXPShipRifleRiders1</card>
+        <card>HCXPShipDogSoldiers1</card>
+        <card>HCXPShipDogSoldiersTeam1</card>
+        <card>HCXPShipWarRifles1</card>
+        <card>HCXPSiouxBurntThighSupport</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

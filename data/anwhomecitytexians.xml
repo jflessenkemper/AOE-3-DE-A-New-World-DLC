@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWTexians</civ>
   <name>$$112827$$</name>
-  <heroname>$$112003$$</heroname>
+  <heroname>$$490375$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>mexico\mexico_homecity.xml</visual>
   <watervisual>mexico\mexico_homecity_water.xml</watervisual>
@@ -13,7 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
-  <maxcardsperdeck>21</maxcardsperdeck>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
@@ -1394,7 +1394,9 @@
     <deck>
 
 
-      <name>Texas</name>
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
 
@@ -1402,25 +1404,25 @@
 
 
       <cards>
-        <card>DEHCREVMXTexasArmy</card>
-        <card>DEHCREVMXTexasLancers</card>
-        <card>DEHCREVMXTexasNavy</card>
-        <card>DEHCREVMXEmpresarioContracts</card>
-        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXBurnetLand</card>
-        <card>DEHCREVMXShipSharpshooters</card>
-        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCShipHaciendaWagon1</card>
         <card>HCFrontierDefenses</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCChipotles</card>
         <card>DEHCCopperCanyon</card>
+        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>HCFrontierDefenses2</card>
         <card>RvltModHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCPresidios</card>
+        <card>DEHCREVMXTexasArmy</card>
+        <card>DEHCREVMXTexasLancers</card>
+        <card>DEHCREVMXTexasNavy</card>
+        <card>DEHCREVMXEmpresarioContracts</card>
+        <card>DEHCREVMXShipSharpshooters</card>
+        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCREVMXShipFortWagon2</card>
         <card>DEHCREVMXIroncladsSteamers1</card>
         <card>DEHCREVMXRobberBarons2</card>
@@ -1436,7 +1438,9 @@
     <deck>
 
 
-      <name>Texas</name>
+      <name>$$20310$$Land</name>
+
+
       <default>
 
 
@@ -1444,25 +1448,25 @@
 
 
       <cards>
-        <card>DEHCREVMXTexasArmy</card>
-        <card>DEHCREVMXTexasLancers</card>
-        <card>DEHCREVMXTexasNavy</card>
-        <card>DEHCREVMXEmpresarioContracts</card>
-        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXBurnetLand</card>
-        <card>DEHCREVMXShipSharpshooters</card>
-        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCShipHaciendaWagon1</card>
         <card>HCFrontierDefenses</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCChipotles</card>
         <card>DEHCCopperCanyon</card>
+        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>HCFrontierDefenses2</card>
         <card>RvltModHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCPresidios</card>
+        <card>DEHCREVMXTexasArmy</card>
+        <card>DEHCREVMXTexasLancers</card>
+        <card>DEHCREVMXTexasNavy</card>
+        <card>DEHCREVMXEmpresarioContracts</card>
+        <card>DEHCREVMXShipSharpshooters</card>
+        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCREVMXShipFortWagon2</card>
         <card>DEHCREVMXIroncladsSteamers1</card>
         <card>DEHCREVMXRobberBarons2</card>
@@ -1478,7 +1482,9 @@
     <deck>
 
 
-      <name>Texas</name>
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
 
@@ -1486,25 +1492,25 @@
 
 
       <cards>
-        <card>DEHCREVMXTexasArmy</card>
-        <card>DEHCREVMXTexasLancers</card>
-        <card>DEHCREVMXTexasNavy</card>
-        <card>DEHCREVMXEmpresarioContracts</card>
-        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXBurnetLand</card>
-        <card>DEHCREVMXShipSharpshooters</card>
-        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCShipHaciendaWagon1</card>
         <card>HCFrontierDefenses</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCChipotles</card>
         <card>DEHCCopperCanyon</card>
+        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>HCFrontierDefenses2</card>
         <card>RvltModHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCPresidios</card>
+        <card>DEHCREVMXTexasArmy</card>
+        <card>DEHCREVMXTexasLancers</card>
+        <card>DEHCREVMXTexasNavy</card>
+        <card>DEHCREVMXEmpresarioContracts</card>
+        <card>DEHCREVMXShipSharpshooters</card>
+        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCREVMXShipFortWagon2</card>
         <card>DEHCREVMXIroncladsSteamers1</card>
         <card>DEHCREVMXRobberBarons2</card>
@@ -1520,7 +1526,9 @@
     <deck>
 
 
-      <name>Texas</name>
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
 
@@ -1528,25 +1536,25 @@
 
 
       <cards>
-        <card>DEHCREVMXTexasArmy</card>
-        <card>DEHCREVMXTexasLancers</card>
-        <card>DEHCREVMXTexasNavy</card>
-        <card>DEHCREVMXEmpresarioContracts</card>
-        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXBurnetLand</card>
-        <card>DEHCREVMXShipSharpshooters</card>
-        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCShipHaciendaWagon1</card>
         <card>HCFrontierDefenses</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCChipotles</card>
         <card>DEHCCopperCanyon</card>
+        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>HCFrontierDefenses2</card>
         <card>RvltModHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCPresidios</card>
+        <card>DEHCREVMXTexasArmy</card>
+        <card>DEHCREVMXTexasLancers</card>
+        <card>DEHCREVMXTexasNavy</card>
+        <card>DEHCREVMXEmpresarioContracts</card>
+        <card>DEHCREVMXShipSharpshooters</card>
+        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCREVMXShipFortWagon2</card>
         <card>DEHCREVMXIroncladsSteamers1</card>
         <card>DEHCREVMXRobberBarons2</card>
@@ -1562,7 +1570,9 @@
     <deck>
 
 
-      <name>Texas</name>
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
 
@@ -1570,25 +1580,25 @@
 
 
       <cards>
-        <card>DEHCREVMXTexasArmy</card>
-        <card>DEHCREVMXTexasLancers</card>
-        <card>DEHCREVMXTexasNavy</card>
-        <card>DEHCREVMXEmpresarioContracts</card>
-        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXBurnetLand</card>
-        <card>DEHCREVMXShipSharpshooters</card>
-        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCShipHaciendaWagon1</card>
         <card>HCFrontierDefenses</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCChipotles</card>
         <card>DEHCCopperCanyon</card>
+        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>HCFrontierDefenses2</card>
         <card>RvltModHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCPresidios</card>
+        <card>DEHCREVMXTexasArmy</card>
+        <card>DEHCREVMXTexasLancers</card>
+        <card>DEHCREVMXTexasNavy</card>
+        <card>DEHCREVMXEmpresarioContracts</card>
+        <card>DEHCREVMXShipSharpshooters</card>
+        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCREVMXShipFortWagon2</card>
         <card>DEHCREVMXIroncladsSteamers1</card>
         <card>DEHCREVMXRobberBarons2</card>
@@ -1604,7 +1614,9 @@
     <deck>
 
 
-      <name>Texas</name>
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
 
@@ -1612,25 +1624,25 @@
 
 
       <cards>
-        <card>DEHCREVMXTexasArmy</card>
-        <card>DEHCREVMXTexasLancers</card>
-        <card>DEHCREVMXTexasNavy</card>
-        <card>DEHCREVMXEmpresarioContracts</card>
-        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXBurnetLand</card>
-        <card>DEHCREVMXShipSharpshooters</card>
-        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCShipHaciendaWagon1</card>
         <card>HCFrontierDefenses</card>
         <card>DEHCFedMXFortifiedHaciendas</card>
         <card>DEHCShipCapturedGalleons1</card>
         <card>DEHCChipotles</card>
         <card>DEHCCopperCanyon</card>
+        <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>HCFrontierDefenses2</card>
         <card>RvltModHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
+        <card>DEHCPresidios</card>
+        <card>DEHCREVMXTexasArmy</card>
+        <card>DEHCREVMXTexasLancers</card>
+        <card>DEHCREVMXTexasNavy</card>
+        <card>DEHCREVMXEmpresarioContracts</card>
+        <card>DEHCREVMXShipSharpshooters</card>
+        <card>DEHCREVMXHeavyFortifications</card>
         <card>DEHCREVMXShipFortWagon2</card>
         <card>DEHCREVMXIroncladsSteamers1</card>
         <card>DEHCREVMXRobberBarons2</card>

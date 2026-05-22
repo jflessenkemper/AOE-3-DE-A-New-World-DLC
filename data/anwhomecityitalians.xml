@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWItalians</civ>
+  <civ>DEItalians</civ>
   <name>$$122002$$</name>
-  <heroname>$$122003$$</heroname>
+  <heroname>$$490226$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>italy\italy_homecity.xml</visual>
   <watervisual>italy\italy_water.xml</watervisual>
@@ -15,6 +15,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>italy</lightset>
   <watertype>Seville</watertype>
@@ -2089,9 +2090,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCExplorerItalian</card>
         <card>DEHCLombardy</card>
@@ -2119,6 +2130,228 @@
         <card>DEHCPioneersItalian</card>
         <card>HCFrontierDefensesItalian</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerItalian</card>
+        <card>DEHCLombardy</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCCavalryDamageItalianTeam</card>
+        <card>DEHCRoyalDecreeItalians</card>
+        <card>DEHCSchiavoniSwords</card>
+        <card>DEHCShipPavisiers1</card>
+        <card>DEHCAdvancedLombard</card>
+        <card>DEHCCavalryCombatItalian</card>
+        <card>DEHCImprovedCrossbowsItalians</card>
+        <card>DEHCShipPavisiers2</card>
+        <card>DEHCShipPavisiersRepeat</card>
+        <card>DEBasilicaShipPapalElmeti1</card>
+        <card>DEHCItalianBattleshipCard</card>
+        <card>DEHCPapalArsenal</card>
+        <card>DEHCPapalCompany</card>
+        <card>DEHCRedshirts</card>
+        <card>DEHCShipBersaglieri1</card>
+        <card>DEHCShipBersaglieriRepeat</card>
+        <card>DEHCShipPapalBombards</card>
+        <card>DEHCShipPapalBombardsRepeat</card>
+        <card>DEHCShipPavisiers4</card>
+        <card>DEHCVenetianArsenal</card>
+        <card>DEHCPioneersItalian</card>
+        <card>HCFrontierDefensesItalian</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerItalian</card>
+        <card>DEHCLombardy</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCCavalryDamageItalianTeam</card>
+        <card>DEHCRoyalDecreeItalians</card>
+        <card>DEHCSchiavoniSwords</card>
+        <card>DEHCShipPavisiers1</card>
+        <card>DEHCAdvancedLombard</card>
+        <card>DEHCCavalryCombatItalian</card>
+        <card>DEHCImprovedCrossbowsItalians</card>
+        <card>DEHCShipPavisiers2</card>
+        <card>DEHCShipPavisiersRepeat</card>
+        <card>DEBasilicaShipPapalElmeti1</card>
+        <card>DEHCItalianBattleshipCard</card>
+        <card>DEHCPapalArsenal</card>
+        <card>DEHCPapalCompany</card>
+        <card>DEHCRedshirts</card>
+        <card>DEHCShipBersaglieri1</card>
+        <card>DEHCShipBersaglieriRepeat</card>
+        <card>DEHCShipPapalBombards</card>
+        <card>DEHCShipPapalBombardsRepeat</card>
+        <card>DEHCShipPavisiers4</card>
+        <card>DEHCVenetianArsenal</card>
+        <card>DEHCPioneersItalian</card>
+        <card>HCFrontierDefensesItalian</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerItalian</card>
+        <card>DEHCLombardy</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCCavalryDamageItalianTeam</card>
+        <card>DEHCRoyalDecreeItalians</card>
+        <card>DEHCSchiavoniSwords</card>
+        <card>DEHCShipPavisiers1</card>
+        <card>DEHCAdvancedLombard</card>
+        <card>DEHCCavalryCombatItalian</card>
+        <card>DEHCImprovedCrossbowsItalians</card>
+        <card>DEHCShipPavisiers2</card>
+        <card>DEHCShipPavisiersRepeat</card>
+        <card>DEBasilicaShipPapalElmeti1</card>
+        <card>DEHCItalianBattleshipCard</card>
+        <card>DEHCPapalArsenal</card>
+        <card>DEHCPapalCompany</card>
+        <card>DEHCRedshirts</card>
+        <card>DEHCShipBersaglieri1</card>
+        <card>DEHCShipBersaglieriRepeat</card>
+        <card>DEHCShipPapalBombards</card>
+        <card>DEHCShipPapalBombardsRepeat</card>
+        <card>DEHCShipPavisiers4</card>
+        <card>DEHCVenetianArsenal</card>
+        <card>DEHCPioneersItalian</card>
+        <card>HCFrontierDefensesItalian</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerItalian</card>
+        <card>DEHCLombardy</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCCavalryDamageItalianTeam</card>
+        <card>DEHCRoyalDecreeItalians</card>
+        <card>DEHCSchiavoniSwords</card>
+        <card>DEHCShipPavisiers1</card>
+        <card>DEHCAdvancedLombard</card>
+        <card>DEHCCavalryCombatItalian</card>
+        <card>DEHCImprovedCrossbowsItalians</card>
+        <card>DEHCShipPavisiers2</card>
+        <card>DEHCShipPavisiersRepeat</card>
+        <card>DEBasilicaShipPapalElmeti1</card>
+        <card>DEHCItalianBattleshipCard</card>
+        <card>DEHCPapalArsenal</card>
+        <card>DEHCPapalCompany</card>
+        <card>DEHCRedshirts</card>
+        <card>DEHCShipBersaglieri1</card>
+        <card>DEHCShipBersaglieriRepeat</card>
+        <card>DEHCShipPapalBombards</card>
+        <card>DEHCShipPapalBombardsRepeat</card>
+        <card>DEHCShipPavisiers4</card>
+        <card>DEHCVenetianArsenal</card>
+        <card>DEHCPioneersItalian</card>
+        <card>HCFrontierDefensesItalian</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerItalian</card>
+        <card>DEHCLombardy</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCCavalryDamageItalianTeam</card>
+        <card>DEHCRoyalDecreeItalians</card>
+        <card>DEHCSchiavoniSwords</card>
+        <card>DEHCShipPavisiers1</card>
+        <card>DEHCAdvancedLombard</card>
+        <card>DEHCCavalryCombatItalian</card>
+        <card>DEHCImprovedCrossbowsItalians</card>
+        <card>DEHCShipPavisiers2</card>
+        <card>DEHCShipPavisiersRepeat</card>
+        <card>DEBasilicaShipPapalElmeti1</card>
+        <card>DEHCItalianBattleshipCard</card>
+        <card>DEHCPapalArsenal</card>
+        <card>DEHCPapalCompany</card>
+        <card>DEHCRedshirts</card>
+        <card>DEHCShipBersaglieri1</card>
+        <card>DEHCShipBersaglieriRepeat</card>
+        <card>DEHCShipPapalBombards</card>
+        <card>DEHCShipPapalBombardsRepeat</card>
+        <card>DEHCShipPavisiers4</card>
+        <card>DEHCVenetianArsenal</card>
+        <card>DEHCPioneersItalian</card>
+        <card>HCFrontierDefensesItalian</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

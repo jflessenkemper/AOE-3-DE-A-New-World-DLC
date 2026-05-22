@@ -23,7 +23,38 @@
 //        milestone.first_forward_base  atMs=<int> baseID=<int>
 //                                       (gForwardBaseState == Active)
 //
-//   2) comp.snapshot / posture.snapshot — fired every 60s (game time) to
+//   2) wall.closure / wall.escalate / wall.reemit — fired every 60s by the
+//      verifyWallClosure rule (aiBuildingsWalls.xs) while any wall plan is
+//      active. Lets the validator confirm closure progress and detect
+//      half-wall stall conditions.
+//
+//      Tags emitted (every 60s while wall plan active):
+//        wall.closure   expected=<int> actual=<int> closure=<float>
+//                       strategy=<int> elapsed=<int> age=<int>
+//                         — expected is 2*PI*radius/4 (4-unit segment length).
+//                           closure = actual/expected. strategy matches the
+//                           cLLWallStrategy* enum. elapsed is game-time seconds.
+//        wall.escalate  plan=<int> closure=<float>
+//                         — fired when coverage < 0.60 after 4 min and the
+//                           plan is still alive. Priority bumped to 95,
+//                           villager pool bumped to 4-16.
+//        wall.reemit    closure=<float>
+//                         — fired when coverage < 0.60 after 4 min and the
+//                           plan was destroyed; a fresh plan is emitted.
+//        wall.water_fix orig=<vec> final=<vec> steps=<int> fixed=<bool>
+//                         — fired by llGetForwardBiasedWallCenter whenever a
+//                           water/cliff fixup is attempted (steps=0 and
+//                           fixed=false on flat inland maps).
+//        wall.chokepoint vec=<vec> tiles=<int> cached=<0|1> [fallback=<tag>]
+//                         — fired by llDetectChokepointVector; tiles is the
+//                           narrowest border area's tile count (0 on cache hits
+//                           or flat-map fallback). cached=1 means a previously
+//                           computed vector was reused.
+//        wall.coast      vec=<vec> waterBorders=<int> cached=<0|1>
+//                         — fired by llDetectCoastVector; waterBorders is the
+//                           count of water-typed border areas found.
+//
+//   3) comp.snapshot / posture.snapshot — fired every 60s (game time) to
 //      give the validator a rolling view. comp.snapshot reports unit
 //      composition (cavalry/infantry/artillery counts + villager count
 //      so we can compute army%); posture.snapshot reports the

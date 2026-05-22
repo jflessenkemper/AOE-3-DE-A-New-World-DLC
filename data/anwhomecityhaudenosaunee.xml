@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWHaudenosaunee</civ>
+  <civ>XPIroquois</civ>
   <name>$$43641$$</name>
-  <heroname>$$48878$$</heroname>
+  <heroname>$$490337$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>iroquois\iroquois_homecity.xml</visual>
   <watervisual>iroquois\iroquois_homecity_water.xml</watervisual>
@@ -14,6 +14,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hc_iroquois1</lightset>
   <watertype>Berlin</watertype>
@@ -1317,9 +1318,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>HCXPShipTomahawk3</card>
         <card>HCXPWarChiefIroquois1</card>
@@ -1347,6 +1358,228 @@
         <card>HCXPIroquoisWoodworking</card>
         <card>HCXPShipMantlets1</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipTomahawk3</card>
+        <card>HCXPWarChiefIroquois1</card>
+        <card>HCXPForestMother</card>
+        <card>HCXPWarChiefIroquois2</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPBattlefieldConstructionIroquois</card>
+        <card>HCXPInfantryDamageIroquois</card>
+        <card>HCXPInfantryHitpointsIroquois</card>
+        <card>DEHCTeamShipMantlets</card>
+        <card>DEHCWampum</card>
+        <card>HCXPCavalryDamageIroquois</card>
+        <card>HCXPCavalryHitpointsIroquois</card>
+        <card>HCXPInfantryCombatIroquois</card>
+        <card>HCXPIroquoisCayugaSupport</card>
+        <card>HCXPCavalryCombatIroquois</card>
+        <card>HCXPOldWaysIroquois</card>
+        <card>HCXPShipMantlets2</card>
+        <card>HCXPShipMantlets4</card>
+        <card>HCXPIroquoisMohawkSupport</card>
+        <card>HCXPIroquoisOneidaSupport</card>
+        <card>HCXPIroquoisOnondagaSupport</card>
+        <card>HCXPIroquoisSenecaSupport</card>
+        <card>HCXPIroquoisTuscaroraSupport</card>
+        <card>HCXPIroquoisWoodworking</card>
+        <card>HCXPShipMantlets1</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipTomahawk3</card>
+        <card>HCXPWarChiefIroquois1</card>
+        <card>HCXPForestMother</card>
+        <card>HCXPWarChiefIroquois2</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPBattlefieldConstructionIroquois</card>
+        <card>HCXPInfantryDamageIroquois</card>
+        <card>HCXPInfantryHitpointsIroquois</card>
+        <card>DEHCTeamShipMantlets</card>
+        <card>DEHCWampum</card>
+        <card>HCXPCavalryDamageIroquois</card>
+        <card>HCXPCavalryHitpointsIroquois</card>
+        <card>HCXPInfantryCombatIroquois</card>
+        <card>HCXPIroquoisCayugaSupport</card>
+        <card>HCXPCavalryCombatIroquois</card>
+        <card>HCXPOldWaysIroquois</card>
+        <card>HCXPShipMantlets2</card>
+        <card>HCXPShipMantlets4</card>
+        <card>HCXPIroquoisMohawkSupport</card>
+        <card>HCXPIroquoisOneidaSupport</card>
+        <card>HCXPIroquoisOnondagaSupport</card>
+        <card>HCXPIroquoisSenecaSupport</card>
+        <card>HCXPIroquoisTuscaroraSupport</card>
+        <card>HCXPIroquoisWoodworking</card>
+        <card>HCXPShipMantlets1</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipTomahawk3</card>
+        <card>HCXPWarChiefIroquois1</card>
+        <card>HCXPForestMother</card>
+        <card>HCXPWarChiefIroquois2</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPBattlefieldConstructionIroquois</card>
+        <card>HCXPInfantryDamageIroquois</card>
+        <card>HCXPInfantryHitpointsIroquois</card>
+        <card>DEHCTeamShipMantlets</card>
+        <card>DEHCWampum</card>
+        <card>HCXPCavalryDamageIroquois</card>
+        <card>HCXPCavalryHitpointsIroquois</card>
+        <card>HCXPInfantryCombatIroquois</card>
+        <card>HCXPIroquoisCayugaSupport</card>
+        <card>HCXPCavalryCombatIroquois</card>
+        <card>HCXPOldWaysIroquois</card>
+        <card>HCXPShipMantlets2</card>
+        <card>HCXPShipMantlets4</card>
+        <card>HCXPIroquoisMohawkSupport</card>
+        <card>HCXPIroquoisOneidaSupport</card>
+        <card>HCXPIroquoisOnondagaSupport</card>
+        <card>HCXPIroquoisSenecaSupport</card>
+        <card>HCXPIroquoisTuscaroraSupport</card>
+        <card>HCXPIroquoisWoodworking</card>
+        <card>HCXPShipMantlets1</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipTomahawk3</card>
+        <card>HCXPWarChiefIroquois1</card>
+        <card>HCXPForestMother</card>
+        <card>HCXPWarChiefIroquois2</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPBattlefieldConstructionIroquois</card>
+        <card>HCXPInfantryDamageIroquois</card>
+        <card>HCXPInfantryHitpointsIroquois</card>
+        <card>DEHCTeamShipMantlets</card>
+        <card>DEHCWampum</card>
+        <card>HCXPCavalryDamageIroquois</card>
+        <card>HCXPCavalryHitpointsIroquois</card>
+        <card>HCXPInfantryCombatIroquois</card>
+        <card>HCXPIroquoisCayugaSupport</card>
+        <card>HCXPCavalryCombatIroquois</card>
+        <card>HCXPOldWaysIroquois</card>
+        <card>HCXPShipMantlets2</card>
+        <card>HCXPShipMantlets4</card>
+        <card>HCXPIroquoisMohawkSupport</card>
+        <card>HCXPIroquoisOneidaSupport</card>
+        <card>HCXPIroquoisOnondagaSupport</card>
+        <card>HCXPIroquoisSenecaSupport</card>
+        <card>HCXPIroquoisTuscaroraSupport</card>
+        <card>HCXPIroquoisWoodworking</card>
+        <card>HCXPShipMantlets1</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPShipTomahawk3</card>
+        <card>HCXPWarChiefIroquois1</card>
+        <card>HCXPForestMother</card>
+        <card>HCXPWarChiefIroquois2</card>
+        <card>DEHCExtensiveFortificationsWarchief</card>
+        <card>HCXPBattlefieldConstructionIroquois</card>
+        <card>HCXPInfantryDamageIroquois</card>
+        <card>HCXPInfantryHitpointsIroquois</card>
+        <card>DEHCTeamShipMantlets</card>
+        <card>DEHCWampum</card>
+        <card>HCXPCavalryDamageIroquois</card>
+        <card>HCXPCavalryHitpointsIroquois</card>
+        <card>HCXPInfantryCombatIroquois</card>
+        <card>HCXPIroquoisCayugaSupport</card>
+        <card>HCXPCavalryCombatIroquois</card>
+        <card>HCXPOldWaysIroquois</card>
+        <card>HCXPShipMantlets2</card>
+        <card>HCXPShipMantlets4</card>
+        <card>HCXPIroquoisMohawkSupport</card>
+        <card>HCXPIroquoisOneidaSupport</card>
+        <card>HCXPIroquoisOnondagaSupport</card>
+        <card>HCXPIroquoisSenecaSupport</card>
+        <card>HCXPIroquoisTuscaroraSupport</card>
+        <card>HCXPIroquoisWoodworking</card>
+        <card>HCXPShipMantlets1</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

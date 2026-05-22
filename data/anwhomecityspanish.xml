@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWSpanish</civ>
+  <civ>Spanish</civ>
   <name>$$36890$$</name>
-  <heroname>$$43037$$</heroname>
+  <heroname>$$490349$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>spanish\spanish_homecity.xml</visual>
   <watervisual>spanish\spanish_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Seville</lightset>
   <watertype>Seville</watertype>
@@ -1879,9 +1880,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCHabsburgAllies1</card>
         <card>HCInquisition</card>
@@ -1909,6 +1920,228 @@
         <card>HCHandCavalryDamageSpanish</card>
         <card>HCHandCavalryHitpointsSpanish</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHabsburgAllies1</card>
+        <card>HCInquisition</card>
+        <card>HCShipRodeleros3</card>
+        <card>HCShipLancers3</card>
+        <card>HCShipSpanishSquare</card>
+        <card>HCSpanishTreasureFleet</card>
+        <card>DEHCPeninsularGuerrillas</card>
+        <card>HCExplorerSpanish</card>
+        <card>HCRoyalDecreeSpanish</card>
+        <card>DEHCAlpacaWool</card>
+        <card>HCSpanishGalleons</card>
+        <card>DEHCReconquista</card>
+        <card>HCShipGalleons</card>
+        <card>HCHandCavalryCombatSpanish</card>
+        <card>HCHandInfantryCombatSpanish</card>
+        <card>HCShipLancers1</card>
+        <card>HCShipRodeleros2</card>
+        <card>HCShipLancers4</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCShipRodeleros4</card>
+        <card>HCXPSpanishGold</card>
+        <card>HCShipLancers5</card>
+        <card>DEHCMercsArmoredPistoleers</card>
+        <card>HCHandCavalryDamageSpanish</card>
+        <card>HCHandCavalryHitpointsSpanish</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHabsburgAllies1</card>
+        <card>HCInquisition</card>
+        <card>HCShipRodeleros3</card>
+        <card>HCShipLancers3</card>
+        <card>HCShipSpanishSquare</card>
+        <card>HCSpanishTreasureFleet</card>
+        <card>DEHCPeninsularGuerrillas</card>
+        <card>HCExplorerSpanish</card>
+        <card>HCRoyalDecreeSpanish</card>
+        <card>DEHCAlpacaWool</card>
+        <card>HCSpanishGalleons</card>
+        <card>DEHCReconquista</card>
+        <card>HCShipGalleons</card>
+        <card>HCHandCavalryCombatSpanish</card>
+        <card>HCHandInfantryCombatSpanish</card>
+        <card>HCShipLancers1</card>
+        <card>HCShipRodeleros2</card>
+        <card>HCShipLancers4</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCShipRodeleros4</card>
+        <card>HCXPSpanishGold</card>
+        <card>HCShipLancers5</card>
+        <card>DEHCMercsArmoredPistoleers</card>
+        <card>HCHandCavalryDamageSpanish</card>
+        <card>HCHandCavalryHitpointsSpanish</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHabsburgAllies1</card>
+        <card>HCInquisition</card>
+        <card>HCShipRodeleros3</card>
+        <card>HCShipLancers3</card>
+        <card>HCShipSpanishSquare</card>
+        <card>HCSpanishTreasureFleet</card>
+        <card>DEHCPeninsularGuerrillas</card>
+        <card>HCExplorerSpanish</card>
+        <card>HCRoyalDecreeSpanish</card>
+        <card>DEHCAlpacaWool</card>
+        <card>HCSpanishGalleons</card>
+        <card>DEHCReconquista</card>
+        <card>HCShipGalleons</card>
+        <card>HCHandCavalryCombatSpanish</card>
+        <card>HCHandInfantryCombatSpanish</card>
+        <card>HCShipLancers1</card>
+        <card>HCShipRodeleros2</card>
+        <card>HCShipLancers4</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCShipRodeleros4</card>
+        <card>HCXPSpanishGold</card>
+        <card>HCShipLancers5</card>
+        <card>DEHCMercsArmoredPistoleers</card>
+        <card>HCHandCavalryDamageSpanish</card>
+        <card>HCHandCavalryHitpointsSpanish</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHabsburgAllies1</card>
+        <card>HCInquisition</card>
+        <card>HCShipRodeleros3</card>
+        <card>HCShipLancers3</card>
+        <card>HCShipSpanishSquare</card>
+        <card>HCSpanishTreasureFleet</card>
+        <card>DEHCPeninsularGuerrillas</card>
+        <card>HCExplorerSpanish</card>
+        <card>HCRoyalDecreeSpanish</card>
+        <card>DEHCAlpacaWool</card>
+        <card>HCSpanishGalleons</card>
+        <card>DEHCReconquista</card>
+        <card>HCShipGalleons</card>
+        <card>HCHandCavalryCombatSpanish</card>
+        <card>HCHandInfantryCombatSpanish</card>
+        <card>HCShipLancers1</card>
+        <card>HCShipRodeleros2</card>
+        <card>HCShipLancers4</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCShipRodeleros4</card>
+        <card>HCXPSpanishGold</card>
+        <card>HCShipLancers5</card>
+        <card>DEHCMercsArmoredPistoleers</card>
+        <card>HCHandCavalryDamageSpanish</card>
+        <card>HCHandCavalryHitpointsSpanish</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCHabsburgAllies1</card>
+        <card>HCInquisition</card>
+        <card>HCShipRodeleros3</card>
+        <card>HCShipLancers3</card>
+        <card>HCShipSpanishSquare</card>
+        <card>HCSpanishTreasureFleet</card>
+        <card>DEHCPeninsularGuerrillas</card>
+        <card>HCExplorerSpanish</card>
+        <card>HCRoyalDecreeSpanish</card>
+        <card>DEHCAlpacaWool</card>
+        <card>HCSpanishGalleons</card>
+        <card>DEHCReconquista</card>
+        <card>HCShipGalleons</card>
+        <card>HCHandCavalryCombatSpanish</card>
+        <card>HCHandInfantryCombatSpanish</card>
+        <card>HCShipLancers1</card>
+        <card>HCShipRodeleros2</card>
+        <card>HCShipLancers4</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCShipRodeleros4</card>
+        <card>HCXPSpanishGold</card>
+        <card>HCShipLancers5</card>
+        <card>DEHCMercsArmoredPistoleers</card>
+        <card>HCHandCavalryDamageSpanish</card>
+        <card>HCHandCavalryHitpointsSpanish</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

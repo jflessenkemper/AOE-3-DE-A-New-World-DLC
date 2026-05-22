@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWEthiopians</civ>
+  <civ>DEEthiopians</civ>
   <name>$$101002$$</name>
-  <heroname>$$101003$$</heroname>
+  <heroname>$$490334$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>ethiopia\ethiopia_homecity.xml</visual>
   <watervisual>ethiopia\ethiopia_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>ethiopia_homecity</lightset>
   <watertype>Lisbon</watertype>
@@ -1173,9 +1174,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCIndianTradeEthiopia</card>
         <card>DEHCIronmongerEthiopians</card>
@@ -1203,6 +1214,228 @@
         <card>DEHCBalambaras</card>
         <card>DEHCCanoeCrafting</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCIndianTradeEthiopia</card>
+        <card>DEHCIronmongerEthiopians</card>
+        <card>DEHCGascenyaDamage</card>
+        <card>DEHCGascenyaHitpoints</card>
+        <card>DEHCLalibelaRockChurch</card>
+        <card>DEHCShipGascenya1</card>
+        <card>DEHCMercsCannoneers</card>
+        <card>DEHCHandInfantryCombatEthiopian</card>
+        <card>DEHCShipGascenya2</card>
+        <card>DEHCShipGascenya3</card>
+        <card>DEHCShipNeftenya1</card>
+        <card>DEHCShipNeftenyaRepeat</card>
+        <card>DEHCMercsCannoneers2</card>
+        <card>DEHCExtensiveFortificationsEthiopian</card>
+        <card>DEHCGascenyaRepeat</card>
+        <card>DEHCShipGascenya4</card>
+        <card>DEHCShipNeftenya2</card>
+        <card>DEHCHeavyFortificationsAfrican</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCShipMercWarDhow</card>
+        <card>DEHCMercsAskari</card>
+        <card>DEHCMercsGatlingCamels</card>
+        <card>DEHCShipMercWarDhows2</card>
+        <card>DEHCBalambaras</card>
+        <card>DEHCCanoeCrafting</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCIndianTradeEthiopia</card>
+        <card>DEHCIronmongerEthiopians</card>
+        <card>DEHCGascenyaDamage</card>
+        <card>DEHCGascenyaHitpoints</card>
+        <card>DEHCLalibelaRockChurch</card>
+        <card>DEHCShipGascenya1</card>
+        <card>DEHCMercsCannoneers</card>
+        <card>DEHCHandInfantryCombatEthiopian</card>
+        <card>DEHCShipGascenya2</card>
+        <card>DEHCShipGascenya3</card>
+        <card>DEHCShipNeftenya1</card>
+        <card>DEHCShipNeftenyaRepeat</card>
+        <card>DEHCMercsCannoneers2</card>
+        <card>DEHCExtensiveFortificationsEthiopian</card>
+        <card>DEHCGascenyaRepeat</card>
+        <card>DEHCShipGascenya4</card>
+        <card>DEHCShipNeftenya2</card>
+        <card>DEHCHeavyFortificationsAfrican</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCShipMercWarDhow</card>
+        <card>DEHCMercsAskari</card>
+        <card>DEHCMercsGatlingCamels</card>
+        <card>DEHCShipMercWarDhows2</card>
+        <card>DEHCBalambaras</card>
+        <card>DEHCCanoeCrafting</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCIndianTradeEthiopia</card>
+        <card>DEHCIronmongerEthiopians</card>
+        <card>DEHCGascenyaDamage</card>
+        <card>DEHCGascenyaHitpoints</card>
+        <card>DEHCLalibelaRockChurch</card>
+        <card>DEHCShipGascenya1</card>
+        <card>DEHCMercsCannoneers</card>
+        <card>DEHCHandInfantryCombatEthiopian</card>
+        <card>DEHCShipGascenya2</card>
+        <card>DEHCShipGascenya3</card>
+        <card>DEHCShipNeftenya1</card>
+        <card>DEHCShipNeftenyaRepeat</card>
+        <card>DEHCMercsCannoneers2</card>
+        <card>DEHCExtensiveFortificationsEthiopian</card>
+        <card>DEHCGascenyaRepeat</card>
+        <card>DEHCShipGascenya4</card>
+        <card>DEHCShipNeftenya2</card>
+        <card>DEHCHeavyFortificationsAfrican</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCShipMercWarDhow</card>
+        <card>DEHCMercsAskari</card>
+        <card>DEHCMercsGatlingCamels</card>
+        <card>DEHCShipMercWarDhows2</card>
+        <card>DEHCBalambaras</card>
+        <card>DEHCCanoeCrafting</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCIndianTradeEthiopia</card>
+        <card>DEHCIronmongerEthiopians</card>
+        <card>DEHCGascenyaDamage</card>
+        <card>DEHCGascenyaHitpoints</card>
+        <card>DEHCLalibelaRockChurch</card>
+        <card>DEHCShipGascenya1</card>
+        <card>DEHCMercsCannoneers</card>
+        <card>DEHCHandInfantryCombatEthiopian</card>
+        <card>DEHCShipGascenya2</card>
+        <card>DEHCShipGascenya3</card>
+        <card>DEHCShipNeftenya1</card>
+        <card>DEHCShipNeftenyaRepeat</card>
+        <card>DEHCMercsCannoneers2</card>
+        <card>DEHCExtensiveFortificationsEthiopian</card>
+        <card>DEHCGascenyaRepeat</card>
+        <card>DEHCShipGascenya4</card>
+        <card>DEHCShipNeftenya2</card>
+        <card>DEHCHeavyFortificationsAfrican</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCShipMercWarDhow</card>
+        <card>DEHCMercsAskari</card>
+        <card>DEHCMercsGatlingCamels</card>
+        <card>DEHCShipMercWarDhows2</card>
+        <card>DEHCBalambaras</card>
+        <card>DEHCCanoeCrafting</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCIndianTradeEthiopia</card>
+        <card>DEHCIronmongerEthiopians</card>
+        <card>DEHCGascenyaDamage</card>
+        <card>DEHCGascenyaHitpoints</card>
+        <card>DEHCLalibelaRockChurch</card>
+        <card>DEHCShipGascenya1</card>
+        <card>DEHCMercsCannoneers</card>
+        <card>DEHCHandInfantryCombatEthiopian</card>
+        <card>DEHCShipGascenya2</card>
+        <card>DEHCShipGascenya3</card>
+        <card>DEHCShipNeftenya1</card>
+        <card>DEHCShipNeftenyaRepeat</card>
+        <card>DEHCMercsCannoneers2</card>
+        <card>DEHCExtensiveFortificationsEthiopian</card>
+        <card>DEHCGascenyaRepeat</card>
+        <card>DEHCShipGascenya4</card>
+        <card>DEHCShipNeftenya2</card>
+        <card>DEHCHeavyFortificationsAfrican</card>
+        <card>DEHCMercsSennarHorsemen</card>
+        <card>DEHCShipMercWarDhow</card>
+        <card>DEHCMercsAskari</card>
+        <card>DEHCMercsGatlingCamels</card>
+        <card>DEHCShipMercWarDhows2</card>
+        <card>DEHCBalambaras</card>
+        <card>DEHCCanoeCrafting</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

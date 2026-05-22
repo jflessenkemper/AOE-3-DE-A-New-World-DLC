@@ -171,6 +171,8 @@ void initLegendaryRevolutionCommander(void)
       llUseAndeanTerraceFortressStyle(2);
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 2, 2, false);
+      // Spec override: Chileans O'Higgins doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
       cvOkToBuildForts = true;
@@ -191,6 +193,8 @@ void initLegendaryRevolutionCommander(void)
       llUseAndeanTerraceFortressStyle(3);
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(3, 2, 2, false);
+      // Spec override: Peruvians Santa Cruz doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
       cvOkToBuildForts = true;
@@ -231,6 +235,8 @@ void initLegendaryRevolutionCommander(void)
       llUseJungleGuerrillaNetworkStyle(0);
       gLLEconomicDistanceMultiplier = 1.40;
       gLLTownCenterDistanceMultiplier = 1.40;
+      // Spec override: Haitians Louverture doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
       cvOkToBuildForts = true;
@@ -250,6 +256,8 @@ void initLegendaryRevolutionCommander(void)
       // LL-BUILD-STYLE-BEGIN
       llUseShrineTradeNodeSpreadStyle(1);
       gLLEconomicDistanceMultiplier = 1.40;
+      // Spec override: Indonesians Diponegoro doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
       cvOkToBuildForts = true;
@@ -436,6 +444,8 @@ void initLegendaryRevolutionCommander(void)
       llUseJungleGuerrillaNetworkStyle(1);
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 1, 2, true);
+      // Spec override: Yucatan Pat doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
       cvOkToBuildForts = true;
@@ -477,6 +487,8 @@ void initLegendaryRevolutionCommander(void)
       llUseJungleGuerrillaNetworkStyle(1);
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 1, 2, true);
+      // Spec override: Mayans Canek doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
       cvOkToBuildForts = true;

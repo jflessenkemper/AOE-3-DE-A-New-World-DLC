@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWEgyptians</civ>
   <name>$$80822$$</name>
-  <heroname>$$43034$$</heroname>
+  <heroname>$$490368$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>ottoman\ottoman_homecity.xml</visual>
   <watervisual>ottoman\ottoman_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
@@ -1350,12 +1351,18 @@
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Egypt</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCColonialMilitiaOttoman</card>
@@ -1371,6 +1378,8 @@
         <card>RvltModHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>DEHCShiAzaps2</card>
         <card>DEHCREVShipEgyptianFleet</card>
         <card>DEHCREVGatlingCamels</card>
         <card>DEHCREVSennarHorsemen</card>
@@ -1381,18 +1390,23 @@
         <card>DEHCShipMercXebecOttoman</card>
         <card>DEHCOttomanBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortarOttoman</card>
-        <card>DEHCShiAzaps2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Egypt</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCColonialMilitiaOttoman</card>
@@ -1408,6 +1422,8 @@
         <card>RvltModHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>DEHCShiAzaps2</card>
         <card>DEHCREVShipEgyptianFleet</card>
         <card>DEHCREVGatlingCamels</card>
         <card>DEHCREVSennarHorsemen</card>
@@ -1418,18 +1434,23 @@
         <card>DEHCShipMercXebecOttoman</card>
         <card>DEHCOttomanBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortarOttoman</card>
-        <card>DEHCShiAzaps2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Egypt</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCColonialMilitiaOttoman</card>
@@ -1445,6 +1466,8 @@
         <card>RvltModHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>DEHCShiAzaps2</card>
         <card>DEHCREVShipEgyptianFleet</card>
         <card>DEHCREVGatlingCamels</card>
         <card>DEHCREVSennarHorsemen</card>
@@ -1455,18 +1478,23 @@
         <card>DEHCShipMercXebecOttoman</card>
         <card>DEHCOttomanBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortarOttoman</card>
-        <card>DEHCShiAzaps2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Egypt</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCColonialMilitiaOttoman</card>
@@ -1482,6 +1510,8 @@
         <card>RvltModHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>DEHCShiAzaps2</card>
         <card>DEHCREVShipEgyptianFleet</card>
         <card>DEHCREVGatlingCamels</card>
         <card>DEHCREVSennarHorsemen</card>
@@ -1492,18 +1522,23 @@
         <card>DEHCShipMercXebecOttoman</card>
         <card>DEHCOttomanBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortarOttoman</card>
-        <card>DEHCShiAzaps2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Egypt</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCColonialMilitiaOttoman</card>
@@ -1519,6 +1554,8 @@
         <card>RvltModHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>DEHCShiAzaps2</card>
         <card>DEHCREVShipEgyptianFleet</card>
         <card>DEHCREVGatlingCamels</card>
         <card>DEHCREVSennarHorsemen</card>
@@ -1529,18 +1566,23 @@
         <card>DEHCShipMercXebecOttoman</card>
         <card>DEHCOttomanBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortarOttoman</card>
-        <card>DEHCShiAzaps2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Egypt</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>DEHCColonialMilitiaOttoman</card>
@@ -1556,6 +1598,8 @@
         <card>RvltModHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>DEHCShiAzaps2</card>
         <card>DEHCREVShipEgyptianFleet</card>
         <card>DEHCREVGatlingCamels</card>
         <card>DEHCREVSennarHorsemen</card>
@@ -1566,9 +1610,8 @@
         <card>DEHCShipMercXebecOttoman</card>
         <card>DEHCOttomanBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortarOttoman</card>
-        <card>DEHCShiAzaps2</card>
       </cards>
+
 
     </deck>
   </decks>

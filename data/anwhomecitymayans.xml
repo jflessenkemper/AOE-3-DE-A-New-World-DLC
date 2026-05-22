@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWMayans</civ>
   <name>$$112819$$</name>
-  <heroname>$$112003$$</heroname>
+  <heroname>$$490373$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>mexico\mexico_homecity.xml</visual>
   <watervisual>mexico\mexico_homecity_water.xml</watervisual>
@@ -1236,7 +1236,9 @@
     <deck>
 
 
-      <name>Maya</name>
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
 
@@ -1246,6 +1248,9 @@
       <cards>
         <card>DEHCREVMXMayaJungleVillages</card>
         <card>DEHCREVMXMayaKowojTraditions</card>
+        <card>DEHCREVMXMayaMariaUicab</card>
+        <card>DEHCREVFedMXSolisShredders</card>
+        <card>DEHCREVMXFoodSilos</card>
         <card>DEHCREVMXMayaNojPeten</card>
         <card>DEHCREVMXJungleWarfare</card>
         <card>DEHCREVMXBallcourts</card>
@@ -1257,18 +1262,15 @@
         <card>DEHCREVFedMXAmparo</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
         <card>DEHCREVMXHuipils</card>
+        <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCREVMXMayaArchitecture</card>
         <card>DEHCREVMXMayaCeramics</card>
         <card>DEHCREVFedMXHenequenIndustry</card>
         <card>DEHCREVFedMXYucatecan</card>
         <card>DEHCREVMXKinshipTies</card>
-        <card>DEHCREVMXMayaMariaUicab</card>
         <card>DEHCREVMXKuchkabal</card>
         <card>DEHCREVMXShipCruzobInfantry</card>
-        <card>DEHCREVFedMXSolisShredders</card>
-        <card>DEHCREVMXFoodSilos</card>
         <card>HCXPMayanAllies2</card>
-        <card>DEHCShipCapturedGalleons2</card>
       </cards>
 
 
@@ -1278,7 +1280,9 @@
     <deck>
 
 
-      <name>Maya</name>
+      <name>$$20310$$Land</name>
+
+
       <default>
 
 
@@ -1288,6 +1292,9 @@
       <cards>
         <card>DEHCREVMXMayaJungleVillages</card>
         <card>DEHCREVMXMayaKowojTraditions</card>
+        <card>DEHCREVMXMayaMariaUicab</card>
+        <card>DEHCREVFedMXSolisShredders</card>
+        <card>DEHCREVMXFoodSilos</card>
         <card>DEHCREVMXMayaNojPeten</card>
         <card>DEHCREVMXJungleWarfare</card>
         <card>DEHCREVMXBallcourts</card>
@@ -1299,18 +1306,15 @@
         <card>DEHCREVFedMXAmparo</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
         <card>DEHCREVMXHuipils</card>
+        <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCREVMXMayaArchitecture</card>
         <card>DEHCREVMXMayaCeramics</card>
         <card>DEHCREVFedMXHenequenIndustry</card>
         <card>DEHCREVFedMXYucatecan</card>
         <card>DEHCREVMXKinshipTies</card>
-        <card>DEHCREVMXMayaMariaUicab</card>
         <card>DEHCREVMXKuchkabal</card>
         <card>DEHCREVMXShipCruzobInfantry</card>
-        <card>DEHCREVFedMXSolisShredders</card>
-        <card>DEHCREVMXFoodSilos</card>
         <card>HCXPMayanAllies2</card>
-        <card>DEHCShipCapturedGalleons2</card>
       </cards>
 
 
@@ -1320,7 +1324,9 @@
     <deck>
 
 
-      <name>Maya</name>
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
 
@@ -1330,6 +1336,9 @@
       <cards>
         <card>DEHCREVMXMayaJungleVillages</card>
         <card>DEHCREVMXMayaKowojTraditions</card>
+        <card>DEHCREVMXMayaMariaUicab</card>
+        <card>DEHCREVFedMXSolisShredders</card>
+        <card>DEHCREVMXFoodSilos</card>
         <card>DEHCREVMXMayaNojPeten</card>
         <card>DEHCREVMXJungleWarfare</card>
         <card>DEHCREVMXBallcourts</card>
@@ -1341,18 +1350,15 @@
         <card>DEHCREVFedMXAmparo</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
         <card>DEHCREVMXHuipils</card>
+        <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCREVMXMayaArchitecture</card>
         <card>DEHCREVMXMayaCeramics</card>
         <card>DEHCREVFedMXHenequenIndustry</card>
         <card>DEHCREVFedMXYucatecan</card>
         <card>DEHCREVMXKinshipTies</card>
-        <card>DEHCREVMXMayaMariaUicab</card>
         <card>DEHCREVMXKuchkabal</card>
         <card>DEHCREVMXShipCruzobInfantry</card>
-        <card>DEHCREVFedMXSolisShredders</card>
-        <card>DEHCREVMXFoodSilos</card>
         <card>HCXPMayanAllies2</card>
-        <card>DEHCShipCapturedGalleons2</card>
       </cards>
 
 
@@ -1362,7 +1368,9 @@
     <deck>
 
 
-      <name>Maya</name>
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
 
@@ -1372,6 +1380,9 @@
       <cards>
         <card>DEHCREVMXMayaJungleVillages</card>
         <card>DEHCREVMXMayaKowojTraditions</card>
+        <card>DEHCREVMXMayaMariaUicab</card>
+        <card>DEHCREVFedMXSolisShredders</card>
+        <card>DEHCREVMXFoodSilos</card>
         <card>DEHCREVMXMayaNojPeten</card>
         <card>DEHCREVMXJungleWarfare</card>
         <card>DEHCREVMXBallcourts</card>
@@ -1383,18 +1394,15 @@
         <card>DEHCREVFedMXAmparo</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
         <card>DEHCREVMXHuipils</card>
+        <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCREVMXMayaArchitecture</card>
         <card>DEHCREVMXMayaCeramics</card>
         <card>DEHCREVFedMXHenequenIndustry</card>
         <card>DEHCREVFedMXYucatecan</card>
         <card>DEHCREVMXKinshipTies</card>
-        <card>DEHCREVMXMayaMariaUicab</card>
         <card>DEHCREVMXKuchkabal</card>
         <card>DEHCREVMXShipCruzobInfantry</card>
-        <card>DEHCREVFedMXSolisShredders</card>
-        <card>DEHCREVMXFoodSilos</card>
         <card>HCXPMayanAllies2</card>
-        <card>DEHCShipCapturedGalleons2</card>
       </cards>
 
 
@@ -1404,7 +1412,9 @@
     <deck>
 
 
-      <name>Maya</name>
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
 
@@ -1414,6 +1424,9 @@
       <cards>
         <card>DEHCREVMXMayaJungleVillages</card>
         <card>DEHCREVMXMayaKowojTraditions</card>
+        <card>DEHCREVMXMayaMariaUicab</card>
+        <card>DEHCREVFedMXSolisShredders</card>
+        <card>DEHCREVMXFoodSilos</card>
         <card>DEHCREVMXMayaNojPeten</card>
         <card>DEHCREVMXJungleWarfare</card>
         <card>DEHCREVMXBallcourts</card>
@@ -1425,18 +1438,15 @@
         <card>DEHCREVFedMXAmparo</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
         <card>DEHCREVMXHuipils</card>
+        <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCREVMXMayaArchitecture</card>
         <card>DEHCREVMXMayaCeramics</card>
         <card>DEHCREVFedMXHenequenIndustry</card>
         <card>DEHCREVFedMXYucatecan</card>
         <card>DEHCREVMXKinshipTies</card>
-        <card>DEHCREVMXMayaMariaUicab</card>
         <card>DEHCREVMXKuchkabal</card>
         <card>DEHCREVMXShipCruzobInfantry</card>
-        <card>DEHCREVFedMXSolisShredders</card>
-        <card>DEHCREVMXFoodSilos</card>
         <card>HCXPMayanAllies2</card>
-        <card>DEHCShipCapturedGalleons2</card>
       </cards>
 
 
@@ -1446,7 +1456,9 @@
     <deck>
 
 
-      <name>Maya</name>
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
 
@@ -1456,6 +1468,9 @@
       <cards>
         <card>DEHCREVMXMayaJungleVillages</card>
         <card>DEHCREVMXMayaKowojTraditions</card>
+        <card>DEHCREVMXMayaMariaUicab</card>
+        <card>DEHCREVFedMXSolisShredders</card>
+        <card>DEHCREVMXFoodSilos</card>
         <card>DEHCREVMXMayaNojPeten</card>
         <card>DEHCREVMXJungleWarfare</card>
         <card>DEHCREVMXBallcourts</card>
@@ -1467,18 +1482,15 @@
         <card>DEHCREVFedMXAmparo</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
         <card>DEHCREVMXHuipils</card>
+        <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCREVMXMayaArchitecture</card>
         <card>DEHCREVMXMayaCeramics</card>
         <card>DEHCREVFedMXHenequenIndustry</card>
         <card>DEHCREVFedMXYucatecan</card>
         <card>DEHCREVMXKinshipTies</card>
-        <card>DEHCREVMXMayaMariaUicab</card>
         <card>DEHCREVMXKuchkabal</card>
         <card>DEHCREVMXShipCruzobInfantry</card>
-        <card>DEHCREVFedMXSolisShredders</card>
-        <card>DEHCREVMXFoodSilos</card>
         <card>HCXPMayanAllies2</card>
-        <card>DEHCShipCapturedGalleons2</card>
       </cards>
 
 

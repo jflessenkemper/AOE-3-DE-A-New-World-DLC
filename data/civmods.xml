@@ -95,8 +95,8 @@
 		<homecityflagbuttonset>frenchFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>frenchFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_french</postgameflagtexture>
-		<postgameflagiconwpf>resources\images\icons\flags\Flag_French_Revolution_NE.png</postgameflagiconwpf>
-		<homecityflagiconwpf>resources\images\icons\flags\Flag_French_Revolution_NE.png</homecityflagiconwpf>
+		<postgameflagiconwpf>resources/images/icons/flags/Flag_French_Revolution_NE.png</postgameflagiconwpf>
+		<homecityflagiconwpf>resources/images/icons/flags/Flag_French_Revolution_NE.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_french_revolution_ne.png</homecityflagbuttonwpf>
 		<matchmakingtextures>

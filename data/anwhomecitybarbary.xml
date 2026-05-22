@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWBarbary</civ>
   <name>$$80805$$</name>
-  <heroname>$$43034$$</heroname>
+  <heroname>$$490367$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>ottoman\ottoman_homecity.xml</visual>
   <watervisual>ottoman\ottoman_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
@@ -1094,225 +1095,267 @@
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Barbary States</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVCorsairCaptain</card>
-        <card>DEHCREVSaleRovers</card>
-        <card>DEHCREVBerberNomads</card>
-        <card>DEHCREVShipBarbaryWarrior</card>
-        <card>DEHCREVShipBerberAllies</card>
-        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCColonialMilitiaOttoman</card>
         <card>DEHCSPCSaharanTrade</card>
+        <card>DEHCREVCorsairCaptain</card>
         <card>DEHCREVDhimma</card>
         <card>DEHCSPCBarbaryMadrasa</card>
         <card>HCNavalCombat</card>
         <card>HCShipGalleons</card>
+        <card>DEHCREVSaleRovers</card>
+        <card>DEHCREVBerberNomads</card>
         <card>DEHCREVLoyalWarriors</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCREVShipZenataTeam</card>
         <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCMercsBosniaks</card>
+        <card>DEHCREVShipBarbaryWarrior</card>
+        <card>DEHCREVShipBerberAllies</card>
+        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCREVShipBarbaryMarksman</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCREVShipXebec</card>
         <card>DEHCREVShipXebec2</card>
         <card>HCXPMercsCorsairsRepeat</card>
-        <card>DEHCMercsBosniaks</card>
         <card>DEHCMercsAskaris</card>
         <card>DEHCMercsOttoman</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Barbary States</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVCorsairCaptain</card>
-        <card>DEHCREVSaleRovers</card>
-        <card>DEHCREVBerberNomads</card>
-        <card>DEHCREVShipBarbaryWarrior</card>
-        <card>DEHCREVShipBerberAllies</card>
-        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCColonialMilitiaOttoman</card>
         <card>DEHCSPCSaharanTrade</card>
+        <card>DEHCREVCorsairCaptain</card>
         <card>DEHCREVDhimma</card>
         <card>DEHCSPCBarbaryMadrasa</card>
         <card>HCNavalCombat</card>
         <card>HCShipGalleons</card>
+        <card>DEHCREVSaleRovers</card>
+        <card>DEHCREVBerberNomads</card>
         <card>DEHCREVLoyalWarriors</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCREVShipZenataTeam</card>
         <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCMercsBosniaks</card>
+        <card>DEHCREVShipBarbaryWarrior</card>
+        <card>DEHCREVShipBerberAllies</card>
+        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCREVShipBarbaryMarksman</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCREVShipXebec</card>
         <card>DEHCREVShipXebec2</card>
         <card>HCXPMercsCorsairsRepeat</card>
-        <card>DEHCMercsBosniaks</card>
         <card>DEHCMercsAskaris</card>
         <card>DEHCMercsOttoman</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Barbary States</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVCorsairCaptain</card>
-        <card>DEHCREVSaleRovers</card>
-        <card>DEHCREVBerberNomads</card>
-        <card>DEHCREVShipBarbaryWarrior</card>
-        <card>DEHCREVShipBerberAllies</card>
-        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCColonialMilitiaOttoman</card>
         <card>DEHCSPCSaharanTrade</card>
+        <card>DEHCREVCorsairCaptain</card>
         <card>DEHCREVDhimma</card>
         <card>DEHCSPCBarbaryMadrasa</card>
         <card>HCNavalCombat</card>
         <card>HCShipGalleons</card>
+        <card>DEHCREVSaleRovers</card>
+        <card>DEHCREVBerberNomads</card>
         <card>DEHCREVLoyalWarriors</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCREVShipZenataTeam</card>
         <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCMercsBosniaks</card>
+        <card>DEHCREVShipBarbaryWarrior</card>
+        <card>DEHCREVShipBerberAllies</card>
+        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCREVShipBarbaryMarksman</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCREVShipXebec</card>
         <card>DEHCREVShipXebec2</card>
         <card>HCXPMercsCorsairsRepeat</card>
-        <card>DEHCMercsBosniaks</card>
         <card>DEHCMercsAskaris</card>
         <card>DEHCMercsOttoman</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Barbary States</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVCorsairCaptain</card>
-        <card>DEHCREVSaleRovers</card>
-        <card>DEHCREVBerberNomads</card>
-        <card>DEHCREVShipBarbaryWarrior</card>
-        <card>DEHCREVShipBerberAllies</card>
-        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCColonialMilitiaOttoman</card>
         <card>DEHCSPCSaharanTrade</card>
+        <card>DEHCREVCorsairCaptain</card>
         <card>DEHCREVDhimma</card>
         <card>DEHCSPCBarbaryMadrasa</card>
         <card>HCNavalCombat</card>
         <card>HCShipGalleons</card>
+        <card>DEHCREVSaleRovers</card>
+        <card>DEHCREVBerberNomads</card>
         <card>DEHCREVLoyalWarriors</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCREVShipZenataTeam</card>
         <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCMercsBosniaks</card>
+        <card>DEHCREVShipBarbaryWarrior</card>
+        <card>DEHCREVShipBerberAllies</card>
+        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCREVShipBarbaryMarksman</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCREVShipXebec</card>
         <card>DEHCREVShipXebec2</card>
         <card>HCXPMercsCorsairsRepeat</card>
-        <card>DEHCMercsBosniaks</card>
         <card>DEHCMercsAskaris</card>
         <card>DEHCMercsOttoman</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Barbary States</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVCorsairCaptain</card>
-        <card>DEHCREVSaleRovers</card>
-        <card>DEHCREVBerberNomads</card>
-        <card>DEHCREVShipBarbaryWarrior</card>
-        <card>DEHCREVShipBerberAllies</card>
-        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCColonialMilitiaOttoman</card>
         <card>DEHCSPCSaharanTrade</card>
+        <card>DEHCREVCorsairCaptain</card>
         <card>DEHCREVDhimma</card>
         <card>DEHCSPCBarbaryMadrasa</card>
         <card>HCNavalCombat</card>
         <card>HCShipGalleons</card>
+        <card>DEHCREVSaleRovers</card>
+        <card>DEHCREVBerberNomads</card>
         <card>DEHCREVLoyalWarriors</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCREVShipZenataTeam</card>
         <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCMercsBosniaks</card>
+        <card>DEHCREVShipBarbaryWarrior</card>
+        <card>DEHCREVShipBerberAllies</card>
+        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCREVShipBarbaryMarksman</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCREVShipXebec</card>
         <card>DEHCREVShipXebec2</card>
         <card>HCXPMercsCorsairsRepeat</card>
-        <card>DEHCMercsBosniaks</card>
         <card>DEHCMercsAskaris</card>
         <card>DEHCMercsOttoman</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Barbary States</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVCorsairCaptain</card>
-        <card>DEHCREVSaleRovers</card>
-        <card>DEHCREVBerberNomads</card>
-        <card>DEHCREVShipBarbaryWarrior</card>
-        <card>DEHCREVShipBerberAllies</card>
-        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCColonialMilitiaOttoman</card>
         <card>DEHCSPCSaharanTrade</card>
+        <card>DEHCREVCorsairCaptain</card>
         <card>DEHCREVDhimma</card>
         <card>DEHCSPCBarbaryMadrasa</card>
         <card>HCNavalCombat</card>
         <card>HCShipGalleons</card>
+        <card>DEHCREVSaleRovers</card>
+        <card>DEHCREVBerberNomads</card>
         <card>DEHCREVLoyalWarriors</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCREVShipZenataTeam</card>
         <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCMercsBosniaks</card>
+        <card>DEHCREVShipBarbaryWarrior</card>
+        <card>DEHCREVShipBerberAllies</card>
+        <card>DEHCREVBarbaryCombat</card>
         <card>DEHCREVShipBarbaryMarksman</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCREVShipXebec</card>
         <card>DEHCREVShipXebec2</card>
         <card>HCXPMercsCorsairsRepeat</card>
-        <card>DEHCMercsBosniaks</card>
         <card>DEHCMercsAskaris</card>
         <card>DEHCMercsOttoman</card>
       </cards>
+
 
     </deck>
   </decks>

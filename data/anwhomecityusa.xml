@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWUSA</civ>
+  <civ>DEAmericans</civ>
   <name>$$110002$$</name>
-  <heroname>$$110003$$</heroname>
+  <heroname>$$490351$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>american\american_homecity.xml</visual>
   <watervisual>american\american_water.xml</watervisual>
@@ -13,7 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
-  <maxcardsperdeck>21</maxcardsperdeck>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>American_Homecity</lightset>
   <watertype>London</watertype>
@@ -1246,9 +1246,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCMinutemenCompanies</card>
         <card>DEHCContinentalRangers</card>
@@ -1276,6 +1286,228 @@
         <card>DEHCBlackMesa</card>
         <card>DEHCBuffaloSoldiers</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCMinutemenCompanies</card>
+        <card>DEHCContinentalRangers</card>
+        <card>DEHCShipRegulars3</card>
+        <card>DEHCShipCarbineCav3</card>
+        <card>DEHCRegularCombat</card>
+        <card>DEHCKosciuszkoFortifications</card>
+        <card>DEHCGeneralAmericans</card>
+        <card>DEHCArkansasPost</card>
+        <card>HCPioneers</card>
+        <card>DEHCAdvancedSaloon</card>
+        <card>DEHCShipRegulars1</card>
+        <card>HCFrontierDefenses</card>
+        <card>DEHCFedGeneralAssembly</card>
+        <card>DEHCShipRegulars2</card>
+        <card>DEHCShipCarbineCav2</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCLegionWashington</card>
+        <card>DEHCShipCarbineCav1</card>
+        <card>DEHCShipGatlingsTeam1</card>
+        <card>HCFrontierDefenses2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipIroncladsSteamers1</card>
+        <card>DEHCApacheScouts</card>
+        <card>DEHCBlackMesa</card>
+        <card>DEHCBuffaloSoldiers</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCMinutemenCompanies</card>
+        <card>DEHCContinentalRangers</card>
+        <card>DEHCShipRegulars3</card>
+        <card>DEHCShipCarbineCav3</card>
+        <card>DEHCRegularCombat</card>
+        <card>DEHCKosciuszkoFortifications</card>
+        <card>DEHCGeneralAmericans</card>
+        <card>DEHCArkansasPost</card>
+        <card>HCPioneers</card>
+        <card>DEHCAdvancedSaloon</card>
+        <card>DEHCShipRegulars1</card>
+        <card>HCFrontierDefenses</card>
+        <card>DEHCFedGeneralAssembly</card>
+        <card>DEHCShipRegulars2</card>
+        <card>DEHCShipCarbineCav2</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCLegionWashington</card>
+        <card>DEHCShipCarbineCav1</card>
+        <card>DEHCShipGatlingsTeam1</card>
+        <card>HCFrontierDefenses2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipIroncladsSteamers1</card>
+        <card>DEHCApacheScouts</card>
+        <card>DEHCBlackMesa</card>
+        <card>DEHCBuffaloSoldiers</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCMinutemenCompanies</card>
+        <card>DEHCContinentalRangers</card>
+        <card>DEHCShipRegulars3</card>
+        <card>DEHCShipCarbineCav3</card>
+        <card>DEHCRegularCombat</card>
+        <card>DEHCKosciuszkoFortifications</card>
+        <card>DEHCGeneralAmericans</card>
+        <card>DEHCArkansasPost</card>
+        <card>HCPioneers</card>
+        <card>DEHCAdvancedSaloon</card>
+        <card>DEHCShipRegulars1</card>
+        <card>HCFrontierDefenses</card>
+        <card>DEHCFedGeneralAssembly</card>
+        <card>DEHCShipRegulars2</card>
+        <card>DEHCShipCarbineCav2</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCLegionWashington</card>
+        <card>DEHCShipCarbineCav1</card>
+        <card>DEHCShipGatlingsTeam1</card>
+        <card>HCFrontierDefenses2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipIroncladsSteamers1</card>
+        <card>DEHCApacheScouts</card>
+        <card>DEHCBlackMesa</card>
+        <card>DEHCBuffaloSoldiers</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCMinutemenCompanies</card>
+        <card>DEHCContinentalRangers</card>
+        <card>DEHCShipRegulars3</card>
+        <card>DEHCShipCarbineCav3</card>
+        <card>DEHCRegularCombat</card>
+        <card>DEHCKosciuszkoFortifications</card>
+        <card>DEHCGeneralAmericans</card>
+        <card>DEHCArkansasPost</card>
+        <card>HCPioneers</card>
+        <card>DEHCAdvancedSaloon</card>
+        <card>DEHCShipRegulars1</card>
+        <card>HCFrontierDefenses</card>
+        <card>DEHCFedGeneralAssembly</card>
+        <card>DEHCShipRegulars2</card>
+        <card>DEHCShipCarbineCav2</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCLegionWashington</card>
+        <card>DEHCShipCarbineCav1</card>
+        <card>DEHCShipGatlingsTeam1</card>
+        <card>HCFrontierDefenses2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipIroncladsSteamers1</card>
+        <card>DEHCApacheScouts</card>
+        <card>DEHCBlackMesa</card>
+        <card>DEHCBuffaloSoldiers</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCMinutemenCompanies</card>
+        <card>DEHCContinentalRangers</card>
+        <card>DEHCShipRegulars3</card>
+        <card>DEHCShipCarbineCav3</card>
+        <card>DEHCRegularCombat</card>
+        <card>DEHCKosciuszkoFortifications</card>
+        <card>DEHCGeneralAmericans</card>
+        <card>DEHCArkansasPost</card>
+        <card>HCPioneers</card>
+        <card>DEHCAdvancedSaloon</card>
+        <card>DEHCShipRegulars1</card>
+        <card>HCFrontierDefenses</card>
+        <card>DEHCFedGeneralAssembly</card>
+        <card>DEHCShipRegulars2</card>
+        <card>DEHCShipCarbineCav2</card>
+        <card>DEHCShipRegulars4</card>
+        <card>DEHCLegionWashington</card>
+        <card>DEHCShipCarbineCav1</card>
+        <card>DEHCShipGatlingsTeam1</card>
+        <card>HCFrontierDefenses2</card>
+        <card>DEHCShipIroncladsRepeat1</card>
+        <card>DEHCShipIroncladsSteamers1</card>
+        <card>DEHCApacheScouts</card>
+        <card>DEHCBlackMesa</card>
+        <card>DEHCBuffaloSoldiers</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

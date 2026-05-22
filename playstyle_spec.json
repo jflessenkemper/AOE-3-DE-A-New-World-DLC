@@ -458,7 +458,7 @@
     },
     "Indians Akbar": {
       "civ_label": "Indians",
-      "leader_label": "Akbar",
+      "leader_label": "Shivaji Maharaj",
       "data_name": "Indians Akbar",
       "doctrine_label": "Highland Citadel",
       "doctrine_summary": "Maratha Ganimi Kava raid",
@@ -538,7 +538,7 @@
     },
     "Lakota Crazy Horse": {
       "civ_label": "Lakota",
-      "leader_label": "Crazy Horse",
+      "leader_label": "Chief Gall",
       "data_name": "Lakota Crazy Horse",
       "doctrine_label": "Steppe Cavalry Wedge",
       "doctrine_summary": "Little Bighorn envelopment",
@@ -748,7 +748,7 @@
       "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
       "claims": {
         "wall_strategy": 3,
-        "first_military_building": "outpost",
+        "first_military_building": "barracks_or_stable",
         "expects_infantry": true,
         "military_distance_band": [
           0.8,
@@ -759,7 +759,7 @@
     },
     "Russians Catherine": {
       "civ_label": "Russians",
-      "leader_label": "Catherine",
+      "leader_label": "Ivan the Terrible",
       "data_name": "Russians Catherine",
       "doctrine_label": "Cossack Voisko",
       "doctrine_summary": "Oprichnik terror",

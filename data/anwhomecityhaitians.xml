@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWHaitians</civ>
   <name>$$80845$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490361$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>french\french_homecity.xml</visual>
   <watervisual>french\french_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1163,225 +1164,267 @@
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Haiti</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
         <card>DEHCREVVodouCeremonies</card>
-        <card>DEHCREVDahomeyAmazonsHaiti</card>
         <card>DEHCREVSevites</card>
-        <card>DEHCREVAfricanAllies</card>
-        <card>DEHCAkanAllies</card>
         <card>DEHCREVLetterOfMarque</card>
-        <card>DEHCREVPickets</card>
-        <card>DEHCREVCitizenshipHaiti</card>
-        <card>DEHCREVHaitianBattleshipCard</card>
-        <card>HCPrivateers</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCTheaters</card>
+        <card>DEHCREVDahomeyAmazonsHaiti</card>
+        <card>DEHCREVAfricanAllies</card>
+        <card>DEHCREVCitizenshipHaiti</card>
         <card>HCPrivateers2</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
+        <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>DEHCAkanAllies</card>
+        <card>DEHCREVPickets</card>
+        <card>DEHCREVHaitianBattleshipCard</card>
         <card>DEHCREVShipPrivateers</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCExtensiveFortificationsEuropean</card>
-        <card>DEHCTheaters</card>
-        <card>HCRefrigeration</card>
-        <card>HCRoyalMint</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Haiti</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
         <card>DEHCREVVodouCeremonies</card>
-        <card>DEHCREVDahomeyAmazonsHaiti</card>
         <card>DEHCREVSevites</card>
-        <card>DEHCREVAfricanAllies</card>
-        <card>DEHCAkanAllies</card>
         <card>DEHCREVLetterOfMarque</card>
-        <card>DEHCREVPickets</card>
-        <card>DEHCREVCitizenshipHaiti</card>
-        <card>DEHCREVHaitianBattleshipCard</card>
-        <card>HCPrivateers</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCTheaters</card>
+        <card>DEHCREVDahomeyAmazonsHaiti</card>
+        <card>DEHCREVAfricanAllies</card>
+        <card>DEHCREVCitizenshipHaiti</card>
         <card>HCPrivateers2</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
+        <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>DEHCAkanAllies</card>
+        <card>DEHCREVPickets</card>
+        <card>DEHCREVHaitianBattleshipCard</card>
         <card>DEHCREVShipPrivateers</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCExtensiveFortificationsEuropean</card>
-        <card>DEHCTheaters</card>
-        <card>HCRefrigeration</card>
-        <card>HCRoyalMint</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Haiti</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
         <card>DEHCREVVodouCeremonies</card>
-        <card>DEHCREVDahomeyAmazonsHaiti</card>
         <card>DEHCREVSevites</card>
-        <card>DEHCREVAfricanAllies</card>
-        <card>DEHCAkanAllies</card>
         <card>DEHCREVLetterOfMarque</card>
-        <card>DEHCREVPickets</card>
-        <card>DEHCREVCitizenshipHaiti</card>
-        <card>DEHCREVHaitianBattleshipCard</card>
-        <card>HCPrivateers</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCTheaters</card>
+        <card>DEHCREVDahomeyAmazonsHaiti</card>
+        <card>DEHCREVAfricanAllies</card>
+        <card>DEHCREVCitizenshipHaiti</card>
         <card>HCPrivateers2</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
+        <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>DEHCAkanAllies</card>
+        <card>DEHCREVPickets</card>
+        <card>DEHCREVHaitianBattleshipCard</card>
         <card>DEHCREVShipPrivateers</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCExtensiveFortificationsEuropean</card>
-        <card>DEHCTheaters</card>
-        <card>HCRefrigeration</card>
-        <card>HCRoyalMint</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Haiti</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
         <card>DEHCREVVodouCeremonies</card>
-        <card>DEHCREVDahomeyAmazonsHaiti</card>
         <card>DEHCREVSevites</card>
-        <card>DEHCREVAfricanAllies</card>
-        <card>DEHCAkanAllies</card>
         <card>DEHCREVLetterOfMarque</card>
-        <card>DEHCREVPickets</card>
-        <card>DEHCREVCitizenshipHaiti</card>
-        <card>DEHCREVHaitianBattleshipCard</card>
-        <card>HCPrivateers</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCTheaters</card>
+        <card>DEHCREVDahomeyAmazonsHaiti</card>
+        <card>DEHCREVAfricanAllies</card>
+        <card>DEHCREVCitizenshipHaiti</card>
         <card>HCPrivateers2</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
+        <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>DEHCAkanAllies</card>
+        <card>DEHCREVPickets</card>
+        <card>DEHCREVHaitianBattleshipCard</card>
         <card>DEHCREVShipPrivateers</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCExtensiveFortificationsEuropean</card>
-        <card>DEHCTheaters</card>
-        <card>HCRefrigeration</card>
-        <card>HCRoyalMint</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Haiti</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
         <card>DEHCREVVodouCeremonies</card>
-        <card>DEHCREVDahomeyAmazonsHaiti</card>
         <card>DEHCREVSevites</card>
-        <card>DEHCREVAfricanAllies</card>
-        <card>DEHCAkanAllies</card>
         <card>DEHCREVLetterOfMarque</card>
-        <card>DEHCREVPickets</card>
-        <card>DEHCREVCitizenshipHaiti</card>
-        <card>DEHCREVHaitianBattleshipCard</card>
-        <card>HCPrivateers</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCTheaters</card>
+        <card>DEHCREVDahomeyAmazonsHaiti</card>
+        <card>DEHCREVAfricanAllies</card>
+        <card>DEHCREVCitizenshipHaiti</card>
         <card>HCPrivateers2</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
+        <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>DEHCAkanAllies</card>
+        <card>DEHCREVPickets</card>
+        <card>DEHCREVHaitianBattleshipCard</card>
         <card>DEHCREVShipPrivateers</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCExtensiveFortificationsEuropean</card>
-        <card>DEHCTheaters</card>
-        <card>HCRefrigeration</card>
-        <card>HCRoyalMint</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Haiti</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
         <card>DEHCREVVodouCeremonies</card>
-        <card>DEHCREVDahomeyAmazonsHaiti</card>
         <card>DEHCREVSevites</card>
-        <card>DEHCREVAfricanAllies</card>
-        <card>DEHCAkanAllies</card>
         <card>DEHCREVLetterOfMarque</card>
-        <card>DEHCREVPickets</card>
-        <card>DEHCREVCitizenshipHaiti</card>
-        <card>DEHCREVHaitianBattleshipCard</card>
-        <card>HCPrivateers</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCTheaters</card>
+        <card>DEHCREVDahomeyAmazonsHaiti</card>
+        <card>DEHCREVAfricanAllies</card>
+        <card>DEHCREVCitizenshipHaiti</card>
         <card>HCPrivateers2</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
+        <card>HCRefrigeration</card>
+        <card>HCRoyalMint</card>
+        <card>DEHCAkanAllies</card>
+        <card>DEHCREVPickets</card>
+        <card>DEHCREVHaitianBattleshipCard</card>
         <card>DEHCREVShipPrivateers</card>
         <card>DEHCREVShipFalconets</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCExtensiveFortificationsEuropean</card>
-        <card>DEHCTheaters</card>
-        <card>HCRefrigeration</card>
-        <card>HCRoyalMint</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
   </decks>
@@ -1413,13 +1456,13 @@
   <building>
     <name>Market</name>
     <visual>
-      <file>revolution\revolution_hall.xml</file>
+      <file>buildings_west\french_market.xml</file>
       <bone>bone_market</bone>
     </visual>
     <uix>250</uix>
     <uiy>375</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>french\french_homecity_market_camera.cam</camera>
+    <widescreencamera>french\french_homecity_market_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\nw_trading_company_icon</portrait>
     <displaynamestringid>24970</displaynamestringid>
@@ -1506,8 +1549,8 @@
     </visual>
     <uix>460</uix>
     <uiy>125</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>french\french_homecity_academy_camera.cam</camera>
+    <widescreencamera>french\french_homecity_academy_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\military_academy_icon</portrait>
     <displaynamestringid>24965</displaynamestringid>
@@ -1624,8 +1667,8 @@
     </visual>
     <uix>80</uix>
     <uiy>475</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>french\french_homecity_cathedral_camera.cam</camera>
+    <widescreencamera>french\french_homecity_cathedral_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\cathedral_icon</portrait>
     <displaynamestringid>24969</displaynamestringid>
@@ -1714,8 +1757,8 @@
     </visual>
     <uix>450</uix>
     <uiy>275</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>french\french_homecity_manufacturing_plant_camera.cam</camera>
+    <widescreencamera>french\french_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
@@ -1778,8 +1821,8 @@
     </visual>
     <uix>200</uix>
     <uiy>250</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>french\french_homecity_dock_camera.cam</camera>
+    <widescreencamera>french\french_homecity_dock_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\harbor_icon</portrait>
     <displaynamestringid>35745</displaynamestringid>
@@ -1874,8 +1917,8 @@
   </building>
   <building>
     <name>Customization</name>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>french\french_homecity_camera.cam</camera>
+    <widescreencamera>french\french_homecity_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>homecity\buildings_west\dock_icon</portrait>
     <displaynamestringid>24966</displaynamestringid>

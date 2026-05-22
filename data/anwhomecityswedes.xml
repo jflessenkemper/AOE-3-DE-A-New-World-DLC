@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWSwedes</civ>
+  <civ>DESwedish</civ>
   <name>$$91502$$</name>
-  <heroname>$$91503$$</heroname>
+  <heroname>$$490350$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>swedish\swedish_homecity.xml</visual>
   <watervisual>swedish\swedish_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>swedish_homecity</lightset>
   <watertype>London</watertype>
@@ -1812,9 +1813,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCExplorerSwedish</card>
         <card>DEHCTorpTeam</card>
@@ -1842,6 +1853,228 @@
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCShipBattleshipRepeat</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerSwedish</card>
+        <card>DEHCTorpTeam</card>
+        <card>DEHCShipLeatherCannonsFoundry</card>
+        <card>DEHCShipLeatherCannons1</card>
+        <card>DEHCRoyalDecreeSwedish</card>
+        <card>DEHCContractMercsIrishBrigadiers</card>
+        <card>DEHCContractMercsLandsknechts</card>
+        <card>DEHCShipLeatherCannons3</card>
+        <card>DEHCShipLeatherCannonsRepeat</card>
+        <card>DEHCShipCaroleans1</card>
+        <card>DEHCShipCaroleans2</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCShipLeatherCannons2</card>
+        <card>DEHCShipCaroleans3</card>
+        <card>DEHCShipCaroleansRepeat</card>
+        <card>DEHCSoldierTorps</card>
+        <card>DEHCShipFalconetsCulverins1</card>
+        <card>DEHCShipFalconetsCulverins2</card>
+        <card>DEHCContractMercsGiantGrenadiers</card>
+        <card>DEHCContractMercsHessians</card>
+        <card>DEHCContractMercsSwissPikemen</card>
+        <card>DEHCGermanMercenaryContracts</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCShipBattleshipRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerSwedish</card>
+        <card>DEHCTorpTeam</card>
+        <card>DEHCShipLeatherCannonsFoundry</card>
+        <card>DEHCShipLeatherCannons1</card>
+        <card>DEHCRoyalDecreeSwedish</card>
+        <card>DEHCContractMercsIrishBrigadiers</card>
+        <card>DEHCContractMercsLandsknechts</card>
+        <card>DEHCShipLeatherCannons3</card>
+        <card>DEHCShipLeatherCannonsRepeat</card>
+        <card>DEHCShipCaroleans1</card>
+        <card>DEHCShipCaroleans2</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCShipLeatherCannons2</card>
+        <card>DEHCShipCaroleans3</card>
+        <card>DEHCShipCaroleansRepeat</card>
+        <card>DEHCSoldierTorps</card>
+        <card>DEHCShipFalconetsCulverins1</card>
+        <card>DEHCShipFalconetsCulverins2</card>
+        <card>DEHCContractMercsGiantGrenadiers</card>
+        <card>DEHCContractMercsHessians</card>
+        <card>DEHCContractMercsSwissPikemen</card>
+        <card>DEHCGermanMercenaryContracts</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCShipBattleshipRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerSwedish</card>
+        <card>DEHCTorpTeam</card>
+        <card>DEHCShipLeatherCannonsFoundry</card>
+        <card>DEHCShipLeatherCannons1</card>
+        <card>DEHCRoyalDecreeSwedish</card>
+        <card>DEHCContractMercsIrishBrigadiers</card>
+        <card>DEHCContractMercsLandsknechts</card>
+        <card>DEHCShipLeatherCannons3</card>
+        <card>DEHCShipLeatherCannonsRepeat</card>
+        <card>DEHCShipCaroleans1</card>
+        <card>DEHCShipCaroleans2</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCShipLeatherCannons2</card>
+        <card>DEHCShipCaroleans3</card>
+        <card>DEHCShipCaroleansRepeat</card>
+        <card>DEHCSoldierTorps</card>
+        <card>DEHCShipFalconetsCulverins1</card>
+        <card>DEHCShipFalconetsCulverins2</card>
+        <card>DEHCContractMercsGiantGrenadiers</card>
+        <card>DEHCContractMercsHessians</card>
+        <card>DEHCContractMercsSwissPikemen</card>
+        <card>DEHCGermanMercenaryContracts</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCShipBattleshipRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerSwedish</card>
+        <card>DEHCTorpTeam</card>
+        <card>DEHCShipLeatherCannonsFoundry</card>
+        <card>DEHCShipLeatherCannons1</card>
+        <card>DEHCRoyalDecreeSwedish</card>
+        <card>DEHCContractMercsIrishBrigadiers</card>
+        <card>DEHCContractMercsLandsknechts</card>
+        <card>DEHCShipLeatherCannons3</card>
+        <card>DEHCShipLeatherCannonsRepeat</card>
+        <card>DEHCShipCaroleans1</card>
+        <card>DEHCShipCaroleans2</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCShipLeatherCannons2</card>
+        <card>DEHCShipCaroleans3</card>
+        <card>DEHCShipCaroleansRepeat</card>
+        <card>DEHCSoldierTorps</card>
+        <card>DEHCShipFalconetsCulverins1</card>
+        <card>DEHCShipFalconetsCulverins2</card>
+        <card>DEHCContractMercsGiantGrenadiers</card>
+        <card>DEHCContractMercsHessians</card>
+        <card>DEHCContractMercsSwissPikemen</card>
+        <card>DEHCGermanMercenaryContracts</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCShipBattleshipRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCExplorerSwedish</card>
+        <card>DEHCTorpTeam</card>
+        <card>DEHCShipLeatherCannonsFoundry</card>
+        <card>DEHCShipLeatherCannons1</card>
+        <card>DEHCRoyalDecreeSwedish</card>
+        <card>DEHCContractMercsIrishBrigadiers</card>
+        <card>DEHCContractMercsLandsknechts</card>
+        <card>DEHCShipLeatherCannons3</card>
+        <card>DEHCShipLeatherCannonsRepeat</card>
+        <card>DEHCShipCaroleans1</card>
+        <card>DEHCShipCaroleans2</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCContractMercsBlackRiders</card>
+        <card>DEHCShipLeatherCannons2</card>
+        <card>DEHCShipCaroleans3</card>
+        <card>DEHCShipCaroleansRepeat</card>
+        <card>DEHCSoldierTorps</card>
+        <card>DEHCShipFalconetsCulverins1</card>
+        <card>DEHCShipFalconetsCulverins2</card>
+        <card>DEHCContractMercsGiantGrenadiers</card>
+        <card>DEHCContractMercsHessians</card>
+        <card>DEHCContractMercsSwissPikemen</card>
+        <card>DEHCGermanMercenaryContracts</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCShipBattleshipRepeat</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

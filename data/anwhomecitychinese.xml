@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWChinese</civ>
+  <civ>Chinese</civ>
   <name>$$60012$$</name>
-  <heroname>$$60013$$</heroname>
+  <heroname>$$490332$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>china\china_homecity.xml</visual>
   <watervisual>china\china_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>China</lightset>
   <watertype>China_HC</watertype>
@@ -1265,9 +1266,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>YPHCAdvancedWonders</card>
         <card>YPHCShipVillageWagon1</card>
@@ -1295,6 +1306,228 @@
         <card>YPHCBannerReforms</card>
         <card>YPHCBannerSchool</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedWonders</card>
+        <card>YPHCShipVillageWagon1</card>
+        <card>YPHCChineseMonkMakeDisciple</card>
+        <card>DEHCChineseBridgesTeam</card>
+        <card>YPHCMercsRattanShield1</card>
+        <card>YPHCArtilleryDamageChinese</card>
+        <card>YPHCArtilleryHitpointsChinese</card>
+        <card>HCMercsManchu</card>
+        <card>YPHCArtilleryCombatChinese</card>
+        <card>YPHCShipArquebusier1</card>
+        <card>YPHCShipManchuTeam</card>
+        <card>DEHCDragonYear</card>
+        <card>YPHCGreatWall</card>
+        <card>YPHCMercsMandarinArmy1</card>
+        <card>YPHCMercsRattanShield2</card>
+        <card>YPHCMercsRattanShield3</card>
+        <card>YPHCChineseImperialNavy</card>
+        <card>YPHCManchuCombat</card>
+        <card>YPHCShipArquebusier2</card>
+        <card>YPHCShipShaolinMaster</card>
+        <card>YPHCWokouChinese2</card>
+        <card>YPHCWokouChinese3</card>
+        <card>YPHCAtonementChinese</card>
+        <card>YPHCBannerReforms</card>
+        <card>YPHCBannerSchool</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedWonders</card>
+        <card>YPHCShipVillageWagon1</card>
+        <card>YPHCChineseMonkMakeDisciple</card>
+        <card>DEHCChineseBridgesTeam</card>
+        <card>YPHCMercsRattanShield1</card>
+        <card>YPHCArtilleryDamageChinese</card>
+        <card>YPHCArtilleryHitpointsChinese</card>
+        <card>HCMercsManchu</card>
+        <card>YPHCArtilleryCombatChinese</card>
+        <card>YPHCShipArquebusier1</card>
+        <card>YPHCShipManchuTeam</card>
+        <card>DEHCDragonYear</card>
+        <card>YPHCGreatWall</card>
+        <card>YPHCMercsMandarinArmy1</card>
+        <card>YPHCMercsRattanShield2</card>
+        <card>YPHCMercsRattanShield3</card>
+        <card>YPHCChineseImperialNavy</card>
+        <card>YPHCManchuCombat</card>
+        <card>YPHCShipArquebusier2</card>
+        <card>YPHCShipShaolinMaster</card>
+        <card>YPHCWokouChinese2</card>
+        <card>YPHCWokouChinese3</card>
+        <card>YPHCAtonementChinese</card>
+        <card>YPHCBannerReforms</card>
+        <card>YPHCBannerSchool</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedWonders</card>
+        <card>YPHCShipVillageWagon1</card>
+        <card>YPHCChineseMonkMakeDisciple</card>
+        <card>DEHCChineseBridgesTeam</card>
+        <card>YPHCMercsRattanShield1</card>
+        <card>YPHCArtilleryDamageChinese</card>
+        <card>YPHCArtilleryHitpointsChinese</card>
+        <card>HCMercsManchu</card>
+        <card>YPHCArtilleryCombatChinese</card>
+        <card>YPHCShipArquebusier1</card>
+        <card>YPHCShipManchuTeam</card>
+        <card>DEHCDragonYear</card>
+        <card>YPHCGreatWall</card>
+        <card>YPHCMercsMandarinArmy1</card>
+        <card>YPHCMercsRattanShield2</card>
+        <card>YPHCMercsRattanShield3</card>
+        <card>YPHCChineseImperialNavy</card>
+        <card>YPHCManchuCombat</card>
+        <card>YPHCShipArquebusier2</card>
+        <card>YPHCShipShaolinMaster</card>
+        <card>YPHCWokouChinese2</card>
+        <card>YPHCWokouChinese3</card>
+        <card>YPHCAtonementChinese</card>
+        <card>YPHCBannerReforms</card>
+        <card>YPHCBannerSchool</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedWonders</card>
+        <card>YPHCShipVillageWagon1</card>
+        <card>YPHCChineseMonkMakeDisciple</card>
+        <card>DEHCChineseBridgesTeam</card>
+        <card>YPHCMercsRattanShield1</card>
+        <card>YPHCArtilleryDamageChinese</card>
+        <card>YPHCArtilleryHitpointsChinese</card>
+        <card>HCMercsManchu</card>
+        <card>YPHCArtilleryCombatChinese</card>
+        <card>YPHCShipArquebusier1</card>
+        <card>YPHCShipManchuTeam</card>
+        <card>DEHCDragonYear</card>
+        <card>YPHCGreatWall</card>
+        <card>YPHCMercsMandarinArmy1</card>
+        <card>YPHCMercsRattanShield2</card>
+        <card>YPHCMercsRattanShield3</card>
+        <card>YPHCChineseImperialNavy</card>
+        <card>YPHCManchuCombat</card>
+        <card>YPHCShipArquebusier2</card>
+        <card>YPHCShipShaolinMaster</card>
+        <card>YPHCWokouChinese2</card>
+        <card>YPHCWokouChinese3</card>
+        <card>YPHCAtonementChinese</card>
+        <card>YPHCBannerReforms</card>
+        <card>YPHCBannerSchool</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedWonders</card>
+        <card>YPHCShipVillageWagon1</card>
+        <card>YPHCChineseMonkMakeDisciple</card>
+        <card>DEHCChineseBridgesTeam</card>
+        <card>YPHCMercsRattanShield1</card>
+        <card>YPHCArtilleryDamageChinese</card>
+        <card>YPHCArtilleryHitpointsChinese</card>
+        <card>HCMercsManchu</card>
+        <card>YPHCArtilleryCombatChinese</card>
+        <card>YPHCShipArquebusier1</card>
+        <card>YPHCShipManchuTeam</card>
+        <card>DEHCDragonYear</card>
+        <card>YPHCGreatWall</card>
+        <card>YPHCMercsMandarinArmy1</card>
+        <card>YPHCMercsRattanShield2</card>
+        <card>YPHCMercsRattanShield3</card>
+        <card>YPHCChineseImperialNavy</card>
+        <card>YPHCManchuCombat</card>
+        <card>YPHCShipArquebusier2</card>
+        <card>YPHCShipShaolinMaster</card>
+        <card>YPHCWokouChinese2</card>
+        <card>YPHCWokouChinese3</card>
+        <card>YPHCAtonementChinese</card>
+        <card>YPHCBannerReforms</card>
+        <card>YPHCBannerSchool</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

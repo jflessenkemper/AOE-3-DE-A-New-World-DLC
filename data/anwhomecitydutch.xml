@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWDutch</civ>
+  <civ>Dutch</civ>
   <name>$$36884$$</name>
-  <heroname>$$43032$$</heroname>
+  <heroname>$$490333$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>dutch\dutch_homecity.xml</visual>
   <watervisual>dutch\dutch_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Amsterdam</lightset>
   <watertype>Amsterdam</watertype>
@@ -1945,9 +1946,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>HCXPBankWagon</card>
         <card>HCBetterBanks</card>
@@ -1975,6 +1986,228 @@
         <card>HCShipDutchCounterCavForce</card>
         <card>HCShipHalberdiers5</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPBankWagon</card>
+        <card>HCBetterBanks</card>
+        <card>HCInfantryCombatDutch</card>
+        <card>HCShipRuyters3</card>
+        <card>HCShipHalberdiers3</card>
+        <card>HCShipFluyts2</card>
+        <card>DEHCMercenaryArmyDutch</card>
+        <card>DEHCDutchPaintings</card>
+        <card>DEHCDutchBattleshipCard</card>
+        <card>DEHCShipSettlersDutch3</card>
+        <card>DEHCShipSettlersDutch2</card>
+        <card>HCInfantryDamageDutch</card>
+        <card>HCInfantryHitpointsDutchTeam</card>
+        <card>HCNativeChampionsDutchTeam</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCShipDutchRaidingFleet</card>
+        <card>HCMortarsDamageDutchTeam</card>
+        <card>DEHCShipSettlersDutchRepeat</card>
+        <card>DEHCAdvancedEnvoy</card>
+        <card>HCCavalryCombatDutch</card>
+        <card>HCShipHalberdiers1</card>
+        <card>HCShipRuyters1</card>
+        <card>HCShipDutchCounterCavForce</card>
+        <card>HCShipHalberdiers5</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPBankWagon</card>
+        <card>HCBetterBanks</card>
+        <card>HCInfantryCombatDutch</card>
+        <card>HCShipRuyters3</card>
+        <card>HCShipHalberdiers3</card>
+        <card>HCShipFluyts2</card>
+        <card>DEHCMercenaryArmyDutch</card>
+        <card>DEHCDutchPaintings</card>
+        <card>DEHCDutchBattleshipCard</card>
+        <card>DEHCShipSettlersDutch3</card>
+        <card>DEHCShipSettlersDutch2</card>
+        <card>HCInfantryDamageDutch</card>
+        <card>HCInfantryHitpointsDutchTeam</card>
+        <card>HCNativeChampionsDutchTeam</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCShipDutchRaidingFleet</card>
+        <card>HCMortarsDamageDutchTeam</card>
+        <card>DEHCShipSettlersDutchRepeat</card>
+        <card>DEHCAdvancedEnvoy</card>
+        <card>HCCavalryCombatDutch</card>
+        <card>HCShipHalberdiers1</card>
+        <card>HCShipRuyters1</card>
+        <card>HCShipDutchCounterCavForce</card>
+        <card>HCShipHalberdiers5</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPBankWagon</card>
+        <card>HCBetterBanks</card>
+        <card>HCInfantryCombatDutch</card>
+        <card>HCShipRuyters3</card>
+        <card>HCShipHalberdiers3</card>
+        <card>HCShipFluyts2</card>
+        <card>DEHCMercenaryArmyDutch</card>
+        <card>DEHCDutchPaintings</card>
+        <card>DEHCDutchBattleshipCard</card>
+        <card>DEHCShipSettlersDutch3</card>
+        <card>DEHCShipSettlersDutch2</card>
+        <card>HCInfantryDamageDutch</card>
+        <card>HCInfantryHitpointsDutchTeam</card>
+        <card>HCNativeChampionsDutchTeam</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCShipDutchRaidingFleet</card>
+        <card>HCMortarsDamageDutchTeam</card>
+        <card>DEHCShipSettlersDutchRepeat</card>
+        <card>DEHCAdvancedEnvoy</card>
+        <card>HCCavalryCombatDutch</card>
+        <card>HCShipHalberdiers1</card>
+        <card>HCShipRuyters1</card>
+        <card>HCShipDutchCounterCavForce</card>
+        <card>HCShipHalberdiers5</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPBankWagon</card>
+        <card>HCBetterBanks</card>
+        <card>HCInfantryCombatDutch</card>
+        <card>HCShipRuyters3</card>
+        <card>HCShipHalberdiers3</card>
+        <card>HCShipFluyts2</card>
+        <card>DEHCMercenaryArmyDutch</card>
+        <card>DEHCDutchPaintings</card>
+        <card>DEHCDutchBattleshipCard</card>
+        <card>DEHCShipSettlersDutch3</card>
+        <card>DEHCShipSettlersDutch2</card>
+        <card>HCInfantryDamageDutch</card>
+        <card>HCInfantryHitpointsDutchTeam</card>
+        <card>HCNativeChampionsDutchTeam</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCShipDutchRaidingFleet</card>
+        <card>HCMortarsDamageDutchTeam</card>
+        <card>DEHCShipSettlersDutchRepeat</card>
+        <card>DEHCAdvancedEnvoy</card>
+        <card>HCCavalryCombatDutch</card>
+        <card>HCShipHalberdiers1</card>
+        <card>HCShipRuyters1</card>
+        <card>HCShipDutchCounterCavForce</card>
+        <card>HCShipHalberdiers5</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCXPBankWagon</card>
+        <card>HCBetterBanks</card>
+        <card>HCInfantryCombatDutch</card>
+        <card>HCShipRuyters3</card>
+        <card>HCShipHalberdiers3</card>
+        <card>HCShipFluyts2</card>
+        <card>DEHCMercenaryArmyDutch</card>
+        <card>DEHCDutchPaintings</card>
+        <card>DEHCDutchBattleshipCard</card>
+        <card>DEHCShipSettlersDutch3</card>
+        <card>DEHCShipSettlersDutch2</card>
+        <card>HCInfantryDamageDutch</card>
+        <card>HCInfantryHitpointsDutchTeam</card>
+        <card>HCNativeChampionsDutchTeam</card>
+        <card>HCMercenaryLoyalty</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCShipDutchRaidingFleet</card>
+        <card>HCMortarsDamageDutchTeam</card>
+        <card>DEHCShipSettlersDutchRepeat</card>
+        <card>DEHCAdvancedEnvoy</card>
+        <card>HCCavalryCombatDutch</card>
+        <card>HCShipHalberdiers1</card>
+        <card>HCShipRuyters1</card>
+        <card>HCShipDutchCounterCavForce</card>
+        <card>HCShipHalberdiers5</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

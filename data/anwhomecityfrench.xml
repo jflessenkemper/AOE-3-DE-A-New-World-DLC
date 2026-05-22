@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWFrench</civ>
+  <civ>French</civ>
   <name>$$36885$$</name>
-  <heroname>$$43031$$</heroname>
+  <heroname>$$490335$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>french\french_homecity.xml</visual>
   <watervisual>french\french_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Paris</lightset>
   <watertype>Paris</watertype>
@@ -2062,9 +2063,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCBourbonAllies1</card>
         <card>DEHCFrenchRoyalArmy</card>
@@ -2092,6 +2103,228 @@
         <card>HCShipCuirassiers5</card>
         <card>HCShipHussars3</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCBourbonAllies1</card>
+        <card>DEHCFrenchRoyalArmy</card>
+        <card>DEHCFencingSchoolFrench</card>
+        <card>HCExplorerFrench</card>
+        <card>HCRoyalDecreeFrench</card>
+        <card>HCCavalryCombatFrench</card>
+        <card>HCRangedInfantryDamageFrenchTeam</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>HCShipCoureurs1</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCHandCavalryDamageFrenchTeam</card>
+        <card>HCRoyalMint</card>
+        <card>HCShipCuirassiers1</card>
+        <card>HCShipCuirassiers3</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCFrenchBattleshipCard</card>
+        <card>DEHCShipBalloonsFrench</card>
+        <card>HCShipCoureurs4</card>
+        <card>HCShipHussars2</card>
+        <card>HCShipSkirmishers1</card>
+        <card>HCShipSkirmishers3</card>
+        <card>HCXPTirailleurs</card>
+        <card>HCShipCuirassiers4</card>
+        <card>HCShipCuirassiers5</card>
+        <card>HCShipHussars3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCBourbonAllies1</card>
+        <card>DEHCFrenchRoyalArmy</card>
+        <card>DEHCFencingSchoolFrench</card>
+        <card>HCExplorerFrench</card>
+        <card>HCRoyalDecreeFrench</card>
+        <card>HCCavalryCombatFrench</card>
+        <card>HCRangedInfantryDamageFrenchTeam</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>HCShipCoureurs1</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCHandCavalryDamageFrenchTeam</card>
+        <card>HCRoyalMint</card>
+        <card>HCShipCuirassiers1</card>
+        <card>HCShipCuirassiers3</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCFrenchBattleshipCard</card>
+        <card>DEHCShipBalloonsFrench</card>
+        <card>HCShipCoureurs4</card>
+        <card>HCShipHussars2</card>
+        <card>HCShipSkirmishers1</card>
+        <card>HCShipSkirmishers3</card>
+        <card>HCXPTirailleurs</card>
+        <card>HCShipCuirassiers4</card>
+        <card>HCShipCuirassiers5</card>
+        <card>HCShipHussars3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCBourbonAllies1</card>
+        <card>DEHCFrenchRoyalArmy</card>
+        <card>DEHCFencingSchoolFrench</card>
+        <card>HCExplorerFrench</card>
+        <card>HCRoyalDecreeFrench</card>
+        <card>HCCavalryCombatFrench</card>
+        <card>HCRangedInfantryDamageFrenchTeam</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>HCShipCoureurs1</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCHandCavalryDamageFrenchTeam</card>
+        <card>HCRoyalMint</card>
+        <card>HCShipCuirassiers1</card>
+        <card>HCShipCuirassiers3</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCFrenchBattleshipCard</card>
+        <card>DEHCShipBalloonsFrench</card>
+        <card>HCShipCoureurs4</card>
+        <card>HCShipHussars2</card>
+        <card>HCShipSkirmishers1</card>
+        <card>HCShipSkirmishers3</card>
+        <card>HCXPTirailleurs</card>
+        <card>HCShipCuirassiers4</card>
+        <card>HCShipCuirassiers5</card>
+        <card>HCShipHussars3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCBourbonAllies1</card>
+        <card>DEHCFrenchRoyalArmy</card>
+        <card>DEHCFencingSchoolFrench</card>
+        <card>HCExplorerFrench</card>
+        <card>HCRoyalDecreeFrench</card>
+        <card>HCCavalryCombatFrench</card>
+        <card>HCRangedInfantryDamageFrenchTeam</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>HCShipCoureurs1</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCHandCavalryDamageFrenchTeam</card>
+        <card>HCRoyalMint</card>
+        <card>HCShipCuirassiers1</card>
+        <card>HCShipCuirassiers3</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCFrenchBattleshipCard</card>
+        <card>DEHCShipBalloonsFrench</card>
+        <card>HCShipCoureurs4</card>
+        <card>HCShipHussars2</card>
+        <card>HCShipSkirmishers1</card>
+        <card>HCShipSkirmishers3</card>
+        <card>HCXPTirailleurs</card>
+        <card>HCShipCuirassiers4</card>
+        <card>HCShipCuirassiers5</card>
+        <card>HCShipHussars3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCBourbonAllies1</card>
+        <card>DEHCFrenchRoyalArmy</card>
+        <card>DEHCFencingSchoolFrench</card>
+        <card>HCExplorerFrench</card>
+        <card>HCRoyalDecreeFrench</card>
+        <card>HCCavalryCombatFrench</card>
+        <card>HCRangedInfantryDamageFrenchTeam</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>HCShipCoureurs1</card>
+        <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>HCHandCavalryDamageFrenchTeam</card>
+        <card>HCRoyalMint</card>
+        <card>HCShipCuirassiers1</card>
+        <card>HCShipCuirassiers3</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCFrenchBattleshipCard</card>
+        <card>DEHCShipBalloonsFrench</card>
+        <card>HCShipCoureurs4</card>
+        <card>HCShipHussars2</card>
+        <card>HCShipSkirmishers1</card>
+        <card>HCShipSkirmishers3</card>
+        <card>HCXPTirailleurs</card>
+        <card>HCShipCuirassiers4</card>
+        <card>HCShipCuirassiers5</card>
+        <card>HCShipHussars3</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

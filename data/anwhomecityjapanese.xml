@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWJapanese</civ>
+  <civ>Japanese</civ>
   <name>$$60010$$</name>
-  <heroname>$$60011$$</heroname>
+  <heroname>$$490342$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>japan\japan_homecity.xml</visual>
   <watervisual>japan\japan_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Japan</lightset>
   <watertype>Japan_HC</watertype>
@@ -1241,9 +1242,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>YPHCAdvancedConsulate</card>
         <card>YPHCShipShrineWagon</card>
@@ -1271,6 +1282,228 @@
         <card>YPHCShipCoveredWagonsJapan</card>
         <card>YPHCShipDaimyoAizu</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulate</card>
+        <card>YPHCShipShrineWagon</card>
+        <card>DEHCShrineHitpoints</card>
+        <card>YPHCShipShrineWagon2</card>
+        <card>YPHCArmedFishermenJapanese</card>
+        <card>YPHCAshigaruDamage</card>
+        <card>YPHCAtonementJapanese</card>
+        <card>DEHCArtilleryDamageJapaneseTeam</card>
+        <card>YPHCConsulateRelations</card>
+        <card>YPHCArtilleryHitpointsJapanese</card>
+        <card>YPHCAshigaruAntiCavalryDamage</card>
+        <card>YPHCBakufu</card>
+        <card>YPHCJapaneseMonkRangeAura</card>
+        <card>YPHCMercsJapaneseArmy</card>
+        <card>YPHCArtilleryCostJapanese</card>
+        <card>YPHCMorutaruRangeJapanese</card>
+        <card>YPHCShipAshigaru3</card>
+        <card>YPHCShipNaginataRider1</card>
+        <card>YPHCShrineLearning</card>
+        <card>YPHCNaginataAntiInfantryDamage</card>
+        <card>YPHCSamuraiSpeed</card>
+        <card>YPHCShipAshigaru1</card>
+        <card>YPHCShipAshigaru4</card>
+        <card>YPHCShipCoveredWagonsJapan</card>
+        <card>YPHCShipDaimyoAizu</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulate</card>
+        <card>YPHCShipShrineWagon</card>
+        <card>DEHCShrineHitpoints</card>
+        <card>YPHCShipShrineWagon2</card>
+        <card>YPHCArmedFishermenJapanese</card>
+        <card>YPHCAshigaruDamage</card>
+        <card>YPHCAtonementJapanese</card>
+        <card>DEHCArtilleryDamageJapaneseTeam</card>
+        <card>YPHCConsulateRelations</card>
+        <card>YPHCArtilleryHitpointsJapanese</card>
+        <card>YPHCAshigaruAntiCavalryDamage</card>
+        <card>YPHCBakufu</card>
+        <card>YPHCJapaneseMonkRangeAura</card>
+        <card>YPHCMercsJapaneseArmy</card>
+        <card>YPHCArtilleryCostJapanese</card>
+        <card>YPHCMorutaruRangeJapanese</card>
+        <card>YPHCShipAshigaru3</card>
+        <card>YPHCShipNaginataRider1</card>
+        <card>YPHCShrineLearning</card>
+        <card>YPHCNaginataAntiInfantryDamage</card>
+        <card>YPHCSamuraiSpeed</card>
+        <card>YPHCShipAshigaru1</card>
+        <card>YPHCShipAshigaru4</card>
+        <card>YPHCShipCoveredWagonsJapan</card>
+        <card>YPHCShipDaimyoAizu</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulate</card>
+        <card>YPHCShipShrineWagon</card>
+        <card>DEHCShrineHitpoints</card>
+        <card>YPHCShipShrineWagon2</card>
+        <card>YPHCArmedFishermenJapanese</card>
+        <card>YPHCAshigaruDamage</card>
+        <card>YPHCAtonementJapanese</card>
+        <card>DEHCArtilleryDamageJapaneseTeam</card>
+        <card>YPHCConsulateRelations</card>
+        <card>YPHCArtilleryHitpointsJapanese</card>
+        <card>YPHCAshigaruAntiCavalryDamage</card>
+        <card>YPHCBakufu</card>
+        <card>YPHCJapaneseMonkRangeAura</card>
+        <card>YPHCMercsJapaneseArmy</card>
+        <card>YPHCArtilleryCostJapanese</card>
+        <card>YPHCMorutaruRangeJapanese</card>
+        <card>YPHCShipAshigaru3</card>
+        <card>YPHCShipNaginataRider1</card>
+        <card>YPHCShrineLearning</card>
+        <card>YPHCNaginataAntiInfantryDamage</card>
+        <card>YPHCSamuraiSpeed</card>
+        <card>YPHCShipAshigaru1</card>
+        <card>YPHCShipAshigaru4</card>
+        <card>YPHCShipCoveredWagonsJapan</card>
+        <card>YPHCShipDaimyoAizu</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulate</card>
+        <card>YPHCShipShrineWagon</card>
+        <card>DEHCShrineHitpoints</card>
+        <card>YPHCShipShrineWagon2</card>
+        <card>YPHCArmedFishermenJapanese</card>
+        <card>YPHCAshigaruDamage</card>
+        <card>YPHCAtonementJapanese</card>
+        <card>DEHCArtilleryDamageJapaneseTeam</card>
+        <card>YPHCConsulateRelations</card>
+        <card>YPHCArtilleryHitpointsJapanese</card>
+        <card>YPHCAshigaruAntiCavalryDamage</card>
+        <card>YPHCBakufu</card>
+        <card>YPHCJapaneseMonkRangeAura</card>
+        <card>YPHCMercsJapaneseArmy</card>
+        <card>YPHCArtilleryCostJapanese</card>
+        <card>YPHCMorutaruRangeJapanese</card>
+        <card>YPHCShipAshigaru3</card>
+        <card>YPHCShipNaginataRider1</card>
+        <card>YPHCShrineLearning</card>
+        <card>YPHCNaginataAntiInfantryDamage</card>
+        <card>YPHCSamuraiSpeed</card>
+        <card>YPHCShipAshigaru1</card>
+        <card>YPHCShipAshigaru4</card>
+        <card>YPHCShipCoveredWagonsJapan</card>
+        <card>YPHCShipDaimyoAizu</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulate</card>
+        <card>YPHCShipShrineWagon</card>
+        <card>DEHCShrineHitpoints</card>
+        <card>YPHCShipShrineWagon2</card>
+        <card>YPHCArmedFishermenJapanese</card>
+        <card>YPHCAshigaruDamage</card>
+        <card>YPHCAtonementJapanese</card>
+        <card>DEHCArtilleryDamageJapaneseTeam</card>
+        <card>YPHCConsulateRelations</card>
+        <card>YPHCArtilleryHitpointsJapanese</card>
+        <card>YPHCAshigaruAntiCavalryDamage</card>
+        <card>YPHCBakufu</card>
+        <card>YPHCJapaneseMonkRangeAura</card>
+        <card>YPHCMercsJapaneseArmy</card>
+        <card>YPHCArtilleryCostJapanese</card>
+        <card>YPHCMorutaruRangeJapanese</card>
+        <card>YPHCShipAshigaru3</card>
+        <card>YPHCShipNaginataRider1</card>
+        <card>YPHCShrineLearning</card>
+        <card>YPHCNaginataAntiInfantryDamage</card>
+        <card>YPHCSamuraiSpeed</card>
+        <card>YPHCShipAshigaru1</card>
+        <card>YPHCShipAshigaru4</card>
+        <card>YPHCShipCoveredWagonsJapan</card>
+        <card>YPHCShipDaimyoAizu</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

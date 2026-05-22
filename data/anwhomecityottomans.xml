@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWOttomans</civ>
+  <civ>Ottomans</civ>
   <name>$$36887$$</name>
-  <heroname>$$43034$$</heroname>
+  <heroname>$$490234$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>ottoman\ottoman_homecity.xml</visual>
   <watervisual>ottoman\ottoman_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Constantinople</lightset>
   <watertype>Constantinople</watertype>
@@ -1845,9 +1846,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>HCShipJanissaries3</card>
         <card>HCShipSpahis3</card>
@@ -1875,6 +1886,228 @@
         <card>HCShipAbusGuns2</card>
         <card>HCShipAbusGuns3</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipJanissaries3</card>
+        <card>HCShipSpahis3</card>
+        <card>HCShipGreatBombards2</card>
+        <card>HCExplorerOttoman</card>
+        <card>HCRoyalDecreeOttoman</card>
+        <card>DEHCColonialMilitiaOttoman</card>
+        <card>DEHCFencingSchoolOttoman</card>
+        <card>DEHCShipSettlersOttoman2</card>
+        <card>DEHCShipSpies1Ottoman</card>
+        <card>HCLightArtilleryHitpointsOttoman</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>HCJanissaryCombatOttoman</card>
+        <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCShipSpies2Ottoman</card>
+        <card>HCArtilleryCombatOttoman</card>
+        <card>HCShipGreatBombards1</card>
+        <card>DEHCMercsOttoman</card>
+        <card>DEHCShipMercXebecOttoman</card>
+        <card>DEHCOttomanBattleshipCard</card>
+        <card>DEHCHeavyInfHitpointsOttoman</card>
+        <card>DEHCShipSettlersOttoman1</card>
+        <card>DEHCShipSettlersOttomanRepeat</card>
+        <card>HCShipAbusGuns1</card>
+        <card>HCShipAbusGuns2</card>
+        <card>HCShipAbusGuns3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipJanissaries3</card>
+        <card>HCShipSpahis3</card>
+        <card>HCShipGreatBombards2</card>
+        <card>HCExplorerOttoman</card>
+        <card>HCRoyalDecreeOttoman</card>
+        <card>DEHCColonialMilitiaOttoman</card>
+        <card>DEHCFencingSchoolOttoman</card>
+        <card>DEHCShipSettlersOttoman2</card>
+        <card>DEHCShipSpies1Ottoman</card>
+        <card>HCLightArtilleryHitpointsOttoman</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>HCJanissaryCombatOttoman</card>
+        <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCShipSpies2Ottoman</card>
+        <card>HCArtilleryCombatOttoman</card>
+        <card>HCShipGreatBombards1</card>
+        <card>DEHCMercsOttoman</card>
+        <card>DEHCShipMercXebecOttoman</card>
+        <card>DEHCOttomanBattleshipCard</card>
+        <card>DEHCHeavyInfHitpointsOttoman</card>
+        <card>DEHCShipSettlersOttoman1</card>
+        <card>DEHCShipSettlersOttomanRepeat</card>
+        <card>HCShipAbusGuns1</card>
+        <card>HCShipAbusGuns2</card>
+        <card>HCShipAbusGuns3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipJanissaries3</card>
+        <card>HCShipSpahis3</card>
+        <card>HCShipGreatBombards2</card>
+        <card>HCExplorerOttoman</card>
+        <card>HCRoyalDecreeOttoman</card>
+        <card>DEHCColonialMilitiaOttoman</card>
+        <card>DEHCFencingSchoolOttoman</card>
+        <card>DEHCShipSettlersOttoman2</card>
+        <card>DEHCShipSpies1Ottoman</card>
+        <card>HCLightArtilleryHitpointsOttoman</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>HCJanissaryCombatOttoman</card>
+        <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCShipSpies2Ottoman</card>
+        <card>HCArtilleryCombatOttoman</card>
+        <card>HCShipGreatBombards1</card>
+        <card>DEHCMercsOttoman</card>
+        <card>DEHCShipMercXebecOttoman</card>
+        <card>DEHCOttomanBattleshipCard</card>
+        <card>DEHCHeavyInfHitpointsOttoman</card>
+        <card>DEHCShipSettlersOttoman1</card>
+        <card>DEHCShipSettlersOttomanRepeat</card>
+        <card>HCShipAbusGuns1</card>
+        <card>HCShipAbusGuns2</card>
+        <card>HCShipAbusGuns3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipJanissaries3</card>
+        <card>HCShipSpahis3</card>
+        <card>HCShipGreatBombards2</card>
+        <card>HCExplorerOttoman</card>
+        <card>HCRoyalDecreeOttoman</card>
+        <card>DEHCColonialMilitiaOttoman</card>
+        <card>DEHCFencingSchoolOttoman</card>
+        <card>DEHCShipSettlersOttoman2</card>
+        <card>DEHCShipSpies1Ottoman</card>
+        <card>HCLightArtilleryHitpointsOttoman</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>HCJanissaryCombatOttoman</card>
+        <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCShipSpies2Ottoman</card>
+        <card>HCArtilleryCombatOttoman</card>
+        <card>HCShipGreatBombards1</card>
+        <card>DEHCMercsOttoman</card>
+        <card>DEHCShipMercXebecOttoman</card>
+        <card>DEHCOttomanBattleshipCard</card>
+        <card>DEHCHeavyInfHitpointsOttoman</card>
+        <card>DEHCShipSettlersOttoman1</card>
+        <card>DEHCShipSettlersOttomanRepeat</card>
+        <card>HCShipAbusGuns1</card>
+        <card>HCShipAbusGuns2</card>
+        <card>HCShipAbusGuns3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipJanissaries3</card>
+        <card>HCShipSpahis3</card>
+        <card>HCShipGreatBombards2</card>
+        <card>HCExplorerOttoman</card>
+        <card>HCRoyalDecreeOttoman</card>
+        <card>DEHCColonialMilitiaOttoman</card>
+        <card>DEHCFencingSchoolOttoman</card>
+        <card>DEHCShipSettlersOttoman2</card>
+        <card>DEHCShipSpies1Ottoman</card>
+        <card>HCLightArtilleryHitpointsOttoman</card>
+        <card>DEHCHandMortarOttoman</card>
+        <card>HCJanissaryCombatOttoman</card>
+        <card>DEHCShipBerberAllies2Ottoman</card>
+        <card>DEHCShipSpies2Ottoman</card>
+        <card>HCArtilleryCombatOttoman</card>
+        <card>HCShipGreatBombards1</card>
+        <card>DEHCMercsOttoman</card>
+        <card>DEHCShipMercXebecOttoman</card>
+        <card>DEHCOttomanBattleshipCard</card>
+        <card>DEHCHeavyInfHitpointsOttoman</card>
+        <card>DEHCShipSettlersOttoman1</card>
+        <card>DEHCShipSettlersOttomanRepeat</card>
+        <card>HCShipAbusGuns1</card>
+        <card>HCShipAbusGuns2</card>
+        <card>HCShipAbusGuns3</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

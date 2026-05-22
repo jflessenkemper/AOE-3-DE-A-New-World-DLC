@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWRussians</civ>
+  <civ>Russians</civ>
   <name>$$36889$$</name>
-  <heroname>$$43036$$</heroname>
+  <heroname>$$490348$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>russian\russian_homecity.xml</visual>
   <watervisual>russian\russian_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>st_petersburg</lightset>
   <watertype>Berlin</watertype>
@@ -1774,9 +1775,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>HCShipStrelets3</card>
         <card>HCShipCossacks3</card>
@@ -1804,6 +1815,228 @@
         <card>HCShipMusketeersRussian3</card>
         <card>HCShipOprichniks3</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipStrelets3</card>
+        <card>HCShipCossacks3</card>
+        <card>HCExplorerRussian</card>
+        <card>HCRoyalDecreeRussian</card>
+        <card>DEHCLandedGentry</card>
+        <card>DEHCInfantryCombatRussian</card>
+        <card>DEHCShipHalberdiersRussian1</card>
+        <card>HCShipCossacks1</card>
+        <card>HCShipCossacks4</card>
+        <card>DEHCBashkirRebellion</card>
+        <card>HCStreletsCombatRussian</card>
+        <card>HCBlockhouseCannon</card>
+        <card>HCShipCossacks2</card>
+        <card>HCCavalryCombatRussian</card>
+        <card>HCFrontierDefensesRussian</card>
+        <card>DEHCRussianBattleshipCard</card>
+        <card>HCShipHalberdiersRussian2</card>
+        <card>HCShipHalberdiersRussian3</card>
+        <card>HCShipHalberdiersRussian1</card>
+        <card>HCShipMusketeersRussian2</card>
+        <card>HCShipOprichniks1</card>
+        <card>HCShipOprichniks2</card>
+        <card>HCShipStrelets2</card>
+        <card>HCShipMusketeersRussian3</card>
+        <card>HCShipOprichniks3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipStrelets3</card>
+        <card>HCShipCossacks3</card>
+        <card>HCExplorerRussian</card>
+        <card>HCRoyalDecreeRussian</card>
+        <card>DEHCLandedGentry</card>
+        <card>DEHCInfantryCombatRussian</card>
+        <card>DEHCShipHalberdiersRussian1</card>
+        <card>HCShipCossacks1</card>
+        <card>HCShipCossacks4</card>
+        <card>DEHCBashkirRebellion</card>
+        <card>HCStreletsCombatRussian</card>
+        <card>HCBlockhouseCannon</card>
+        <card>HCShipCossacks2</card>
+        <card>HCCavalryCombatRussian</card>
+        <card>HCFrontierDefensesRussian</card>
+        <card>DEHCRussianBattleshipCard</card>
+        <card>HCShipHalberdiersRussian2</card>
+        <card>HCShipHalberdiersRussian3</card>
+        <card>HCShipHalberdiersRussian1</card>
+        <card>HCShipMusketeersRussian2</card>
+        <card>HCShipOprichniks1</card>
+        <card>HCShipOprichniks2</card>
+        <card>HCShipStrelets2</card>
+        <card>HCShipMusketeersRussian3</card>
+        <card>HCShipOprichniks3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipStrelets3</card>
+        <card>HCShipCossacks3</card>
+        <card>HCExplorerRussian</card>
+        <card>HCRoyalDecreeRussian</card>
+        <card>DEHCLandedGentry</card>
+        <card>DEHCInfantryCombatRussian</card>
+        <card>DEHCShipHalberdiersRussian1</card>
+        <card>HCShipCossacks1</card>
+        <card>HCShipCossacks4</card>
+        <card>DEHCBashkirRebellion</card>
+        <card>HCStreletsCombatRussian</card>
+        <card>HCBlockhouseCannon</card>
+        <card>HCShipCossacks2</card>
+        <card>HCCavalryCombatRussian</card>
+        <card>HCFrontierDefensesRussian</card>
+        <card>DEHCRussianBattleshipCard</card>
+        <card>HCShipHalberdiersRussian2</card>
+        <card>HCShipHalberdiersRussian3</card>
+        <card>HCShipHalberdiersRussian1</card>
+        <card>HCShipMusketeersRussian2</card>
+        <card>HCShipOprichniks1</card>
+        <card>HCShipOprichniks2</card>
+        <card>HCShipStrelets2</card>
+        <card>HCShipMusketeersRussian3</card>
+        <card>HCShipOprichniks3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipStrelets3</card>
+        <card>HCShipCossacks3</card>
+        <card>HCExplorerRussian</card>
+        <card>HCRoyalDecreeRussian</card>
+        <card>DEHCLandedGentry</card>
+        <card>DEHCInfantryCombatRussian</card>
+        <card>DEHCShipHalberdiersRussian1</card>
+        <card>HCShipCossacks1</card>
+        <card>HCShipCossacks4</card>
+        <card>DEHCBashkirRebellion</card>
+        <card>HCStreletsCombatRussian</card>
+        <card>HCBlockhouseCannon</card>
+        <card>HCShipCossacks2</card>
+        <card>HCCavalryCombatRussian</card>
+        <card>HCFrontierDefensesRussian</card>
+        <card>DEHCRussianBattleshipCard</card>
+        <card>HCShipHalberdiersRussian2</card>
+        <card>HCShipHalberdiersRussian3</card>
+        <card>HCShipHalberdiersRussian1</card>
+        <card>HCShipMusketeersRussian2</card>
+        <card>HCShipOprichniks1</card>
+        <card>HCShipOprichniks2</card>
+        <card>HCShipStrelets2</card>
+        <card>HCShipMusketeersRussian3</card>
+        <card>HCShipOprichniks3</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>HCShipStrelets3</card>
+        <card>HCShipCossacks3</card>
+        <card>HCExplorerRussian</card>
+        <card>HCRoyalDecreeRussian</card>
+        <card>DEHCLandedGentry</card>
+        <card>DEHCInfantryCombatRussian</card>
+        <card>DEHCShipHalberdiersRussian1</card>
+        <card>HCShipCossacks1</card>
+        <card>HCShipCossacks4</card>
+        <card>DEHCBashkirRebellion</card>
+        <card>HCStreletsCombatRussian</card>
+        <card>HCBlockhouseCannon</card>
+        <card>HCShipCossacks2</card>
+        <card>HCCavalryCombatRussian</card>
+        <card>HCFrontierDefensesRussian</card>
+        <card>DEHCRussianBattleshipCard</card>
+        <card>HCShipHalberdiersRussian2</card>
+        <card>HCShipHalberdiersRussian3</card>
+        <card>HCShipHalberdiersRussian1</card>
+        <card>HCShipMusketeersRussian2</card>
+        <card>HCShipOprichniks1</card>
+        <card>HCShipOprichniks2</card>
+        <card>HCShipStrelets2</card>
+        <card>HCShipMusketeersRussian3</card>
+        <card>HCShipOprichniks3</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

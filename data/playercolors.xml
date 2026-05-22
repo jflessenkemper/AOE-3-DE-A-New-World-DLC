@@ -25,10 +25,7 @@
   <Color civ="ANWHausa" leader="Usman dan Fodio" r="153" g="102" b="0" />
   <Color civ="ANWNapoleonicFrance" leader="Napoleon Bonaparte" r="0" g="43" b="92" />
   <Color civ="ANWRevFrance" leader="Maximilien Robespierre" r="18" g="62" b="140" />
-  <Color civ="ANWAmericansRev" leader="Thomas Jefferson" r="16" g="48" b="96" />
-  <Color civ="ANWMexicansRev" leader="Miguel Hidalgo y Costilla" r="0" g="120" b="45" />
   <Color civ="ANWCanadians" leader="Sir Isaac Brock" r="187" g="0" b="0" />
-  <Color civ="ANWFrenchCanadians" leader="Louis-Joseph Papineau" r="52" g="92" b="164" />
   <Color civ="ANWBrazil" leader="Pedro I" r="0" g="122" b="61" />
   <Color civ="ANWArgentines" leader="Jose de San Martin" r="102" g="178" b="255" />
   <Color civ="ANWChileans" leader="Bernardo O'Higgins" r="213" g="43" b="30" />
@@ -42,11 +39,6 @@
   <Color civ="ANWRomanians" leader="Alexandru Ioan Cuza" r="0" g="43" b="127" />
   <Color civ="ANWBarbary" leader="Hayreddin Barbarossa" r="0" g="122" b="92" />
   <Color civ="ANWEgyptians" leader="Muhammad Ali" r="196" g="154" b="55" />
-  <Color civ="ANWCentralAmericans" leader="Francisco Morazan" r="0" g="108" b="54" />
-  <Color civ="ANWBajaCalifornians" leader="Juan Bautista Alvarado" r="199" g="146" b="0" />
-  <Color civ="ANWYucatan" leader="Felipe Carrillo Puerto" r="0" g="140" b="102" />
-  <Color civ="ANWRioGrande" leader="Antonio Canales Rosillo" r="120" g="30" b="30" />
   <Color civ="ANWMayans" leader="Jacinto Canek" r="22" g="148" b="125" />
-  <Color civ="ANWCalifornians" leader="Mariano Guadalupe Vallejo" r="198" g="155" b="44" />
   <Color civ="ANWTexians" leader="Sam Houston" r="104" g="66" b="27" />
 </PlayerColors>

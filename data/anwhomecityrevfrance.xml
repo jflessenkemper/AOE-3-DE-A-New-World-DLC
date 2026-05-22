@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWRevFrance</civ>
   <name>$$36885$$</name>
-  <heroname>$$43031$$</heroname>
+  <heroname>$$490352$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>french\french_homecity.xml</visual>
   <watervisual>french\french_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
@@ -1360,6 +1361,116 @@
       <revoltcard>
       </revoltcard>
     </card>
+    <!-- ===== Coronation of Napoleon — the transform trigger card (Age III, one-time) ===== -->
+    <card>
+      <name>ANWNapoleonicTransform</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <bindtotech>ANWNapoleonicTransform</bindtotech>
+      <age>3</age>
+    </card>
+    <!-- ===== Napoleonic Empire cards — only available after ANWNapoleonicTransform fires ===== -->
+    <card>
+      <name>DEHCFrenchRoyalArmy</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCREVHundredDays</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVHundredDays</bindtotech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCREVImperialOldGuard</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <age>3</age>
+      <bindtotech>DEHCREVImperialOldGuard</bindtotech>
+    </card>
+    <card>
+      <name>DEHCREVGenieTroops</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVGenieTroops</bindtotech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCREVGrandBattery</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVGrandBattery</bindtotech>
+      <age>3</age>
+      <displayunitcount>6</displayunitcount>
+      <infiniteinlastage>1</infiniteinlastage>
+    </card>
+    <card>
+      <name>DEHCREVFlyingBattery</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVFlyingBattery</bindtotech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCREVNapoleonicWarfare</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVNapoleonicWarfare</bindtotech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCREVContinentalBlockade</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVContinentalBlockade</bindtotech>
+      <age>4</age>
+    </card>
+    <card>
+      <name>DEHCREVRustamsRegiment</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVRustamsRegiment</bindtotech>
+      <age>3</age>
+      <displayunitcount>10</displayunitcount>
+      <infiniteinlastage>1</infiniteinlastage>
+    </card>
+    <card>
+      <name>DEHCREVMercsBosniaksRepeat</name>
+      <maxcount>-1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <age>3</age>
+      <displayunitcount>7</displayunitcount>
+    </card>
+    <card>
+      <name>DEHCREVMercsMountedRiflemenRepeat</name>
+      <maxcount>-1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <age>3</age>
+      <displayunitcount>7</displayunitcount>
+    </card>
+    <card>
+      <name>DEHCREVSisterRepublics</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>ANWNapoleonicTransform</prereqtech>
+      <bindtotech>DEHCREVSisterRepublics</bindtotech>
+      <age>2</age>
+    </card>
+    <!-- ===== End Napoleonic Empire cards ===== -->
   </cards>
   <decks>
 
@@ -1367,7 +1478,9 @@
     <deck>
 
 
-      <name>Revolutionary France</name>
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
 
@@ -1375,31 +1488,31 @@
 
 
       <cards>
-        <card>DEHCREVBastilleStorming</card>
         <card>DEHCREVGuillotine</card>
         <card>DEHCREVRobespierre</card>
-        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCREVCantinieres</card>
-        <card>DEHCREVShipmentRevolutionaries</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVClientStates</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCREVBastilleStorming</card>
+        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
-        <card>DEHCREVFrenchRoyalArmy</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
         <card>HCShipSkirmishers1</card>
         <card>HCShipSkirmishers3</card>
         <card>HCXPTirailleurs</card>
         <card>DEHCMercsArmoredPistoleers</card>
+        <card>DEHCMercsGiantGrenadiers</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>HCShipSkirmishers2</card>
         <card>HCShipSkirmishers4</card>
         <card>HCShipSkirmishers5</card>
-        <card>HCEarlySkirmishersTeam</card>
-        <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCFrenchBattleshipCard</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1409,7 +1522,9 @@
     <deck>
 
 
-      <name>Revolutionary France</name>
+      <name>$$20310$$Land</name>
+
+
       <default>
 
 
@@ -1417,31 +1532,31 @@
 
 
       <cards>
-        <card>DEHCREVBastilleStorming</card>
         <card>DEHCREVGuillotine</card>
         <card>DEHCREVRobespierre</card>
-        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCREVCantinieres</card>
-        <card>DEHCREVShipmentRevolutionaries</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVClientStates</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCREVBastilleStorming</card>
+        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
-        <card>DEHCREVFrenchRoyalArmy</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
         <card>HCShipSkirmishers1</card>
         <card>HCShipSkirmishers3</card>
         <card>HCXPTirailleurs</card>
         <card>DEHCMercsArmoredPistoleers</card>
+        <card>DEHCMercsGiantGrenadiers</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>HCShipSkirmishers2</card>
         <card>HCShipSkirmishers4</card>
         <card>HCShipSkirmishers5</card>
-        <card>HCEarlySkirmishersTeam</card>
-        <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCFrenchBattleshipCard</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1451,7 +1566,9 @@
     <deck>
 
 
-      <name>Revolutionary France</name>
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
 
@@ -1459,31 +1576,31 @@
 
 
       <cards>
-        <card>DEHCREVBastilleStorming</card>
         <card>DEHCREVGuillotine</card>
         <card>DEHCREVRobespierre</card>
-        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCREVCantinieres</card>
-        <card>DEHCREVShipmentRevolutionaries</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVClientStates</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCREVBastilleStorming</card>
+        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
-        <card>DEHCREVFrenchRoyalArmy</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
         <card>HCShipSkirmishers1</card>
         <card>HCShipSkirmishers3</card>
         <card>HCXPTirailleurs</card>
         <card>DEHCMercsArmoredPistoleers</card>
+        <card>DEHCMercsGiantGrenadiers</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>HCShipSkirmishers2</card>
         <card>HCShipSkirmishers4</card>
         <card>HCShipSkirmishers5</card>
-        <card>HCEarlySkirmishersTeam</card>
-        <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCFrenchBattleshipCard</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1493,7 +1610,9 @@
     <deck>
 
 
-      <name>Revolutionary France</name>
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
 
@@ -1501,31 +1620,31 @@
 
 
       <cards>
-        <card>DEHCREVBastilleStorming</card>
         <card>DEHCREVGuillotine</card>
         <card>DEHCREVRobespierre</card>
-        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCREVCantinieres</card>
-        <card>DEHCREVShipmentRevolutionaries</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVClientStates</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCREVBastilleStorming</card>
+        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
-        <card>DEHCREVFrenchRoyalArmy</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
         <card>HCShipSkirmishers1</card>
         <card>HCShipSkirmishers3</card>
         <card>HCXPTirailleurs</card>
         <card>DEHCMercsArmoredPistoleers</card>
+        <card>DEHCMercsGiantGrenadiers</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>HCShipSkirmishers2</card>
         <card>HCShipSkirmishers4</card>
         <card>HCShipSkirmishers5</card>
-        <card>HCEarlySkirmishersTeam</card>
-        <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCFrenchBattleshipCard</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1535,7 +1654,9 @@
     <deck>
 
 
-      <name>Revolutionary France</name>
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
 
@@ -1543,31 +1664,31 @@
 
 
       <cards>
-        <card>DEHCREVBastilleStorming</card>
         <card>DEHCREVGuillotine</card>
         <card>DEHCREVRobespierre</card>
-        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCREVCantinieres</card>
-        <card>DEHCREVShipmentRevolutionaries</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVClientStates</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCREVBastilleStorming</card>
+        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
-        <card>DEHCREVFrenchRoyalArmy</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
         <card>HCShipSkirmishers1</card>
         <card>HCShipSkirmishers3</card>
         <card>HCXPTirailleurs</card>
         <card>DEHCMercsArmoredPistoleers</card>
+        <card>DEHCMercsGiantGrenadiers</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>HCShipSkirmishers2</card>
         <card>HCShipSkirmishers4</card>
         <card>HCShipSkirmishers5</card>
-        <card>HCEarlySkirmishersTeam</card>
-        <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCFrenchBattleshipCard</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
 
 
@@ -1577,7 +1698,9 @@
     <deck>
 
 
-      <name>Revolutionary France</name>
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
 
@@ -1585,34 +1708,67 @@
 
 
       <cards>
-        <card>DEHCREVBastilleStorming</card>
         <card>DEHCREVGuillotine</card>
         <card>DEHCREVRobespierre</card>
-        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCREVCantinieres</card>
-        <card>DEHCREVShipmentRevolutionaries</card>
-        <card>DEHCREVHorseHunters</card>
-        <card>DEHCREVClientStates</card>
+        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCREVBastilleStorming</card>
+        <card>DEHCREVCultSupremeBeing</card>
         <card>DEHCMercsIrishBrigadiers</card>
         <card>DEHCCentSuisses</card>
         <card>DEHCColbertismTeam</card>
-        <card>DEHCREVFrenchRoyalArmy</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
         <card>HCShipSkirmishers1</card>
         <card>HCShipSkirmishers3</card>
         <card>HCXPTirailleurs</card>
         <card>DEHCMercsArmoredPistoleers</card>
+        <card>DEHCMercsGiantGrenadiers</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVClientStates</card>
         <card>DEHCREVShipHorseArtillery3</card>
         <card>HCShipSkirmishers2</card>
         <card>HCShipSkirmishers4</card>
         <card>HCShipSkirmishers5</card>
-        <card>HCEarlySkirmishersTeam</card>
+        <card>DEHCMercsRoyalHorseman</card>
+        <card>DEHCMercsZouaves</card>
+        <card>DEHCFrenchBattleshipCard</card>
+        <card>HCShipFoodCrates1</card>
+      </cards>
+
+
+    </deck>
+    <!-- Napoleonic Empire AI deck — used after ANWNapoleonicTransform fires -->
+    <deck>
+      <name>$$490426$$NapoleonicEmpire</name>
+      <default>
+      </default>
+      <cards>
+        <card>DEHCShipBalloonsFrench</card>
+        <card>DEHCREVNapoleonicWarfare</card>
+        <card>DEHCCentSuisses</card>
+        <card>DEHCREVHundredDays</card>
+        <card>DEHCREVFlyingBattery</card>
+        <card>DEHCREVSisterRepublics</card>
+        <card>DEHCREVGenieTroops</card>
+        <card>DEHCREVShipmentRevolutionaries</card>
+        <card>DEHCREVImperialOldGuard</card>
+        <card>DEHCREVGrandBattery</card>
+        <card>DEHCREVHorseHunters</card>
+        <card>DEHCREVRustamsRegiment</card>
+        <card>DEHCREVClientStates</card>
+        <card>DEHCREVMercsBosniaksRepeat</card>
+        <card>DEHCREVMercsMountedRiflemenRepeat</card>
+        <card>DEHCREVShipHorseArtillery3</card>
+        <card>HCShipWoodCrates5</card>
+        <card>DEHCFrenchRoyalArmy</card>
+        <card>DEHCMercsArmoredPistoleers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCMercsRoyalHorseman</card>
         <card>DEHCMercsZouaves</card>
         <card>DEHCFrenchBattleshipCard</card>
+        <card>HCNavalGunners</card>
+        <card>HCShipFoodCrates1</card>
       </cards>
-
-
     </deck>
   </decks>
   <building>

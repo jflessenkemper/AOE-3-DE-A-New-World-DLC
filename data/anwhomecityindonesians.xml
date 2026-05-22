@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWIndonesians</civ>
   <name>$$80825$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490262$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>dutch\dutch_homecity.xml</visual>
   <watervisual>dutch\dutch_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1370,20 +1371,20 @@
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Indonesia</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVKratonGuards</card>
-        <card>DEHCREVAcehExports</card>
-        <card>DEHCREVLantakas</card>
-        <card>DEHCREVShipJavaSpearman</card>
-        <card>DEHCREVShipCetbang</card>
-        <card>DEHCREVShipWokouJunk</card>
         <card>HCSpiceTradeTeam</card>
         <card>DEHCFeitorias</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1391,36 +1392,43 @@
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
         <card>HCFrontierDefenses</card>
+        <card>DEHCREVAcehExports</card>
+        <card>DEHCREVLantakas</card>
         <card>DEHCMercenaryArmyDutch</card>
         <card>DEHCMercsBosniaks</card>
         <card>DEHCBlueGuards</card>
         <card>DEHCHabsburgAllies1</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCShipHussars2</card>
+        <card>DEHCREVKratonGuards</card>
+        <card>DEHCREVShipJavaSpearman</card>
+        <card>DEHCREVShipCetbang</card>
+        <card>DEHCREVShipWokouJunk</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCMercsMountedRiflemen</card>
         <card>DEHCDutchBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortar</card>
-        <card>DEHCShipHussars2</card>
         <card>DEHCBelandaHitam</card>
         <card>DEHCWettinAllies2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Indonesia</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVKratonGuards</card>
-        <card>DEHCREVAcehExports</card>
-        <card>DEHCREVLantakas</card>
-        <card>DEHCREVShipJavaSpearman</card>
-        <card>DEHCREVShipCetbang</card>
-        <card>DEHCREVShipWokouJunk</card>
         <card>HCSpiceTradeTeam</card>
         <card>DEHCFeitorias</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1428,36 +1436,43 @@
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
         <card>HCFrontierDefenses</card>
+        <card>DEHCREVAcehExports</card>
+        <card>DEHCREVLantakas</card>
         <card>DEHCMercenaryArmyDutch</card>
         <card>DEHCMercsBosniaks</card>
         <card>DEHCBlueGuards</card>
         <card>DEHCHabsburgAllies1</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCShipHussars2</card>
+        <card>DEHCREVKratonGuards</card>
+        <card>DEHCREVShipJavaSpearman</card>
+        <card>DEHCREVShipCetbang</card>
+        <card>DEHCREVShipWokouJunk</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCMercsMountedRiflemen</card>
         <card>DEHCDutchBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortar</card>
-        <card>DEHCShipHussars2</card>
         <card>DEHCBelandaHitam</card>
         <card>DEHCWettinAllies2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Indonesia</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVKratonGuards</card>
-        <card>DEHCREVAcehExports</card>
-        <card>DEHCREVLantakas</card>
-        <card>DEHCREVShipJavaSpearman</card>
-        <card>DEHCREVShipCetbang</card>
-        <card>DEHCREVShipWokouJunk</card>
         <card>HCSpiceTradeTeam</card>
         <card>DEHCFeitorias</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1465,36 +1480,43 @@
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
         <card>HCFrontierDefenses</card>
+        <card>DEHCREVAcehExports</card>
+        <card>DEHCREVLantakas</card>
         <card>DEHCMercenaryArmyDutch</card>
         <card>DEHCMercsBosniaks</card>
         <card>DEHCBlueGuards</card>
         <card>DEHCHabsburgAllies1</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCShipHussars2</card>
+        <card>DEHCREVKratonGuards</card>
+        <card>DEHCREVShipJavaSpearman</card>
+        <card>DEHCREVShipCetbang</card>
+        <card>DEHCREVShipWokouJunk</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCMercsMountedRiflemen</card>
         <card>DEHCDutchBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortar</card>
-        <card>DEHCShipHussars2</card>
         <card>DEHCBelandaHitam</card>
         <card>DEHCWettinAllies2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Indonesia</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVKratonGuards</card>
-        <card>DEHCREVAcehExports</card>
-        <card>DEHCREVLantakas</card>
-        <card>DEHCREVShipJavaSpearman</card>
-        <card>DEHCREVShipCetbang</card>
-        <card>DEHCREVShipWokouJunk</card>
         <card>HCSpiceTradeTeam</card>
         <card>DEHCFeitorias</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1502,36 +1524,43 @@
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
         <card>HCFrontierDefenses</card>
+        <card>DEHCREVAcehExports</card>
+        <card>DEHCREVLantakas</card>
         <card>DEHCMercenaryArmyDutch</card>
         <card>DEHCMercsBosniaks</card>
         <card>DEHCBlueGuards</card>
         <card>DEHCHabsburgAllies1</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCShipHussars2</card>
+        <card>DEHCREVKratonGuards</card>
+        <card>DEHCREVShipJavaSpearman</card>
+        <card>DEHCREVShipCetbang</card>
+        <card>DEHCREVShipWokouJunk</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCMercsMountedRiflemen</card>
         <card>DEHCDutchBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortar</card>
-        <card>DEHCShipHussars2</card>
         <card>DEHCBelandaHitam</card>
         <card>DEHCWettinAllies2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Indonesia</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVKratonGuards</card>
-        <card>DEHCREVAcehExports</card>
-        <card>DEHCREVLantakas</card>
-        <card>DEHCREVShipJavaSpearman</card>
-        <card>DEHCREVShipCetbang</card>
-        <card>DEHCREVShipWokouJunk</card>
         <card>HCSpiceTradeTeam</card>
         <card>DEHCFeitorias</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1539,36 +1568,43 @@
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
         <card>HCFrontierDefenses</card>
+        <card>DEHCREVAcehExports</card>
+        <card>DEHCREVLantakas</card>
         <card>DEHCMercenaryArmyDutch</card>
         <card>DEHCMercsBosniaks</card>
         <card>DEHCBlueGuards</card>
         <card>DEHCHabsburgAllies1</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCShipHussars2</card>
+        <card>DEHCREVKratonGuards</card>
+        <card>DEHCREVShipJavaSpearman</card>
+        <card>DEHCREVShipCetbang</card>
+        <card>DEHCREVShipWokouJunk</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCMercsMountedRiflemen</card>
         <card>DEHCDutchBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortar</card>
-        <card>DEHCShipHussars2</card>
         <card>DEHCBelandaHitam</card>
         <card>DEHCWettinAllies2</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Indonesia</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
+
 
       </default>
 
+
       <cards>
-        <card>DEHCREVKratonGuards</card>
-        <card>DEHCREVAcehExports</card>
-        <card>DEHCREVLantakas</card>
-        <card>DEHCREVShipJavaSpearman</card>
-        <card>DEHCREVShipCetbang</card>
-        <card>DEHCREVShipWokouJunk</card>
         <card>HCSpiceTradeTeam</card>
         <card>DEHCFeitorias</card>
         <card>DEHCMercsIrishBrigadiers</card>
@@ -1576,19 +1612,26 @@
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
         <card>HCFrontierDefenses</card>
+        <card>DEHCREVAcehExports</card>
+        <card>DEHCREVLantakas</card>
         <card>DEHCMercenaryArmyDutch</card>
         <card>DEHCMercsBosniaks</card>
         <card>DEHCBlueGuards</card>
         <card>DEHCHabsburgAllies1</card>
+        <card>DEHCHandMortar</card>
+        <card>DEHCShipHussars2</card>
+        <card>DEHCREVKratonGuards</card>
+        <card>DEHCREVShipJavaSpearman</card>
+        <card>DEHCREVShipCetbang</card>
+        <card>DEHCREVShipWokouJunk</card>
         <card>DEHCREVOttomanExpArmy</card>
         <card>DEHCMercsMountedRiflemen</card>
         <card>DEHCDutchBattleshipCard</card>
         <card>DEHCShipBattleshipRepeat</card>
-        <card>DEHCHandMortar</card>
-        <card>DEHCShipHussars2</card>
         <card>DEHCBelandaHitam</card>
         <card>DEHCWettinAllies2</card>
       </cards>
+
 
     </deck>
   </decks>
@@ -1620,13 +1663,13 @@
   <building>
     <name>Market</name>
     <visual>
-      <file>revolution\revolution_hall.xml</file>
+      <file>dutch\dutch_tradecenter.xml</file>
       <bone>bone_market</bone>
     </visual>
     <uix>250</uix>
     <uiy>375</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>dutch\dutch_homecity_market_camera.cam</camera>
+    <widescreencamera>dutch\dutch_homecity_market_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\nw_trading_company_icon</portrait>
     <displaynamestringid>24970</displaynamestringid>
@@ -1707,8 +1750,8 @@
     </visual>
     <uix>460</uix>
     <uiy>125</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>dutch\dutch_homecity_academy_camera.cam</camera>
+    <widescreencamera>dutch\dutch_homecity_academy_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\military_academy_icon</portrait>
     <displaynamestringid>24965</displaynamestringid>
@@ -1823,8 +1866,8 @@
     </visual>
     <uix>80</uix>
     <uiy>475</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>dutch\dutch_homecity_cathedral_camera.cam</camera>
+    <widescreencamera>dutch\dutch_homecity_cathedral_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\cathedral_icon</portrait>
     <displaynamestringid>24969</displaynamestringid>
@@ -1915,8 +1958,8 @@
     </visual>
     <uix>450</uix>
     <uiy>275</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>dutch\dutch_homecity_manufacturing_plant_camera.cam</camera>
+    <widescreencamera>dutch\dutch_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
@@ -1983,8 +2026,8 @@
     </visual>
     <uix>200</uix>
     <uiy>250</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>dutch\dutch_homecity_dock_camera.cam</camera>
+    <widescreencamera>dutch\dutch_homecity_dock_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\harbor_icon</portrait>
     <displaynamestringid>35745</displaynamestringid>
@@ -2089,8 +2132,8 @@
   </building>
   <building>
     <name>Customization</name>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>dutch\dutch_homecity_camera.cam</camera>
+    <widescreencamera>dutch\dutch_homecity_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>homecity\buildings_west\dock_icon</portrait>
     <displaynamestringid>24966</displaynamestringid>

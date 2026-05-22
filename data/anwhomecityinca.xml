@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWInca</civ>
+  <civ>DEInca</civ>
   <name>$$80003$$</name>
-  <heroname>$$80004$$</heroname>
+  <heroname>$$490214$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>inca\inca_homecity.xml</visual>
   <watervisual>inca\inca_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>inca_homecity</lightset>
   <watertype>Seville</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1190,9 +1191,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCAdvancedTambos</card>
         <card>DEHCIncaWallsTeam</card>
@@ -1220,6 +1231,228 @@
         <card>DEHCRangedInfDamageInca</card>
         <card>DEHCRangedInfHitpointsInca</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAdvancedTambos</card>
+        <card>DEHCIncaWallsTeam</card>
+        <card>DEHCEarlyKallanka</card>
+        <card>DEHCExtensiveFortificationsInca</card>
+        <card>DEHCShipTamboTravois</card>
+        <card>DEHCArmedFishermenInca</card>
+        <card>DEHCIncaBridgesTeam</card>
+        <card>DEHCChimuSupport</card>
+        <card>DEHCMeleeInfCombatInca</card>
+        <card>DEHCShipBolasWarriors1</card>
+        <card>DEHCShipBolasWarriorsRepeat</card>
+        <card>DEHCShipCoveredWagons2Inca</card>
+        <card>DEHCShipIncaRunners2</card>
+        <card>DEHCHeavyFortificationsInca</card>
+        <card>DEHCIncaFortifications</card>
+        <card>DEHCOldWaysInca</card>
+        <card>DEHCShipBolasWarriors2</card>
+        <card>DEHCShipIncaRunners3</card>
+        <card>DEHCShipIncaSpearmen1</card>
+        <card>DEHCShipIncaRunnersRepeat</card>
+        <card>DEHCShipIncaSpearmen3</card>
+        <card>DEHCShipVillagersInca</card>
+        <card>DEHCWarChiefInca2</card>
+        <card>DEHCRangedInfDamageInca</card>
+        <card>DEHCRangedInfHitpointsInca</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAdvancedTambos</card>
+        <card>DEHCIncaWallsTeam</card>
+        <card>DEHCEarlyKallanka</card>
+        <card>DEHCExtensiveFortificationsInca</card>
+        <card>DEHCShipTamboTravois</card>
+        <card>DEHCArmedFishermenInca</card>
+        <card>DEHCIncaBridgesTeam</card>
+        <card>DEHCChimuSupport</card>
+        <card>DEHCMeleeInfCombatInca</card>
+        <card>DEHCShipBolasWarriors1</card>
+        <card>DEHCShipBolasWarriorsRepeat</card>
+        <card>DEHCShipCoveredWagons2Inca</card>
+        <card>DEHCShipIncaRunners2</card>
+        <card>DEHCHeavyFortificationsInca</card>
+        <card>DEHCIncaFortifications</card>
+        <card>DEHCOldWaysInca</card>
+        <card>DEHCShipBolasWarriors2</card>
+        <card>DEHCShipIncaRunners3</card>
+        <card>DEHCShipIncaSpearmen1</card>
+        <card>DEHCShipIncaRunnersRepeat</card>
+        <card>DEHCShipIncaSpearmen3</card>
+        <card>DEHCShipVillagersInca</card>
+        <card>DEHCWarChiefInca2</card>
+        <card>DEHCRangedInfDamageInca</card>
+        <card>DEHCRangedInfHitpointsInca</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAdvancedTambos</card>
+        <card>DEHCIncaWallsTeam</card>
+        <card>DEHCEarlyKallanka</card>
+        <card>DEHCExtensiveFortificationsInca</card>
+        <card>DEHCShipTamboTravois</card>
+        <card>DEHCArmedFishermenInca</card>
+        <card>DEHCIncaBridgesTeam</card>
+        <card>DEHCChimuSupport</card>
+        <card>DEHCMeleeInfCombatInca</card>
+        <card>DEHCShipBolasWarriors1</card>
+        <card>DEHCShipBolasWarriorsRepeat</card>
+        <card>DEHCShipCoveredWagons2Inca</card>
+        <card>DEHCShipIncaRunners2</card>
+        <card>DEHCHeavyFortificationsInca</card>
+        <card>DEHCIncaFortifications</card>
+        <card>DEHCOldWaysInca</card>
+        <card>DEHCShipBolasWarriors2</card>
+        <card>DEHCShipIncaRunners3</card>
+        <card>DEHCShipIncaSpearmen1</card>
+        <card>DEHCShipIncaRunnersRepeat</card>
+        <card>DEHCShipIncaSpearmen3</card>
+        <card>DEHCShipVillagersInca</card>
+        <card>DEHCWarChiefInca2</card>
+        <card>DEHCRangedInfDamageInca</card>
+        <card>DEHCRangedInfHitpointsInca</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAdvancedTambos</card>
+        <card>DEHCIncaWallsTeam</card>
+        <card>DEHCEarlyKallanka</card>
+        <card>DEHCExtensiveFortificationsInca</card>
+        <card>DEHCShipTamboTravois</card>
+        <card>DEHCArmedFishermenInca</card>
+        <card>DEHCIncaBridgesTeam</card>
+        <card>DEHCChimuSupport</card>
+        <card>DEHCMeleeInfCombatInca</card>
+        <card>DEHCShipBolasWarriors1</card>
+        <card>DEHCShipBolasWarriorsRepeat</card>
+        <card>DEHCShipCoveredWagons2Inca</card>
+        <card>DEHCShipIncaRunners2</card>
+        <card>DEHCHeavyFortificationsInca</card>
+        <card>DEHCIncaFortifications</card>
+        <card>DEHCOldWaysInca</card>
+        <card>DEHCShipBolasWarriors2</card>
+        <card>DEHCShipIncaRunners3</card>
+        <card>DEHCShipIncaSpearmen1</card>
+        <card>DEHCShipIncaRunnersRepeat</card>
+        <card>DEHCShipIncaSpearmen3</card>
+        <card>DEHCShipVillagersInca</card>
+        <card>DEHCWarChiefInca2</card>
+        <card>DEHCRangedInfDamageInca</card>
+        <card>DEHCRangedInfHitpointsInca</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCAdvancedTambos</card>
+        <card>DEHCIncaWallsTeam</card>
+        <card>DEHCEarlyKallanka</card>
+        <card>DEHCExtensiveFortificationsInca</card>
+        <card>DEHCShipTamboTravois</card>
+        <card>DEHCArmedFishermenInca</card>
+        <card>DEHCIncaBridgesTeam</card>
+        <card>DEHCChimuSupport</card>
+        <card>DEHCMeleeInfCombatInca</card>
+        <card>DEHCShipBolasWarriors1</card>
+        <card>DEHCShipBolasWarriorsRepeat</card>
+        <card>DEHCShipCoveredWagons2Inca</card>
+        <card>DEHCShipIncaRunners2</card>
+        <card>DEHCHeavyFortificationsInca</card>
+        <card>DEHCIncaFortifications</card>
+        <card>DEHCOldWaysInca</card>
+        <card>DEHCShipBolasWarriors2</card>
+        <card>DEHCShipIncaRunners3</card>
+        <card>DEHCShipIncaSpearmen1</card>
+        <card>DEHCShipIncaRunnersRepeat</card>
+        <card>DEHCShipIncaSpearmen3</card>
+        <card>DEHCShipVillagersInca</card>
+        <card>DEHCWarChiefInca2</card>
+        <card>DEHCRangedInfDamageInca</card>
+        <card>DEHCRangedInfHitpointsInca</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

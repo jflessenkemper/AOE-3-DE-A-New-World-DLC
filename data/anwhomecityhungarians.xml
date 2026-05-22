@@ -2,7 +2,7 @@
 <homecity>
   <civ>ANWHungarians</civ>
   <name>$$80824$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490365$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>german\german_homecity.xml</visual>
   <watervisual>german\german_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <lightset>hc_revolution</lightset>
   <watertype>London</watertype>
   <numpropunlocksearned>0</numpropunlocksearned>
@@ -1086,15 +1087,80 @@
       <age>3</age>
       <displayunitcount>1</displayunitcount>
     </card>
+    <!-- Card Pack 2026-05-17 — ANWHungarians 8 new cards -->
+    <card>
+      <name>DEHCHungarianHonvedRising</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCHungarianKossuthRifles</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCHungarianSzabalyos</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCHungarianPandourRaiders</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>1</age>
+    </card>
+    <card>
+      <name>DEHCHungarianDanubianNavy</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCHungarianHusariaCombat</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>2</age>
+    </card>
+    <card>
+      <name>DEHCHungarianBudapestAcademy</name>
+      <maxcount>1</maxcount>
+      <level>0</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+    </card>
+    <card>
+      <name>DEHCHungarianComitatus</name>
+      <maxcount>-1</maxcount>
+      <level>10</level>
+      <prereqtech>-1</prereqtech>
+      <age>3</age>
+      <displayunitcount>6</displayunitcount>
+      <infiniteinlastage>1</infiniteinlastage>
+    </card>
   </cards>
   <decks>
 
+
     <deck>
 
-      <name>Hungary</name>
+
+      <name>$$71332$$Beginner</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>HCExoticHardwoods</card>
@@ -1104,34 +1170,41 @@
         <card>RvltModHCMagyarGrenadiers</card>
         <card>RvltModHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCTheaters</card>
         <card>RvltModHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCHandMortar</card>
-        <card>DEHCREVShipFalconets</card>
-        <card>HCShipHussars3</card>
-        <card>DEHCLegionHungarian</card>
-        <card>RvltModHCPandours</card>
-        <card>DEHCShipBattleshipRepeat</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>DEHCHabsburgAllies2</card>
-        <card>DEHCInfantryHitpointsItalian</card>
-        <card>DEHCTheaters</card>
         <card>HCCavalryCombatFrench</card>
         <card>HCShipDragoons1</card>
         <card>HCShipDragoons3</card>
+        <card>DEHCREVShipFalconets</card>
+        <card>HCShipHussars3</card>
+        <card>RvltModHCPandours</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>HCShipWoodCrates5</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Hungary</name>
+
+      <name>$$20310$$Land</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>HCExoticHardwoods</card>
@@ -1141,34 +1214,41 @@
         <card>RvltModHCMagyarGrenadiers</card>
         <card>RvltModHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCTheaters</card>
         <card>RvltModHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCHandMortar</card>
-        <card>DEHCREVShipFalconets</card>
-        <card>HCShipHussars3</card>
-        <card>DEHCLegionHungarian</card>
-        <card>RvltModHCPandours</card>
-        <card>DEHCShipBattleshipRepeat</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>DEHCHabsburgAllies2</card>
-        <card>DEHCInfantryHitpointsItalian</card>
-        <card>DEHCTheaters</card>
         <card>HCCavalryCombatFrench</card>
         <card>HCShipDragoons1</card>
         <card>HCShipDragoons3</card>
+        <card>DEHCREVShipFalconets</card>
+        <card>HCShipHussars3</card>
+        <card>RvltModHCPandours</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>HCShipWoodCrates5</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Hungary</name>
+
+      <name>$$71333$$Naval</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>HCExoticHardwoods</card>
@@ -1178,34 +1258,41 @@
         <card>RvltModHCMagyarGrenadiers</card>
         <card>RvltModHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCTheaters</card>
         <card>RvltModHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCHandMortar</card>
-        <card>DEHCREVShipFalconets</card>
-        <card>HCShipHussars3</card>
-        <card>DEHCLegionHungarian</card>
-        <card>RvltModHCPandours</card>
-        <card>DEHCShipBattleshipRepeat</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>DEHCHabsburgAllies2</card>
-        <card>DEHCInfantryHitpointsItalian</card>
-        <card>DEHCTheaters</card>
         <card>HCCavalryCombatFrench</card>
         <card>HCShipDragoons1</card>
         <card>HCShipDragoons3</card>
+        <card>DEHCREVShipFalconets</card>
+        <card>HCShipHussars3</card>
+        <card>RvltModHCPandours</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>HCShipWoodCrates5</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Hungary</name>
+
+      <name>$$55547$$Tycoon</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>HCExoticHardwoods</card>
@@ -1215,34 +1302,41 @@
         <card>RvltModHCMagyarGrenadiers</card>
         <card>RvltModHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCTheaters</card>
         <card>RvltModHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCHandMortar</card>
-        <card>DEHCREVShipFalconets</card>
-        <card>HCShipHussars3</card>
-        <card>DEHCLegionHungarian</card>
-        <card>RvltModHCPandours</card>
-        <card>DEHCShipBattleshipRepeat</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>DEHCHabsburgAllies2</card>
-        <card>DEHCInfantryHitpointsItalian</card>
-        <card>DEHCTheaters</card>
         <card>HCCavalryCombatFrench</card>
         <card>HCShipDragoons1</card>
         <card>HCShipDragoons3</card>
+        <card>DEHCREVShipFalconets</card>
+        <card>HCShipHussars3</card>
+        <card>RvltModHCPandours</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>HCShipWoodCrates5</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Hungary</name>
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>HCExoticHardwoods</card>
@@ -1252,34 +1346,41 @@
         <card>RvltModHCMagyarGrenadiers</card>
         <card>RvltModHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCTheaters</card>
         <card>RvltModHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCHandMortar</card>
-        <card>DEHCREVShipFalconets</card>
-        <card>HCShipHussars3</card>
-        <card>DEHCLegionHungarian</card>
-        <card>RvltModHCPandours</card>
-        <card>DEHCShipBattleshipRepeat</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>DEHCHabsburgAllies2</card>
-        <card>DEHCInfantryHitpointsItalian</card>
-        <card>DEHCTheaters</card>
         <card>HCCavalryCombatFrench</card>
         <card>HCShipDragoons1</card>
         <card>HCShipDragoons3</card>
+        <card>DEHCREVShipFalconets</card>
+        <card>HCShipHussars3</card>
+        <card>RvltModHCPandours</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>HCShipWoodCrates5</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
 
+
     <deck>
 
-      <name>Hungary</name>
+
+      <name>$$90975$$TreatyNative</name>
+
+
       <default>
 
+
       </default>
+
 
       <cards>
         <card>HCExoticHardwoods</card>
@@ -1289,25 +1390,26 @@
         <card>RvltModHCMagyarGrenadiers</card>
         <card>RvltModHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
+        <card>DEHCInfantryHitpointsItalian</card>
+        <card>DEHCTheaters</card>
         <card>RvltModHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCHabsburgAllies1</card>
         <card>DEHCHandMortar</card>
-        <card>DEHCREVShipFalconets</card>
-        <card>HCShipHussars3</card>
-        <card>DEHCLegionHungarian</card>
-        <card>RvltModHCPandours</card>
-        <card>DEHCShipBattleshipRepeat</card>
-        <card>HCXPIndustrialRevolution</card>
-        <card>DEHCHabsburgAllies2</card>
-        <card>DEHCInfantryHitpointsItalian</card>
-        <card>DEHCTheaters</card>
         <card>HCCavalryCombatFrench</card>
         <card>HCShipDragoons1</card>
         <card>HCShipDragoons3</card>
+        <card>DEHCREVShipFalconets</card>
+        <card>HCShipHussars3</card>
+        <card>RvltModHCPandours</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>DEHCHabsburgAllies2</card>
+        <card>HCShipWoodCrates5</card>
+        <card>HCShipSettlers1</card>
       </cards>
+
 
     </deck>
   </decks>
@@ -1339,13 +1441,13 @@
   <building>
     <name>Market</name>
     <visual>
-      <file>revolution\revolution_hall.xml</file>
+      <file>german\german_tradecenter.xml</file>
       <bone>bone_market</bone>
     </visual>
     <uix>250</uix>
     <uiy>375</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_market_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_market_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\nw_trading_company_icon</portrait>
     <displaynamestringid>24970</displaynamestringid>
@@ -1418,8 +1520,8 @@
     </visual>
     <uix>460</uix>
     <uiy>125</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_academy_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_academy_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\military_academy_icon</portrait>
     <displaynamestringid>24965</displaynamestringid>
@@ -1504,8 +1606,8 @@
     </visual>
     <uix>80</uix>
     <uiy>475</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_cathedral_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_cathedral_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\cathedral_icon</portrait>
     <displaynamestringid>24969</displaynamestringid>
@@ -1578,8 +1680,8 @@
     </visual>
     <uix>450</uix>
     <uiy>275</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_manufacturing_plant_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
@@ -1642,8 +1744,8 @@
     </visual>
     <uix>200</uix>
     <uiy>250</uiy>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\germany_homecity_dock_camera.cam</camera>
+    <widescreencamera>german\germany_homecity_dock_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>ui\home_city\harbor_icon</portrait>
     <displaynamestringid>35745</displaynamestringid>
@@ -1716,8 +1818,8 @@
   </building>
   <building>
     <name>Customization</name>
-    <camera>revolution\revolution_market_camera.cam</camera>
-    <widescreencamera>revolution\revolution_market_camera.cam</widescreencamera>
+    <camera>german\german_homecity_camera.cam</camera>
+    <widescreencamera>german\german_homecity_camera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
     <portrait>homecity\buildings_west\dock_icon</portrait>
     <displaynamestringid>24966</displaynamestringid>

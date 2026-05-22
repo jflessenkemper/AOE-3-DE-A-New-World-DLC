@@ -289,7 +289,9 @@
   "btBiasTrade": 0.35,
   "btOffenseDefense": 0.35,
   "btRushBoom": -0.15,
+  "build_style": "CompactFortifiedCore",
   "cvMaxArmyPop": 115.0,
+  "cvMaxCivPop": -1.0,
   "cvMaxTowers": 5.0,
   "cvMinNumVills": 20.0,
   "cvOkToBuildForts": true,
@@ -313,7 +315,9 @@
   "btBiasTrade": 0.55,
   "btOffenseDefense": -0.3,
   "btRushBoom": -0.45,
+  "build_style": "CompactFortifiedCore",
   "cvMaxArmyPop": 110.0,
+  "cvMaxCivPop": -1.0,
   "cvMaxTowers": 6.0,
   "cvMinNumVills": 18.0,
   "cvOkToBuildForts": true,
@@ -387,10 +391,16 @@
   "btBiasTrade": -0.5,
   "btOffenseDefense": 0.6,
   "btRushBoom": 0.55,
+  "build_style": "JungleGuerrillaNetwork",
   "cvMaxArmyPop": 110.0,
+  "cvMaxCivPop": -1.0,
   "cvMaxTowers": 3.0,
   "cvMinNumVills": 18.0,
-  "cvOkToBuildForts": false
+  "cvOkToBuildForts": false,
+  "doctrine_defense": 0.3,
+  "doctrine_offense": 0.7,
+  "doctrine_posture": 1,
+  "doctrine_scale": 3.0
  },
  "Napoleon Bonaparte": {
   "army_pop_per_age": [
@@ -542,7 +552,7 @@
   "doctrine_posture": 2,
   "doctrine_scale": 3.5
  },
- "Wellington": {
+ "Queen Elizabeth I": {
   "army_pop_per_age": [
    110.0,
    110.0,

@@ -7,7 +7,7 @@
       "leaderName": "Napoleon Bonaparte",
       "articleUrl": "https://en.wikipedia.org/wiki/Napoleon",
       "portraitLocalFile": "art/ui/leaders/napoleon_imperial.jpg",
-      "smallPortraitFile": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png",
+      "smallPortraitFile": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png",
       "voice": { "stability": 0.42, "similarityBoost": 0.68, "style": 0.24, "useSpeakerBoost": true },
       "voicePrompt": "Imperial sovereign in full regalia, concise battlefield judgment, light French inflection, authoritative rather than theatrical.",
       "insults": ["You maneuver like a clerk, not a commander.", "Those walls betray fear, not strength."],

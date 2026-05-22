@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWBritish</civ>
+  <civ>British</civ>
   <name>$$36883$$</name>
-  <heroname>$$43030$$</heroname>
+  <heroname>$$490331$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>british\british_homecity.xml</visual>
   <watervisual>british\british_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>London</lightset>
   <watertype>London</watertype>
@@ -1932,9 +1933,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCRuleBritannia</card>
         <card>DEHCRangers</card>
@@ -1962,6 +1973,228 @@
         <card>HCShipLongbowmen4</card>
         <card>HCShipLongbowmenRepeat</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCRuleBritannia</card>
+        <card>DEHCRangers</card>
+        <card>DEHCShipRangers2</card>
+        <card>HCExplorerBritish</card>
+        <card>HCMusketeerGrenadierCombatBritish</card>
+        <card>DEHCSiegeArchery</card>
+        <card>DEHCWhaleOilTeam</card>
+        <card>DEHCGreenwichTime</card>
+        <card>DEHCFedMarionsDiversions</card>
+        <card>HCMusketeerGrenadierHitpointsBritishTeam</card>
+        <card>HCMusketeerGrenadierDamageBritish</card>
+        <card>HCShipGalleons</card>
+        <card>HCCavalryDamageBritish</card>
+        <card>DEHCCanadianLoyalists</card>
+        <card>DEHCShipRangers1</card>
+        <card>HCShipFrigates</card>
+        <card>HCMercsHighlanders</card>
+        <card>DEHCShipPikemenBritish</card>
+        <card>HCMonitorCombatTeam</card>
+        <card>HCCheapDocksTeam</card>
+        <card>HCCavalryCombatBritish</card>
+        <card>HCImprovedLongbows</card>
+        <card>HCNavalGunners</card>
+        <card>HCShipLongbowmen4</card>
+        <card>HCShipLongbowmenRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCRuleBritannia</card>
+        <card>DEHCRangers</card>
+        <card>DEHCShipRangers2</card>
+        <card>HCExplorerBritish</card>
+        <card>HCMusketeerGrenadierCombatBritish</card>
+        <card>DEHCSiegeArchery</card>
+        <card>DEHCWhaleOilTeam</card>
+        <card>DEHCGreenwichTime</card>
+        <card>DEHCFedMarionsDiversions</card>
+        <card>HCMusketeerGrenadierHitpointsBritishTeam</card>
+        <card>HCMusketeerGrenadierDamageBritish</card>
+        <card>HCShipGalleons</card>
+        <card>HCCavalryDamageBritish</card>
+        <card>DEHCCanadianLoyalists</card>
+        <card>DEHCShipRangers1</card>
+        <card>HCShipFrigates</card>
+        <card>HCMercsHighlanders</card>
+        <card>DEHCShipPikemenBritish</card>
+        <card>HCMonitorCombatTeam</card>
+        <card>HCCheapDocksTeam</card>
+        <card>HCCavalryCombatBritish</card>
+        <card>HCImprovedLongbows</card>
+        <card>HCNavalGunners</card>
+        <card>HCShipLongbowmen4</card>
+        <card>HCShipLongbowmenRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCRuleBritannia</card>
+        <card>DEHCRangers</card>
+        <card>DEHCShipRangers2</card>
+        <card>HCExplorerBritish</card>
+        <card>HCMusketeerGrenadierCombatBritish</card>
+        <card>DEHCSiegeArchery</card>
+        <card>DEHCWhaleOilTeam</card>
+        <card>DEHCGreenwichTime</card>
+        <card>DEHCFedMarionsDiversions</card>
+        <card>HCMusketeerGrenadierHitpointsBritishTeam</card>
+        <card>HCMusketeerGrenadierDamageBritish</card>
+        <card>HCShipGalleons</card>
+        <card>HCCavalryDamageBritish</card>
+        <card>DEHCCanadianLoyalists</card>
+        <card>DEHCShipRangers1</card>
+        <card>HCShipFrigates</card>
+        <card>HCMercsHighlanders</card>
+        <card>DEHCShipPikemenBritish</card>
+        <card>HCMonitorCombatTeam</card>
+        <card>HCCheapDocksTeam</card>
+        <card>HCCavalryCombatBritish</card>
+        <card>HCImprovedLongbows</card>
+        <card>HCNavalGunners</card>
+        <card>HCShipLongbowmen4</card>
+        <card>HCShipLongbowmenRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCRuleBritannia</card>
+        <card>DEHCRangers</card>
+        <card>DEHCShipRangers2</card>
+        <card>HCExplorerBritish</card>
+        <card>HCMusketeerGrenadierCombatBritish</card>
+        <card>DEHCSiegeArchery</card>
+        <card>DEHCWhaleOilTeam</card>
+        <card>DEHCGreenwichTime</card>
+        <card>DEHCFedMarionsDiversions</card>
+        <card>HCMusketeerGrenadierHitpointsBritishTeam</card>
+        <card>HCMusketeerGrenadierDamageBritish</card>
+        <card>HCShipGalleons</card>
+        <card>HCCavalryDamageBritish</card>
+        <card>DEHCCanadianLoyalists</card>
+        <card>DEHCShipRangers1</card>
+        <card>HCShipFrigates</card>
+        <card>HCMercsHighlanders</card>
+        <card>DEHCShipPikemenBritish</card>
+        <card>HCMonitorCombatTeam</card>
+        <card>HCCheapDocksTeam</card>
+        <card>HCCavalryCombatBritish</card>
+        <card>HCImprovedLongbows</card>
+        <card>HCNavalGunners</card>
+        <card>HCShipLongbowmen4</card>
+        <card>HCShipLongbowmenRepeat</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCRuleBritannia</card>
+        <card>DEHCRangers</card>
+        <card>DEHCShipRangers2</card>
+        <card>HCExplorerBritish</card>
+        <card>HCMusketeerGrenadierCombatBritish</card>
+        <card>DEHCSiegeArchery</card>
+        <card>DEHCWhaleOilTeam</card>
+        <card>DEHCGreenwichTime</card>
+        <card>DEHCFedMarionsDiversions</card>
+        <card>HCMusketeerGrenadierHitpointsBritishTeam</card>
+        <card>HCMusketeerGrenadierDamageBritish</card>
+        <card>HCShipGalleons</card>
+        <card>HCCavalryDamageBritish</card>
+        <card>DEHCCanadianLoyalists</card>
+        <card>DEHCShipRangers1</card>
+        <card>HCShipFrigates</card>
+        <card>HCMercsHighlanders</card>
+        <card>DEHCShipPikemenBritish</card>
+        <card>HCMonitorCombatTeam</card>
+        <card>HCCheapDocksTeam</card>
+        <card>HCCavalryCombatBritish</card>
+        <card>HCImprovedLongbows</card>
+        <card>HCNavalGunners</card>
+        <card>HCShipLongbowmen4</card>
+        <card>HCShipLongbowmenRepeat</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

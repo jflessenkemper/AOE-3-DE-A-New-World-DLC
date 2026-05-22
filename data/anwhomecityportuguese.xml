@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWPortuguese</civ>
+  <civ>Portuguese</civ>
   <name>$$36888$$</name>
-  <heroname>$$43035$$</heroname>
+  <heroname>$$490347$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>portuguese\portuguese_homecity.xml</visual>
   <watervisual>portuguese\portuguese_homecity_water.xml</watervisual>
@@ -13,6 +13,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>Lisbon</lightset>
   <watertype>Lisbon</watertype>
@@ -1935,9 +1936,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>DEHCFeitorias</card>
         <card>HCShipCacadores3</card>
@@ -1965,6 +1976,228 @@
         <card>HCShipOrganGuns3</card>
         <card>HCShipPortugueseExpForce</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCFeitorias</card>
+        <card>HCShipCacadores3</card>
+        <card>HCShipDragoons3</card>
+        <card>HCExplorerPortuguese</card>
+        <card>HCRoyalDecreePortuguese</card>
+        <card>HCNavalCombat</card>
+        <card>HCNavalGunners</card>
+        <card>HCRangedInfantryDamagePortuguese</card>
+        <card>DEHCMercsCannoneersEuropean</card>
+        <card>HCDragoonCombatPortuguese</card>
+        <card>DEHCCarracks</card>
+        <card>DEHCHandCombatPortuguese</card>
+        <card>HCArtilleryHitpointsPortugueseTeam</card>
+        <card>DEHCPortugueseBattleshipCard</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCRangedInfantryCombatPortuguese</card>
+        <card>HCShipDragoons2</card>
+        <card>HCShipDragoons4</card>
+        <card>DEHCNavalInfantry</card>
+        <card>HCRangedInfantryHitpointsPortugueseTeam</card>
+        <card>HCShipDragoons1</card>
+        <card>HCShipOrganGuns1</card>
+        <card>HCShipOrganGuns2</card>
+        <card>HCShipOrganGuns3</card>
+        <card>HCShipPortugueseExpForce</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCFeitorias</card>
+        <card>HCShipCacadores3</card>
+        <card>HCShipDragoons3</card>
+        <card>HCExplorerPortuguese</card>
+        <card>HCRoyalDecreePortuguese</card>
+        <card>HCNavalCombat</card>
+        <card>HCNavalGunners</card>
+        <card>HCRangedInfantryDamagePortuguese</card>
+        <card>DEHCMercsCannoneersEuropean</card>
+        <card>HCDragoonCombatPortuguese</card>
+        <card>DEHCCarracks</card>
+        <card>DEHCHandCombatPortuguese</card>
+        <card>HCArtilleryHitpointsPortugueseTeam</card>
+        <card>DEHCPortugueseBattleshipCard</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCRangedInfantryCombatPortuguese</card>
+        <card>HCShipDragoons2</card>
+        <card>HCShipDragoons4</card>
+        <card>DEHCNavalInfantry</card>
+        <card>HCRangedInfantryHitpointsPortugueseTeam</card>
+        <card>HCShipDragoons1</card>
+        <card>HCShipOrganGuns1</card>
+        <card>HCShipOrganGuns2</card>
+        <card>HCShipOrganGuns3</card>
+        <card>HCShipPortugueseExpForce</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCFeitorias</card>
+        <card>HCShipCacadores3</card>
+        <card>HCShipDragoons3</card>
+        <card>HCExplorerPortuguese</card>
+        <card>HCRoyalDecreePortuguese</card>
+        <card>HCNavalCombat</card>
+        <card>HCNavalGunners</card>
+        <card>HCRangedInfantryDamagePortuguese</card>
+        <card>DEHCMercsCannoneersEuropean</card>
+        <card>HCDragoonCombatPortuguese</card>
+        <card>DEHCCarracks</card>
+        <card>DEHCHandCombatPortuguese</card>
+        <card>HCArtilleryHitpointsPortugueseTeam</card>
+        <card>DEHCPortugueseBattleshipCard</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCRangedInfantryCombatPortuguese</card>
+        <card>HCShipDragoons2</card>
+        <card>HCShipDragoons4</card>
+        <card>DEHCNavalInfantry</card>
+        <card>HCRangedInfantryHitpointsPortugueseTeam</card>
+        <card>HCShipDragoons1</card>
+        <card>HCShipOrganGuns1</card>
+        <card>HCShipOrganGuns2</card>
+        <card>HCShipOrganGuns3</card>
+        <card>HCShipPortugueseExpForce</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCFeitorias</card>
+        <card>HCShipCacadores3</card>
+        <card>HCShipDragoons3</card>
+        <card>HCExplorerPortuguese</card>
+        <card>HCRoyalDecreePortuguese</card>
+        <card>HCNavalCombat</card>
+        <card>HCNavalGunners</card>
+        <card>HCRangedInfantryDamagePortuguese</card>
+        <card>DEHCMercsCannoneersEuropean</card>
+        <card>HCDragoonCombatPortuguese</card>
+        <card>DEHCCarracks</card>
+        <card>DEHCHandCombatPortuguese</card>
+        <card>HCArtilleryHitpointsPortugueseTeam</card>
+        <card>DEHCPortugueseBattleshipCard</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCRangedInfantryCombatPortuguese</card>
+        <card>HCShipDragoons2</card>
+        <card>HCShipDragoons4</card>
+        <card>DEHCNavalInfantry</card>
+        <card>HCRangedInfantryHitpointsPortugueseTeam</card>
+        <card>HCShipDragoons1</card>
+        <card>HCShipOrganGuns1</card>
+        <card>HCShipOrganGuns2</card>
+        <card>HCShipOrganGuns3</card>
+        <card>HCShipPortugueseExpForce</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>DEHCFeitorias</card>
+        <card>HCShipCacadores3</card>
+        <card>HCShipDragoons3</card>
+        <card>HCExplorerPortuguese</card>
+        <card>HCRoyalDecreePortuguese</card>
+        <card>HCNavalCombat</card>
+        <card>HCNavalGunners</card>
+        <card>HCRangedInfantryDamagePortuguese</card>
+        <card>DEHCMercsCannoneersEuropean</card>
+        <card>HCDragoonCombatPortuguese</card>
+        <card>DEHCCarracks</card>
+        <card>DEHCHandCombatPortuguese</card>
+        <card>HCArtilleryHitpointsPortugueseTeam</card>
+        <card>DEHCPortugueseBattleshipCard</card>
+        <card>DEHCShipBattleshipRepeat</card>
+        <card>HCRangedInfantryCombatPortuguese</card>
+        <card>HCShipDragoons2</card>
+        <card>HCShipDragoons4</card>
+        <card>DEHCNavalInfantry</card>
+        <card>HCRangedInfantryHitpointsPortugueseTeam</card>
+        <card>HCShipDragoons1</card>
+        <card>HCShipOrganGuns1</card>
+        <card>HCShipOrganGuns2</card>
+        <card>HCShipOrganGuns3</card>
+        <card>HCShipPortugueseExpForce</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>

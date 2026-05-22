@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <homecity>
-  <civ>ANWIndians</civ>
+  <civ>Indians</civ>
   <name>$$60014$$</name>
-  <heroname>$$60015$$</heroname>
+  <heroname>$$490210$$</heroname>
   <gatherpointunit>HomeCityGatherFlag</gatherpointunit>
   <visual>india\india_homecity.xml</visual>
   <watervisual>india\india_homecity_water.xml</watervisual>
@@ -15,6 +15,7 @@
   <transportroundtriptime>1</transportroundtriptime>
   <transportactivationtime>0</transportactivationtime>
   <level>1</level>
+  <maxcardsperdeck>25</maxcardsperdeck>
   <skillpoints>9</skillpoints>
   <lightset>India</lightset>
   <watertype>India_HC</watertype>
@@ -1268,9 +1269,19 @@
   </cards>
   <decks>
 
+
     <deck>
-      <name>A New World</name>
-      <default />
+
+
+      <name>$$71332$$Beginner</name>
+
+
+      <default>
+
+
+      </default>
+
+
       <cards>
         <card>YPHCAdvancedConsulateIndians</card>
         <card>YPHCAdvancedWondersIndians</card>
@@ -1298,6 +1309,228 @@
         <card>YPHCNativeHitpointsIndians</card>
         <card>YPHCNativeTradeTaxIndians</card>
       </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$20310$$Land</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulateIndians</card>
+        <card>YPHCAdvancedWondersIndians</card>
+        <card>YPHCExtensiveFortificationsIndians</card>
+        <card>YPHCAdmiralityIndians</card>
+        <card>YPHCArmedFishermenIndians</card>
+        <card>YPHCAtonementIndians</card>
+        <card>YPHCCamelDamageIndians</card>
+        <card>YPHCConsulateRelationsIndians</card>
+        <card>YPHCIndianMonkFrighten</card>
+        <card>DEHCExportTradeIndians</card>
+        <card>YPHCMercenaryLoyaltyIndians</card>
+        <card>YPHCShipFrigateIndians</card>
+        <card>YPHCEastIndiaCompany</card>
+        <card>DEHCShipMercWarDhowsIndians</card>
+        <card>DEHCCheapSepoys</card>
+        <card>YPHCMercsIndianArmy</card>
+        <card>YPHCShipFrigateDoubleIndians</card>
+        <card>YPHCShipMonitorIndians</card>
+        <card>YPHCIndianMonkCombat</card>
+        <card>YPHCAdvancedMonasteryIndians</card>
+        <card>YPHCExpandedTradingPostIndians</card>
+        <card>YPHCElephantCombatIndians</card>
+        <card>YPHCGurkhaAid</card>
+        <card>YPHCNativeHitpointsIndians</card>
+        <card>YPHCNativeTradeTaxIndians</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$71333$$Naval</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulateIndians</card>
+        <card>YPHCAdvancedWondersIndians</card>
+        <card>YPHCExtensiveFortificationsIndians</card>
+        <card>YPHCAdmiralityIndians</card>
+        <card>YPHCArmedFishermenIndians</card>
+        <card>YPHCAtonementIndians</card>
+        <card>YPHCCamelDamageIndians</card>
+        <card>YPHCConsulateRelationsIndians</card>
+        <card>YPHCIndianMonkFrighten</card>
+        <card>DEHCExportTradeIndians</card>
+        <card>YPHCMercenaryLoyaltyIndians</card>
+        <card>YPHCShipFrigateIndians</card>
+        <card>YPHCEastIndiaCompany</card>
+        <card>DEHCShipMercWarDhowsIndians</card>
+        <card>DEHCCheapSepoys</card>
+        <card>YPHCMercsIndianArmy</card>
+        <card>YPHCShipFrigateDoubleIndians</card>
+        <card>YPHCShipMonitorIndians</card>
+        <card>YPHCIndianMonkCombat</card>
+        <card>YPHCAdvancedMonasteryIndians</card>
+        <card>YPHCExpandedTradingPostIndians</card>
+        <card>YPHCElephantCombatIndians</card>
+        <card>YPHCGurkhaAid</card>
+        <card>YPHCNativeHitpointsIndians</card>
+        <card>YPHCNativeTradeTaxIndians</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$55547$$Tycoon</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulateIndians</card>
+        <card>YPHCAdvancedWondersIndians</card>
+        <card>YPHCExtensiveFortificationsIndians</card>
+        <card>YPHCAdmiralityIndians</card>
+        <card>YPHCArmedFishermenIndians</card>
+        <card>YPHCAtonementIndians</card>
+        <card>YPHCCamelDamageIndians</card>
+        <card>YPHCConsulateRelationsIndians</card>
+        <card>YPHCIndianMonkFrighten</card>
+        <card>DEHCExportTradeIndians</card>
+        <card>YPHCMercenaryLoyaltyIndians</card>
+        <card>YPHCShipFrigateIndians</card>
+        <card>YPHCEastIndiaCompany</card>
+        <card>DEHCShipMercWarDhowsIndians</card>
+        <card>DEHCCheapSepoys</card>
+        <card>YPHCMercsIndianArmy</card>
+        <card>YPHCShipFrigateDoubleIndians</card>
+        <card>YPHCShipMonitorIndians</card>
+        <card>YPHCIndianMonkCombat</card>
+        <card>YPHCAdvancedMonasteryIndians</card>
+        <card>YPHCExpandedTradingPostIndians</card>
+        <card>YPHCElephantCombatIndians</card>
+        <card>YPHCGurkhaAid</card>
+        <card>YPHCNativeHitpointsIndians</card>
+        <card>YPHCNativeTradeTaxIndians</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90974$$TreatyNoNat</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulateIndians</card>
+        <card>YPHCAdvancedWondersIndians</card>
+        <card>YPHCExtensiveFortificationsIndians</card>
+        <card>YPHCAdmiralityIndians</card>
+        <card>YPHCArmedFishermenIndians</card>
+        <card>YPHCAtonementIndians</card>
+        <card>YPHCCamelDamageIndians</card>
+        <card>YPHCConsulateRelationsIndians</card>
+        <card>YPHCIndianMonkFrighten</card>
+        <card>DEHCExportTradeIndians</card>
+        <card>YPHCMercenaryLoyaltyIndians</card>
+        <card>YPHCShipFrigateIndians</card>
+        <card>YPHCEastIndiaCompany</card>
+        <card>DEHCShipMercWarDhowsIndians</card>
+        <card>DEHCCheapSepoys</card>
+        <card>YPHCMercsIndianArmy</card>
+        <card>YPHCShipFrigateDoubleIndians</card>
+        <card>YPHCShipMonitorIndians</card>
+        <card>YPHCIndianMonkCombat</card>
+        <card>YPHCAdvancedMonasteryIndians</card>
+        <card>YPHCExpandedTradingPostIndians</card>
+        <card>YPHCElephantCombatIndians</card>
+        <card>YPHCGurkhaAid</card>
+        <card>YPHCNativeHitpointsIndians</card>
+        <card>YPHCNativeTradeTaxIndians</card>
+      </cards>
+
+
+    </deck>
+
+
+    <deck>
+
+
+      <name>$$90975$$TreatyNative</name>
+
+
+      <default>
+
+
+      </default>
+
+
+      <cards>
+        <card>YPHCAdvancedConsulateIndians</card>
+        <card>YPHCAdvancedWondersIndians</card>
+        <card>YPHCExtensiveFortificationsIndians</card>
+        <card>YPHCAdmiralityIndians</card>
+        <card>YPHCArmedFishermenIndians</card>
+        <card>YPHCAtonementIndians</card>
+        <card>YPHCCamelDamageIndians</card>
+        <card>YPHCConsulateRelationsIndians</card>
+        <card>YPHCIndianMonkFrighten</card>
+        <card>DEHCExportTradeIndians</card>
+        <card>YPHCMercenaryLoyaltyIndians</card>
+        <card>YPHCShipFrigateIndians</card>
+        <card>YPHCEastIndiaCompany</card>
+        <card>DEHCShipMercWarDhowsIndians</card>
+        <card>DEHCCheapSepoys</card>
+        <card>YPHCMercsIndianArmy</card>
+        <card>YPHCShipFrigateDoubleIndians</card>
+        <card>YPHCShipMonitorIndians</card>
+        <card>YPHCIndianMonkCombat</card>
+        <card>YPHCAdvancedMonasteryIndians</card>
+        <card>YPHCExpandedTradingPostIndians</card>
+        <card>YPHCElephantCombatIndians</card>
+        <card>YPHCGurkhaAid</card>
+        <card>YPHCNativeHitpointsIndians</card>
+        <card>YPHCNativeTradeTaxIndians</card>
+      </cards>
+
+
     </deck>
   </decks>
   <building>
