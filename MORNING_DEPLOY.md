@@ -1,7 +1,7 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
-Last updated: fifth loop pass (2026-05-23, complete flag art audit — all 40 civs clean).
+Last updated: sixth loop pass (2026-05-23, final pre-deploy audit — mod fully ready).
 
 ---
 
@@ -42,6 +42,18 @@ Last updated: fifth loop pass (2026-05-23, complete flag art audit — all 40 ci
      the 10 WARN civs use the allowlisted revolution DDT names that the engine
      handles gracefully.
    - **All 41 static validators still PASS** after all changes.
+
+11. **Sixth loop pass — Final pre-deploy audit (2026-05-23).**
+   - `modinfo.json` date corrected to `2026-05-23` (was `2026-05-20`).
+   - Confirmed: all 40 ANW personality files present, all 40 AI portrait
+     files exist locally, all 40 `homecitypreviewwpf` images valid, all
+     40 hero-name strings resolve, deck JSON covers all 40 ANW civs,
+     all 40 homecity XMLs have `maxcardsperdeck=25` and valid heroname.
+   - Confirmed: `anwHubTest.xs` testing map well-formed; 6 coverage
+     scenarios (A–F, 7 civs each) cover all 40 ANW civs; `self_scenario_binary`
+     PASS.
+   - **Final state: 41/48 validators PASS, 0 FAIL, 7 SKIP (live only).
+     Mod is fully ready for Workshop deploy.**
 
 9. **Fourth loop pass — Postgame flag art complete (2026-05-22).**
    One commit pushed to main (9ea750e):
