@@ -535,6 +535,28 @@ void llAssignLeaderIdentity(void)
    else if (rvltName == "ANWRomanians")           { gLLLeaderKey = "anw_romanians";           gLLChatsetKey = "anw_romanians"; }
    else if (rvltName == "ANWSouthAfricans")       { gLLLeaderKey = "anw_southafricans";       gLLChatsetKey = "anw_southafricans"; }
    else if (rvltName == "ANWTexians")             { gLLLeaderKey = "anw_texians";             gLLChatsetKey = "anw_texians"; }
+   // ── ANW CANONICAL NATIONS (21) — unique mod-added civs, name-dispatched ─
+   else if (rvltName == "ANWAztecs")         { gLLLeaderKey = "anw_aztecs";         gLLChatsetKey = "anw_aztecs"; }
+   else if (rvltName == "ANWBritish")        { gLLLeaderKey = "anw_british";        gLLChatsetKey = "anw_british"; }
+   else if (rvltName == "ANWChinese")        { gLLLeaderKey = "anw_chinese";        gLLChatsetKey = "anw_chinese"; }
+   else if (rvltName == "ANWDutch")          { gLLLeaderKey = "anw_dutch";          gLLChatsetKey = "anw_dutch"; }
+   else if (rvltName == "ANWEthiopians")     { gLLLeaderKey = "anw_ethiopians";     gLLChatsetKey = "anw_ethiopians"; }
+   else if (rvltName == "ANWFrench")         { gLLLeaderKey = "anw_french";         gLLChatsetKey = "anw_french"; }
+   else if (rvltName == "ANWGermans")        { gLLLeaderKey = "anw_germans";        gLLChatsetKey = "anw_germans"; }
+   else if (rvltName == "ANWHaudenosaunee")  { gLLLeaderKey = "anw_haudenosaunee";  gLLChatsetKey = "anw_haudenosaunee"; }
+   else if (rvltName == "ANWHausa")          { gLLLeaderKey = "anw_hausa";          gLLChatsetKey = "anw_hausa"; }
+   else if (rvltName == "ANWInca")           { gLLLeaderKey = "anw_inca";           gLLChatsetKey = "anw_inca"; }
+   else if (rvltName == "ANWIndians")        { gLLLeaderKey = "anw_indians";        gLLChatsetKey = "anw_indians"; }
+   else if (rvltName == "ANWItalians")       { gLLLeaderKey = "anw_italians";       gLLChatsetKey = "anw_italians"; }
+   else if (rvltName == "ANWJapanese")       { gLLLeaderKey = "anw_japanese";       gLLChatsetKey = "anw_japanese"; }
+   else if (rvltName == "ANWLakota")         { gLLLeaderKey = "anw_lakota";         gLLChatsetKey = "anw_lakota"; }
+   else if (rvltName == "ANWMaltese")        { gLLLeaderKey = "anw_maltese";        gLLChatsetKey = "anw_maltese"; }
+   else if (rvltName == "ANWOttomans")       { gLLLeaderKey = "anw_ottomans";       gLLChatsetKey = "anw_ottomans"; }
+   else if (rvltName == "ANWPortuguese")     { gLLLeaderKey = "anw_portuguese";     gLLChatsetKey = "anw_portuguese"; }
+   else if (rvltName == "ANWRussians")       { gLLLeaderKey = "anw_russians";       gLLChatsetKey = "anw_russians"; }
+   else if (rvltName == "ANWSpanish")        { gLLLeaderKey = "anw_spanish";        gLLChatsetKey = "anw_spanish"; }
+   else if (rvltName == "ANWSwedes")         { gLLLeaderKey = "anw_swedes";         gLLChatsetKey = "anw_swedes"; }
+   else if (rvltName == "ANWUSA")            { gLLLeaderKey = "anw_usa";            gLLChatsetKey = "anw_usa"; }
    else
    {
       gLLLeaderKey = "unassigned-" + rvltName;
@@ -1193,6 +1215,197 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetBuildStrongpointProfile(2, 1, 3, true);
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.30);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
+   }
+
+   // ── ANW CANONICAL NATIONS (21) — mirror parent-civ build profiles ────────
+   // kbGetCivName(cMyCiv) returns "ANWBritish" etc. for these mod-added civs;
+   // cMyCiv does NOT equal any cCivXxx constant, so they cannot match above.
+   else if (rvltName == "ANWAztecs")
+   {
+      // Montezuma — Flower War tribute aggression. Hidden war huts, no perimeter.
+      llUseJungleGuerrillaNetworkStyle(0);
+      gLLHouseDistanceMultiplier = 0.85;
+      llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainWetland, 0.30);
+      llSetExpansionHeading(cLLHeadingOutwardRings, 0.20);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWBritish")
+   {
+      // Elizabeth I — Tudor naval, Sea Dogs, coastal Manor economy.
+      llUseNavalMercantileCompoundStyle(2);
+      gLLEconomicDistanceMultiplier = 1.30;
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainPlain, 0.55);
+      llSetExpansionHeading(cLLHeadingAlongCoast, 0.45);
+   }
+   else if (rvltName == "ANWChinese")
+   {
+      // Kangxi — High-walled Forbidden City. Compact, multi-ring fortress.
+      llUseCompactFortifiedCoreStyle(4, true);
+      gLLHouseDistanceMultiplier = 0.70;
+      llSetBuildStrongpointProfile(3, 2, 2, false);
+      llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.25);
+      llSetExpansionHeading(cLLHeadingOutwardRings, 0.15);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWDutch")
+   {
+      // Maurice of Nassau — Dutch trade republic. Bank-and-dock spine.
+      llUseNavalMercantileCompoundStyle(2);
+      gLLEconomicDistanceMultiplier = 1.40;
+      gLLHouseDistanceMultiplier = 1.05;
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainWetland, 0.60);
+      llSetExpansionHeading(cLLHeadingFollowTradeRoute, 0.40);
+   }
+   else if (rvltName == "ANWEthiopians")
+   {
+      // Menelik II — Highland citadel of Entoto / Magdala.
+      llUseHighlandCitadelStyle(3);
+      gLLHouseDistanceMultiplier = 0.80;
+      llSetBuildStrongpointProfile(3, 2, 2, false);
+      llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainRiver, 0.25);
+      llSetExpansionHeading(cLLHeadingDefensive, 0.0);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWFrench")
+   {
+      // Napoleon Bonaparte — Grande Armée operational manoeuvre on rivers/plains.
+      llUseForwardOperationalLineStyle(1);
+      gLLMilitaryDistanceMultiplier = 0.85;
+      llSetBuildStrongpointProfile(2, 2, 3, true);
+      llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.25);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.55);
+   }
+   else if (rvltName == "ANWGermans")
+   {
+      // Frederick the Great — Prussian republican-levee + oblique-order march.
+      llUseRepublicanLeveeStyle(2);
+      gLLMilitaryDistanceMultiplier = 0.85;
+      llSetBuildStrongpointProfile(2, 2, 2, true);
+      llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.30);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
+   }
+   else if (rvltName == "ANWHaudenosaunee")
+   {
+      // Hiawatha — Confederation longhouse and trade. Woodland + Great Lakes.
+      llUseShrineTradeNodeSpreadStyle(1);
+      gLLEconomicDistanceMultiplier = 1.20;
+      llSetPreferredTerrain(cLLTerrainForestEdge, cLLTerrainRiver, 0.40);
+      llSetExpansionHeading(cLLHeadingFollowTradeRoute, 0.35);
+   }
+   else if (rvltName == "ANWHausa")
+   {
+      // Muhammadu Kanta — Hausa Surame-fortress, trans-Saharan caravan lattice.
+      llUseDistributedEconomicNetworkStyle(2);
+      gLLEconomicDistanceMultiplier = 1.30;
+      llSetPreferredTerrain(cLLTerrainDesertOasis, cLLTerrainRiver, 0.25);
+      llSetExpansionHeading(cLLHeadingFollowTradeRoute, 0.40);
+   }
+   else if (rvltName == "ANWInca")
+   {
+      // Pachacuti — Sacsayhuamán terraced fortress.
+      llUseAndeanTerraceFortressStyle(4);
+      gLLHouseDistanceMultiplier = 0.75;
+      llSetBuildStrongpointProfile(3, 3, 2, false);
+      llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainPlain, 0.20);
+      llSetExpansionHeading(cLLHeadingOutwardRings, 0.15);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWIndians")
+   {
+      // Shivaji — Maratha hill-fort citadel, Sahyadri spur network.
+      llUseHighlandCitadelStyle(5);
+      gLLEconomicDistanceMultiplier = 1.10;
+      llSetBuildStrongpointProfile(2, 1, 2, false);
+      llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainJungle, 0.30);
+      llSetExpansionHeading(cLLHeadingOutwardRings, 0.15);
+   }
+   else if (rvltName == "ANWItalians")
+   {
+      // Garibaldi — Risorgimento volunteer Redshirts marching north.
+      llUseRepublicanLeveeStyle(2);
+      gLLMilitaryDistanceMultiplier = 0.90;
+      llSetBuildStrongpointProfile(2, 2, 3, true);
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainRiver, 0.30);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.40);
+   }
+   else if (rvltName == "ANWJapanese")
+   {
+      // Tokugawa — Sankin-kōtai shrine network and castle towns.
+      llUseShrineTradeNodeSpreadStyle(3);
+      gLLEconomicDistanceMultiplier = 1.25;
+      llSetBuildStrongpointProfile(2, 2, 1, false);
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainRiver, 0.45);
+      llSetExpansionHeading(cLLHeadingFollowTradeRoute, 0.30);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWLakota")
+   {
+      // Chief Gall — Lakota wedge, plains horse archers, buffalo hunt mobility.
+      llUseSteppeCavalryWedgeStyle(0);
+      llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.15);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.50);
+   }
+   else if (rvltName == "ANWMaltese")
+   {
+      // Jean de Valette — Hospitaller fortress of Birgu and Senglea, 1565 siege.
+      llUseHighlandCitadelStyle(5);
+      llSetBuildStrongpointProfile(4, 3, 2, false);
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainHighland, 0.35);
+      llSetExpansionHeading(cLLHeadingDefensive, 0.0);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWOttomans")
+   {
+      // Suleiman the Magnificent — Ottoman siege at Vienna and Rhodes.
+      llUseSiegeTrainConcentrationStyle(3);
+      gLLEconomicDistanceMultiplier = 1.05;
+      llSetBuildStrongpointProfile(2, 2, 2, true);
+      llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainCoast, 0.30);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.40);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWPortuguese")
+   {
+      // Henry the Navigator — Carrack-and-feitoria Atlantic mercantile network.
+      llUseNavalMercantileCompoundStyle(2);
+      gLLEconomicDistanceMultiplier = 1.30;
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainRiver, 0.60);
+      llSetExpansionHeading(cLLHeadingAlongCoast, 0.50);
+   }
+   else if (rvltName == "ANWRussians")
+   {
+      // Ivan the Terrible / Catherine — Streltsy corps, Kazan/Astrakhan siege.
+      llUseCossackVoiskoStyle(1);
+      llSetBuildStrongpointProfile(2, 2, 3, true);
+      llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.35);
+      llSetExpansionHeading(cLLHeadingUpriver, 0.40);
+   }
+   else if (rvltName == "ANWSpanish")
+   {
+      // Isabella — Reconquista forward operational line, Iberian plain.
+      llUseForwardOperationalLineStyle(2);
+      gLLMilitaryDistanceMultiplier = 0.90;
+      llSetBuildStrongpointProfile(2, 2, 3, true);
+      llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainCoast, 0.30);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
+      llEnableCenterAnchoredCivic(true);
+   }
+   else if (rvltName == "ANWSwedes")
+   {
+      // Gustavus Adolphus — Lion of the North, Swedish thin-line tercio.
+      llUseForwardOperationalLineStyle(1);
+      gLLMilitaryDistanceMultiplier = 0.85;
+      llSetBuildStrongpointProfile(2, 2, 3, true);
+      llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainForestEdge, 0.35);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.40);
+   }
+   else if (rvltName == "ANWUSA")
+   {
+      // Washington — Continental Army republican compound, tidewater.
+      llUseRepublicanLeveeStyle(1);
+      gLLTownCenterDistanceMultiplier = 1.10;
+      llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.30);
+      llSetExpansionHeading(cLLHeadingFrontierPush, 0.35);
    }
 
    llLogEvent("BUILDSTYLE", kbGetCivName(cMyCiv) + " -> " + llGetBuildStyleName(gLLBuildStyle) +

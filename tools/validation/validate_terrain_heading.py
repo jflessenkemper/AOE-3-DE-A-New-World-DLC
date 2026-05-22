@@ -1,7 +1,7 @@
 """Validate the historical terrain + heading enforcement layer is wired
 for every civ.
 
-For the 22 base civs and the 26 revolution civs we expect:
+For the 22 base civs, 26 revolution civs, and 40 ANW civs we expect:
 
   * `llApplyBuildStyleForActiveCiv()` in
     `game/ai/leaders/leaderCommon.xs` to contain a branch that calls
@@ -85,7 +85,52 @@ REVOLUTION_CIVS = (
     "RvltModYucatan",
 )
 
-EXPECTED_TOTAL = len(BASE_CIVS) + len(REVOLUTION_CIVS)  # 48
+ANW_CIVS = (
+    # 19 ANW revolution / variant civs
+    "ANWArgentines",
+    "ANWBarbary",
+    "ANWBrazil",
+    "ANWCanadians",
+    "ANWChileans",
+    "ANWColumbians",
+    "ANWEgyptians",
+    "ANWFinnish",
+    "ANWHaitians",
+    "ANWHungarians",
+    "ANWIndonesians",
+    "ANWMayans",
+    "ANWMexicans",
+    "ANWNapoleonicFrance",
+    "ANWPeruvians",
+    "ANWRevFrance",
+    "ANWRomanians",
+    "ANWSouthAfricans",
+    "ANWTexians",
+    # 21 ANW canonical civs (mod-added; cMyCiv != cCivXxx so name-dispatched)
+    "ANWAztecs",
+    "ANWBritish",
+    "ANWChinese",
+    "ANWDutch",
+    "ANWEthiopians",
+    "ANWFrench",
+    "ANWGermans",
+    "ANWHaudenosaunee",
+    "ANWHausa",
+    "ANWInca",
+    "ANWIndians",
+    "ANWItalians",
+    "ANWJapanese",
+    "ANWLakota",
+    "ANWMaltese",
+    "ANWOttomans",
+    "ANWPortuguese",
+    "ANWRussians",
+    "ANWSpanish",
+    "ANWSwedes",
+    "ANWUSA",
+)
+
+EXPECTED_TOTAL = len(BASE_CIVS) + len(REVOLUTION_CIVS) + len(ANW_CIVS)  # 88
 
 TERRAIN_CONST_RE = re.compile(r"\bcLLTerrain[A-Za-z]+\b")
 HEADING_CONST_RE = re.compile(r"\bcLLHeading[A-Za-z]+\b")
@@ -244,7 +289,7 @@ def validate_terrain_heading(repo_root: Path = REPO_ROOT) -> list[str]:
 
     issues: list[str] = []
 
-    expected = set(BASE_CIVS) | set(REVOLUTION_CIVS)
+    expected = set(BASE_CIVS) | set(REVOLUTION_CIVS) | set(ANW_CIVS)
     missing = sorted(expected - branch_labels)
     for label in missing:
         issues.append(f"{label}: no branch in llApplyBuildStyleForActiveCiv()")
@@ -275,7 +320,8 @@ def main() -> int:
 
     print(
         f"Terrain/heading wiring OK for {EXPECTED_TOTAL} civs "
-        f"({len(BASE_CIVS)} base + {len(REVOLUTION_CIVS)} revolution)."
+        f"({len(BASE_CIVS)} base + {len(REVOLUTION_CIVS)} revolution + "
+        f"{len(ANW_CIVS)} ANW [19 variant + 21 canonical])."
     )
     return 0
 
