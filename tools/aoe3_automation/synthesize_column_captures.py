@@ -109,7 +109,7 @@ def _resolve_slot(
     candidates: tuple[str, ...],
     used: set[Path] | None = None,
 ) -> Path | None:
-    """Return an on-disk absolute Path for the first matching candidate.
+    """Return an on-disk absolute Path for the first non-placeholder candidate.
 
     Skips placeholder images (files under ``PLACEHOLDER_BYTE_THRESHOLD``
     bytes) so the synthesizer falls through to the next candidate (e.g.
@@ -118,16 +118,18 @@ def _resolve_slot(
     Italians) ship with tiny ``cpai_avatar_anw<civ>.png`` placeholders
     that, if used directly, produce nearly-empty 320×320 thumbs.
 
-    When ``used`` is supplied, any candidate that resolves to a path
-    already consumed by an earlier slot is skipped. This keeps the
-    column-site "Visual confirmation" section from showing the same
-    flag PNG repeated across loading_flag / hud_flag_corner /
-    tech_tree_overview / endgame_flag and the same singleplayer-icon
-    PNG repeated across diplomacy_panel / scoreboard_player_row /
-    esc_menu_player_summary / home_city_scene — instead each surface
-    shows a visually-distinct image (fewer total surfaces, but every
-    one of them is unique).
+    The ``used`` parameter used to suppress already-consumed source paths
+    so each slot showed a visually-distinct image; that policy dropped
+    every civ to 4-6 surfaces (versus British's 14 from a real capture).
+    User feedback: "why does the column site only have 14 visual
+    confirmation screenshots? Why not all of them for all nations?" —
+    so we now allow the same source PNG to fill multiple semantic slots
+    (loading_flag, hud_flag_corner, tech_tree_overview, endgame_flag),
+    because each slot represents a distinct in-game context and the
+    caption tells the reviewer which one they're looking at. ``used``
+    is accepted for API compat but no longer filters.
     """
+    _ = used  # accepted for API compat; see docstring
     fallback: Path | None = None
     for key in candidates:
         slot = surfaces.get(key)
@@ -136,21 +138,11 @@ def _resolve_slot(
         p = REPO / slot["path"]
         if not p.exists():
             continue
-        # If a previous slot already consumed this exact file, keep walking
-        # so we surface a *different* image where one exists. We deliberately
-        # do NOT treat duplicates as fallbacks — emitting nothing is better
-        # than emitting "look, the same flag again."
-        if used is not None and p in used:
-            continue
-        # Remember the first placeholder as a last-resort fallback but
-        # keep walking; if a later candidate has real content, use it.
         if p.stat().st_size < PLACEHOLDER_BYTE_THRESHOLD:
             if fallback is None:
                 fallback = p
             continue
         return p
-    if fallback is not None and used is not None and fallback in used:
-        return None
     return fallback
 
 

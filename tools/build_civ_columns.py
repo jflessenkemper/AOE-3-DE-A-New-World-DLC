@@ -3822,15 +3822,6 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
 
     narrative_parts = []
 
-    # ── Leader bio (rollover description = lobby description) ─────────────────
-    if rollover_text:
-        narrative_parts.append(
-            f'<div class="narr-block narr-rollover">'
-            f'<span class="narr-label">Lobby description</span>'
-            f'<div class="narr-text">{_esc_ingame_local(rollover_text)}</div>'
-            f'</div>'
-        )
-
     # ── Civ bonus ─────────────────────────────────────────────────────────────
     if civ_bonus_text:
         narrative_parts.append(
@@ -3878,87 +3869,6 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
             f'</div>'
         )
 
-    # ── Power spike timing (from claims) ─────────────────────────────────────
-    spike_lines = []
-    if claims_narr:
-        _WALL_STRAT = {
-            0: "Fortress Ring",
-            1: "Chokepoint Segments",
-            2: "Coastal Batteries",
-            3: "Frontier Palisades",
-            4: "Urban Barricade",
-            5: "Mobile / No Walls",
-        }
-        for ck, cv in claims_narr.items():
-            if isinstance(cv, (int, float)) and ck.endswith("_ms"):
-                secs = int(cv) // 1000
-                pretty = ck.replace("_", " ").replace(" ms", "").capitalize()
-                spike_lines.append(f"{pretty}: \u2264\u202f{secs // 60}m\u202f{secs % 60:02d}s")
-            elif ck == "wall_strategy" and isinstance(cv, int):
-                wname = _WALL_STRAT.get(cv, str(cv))
-                spike_lines.append(f"Wall strategy: {cv} \u2014 {wname}")
-            elif ck == "first_military_building" and cv:
-                spike_lines.append(f"First military building: {cv}")
-        if doctrine_label_narr:
-            spike_lines.insert(0, f"Doctrine: {doctrine_label_narr}")
-    if spike_lines:
-        spike_html = "\n".join(f"\u2022 {html_module.escape(l)}" for l in spike_lines)
-        narrative_parts.append(
-            f'<div class="narr-block narr-spike">'
-            f'<span class="narr-label">Power spike &amp; timing</span>'
-            f'<div class="narr-text">{spike_html}</div>'
-            f'</div>'
-        )
-
-    # ── Counter-strategy (derived from doctrine posture) ─────────────────────
-    # Build a short heuristic counter-guide from the spec fields
-    counter_lines = []
-    if spec_entry_narr:
-        d_off = spec_entry_narr.get("doctrine_offense", 0.5)
-        d_def = spec_entry_narr.get("doctrine_defense", 0.5)
-        rush_boom_val = _LEADER_XS_KNOBS.get(
-            _LEADER_KEY_TO_KNOBS_KEY.get(_CIV_LEADER_KEY.get(civ_token) or "", "") or "",
-            {}
-        ).get("btRushBoom", 0.0)
-        trade_val = _LEADER_XS_KNOBS.get(
-            _LEADER_KEY_TO_KNOBS_KEY.get(_CIV_LEADER_KEY.get(civ_token) or "", "") or "",
-            {}
-        ).get("btBiasTrade", 0.0)
-
-        if isinstance(rush_boom_val, (int, float)) and rush_boom_val < -0.2:
-            counter_lines.append("Pressure early: this civ booms; deny key resources before Fortress age.")
-        elif isinstance(rush_boom_val, (int, float)) and rush_boom_val > 0.2:
-            counter_lines.append("Avoid open-field fights in Colonial age; turtle and boom past the rush window.")
-        if isinstance(trade_val, (int, float)) and trade_val > 0.5:
-            counter_lines.append("Contest Trade Routes: high trade-bias means crippling trade cuts long-term income.")
-        if isinstance(d_off, (int, float)) and d_off > 0.65:
-            counter_lines.append("Exploit aggressive overextension: bait the forward army then counter-attack the undefended base.")
-        elif isinstance(d_def, (int, float)) and d_def > 0.65:
-            counter_lines.append("Force engagement: defensive posture means drawing out the AI and attacking on your terms.")
-        claims_naval = (claims_narr or {}).get("expects_naval", False)
-        if claims_naval:
-            counter_lines.append("Blockade or destroy docks early — naval economy is key to this civ\u2019s mid-game shipments.")
-    if counter_lines:
-        counter_html = "\n".join(f"\u2022 {html_module.escape(l)}" for l in counter_lines)
-        narrative_parts.append(
-            f'<div class="narr-block narr-counter">'
-            f'<span class="narr-label">Counter-strategy</span>'
-            f'<div class="narr-text">{counter_html}</div>'
-            f'</div>'
-        )
-
-    # ── Lore quote (leader XS doctrine comment block) ─────────────────────────
-    if lore_comment:
-        xs_attr = html_module.escape(xs_file_narr or "leader XS", quote=True)
-        narrative_parts.append(
-            f'<div class="narr-block narr-lore">'
-            f'<span class="narr-label">Historical context</span>'
-            f'<blockquote class="narr-lore-quote" title="{xs_attr}">'
-            f'{_esc_ingame_local(lore_comment)}'
-            f'</blockquote>'
-            f'</div>'
-        )
-
     narrative_html = (
         '<div class="panel panel-narrative">'
         + "".join(narrative_parts)
@@ -3989,29 +3899,14 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     if sub_parts:
         sub_line = f'<div class="col-sub">{" · ".join(sub_parts)}</div>'
 
-    # ── "Needs full custom art" banner ────────────────────────────────────────
-    summary_stem = vanilla_summary_stem(civ_token)
-    van_summary = VANILLA_SUMMARY.get(summary_stem, {}) if VANILLA_SUMMARY else {}
-    van_total   = van_summary.get("_total", 0) if van_summary else 0
-    empty_banner = ""
-    if van_total == 0:
-        empty_banner = (
-            '<div class="empty-banner">⚠ No vanilla AoE3 DE assets for this civ'
-            '<div class="sub">All home-city scene, voice, unit-model, building, '
-            'and resource art needs to be custom-authored or aliased to a base civ.</div>'
-            '</div>'
-        )
-    elif van_total < 50:
-        empty_banner = (
-            f'<div class="empty-banner" style="background:linear-gradient(135deg,rgba(180,130,40,0.92),rgba(140,90,20,0.92));border-color:rgba(255,210,160,0.50);">'
-            f'⚠ Minimal vanilla assets ({van_total} entries) — partial coverage only'
-            '<div class="sub">Most surfaces will need custom art or a vanilla-civ alias.</div>'
-            '</div>'
-        )
+    # ── Cards section (AI deck by age) ───────────────────────────────────────
+    cards_section_html = render_text_section(
+        civ_token, civ_el, strings, hc, blurbs, spec, decks, cards, colors
+    )
 
-    # ── Review-friendly lean layout ───────────────────────────────────────────
+    # ── Release-review lean layout ────────────────────────────────────────────
+    # Screenshots first (most important for v1.0 review), then summary, then cards.
     col = f"""<section class="civ-col" id="{html_module.escape(civ_token)}" data-civ="{html_module.escape(civ_token)}" style="{bg}color:{tc}">
-  {empty_banner}
   <div class="col-header">
     {header_img}
     <div class="hdr-text">
@@ -4020,16 +3915,13 @@ def render_column(civ_token, civmods, strings, colors, blurbs, spec, decks, card
     </div>
   </div>
   <div class="col-body">
-    {narrative_html}
-    <div class="panel panel-strings">
-      {new_strings_html}
-    </div>
-    {mod_changes_html}
     <div class="panel panel-art">
-      <div class="section-label">Art &amp; Assets</div>
+      <div class="section-label">Visual Confirmation</div>
       {captures_html}
       {doctrine_html}
     </div>
+    {narrative_html}
+    {cards_section_html}
   </div>
 </section>
 """
@@ -4624,20 +4516,21 @@ html, body {
   vertical-align: middle;
 }
 .card-img {
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.20);
   border-radius: 3px;
   background: rgba(0,0,0,0.30);
   cursor: help;
   transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 .card-img:hover {
-  transform: scale(1.8);
-  border-color: rgba(255,255,255,0.65);
-  box-shadow: 0 0 6px rgba(0,0,0,0.55);
-  z-index: 2;
+  transform: scale(3.2);
+  transform-origin: center left;
+  border-color: rgba(255,255,255,0.78);
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  z-index: 5;
   position: relative;
 }
 .card-text {
@@ -5048,12 +4941,12 @@ html, body {
   border-top: 1px solid rgba(255,255,255,0.10);
 }
 
-/* 4 or 5 column grid — thumbs are 56-72px tall; 2 rows of 5 fit without overflow */
+/* Auto-wrapping grid — min 120px per thumb, fills the available width */
 .captures-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 3px;
-  /* No overflow here — constraint is honoured by column height */
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .capture-thumb {
@@ -5086,22 +4979,22 @@ html, body {
 
 .capture-thumb img {
   width: 100%;
-  height: 56px;
+  height: 120px;
   object-fit: cover;
   display: block;
 }
 
 .capture-thumb figcaption {
-  font-size: 7px;
+  font-size: 10px;
   font-weight: 600;
   text-align: center;
-  color: rgba(255,255,255,0.72);
-  padding: 1px 2px 2px;
+  color: rgba(255,255,255,0.88);
+  padding: 3px 4px 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 /* ── Doctrine evidence section (AI live-game proofs) ── */
@@ -5663,31 +5556,15 @@ _BASE_CIV_ORDER = [
 ]
 
 def get_civ_order():
-    # 1. ANW civs from playercolors.xml
+    # ANW civs from playercolors.xml. The 22 base civs (British, French,
+    # DEItalians, XPSioux, etc.) used to be appended at the bottom of the
+    # pager as a "what the mod is built on top of" reference. User feedback:
+    # they're duplicates of the ANW nations and clutter the nation selector,
+    # so we now show only the 40 ANW columns.
     pc_path = os.path.join(DATA_DIR, "playercolors.xml")
     tree = ET.parse(pc_path)
     anw_order = [c.get("civ") for c in tree.getroot().findall(".//Color") if c.get("civ")]
-
-    # 2. Add base civs that have deck entries in decks_anw.json (mod modifies their AI)
-    decks_path = os.path.join(DATA_DIR, "decks_anw.json")
-    try:
-        with open(decks_path) as f:
-            all_deck_keys = set(json.load(f).keys())
-    except Exception:
-        all_deck_keys = set()
-
-    seen = set(anw_order)
-    # Use the canonical order defined above, then any remaining deck keys
-    extra = []
-    for tok in _BASE_CIV_ORDER:
-        if tok in all_deck_keys and tok not in seen:
-            extra.append(tok)
-            seen.add(tok)
-    # Append any deck keys not yet covered (future-proofing)
-    for tok in sorted(all_deck_keys - seen):
-        extra.append(tok)
-
-    return anw_order + extra
+    return anw_order
 
 # ── Build ──────────────────────────────────────────────────────────────────────
 def build():
