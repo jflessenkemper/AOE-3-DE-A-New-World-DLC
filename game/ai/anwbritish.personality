@@ -5,7 +5,7 @@
    <tooltipID>490201</tooltipID>
    <forcedciv>ANWBritish</forcedciv>
    <rushboom>0</rushboom>
-   <icon>resources/images/icons/singleplayer/cpai_avatar_british_wellington.png</icon>
+   <icon>resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png</icon>
    <chatset>anw_british</chatset>
    <playerNames>
       <nameID>490200<civ>ANWBritish</civ></nameID>
