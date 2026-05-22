@@ -631,7 +631,7 @@
 		<homecityflagtexture>objects\flags\canadian</homecityflagtexture>
 		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_british</postgameflagtexture>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_canadian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/Flag_Canadians.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Canadians.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png</homecitypreviewwpf>
@@ -2485,7 +2485,7 @@
 		<homecityflagtexture>objects\flags\indonesian</homecityflagtexture>
 		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_dutch</postgameflagtexture>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_indonesian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/Flag_Indonesian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Indonesian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png</homecitypreviewwpf>
@@ -2754,8 +2754,8 @@
 		<homecityflagtexture>objects\flags\south_african</homecityflagtexture>
 		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_british</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_South_African.png</postgameflagiconwpf>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_south_african</postgameflagtexture>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_south_african.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_South_African.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_south_african.png</homecityflagbuttonwpf>
@@ -3023,8 +3023,8 @@
 		<homecityflagtexture>objects\flags\finnish</homecityflagtexture>
 		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_russian</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Finnish.png</postgameflagiconwpf>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_finnish</postgameflagtexture>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_finnish.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Finnish.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_finnish.png</homecityflagbuttonwpf>
@@ -3283,8 +3283,8 @@
 		<homecityflagtexture>objects\flags\hungarian</homecityflagtexture>
 		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_german</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Hungarian.png</postgameflagiconwpf>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_hungarian</postgameflagtexture>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_hungarian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Hungarian.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_hungarian.png</homecityflagbuttonwpf>
@@ -3543,7 +3543,7 @@
 		<homecityflagtexture>objects\flags\romanian</homecityflagtexture>
 		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_russian</postgameflagtexture>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_romanian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/Flag_Romanians.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Romanians.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png</homecitypreviewwpf>
@@ -3799,8 +3799,8 @@
 		<homecityflagtexture>objects\flags\spc_barbary</homecityflagtexture>
 		<homecityflagbuttonset>ottomanFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>ottomanFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_ottoman</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_barbary.png</postgameflagiconwpf>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_barbary</postgameflagtexture>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_barbary.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_barbary.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_barbary.png</homecityflagbuttonwpf>
@@ -4046,8 +4046,8 @@
 		<homecityflagtexture>objects\flags\egyptian</homecityflagtexture>
 		<homecityflagbuttonset>ottomanFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>ottomanFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_ottoman</postgameflagtexture>
-		<postgameflagiconwpf>resources/images/icons/flags/Flag_Egyptians.png</postgameflagiconwpf>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_egyptian</postgameflagtexture>
+		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_egyptian.png</postgameflagiconwpf>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Egyptians.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_egyptian.png</homecityflagbuttonwpf>
@@ -7561,7 +7561,7 @@
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_ethiopian.png</homecityflagbuttonwpf>
 		<homecityflagbuttonset>portugueseFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>portugueseFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_portuguese</postgameflagtexture>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_ethiopian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_ethiopian.png</postgameflagiconwpf>
 		<matchmakingtextures>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png</smallportraittexturewpf>
@@ -12451,9 +12451,9 @@
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Swedish.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus_adolphus.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_swedish.png</homecityflagbuttonwpf>
-		<homecityflagbuttonset>britishFlagBtn</homecityflagbuttonset>
-		<homecityflagbuttonsetlarge>britishFlagBtnLarge</homecityflagbuttonsetlarge>
-		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_russian</postgameflagtexture>
+		<homecityflagbuttonset>swedishFlagBtn</homecityflagbuttonset>
+		<homecityflagbuttonsetlarge>swedishFlagBtnLarge</homecityflagbuttonsetlarge>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_swedish</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_swedish.png</postgameflagiconwpf>
 		<matchmakingtextures>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus_adolphus.png</smallportraittexturewpf>
@@ -12721,6 +12721,7 @@
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_American.png</homecityflagiconwpf>
 		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_americans_washington.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_american.png</homecityflagbuttonwpf>
+		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_USA</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_american.png</postgameflagiconwpf>
 		<matchmakingtextures>
 			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_americans_washington.png</smallportraittexturewpf>
