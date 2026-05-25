@@ -1,21 +1,19 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (eleventh pass: 4 flag historical repaints, 3 card anachronism fixes, Catherine/Ivan + Akbar/Shivaji consistency, oversized portrait resize)
+## STATUS: ✅ COMPLETE — 2026-05-25 (eleventh pass: 3 card anachronism fixes, Catherine/Ivan + Akbar/Shivaji consistency, oversized portrait resize)
 
 All tracks completed. Mod is deploy-ready. Validators 41/48 PASS, 0 FAIL.
 Latest re-run: 2026-05-25 20:32:46.
 
 **Eleventh pass (this session)** — fixes applied:
-1. **4 flag historical repaints** via new `tools/cardextract/repaint_flags.py`:
-   - ANWBritish: Cross of St George red on white (Elizabeth I, pre-1606)
-   - ANWRussians: Black double-headed eagle on gold with crowned heads,
-     red shield with gold St George cross (Ivan IV Tsardom Imperial Coat of Arms)
-   - ANWEthiopians: Red/yellow/green tricolor with central Imperial seal
-     and Ethiopian-style cross (Menelik II, Ethiopian Empire 1897)
-   - ANWIndians: Bhagwa saffron with white sun (Shivaji's Maratha Confederacy banner)
-   - All 3 surfaces per civ updated (Flag_, postgame_flag_, flag_hc_)
-   - Pure-PIL implementation with cloth-fold wave shading preserved
-     via gaussian-blurred luminance mask normalized to [200..255]
+1. **Flag historical repaint REVERTED** — user directive 2026-05-25:
+   *"Don't generate flags or art, ever, find art in the base game that we can use"*.
+   All 12 procedurally-generated flag PNGs (Flag_/postgame_flag_/flag_hc_
+   for British/Russian/Ethiopian/Indian) reverted to commit 0e2533a
+   base-game art (Union Jack, Russian tricolor, Ethiopian tricolor,
+   Indian Lion+Sun). `tools/cardextract/repaint_flags.py` deleted.
+   The 4 civs were already shipping recognizable base-game flag art —
+   procedural overrides were aesthetic-only and out of scope.
 2. **3 card anachronism fixes**:
    - HCXPFlorenceNightingale renamed "Florence Nightingale" → "Manor Infirmaries"
      (period-neutral; works for both Elizabeth I British and Brock Canadians decks)
