@@ -150,13 +150,38 @@ The deploy is not gated on this — it's WARN, not FAIL.
 
 Run `git log --oneline -10` for the latest. Top of stack (overnight):
 
+- `9c0c39c` fix(doctrine): disable forward base for FrenchCanadians + Romanians
+- `0f9ffe1` fix(audit): align 3 leader-doctrine prose/dispatch mismatches
+   (Hausa Surame fort, Russians/Ivan prose, S.Africans Boer-commando prose)
+- `d778805` polish(leaders): explicit military-distance overrides where
+   style default fell below spec band (6 civs)
+- `8f0da35` Add MORNING_DEPLOY_BRIEF.md
+- `3442a2a` feat(smart-walls): Track 1.2 — perimeter gaps + threat
+   vector + adaptive radius
 - `c857163` release-readiness dashboard
 - `892e2d3` ai_behaviour_map per-civ deep-dive MD
 - `ed21cd2` AI Behaviour Map initial
-- (smart-walls Track 1 + 2 refinements landed by background agent —
-  check `git log` for the actual hash)
 - `ef8219b` Twelfth pre-deploy pass changelog
 - `3e0d00b` Eleventh pre-deploy pass (Catherine/Ivan + Akbar/Shivaji)
+
+## Doctrine prose audit (added overnight)
+
+The `ai_behaviour_map.py` reports 0 spec mismatches (structured fields),
+but a deeper prose-vs-dispatch audit (`artifacts/validation/doctrine_prose_audit.md`)
+caught 4 hard contradictions between `playstyle_spec.json` doctrine_prose
+and the actual leader dispatch. All 4 now fixed:
+
+1. Indonesians fort=0 contradicted "kraton fort" → fort=1 (d778805)
+2. Hausa empty strongpoint contradicted "Surame fortress" → tower=2 fort=1 (0f9ffe1)
+3. Russians/Ivan prose talked about "cavalry stream" but dispatch is
+   Streltsy infantry-heavy → prose rewritten for Ivan (0f9ffe1)
+4. South Africans prose was naval-template ("docks first") but Boers
+   are landlocked commandos → hybrid trader-cavalry prose (0f9ffe1)
+
+Plus 2 soft mismatches escalated:
+
+5. FrenchCanadians forward base disabled (Papineau is reactive) (9c0c39c)
+6. Romanians forward base disabled (Cuza 1859 was internal) (9c0c39c)
 
 ---
 
