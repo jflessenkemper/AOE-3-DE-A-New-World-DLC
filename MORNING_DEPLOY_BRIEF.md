@@ -150,6 +150,8 @@ The deploy is not gated on this — it's WARN, not FAIL.
 
 Run `git log --oneline -10` for the latest. Top of stack (overnight):
 
+- `712980d` fix(blurbs): align 3 hard + 7 soft doctrine mismatches in civ tooltips
+- `ed31702` docs: refresh MORNING_DEPLOY_BRIEF with audit fixes commit stack
 - `9c0c39c` fix(doctrine): disable forward base for FrenchCanadians + Romanians
 - `0f9ffe1` fix(audit): align 3 leader-doctrine prose/dispatch mismatches
    (Hausa Surame fort, Russians/Ivan prose, S.Africans Boer-commando prose)
@@ -182,6 +184,33 @@ Plus 2 soft mismatches escalated:
 
 5. FrenchCanadians forward base disabled (Papineau is reactive) (9c0c39c)
 6. Romanians forward base disabled (Cuza 1859 was internal) (9c0c39c)
+
+## Player-facing blurb audit (added overnight)
+
+A separate audit (`artifacts/validation/blurb_vs_spec_audit.md`) checked
+the 40 user-facing `playstyle` tooltips in `data/anw_civ_blurbs.json`
+against `playstyle_spec.json`. Found **3 hard errors + 7 soft mismatches
++ 30 clean**. All 10 now fixed (commit `712980d`):
+
+Hard errors (carryover from 3e0d00b leader rename — tooltip framing
+still reflected the OLD leader's doctrine identity even though the
+leader name was already gone):
+
+1. ANWRussians: Cossack-led framing → Streltsy/Oprichnik/siege (Ivan)
+2. ANWIndians: Mughal/Akbar elephant citadel → Maratha Ganimi Kava
+   raid (Shivaji)
+3. ANWLakota: Crazy Horse pure speed-raid → Little Bighorn envelopment
+   (Chief Gall)
+
+Soft mismatches (template prose drifted from civ-specific doctrine):
+
+4. ANWFrench: dropped "shipment-heavy push" → counter-punch core (Louis XVIII)
+5. ANWCanadians: dropped tacked-on Papineau clause (it's a separate civ)
+6. ANWBrazil: dropped "forward bases" → bottleneck-free multi-node eco
+7. ANWSouthAfricans: added inland Boer commando branch (was Dutch-only)
+8. ANWHaudenosaunee: dropped rush framing → plant-and-defend (Hiawatha)
+9. ANWJapanese: dropped "tech deep via Wonders" (not in spec)
+10. ANWOttomans: clarified "stone-and-forward walls" → "forward staging walls"
 
 ---
 
