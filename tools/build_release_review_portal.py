@@ -199,6 +199,62 @@ def signoff_panel_html(token: str, row: dict) -> str:
 """.strip()
 
 
+def nav_strip_html(tokens: list[str], token_to_label: dict) -> str:
+    """A sticky row of 40 color-coded tiles, one per civ. Status colour
+    (grey = pending, green = approved, orange = flagged) is hydrated by
+    JS from localStorage on load and on every state change. Click → scroll
+    to that civ."""
+    tiles = []
+    for tok in tokens:
+        leader = token_to_label.get(tok, "")
+        short = tok.replace("ANW", "")
+        title = f"{tok}" + (f" — {leader}" if leader else "")
+        tiles.append(
+            f'<a class="rr-tile" data-rr-tile="{escape(tok)}" '
+            f'href="#{escape(tok)}" title="{escape(title)}">'
+            f'<span class="rr-tile-label">{escape(short)}</span></a>'
+        )
+    return (
+        '<div class="rr-navstrip" id="rr-navstrip">'
+        + "".join(tiles)
+        + "</div>"
+    )
+
+
+def flagged_panel_html() -> str:
+    """Right-side collapsible drawer showing every civ the user flagged,
+    with their notes. Rebuilt by JS whenever state changes."""
+    return (
+        '<button type="button" class="rr-flag-toggle" id="rr-flag-toggle" '
+        'title="Toggle flagged-civs panel">⚐ <span data-role="flag-count">0</span></button>'
+        '<aside class="rr-flag-panel" id="rr-flag-panel" hidden>'
+        '<div class="rr-flag-panel-head">'
+        '<h3>Flagged civs</h3>'
+        '<button type="button" class="rr-btn rr-btn-reset" id="rr-flag-close">close</button>'
+        '</div>'
+        '<div class="rr-flag-list" data-role="flag-list">'
+        '<p class="rr-flag-empty">No civs flagged. Press <kbd>F</kbd> on a civ to flag it.</p>'
+        '</div>'
+        '<div class="rr-flag-panel-foot">'
+        '<button type="button" class="rr-btn rr-btn-approve" id="rr-flag-copy">'
+        'Copy flagged summary to clipboard</button>'
+        '</div>'
+        '</aside>'
+    )
+
+
+def lightbox_html() -> str:
+    """Image lightbox modal. Hidden by default. JS opens it on click of
+    any <img> inside a civ-col."""
+    return (
+        '<div class="rr-lightbox" id="rr-lightbox" hidden>'
+        '<button type="button" class="rr-lightbox-close" title="Close (Esc)">×</button>'
+        '<img class="rr-lightbox-img" alt="">'
+        '<div class="rr-lightbox-caption" data-role="lightbox-caption"></div>'
+        '</div>'
+    )
+
+
 def top_bar_html(dash: dict) -> str:
     """Sticky top bar. Verdict, progress, filter, jump-to, export, reset."""
     verdict = dash["verdict"]
@@ -351,11 +407,102 @@ PORTAL_CSS = r"""
 /* Push the existing column content down to give room for the panel.
    The first direct child inside each civ-col is .col-header for normal
    civs and .stub-content for base/DLC stub civs. Padding both keeps
-   the leader portrait + body from being hidden behind the sign-off. */
+   the leader portrait + body from being hidden behind the sign-off.
+   Note: we add ~28 extra px to account for the nav strip stickying
+   below the topbar (the panel is absolute inside the col, but the
+   col itself isn't scrolled past the sticky chrome). */
 .civ-col > .col-header,
 .civ-col > .stub-content {
-  margin-top: 210px;
+  margin-top: 240px;
 }
+
+/* ── Civ-nav strip ────────────────────────────────────────────────────
+   Sticky row of 40 color-coded tiles below the topbar. Each tile gets
+   its colour from the data-rr-status attribute (set by JS from
+   localStorage). */
+.rr-navstrip {
+  position:sticky; top:42px; left:0; right:0; z-index:9998;
+  background:#0b0d12; border-bottom:1px solid #2a2f3a;
+  display:flex; flex-wrap:wrap; gap:2px; padding:4px 8px;
+}
+.rr-tile {
+  display:inline-block; padding:3px 6px; font:600 10px/1.2 system-ui,sans-serif;
+  background:#2a2f3a; color:#bbb; border-radius:3px; text-decoration:none;
+  border:1px solid #1a1f2a; cursor:pointer; user-select:none;
+  transition:background .15s, color .15s;
+}
+.rr-tile:hover { background:#444; color:#fff; }
+.rr-tile[data-rr-status="approved"] { background:var(--rr-ok);   color:#fff; }
+.rr-tile[data-rr-status="flagged"]  { background:var(--rr-flag); color:#fff; }
+.rr-tile[data-rr-status="warn"]     { background:var(--rr-warn); color:#111; }
+.rr-tile-label { letter-spacing:.3px; }
+
+/* ── Image lightbox ───────────────────────────────────────────────────
+   Click any <img> inside a civ-col to open the source image at its
+   natural size in an overlay. Esc or click anywhere to close. */
+.rr-lightbox {
+  position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:10001;
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  cursor:zoom-out;
+}
+.rr-lightbox[hidden] { display:none; }
+.rr-lightbox-img {
+  max-width:96vw; max-height:90vh; box-shadow:0 0 60px rgba(0,0,0,0.8);
+  background:#fff;
+}
+.rr-lightbox-caption {
+  position:absolute; bottom:14px; left:14px; right:14px; text-align:center;
+  color:#ddd; font:13px/1.4 system-ui,sans-serif; pointer-events:none;
+}
+.rr-lightbox-close {
+  position:absolute; top:14px; right:18px; background:rgba(0,0,0,0.7);
+  color:#fff; border:1px solid #444; border-radius:4px;
+  font:700 22px/1 system-ui,sans-serif; padding:4px 12px; cursor:pointer;
+}
+/* Show pointer cursor on every visible image inside a civ-col so it's
+   obvious you can click to zoom. */
+.civ-col img { cursor:zoom-in; }
+
+/* ── Flagged-civs panel + toggle ──────────────────────────────────────
+   Floating ⚐ button (bottom-right) opens a side drawer with every
+   flagged civ + its note. */
+.rr-flag-toggle {
+  position:fixed; bottom:14px; right:14px; z-index:9997;
+  background:var(--rr-flag); color:#fff; border:none; border-radius:24px;
+  padding:8px 16px; font:700 14px/1 system-ui,sans-serif; cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,0.4);
+}
+.rr-flag-toggle:hover { background:#d8551e; }
+.rr-flag-panel {
+  position:fixed; top:88px; right:0; bottom:0; width:360px; z-index:9996;
+  background:#0f1116; color:var(--rr-fg); border-left:2px solid var(--rr-flag);
+  box-shadow:-4px 0 16px rgba(0,0,0,0.5);
+  display:flex; flex-direction:column;
+  font:13px/1.4 system-ui,sans-serif;
+}
+.rr-flag-panel[hidden] { display:none; }
+.rr-flag-panel-head {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px; border-bottom:1px solid #2a2f3a;
+}
+.rr-flag-panel-head h3 { margin:0; font-size:14px; }
+.rr-flag-list { flex:1; overflow-y:auto; padding:10px 14px; }
+.rr-flag-list .rr-flag-empty { color:var(--rr-muted); font-style:italic; }
+.rr-flag-list .rr-flag-entry {
+  margin-bottom:12px; padding:8px 10px; background:#1a1f2a; border-radius:4px;
+  border-left:3px solid var(--rr-flag); cursor:pointer;
+}
+.rr-flag-list .rr-flag-entry:hover { background:#262c3a; }
+.rr-flag-list .rr-flag-entry-civ {
+  font-weight:700; color:#fff; margin-bottom:4px;
+}
+.rr-flag-list .rr-flag-entry-note {
+  color:#ccc; font-size:12px; white-space:pre-wrap; word-break:break-word;
+}
+.rr-flag-panel-foot {
+  padding:10px 14px; border-top:1px solid #2a2f3a;
+}
+.rr-flag-panel-foot .rr-btn { width:100%; }
 """
 
 
@@ -403,6 +550,46 @@ def portal_js(token_to_label: dict) -> str:
     if (ta) ta.value = (civState && civState.notes) || '';
   }
 
+  function hydrateNavStrip(state){
+    // Paint each tile in the nav strip with its current sign-off status.
+    document.querySelectorAll('.rr-tile').forEach(tile=>{
+      const civ = tile.dataset.rrTile;
+      const status = statusOf(state[civ]);
+      if (status === 'pending') tile.removeAttribute('data-rr-status');
+      else tile.setAttribute('data-rr-status', status);
+    });
+  }
+
+  function rebuildFlagPanel(state){
+    const list = document.querySelector('[data-role="flag-list"]');
+    const countEl = document.querySelector('[data-role="flag-count"]');
+    if (!list || !countEl) return;
+    const flagged = Object.entries(state)
+      .filter(([_, v]) => v && v.status === 'flagged');
+    countEl.textContent = flagged.length;
+    if (!flagged.length){
+      list.innerHTML = '<p class="rr-flag-empty">No civs flagged. Press <kbd>F</kbd> on a civ to flag it.</p>';
+      return;
+    }
+    list.innerHTML = '';
+    flagged.sort((a,b) => a[0].localeCompare(b[0]));
+    flagged.forEach(([civ, v])=>{
+      const e = document.createElement('div');
+      e.className = 'rr-flag-entry';
+      e.dataset.civ = civ;
+      const leader = TOKEN_LABELS[civ] || '';
+      const head = civ.replace(/^ANW/,'') + (leader ? ' — ' + leader : '');
+      e.innerHTML = '<div class="rr-flag-entry-civ"></div><div class="rr-flag-entry-note"></div>';
+      e.querySelector('.rr-flag-entry-civ').textContent = head;
+      e.querySelector('.rr-flag-entry-note').textContent = (v.notes || '(no note)');
+      e.addEventListener('click', ()=>{
+        const col = document.getElementById(civ);
+        if (col) scrollToCol(col);
+      });
+      list.appendChild(e);
+    });
+  }
+
   function updateProgress(){
     const state = loadState();
     const panels = document.querySelectorAll('.rr-signoff');
@@ -417,6 +604,62 @@ def portal_js(token_to_label: dict) -> str:
     document.querySelector('[data-role="progress-fill"]').style.width = pct + '%';
     const banner = document.getElementById('rr-shipbanner');
     if (banner) banner.hidden = (approved < panels.length);
+    hydrateNavStrip(state);
+    rebuildFlagPanel(state);
+  }
+
+  // ── Lightbox ─────────────────────────────────────────────────────────
+  function openLightbox(src, caption){
+    const lb = document.getElementById('rr-lightbox');
+    if (!lb) return;
+    const img = lb.querySelector('.rr-lightbox-img');
+    const cap = lb.querySelector('[data-role="lightbox-caption"]');
+    img.src = src;
+    img.alt = caption || '';
+    if (cap) cap.textContent = caption || '';
+    lb.hidden = false;
+  }
+  function closeLightbox(){
+    const lb = document.getElementById('rr-lightbox');
+    if (!lb) return;
+    lb.hidden = true;
+    const img = lb.querySelector('.rr-lightbox-img');
+    if (img) img.src = '';
+  }
+
+  // ── Flagged-panel toggle + copy ─────────────────────────────────────
+  function toggleFlagPanel(force){
+    const p = document.getElementById('rr-flag-panel');
+    if (!p) return;
+    if (force === true)  p.hidden = false;
+    else if (force === false) p.hidden = true;
+    else p.hidden = !p.hidden;
+  }
+  function copyFlaggedSummary(){
+    const state = loadState();
+    const flagged = Object.entries(state)
+      .filter(([_, v]) => v && v.status === 'flagged')
+      .sort((a,b) => a[0].localeCompare(b[0]));
+    if (!flagged.length){
+      alert('No civs flagged.');
+      return;
+    }
+    const lines = ['ANW v1.0 — flagged civs (' + flagged.length + ')', ''];
+    flagged.forEach(([civ, v])=>{
+      const leader = TOKEN_LABELS[civ] || '';
+      lines.push('• ' + civ.replace(/^ANW/,'') + (leader ? ' (' + leader + ')' : ''));
+      lines.push('  ' + (v.notes || '(no note)').replace(/\n/g, '\n  '));
+      lines.push('');
+    });
+    const text = lines.join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(
+        ()=> alert('Copied ' + flagged.length + ' flagged civs to clipboard.'),
+        ()=> alert('Clipboard copy failed. Text:\n\n' + text)
+      );
+    } else {
+      alert(text);
+    }
   }
 
   function applyFilter(){
@@ -634,8 +877,64 @@ def portal_js(token_to_label: dict) -> str:
     document.getElementById('rr-export').addEventListener('click', exportSignoff);
     document.getElementById('rr-reset-all').addEventListener('click', resetAll);
 
+    // Lightbox: clicking any image inside a civ-col opens it fullscreen.
+    document.body.addEventListener('click', e=>{
+      const img = e.target.closest('section.civ-col img');
+      if (img){
+        e.preventDefault();
+        // Caption = nearest figcaption or img alt, or parent label text.
+        let cap = img.alt || '';
+        const fig = img.closest('figure');
+        if (fig){
+          const fc = fig.querySelector('figcaption');
+          if (fc) cap = fc.textContent.trim();
+        }
+        openLightbox(img.src, cap);
+      }
+    });
+    const lb = document.getElementById('rr-lightbox');
+    if (lb){
+      lb.addEventListener('click', e=>{
+        // Click background or × button — close. Click on the image itself — keep open.
+        if (e.target === lb || e.target.classList.contains('rr-lightbox-close')){
+          closeLightbox();
+        }
+      });
+    }
+
+    // Flagged-panel: floating ⚐ toggles drawer, close button hides it,
+    // copy button copies a markdown-ish summary to the clipboard.
+    const ft = document.getElementById('rr-flag-toggle');
+    if (ft) ft.addEventListener('click', ()=> toggleFlagPanel());
+    const fc = document.getElementById('rr-flag-close');
+    if (fc) fc.addEventListener('click', ()=> toggleFlagPanel(false));
+    const fcp = document.getElementById('rr-flag-copy');
+    if (fcp) fcp.addEventListener('click', copyFlaggedSummary);
+
+    // Nav-strip tile click → scroll to col (anchors handle this naturally
+    // but we also want to ensure the col gets keyboard focus).
+    document.querySelectorAll('.rr-tile').forEach(t=>{
+      t.addEventListener('click', e=>{
+        const civ = t.dataset.rrTile;
+        const col = document.getElementById(civ);
+        if (col){
+          e.preventDefault();
+          scrollToCol(col);
+        }
+      });
+    });
+
     // Keyboard shortcuts
     document.addEventListener('keydown', e=>{
+      // Esc closes lightbox / flag panel / help overlay even from inputs.
+      if (e.key === 'Escape'){
+        const lb = document.getElementById('rr-lightbox');
+        if (lb && !lb.hidden){ closeLightbox(); return; }
+        const fp = document.getElementById('rr-flag-panel');
+        if (fp && !fp.hidden){ toggleFlagPanel(false); return; }
+        const ov = document.querySelector('.rr-help-overlay');
+        if (ov){ ov.remove(); return; }
+      }
       if (e.target.matches('input,textarea,select')) return;
       if (e.key === 'a' || e.key === 'A'){ e.preventDefault(); approveCurrent(); }
       else if (e.key === 'f' || e.key === 'F'){ e.preventDefault(); flagCurrent(); }
@@ -686,11 +985,26 @@ def main() -> int:
     css_block = f"<style>\n{PORTAL_CSS}\n</style>"
     new_html = new_html.replace("</head>", css_block + "\n</head>", 1)
 
-    # Inject top bar right after <body>.
-    new_html = new_html.replace("<body>", "<body>\n" + top_bar_html(dash), 1)
+    # Inject top bar + nav strip right after <body>.
+    # Nav strip appears below the topbar (sticky) so tile colours
+    # mirror live sign-off state.
+    tokens_in_order = [m.group(2) for m in CIV_COL_RE.finditer(html)]
+    top_chrome = (
+        top_bar_html(dash)
+        + "\n"
+        + nav_strip_html(tokens_in_order, token_to_label)
+    )
+    new_html = new_html.replace("<body>", "<body>\n" + top_chrome, 1)
 
-    # Inject JS before </body>.
-    new_html = new_html.replace("</body>", portal_js(token_to_label) + "\n</body>", 1)
+    # Inject lightbox + flagged-civs side panel + JS before </body>.
+    tail = (
+        lightbox_html()
+        + "\n"
+        + flagged_panel_html()
+        + "\n"
+        + portal_js(token_to_label)
+    )
+    new_html = new_html.replace("</body>", tail + "\n</body>", 1)
 
     with open(DST, "w", encoding="utf-8") as f:
         f.write(new_html)
