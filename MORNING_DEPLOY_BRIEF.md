@@ -2,6 +2,41 @@
 
 *Written overnight 2026-05-25 → 2026-05-26 while you slept.*
 
+---
+
+## 👉 START HERE — pre-release sign-off portal
+
+**Open `a_new_world_review.html` in your browser.**
+
+That's your single review surface. One column per civ (40 columns,
+horizontal scroll). Each column has:
+
+- The full leader portrait, home-city scene, flag, scoreboard art,
+  diplomacy panel art, post-game art, and ally home-city art —
+  every visual surface, on-screen, no game launch needed.
+- AI doctrine + per-age plan + radar chart + unique units.
+- Player-facing blurb (civ bonus / playstyle / age-up).
+- A **sign-off panel** with 4 checkboxes + a notes textarea + an
+  **APPROVE & NEXT** button that jumps to the next pending civ.
+
+Keyboard: <kbd>A</kbd> approve, <kbd>F</kbd> flag, <kbd>→</kbd>/<kbd>←</kbd>
+to navigate, <kbd>/</kbd> to jump-to-civ, <kbd>?</kbd> for help.
+
+At the top: live progress meter ("Reviewed: 0/40"), dashboard
+verdict pill, filter dropdown (Pending / Flagged / Approved /
+Runtime-WARN-only), and **Export sign-off JSON** which downloads
+your final review report.
+
+When 40/40 are approved the page reveals a 🚢 banner with the
+deploy command and Workshop steps. **That's your gate. Ship when
+the banner appears.**
+
+State is saved in browser localStorage, so you can close + reopen
+the page without losing progress. Reset-all clears everything if
+you want to start a fresh review.
+
+---
+
 ## TL;DR — You can ship
 
 **Verdict: `SHIP WITH KNOWN GAPS`** (30/45 PASS · 15 WARN · 0 FAIL)
@@ -14,7 +49,8 @@ which the in-engine matrix runner can't reach overnight per your
 prior note ("AoE3 crashes mid-skirmish… runner caps at ~3/45").
 
 Open `artifacts/validation/release_readiness.html` in your browser to
-see the per-civ table.
+see the per-civ table, or use the sign-off portal above as the
+primary review surface.
 
 ---
 
