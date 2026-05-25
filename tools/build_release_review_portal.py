@@ -170,6 +170,58 @@ def status_pills(row: dict) -> str:
     return " ".join(parts)
 
 
+"""Civs where a historical-canon / design choice is still open and
+the user is the only one who can make the call. Surfaced as a blue
+"❓ Decision" banner so the reviewer can resolve in-flow rather than
+flipping back to the audit doc.
+Source: artifacts/validation/column_site_audit_2026-05-23.md
+🟡 medium-priority table."""
+DECISION_NOTES = {
+    "ANWHaitians": (
+        "Toussaint died 1803 before Haiti declared independence (1804, "
+        "Dessalines's First Empire). Options: (A) rename civ to "
+        "\"Republic of Saint-Domingue\" (Toussaint's title); "
+        "(B) switch leader to Dessalines; (C) keep as artistic licence."
+    ),
+    "ANWMayans": (
+        "Jacinto Canek (executed 1761) predates the Cruzob movement "
+        "(Caste War 1847) by ~86 years. Real founders: Cecilio Chi + "
+        "Jacinto Pat. Options: (A) switch to Chi/Pat; (B) keep Canek "
+        "as symbolic of Maya resistance."
+    ),
+    "ANWMexicans": (
+        "Hidalgo (executed 1811) cannot be paired with the First Mexican "
+        "Empire (Iturbide, 1821). Options: (A) rename to \"Insurgent "
+        "Mexico\" / \"Grito de Dolores\"; (B) keep as-is."
+    ),
+    "ANWRevFrance": (
+        "Robespierre was a politician (Committee of Public Safety, "
+        "executed 1794), not a military commander. Options: (A) replace "
+        "with Lazare Carnot (\"organizer of victory\"); (B) drop the "
+        "named commander — sub-header \"The Terror · Revolutionary "
+        "France\" alone."
+    ),
+    "ANWBrazil": (
+        "XS log says \"Pedro II\"; HTML sub-header says \"Pedro I.\" "
+        "Options: (A) align HTML to Pedro II (long reign 1841–1889, "
+        "more AoE3-era); (B) change XS to Pedro I and keep HTML. "
+        "Gameplay identical."
+    ),
+    "ANWLakota": (
+        "Sub-header now says \"Chief Gall\" but the avatar DDT is "
+        "`cpai_avatar_lakota_crazy_horse.png`. Options: (A) rename "
+        "the portrait file; (B) revert sub-header to Crazy Horse; "
+        "(C) keep as-is (reused art)."
+    ),
+    "ANWCanadians": (
+        "Strategic-identity text mentions \"Lower-Canada Patriote "
+        "doctrine\" but the AI personality is Isaac Brock (War of 1812, "
+        "died 1812). Papineau's Patriote rebellion was 1837 — 25 years "
+        "later. Suggestion: replace phrase with \"War of 1812 defensive "
+        "posture.\""
+    ),
+}
+
 """Civs with known-intentional leader/doctrine substitutions that
 look like bugs at first glance but are deliberate per the
 MORNING_DEPLOY_BRIEF design notes. These get a yellow "intentional"
@@ -220,6 +272,12 @@ def signoff_panel_html(token: str, row: dict) -> str:
         f'<strong>ⓘ Intentional design:</strong> {escape(note)}'
         f'</div>'
     ) if note else ""
+    decision = DECISION_NOTES.get(token, "")
+    decision_html = (
+        f'<div class="rr-signoff-note rr-signoff-note-decision">'
+        f'<strong>❓ Needs decision:</strong> {escape(decision)}'
+        f'</div>'
+    ) if decision else ""
     return f"""
 <div class="rr-signoff" data-civ="{escape(token)}">
   <div class="rr-signoff-head">
@@ -228,6 +286,7 @@ def signoff_panel_html(token: str, row: dict) -> str:
     <span class="rr-signoff-state" data-role="state">pending</span>
   </div>
   {note_html}
+  {decision_html}
   <div class="rr-signoff-checks">
     <label><input type="checkbox" data-check="visual">  Visual art correct (portrait, home city, flag)</label>
     <label><input type="checkbox" data-check="doctrine"> AI doctrine matches lore</label>
@@ -423,6 +482,12 @@ PORTAL_CSS = r"""
   border-left: 3px solid var(--rr-warn); color: #f3e1b8;
 }
 .rr-signoff-note strong { color: var(--rr-warn); margin-right: 4px; }
+.rr-signoff-note-decision {
+  background: rgba(80,120,200,0.18);
+  border-left-color: #6688cc;
+  color: #d2dcee;
+}
+.rr-signoff-note-decision strong { color: #aac1ff; }
 .rr-signoff-checks { display:grid; grid-template-columns:repeat(2,1fr); gap:2px 14px; margin-bottom:6px; }
 .rr-signoff-checks label { display:flex; align-items:center; gap:6px; cursor:pointer; }
 .rr-signoff-notes textarea {
