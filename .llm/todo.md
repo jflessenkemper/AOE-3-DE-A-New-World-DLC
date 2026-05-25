@@ -1,9 +1,44 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (eleventh pass: 3 card anachronism fixes, Catherine/Ivan + Akbar/Shivaji consistency, oversized portrait resize)
+## STATUS: ✅ COMPLETE — 2026-05-25 (twelfth pass: 18 lobby portrait PNGs aligned with their DDT counterparts using base-game leader portraits)
 
 All tracks completed. Mod is deploy-ready. Validators 41/48 PASS, 0 FAIL.
-Latest re-run: 2026-05-25 20:32:46.
+Latest re-run: 2026-05-25 20:44:14.
+
+**Twelfth pass (this session)** — fixes applied:
+1. **Reverted procedural flag art** (commit 9509c9e) per user directive:
+   *"Don't generate flags or art, ever, find art in the base game we can use."*
+   12 PNGs reverted (British/Russian/Ethiopian/Indian × 3 surfaces) +
+   `tools/cardextract/repaint_flags.py` deleted. Now shipping base-game
+   art: Union Jack, Russian tricolor, Ethiopian tricolor, Maratha Lion+Sun.
+   Each flag multimodally re-verified — all show proper heraldry and
+   cloth-fold shading.
+2. **Aligned 18 anw lobby portrait PNGs** (commits 4400cf8 + 58f737c) with
+   their DDT counterparts and `data/civmods.xml` `<smallportraittexturewpf>`
+   canonical references. The PNGs were 1.5-2.8KB flat-color text placeholders
+   in repo, but the matching DDTs already pointed at real base-game leader
+   portraits. Now both render paths source from the same canonical leader:
+     anwargentines       → San Martín
+     anwbarbary          → Barbarossa
+     anwbrazil           → Pedro I
+     anwcanadians        → Isaac Brock
+     anwchileans         → O'Higgins
+     anwcolumbians       → Bolívar
+     anwegyptians        → Muhammad Ali
+     anwfinnish          → Mannerheim
+     anwhaitians         → Louverture
+     anwhungarians       → Kossuth
+     anwindonesians      → Diponegoro
+     anwmayans           → Carrillo Puerto statue (tenth pass)
+     anwnapoleonicfrance → Napoleon (canonical napoleonic_france.png)
+     anwperuvians        → Santa Cruz
+     anwrevfrance        → Robespierre
+     anwromanians        → Cuza
+     anwsouthafricans    → Kruger
+     anwtexians          → Sam Houston
+   All DDTs regenerated at 128×128 BGRA32. 4 portraits multimodally
+   spot-verified (Louverture, Kruger, Barbarossa, Mannerheim) — all
+   recognizable historical leaders.
 
 **Eleventh pass (this session)** — fixes applied:
 1. **Flag historical repaint REVERTED** — user directive 2026-05-25:
