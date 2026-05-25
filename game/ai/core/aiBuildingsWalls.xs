@@ -135,6 +135,59 @@ int llGetLegendaryWallGateCount(bool lateGame = false)
    return (gateCount);
 }
 
+//==============================================================================
+// SMART WALLS — Track 1.2b: threat-vector tracking.
+//
+// Computes the centroid of all visible enemy land-military units. Returns
+// cInvalidVector when no enemy military is spotted. Result is cached for 60s
+// game time so it is cheap to call from multiple wall planners per tick.
+// Emits wall.threat_vector probe on every recompute.
+// Declared here so llGetForwardBiasedWallCenter can use the cached result.
+//==============================================================================
+static vector gLLCachedThreatVector = cInvalidVector;
+static int    gLLThreatVectorTime   = -999999;
+
+vector llComputeThreatVector()
+{
+   int now = xsGetTime();
+   if ((now - gLLThreatVectorTime) <= 60000)
+   {
+      return (gLLCachedThreatVector);
+   }
+
+   // Use a single enemy-relation query for all enemy military units.
+   int qID = createSimpleUnitQuery(cUnitTypeLogicalTypeLandMilitary,
+                                   cPlayerRelationEnemyNotGaia,
+                                   cUnitStateAlive);
+   int found = kbUnitQueryExecute(qID);
+
+   float sumX = 0.0;
+   float sumZ = 0.0;
+   int   cnt  = 0;
+   for (i = 0; < found)
+   {
+      int uid = kbUnitQueryGetResult(qID, i);
+      if (uid < 0) { continue; }
+      vector upos = kbUnitGetPosition(uid);
+      if (upos == cInvalidVector) { continue; }
+      sumX = sumX + xsVectorGetX(upos);
+      sumZ = sumZ + xsVectorGetZ(upos);
+      cnt  = cnt + 1;
+   }
+
+   vector result = cInvalidVector;
+   if (cnt > 0)
+   {
+      result = xsVectorSet(sumX / cnt, 0.0, sumZ / cnt);
+   }
+
+   gLLCachedThreatVector = result;
+   gLLThreatVectorTime   = now;
+   llProbe("wall.threat_vector",
+      "vec=" + llFmtVec(result) + " enemies=" + cnt);
+   return (result);
+}
+
 // Shift the wall ring center slightly along the base's front vector (toward
 // the likely enemy arc). A full ring still surrounds the base, but the
 // extra bias thickens wall coverage on the contested side where it matters
@@ -144,6 +197,12 @@ int llGetLegendaryWallGateCount(bool lateGame = false)
 // area type. If we land in water (or a 0-tile area), walk backwards along
 // the inverse front vector in 8-unit steps (up to 5) trying to find land.
 // If we never find land, return baseCenter unchanged (safer than ocean).
+//
+// SMART WALLS — Track 1.2b: threat-vector bias. When a threat vector is
+// known (enemy military spotted within the last 60s), blend the bias
+// direction toward the threat centroid (0.6 weight) rather than just the
+// static front vector (1.0 weight when unknown). This tilts the ring toward
+// the actual incoming threat rather than the map-edge heuristic.
 vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
                                     int mainBaseID = -1,
                                     float biasFactor = 0.25)
@@ -158,10 +217,36 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
    {
       return (baseCenter);
    }
+
+   // Track 1.2b: blend toward threat centroid when known.
+   // threatVec is cInvalidVector when no enemies are spotted (cache miss);
+   // in that case fall back to pure front-vector bias (weight = 1.0).
+   vector threatVec = llComputeThreatVector();
+   vector biasDir = frontVec;   // default: static front-vector bias
+   if (threatVec != cInvalidVector)
+   {
+      // Direction from base center toward threat centroid.
+      vector toThreat = threatVec - baseCenter;
+      float tMag = xsVectorLength(toThreat);
+      if (tMag > 0.0)
+      {
+         vector threatDir = xsVectorNormalize(toThreat);
+         // Blend: 0.6 * threatDir + 0.4 * frontVec (un-normalised sum,
+         // then normalise so the shift magnitude stays = radius * biasFactor).
+         float tbx = 0.6 * xsVectorGetX(threatDir) + 0.4 * xsVectorGetX(frontVec);
+         float tbz = 0.6 * xsVectorGetZ(threatDir) + 0.4 * xsVectorGetZ(frontVec);
+         float bmag = xsVectorLength(xsVectorSet(tbx, 0.0, tbz));
+         if (bmag > 0.0)
+         {
+            biasDir = xsVectorSet(tbx / bmag, 0.0, tbz / bmag);
+         }
+      }
+   }
+
    float radius = llGetLegendaryWallRadius(false);
    float shift = radius * biasFactor;
-   float nx = xsVectorGetX(baseCenter) + xsVectorGetX(frontVec) * shift;
-   float nz = xsVectorGetZ(baseCenter) + xsVectorGetZ(frontVec) * shift;
+   float nx = xsVectorGetX(baseCenter) + xsVectorGetX(biasDir) * shift;
+   float nz = xsVectorGetZ(baseCenter) + xsVectorGetZ(biasDir) * shift;
    vector biased = xsVectorSet(nx, xsVectorGetY(baseCenter), nz);
 
    // Water/cliff fixup. Sample the biased center's area; if it's water or
@@ -365,6 +450,100 @@ int llSelectWallType(int wallStrategy = -1, int age = 1)
 }
 
 //==============================================================================
+// SMART WALLS — Track 1.2a: natural-wall gap detection.
+//
+// Walks the proposed wall ring at 8 sample points (every 45°) and counts how
+// many land-typed sample points exist. "Land" here means NOT water-typed —
+// the engine only reliably exposes cAreaTypeWater; no cAreaTypeLand constant
+// is present anywhere in this codebase. The count (0–8) tells callers how
+// much of the perimeter can hold wall pieces. If landCount == 0 (ring center
+// is entirely in/over water or unmappable), skip the wall plan entirely and
+// emit a wall.skip probe. Otherwise emit wall.perimeter_gaps for telemetry.
+//==============================================================================
+int llCountPerimeterGaps(vector baseCenter = cInvalidVector,
+                         float radius = 42.0,
+                         int strategy = 0)
+{
+   if (baseCenter == cInvalidVector)
+   {
+      return (0);
+   }
+   int landCount  = 0;
+   int waterCount = 0;
+   for (i = 0; < 8)
+   {
+      float angle = (2.0 * PI / 8.0) * i;
+      float sx = xsVectorGetX(baseCenter) + radius * cos(angle);
+      float sz = xsVectorGetZ(baseCenter) + radius * sin(angle);
+      vector samplePoint = xsVectorSet(sx, xsVectorGetY(baseCenter), sz);
+      int areaID = kbAreaGetIDByPosition(samplePoint);
+      if (areaID < 0)
+      {
+         // unmappable sample — conservatively treat as water
+         waterCount = waterCount + 1;
+         continue;
+      }
+      int aType = kbAreaGetType(areaID);
+      if (aType == cAreaTypeWater)
+      {
+         waterCount = waterCount + 1;
+      }
+      else
+      {
+         landCount = landCount + 1;
+      }
+   }
+   llProbe("wall.perimeter_gaps",
+      "land=" + landCount + " water=" + waterCount + " radius=" + radius);
+   return (landCount);
+}
+
+//==============================================================================
+// SMART WALLS — Track 1.2c: adaptive wall radius.
+//
+// Scales the base radius from llGetLegendaryWallRadius(lateGame) by the
+// current villager-to-pop-cap ratio (eco saturation):
+//   ratio < 0.4  → 0.7× (tight ring, early eco)
+//   ratio 0.4–0.7 → 1.0× (current behaviour)
+//   ratio > 0.7  → 1.3× (expanded outer ring, saturated eco)
+//
+// Clamped to [12.0, 60.0] m. Emits wall.adaptive_radius probe.
+//==============================================================================
+float llComputeAdaptiveRadius(int age = 1, int strategy = 0,
+                              vector baseCenter = cInvalidVector)
+{
+   bool lateGame = (age >= 3);
+   float base = llGetLegendaryWallRadius(lateGame);
+
+   int   popCap  = kbGetPopCap();
+   float vilCount = kbUnitCount(cMyID, gEconUnit, cUnitStateAlive);
+   float villageRatio = 0.5;   // safe mid-value if pop-cap unavailable
+   if (popCap > 0)
+   {
+      villageRatio = vilCount / (1.0 * popCap);
+   }
+
+   float scaled = base;
+   if (villageRatio < 0.4)
+   {
+      scaled = base * 0.7;
+   }
+   else if (villageRatio > 0.7)
+   {
+      scaled = base * 1.3;
+   }
+
+   // Clamp [12.0, 60.0]
+   if (scaled < 12.0) { scaled = 12.0; }
+   if (scaled > 60.0) { scaled = 60.0; }
+
+   llProbe("wall.adaptive_radius",
+      "base=" + base + " ratio=" + villageRatio + " result=" + scaled +
+      " age=" + age + " strategy=" + strategy);
+   return (scaled);
+}
+
+//==============================================================================
 // Per-doctrine wall strategy dispatch. Each strategy plans its Age-1
 // fortifications in a historically-grounded way.
 //==============================================================================
@@ -374,7 +553,7 @@ int llSelectWallType(int wallStrategy = -1, int age = 1)
 // Keeps symmetric center — fortress doctrine is all-around defense.
 int llPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llGetLegendaryWallRadius(false);
+   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter);
    int planID = aiPlanCreate("FortressRing Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
    aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
@@ -404,7 +583,7 @@ int llPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVect
 // biased forward toward enemy since chokepoints always face outward.
 int llPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llGetLegendaryWallRadius(false) - 4.0;
+   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter) - 4.0;
    // SMART WALLS — Track 1.1a: real chokepoint detection rather than
    // the misnamed forward-biased fallback. Detector itself falls back
    // to forward-biased on flat maps.
@@ -545,7 +724,7 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
 // graceful on flat terrain instead of NaN-ing the plan.
 int llPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llGetLegendaryWallRadius(false);
+   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter);
    vector coastCenter = llDetectCoastVector(mainBaseID, baseCenter);
    vector center = cInvalidVector;
    string centerSrc = "";
@@ -582,7 +761,7 @@ int llPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalid
 // Washington, Jefferson, Brock, Papineau, Houston, Kruger, Mannerheim, Morazán.
 int llPlanFrontierPalisadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llGetLegendaryWallRadius(false) + 2.0;
+   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter) + 2.0;
    vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.15);
    int planID = aiPlanCreate("FrontierPalisade Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
@@ -604,7 +783,7 @@ int llPlanFrontierPalisadeWall(int mainBaseID = -1, vector baseCenter = cInvalid
 // UrbanBarricade: tight compact inner ring (Robespierre Paris, Garibaldi cities).
 int llPlanUrbanBarricadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llGetLegendaryWallRadius(false) - 8.0;
+   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter) - 8.0;
    vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.15);
    int planID = aiPlanCreate("UrbanBarricade Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
@@ -831,7 +1010,8 @@ minInterval 30
    // llDetectChokepointVector(), so Pachacuti / Shivaji / Kangxi late-game
    // walls would ring a forward-biased point rather than the actual valley
    // mouth that defines the doctrine.
-   float wallRadius = llGetLegendaryWallRadius(true);
+   // SMART WALLS — Track 1.2c: adaptive radius (eco-saturation scaling).
+   float wallRadius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter);
    vector wallCenter = baseCenter;
    if (gLLWallStrategy == cLLWallStrategyFortressRing)
    {
@@ -870,6 +1050,19 @@ minInterval 30
          // Nothing to do this tick — ring alive, no supplement needed yet.
          return;
       }
+   }
+
+   // SMART WALLS — Track 1.2a: perimeter gap check.
+   // Count how many of the 8 sample points around the proposed ring are
+   // land (not water/unmappable). Emit wall.perimeter_gaps for telemetry.
+   // If landCount == 0, the entire ring is over water — skip this tick.
+   int perimLandCount = llCountPerimeterGaps(wallCenter, wallRadius, gLLWallStrategy);
+   if (perimLandCount == 0)
+   {
+      llProbe("wall.skip",
+         "reason=noLandPerimeter center=" + llFmtVec(wallCenter) +
+         " radius=" + wallRadius + " strategy=" + gLLWallStrategy);
+      return;
    }
 
    int wallPlanID = aiPlanCreate(placingOuter ? "OuterWallRing" : "WallInBase", cPlanBuildWall);

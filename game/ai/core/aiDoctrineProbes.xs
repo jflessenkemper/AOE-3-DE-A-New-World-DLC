@@ -53,6 +53,29 @@
 //        wall.coast      vec=<vec> waterBorders=<int> cached=<0|1>
 //                         — fired by llDetectCoastVector; waterBorders is the
 //                           count of water-typed border areas found.
+//        wall.perimeter_gaps  land=<int> water=<int> radius=<float>
+//                         — fired by llCountPerimeterGaps (Track 1.2a); land
+//                           is the count of the 8 ring sample points that are
+//                           NOT water-typed (0–8). water is the complement.
+//                           Emitted from delayWallsNew before every ring plan
+//                           for telemetry. If land==0 the plan is skipped.
+//        wall.skip        reason=<tag> center=<vec> radius=<float>
+//                         strategy=<int>
+//                         — fired when a wall plan is suppressed. Currently
+//                           only reason=noLandPerimeter (all 8 sample points
+//                           are water or unmappable).
+//        wall.threat_vector  vec=<vec> enemies=<int>
+//                         — fired by llComputeThreatVector (Track 1.2b) on
+//                           every 60s cache-miss recompute. vec is the
+//                           centroid of all visible enemy land-military units
+//                           (cInvalidVector when none spotted). enemies is
+//                           the raw unit count fed into the centroid.
+//        wall.adaptive_radius  base=<float> ratio=<float> result=<float>
+//                              age=<int> strategy=<int>
+//                         — fired by llComputeAdaptiveRadius (Track 1.2c) on
+//                           every call. base is llGetLegendaryWallRadius(),
+//                           ratio is vilCount/popCap, result is the clamped
+//                           scaled radius actually used.
 //
 //   3) comp.snapshot / posture.snapshot — fired every 60s (game time) to
 //      give the validator a rolling view. comp.snapshot reports unit
