@@ -50,7 +50,7 @@
       "Lancer"
     ],
     "unique_buildings": [],
-    "playstyle": "Spread Mills and Plantations for multi-node economy; steady Covered Wagon trickle keeps forward bases funded; Voluntarios from Town Centers.",
+    "playstyle": "Spread Mills and Plantations across multiple resource patches for a bottleneck-free economy; Covered Wagon trickle expands the economic footprint; Voluntarios from Town Centers back up a Market-heavy late game.",
     "age_up": "Covered Wagon with each Age-up"
   },
   "ANWBritish": {
@@ -78,7 +78,7 @@
     "unique_buildings": [
       "Manor"
     ],
-    "playstyle": "Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress; Lower-Canada Patriote doctrine adds a tight civic core with reactive counter-punch instead of open aggression.",
+    "playstyle": "Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress.",
     "age_up": "Wagon politicians with Blockhouse (Brock) or tight-core civic politicians (Papineau / Lower Canada)"
   },
   "ANWChileans": {
@@ -182,7 +182,7 @@
       "Skirmisher"
     ],
     "unique_buildings": [],
-    "playstyle": "Coureur des Bois boom; quick mass eco; Wall TC core early; Cuirassier + Skirmisher flexible army; shipment-heavy push.",
+    "playstyle": "Coureur des Bois eco boom into a tight fortified core; wall TC early with stone; Cuirassier and Skirmisher hold the perimeter and counter-punch when the enemy advances.",
     "age_up": "Wagon politicians"
   },
   "ANWGermans": {
@@ -217,7 +217,7 @@
       "Longhouse",
       "War Hut"
     ],
-    "playstyle": "Claim Trading Posts for XP trickle; Longhouse multi-unit production; fast Mohawk Warrior rush or FF into Aenna mass.",
+    "playstyle": "Plant Trading Posts and shrines across the map for a steady XP and resource trickle; defend nodes with isolated towers and fast cavalry response; Longhouse multi-unit production scales from the income base into a Mohawk or Aenna mid-game.",
     "age_up": "Tribal Council (Community Plaza)"
   },
   "ANWHausa": {
@@ -272,7 +272,7 @@
     "unique_buildings": [
       "Consulate"
     ],
-    "playstyle": "Fortify high-ground citadel; grow Elephant/Howdah army via Consulate allies; Sepoy musket line holds while Elephants close.",
+    "playstyle": "Ganimi Kava raid doctrine: swift Urumi and Sepoy strikes from high-ground cover deny open engagements; bleed the enemy economy with hit-and-run pressure; Howdah elephants commit only after the foe is softened, with Consulate allies sustaining the column.",
     "age_up": "Wonders (Taj Mahal, etc.)"
   },
   "ANWIndonesians": {
@@ -313,7 +313,7 @@
       "Buddhist Temple",
       "Shinto Shrine"
     ],
-    "playstyle": "Plant Shrines everywhere for passive resource trickle; defend with isolated towers and cavalry; tech deep via Wonders; Yumi + Samurai army.",
+    "playstyle": "Plant Shrines everywhere for passive resource trickle; defend the network with isolated towers and fast cavalry response; Yumi Archer and Samurai army scales from the income base.",
     "age_up": "Wonders (Torii, Dojo, etc.)"
   },
   "ANWLakota": {
@@ -328,7 +328,7 @@
       "Teepee",
       "Tribal Marketplace"
     ],
-    "playstyle": "Over-build Stables; all-cavalry Axe Rider + Tokala rush; raid economy and map control; punish any exposed eco with speed.",
+    "playstyle": "Over-build Stables; Axe Rider and Tokala flanking columns envelop the enemy army from multiple angles in a coordinated Little Bighorn maneuver; raids harass the eco, but the kill is a disciplined wrap, not a pure speed rush.",
     "age_up": "Tribal Council (Community Plaza)"
   },
   "ANWMaltese": {
@@ -398,7 +398,7 @@
     "unique_buildings": [
       "Artillery Foundry"
     ],
-    "playstyle": "Free Settler trickle removes eco bottleneck; over-build Artillery Foundries; slow siege-column with Janissary escort; stone-and-forward walls.",
+    "playstyle": "Free Settler trickle removes the eco bottleneck; over-build Artillery Foundries and stockpile cannons; every push is a slow siege column with Janissary escort behind forward staging walls.",
     "age_up": "Wagon politicians (Ottoman-style)"
   },
   "ANWPeruvians": {
@@ -454,7 +454,7 @@
     "unique_buildings": [
       "Blockhouse"
     ],
-    "playstyle": "Wide Cossack raid bands keep enemy occupied; cheap Strelet batches fill lines; rush to third Town Center; Blockhouses replace stone walls.",
+    "playstyle": "Mass Streltsy musketeer blocks form the backbone; Oprichnik shock cavalry hits the flanks; a forward Blockhouse projects terror onto rival capitals while a siege train reduces forts. Cossacks raid as a secondary arm, not the headline.",
     "age_up": "Wagon politicians"
   },
   "ANWSouthAfricans": {
@@ -467,7 +467,7 @@
     "unique_buildings": [
       "Bank"
     ],
-    "playstyle": "Bank coin boom + Trek Wagon expansion; dock-first on water; Ruyter cavalry control the mid-game; strong naval with Fluyt.",
+    "playstyle": "Bank coin boom and Trek Wagon expansion. On coastal maps the AI builds Docks first for a mercantile harbor with Ruyter and Fluyt support. On inland maps Boer commandos on swift horses operate from a forward laager while home-city shipments sustain the cavalry stream.",
     "age_up": "Trek Wagon with each Age-up"
   },
   "ANWSpanish": {
