@@ -112,6 +112,10 @@ void initLegendaryRevolutionCommander(void)
       llUseCivicMilitiaCenterStyle(1);
       gLLEconomicDistanceMultiplier = 1.05;
       llSetBuildStrongpointProfile(2, 1, 2, false);
+      // Spec claim: expects_forward=false. CivicMilitiaCenter style defaults
+      // to forward base at 7 min; Papineau is reactive (1837 Patriote war
+      // was defensive militia), so reset to engine default (20 min = never).
+      gLLForwardBaseEarliestMs = 1200000;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
       cvOkToBuildForts = true;
@@ -351,6 +355,9 @@ void initLegendaryRevolutionCommander(void)
       llUseCivicMilitiaCenterStyle(2);
       gLLEconomicDistanceMultiplier = 1.10;
       llSetBuildStrongpointProfile(2, 1, 2, false);
+      // Spec claim: expects_forward not set (reactive consolidation, 1859
+      // unification was internal). Reset forward base to engine default.
+      gLLForwardBaseEarliestMs = 1200000;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
       cvOkToBuildForts = true;
