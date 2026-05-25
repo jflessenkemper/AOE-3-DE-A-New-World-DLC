@@ -144,8 +144,8 @@
     "ages": {
       "0": "Send German Tongue and Master Surgeons cards. Train the first Settler Wagons; plan for two Barracks near the TC as soon as Colonial is reached.",
       "1": "Ship Royal Decree, Landsnecht 1, Irish Brigaders, and Wettın Allies 1. Begin multi-barracks spam; Uhlans from cards supplement the line; a Caravelle provides early shipment reach.",
-      "2": "Send War Wagons, Habsburg Allies, Hessian mercs, Hand Mortar, and German Chevaulegers. Field a combined Musketeer-Uhlan-Doppelsoldner army; begin light outpost walling around production.",
-      "3": "Ship Uhlans 3, Uhlan Combat, Giant Grenadiers, Habsburg Allies 2, and Advanced Artillery. Massed Uhlan cavalry charges alongside Doppelsoldner shock infantry and artillery for a decisive Industrial push.",
+      "2": "Send War Wagons, Habsburg Allies, Hessian mercs, Hand Mortar, and Uhlans 2. Field a combined Musketeer-Uhlan-Doppelsoldner army; begin light outpost walling around production.",
+      "3": "Ship Uhlans 3, Lipizzaner Cavalry, Giant Grenadiers, Habsburg Allies 2, and Advanced Artillery. Massed Uhlan cavalry charges alongside Doppelsoldner shock infantry and artillery for a decisive Industrial push.",
       "4": "No Imperial cards; sustain with Wettın Allies and Cannon shipments; deploy supreme Uhlan + War Wagon columns for the final oblique assault."
     }
   },
@@ -290,11 +290,11 @@
     }
   },
   "ANWOttomans": {
-    "strategy_overview": "Sublime Porte gunpowder empire: free TC Settler trickle removes the eco bottleneck; over-build Artillery Foundries and stock Abus Guns and Great Bombards; advance as a slow siege column with Janissary escort behind stone-and-forward walls.",
+    "strategy_overview": "Sublime Porte gunpowder empire: free TC Settler trickle removes the eco bottleneck; over-build Artillery Foundries and stock Abus Guns and Great Bombards; Janissary line plus siege-train forward pressure — no walls, just heavy artillery staging.",
     "ages": {
       "0": "Send Ottoman Explorer, Colonial Militia, and Settler 1 + Settler repeat cards. Let the TC train free Settlers; gather wood for both a Barracks and first Foundry placement near the TC.",
-      "1": "Ship Fencing School, Settlers 2, Spies 1, and Light Artillery Hitpoints; reduce Janissary cost. The eco base grows passively; Abus Guns begin production once the Foundry is built.",
-      "2": "Send Spahis 3, Hand Mortar, Janissary Combat, Berber Allies, Spies 2, Artillery Combat, and Abus Guns 1. Stone walls go up around the Foundry cluster; first siege column of Janissaries and Abus Guns begins advancing.",
+      "1": "Ship Matrakci School, 5 Yörüks, 6 Muhbirs, and Light Artillery Hitpoints; reduce Janissary cost. The eco base grows passively; Abus Guns begin production once the Foundry is built.",
+      "2": "Send Spahis 3, Hand Mortar, Enderun School, Berber Allies, 6 Muhbirs 2, Topçular, and Abus Guns 1. First siege column of Janissaries and Abus Guns begins advancing.",
       "3": "Ship Janissaries 3, Great Bombards 1+2, Ottoman Mercs, Xebec, Battleship, and Abus Guns 3. Supreme siege column: Great Bombards blast walls while Janissaries guard the flanks.",
       "4": "No Imperial cards; sustain with Flight Archery and mercs for an endgame all-artillery smash."
     }
@@ -340,11 +340,11 @@
     }
   },
   "ANWRussians": {
-    "strategy_overview": "Cossack Voisko wide mobile game: cheap Strelet batches fill lines while roving Cossack bands raid, Blockhouses replace stone walls, and a third TC fuels the cavalry stream alongside Oprichnik shock troops.",
+    "strategy_overview": "Cossack Voisko wide mobile game: cheap Strelet batches fill lines while roving Cossack bands raid, Blockhouses replace stone walls, and builds 1–2 Town Centers, relies on Strelet batches and Cossack raids rather than TC sprawl alongside Oprichnik shock troops.",
     "ages": {
-      "0": "Send Landed Gentry and Soldier Torps cards. Scout aggressively in all directions; begin TC expansion planning since a third TC is the key milestone. Place Blockhouses at key chokepoints.",
+      "0": "Send Landed Gentry and Allotment System cards. Scout aggressively in all directions; plan Blockhouse ring positions early. Place Blockhouses at key chokepoints.",
       "1": "Ship Infantry Combat, Halberdiers 1, Cossacks 1+4, and Frontier Defenses Russian. Cossack raids begin immediately; cheap Strelet batches pad headcount; Blockhouses hold key passes.",
-      "2": "Send Bashkir Rebellion, Cossacks 2, Musket 2, Oprichniks 1+2, Strelets 2, Phanar, Pandours, Hand Mortar, and Snaplocks. Deep combined arms: Cossack + Oprichnik cavalry charges backed by Strelet firelock lines.",
+      "2": "Send Bashkir Rebellion, Cossacks 2, 13 Rekruts, Oprichniks 1+2, 19 Streltsy, Phanar, Pandours, Hand Mortar, and Strelet Combat. Deep combined arms: Cossack + Oprichnik cavalry charges backed by Strelet firelock lines.",
       "3": "Ship Strelets 3, Cossacks 3, Russian Battleship, Halberdiers 2+3, Musket 3, Oprichniks 3, and Giant Grenadiers. Full Industrial Cossack surge with artillery support and a Russian Battleship naval flank.",
       "4": "No Imperial cards; sustain with Oprichnik and Strelet repeats for an endgame wide-front Cossack sweep."
     }
@@ -380,7 +380,7 @@
     }
   },
   "ANWTexians": {
-    "strategy_overview": "Republic of Texas forward militia: push Barracks and Outposts forward with Hacienda eco backing; Minuteman swarms defend while Regulars train; reach Industrial for two bonus cards and a Sharpshooter + Texas Army finish.",
+    "strategy_overview": "Texas Lancer cavalry-first doctrine from Colonial onward; Sharpshooters and Republic militia screen the flanks; Imperial completes the combined-arms column.",
     "ages": {
       "0": "Send Burnet Land and Hacienda Wagon cards. Build the first Hacienda immediately for eco bonus; plan a forward Outpost near the contested map edge before Age 2.",
       "1": "Ship Frontier Defenses, Fortified Haciendas, Captured Galleons, Chipotles, and Copper Canyon. Forward Barracks and Outpost planted; Minuteman levies spring from both TC and Outposts to defend the advance.",
