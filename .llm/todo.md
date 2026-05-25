@@ -1,18 +1,45 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (ninth pass: full art re-verification + SA flag fix)
+## STATUS: ✅ COMPLETE — 2026-05-25 (tenth pass: gruesome-portrait fix, Italian Savoy shield, Crazy Horse → Gall string cleanup)
 
 All tracks completed. Mod is deploy-ready. Validators 41/48 PASS, 0 FAIL.
-Latest re-run: 2026-05-25 19:42:29.
+Latest re-run: 2026-05-25 20:05:45.
 
-**Ninth pass (this session)**: Direct visual re-verification of all 40
-leader portraits + all 80 flag PNGs (40 post-game + 40 mod-supplied
-Flag_*) via multimodal Read. One real bug found and fixed: ANWSouthAfricans
-post-game results screen was showing the modern 1994+ flag instead of
-Kruger's Vierkleur, because the mod didn't ship its own
-`postgame_flag_south_african.png` (engine fell through to base-game
-asset). Fixed by copying the mod's correct Vierkleur into that path.
-Report: `artifacts/validation/visual_confirmation_2026-05-25_session.md`.
+**Tenth pass (this session)** — fixes applied:
+1. **Gruesome ANWMayans portrait replaced**: was Canek-on-the-wheel
+   execution scene; now a dignified Caste War rebel statue with machete
+   (sourced from orphan ANWYucatan `cpai_avatar_yucatan_carrillo_puerto.png`,
+   256×256 RGBA). DDT also regenerated via `tools/cardextract/png_to_ddt.py`
+   so the legacy `<smallportraittexture>` path also shows the statue.
+2. **Italian flag Risorgimento-accurate**: Savoy cross shield (white
+   field, red Greek cross, blue heraldic border) added to all three
+   surfaces (`Flag_Italian.png`, `postgame_flag_italian.png`,
+   `flag_hc_italian.png`) — composited over the existing wave-shaded
+   tricolor via PIL.
+3. **Crazy Horse → Chief Gall user-visible strings**: rendered HTML
+   site (`a_new_world.html`), card deck JSON
+   (`tools/playtest/html_card_decks.json`), audio voice manifest
+   (`resources/audio/standard_leader_manifest.json`), and chat-quotes
+   display (`tools/chatquotes/quotes.json`) all updated. Engine-binding
+   files keep `crazy_horse` filename and `Crazyhorse` personality ID
+   (load-bearing; documented in `leader_crazy_horse.xs` header).
+4. **Orphan placeholders deleted**: pink-text placeholder PNGs
+   `cpai_avatar_anwmayans.png`, `cpai_avatar_anwyucatan.png`, plus
+   their stale .ddt artifact `cpai_avatar_anwyucatan.ddt`.
+5. **Wavy loading-flag consistency confirmed**: direct multimodal Read
+   of all 40 `loading_flag.png` captures — 39 wavy, 1 broken capture
+   (ANWBritish — purely a capture-pipeline artifact, gitignored, not
+   shipped). The in-game wavy rendering is engine-driven and consistent.
+6. **Lobby/HUD/diplomacy/scoreboard cross-civ audit**: 5 reported
+   "bugs" were verified to be capture-pipeline artifacts only — every
+   live in-game portrait (`cpai_avatar_*.png` in `resources/images/`)
+   renders correctly. La Valette is in Hospitaller robes; Usman dan
+   Fodio shows Sokoto dignitaries; Napoleon Imperial Guard portrait
+   is distinct from Bourbon-French / Robespierre. Nothing ships
+   broken.
+
+Ninth pass (prior): SA Vierkleur fix — see
+`artifacts/validation/visual_confirmation_2026-05-25_session.md`.
 
 ## Completed
 - [x] Track 1: Smart walls in aiBuildingsWalls.xs — llDetectChokepointVector,
