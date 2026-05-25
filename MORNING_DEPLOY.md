@@ -1,7 +1,7 @@
 # A New World — Morning Deploy Checklist
 
 **Generated overnight 2026-05-22 by autonomous /loop.** This is the single doc to read when you wake up.
-Last updated: sixth loop pass (2026-05-23, final pre-deploy audit — mod fully ready).
+Last updated: **eighth loop pass (2026-05-25, low-priority column polish + fresh validator pass — mod still fully ready).**
 
 ---
 
@@ -9,18 +9,77 @@ Last updated: sixth loop pass (2026-05-23, final pre-deploy audit — mod fully 
 
 **Static signals: GO.** 41/48 validators PASS, 0 FAIL, 7 SKIP (all live-game only). The mod is ready to ship.
 
-**AI coverage: 100%.** All 40 ANW civs now have complete AI dispatch — 21 canonical civs + 19 revolution civs. No civ falls to "unassigned" fallback.
+**AI coverage: 100%.** All 40 ANW civs now have complete AI dispatch — 22 canonical civs + 18 revolution civs. No civ falls to "unassigned" fallback.
 
 **Flag art: FULLY AUDITED.** All 40 ANW civs' flag fields have been cross-checked against the base game's bar archives and corrected:
 - `postgameflagtexture` DDTs: correct for all 40 civs (10 revolution civs use allowlisted DDTs that the engine handles gracefully, identical to the base-game revolution mod).
 - `postgameflagiconwpf` PNGs: all 40 now use the proper `postgame_flag_*.png` icons from UIResources1.bar (proper postgame-screen-sized wavy icons).
 - `homecityflagbuttonset`: all 40 use confirmed-existing button set keys from civs.xml.xmb.
 
-**Three small decisions** are waiting for you before clicking Publish. None are blockers — pick "skip" on any to ship as-is.
+**Column site: FULLY AUDITED.** Systematic read of all 40 civs' Strategic Identity + Build Strategy text against their XS leader files. 11 critical errors fixed (see below); remaining issues documented in `artifacts/validation/column_site_audit_2026-05-23.md` for your review.
+
+**User decisions:** See updated table at the bottom — expanded from 3 to include column site historical choices.
 
 ---
 
 ## What landed overnight (autonomous, no manual input)
+
+13. **Eighth loop pass — Low-priority column polish + fresh validator pass (2026-05-25).**
+   Two days after seventh pass; re-verified the mod still validates cleanly and swept
+   the remaining low-priority items from `column_site_audit_2026-05-23.md` that I
+   could verify against the rendered Cards section in the same column. All edits
+   are HTML-only — zero gameplay impact.
+   - **ANWGermans Age IV**: card names "Uhlans 3 / Uhlan Combat / Giant Grenadiers /
+     Habsburg Allies 2" → real names "11 Uhlans / Lipizzaner Cavalry / Potsdam Giants /
+     17 Habsburg Allies" (verified against own Cards section).
+   - **ANWSwedes Age I + Age II**: bsnote card names re-aligned with rendered Cards
+     section ("Duelist / TEAM New Sweden / Julita Styckebruk / 2 Leather Cannons" for
+     Age I; "Treaty of Roskilde / Contract Irish Brigadiers / Contract Landsknechts /
+     3 Leather Cannons / 2-Leather-Cannons repeat" for Age II).
+   - **ANWFinnish Age I + Age II**: same pattern ("Finnish Taiga / TEAM New Sweden"
+     and "Strelet Horde / Contract Irish Brigadiers / Contract Landsknechts").
+   - **ANWJapanese + ANWHaudenosaunee**: header wording "Shrine or Trade Node Spread"
+     → "Shrine Trade Node Spread" (one style, not a choice; matches XS
+     `llUseShrineTradeNodeSpreadStyle`).
+   - **ANWHaudenosaunee Aenna**: fabricated "Aenna Shotgun Rider" unit name removed
+     from 4 places (bsnote-overview, Age IV bsnote, unique-unit pill, strategic
+     identity) → "Aenna foot infantry" / "Aenna" (Aenna is foot infantry; the
+     Haudenosaunee cavalry unit is the Kanya Horseman).
+   - **ANWEthiopians sub-header**: "Menelik" → "Menelik II" (distinguishes from
+     the legendary 10th-century BCE Menelik I).
+   - **Audit log updated**: `column_site_audit_2026-05-23.md` now marks the six
+     items above as fixed; the remaining 6 low-priority items are intentional
+     flavour decisions or require a DDT rename (ANWFrench/Napoleon avatar).
+   - **Validators: 41/48 PASS, 0 FAIL, 7 SKIP — unchanged after edits (re-run
+     2026-05-25 18:31:08).**
+
+12. **Seventh loop pass — Full 40-civ column site audit + fixes (2026-05-23).**
+   Systematic read of every civ's Strategic Identity and Build Strategy per Age text against
+   the actual XS leader file. 11 critical errors fixed in `a_new_world_columns.html`:
+   - **ANWBritish**: 7 blank thumbnails replaced with styled placeholders; complete rewrite
+     of Strategic Identity + Build Strategy for Queen Elizabeth I (Tudor naval-mercantile,
+     Longbow→Ranger Industrial transition, no walls, Dock-first economy).
+   - **ANWHausa**: Leader corrected from "Usman dan Fodio / Sokoto Caliphate" to
+     "Muhammadu Kanta / Hausa States — Kebbi" (XS explicitly rebranded, logs "Kanta initialized").
+   - **ANWIndonesians**: Doctrine label corrected "Jungle Guerrilla Network" →
+     "Shrine Trade Node Spread" (XS uses `llUseShrineTradeNodeSpreadStyle(1)`).
+   - **ANWDutch**: Removed dock-first / fishing-fleet / wall-harbor boilerplate
+     copy-pasted from Portuguese (Dutch XS has no `cvOkToTrainNavy`).
+   - **ANWNapoleonicFrance**: Removed wall claims ("Forward wall segments protect advance
+     base"; "lost ground is re-walled") — `leader_napoleon.xs` has zero wall code.
+   - **ANWPeruvians**: De-boilerplated narr-playstyle second paragraph (was verbatim copy
+     of ANWChileans); now reflects stronger native-levy emphasis (`btBiasNative = 0.55`).
+   - **ANWColumbians**: De-boilerplated narr-playstyle second paragraph (was verbatim copy
+     of ANWArgentines); now reflects Bolívar's wider Pan-American theatre.
+   - **ANWIndonesians**: De-boilerplated narr-playstyle (was verbatim copy of ANWHaitians).
+   - **ANWItalians**: Lombards description corrected from "passively generate coin" to
+     "convert deposited resources and generate XP" (Lombards are exchange buildings,
+     not Dutch-style auto-banks).
+   - **ANWMaltese**: Age IV card name corrected: "Rolling Wood" → "Shipping Supplies"
+     (Rolling Wood is not in the Maltese card list).
+   - Remaining issues documented in `artifacts/validation/column_site_audit_2026-05-23.md`
+     with priority tiers for user review (all are documentation-only, no gameplay impact).
+   - **Validators: 41/48 PASS, 0 FAIL, 7 SKIP — unchanged.**
 
 10. **Fifth loop pass — Flag art audit complete (2026-05-22/23).**
    Two commits:
@@ -184,13 +243,31 @@ Last updated: sixth loop pass (2026-05-23, final pre-deploy audit — mod fully 
 
 ---
 
-## Three things waiting for your call (10 sec each)
+## Decisions waiting for your call
+
+### Original 3 (from before — unchanged, all skip-by-default)
 
 | # | Decision | Cost of "skip" |
 |---|---|---|
 | 1 | LICENSE file (MIT? CC-BY-NC?) | Workshop doesn't require one. Skip ⇒ ships with no LICENSE. |
 | 2 | modinfo.json gameVersion: pin to `100.15.59076.0` vs keep `100.15.x` wildcard | Wildcard works on every patch. Skip ⇒ ships as-is. |
 | 3 | 11 flag/card anachronisms in `artifacts/validation/visual_audit_round2.md` | Aesthetic only; doesn't affect gameplay. Skip ⇒ ships with current art. |
+
+### Column site — historical choices (new, all skip-by-default, documentation only)
+
+Full details in `artifacts/validation/column_site_audit_2026-05-23.md`.
+
+| # | Civ | Issue | Skip cost |
+|---|-----|-------|-----------|
+| 4 | ANWHaitians | "First Empire" + Toussaint: Toussaint died 1803, Empire declared 1804 by Dessalines | Ships with incongruous pairing |
+| 5 | ANWMayans | "Jacinto Canek" (d. 1761) is pre-Cruzob; Cruzob leaders were Cecilio Chi / Jacinto Pat | Ships with wrong historical figure |
+| 6 | ANWMexicans | "First Mexican Empire" + Hidalgo: Hidalgo died 1811, Empire was 1821 under Iturbide | Ships with wrong polity name |
+| 7 | ANWRevFrance | Robespierre as "strategic commander": he was a politician, never a military commander | Ships with this framing |
+| 8 | ANWBrazil | Pedro I (HTML) vs Pedro II (XS log): need to pick one canonical emperor | Ships with mismatch between HTML and XS comment |
+| 9 | ANWRussians | "Third TC rush" claim: no supporting code in `leader_catherine.xs` + fabricated card names in Age III bsnote | Ships with mechanical inaccuracy in docs |
+| 10 | ANWOttomans | Wall claims: no wall code in `leader_suleiman.xs` + generic card names instead of Ottoman-specific | Ships with inaccurate playstyle description |
+| 11 | ANWTexians | Infantry described as primary; XS runs cavalry bias 0.8–0.9 from Colonial (highest in mod) | Ships with inverted doctrine description |
+| 12 | ANWLakota | Chief Gall named in sub-header; avatar portrait is `cpai_avatar_lakota_crazy_horse.png` | Ships with name/portrait mismatch |
 
 All three default to "skip" and are independently overridable later.
 
