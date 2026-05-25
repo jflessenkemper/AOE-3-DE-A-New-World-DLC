@@ -410,7 +410,7 @@
       "Chasqui"
     ],
     "unique_buildings": [],
-    "playstyle": "Wall high ground in rings with Kallankas; Lancer + Rodelero push; slow Industrial snowball; never overextend from fortified line.",
+    "playstyle": "Wall high ground in rings; Lancer + Rodelero push; slow Industrial snowball; never overextend from fortified line.",
     "age_up": "Wagon politicians (Citizens)"
   },
   "ANWPortuguese": {
@@ -492,7 +492,7 @@
     "unique_buildings": [
       "Torp"
     ],
-    "playstyle": "Torp passive eco; push forward barracks and stables early; Carolean + Hakkapelit combined arms; relentless forward pressure.",
+    "playstyle": "Torp passive eco; push forward barracks and stables early; Carolean + Hakkapelit combined arms backed by Leather Cannon artillery; relentless forward pressure.",
     "age_up": "Wagon politicians (Torp wagon)"
   },
   "ANWTexians": {

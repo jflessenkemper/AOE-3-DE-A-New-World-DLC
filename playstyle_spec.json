@@ -622,7 +622,7 @@
       "leader_label": "Napoleon Bonaparte",
       "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
       "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Grande Armée Grand Battery empire",
+      "doctrine_summary": "Grande Armée combined-arms empire",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png",
       "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
       "claims": {
