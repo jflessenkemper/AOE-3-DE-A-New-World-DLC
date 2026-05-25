@@ -71,6 +71,7 @@ void initLegendaryRevolutionCommander(void)
       // LL-BUILD-STYLE-BEGIN
       llUseCompactFortifiedCoreStyle(2, false);
       gLLEconomicDistanceMultiplier = 0.95;
+      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: frontier blockhouse defense.
       llSetBuildStrongpointProfile(2, 2, 2, false);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
@@ -314,6 +315,7 @@ void initLegendaryRevolutionCommander(void)
       // LL-BUILD-STYLE-BEGIN
       llUseCompactFortifiedCoreStyle(3, true);
       gLLHouseDistanceMultiplier = 0.80;
+      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: Mannerheim Line fortified depth.
       llSetBuildStrongpointProfile(3, 2, 2, false);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
@@ -333,7 +335,7 @@ void initLegendaryRevolutionCommander(void)
       llSetMilitaryFocus(0.55, 0.7, 0.25);  // Honved hussar wing.
       // LL-BUILD-STYLE-BEGIN
       llUseSteppeCavalryWedgeStyle(1);
-      gLLMilitaryDistanceMultiplier = 0.90;
+      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: Honved hussar forward charge.
       llSetBuildStrongpointProfile(2, 1, 3, true);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 3.5);
@@ -465,7 +467,7 @@ void initLegendaryRevolutionCommander(void)
       llSetMilitaryFocus(0.85, -0.1, 0.15);
       // LL-BUILD-STYLE-BEGIN
       llUseJungleGuerrillaNetworkStyle(1);
-      gLLMilitaryDistanceMultiplier = 0.90;
+      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: guerrilla network pushes out.
       llSetBuildStrongpointProfile(2, 1, 2, true);
       // Spec override: Yucatan Pat doctrine — see playstyle_spec.json
       gLLWallStrategy = cLLWallStrategyChokepointSegments;
@@ -508,7 +510,7 @@ void initLegendaryRevolutionCommander(void)
       llSetMilitaryFocus(0.95, -0.2, 0.0);
       // LL-BUILD-STYLE-BEGIN
       llUseJungleGuerrillaNetworkStyle(1);
-      gLLMilitaryDistanceMultiplier = 0.90;
+      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: insurgent network spreads forward.
       llSetBuildStrongpointProfile(2, 1, 2, true);
       // Spec override: Mayans Canek doctrine — see playstyle_spec.json
       gLLWallStrategy = cLLWallStrategyChokepointSegments;
@@ -532,6 +534,7 @@ void initLegendaryRevolutionCommander(void)
       llUseDistributedEconomicNetworkStyle(1);
       gLLHouseDistanceMultiplier = 1.15;
       gLLEconomicDistanceMultiplier = 1.40;
+      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: ranchero trade-defense sprawl.
       llSetBuildStrongpointProfile(2, 1, 1, false);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
@@ -615,6 +618,7 @@ void initLegendaryRevolutionCommander(void)
       btBiasTrade = 0.25;
       btBiasNative = 0.1;
       llSetMilitaryFocus(0.85, -0.2, 0.35);
+      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: frontier blockhouse defense.
       llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 9;
@@ -675,6 +679,7 @@ void initLegendaryRevolutionCommander(void)
       btBiasTrade = -0.05;
       btBiasNative = 0.15;
       llSetMilitaryFocus(0.85, -0.1, 0.4);
+      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: Mannerheim Line fortified depth.
       llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 9;
@@ -705,6 +710,7 @@ void initLegendaryRevolutionCommander(void)
       btBiasTrade = 0.15;
       btBiasNative = 0.0;
       llSetMilitaryFocus(0.55, 0.7, 0.25);
+      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: Honved hussar forward charge.
       llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 3.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 4;
@@ -735,6 +741,7 @@ void initLegendaryRevolutionCommander(void)
       btBiasTrade = 0.1;
       btBiasNative = 0.85;
       llSetMilitaryFocus(0.95, -0.2, 0.0);
+      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: insurgent network spreads forward.
       llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 4;

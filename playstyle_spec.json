@@ -345,7 +345,7 @@
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Hohenzollern oblique-order shock",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "doctrine_prose": "Drills a Musketeer-and-Skirmisher line backed by Uhlan cavalry on the flanks. Production hugs the Town Center in early Colonial, then projects a forward base from Fortress onward. Cavalry weight escalates significantly in the mid-game — the oblique hammer wing grows until it rivals the infantry core.",
       "claims": {
         "wall_strategy": 4,
         "first_military_building": "barracks_or_stable",

@@ -36,6 +36,7 @@ void initLeaderKangxi(void)
    // LL-BUILD-STYLE-BEGIN
    llUseCompactFortifiedCoreStyle(4, true);
    gLLHouseDistanceMultiplier = 0.70;
+   gLLMilitaryDistanceMultiplier = 0.85;   // Spec band [0.7,0.9]: tight banner-army deployment.
    llSetBuildStrongpointProfile(3, 2, 2, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);

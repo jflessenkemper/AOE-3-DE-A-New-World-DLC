@@ -42,6 +42,7 @@ void initLeaderBourbon(void)
    // LL-BUILD-STYLE-BEGIN
    llUseCompactFortifiedCoreStyle(3, true);
    gLLEconomicDistanceMultiplier = 1.05;
+   gLLMilitaryDistanceMultiplier = 0.85;   // Spec band [0.7,0.9]: Restoration interior fort line.
    llSetBuildStrongpointProfile(3, 2, 2, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.88, 0.12, 2, 5.0);  // Royal explorer well behind the line.

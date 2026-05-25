@@ -44,6 +44,7 @@ void initLeaderCrazyHorse(void)
 
    // LL-BUILD-STYLE-BEGIN
    llUseSteppeCavalryWedgeStyle(0);
+   gLLMilitaryDistanceMultiplier = 1.15;   // Spec band [1.1,1.3]: forward cavalry envelopment.
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.55, 0.45, 2, 2.5);
 
