@@ -63,6 +63,8 @@ class ValidatorSpec:
 # game-dependent, or dev-only (tier3 gameplay etc.). Add as needed.
 VALIDATORS: list[ValidatorSpec] = [
     # === Tier 1: Pure static (XML well-formedness, file existence) ===
+    ValidatorSpec("mod_version_metadata", "tools/validation/validate_mod_version_metadata.py",
+                  timeout_s=15, warn_is_pass=True),
     ValidatorSpec("xml_well_formed", "tools/validation/validate_xml_well_formed.py"),
     ValidatorSpec("packaged_mod", "tools/validation/validate_packaged_mod.py",
                   warn_is_pass=True),  # has known dup-locID warning, OK to pass
@@ -136,6 +138,15 @@ VALIDATORS: list[ValidatorSpec] = [
     # These catch the bug-classes the project hit on 2026-05-08 (locID dups,
     # NameID resolution failures, .anw.xml shadow files, .proposed-only
     # personalities, picker text collisions). They run fast and stay cheap.
+    # Rank #3 coverage: catch shipped cards that do nothing — card token in a
+    # deck but no <effect> block in techtreemods.xml or base techtreey.xml.
+    # First-run flagged 65 pre-existing "no-op card" warnings (mostly Romanian/
+    # Hungarian RvltMod* tokens with cards.json metadata but no techtreemods
+    # entry). Marked warn_is_pass while the missing tech-effect blocks get
+    # designed and added; the validator continues to surface the gap.
+    ValidatorSpec("deck_card_effects", "tools/validation/validate_deck_card_effects.py",
+                  warn_is_pass=True,
+                  timeout_s=30),
     ValidatorSpec("no_locid_duplicates", "tools/validation/validate_no_locid_duplicates.py",
                   timeout_s=30),
     ValidatorSpec("string_resolution", "tools/validation/validate_string_resolution.py",
@@ -147,6 +158,19 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("personality_active", "tools/validation/validate_personality_active.py",
                   timeout_s=15),
     ValidatorSpec("civ_distinguishability", "tools/validation/validate_civ_distinguishability.py",
+                  timeout_s=30),
+    # Lobby quadruple check: every ANW personality's name/tooltip/portrait/
+    # forcedciv all resolve. Catches the 2026-05-08 locID-mismatch class
+    # (wrong lobby text), broken icon paths (blank portraits), and forcedciv
+    # typos (engine falls back to base-game civ silently).
+    ValidatorSpec("personality_lobby", "tools/validation/validate_personality_lobby.py",
+                  timeout_s=30),
+    # Rank #1 coverage (impact 5/5, effort 1/5): catch free-age-up exploits
+    # and missing politician options.  Each ANW-specific civ must expose ≥ 2
+    # politician choices at every age tier (Commerce/Fortress/Industrial/Imperial)
+    # and any politician tech defined in techtreemods.xml must have cost > 0.
+    ValidatorSpec("age_up_politicians",
+                  "tools/validation/validate_age_up_politicians.py",
                   timeout_s=30),
 
     # === Tier 4c: Offline engine simulators (no game launch needed) ===
@@ -179,6 +203,13 @@ VALIDATORS: list[ValidatorSpec] = [
     # or the SELECT HOME CITY picker shows two entries (base + ANW).
     ValidatorSpec("no_homecity_doubles",
                   "tools/validation/validate_no_homecity_doubles.py",
+                  timeout_s=15),
+    # Blurb coverage: catches stale/short/placeholder blurbs and copy-paste
+    # drift across civs.  Checks all ANW civ tokens in anw_civ_blurbs.json
+    # for playstyle length ≥ 40 chars, no TODO/TBD/FIXME/template text,
+    # cross-source parity with age_build_notes.json, and unique playstyle text.
+    ValidatorSpec("blurb_coverage",
+                  "tools/validation/validate_blurb_coverage.py",
                   timeout_s=15),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
