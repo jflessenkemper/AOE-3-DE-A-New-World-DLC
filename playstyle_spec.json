@@ -467,11 +467,12 @@
       "claims": {
         "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",
-        "expects_artillery": true,
+        "expects_cavalry": true,
+        "expects_forward": true,
         "first_wall_before_ms": 720000,
         "military_distance_band": [
-          0.7,
-          1.0
+          1.0,
+          1.3
         ]
       },
       "prose_overrides": []

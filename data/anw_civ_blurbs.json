@@ -104,7 +104,7 @@
     "unique_buildings": [
       "Summer Palace",
       "Porcelain Tower",
-      "Old Summer Palace"
+      "Temple of Heaven"
     ],
     "playstyle": "Eight-Banner macro — cluster buildings near TC, wall early with stone, macro Banner Armies, counter-attack from hardened core.",
     "age_up": "Wonders (Summer Palace, etc.)"
@@ -309,9 +309,8 @@
     ],
     "unique_buildings": [
       "Shrine",
-      "Castle",
-      "Buddhist Temple",
-      "Shinto Shrine"
+      "Cherry Orchard",
+      "Dojo"
     ],
     "playstyle": "Plant Shrines everywhere for passive resource trickle; defend the network with isolated towers and fast cavalry response; Yumi Archer and Samurai army scales from the income base.",
     "age_up": "Wonders (Torii, Dojo, etc.)"
@@ -332,15 +331,14 @@
     "age_up": "Tribal Council (Community Plaza)"
   },
   "ANWMaltese": {
-    "civ_bonus": "Towers and Outposts cost no wood; Sacre Infermeria heals nearby units.",
+    "civ_bonus": "Towers and Outposts cost no wood; Hospital heals nearby units.",
     "unique_units": [
       "Hospitaller Knight",
       "Fire Thrower",
       "Sentinel"
     ],
     "unique_buildings": [
-      "Bastion",
-      "Sacre Infermeria"
+      "Hospital"
     ],
     "playstyle": "FF into single fortified bastion position; Hospitaller Knights sortie from walls; very hard to dislodge; expand only after citadel is secure.",
     "age_up": "Wagon politicians (Banco)"
@@ -487,7 +485,7 @@
     "unique_units": [
       "Carolean",
       "Hakkapelit",
-      "Horse Artillery"
+      "Leather Cannon"
     ],
     "unique_buildings": [
       "Torp"
