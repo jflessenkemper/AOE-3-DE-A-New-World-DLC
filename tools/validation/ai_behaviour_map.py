@@ -885,15 +885,84 @@ def render_markdown(data: dict) -> str:
         ))
     return "\n".join(lines) + "\n"
 
+def render_per_civ_md(spec_key: str, cb: dict) -> str:
+    """One reviewable Markdown sheet per civ — feed back into iteration loop."""
+    bt = cb.get("bt", {}); mf = cb.get("mil_focus", {})
+    bs = cb.get("build_style", {}); sp = cb.get("strongpoint", {})
+    td = cb.get("tactical_doctrine", {}); cv = cb.get("cv", {})
+    dm = cb.get("distance_multipliers", {}); fb = cb.get("forward_base", {})
+    sc = cb.get("spec_claims", {})
+    lines = [
+        f"# {cb.get('leader_label','—')} — {spec_key}",
+        "",
+        f"- **Source**: `{cb.get('source_file','—')}`",
+        f"- **Personality**: {cb.get('personality','—')}",
+        f"- **Doctrine label (spec)**: {cb.get('spec_doctrine_label','—')}",
+        f"- **Doctrine summary (spec)**: {cb.get('spec_doctrine_summary','—')}",
+        "",
+        "## Init-time behaviour (from leader_*.xs)",
+        "",
+        f"- Behaviour-tree biases: rushBoom={bt.get('btRushBoom','—')}, offenseDefense={bt.get('btOffenseDefense','—')}, biasTrade={bt.get('btBiasTrade','—')}, biasNative={bt.get('btBiasNative','—')}",
+        f"- Military focus: infantry={mf.get('infantry','—')}, cavalry={mf.get('cavalry','—')}, artillery={mf.get('artillery','—')}",
+        f"- Build style: `{bs.get('function','—')}` (intensity={bs.get('intensity','—')})",
+        f"- Wall strategy: **{cb.get('wall_strategy','—')}** (default from style: {cb.get('wall_strategy_default','—')}, explicit override: {cb.get('wall_strategy_override','—') or 'none'})",
+        f"- Distance multipliers: house={dm.get('house','—')}, eco={dm.get('economic','—')}, mil={dm.get('military','—')}, tc={dm.get('tc','—')}",
+        f"- Strongpoint: towers={sp.get('tower_level','—')}, forts={sp.get('fort_level','—')}, fwdBaseTowers={sp.get('fwd_base_tower_count','—')}, preferFwd={sp.get('prefer_forward_base','—')}",
+        f"- Tactical doctrine: protection={td.get('protection','—')}, decapitation={td.get('decapitation','—')}",
+        f"- Caps: forts={cv.get('cvOkToBuildForts','—')}, maxTowers={cv.get('cvMaxTowers','—')}, maxArmyPop={cv.get('cvMaxArmyPop','—')}",
+        f"- Forward base earliest ms: {fb.get('earliest_ms') or fb.get('earliest_ms_from_style') or '—'}",
+        "",
+        "## Per-age policy drift",
+        "",
+        "| Age | Rule | Assignments |",
+        "|---|---|---|",
+    ]
+    for ar in cb.get("age_rules", []):
+        ag = ar.get("age", "?")
+        rn = ar.get("rule", "?")
+        ass = ", ".join(f"{k}={v}" for k, v in ar.get("assignments", {}).items())
+        lines.append(f"| A{ag} | `{rn}` | {ass} |")
+    lines += [
+        "",
+        "## Spec claims (from playstyle_spec.json)",
+        "",
+    ]
+    for k, v in sc.items():
+        lines.append(f"- **{k}**: `{v}`")
+    if cb.get("mismatches"):
+        lines += ["", "## Mismatches", ""]
+        for m in cb["mismatches"]:
+            lines.append(f"- ⚠️ **{m['claim']}** (severity={m.get('severity','?')}): {m.get('note','')}")
+            for kk, vv in m.items():
+                if kk not in ("claim", "severity", "note"):
+                    lines.append(f"   - {kk}: `{vv}`")
+    else:
+        lines += ["", "## Spec verdict", "", "✅ All claims align with derived static behaviour."]
+    lines += [
+        "",
+        "## How to iterate",
+        "",
+        "1. Edit the dispatch in `" + cb.get('source_file','—') + "` (init block or age-N rule).",
+        "2. Re-run `python3 tools/validation/ai_behaviour_map.py`.",
+        "3. Diff this file against the new output to see what changed.",
+        "4. Open `artifacts/validation/ai_behaviour_map.html` to compare side-by-side.",
+    ]
+    return "\n".join(lines) + "\n"
+
 def main():
     ART_DIR.mkdir(parents=True, exist_ok=True)
     data = derive_all()
     out_json = ART_DIR / "ai_behaviour_map.json"
     out_html = ART_DIR / "ai_behaviour_map.html"
     out_md   = ART_DIR / "ai_behaviour_map.md"
+    per_civ_dir = ART_DIR / "ai_behaviour_per_civ"
+    per_civ_dir.mkdir(exist_ok=True)
     out_json.write_text(json.dumps(data, indent=2), encoding="utf-8")
     out_html.write_text(render_html(data), encoding="utf-8")
     out_md.write_text(render_markdown(data), encoding="utf-8")
+    for spec_key, cb in data["civs"].items():
+        slug = re.sub(r"[^a-z0-9]+", "_", spec_key.lower()).strip("_")
+        (per_civ_dir / f"{slug}.md").write_text(render_per_civ_md(spec_key, cb), encoding="utf-8")
     # Summary line.
     n_civs = len(data["civs"])
     n_mm   = sum(1 for cb in data["civs"].values() if cb["mismatches"])
