@@ -170,10 +170,56 @@ def status_pills(row: dict) -> str:
     return " ".join(parts)
 
 
+"""Civs with known-intentional leader/doctrine substitutions that
+look like bugs at first glance but are deliberate per the
+MORNING_DEPLOY_BRIEF design notes. These get a yellow "intentional"
+banner in the sign-off panel so the reviewer doesn't flag them.
+Source: artifacts/validation/polish_pass_3.md + commit 3e0d00b."""
+INTENTIONAL_NOTES = {
+    "ANWIndians": (
+        "Leader renamed Akbar → Shivaji Maharaj (Maratha Ganimi-Kava raid "
+        "doctrine, not Mughal elephant citadel). Intentional per 3e0d00b."
+    ),
+    "ANWRussians": (
+        "Leader renamed Catherine → Ivan the Terrible (Streltsy/Oprichnik "
+        "siege, not Cossack cavalry stream). Intentional per 3e0d00b."
+    ),
+    "ANWLakota": (
+        "Leader renamed Crazy Horse → Chief Gall (Little Bighorn "
+        "envelopment, not pure speed-raid). Intentional per 3e0d00b."
+    ),
+    "ANWYucatan": (
+        "Portrait file is `yucatan_carrillo_puerto.png` even though spec key "
+        "says \"Yucatan Pat Revolution\". Both are real Yucatec figures; "
+        "substitution is intentional."
+    ),
+    "ANWTexians": (
+        "ai_behaviour_map.py previously read the vanilla RvltModTexians "
+        "block instead of the ANWTexians block (mapper artefact, fixed). "
+        "Actual dispatch is cavalry-aggressive with forward base."
+    ),
+    "ANWFrenchCanadians": (
+        "Kept as FrenchCanadians, not LowerCanada (152 references vs 2 "
+        "doc-only mentions; rename would touch 140+ files). Forward base "
+        "intentionally disabled — Papineau was a reactive leader."
+    ),
+    "ANWRomanians": (
+        "Forward base intentionally disabled — Cuza's 1859 was internal "
+        "consolidation, not external expansion. Per 9c0c39c."
+    ),
+}
+
+
 def signoff_panel_html(token: str, row: dict) -> str:
     """Sign-off panel injected at the top of each civ-col section."""
     leader = escape(row.get("leader_label", ""))
     pills = status_pills(row)
+    note = INTENTIONAL_NOTES.get(token, "")
+    note_html = (
+        f'<div class="rr-signoff-note rr-signoff-note-intentional">'
+        f'<strong>ⓘ Intentional design:</strong> {escape(note)}'
+        f'</div>'
+    ) if note else ""
     return f"""
 <div class="rr-signoff" data-civ="{escape(token)}">
   <div class="rr-signoff-head">
@@ -181,6 +227,7 @@ def signoff_panel_html(token: str, row: dict) -> str:
     <span class="rr-signoff-pills">{pills}</span>
     <span class="rr-signoff-state" data-role="state">pending</span>
   </div>
+  {note_html}
   <div class="rr-signoff-checks">
     <label><input type="checkbox" data-check="visual">  Visual art correct (portrait, home city, flag)</label>
     <label><input type="checkbox" data-check="doctrine"> AI doctrine matches lore</label>
@@ -370,6 +417,12 @@ PORTAL_CSS = r"""
   background:#444; color:#fff; font-size:11px; text-transform:uppercase; }
 .rr-signoff[data-status="approved"] .rr-signoff-state { background:var(--rr-ok); }
 .rr-signoff[data-status="flagged"]  .rr-signoff-state { background:var(--rr-flag); }
+.rr-signoff-note {
+  margin: 4px 0 6px; padding: 5px 8px; border-radius: 3px;
+  font-size: 11px; line-height: 1.35; background: rgba(216,160,32,0.18);
+  border-left: 3px solid var(--rr-warn); color: #f3e1b8;
+}
+.rr-signoff-note strong { color: var(--rr-warn); margin-right: 4px; }
 .rr-signoff-checks { display:grid; grid-template-columns:repeat(2,1fr); gap:2px 14px; margin-bottom:6px; }
 .rr-signoff-checks label { display:flex; align-items:center; gap:6px; cursor:pointer; }
 .rr-signoff-notes textarea {
