@@ -460,10 +460,10 @@
       "civ_label": "Indians",
       "leader_label": "Shivaji Maharaj",
       "data_name": "Indians Akbar",
-      "doctrine_label": "Highland Citadel",
+      "doctrine_label": "Ganimi Kava Raid",
       "doctrine_summary": "Maratha Ganimi Kava raid",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png",
-      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+      "doctrine_prose": "Opens with Sowar cavalry raids and Sepoy screens from Colonial on (forward-base style enables at age 2). The hill-fort line anchors ground already taken rather than a home base. Howdah Elephants and Mansabdar units commit once the raid has bled the opponent's economy; the Maratha Confederacy expands outward, not inward.",
       "claims": {
         "wall_strategy": 0,
         "first_military_building": "barracks_or_stable",

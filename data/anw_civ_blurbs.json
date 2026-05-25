@@ -143,7 +143,7 @@
       "Khevite Fusilier"
     ],
     "unique_buildings": [],
-    "playstyle": "Fortify high ground then snowball; Mameluke cavalry per shipment grows a dangerous force; hard to dislodge once entrenched.",
+    "playstyle": "Fortify high ground behind Nizam-i Cedid infantry lines and a growing cannon park; Mameluke cavalry screens the flanks while the citadel becomes unbreakable; hard to dislodge once entrenched.",
     "age_up": "Ottoman-style Wagon shipments"
   },
   "ANWEthiopians": {
@@ -210,7 +210,7 @@
     "civ_bonus": "Builds Longhouses that train infantry and can garrison; unique War Chief unit.",
     "unique_units": [
       "Mohawk Warrior",
-      "Aenna Shotgun Rider",
+      "Aenna",
       "Mantlet"
     ],
     "unique_buildings": [
@@ -508,7 +508,7 @@
       "Hacienda",
       "Cathedral"
     ],
-    "playstyle": "Push barracks and Outposts forward; Minuteman swarms defend while Regulars train; Republic militia mass into Sharpshooter FF timing.",
+    "playstyle": "Push Stables and barracks forward; Chinaco cavalry and Minuteman infantry form a combined-arms advance; Sharpshooters screen the flanks as the Republic line reaches the enemy base.",
     "age_up": "Federal States politicians"
   },
   "ANWUSA": {

@@ -100,7 +100,7 @@
     }
   },
   "ANWEgyptians": {
-    "strategy_overview": "Nizam-i Cedid modernization with a Highland Citadel doctrine: fortify a single stone-walled high-ground position, grow a free Mameluke cavalry force from shipments, and expand only once the citadel is truly unbreakable.",
+    "strategy_overview": "Nizam-i Cedid modernization with a Highland Citadel doctrine: fortify a single stone-walled high-ground position behind a Nizam infantry line and an Ottoman cannon park, with Mameluke cavalry shipments screening the flanks. Expand only once the citadel is truly unbreakable.",
     "ages": {
       "0": "Send Ottoman Colonial Militia and Stonemasons cards. Gather stone immediately; place the first TC wall segment on high ground before 8 minutes. Citizens provide affordable early eco.",
       "1": "Ship Nile Flood, Suez Canal, Extensive Fortifications, and Azap infantry. Begin the stone wall ring; Azaps defend the perimeter while the economy grows behind walls.",
@@ -160,12 +160,12 @@
     }
   },
   "ANWHaudenosaunee": {
-    "strategy_overview": "Confederacy forest warfare through Trading Post XP trickle: claim posts immediately, produce from Longhouses, and either rush with Mohawk Warriors or Fast Fortress into Aenna Shotgun Rider mass supported by Mantlet siege.",
+    "strategy_overview": "Confederacy forest warfare through Trading Post XP trickle: claim posts immediately, produce from Longhouses, and either rush with Mohawk Warriors or Fast Fortress into Aenna foot infantry mass supported by Mantlet siege.",
     "ages": {
       "0": "Send Tomahawk Warriors, Warchief 1, Forest Mother, and Warchief 2 cards. Claim the nearest Trading Post on turn one; Longhouse construction begins for multi-unit training.",
       "1": "Ship Extensive Fortifications Warchief, Battlefield Construction, infantry damage and hitpoints, and Mantlet Team. Use Trading Post XP income to fuel colonial warband raids from a forward War Hut.",
       "2": "Send Wampum, cavalry combat, infantry combat, Mohawk and Cayuga support cards. Transition to an Aenna + Mohawk Warrior army; Mantlets provide siege pressure at chokepoints.",
-      "3": "Ship Oneida, Onondaga, Seneca, and Tuscarora support; send Woodworking and Mantlets. Full Confederacy muster: Aenna Shotgun Riders backed by all-nation support cards overrun the enemy.",
+      "3": "Ship Oneida, Onondaga, Seneca, and Tuscarora support; send Woodworking and Mantlets. Full Confederacy muster: Aenna foot infantry backed by all-nation support cards overrun the enemy.",
       "4": "No Imperial cards; sustain with Old Ways and Mantlet repeats for a final forest-siege push."
     }
   },
@@ -200,7 +200,7 @@
     }
   },
   "ANWIndians": {
-    "strategy_overview": "Maratha Ganimi Kava highland citadel: fortify a single stone-walled high-ground position with Consulate allies, grow Elephant and Howdah forces from the Consulate, and hold the citadel until the Sepoy musket line can escort Elephants in a breakout push.",
+    "strategy_overview": "Maratha Ganimi Kava raid doctrine: Sowar cavalry and Sepoy screens strike from forward hill-forts (the build-style enables Forward Base at Colonial). Hit-and-run pressure bleeds the enemy economy; Howdah Elephants and Mansabdar units commit only after the raid has softened the foe. The Confederacy expands outward — the hill-fort line anchors ground already taken, not a home turtle.",
     "ages": {
       "0": "Send Advanced Consulate, Advanced Wonders, Extensive Fortifications, and Admiralty cards. Establish the Consulate on a high-ground TC position; begin stone wall planning before Age 2.",
       "1": "Ship Armed Fishermen, Atonement, Camel Damage, Consulate Relations, and Monk Frighten. Build the Consulate; Sepoys and Camels defend the walls while Consulate relations develop.",
