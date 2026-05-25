@@ -1,9 +1,18 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (eighth loop pass: low-priority column polish)
+## STATUS: ✅ COMPLETE — 2026-05-25 (ninth pass: full art re-verification + SA flag fix)
 
 All tracks completed. Mod is deploy-ready. Validators 41/48 PASS, 0 FAIL.
-Latest re-run: 2026-05-25 18:31:08.
+Latest re-run: 2026-05-25 19:42:29.
+
+**Ninth pass (this session)**: Direct visual re-verification of all 40
+leader portraits + all 80 flag PNGs (40 post-game + 40 mod-supplied
+Flag_*) via multimodal Read. One real bug found and fixed: ANWSouthAfricans
+post-game results screen was showing the modern 1994+ flag instead of
+Kruger's Vierkleur, because the mod didn't ship its own
+`postgame_flag_south_african.png` (engine fell through to base-game
+asset). Fixed by copying the mod's correct Vierkleur into that path.
+Report: `artifacts/validation/visual_confirmation_2026-05-25_session.md`.
 
 ## Completed
 - [x] Track 1: Smart walls in aiBuildingsWalls.xs — llDetectChokepointVector,
