@@ -37,13 +37,13 @@
       "ToAllyBattleOverIWonAsExpected": "As expected. Brought up the Guards, brought up the Hussars, and that was that."
     },
     "catherine": {
-      "display": "Catherine the Great",
-      "ToAllyIntro":                    "Reason and the scepter, my friend. We advance together.",
-      "ToEnemyIntro":                   "The Empire of the Rus does not negotiate with disorder.",
-      "ToAllyWhenIWallIn":              "Stone walls, like laws, hold the Empire in place.",
-      "ToEnemyWhenHeWallsIn":           "He hides. Even Frederick dared meet me on the field.",
-      "ToAllyILoseExplorerEnemy":       "A faithful servant is lost. I shall have his estate carved in his memory.",
-      "ToAllyBattleOverIWonAsExpected": "Order has imposed itself upon chaos. As reason demanded."
+      "display": "Ivan the Terrible",
+      "ToAllyIntro":                    "By the iron staff and the will of God, ally — Moscow rides with you.",
+      "ToEnemyIntro":                   "The Tsar of All Rus' has marked you. The Oprichnik comes.",
+      "ToAllyWhenIWallIn":              "Kazan fell to siege, not to flight. We hold the earth we have taken.",
+      "ToEnemyWhenHeWallsIn":           "Behind walls a coward dies twice. Streltsy, ready the powder.",
+      "ToAllyILoseExplorerEnemy":       "A servant of the Tsar is taken. His family will be answered for.",
+      "ToAllyBattleOverIWonAsExpected": "As at Kazan, as at Astrakhan — the foe is broken, the river is ours."
     },
     "maurice": {
       "display": "Maurice of Nassau",

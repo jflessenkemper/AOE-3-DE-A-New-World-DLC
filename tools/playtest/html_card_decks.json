@@ -428,8 +428,8 @@
   "gall": {
     "civ_id": "cCivXPSioux",
     "leader": "gall",
-    "leader_display": "Gall",
-    "data_name": "Lakota Gall Sioux",
+    "leader_display": "Chief Gall",
+    "data_name": "Lakota Gall",
     "deck": [
       "Ogle Tanka Un",
       "9 Bison",
@@ -750,39 +750,6 @@
       "1 Battleship",
       "9 Habsburg Allies",
       "Industrial Revolution"
-    ]
-  },
-  "rvltmodbajacalifornians": {
-    "civ_id": "cRvltModBajaCalifornians",
-    "leader": "rvltmodbajacalifornians",
-    "leader_display": "Pedro de Alvarado",
-    "data_name": "Baja Californians Alvarado Revolution",
-    "deck": [
-      "Capitalism",
-      "Rancheros",
-      "Baja California Territory",
-      "3 Post Wagons",
-      "Exploitation",
-      "Foreign Investment",
-      "Bad Boys",
-      "Frontier Defenses",
-      "1 Hacienda Wagon",
-      "TEAM Trickle Economics",
-      "Annexation",
-      "Hire French Fusiliers",
-      "Hire Hessian Jaegers",
-      "1 Gold Prospector Wagon",
-      "Soldier of Fortune",
-      "Filibuster Invasion",
-      "TEAM Alta California Territory",
-      "1 Frigate",
-      "Robber Barons",
-      "Walker's Gang",
-      "Recruit Privateers",
-      "Coach Guns",
-      "Walker's Illusions",
-      "Walker's Gamble",
-      "Advanced Frontier Defenses"
     ]
   },
   "rvltmodbarbary": {

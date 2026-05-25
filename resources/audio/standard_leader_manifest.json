@@ -241,14 +241,14 @@
       "civId": "Russians",
       "nation": "Russians",
       "leaderKey": "catherine",
-      "leaderName": "Catherine the Great",
-      "articleUrl": "https://en.wikipedia.org/wiki/Catherine_the_Great",
+      "leaderName": "Ivan the Terrible",
+      "articleUrl": "https://en.wikipedia.org/wiki/Ivan_the_Terrible",
       "portraitLocalFile": "art/ui/leaders/catherine.jpg",
-      "smallPortraitFile": "resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png",
-      "voice": { "stability": 0.49, "similarityBoost": 0.69, "style": 0.17, "useSpeakerBoost": true },
-      "voicePrompt": "Imperial strategist and reformer, elegant but cold, light Russian inflection, controlled contempt.",
-      "insults": ["You mistake size for strength.", "Your frontier would shame a provincial governor."],
-      "compliments": ["You offered a competent resistance.", "That was not an unworthy maneuver."]
+      "smallPortraitFile": "resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png",
+      "voice": { "stability": 0.42, "similarityBoost": 0.74, "style": 0.28, "useSpeakerBoost": true },
+      "voicePrompt": "Tsar of All Rus' in the 16th century, severe and theatrical, deep voice with deliberate menace, Old Church Slavonic cadence, religious-imperial gravity.",
+      "insults": ["You will kneel, or you will be buried in the earth you stand on.", "Streltsy do not parley with merchants."],
+      "compliments": ["You held the line. That earns my mercy, for now.", "A worthy opponent. The chronicles will remember you."]
     },
     {
       "civId": "Spanish",

@@ -271,20 +271,9 @@
       <prereqtech>-1</prereqtech>
       <age>0</age>
     </card>
-    <card>
-      <name>HCShipBalloons</name>
-      <maxcount>1</maxcount>
-      <level>10</level>
-      <prereqtech>-1</prereqtech>
-      <age>0</age>
-    </card>
-    <card>
-      <name>HCXPAdvancedBalloon</name>
-      <maxcount>1</maxcount>
-      <level>25</level>
-      <prereqtech>-1</prereqtech>
-      <age>3</age>
-    </card>
+    <!-- Hot Air Balloon cards removed: anachronistic for Suleiman the
+         Magnificent (r. 1520-1566). The Montgolfier brothers' hot air
+         balloon was not invented until 1783. -->
     <card>
       <name>DEHCShipAzaps1</name>
       <maxcount>1</maxcount>
@@ -2169,8 +2158,6 @@
       <tech x="5.1" y="2.0">HCShipCows</tech>
       <tech x="6.1" y="1.0">HCShipCoveredWagons</tech>
       <tech x="6.1" y="3.0">HCShipCoveredWagons2</tech>
-      <tech x="6.1" y="5.0">HCXPAdvancedBalloon</tech>
-      <tech x="6.1" y="5.0">HCShipBalloons</tech>
       <tech x="7.1" y="1.0">HCExplorerOttoman</tech>
       <tech x="7.1" y="2.0">HCShipSurgeons</tech>
       <tech x="7.1" y="3.0">HCXPShipSurgeons2</tech>
@@ -2200,8 +2187,6 @@
       <tech x="5.1" y="2.0">HCShipCows</tech>
       <tech x="6.1" y="1.0">HCShipCoveredWagons</tech>
       <tech x="6.1" y="3.0">HCShipCoveredWagons2</tech>
-      <tech x="6.1" y="5.0">HCXPAdvancedBalloon</tech>
-      <tech x="6.1" y="5.0">HCShipBalloons</tech>
       <tech x="7.1" y="1.0">HCExplorerOttoman</tech>
       <tech x="7.1" y="2.0">HCShipSurgeons</tech>
       <tech x="7.1" y="3.0">HCXPShipSurgeons2</tech>

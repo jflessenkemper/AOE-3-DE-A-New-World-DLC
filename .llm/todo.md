@@ -1,9 +1,51 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (tenth pass: gruesome-portrait fix, Italian Savoy shield, Crazy Horse → Gall string cleanup)
+## STATUS: ✅ COMPLETE — 2026-05-25 (eleventh pass: 4 flag historical repaints, 3 card anachronism fixes, Catherine/Ivan + Akbar/Shivaji consistency, oversized portrait resize)
 
 All tracks completed. Mod is deploy-ready. Validators 41/48 PASS, 0 FAIL.
-Latest re-run: 2026-05-25 20:05:45.
+Latest re-run: 2026-05-25 20:32:46.
+
+**Eleventh pass (this session)** — fixes applied:
+1. **4 flag historical repaints** via new `tools/cardextract/repaint_flags.py`:
+   - ANWBritish: Cross of St George red on white (Elizabeth I, pre-1606)
+   - ANWRussians: Black double-headed eagle on gold with crowned heads,
+     red shield with gold St George cross (Ivan IV Tsardom Imperial Coat of Arms)
+   - ANWEthiopians: Red/yellow/green tricolor with central Imperial seal
+     and Ethiopian-style cross (Menelik II, Ethiopian Empire 1897)
+   - ANWIndians: Bhagwa saffron with white sun (Shivaji's Maratha Confederacy banner)
+   - All 3 surfaces per civ updated (Flag_, postgame_flag_, flag_hc_)
+   - Pure-PIL implementation with cloth-fold wave shading preserved
+     via gaussian-blurred luminance mask normalized to [200..255]
+2. **3 card anachronism fixes**:
+   - HCXPFlorenceNightingale renamed "Florence Nightingale" → "Manor Infirmaries"
+     (period-neutral; works for both Elizabeth I British and Brock Canadians decks)
+   - ANWOttomans: removed `HCShipBalloons` + `HCXPAdvancedBalloon` cards
+     (Montgolfier 1783 anachronistic for Suleiman 1520s)
+   - ANWIndians: removed `YPHCMughalArchitecture` card (Shivaji's Maratha
+     Confederacy explicitly opposed Mughal architectural conventions);
+     also rebranded home-city name "Mughal India" → "Maratha India" (locID 60003)
+3. **Catherine/Ivan + Akbar/Shivaji rendering consistency**:
+   - `a_new_world.html`: 5 places updated — "Russians — Catherine" → "Ivan the Terrible",
+     "Indians — Akbar" → "Shivaji Maharaj", data-name + leader keys
+   - `tools/chatquotes/quotes.json` "catherine" block: rewrote 6 quote lines
+     to Ivan IV themes (Kazan/Astrakhan sieges, Streltsy, Oprichnik terror)
+   - `resources/audio/standard_leader_manifest.json`: leaderName +
+     articleUrl + voicePrompt + insults + compliments all switched to Ivan IV
+   - `tools/playtest/html_card_decks.json` shivaji block: reverted
+     "Akbar" → "Shivaji Maharaj" (engine binding "shivaji" is load-bearing,
+     leader_shivaji.xs exists)
+   - Engine personality binding "Catherine" preserved (load-bearing, see
+     `leader_catherine.xs` header which documents the Ivan IV rebrand)
+4. **Oversized lobby portraits resized**:
+   - `cpai_avatar_british.png`: 1254×1254 (2.5MB) → 256×256 (136KB)
+   - `cpai_avatar_dutch.png`: 1254×1254 (2.5MB) → 256×256 (133KB)
+   - Corresponding `.ddt` files regenerated via `tools/cardextract/png_to_ddt.py`
+   - All 40 lobby portraits now standardized at 256×256 ≤ 200KB
+5. **Hausa + Peruvian flags evaluated, kept as-is**:
+   - ANWHausa green Sokoto field with Islamic geometric knot — visually strong
+   - ANWPeruvians republic tricolor with coat of arms — historically appropriate
+
+Tenth pass (prior): gruesome portrait fix, Italian Savoy shield, Gall string cleanup.
 
 **Tenth pass (this session)** — fixes applied:
 1. **Gruesome ANWMayans portrait replaced**: was Canek-on-the-wheel

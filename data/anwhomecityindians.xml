@@ -733,13 +733,11 @@
       <prereqtech>YPHCTheRaj</prereqtech>
       <age>3</age>
     </card>
-    <card>
-      <name>YPHCMughalArchitecture</name>
-      <maxcount>1</maxcount>
-      <level>40</level>
-      <prereqtech>YPHCImprovedBuildingsTeam</prereqtech>
-      <age>1</age>
-    </card>
+    <!-- Mughal Architecture card removed: the ANW India civ represents
+         Shivaji's Maratha Confederacy (r. 1674-1680), which fought
+         against and culturally distanced itself from Mughal building
+         conventions. Hill-fort architecture (Deccan/Maratha) is
+         represented by other cards in this deck. -->
     <card>
       <name>YPHCShipCastleWagons1Indians</name>
       <maxcount>1</maxcount>
@@ -1765,7 +1763,6 @@
       <tech x="1.7" y="2">YPHCPioneersIndians</tech>
       <tech x="1.7" y="3">YPHCTheRaj</tech>
       <tech x="1.7" y="4">YPHCImprovedBuildingsTeam</tech>
-      <tech x="1.7" y="7">YPHCMughalArchitecture</tech>
       <tech x="3.8" y="2">YPHCShipCastleWagons1Indians</tech>
       <tech x="3.4" y="3">YPHCExtensiveFortificationsIndians</tech>
       <tech x="4.2" y="3">YPHCShipCastleWagons2Indians</tech>
@@ -1794,7 +1791,6 @@
       <tech x="1.7" y="2">YPHCPioneersIndians</tech>
       <tech x="1.7" y="3">YPHCTheRaj</tech>
       <tech x="1.7" y="4">YPHCImprovedBuildingsTeam</tech>
-      <tech x="1.7" y="7">YPHCMughalArchitecture</tech>
       <tech x="3.8" y="2">YPHCShipCastleWagons1Indians</tech>
       <tech x="3.4" y="3">YPHCExtensiveFortificationsIndians</tech>
       <tech x="4.2" y="3">YPHCShipCastleWagons2Indians</tech>
