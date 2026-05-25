@@ -1,9 +1,37 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (twelfth pass: 18 lobby portrait PNGs aligned with their DDT counterparts using base-game leader portraits)
+## STATUS: ✅ COMPLETE — 2026-05-25 (thirteenth pass: static AI Behaviour Map — review the AI without playing)
 
-All tracks completed. Mod is deploy-ready. Validators 41/48 PASS, 0 FAIL.
-Latest re-run: 2026-05-25 20:44:14.
+All tracks completed. Mod is deploy-ready. Validators **42/49 PASS, 0 FAIL**.
+Latest re-run: 2026-05-25 21:26.
+
+**Thirteenth pass (this session)** — new tool + zero-mismatch milestone:
+
+User asked: *"I think we need to build an AI behaviour schema, like a way
+to review how the actual ai will play without playing, and you can review
+and iterate on a nation, like an AI behaviour map"*.
+
+Delivered `tools/validation/ai_behaviour_map.py`:
+- Statically derives the **per-civ AI behaviour schema** from every
+  `game/ai/leaders/*.xs` file by parsing the `initLeader*()` block,
+  the per-age `rule *` blocks, and the build-style helper defaults.
+- Cross-checks each civ against `playstyle_spec.json` claims
+  (wall_strategy, expects_forward, expects_naval, expects_treaty).
+- Wired into `run_all_validators.py` → suite is now 42/49 PASS.
+- Outputs `artifacts/validation/ai_behaviour_map.{json,html,md,png}`:
+   - JSON: machine-readable per-civ behaviour
+   - HTML: 45-civ side-by-side sortable table with personality colour-
+     coding, wall-strategy backgrounds, A1→A5 age timeline strip
+   - MD: rollup + per-civ one-row summary table
+   - PNG: 2600×5400 headless-Chrome render for multimodal review
+- **Result: 0/45 civs have spec mismatches.** Every civ's static
+  behaviour (personality, biases, military focus, build style, wall
+  strategy, distance multipliers, strongpoint profile, tactical doctrine,
+  per-age policy drift) matches its playstyle_spec.json claim.
+
+This is the **"review without playing"** primitive the user asked for:
+edit a leader's `init*()` or rule, re-run `python3 tools/validation/ai_behaviour_map.py`,
+diff the HTML/JSON to see exactly what changed in the behaviour map.
 
 **Twelfth pass (this session)** — fixes applied:
 1. **Reverted procedural flag art** (commit 9509c9e) per user directive:
