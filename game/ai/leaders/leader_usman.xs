@@ -51,6 +51,10 @@ void initLeaderUsman(void)
    // Spec override: military_distance_band [1.1, 1.3]; DistributedEcoNetwork
    // default is 1.0 which falls below the band floor.
    gLLMilitaryDistanceMultiplier = 1.10;
+   // Spec doctrine_summary: "Surame fortress and trans-Saharan caravan
+   // lattice" — the single Sokoto/Surame fortress anchors the caravan
+   // network. Tower ring screens the markets; fort=1 for Surame itself.
+   llSetBuildStrongpointProfile(2, 1, 2, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
 
