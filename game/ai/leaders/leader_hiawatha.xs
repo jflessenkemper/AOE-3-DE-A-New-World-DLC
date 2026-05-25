@@ -35,6 +35,9 @@ void initLeaderHiawatha(void)
    // LL-BUILD-STYLE-BEGIN
    llUseShrineTradeNodeSpreadStyle(1);
    gLLEconomicDistanceMultiplier = 1.20;
+   // Spec override: military_distance_band [1.0, 1.3]; ShrineTradeNodeSpread
+   // default is 0.95 which falls below the band floor.
+   gLLMilitaryDistanceMultiplier = 1.05;
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
 

@@ -48,6 +48,9 @@ void initLeaderUsman(void)
    // LL-BUILD-STYLE-BEGIN
    llUseDistributedEconomicNetworkStyle(2);
    gLLEconomicDistanceMultiplier = 1.30;
+   // Spec override: military_distance_band [1.1, 1.3]; DistributedEcoNetwork
+   // default is 1.0 which falls below the band floor.
+   gLLMilitaryDistanceMultiplier = 1.10;
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
 

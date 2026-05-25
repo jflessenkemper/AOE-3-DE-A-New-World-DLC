@@ -38,6 +38,9 @@ void initLeaderMontezuma(void)
    // MobileNoWalls(5) by default; spec/playstyle_spec.json wants
    // ChokepointSegments(1) to lock down causeway approaches.
    gLLWallStrategy = cLLWallStrategyChokepointSegments;
+   // Spec override: military_distance_band [1.0, 1.3]; JungleGuerrilla
+   // default is 0.95 which falls below the band floor.
+   gLLMilitaryDistanceMultiplier = 1.05;
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.7, 0.3, 1, 3.0);
 

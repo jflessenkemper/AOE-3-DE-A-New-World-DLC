@@ -131,6 +131,9 @@ void initLegendaryRevolutionCommander(void)
       // LL-BUILD-STYLE-BEGIN
       llUseDistributedEconomicNetworkStyle(2);
       gLLEconomicDistanceMultiplier = 1.35;
+      // Spec override: military_distance_band [1.1, 1.3]; DistributedEcoNetwork
+      // default is 1.0 which falls below the band floor.
+      gLLMilitaryDistanceMultiplier = 1.10;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.8, 0.2, 2, 4.0);
       cvOkToBuildForts = true;
@@ -237,6 +240,9 @@ void initLegendaryRevolutionCommander(void)
       gLLTownCenterDistanceMultiplier = 1.40;
       // Spec override: Haitians Louverture doctrine — see playstyle_spec.json
       gLLWallStrategy = cLLWallStrategyChokepointSegments;
+      // Spec override: military_distance_band [1.0, 1.3]; JungleGuerrilla
+      // default is 0.95 which falls below the band floor.
+      gLLMilitaryDistanceMultiplier = 1.10;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
       cvOkToBuildForts = true;
@@ -258,6 +264,13 @@ void initLegendaryRevolutionCommander(void)
       gLLEconomicDistanceMultiplier = 1.40;
       // Spec override: Indonesians Diponegoro doctrine — see playstyle_spec.json
       gLLWallStrategy = cLLWallStrategyChokepointSegments;
+      // Spec override: military_distance_band [1.0, 1.3]; ShrineTradeNodeSpread
+      // default is 0.95 which falls below the band floor.
+      gLLMilitaryDistanceMultiplier = 1.05;
+      // Spec doctrine_summary: "Java War guerrilla and kraton fort" — keep
+      // the single kraton fort (fort=1, matching ShrineTradeNodeSpread default).
+      // Forward-fortified base preferred (preferFwd=true) for warband staging.
+      llSetBuildStrongpointProfile(1, 1, 2, true);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
       cvOkToBuildForts = true;
@@ -397,6 +410,9 @@ void initLegendaryRevolutionCommander(void)
       // LL-BUILD-STYLE-BEGIN
       llUseDistributedEconomicNetworkStyle(1);
       gLLEconomicDistanceMultiplier = 1.25;
+      // Spec override: military_distance_band [1.1, 1.3]; DistributedEcoNetwork
+      // default is 1.0 which falls below the band floor.
+      gLLMilitaryDistanceMultiplier = 1.10;
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.76, 0.24, 2, 4.0);
       cvOkToBuildForts = true;
