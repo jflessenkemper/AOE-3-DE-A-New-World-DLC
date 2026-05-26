@@ -258,6 +258,16 @@ VALIDATORS: list[ValidatorSpec] = [
                   "tools/validation/validate_doctrine_prose_theme.py",
                   warn_is_pass=False,
                   timeout_s=10),
+    # Hub test coverage: the random-map doctrine test arena
+    # (RandMaps/anwHubTest.xs) extended-cycle threshold must cover the
+    # longest *_before_ms claim in playstyle_spec.json. Locks the test
+    # script's milestone observation window against spec drift — if
+    # someone adds a civ with a 1500s wall deadline but the test caps
+    # at 1200s, this fires. Currently PASS with 300s headroom.
+    ValidatorSpec("hub_test_coverage",
+                  "tools/validation/validate_hub_test_coverage.py",
+                  warn_is_pass=False,
+                  timeout_s=10),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
     # Caught 24 broken-flag references on first run.
