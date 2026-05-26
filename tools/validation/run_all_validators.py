@@ -249,6 +249,15 @@ VALIDATORS: list[ValidatorSpec] = [
                   "tools/validation/validate_spec_vs_xs_doctrine.py",
                   warn_is_pass=False,
                   timeout_s=15),
+    # Doctrine prose theme alignment: each civ's doctrine_label /
+    # doctrine_summary / doctrine_prose must contain at least one
+    # keyword that matches its declared wall_strategy. Catches edits
+    # that drift the player-facing prose away from the engine doctrine
+    # (or vice versa). On first run: 45/45 PASS.
+    ValidatorSpec("doctrine_prose_theme",
+                  "tools/validation/validate_doctrine_prose_theme.py",
+                  warn_is_pass=False,
+                  timeout_s=10),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
     # Caught 24 broken-flag references on first run.
