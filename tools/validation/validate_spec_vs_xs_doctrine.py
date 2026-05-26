@@ -148,6 +148,66 @@ SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
 }
 
 
+def _verify_style_defaults_against_xs(xs_source: str) -> list[str]:
+    """Lock STYLE_DEFAULTS[*]['wall_strategy'] against the actual style helpers.
+
+    For each ``void llUse<Name>Style(...)`` definition in leaderCommon.xs, walk
+    the function body until the first ``gLLWallStrategy = cLLWallStrategy<X>;``
+    assignment and check that it matches our hardcoded STYLE_DEFAULTS entry.
+    Returns a list of mismatch strings; empty if every style helper is in sync
+    with our table.
+
+    This protects against the silent failure where a style helper in
+    leaderCommon.xs gets its default strategy changed but STYLE_DEFAULTS does
+    not — which would cause this validator to keep reporting PASS while the
+    engine doctrine has drifted.
+    """
+    issues: list[str] = []
+    # Match function header: `void llUse<Name>Style(...)` then take the body
+    # from the opening { to the matching }.
+    fn_header_re = re.compile(
+        r"^void\s+(llUse[A-Za-z]+Style)\s*\([^)]*\)\s*$", re.MULTILINE
+    )
+    code = _strip_comments(xs_source)
+    for m in fn_header_re.finditer(code):
+        fn_name = m.group(1)
+        if fn_name not in STYLE_DEFAULTS:
+            # Not every llUse*Style helper appears in our defaults table;
+            # only those used by ANW civs do. Skip unrelated ones.
+            continue
+        brace_start = code.find("{", m.end())
+        if brace_start < 0:
+            issues.append(f"{fn_name}: no opening brace after definition")
+            continue
+        # Find first gLLWallStrategy assignment inside the body (within the
+        # next ~600 chars — body of these helpers is short).
+        body_window = code[brace_start:brace_start + 800]
+        ws_match = re.search(
+            r"gLLWallStrategy\s*=\s*(cLLWallStrategy\w+)\s*;", body_window
+        )
+        if not ws_match:
+            issues.append(
+                f"{fn_name}: no gLLWallStrategy assignment in body — "
+                f"STYLE_DEFAULTS expects ws={STYLE_DEFAULTS[fn_name]['wall_strategy']}"
+            )
+            continue
+        const = ws_match.group(1)
+        if const not in WALL_STRATEGY_VALUES:
+            issues.append(
+                f"{fn_name}: unknown wall-strategy constant {const!r}"
+            )
+            continue
+        actual_ws = WALL_STRATEGY_VALUES[const]
+        expected_ws = STYLE_DEFAULTS[fn_name]["wall_strategy"]
+        if actual_ws != expected_ws:
+            issues.append(
+                f"{fn_name}: XS sets ws={actual_ws} ({WALL_STRATEGY_NAMES.get(actual_ws,'?')}) "
+                f"but STYLE_DEFAULTS expects ws={expected_ws} "
+                f"({WALL_STRATEGY_NAMES.get(expected_ws,'?')})"
+            )
+    return issues
+
+
 def _strip_comments(text: str) -> str:
     """Remove C-style line comments (//) from XS source."""
     lines = []
@@ -376,6 +436,18 @@ def main() -> int:
         return 2
     xs_raw = args.xs.read_text(encoding="utf-8")
     print(f"  Loaded leaderCommon.xs ({len(xs_raw)} bytes)")
+
+    # Self-check: lock STYLE_DEFAULTS against the actual style helpers so the
+    # validator can't silently report PASS after an XS edit that drifts a
+    # style's default wall_strategy without updating our table.
+    style_issues = _verify_style_defaults_against_xs(xs_raw)
+    if style_issues:
+        print()
+        print("  ERROR: STYLE_DEFAULTS out of sync with leaderCommon.xs:")
+        for issue in style_issues:
+            print(f"    - {issue}")
+        return 2
+    print("  STYLE_DEFAULTS table in sync with XS style helpers")
 
     # Extract the llApplyBuildStyleForActiveCiv function body once.
     apply_fn_body = _extract_function_body(xs_raw, "llApplyBuildStyleForActiveCiv")
