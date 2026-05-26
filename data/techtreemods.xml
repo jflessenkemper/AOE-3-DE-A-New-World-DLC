@@ -9557,4 +9557,662 @@
 		</Effects>
 	</Tech>
 
+	<!-- ============================================================
+	     RvltMod and vanilla-alias stubs added for v1.0 release.
+	     Each mirrors the corresponding ANW* or base-game tech.
+	     DBIDs 40038-40073.
+	     ============================================================ -->
+
+	<!-- RvltModHCMilitaryFrontier - mirrors ANWHCMilitaryFrontier -->
+	<Tech name='RvltModHCMilitaryFrontier' type='Normal'>
+		<DBID>40038</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\military_frontier.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' action='SpawnGrenzerOnce' amount='1.00' subtype='ActionAdd' unittype='Outpost' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='SpawnGrenzerOnce' amount='1.00' subtype='ActionAdd' unittype='Blockhouse' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='TechStatus' status='active'>DEREVMilitaryFrontierShadow</Effect>
+			<Effect type='Data' amount='1.00' subtype='BuildLimit' relativity='Absolute'>
+				<Target type='ProtoUnit'>Outpost</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCMagyarGrenadiers - mirrors ANWHCMagyarGrenadiers -->
+	<Tech name='RvltModHCMagyarGrenadiers' type='Normal'>
+		<DBID>40039</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\garde_imperial\garde_imperial_2_icon_64x64.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' action='SpawnMagyarGrenadierOnce' amount='1.00' subtype='ActionAdd' unittype='Outpost' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='SpawnMagyarGrenadierOnce' amount='1.00' subtype='ActionAdd' unittype='Blockhouse' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCHajduks - mirrors ANWHCHajduks -->
+	<Tech name='RvltModHCHajduks' type='Normal'>
+		<DBID>40040</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\hajduks.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' action='SpawnHajdukOnce' amount='1.00' subtype='ActionAdd' unittype='Outpost' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='SpawnHajdukOnce' amount='1.00' subtype='ActionAdd' unittype='Blockhouse' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='TechStatus' status='active'>DEREVHajduk</Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCMagyarHussarsAlt - mirrors ANWHCMagyarHussarsAlt -->
+	<Tech name='RvltModHCMagyarHussarsAlt' type='Normal'>
+		<DBID>40041</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\hungarian_hussars.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' action='SpawnMagyarHussarOnce' amount='1.00' subtype='ActionAdd' unittype='Outpost' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='SpawnMagyarHussarOnce' amount='1.00' subtype='ActionAdd' unittype='Blockhouse' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCPandours - mirrors ANWHCPandours -->
+	<Tech name='RvltModHCPandours' type='Normal'>
+		<DBID>40042</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\mercenaries\pandour\hc_pandour_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='deMercPandour' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='TechStatus' status='active'>DEREVPandour</Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCCrabats - mirrors ANWHCCrabats -->
+	<Tech name='RvltModHCCrabats' type='Normal'>
+		<DBID>40043</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\natives\europeans\crabat_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='12.00' subtype='FreeHomeCityUnit' unittype='deSaloonCrabat' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='TechStatus' status='active'>DEREVCrabat</Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCLegionHungarian - mirrors ANWHCLegionHungarian -->
+	<Tech name='RvltModHCLegionHungarian' type='Normal'>
+		<DBID>40044</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<Cost resourcetype='Food'>1500.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\americans\legion_kovat.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='TechStatus' status='active'>VeteranHussars</Effect>
+			<Effect type='TechStatus' status='active'>ANWMagyarHussars</Effect>
+			<Effect type='Data' amount='1.15' subtype='Hitpoints' relativity='BasePercent'>
+				<Target type='ProtoUnit'>Hussar</Target></Effect>
+			<Effect type='Data' amount='15.00' subtype='FreeHomeCityUnit' unittype='Hussar' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCShipEuropeanFleet - mirrors ANWHCShipEuropeanFleet -->
+	<Tech name='RvltModHCShipEuropeanFleet' type='Normal'>
+		<DBID>40045</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\danubian_flotilla.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='3.00' subtype='FreeHomeCityUnit' unittype='Galley' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCShipFortWagonOutpost - mirrors ANWHCShipFortWagonOutpost -->
+	<Tech name='RvltModHCShipFortWagonOutpost' type='Normal'>
+		<DBID>40046</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\border_fortress.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.00' subtype='FreeHomeCityUnit' unittype='FortWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='BuildLimit' relativity='Absolute'>
+				<Target type='ProtoUnit'>FortFrontier</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='BuildLimit' relativity='Absolute'>
+				<Target type='ProtoUnit'>Outpost</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCWallachianArchers - mirrors ANWHCWallachianArchers -->
+	<Tech name='RvltModHCWallachianArchers' type='Normal'>
+		<DBID>40047</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\wallachian_horse_archers.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' action='SpawnHorseArcherOnce' amount='1.00' subtype='ActionAdd' unittype='Outpost' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='SpawnHorseArcherOnce' amount='1.00' subtype='ActionAdd' unittype='Blockhouse' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='TechStatus' status='active'>VeteranCavalryArchersShadow</Effect>
+			<Effect type='Data' amount='1.10' subtype='MaximumVelocity' relativity='BasePercent'>
+				<Target type='ProtoUnit'>CavalryArcher</Target></Effect>
+			<Effect type='Data' amount='0.67' subtype='HitPoints' relativity='BasePercent'>
+				<Target type='ProtoUnit'>CavalryArcher</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCShipCavArchers - mirrors ANWHCShipCavArchers -->
+	<Tech name='RvltModHCShipCavArchers' type='Normal'>
+		<DBID>40048</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\infinite_cav_archer.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='8.00' subtype='FreeHomeCityUnit' unittype='CavalryArcher' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCRoshiorDragoons - mirrors ANWHCRoshiorDragoons -->
+	<Tech name='RvltModHCRoshiorDragoons' type='Normal'>
+		<DBID>40049</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\rosior_dragoons.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' action='SpawnRoshiorOnce' amount='1.00' subtype='ActionAdd' unittype='Outpost' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='SpawnRoshiorOnce' amount='1.00' subtype='ActionAdd' unittype='Blockhouse' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>Dragoon</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCRussianExpArmy - mirrors ANWHCRussianExpArmy -->
+	<Tech name='RvltModHCRussianExpArmy' type='Normal'>
+		<DBID>40050</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<Cost resourcetype='Gold'>500.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\asians\consulate\rus_armies\rus_army_icon_64.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='9.00' subtype='FreeHomeCityUnit' unittype='ypConsulateKalmuck' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='3.00' subtype='FreeHomeCityUnit' unittype='ypConsulateCulverin' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCPhanariotes - mirrors ANWHCPhanariotes -->
+	<Tech name='RvltModHCPhanariotes' type='Normal'>
+		<DBID>40051</DBID>
+		<ResearchPoints>5.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\danubian_principalities.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>NativeEmbassy</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='FreeHomeCityUnit' unittype='deEmbassyTravois' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect civ='Phanar' type='Data' amount='1.00' subtype='UpgradeSubCivAlliance' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deNatMercEvzone</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deNatMercBoyar</Target></Effect>
+			<Effect type='TechStatus' status='active'>DEVeteranPhanar</Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCFlightArcheryRomanians - mirrors ANWHCFlightArcheryRomanians -->
+	<Tech name='RvltModHCFlightArcheryRomanians' type='Normal'>
+		<DBID>40052</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\ottoman\flight_archery.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.15' subtype='Damage' allactions='1' relativity='BasePercent'>
+				<Target type='ProtoUnit'>AbstractArcher</Target></Effect>
+			<Effect type='Data' action='BowAttack' amount='0.00' subtype='ActionEnable' relativity='Absolute'>
+				<Target type='ProtoUnit'>CavalryArcher</Target></Effect>
+			<Effect type='Data' action='VolleyRangedAttack' amount='1.00' subtype='ActionEnable' relativity='Absolute'>
+				<Target type='ProtoUnit'>CavalryArcher</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCSovnyaRomanian - mirrors ANWHCSovnyaRomanian -->
+	<Tech name='RvltModHCSovnyaRomanian' type='Normal'>
+		<DBID>40053</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\russian\sovnya.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' action='ChargeAttack' amount='5.00' subtype='Damage' relativity='Absolute'>
+				<Target type='ProtoUnit'>CavalryArcher</Target></Effect>
+			<Effect type='Data' action='ChargeAttack' amount='1.00' subtype='DamageArea' relativity='Absolute'>
+				<Target type='ProtoUnit'>CavalryArcher</Target></Effect>
+			<Effect type='Data' action='DefendHandAttack' amount='4.00' subtype='Damage' relativity='Absolute'>
+				<Target type='ProtoUnit'>Halberdier</Target></Effect>
+			<Effect type='Data' action='CoverHandAttack' amount='4.00' subtype='Damage' relativity='Absolute'>
+				<Target type='ProtoUnit'>Halberdier</Target></Effect>
+			<Effect type='Data' action='MeleeHandAttack' amount='4.00' subtype='Damage' relativity='Absolute'>
+				<Target type='ProtoUnit'>Halberdier</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCMetis - ships 12 Metis Pathfinders (mirrors ANWHCMetis) -->
+	<Tech name='RvltModHCMetis' type='Normal'>
+		<DBID>40054</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\infinite_metis_pathfinder.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='12.00' subtype='FreeHomeCityUnit' unittype='Settler' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCLlaneros - mirrors ANWHCLlaneros -->
+	<Tech name='RvltModHCLlaneros' type='Normal'>
+		<DBID>40055</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\spc\outlaws\outlaw_rider_icon_64x64.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='Cow' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='10.00' subtype='BuildLimit' relativity='Absolute'>
+				<Target type='ProtoUnit'>Cow</Target></Effect>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='deREVLlanero' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deREVLlanero</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>Cow</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCJaguncos - mirrors ANWHCJaguncos -->
+	<Tech name='RvltModHCJaguncos' type='Normal'>
+		<DBID>40056</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\spc\outlaws\outlaw_rider_icon_64x64.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='Cow' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='10.00' subtype='BuildLimit' relativity='Absolute'>
+				<Target type='ProtoUnit'>Cow</Target></Effect>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='deREVJagunco' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deREVJagunco</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>Cow</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCGranaderos - mirrors ANWHCGranaderos -->
+	<Tech name='RvltModHCGranaderos' type='Normal'>
+		<DBID>40057</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\granaderos.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='Cow' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='10.00' subtype='BuildLimit' relativity='Absolute'>
+				<Target type='ProtoUnit'>Cow</Target></Effect>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='deREVGranadero' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deREVGranadero</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>Cow</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCMercsMamelukes - ships 4 Mamelukes -->
+	<Tech name='RvltModHCMercsMamelukes' type='Normal'>
+		<DBID>40058</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<Cost resourcetype='Gold'>1000.0000</Cost>
+		<ResearchPoints>60.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\mercenaries\mameluke\hc_mameluke_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>DEFortressMercShipment</Flag>
+		<Effects>
+			<Effect type='Data' amount='4.00' subtype='FreeHomeCityUnit' unittype='MercMameluke' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCBuenosAires - mirrors ANWHCBuenosAires -->
+	<Tech name='RvltModHCBuenosAires' type='Normal'>
+		<DBID>40059</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\buenos_aires.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='2.00' subtype='FreeHomeCityUnit' unittype='deLombardWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='3.00' subtype='FreeHomeCityUnit' unittype='deTradingPostWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCUffizi - mirrors ANWHCUffizi -->
+	<Tech name='RvltModHCUffizi' type='Normal'>
+		<DBID>40060</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>30.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\italians\uffizi.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.00' subtype='FreeHomeCityUnit' unittype='ypChurchWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' action='AutoGatherXP' amount='1.00' subtype='ActionEnable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deLombard</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deBasilica</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCREVCuzco - mirrors ANWHCREVCuzco -->
+	<Tech name='RvltModHCREVCuzco' type='Normal'>
+		<DBID>40061</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<Cost resourcetype='Wood'>1000.0000</Cost>
+		<ResearchPoints>60.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\cuzco.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='Data' amount='10.00' subtype='FreeHomeCityUnit' unittype='deImperialWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='2.00' subtype='FreeHomeCityUnit' unittype='deProspectorWagonSilver' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCREVMXCaliforniaStatehood - mirrors ANWHCREVMXCaliforniaStatehood -->
+	<Tech name='RvltModHCREVMXCaliforniaStatehood' type='Normal'>
+		<DBID>40062</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\mexicans\revolutions\california_statehood.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.00' subtype='FreeHomeCityUnit' unittype='deStateCapitolWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitol</Target></Effect>
+			<Effect type='TechStatus' status='obtainable'>DEOregonTrail</Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainCoveredWagon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainHaciendaWagon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainTradingPostWagon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainOutpostWagon</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCREVMXTexasStatehood - mirrors ANWHCREVMXTexasStatehood -->
+	<Tech name='RvltModHCREVMXTexasStatehood' type='Normal'>
+		<DBID>40063</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\mexicans\revolutions\texas_statehood.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.00' subtype='FreeHomeCityUnit' unittype='deStateCapitolWagon' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitol</Target></Effect>
+			<Effect type='TechStatus' status='obtainable'>DEOregonTrail</Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainCoveredWagon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainHaciendaWagon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainTradingPostWagon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>deStateCapitolTrainOutpostWagon</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCREVMXTexasMarines - mirrors ANWHCREVMXTexasMarines -->
+	<Tech name='RvltModHCREVMXTexasMarines' type='Normal'>
+		<DBID>40064</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\mexicans\revolutions\texas_marines.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='TechStatus' status='unobtainable'>DEUSLevy</Effect>
+			<Effect type='TechStatus' status='active'>DEUSConscription</Effect>
+			<Effect type='TechStatus' status='active'>DEHCUSMarines</Effect>
+			<Effect type='SetName' proto='deMinuteman' culture='none' newName='104620'></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCREVWagonWarfare - mirrors ANWHCREVWagonWarfare -->
+	<Tech name='RvltModHCREVWagonWarfare' type='Normal'>
+		<DBID>40065</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<Cost resourcetype='Wood'>400.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\cavalry\war_wagon\war_wagon_improved_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='0.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>Ruyter</Target></Effect>
+			<Effect type='Data' amount='0.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>Dragoon</Target></Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>WarWagon</Target></Effect>
+			<Effect type='TechStatus' status='active'>GuardWarWagons</Effect>
+			<Effect type='TechStatus' status='obtainable'>ImperialWarWagons</Effect>
+			<Effect type='CommandRemove' proto='Ruyter'><Target type='ProtoUnit'>Stable</Target></Effect>
+			<Effect type='CommandRemove' proto='Dragoon'><Target type='ProtoUnit'>Stable</Target></Effect>
+			<Effect type='CommandRemove' proto='Ruyter'><Target type='ProtoUnit'>FortFrontier</Target></Effect>
+			<Effect type='CommandRemove' proto='Dragoon'><Target type='ProtoUnit'>FortFrontier</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- RvltModHCShipWarElephant - mirrors ANWHCShipWarElephant -->
+	<Tech name='RvltModHCShipWarElephant' type='Normal'>
+		<DBID>40066</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\hc_infinite_war_elephants.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Effects>
+			<Effect type='SetOnShipmentSentTech' amount='1.00'>ANWShipWarElephant</Effect>
+			<Effect type='TechStatus' status='active'>ANWWarElephantShadow</Effect>
+			<Effect type='TechStatus' status='active'>ANWWarElephantShipShadowInf</Effect>
+			<Effect type='Data' amount='1.00' subtype='Enable' relativity='Absolute'>
+				<Target type='ProtoUnit'>ypNatMercWarElephant</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- HCXPShipDogSoldiers1 - 4 Dog Soldiers -->
+	<Tech name='HCXPShipDogSoldiers1' type='Normal'>
+		<DBID>40067</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\hc_sx_axe_rider_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='4.00' subtype='FreeHomeCityUnit' unittype='xpDogSoldier' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- HCXPShipDogSoldiers3 - 12 Dog Soldiers -->
+	<Tech name='HCXPShipDogSoldiers3' type='Normal'>
+		<DBID>40068</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\hc_sx_axe_rider_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='12.00' subtype='FreeHomeCityUnit' unittype='xpDogSoldier' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- HCXPShipDogSoldiersTeam1 - team bonus 4 Dog Soldiers -->
+	<Tech name='HCXPShipDogSoldiersTeam1' type='Normal'>
+		<DBID>40069</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\art\units\hc_sx_axe_rider_icon.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='4.00' subtype='FreeHomeCityUnit' unittype='xpDogSoldier' relativity='Absolute'>
+				<Target type='Player'></Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- HCXPCavalryCombatIroquois - all cavalry +15% HP and damage (mirrors HCXPCavalryCombatSioux) -->
+	<Tech name='HCXPCavalryCombatIroquois' type='Normal'>
+		<DBID>40070</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\hc_cavalry_combat\hc_cavalry_combat.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='Data' amount='1.15' subtype='Hitpoints' relativity='BasePercent'>
+				<Target type='ProtoUnit'>AbstractCavalry</Target></Effect>
+			<Effect type='Data' amount='1.15' subtype='Damage' allactions='1' relativity='BasePercent'>
+				<Target type='ProtoUnit'>AbstractCavalry</Target></Effect>
+		</Effects>
+	</Tech>
+
+	<!-- YPHCConsulateRelations - alias for ypHCConsulateRelations (case mismatch) -->
+	<Tech name='YPHCConsulateRelations' type='Normal'>
+		<DBID>40071</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\home_city\hc_Intervention.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='TechStatus' status='active'>ypHCConsulateRelations</Effect>
+		</Effects>
+	</Tech>
+
+	<!-- YPHCConsulateRelationsIndians - alias for ypHCConsulateRelationsIndians (case mismatch) -->
+	<Tech name='YPHCConsulateRelationsIndians' type='Normal'>
+		<DBID>40072</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\home_city\hc_Intervention.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Flag>YPIgnorePopCostBuildLimitFreeHCUnitIfTechObtainable</Flag>
+		<Flag>DEForceLegacyIgnoreBehavior</Flag>
+		<Effects>
+			<Effect type='TechStatus' status='active'>ypHCConsulateRelations</Effect>
+			<Effect type='TechStatus' status='active'>ypHCConsulateRelationsIndians</Effect>
+		</Effects>
+	</Tech>
+
+	<!-- DEHCRevFrenchRoyalArmy - alias for DEHCFrenchRoyalArmy (Rev vs REV case mismatch in deck) -->
+	<Tech name='DEHCRevFrenchRoyalArmy' type='Normal'>
+		<DBID>40073</DBID>
+		<Cost resourcetype='Ships'>1.0000</Cost>
+		<ResearchPoints>40.0000</ResearchPoints>
+		<Status>UNOBTAINABLE</Status>
+		<Icon>resources\images\icons\techs\revolution\napoleonic_royal_army.png</Icon>
+		<Flag>HomeCity</Flag>
+		<Effects>
+			<Effect type='TechStatus' status='active'>DEHCFrenchRoyalArmy</Effect>
+		</Effects>
+	</Tech>
+
 </techtreemods>
