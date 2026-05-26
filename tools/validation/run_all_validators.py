@@ -211,6 +211,31 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("blurb_coverage",
                   "tools/validation/validate_blurb_coverage.py",
                   timeout_s=15),
+    # Proto unit/building references: every entry in unique_units and
+    # unique_buildings in anw_civ_blurbs.json must resolve to a real
+    # engine display name (stringtable, stringmods, or proto/techtree
+    # ProtoUnit token). Caught polish_pass_7 phantoms ("Buddhist Temple",
+    # "Sacre Infermeria", "Horse Artillery") + the "Fire Lancer"
+    # phantom + "Dorabant" vs engine-spelled "Dorobant".
+    ValidatorSpec("proto_unit_references",
+                  "tools/validation/validate_proto_unit_references.py",
+                  timeout_s=20),
+    # Icon / portrait / flag path existence on all ANW homecity XMLs
+    # + civmods.xml.  Verifies every <portrait>, <smallportraittexture>,
+    # <smallportraittexturewpf>, etc. resolves to a real file (mod tree
+    # PNG or base game DDT in extracted_bar_index.json).  Caught 2
+    # ManufacturingPlant portrait typos (Ethiopians + Portuguese).
+    ValidatorSpec("icon_path_existence",
+                  "tools/validation/validate_icon_path_existence.py",
+                  timeout_s=15),
+    # Doctrine template drift: civs sharing identical doctrine_prose text
+    # in playstyle_spec.json must also share critical claims fields
+    # (wall_strategy, first_military_building, expects_* booleans).
+    # Caught Romanians-vs-French-Canadians drift where prose was
+    # "civic militia outpost" but claims said barracks-first.
+    ValidatorSpec("doctrine_template_drift",
+                  "tools/validation/validate_doctrine_template_drift.py",
+                  timeout_s=15),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
     # Caught 24 broken-flag references on first run.

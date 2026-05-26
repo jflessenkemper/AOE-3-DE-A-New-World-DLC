@@ -749,8 +749,8 @@
       "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
       "claims": {
         "wall_strategy": 3,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
+        "first_military_building": "outpost",
+        "expects_forward": false,
         "military_distance_band": [
           0.8,
           1.1

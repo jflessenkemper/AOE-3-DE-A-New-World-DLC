@@ -98,7 +98,7 @@
     "unique_units": [
       "Chu Ko Nu",
       "Iron Flail",
-      "Fire Lancer",
+      "Meteor Hammer",
       "Flamethrower"
     ],
     "unique_buildings": [
@@ -436,7 +436,7 @@
     "civ_bonus": "Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.",
     "unique_units": [
       "Rosior Dragoon",
-      "Dorabant"
+      "Dorobant"
     ],
     "unique_buildings": [],
     "playstyle": "Tight civic core with Outpost militia; Rosior Dragoon cavalry from every Outpost; reactive defense that counter-punches hard.",

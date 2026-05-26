@@ -2500,7 +2500,7 @@
     <camera>portuguese\portuguese_homecity_manufacturing_plant_camera.cam</camera>
     <widescreencamera>portuguese\portuguese_homecity_plant_widescreencamera.cam</widescreencamera>
     <unlocklevel>0</unlocklevel>
-    <portrait>homecity\buildings_west\buildings_west\_icon</portrait>
+    <portrait>ui\home_city\manufacturing_plant_icon</portrait>
     <displaynamestringid>24972</displaynamestringid>
     <rolloverstringid>25535</rolloverstringid>
     <obtainabletechs>
