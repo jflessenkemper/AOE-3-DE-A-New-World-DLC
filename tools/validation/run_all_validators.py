@@ -236,6 +236,19 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("doctrine_template_drift",
                   "tools/validation/validate_doctrine_template_drift.py",
                   timeout_s=15),
+    # Spec-vs-XS doctrine check: for each ANW civ in playstyle_spec.json,
+    # extracts the actual wall_strategy, first_military_building, and
+    # expects_forward values produced by the XS dispatch in
+    # leaderCommon.xs:llApplyBuildStyleForActiveCiv() (plus
+    # leader_revolution_commanders.xs overrides for RvltMod* civs) and
+    # compares them to the claims in the spec. Catches doc-vs-engine drift
+    # that static prose checks cannot detect — e.g. a style helper's default
+    # forward-base setting disagrees with the spec's expects_forward claim.
+    # On first run: 45/45 PASS (post-fix XS state). Must stay 45/45 green.
+    ValidatorSpec("spec_vs_xs_doctrine",
+                  "tools/validation/validate_spec_vs_xs_doctrine.py",
+                  warn_is_pass=False,
+                  timeout_s=15),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
     # Caught 24 broken-flag references on first run.
