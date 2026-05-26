@@ -57,7 +57,7 @@ FLAGS = [
     "Flag_Colombian.png",
     "Flag_Egyptians.png",
     "Flag_Finnish.png",
-    "Flag_SPC_Canadian.png",  # French Canadians
+    "Flag_SPC_Canadian.png",  # Lower Canada (Patriote — engine spec_key "French Canadians Papineau Revolution")
     "Flag_Haitian.png",
     "Flag_Hungarian.png",
     "Flag_Indonesian.png",

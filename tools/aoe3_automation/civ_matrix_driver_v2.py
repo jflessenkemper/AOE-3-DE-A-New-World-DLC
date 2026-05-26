@@ -120,7 +120,7 @@ PICKER_LIST = [
     "Ethiopians",                      # 14
     "Finnish",                         # 15 mod
     "French",                          # 16
-    "French Canadians",                # 17 mod
+    "Lower Canada",                    # 17 mod (display name; spec_key remains "French Canadians Papineau Revolution")
     "Germans",                         # 18
     "Haitians",                        # 19 mod
     "Haudenosaunee",                   # 20
@@ -153,7 +153,6 @@ PICKER_LIST = [
 
 # 5 user-requested civs with their alphabetical indices
 TARGETS = [
-    ("baja_californians", 3),   # guess: around Barbary
     ("brazil",            4),
     ("central_americans", 8),
     ("romanians",         38),

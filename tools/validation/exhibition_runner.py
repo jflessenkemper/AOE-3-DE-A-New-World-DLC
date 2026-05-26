@@ -1,8 +1,8 @@
-"""Exhibition-match sweep: launch the game 46 times (once per ANW civ) in a loop,
+"""Exhibition-match sweep: launch the game 44 times (once per ANW civ) in a loop,
 capture logs, validate each match, and generate a pass/fail report.
 
 This is an unattended orchestrator that:
-1. Loads all 46 civ entries from playstyle_spec.json (the ANW mod roster)
+1. Loads all 44 civ entries from playstyle_spec.json (the ANW mod roster)
 2. For each civ, launches 1v1 AI match (test_civ vs ANWNapoleonicFrance), Hard difficulty
 3. Truncates Age3Log.txt before each match to isolate per-civ log lines
 4. Forces game exit after --match-seconds (default 180s)
@@ -156,68 +156,76 @@ _ALLY_FLAG_Y = 276
 # Civ-token resolution helpers
 # ---------------------------------------------------------------------------
 
-# Map from HTML dev-table civ_token to the ANW lobby picker token used by the
-# engine and lobby_driver.py.  The ANW mod re-wraps every base-game civ under
-# an ANW* identifier; revolution civs already carry the ANW* prefix in the HTML.
-_HTML_TOKEN_TO_ANW: dict[str, str] = {
-    # Base-game civs
-    "British":      "ANWBritish",
-    "French":       "ANWFrench",
-    "Dutch":        "ANWDutch",
-    "Germans":      "ANWGermans",
-    "Ottomans":     "ANWOttomans",
-    "Portuguese":   "ANWPortuguese",
-    "Russians":     "ANWRussians",
-    "Spanish":      "ANWSpanish",
-    "DESwedish":    "ANWSwedes",
-    "DEEthiopians": "ANWEthiopians",
-    "DEHausa":      "ANWHausa",
-    "Chinese":      "ANWChinese",
-    "Japanese":     "ANWJapanese",
-    "Indians":      "ANWIndians",
-    "DEItalians":   "ANWItalians",
-    "DEMaltese":    "ANWMaltese",
-    "DEMexicans":   "ANWMexicans",
-    "DEAmericans":  "ANWUSA",
-    "DEInca":       "ANWInca",
-    "XPAztec":      "ANWAztecs",
-    "XPIroquois":   "ANWHaudenosaunee",
-    "XPSioux":      "ANWLakota",
-    # ANW revolution / new civs — already in ANW* form
-    "ANWArgentines":        "ANWArgentines",
-    "ANWBajaCalifornians":  "ANWBajaCalifornians",
-    "ANWBarbary":           "ANWBarbary",
-    "ANWBrazil":            "ANWBrazil",
-    "ANWCalifornians":      "ANWCalifornians",
-    "ANWCanadians":         "ANWCanadians",
-    "ANWCentralAmericans":  "ANWCentralAmericans",
-    "ANWChileans":          "ANWChileans",
-    "ANWColumbians":        "ANWColumbians",
-    "ANWEgyptians":         "ANWEgyptians",
-    "ANWFinnish":           "ANWFinnish",
-    "ANWHungarians":        "ANWHungarians",
-    "ANWFrenchCanadians":   "ANWFrenchCanadians",
-    "ANWHaitians":          "ANWHaitians",
-    "ANWIndonesians":       "ANWIndonesians",
-    "ANWMayans":            "ANWMayans",
-    "ANWNapoleonicFrance":  "ANWNapoleonicFrance",
-    "ANWPeruvians":         "ANWPeruvians",
-    "ANWRevFrance":         "ANWRevFrance",
-    "ANWRioGrande":         "ANWRioGrande",
-    "ANWRomanians":         "ANWRomanians",
-    "ANWSouthAfricans":     "ANWSouthAfricans",
-    "ANWTexians":           "ANWTexians",
-    "ANWYucatan":           "ANWYucatan",
-}
+# Map from playstyle_spec.json `civ_label` to the ANW lobby picker token used
+# by the engine and lobby_driver.py. The ANW mod re-wraps every base-game civ
+# under an ANW* identifier; revolution civs already carry the ANW* prefix.
+#
+# 2026-05-18: Reverted from HTML-driven `Civ token` lookup to a direct
+# civ_label map. The HTML format dropped the dev-table `Civ token` cells, so
+# the previous extract_html_reference-based resolution returned None for all
+# 44 civs. playstyle_spec.json is the canonical source of truth for the
+# 44-civ roster, and every entry has a 1:1 .personality file at
+# `game/ai/anw{lowercase_token}.personality`.
+# Stub civs present in playstyle_spec.json but with NO civmods.xml entry.
+# These were dropped from the review sites in the 2026-05-19 audit
+# (artifacts/validation/civ_art_audit.md). The runner skips them silently
+# instead of flagging them as "UNRESOLVED" warnings — they are not real
+# ANW civs, and including them in the denominator distorts the 100%-
+# coverage target. The civ_label values must match playstyle_spec entries.
+_STUB_CIV_LABELS: frozenset[str] = frozenset({
+    "Californians",
+    "Central Americans",
+    "Lower Canada",
+    "Rio Grande",
+    "Yucatan",
+})
 
-# Sentinel used for revolution civs that share the parent civ's personality
-# (no standalone .personality file — the AI logic lives in
-# game/ai/leaders/leader_revolution_commanders.xs).
-_REVOLUTION_COMMANDERS_XS = "leader_revolution_commanders"
+_CIV_LABEL_TO_ANW: dict[str, str] = {
+    "Argentines":           "ANWArgentines",
+    "Aztecs":               "ANWAztecs",
+    "Barbary":              "ANWBarbary",
+    "Brazil":               "ANWBrazil",
+    "British":              "ANWBritish",
+    "Canadians":            "ANWCanadians",
+    "Chileans":             "ANWChileans",
+    "Chinese":              "ANWChinese",
+    "Columbians":           "ANWColumbians",
+    "Dutch":                "ANWDutch",
+    "Egyptians":            "ANWEgyptians",
+    "Ethiopians":           "ANWEthiopians",
+    "Finnish":              "ANWFinnish",
+    "French Louis":         "ANWFrench",
+    "Germans":              "ANWGermans",
+    "Haitians":             "ANWHaitians",
+    "Haudenosaunee":        "ANWHaudenosaunee",
+    "Hausa":                "ANWHausa",
+    "Hungarians":           "ANWHungarians",
+    "Inca":                 "ANWInca",
+    "Indians":              "ANWIndians",
+    "Indonesians":          "ANWIndonesians",
+    "Italians":             "ANWItalians",
+    "Japanese":             "ANWJapanese",
+    "Lakota":               "ANWLakota",
+    "Maltese":              "ANWMaltese",
+    "Mayans":               "ANWMayans",
+    "Mexicans":             "ANWMexicans",
+    "Napoleonic France":    "ANWNapoleonicFrance",
+    "Ottomans":             "ANWOttomans",
+    "Peruvians":            "ANWPeruvians",
+    "Portuguese":           "ANWPortuguese",
+    "Revolutionary France": "ANWRevFrance",
+    "Romanians":            "ANWRomanians",
+    "Russians":             "ANWRussians",
+    "South Africans":       "ANWSouthAfricans",
+    "Spanish":              "ANWSpanish",
+    "Swedes":               "ANWSwedes",
+    "Texians":              "ANWTexians",
+    "United States":        "ANWUSA",
+}
 
 
 def _build_roster() -> list[dict]:
-    """Build the 46-entry ANW roster from playstyle_spec.json + a_new_world.html.
+    """Build the 44-entry ANW roster from playstyle_spec.json.
 
     Each entry is a dict with:
       data_name           — spec key, used for log correlation and --only filter
@@ -225,64 +233,32 @@ def _build_roster() -> list[dict]:
       leader_label        — human-readable leader     (e.g. "San Martin Revolution")
       engine_civ_token    — ANW picker token          (e.g. "ANWArgentines")
       engine_leader_token — personality stem / leader id for log matching
-      personality_file    — full personality path from HTML
+      personality_file    — full personality path
       resolved            — True when engine_civ_token could be determined
     """
     spec_path = REPO_ROOT / "playstyle_spec.json"
-    html_path = REPO_ROOT / "a_new_world.html"
 
-    # Load playstyle spec
     spec: dict[str, dict] = {}
     if spec_path.exists():
         raw = json.loads(spec_path.read_text(encoding="utf-8"))
         spec = raw.get("civs", {})
 
-    # Parse HTML to get civ_token + personality_file per data_name
-    html_lookup: dict[str, dict] = {}  # data_name -> {civ_token, personality_file}
-    if html_path.exists():
-        try:
-            from tools.validation.extract_html_reference import parse_html
-            html_civs, _ = parse_html(html_path)
-            for hc in html_civs:
-                personality = hc.personality_file or ""
-                # Normalise the "Revolution civ; …" long-form value
-                if "leader_revolution_commanders" in personality:
-                    personality = _REVOLUTION_COMMANDERS_XS
-                html_lookup[hc.data_name] = {
-                    "civ_token": hc.civ_token or "",
-                    "personality_file": personality,
-                }
-        except Exception as exc:
-            print(f"[exhibition_runner] WARNING: HTML parse failed: {exc}", file=sys.stderr)
-
     roster: list[dict] = []
     for data_name, entry in spec.items():
-        civ_label   = entry.get("civ_label", data_name)
+        civ_label    = entry.get("civ_label", data_name)
         leader_label = entry.get("leader_label", "")
 
-        html_entry       = html_lookup.get(data_name, {})
-        raw_civ_token    = html_entry.get("civ_token", "")
-        personality_file = html_entry.get("personality_file", "")
-
-        # Resolve to ANW engine token
-        engine_civ_token = _HTML_TOKEN_TO_ANW.get(raw_civ_token, "")
-        if not engine_civ_token and raw_civ_token:
-            # Fallback: if the html already gave us an ANW* form we don't have
-            # mapped above, accept it as-is.
-            if raw_civ_token.startswith("ANW"):
-                engine_civ_token = raw_civ_token
-
+        engine_civ_token = _CIV_LABEL_TO_ANW.get(civ_label, "")
         resolved = bool(engine_civ_token)
+        is_stub = civ_label in _STUB_CIV_LABELS
 
-        # Derive a short leader token for log-search from the personality path
-        # e.g. "game/ai/anwargentines.personality" -> "anwargentines"
-        # or   "leader_revolution_commanders"       -> "leader_revolution_commanders"
-        engine_leader_token = ""
-        if personality_file:
-            stem = Path(personality_file).stem  # strips .personality suffix
-            engine_leader_token = stem
-        if not engine_leader_token:
+        # Every ANW civ has a 1:1 .personality file at game/ai/anw<lower>.personality
+        if resolved:
+            engine_leader_token = engine_civ_token.lower()
+            personality_file = f"game/ai/{engine_leader_token}.personality"
+        else:
             engine_leader_token = "UNRESOLVED"
+            personality_file = ""
 
         roster.append({
             "data_name":            data_name,
@@ -292,6 +268,7 @@ def _build_roster() -> list[dict]:
             "engine_leader_token":  engine_leader_token,
             "personality_file":     personality_file,
             "resolved":             resolved,
+            "is_stub":              is_stub,
         })
 
     return roster
@@ -1235,6 +1212,159 @@ def write_report(results: list[MatchResult], elapsed_seconds: float,
     print(f"Report written to {display_path}")
 
 
+# ---------------------------------------------------------------------------
+# Checkpoint persistence (for --resume across crashes / power loss)
+# ---------------------------------------------------------------------------
+
+CHECKPOINT_PATH = REPO_ROOT / "artifacts" / "validation" / "ai_playstyle" / "exhibition_checkpoint.json"
+
+
+def load_checkpoint() -> dict:
+    """Read the persistent checkpoint. Returns {} if missing or corrupt.
+
+    Schema:
+      {
+        "started_at": <iso8601>,
+        "results": {
+          "<data_name>": {
+            "status": "PASS" | "FAIL" | "ERROR",
+            "engine_civ_token": str,
+            "ai_opponents_harvested": int,
+            "observed_wall_strategy": int,
+            "error": str,
+            "attempts": int,
+            "last_attempt_at": <iso8601>
+          },
+          ...
+        }
+      }
+    """
+    if not CHECKPOINT_PATH.exists():
+        return {}
+    try:
+        return json.loads(CHECKPOINT_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  [CKPT] WARN: could not parse {CHECKPOINT_PATH}: {exc}", flush=True)
+        return {}
+
+
+def save_checkpoint(state: dict) -> None:
+    """Atomically write the checkpoint to disk (tmp + rename)."""
+    try:
+        CHECKPOINT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        tmp = CHECKPOINT_PATH.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(state, indent=2, sort_keys=True), encoding="utf-8")
+        tmp.replace(CHECKPOINT_PATH)
+    except Exception as exc:
+        print(f"  [CKPT] WARN: could not write {CHECKPOINT_PATH}: {exc}", flush=True)
+
+
+def record_attempt(state: dict, entry: dict, result: MatchResult) -> None:
+    """Update the checkpoint state dict for one civ attempt and persist."""
+    state.setdefault("results", {})
+    prev = state["results"].get(entry["data_name"], {})
+    status = "PASS" if result.is_pass else ("ERROR" if result.error else "FAIL")
+    state["results"][entry["data_name"]] = {
+        "status":                  status,
+        "engine_civ_token":        entry["engine_civ_token"],
+        "ai_opponents_harvested":  result.ai_opponents_harvested,
+        "observed_wall_strategy":  result.observed_wall_strategy,
+        "error":                   result.error,
+        "attempts":                int(prev.get("attempts", 0)) + 1,
+        "last_attempt_at":         datetime.now().isoformat(),
+    }
+    state.setdefault("started_at", datetime.now().isoformat())
+    save_checkpoint(state)
+
+
+def filter_by_checkpoint(entries: list[dict], state: dict,
+                         retry_failed: bool) -> list[dict]:
+    """Drop entries that already PASSed (and FAILs if retry_failed=False)."""
+    results = state.get("results", {}) if state else {}
+    out: list[dict] = []
+    skipped_pass = 0
+    skipped_fail = 0
+    for e in entries:
+        rec = results.get(e["data_name"])
+        if rec is None:
+            out.append(e)
+            continue
+        if rec.get("status") == "PASS":
+            skipped_pass += 1
+            continue
+        if not retry_failed:
+            skipped_fail += 1
+            continue
+        out.append(e)
+    if skipped_pass or skipped_fail:
+        msg_parts = [f"{skipped_pass} already-PASSed"]
+        if not retry_failed and skipped_fail:
+            msg_parts.append(f"{skipped_fail} previously-failed "
+                              "(use --retry-failed to retry)")
+        print(f"  [CKPT] Resume: skipping {', '.join(msg_parts)}", flush=True)
+    return out
+
+
+def write_coverage_report(roster: list[dict], state: dict,
+                          output_path: Path) -> None:
+    """Write a global per-civ coverage report from the persisted checkpoint.
+
+    Unlike `write_report` (which only sees the current invocation's matches),
+    this report unions over ALL civs in the resolved roster and reports each
+    civ's *latest* checkpoint status — making it the source of truth for the
+    100%-coverage target across multiple runner invocations.
+    """
+    results = state.get("results", {}) if state else {}
+    resolved = [e for e in roster if e.get("resolved") and not e.get("is_stub")]
+    pass_count = sum(1 for e in resolved
+                     if results.get(e["data_name"], {}).get("status") == "PASS")
+    total = len(resolved)
+    coverage_pct = 100.0 * pass_count / total if total else 0.0
+
+    lines = [
+        "# ANW Exhibition Coverage Report",
+        "",
+        f"**Generated:** {datetime.now().isoformat()}",
+        f"**Coverage:** {pass_count}/{total} civs PASSed ({coverage_pct:.1f}%)",
+        f"**Source:** `{CHECKPOINT_PATH.relative_to(REPO_ROOT)}`",
+        "",
+        "Civs are listed in roster order. NEVER-RUN means the civ has no entry",
+        "in the checkpoint yet — use `--resume` (after the first run) to pick",
+        "those up; use `--retry-failed` to re-attempt FAIL/ERROR civs.",
+        "",
+        "| # | Civ | Engine Token | Status | Attempts | Last Attempt | Notes |",
+        "|---|-----|--------------|--------|----------|--------------|-------|",
+    ]
+    for idx, entry in enumerate(resolved, 1):
+        rec = results.get(entry["data_name"])
+        if rec is None:
+            status   = "⚪ NEVER-RUN"
+            attempts = "—"
+            last     = "—"
+            notes    = "—"
+        else:
+            raw_status = rec.get("status", "?")
+            icon = {"PASS": "✅", "FAIL": "❌", "ERROR": "⚠️"}.get(raw_status, "?")
+            status   = f"{icon} {raw_status}"
+            attempts = str(rec.get("attempts", "?"))
+            last     = rec.get("last_attempt_at", "?")
+            notes    = rec.get("error", "") or ""
+            if len(notes) > 60:
+                notes = notes[:57] + "..."
+        lines.append(
+            f"| {idx} | {entry['civ_label']} | {entry['engine_civ_token']} | "
+            f"{status} | {attempts} | {last} | {notes} |"
+        )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    try:
+        display = output_path.relative_to(REPO_ROOT)
+    except ValueError:
+        display = output_path
+    print(f"Coverage report written to {display}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Exhibition-match sweep: test all 46 ANW civs in 1v1 AI matches and report pass/fail.",
@@ -1299,13 +1429,61 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
             "Use this flag when you only want the AI log validation."
         ),
     )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help=(
+            "Resume from artifacts/validation/ai_playstyle/exhibition_checkpoint.json — "
+            "skip civs already marked PASS in the checkpoint. Combine with "
+            "--retry-failed to also retry FAIL/ERROR civs. The checkpoint is "
+            "always written (every civ, every attempt); --resume only controls "
+            "whether the runner *reads* it on startup."
+        ),
+    )
+    parser.add_argument(
+        "--retry-failed",
+        action="store_true",
+        help=(
+            "When --resume is set, also retry civs that previously FAILed or "
+            "ERRORed (default: skip them). Has no effect without --resume."
+        ),
+    )
+    parser.add_argument(
+        "--max-attempts",
+        type=int,
+        default=1,
+        help=(
+            "Max attempts per civ within a single invocation (default: 1). "
+            "If a match fails or errors, the runner will re-run that civ up "
+            "to N times before moving on. Useful for transient engine crashes."
+        ),
+    )
+    parser.add_argument(
+        "--include-stubs",
+        action="store_true",
+        help=(
+            "Suppress the 'skipping N stub civs' INFO line. Stub civs "
+            "(Californians, Central Americans, Lower Canada, Rio Grande, "
+            "Yucatan) have NO civmods.xml entry and CANNOT be tested — the "
+            "engine cannot bind them to a player slot. This flag only "
+            "suppresses the skip-message for quieter output."
+        ),
+    )
 
     args = parser.parse_args()
 
     # Load roster
     all_entries = ANW_ROSTER
     resolved   = [e for e in all_entries if e["resolved"]]
-    unresolved = [e for e in all_entries if not e["resolved"]]
+    stubs      = [e for e in all_entries if e.get("is_stub")]
+    unresolved = [e for e in all_entries if not e["resolved"] and not e.get("is_stub")]
+
+    if stubs and not args.include_stubs:
+        # Silent skip — these are not real ANW civs (no civmods.xml entry).
+        # See _STUB_CIV_LABELS for the audit reference.
+        print(f"INFO: skipping {len(stubs)} stub civs without civmods data "
+              f"(use --include-stubs to surface in dry-run): "
+              f"{', '.join(s['civ_label'] for s in stubs)}")
 
     if unresolved:
         print(f"WARNING: {len(unresolved)} entries could not be resolved and will be skipped:")
@@ -1332,6 +1510,22 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
             return 1
         idx = names.index(args.start_from)
         entries_to_test = entries_to_test[idx:]
+
+    # Resume-from-checkpoint filtering (--resume). Applied BEFORE dry-run so
+    # the dry-run plan reflects what would actually be tested in a real run.
+    ckpt_state: dict = {}
+    if args.resume:
+        ckpt_state = load_checkpoint()
+        if ckpt_state:
+            print(f"  [CKPT] Loaded {len(ckpt_state.get('results', {}))} prior results "
+                  f"from {CHECKPOINT_PATH.relative_to(REPO_ROOT)}")
+            entries_to_test = filter_by_checkpoint(
+                entries_to_test, ckpt_state,
+                retry_failed=args.retry_failed,
+            )
+        else:
+            print(f"  [CKPT] --resume requested but no prior checkpoint at "
+                  f"{CHECKPOINT_PATH.relative_to(REPO_ROOT)}; starting fresh")
 
     # Dry run
     capture_art = not args.no_art_capture
@@ -1363,8 +1557,13 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
         print(f"  Tried: {ALTERNATE_LOG_PATH}")
         return 1
 
+    if not entries_to_test:
+        print("Nothing to do — all targeted civs already PASSed in checkpoint.")
+        return 0
+
     print(f"Using log: {log_path}")
-    print(f"Testing {len(entries_to_test)}/{len(all_entries)} ANW civ-leader pairs")
+    print(f"Testing {len(entries_to_test)}/{len(resolved)} ANW civ-leader pairs"
+          f" (max_attempts={args.max_attempts})")
     if args.manual_launch:
         print("Mode: MANUAL LAUNCH (you will start matches in the game)")
     if capture_art:
@@ -1373,49 +1572,73 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
         print("Art captures: OFF (--no-art-capture)")
     print()
 
-    # Run matches
+    # Run matches with per-civ retry-on-failure.
     results: list[MatchResult] = []
     start_time = time.time()
 
     for i, entry in enumerate(entries_to_test, 1):
-        print(
-            f"[{i}/{len(entries_to_test)}] {entry['data_name']} "
-            f"({entry['engine_civ_token']})... ",
-            end="", flush=True,
-        )
-
-        try:
-            result = run_one_match(
-                entry, log_path, args.match_seconds, args.manual_launch,
-                capture_art=capture_art,
-                first_match=(i == 1),
+        result: Optional[MatchResult] = None
+        for attempt in range(1, max(1, args.max_attempts) + 1):
+            attempt_tag = (f" (attempt {attempt}/{args.max_attempts})"
+                           if args.max_attempts > 1 else "")
+            print(
+                f"[{i}/{len(entries_to_test)}] {entry['data_name']} "
+                f"({entry['engine_civ_token']}){attempt_tag}... ",
+                end="", flush=True,
             )
-            results.append(result)
-            if result.is_pass:
-                print("✅ PASS")
-            else:
-                print("❌ FAIL")
-        except Exception as e:
-            print(f"❌ ERROR: {e}")
-            results.append(MatchResult(
-                data_name=entry["data_name"],
-                civ_label=entry["civ_label"],
-                leader_label=entry["leader_label"],
-                engine_civ_token=entry["engine_civ_token"],
-                engine_leader_token=entry["engine_leader_token"],
-                error=str(e),
-            ))
+
+            try:
+                result = run_one_match(
+                    entry, log_path, args.match_seconds, args.manual_launch,
+                    capture_art=capture_art,
+                    first_match=(i == 1 and attempt == 1),
+                )
+                if result.is_pass:
+                    print("✅ PASS")
+                    record_attempt(ckpt_state, entry, result)
+                    break
+                else:
+                    print("❌ FAIL"
+                          + (f" — retrying" if attempt < args.max_attempts else ""))
+                    record_attempt(ckpt_state, entry, result)
+            except Exception as e:
+                print(f"❌ ERROR: {e}"
+                      + (f" — retrying" if attempt < args.max_attempts else ""))
+                result = MatchResult(
+                    data_name=entry["data_name"],
+                    civ_label=entry["civ_label"],
+                    leader_label=entry["leader_label"],
+                    engine_civ_token=entry["engine_civ_token"],
+                    engine_leader_token=entry["engine_leader_token"],
+                    error=str(e),
+                )
+                record_attempt(ckpt_state, entry, result)
+
+        # Always append the final attempt's result (may be PASS or last FAIL).
+        results.append(result)
 
     elapsed = time.time() - start_time
 
-    # Write report
+    # Write per-invocation report
     output = args.output or (REPO_ROOT / "tools/validation/exhibition_report.md")
     write_report(results, elapsed, args.match_seconds, args.manual_launch, output)
 
+    # Write global coverage report (unions over all checkpoint history,
+    # not just this invocation) — this is the 100%-coverage source of truth.
+    coverage_path = REPO_ROOT / "tools/validation/exhibition_coverage.md"
+    final_state = ckpt_state if ckpt_state else load_checkpoint()
+    write_coverage_report(resolved, final_state, coverage_path)
+
     # Summary
     passed = sum(1 for r in results if r.is_pass)
+    global_pass = sum(
+        1 for e in resolved
+        if final_state.get("results", {}).get(e["data_name"], {}).get("status") == "PASS"
+    )
     print()
-    print(f"Results: {passed}/{len(results)} ✅")
+    print(f"This invocation: {passed}/{len(results)} ✅")
+    print(f"Global coverage: {global_pass}/{len(resolved)} ✅ "
+          f"({100.0 * global_pass / max(1, len(resolved)):.1f}%)")
     # output may live outside REPO_ROOT (e.g. --output /tmp/...); fall back to
     # the absolute path rather than crashing on relative_to ValueError.
     try:
