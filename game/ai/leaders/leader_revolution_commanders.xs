@@ -265,17 +265,18 @@ void initLegendaryRevolutionCommander(void)
       btBiasNative = 0.55;
       llSetMilitaryFocus(0.8, -0.1, 0.2);
       // LL-BUILD-STYLE-BEGIN
-      llUseShrineTradeNodeSpreadStyle(1);
-      gLLEconomicDistanceMultiplier = 1.40;
-      // Spec override: Indonesians Diponegoro doctrine — see playstyle_spec.json
+      llUseJungleGuerrillaNetworkStyle(0);
       gLLWallStrategy = cLLWallStrategyChokepointSegments;
-      // Spec override: military_distance_band [1.0, 1.3]; ShrineTradeNodeSpread
+      gLLEconomicDistanceMultiplier = 1.40;
+      // Spec override: military_distance_band [1.0, 1.3]; JungleGuerrillaNetwork
       // default is 0.95 which falls below the band floor.
       gLLMilitaryDistanceMultiplier = 1.05;
       // Spec doctrine_summary: "Java War guerrilla and kraton fort" — keep
-      // the single kraton fort (fort=1, matching ShrineTradeNodeSpread default).
+      // the single kraton fort (fort=1, matching JungleGuerrillaNetwork default).
       // Forward-fortified base preferred (preferFwd=true) for warband staging.
       llSetBuildStrongpointProfile(1, 1, 2, true);
+      llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainCoast, 0.40);
+      llSetExpansionHeading(cLLHeadingIslandHop, 0.35);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
       cvOkToBuildForts = true;

@@ -689,6 +689,7 @@ void llApplyBuildStyleForActiveCiv(void)
       // Trade Node; the Sacred Field economy is preserved via the strongpoint
       // profile and heading bias below.
       llUseHighlandCitadelStyle(5);
+      llEnableEarlyForwardBase(360000);
       gLLEconomicDistanceMultiplier = 1.10;
       llSetBuildStrongpointProfile(2, 1, 2, false);
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainJungle, 0.30);
@@ -760,6 +761,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Ivan the Terrible — Streltsy corps, Kazan/Astrakhan siege, Volga push.
       llUseCossackVoiskoStyle(1);
+      gLLWallStrategy = cLLWallStrategyFrontierPalisades;
       llSetBuildStrongpointProfile(2, 2, 3, true);
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.35);
       llSetExpansionHeading(cLLHeadingUpriver, 0.40);
@@ -1030,6 +1032,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Yucatán — Caste War jungle guerrilla on the limestone peninsula.
       llUseJungleGuerrillaNetworkStyle(1);
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 1, 2, true);
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainCoast, 0.40);
@@ -1076,6 +1079,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // O'Higgins — Andean column on the Pacific coast.
       llUseAndeanTerraceFortressStyle(2);
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 2, 2, false);
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainCoast, 0.35);
@@ -1135,6 +1139,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Diponegoro — Java War jungle-guerrilla campaign across the archipelago.
       llUseJungleGuerrillaNetworkStyle(0);
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       gLLEconomicDistanceMultiplier = 1.40;
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainCoast, 0.40);
       llSetExpansionHeading(cLLHeadingIslandHop, 0.35);
@@ -1143,6 +1148,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Caste War — Maya jungle guerrilla, Yucatán bush huts on limestone shelf.
       llUseJungleGuerrillaNetworkStyle(1);
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 1, 2, true);
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainForestEdge, 0.40);
@@ -1170,6 +1176,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Túpac Amaru / Santa Cruz — Andean terrace fortress above the altiplano.
       llUseAndeanTerraceFortressStyle(3);
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(3, 2, 2, false);
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainPlain, 0.30);
@@ -1189,6 +1196,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Cuza — Romanian unification civic militia, Carpathian-Danube axis.
       llUseCivicMilitiaCenterStyle(2);
+      gLLForwardBaseEarliestMs = 1200000;
       gLLEconomicDistanceMultiplier = 1.10;
       llSetBuildStrongpointProfile(2, 1, 2, false);
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainHighland, 0.30);
@@ -1224,6 +1232,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Montezuma — Flower War tribute aggression. Hidden war huts, no perimeter.
       llUseJungleGuerrillaNetworkStyle(0);
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       gLLHouseDistanceMultiplier = 0.85;
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainWetland, 0.30);
       llSetExpansionHeading(cLLHeadingOutwardRings, 0.20);
@@ -1268,8 +1277,9 @@ void llApplyBuildStyleForActiveCiv(void)
    }
    else if (rvltName == "ANWFrench")
    {
-      // Napoleon Bonaparte — Grande Armée operational manoeuvre on rivers/plains.
-      llUseForwardOperationalLineStyle(1);
+      // Louis XVIII Bourbon — compact fortified core, Restoration defensive posture.
+      llUseCompactFortifiedCoreStyle(2);
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       gLLMilitaryDistanceMultiplier = 0.85;
       llSetBuildStrongpointProfile(2, 2, 3, true);
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.25);
@@ -1304,6 +1314,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Pachacuti — Sacsayhuamán terraced fortress.
       llUseAndeanTerraceFortressStyle(4);
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       gLLHouseDistanceMultiplier = 0.75;
       llSetBuildStrongpointProfile(3, 3, 2, false);
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainPlain, 0.20);
@@ -1314,6 +1325,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Shivaji — Maratha hill-fort citadel, Sahyadri spur network.
       llUseHighlandCitadelStyle(5);
+      llEnableEarlyForwardBase(360000);
       gLLEconomicDistanceMultiplier = 1.10;
       llSetBuildStrongpointProfile(2, 1, 2, false);
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainJungle, 0.30);
@@ -1376,6 +1388,7 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Ivan the Terrible / Catherine — Streltsy corps, Kazan/Astrakhan siege.
       llUseCossackVoiskoStyle(1);
+      gLLWallStrategy = cLLWallStrategyFrontierPalisades;
       llSetBuildStrongpointProfile(2, 2, 3, true);
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.35);
       llSetExpansionHeading(cLLHeadingUpriver, 0.40);
