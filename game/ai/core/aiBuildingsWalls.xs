@@ -1154,8 +1154,13 @@ minInterval 60
       closure = (1.0 * actualPieces) / expectedPieces;
    }
    int elapsedSec = xsGetTime() / 1000;
-   llProbe("wall.closure", "expected=" + expectedPieces +
-      " actual=" + actualPieces +
+   // pct=<N> radius=<R> expected=<E> placed=<P> fields satisfy the
+   // wall.closure probe spec consumed by aiDoctrineProbes / validators.
+   int closurePct = (1.0 * actualPieces * 100) / (expectedPieces > 0 ? expectedPieces : 1);
+   llProbe("wall.closure", "pct=" + closurePct +
+      " radius=" + radius +
+      " expected=" + expectedPieces +
+      " placed=" + actualPieces +
       " closure=" + closure +
       " strategy=" + gLLWallStrategy +
       " elapsed=" + elapsedSec +

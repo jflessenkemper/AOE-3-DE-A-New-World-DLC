@@ -29,11 +29,14 @@
 //      half-wall stall conditions.
 //
 //      Tags emitted (every 60s while wall plan active):
-//        wall.closure   expected=<int> actual=<int> closure=<float>
-//                       strategy=<int> elapsed=<int> age=<int>
-//                         — expected is 2*PI*radius/4 (4-unit segment length).
-//                           closure = actual/expected. strategy matches the
-//                           cLLWallStrategy* enum. elapsed is game-time seconds.
+//        wall.closure   pct=<int> radius=<float> expected=<int> placed=<int>
+//                       closure=<float> strategy=<int> elapsed=<int> age=<int>
+//                         — pct is integer percentage (0-100+). radius is the
+//                           ring radius used. expected is 2*PI*radius/4
+//                           (4-unit segment length). placed is actual owned
+//                           wall segments (kbUnitCount ABQ). closure=placed/expected.
+//                           strategy matches the cLLWallStrategy* enum.
+//                           elapsed is game-time seconds.
 //        wall.escalate  plan=<int> closure=<float>
 //                         — fired when coverage < 0.60 after 4 min and the
 //                           plan is still alive. Priority bumped to 95,

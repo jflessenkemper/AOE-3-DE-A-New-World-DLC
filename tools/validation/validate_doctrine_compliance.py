@@ -35,7 +35,8 @@ Probe tags consumed:
     comp.snapshot                 ageMs=… vil=… inf=… cav=… arty=… landmil=… warship=…
     posture.snapshot              ageMs=… age=… ws=… bs=… mdist=… edist=…
                                   walls=… forts=… docks=… tposts=…
-    wall.closure                  expected=<N> actual=<N> closure=<0.0-1.0> age=<int>
+    wall.closure                  pct=<N> radius=<float> expected=<N> placed=<N>
+                                  closure=<0.0-1.0> strategy=<int> elapsed=<int> age=<int>
                                   — OR (llVerifyWallClosure format) —
                                   key=wall.closure planID=<N> coverage=<percent> elapsed=<seconds>
     wall.chokepoint               vec=<x,z> tiles=<int> cached=<0/1>
