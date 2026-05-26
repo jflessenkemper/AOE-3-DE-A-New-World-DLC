@@ -303,6 +303,53 @@ def _spec_expects_forward(claims: dict) -> bool | None:
     return bool(val)
 
 
+def _spec_expects_naval(claims: dict) -> bool | None:
+    """Return spec's expects_naval value; treat None/missing as not_checked."""
+    val = claims.get("expects_naval")
+    if val is None:
+        return None
+    return bool(val)
+
+
+def _check_spec_internal_consistency(data_name: str, claims: dict) -> list[str]:
+    """Sanity-check that a civ's claim set is internally consistent.
+
+    Rules (each violation produces one diff line):
+      • expects_naval=True ↔ first_military_building == "dock"
+      • expects_naval=True ↔ wall_strategy == 2 (CoastalBatteries)
+      • first_military_building == "dock" ↔ wall_strategy == 2
+
+    These are *spec-internal* consistency checks — they catch hand-edits
+    to playstyle_spec.json that drift one field without updating the
+    related fields. Returns an empty list if the claim set is consistent.
+    """
+    diffs: list[str] = []
+    naval = claims.get("expects_naval")
+    fmb = claims.get("first_military_building")
+    ws = claims.get("wall_strategy")
+
+    if naval is True and fmb is not None and fmb != "dock":
+        diffs.append(
+            f"spec-internal: expects_naval=True but first_military_building={fmb!r}"
+            f" (expected 'dock')"
+        )
+    if naval is True and ws is not None and ws != 2:
+        diffs.append(
+            f"spec-internal: expects_naval=True but wall_strategy={ws}"
+            f" (expected 2/CoastalBatteries)"
+        )
+    if fmb == "dock" and ws is not None and ws != 2:
+        diffs.append(
+            f"spec-internal: first_military_building='dock' but wall_strategy={ws}"
+            f" (expected 2/CoastalBatteries)"
+        )
+    if fmb == "dock" and naval is False:
+        diffs.append(
+            "spec-internal: first_military_building='dock' but expects_naval=False"
+        )
+    return diffs
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--spec", type=Path, default=SPEC_PATH)
@@ -392,6 +439,7 @@ def main() -> int:
         actual_fmb = actual["first_military_building"]
         spec_fwd = _spec_expects_forward(claims)
         actual_fwd = actual["expects_forward"]
+        spec_naval = _spec_expects_naval(claims)
 
         diffs: list[str] = []
         if spec_ws is not None and actual_ws != spec_ws:
@@ -403,6 +451,18 @@ def main() -> int:
             diffs.append(f"first_military_building: spec={spec_fmb!r} actual={actual_fmb!r}")
         if spec_fwd is not None and actual_fwd != spec_fwd:
             diffs.append(f"expects_forward: spec={spec_fwd} actual={actual_fwd}")
+
+        # Defence-in-depth: expects_naval is derived from first_military_building
+        # in the style. If the spec asserts expects_naval=True the dispatched
+        # style must produce a dock-first AI.
+        if spec_naval is True and actual_fmb != "dock":
+            diffs.append(
+                f"expects_naval=True implies first_military_building='dock' but actual={actual_fmb!r}"
+            )
+
+        # Spec-internal consistency (catches hand-edits to playstyle_spec.json
+        # that drift one claim field without updating its dependents).
+        diffs.extend(_check_spec_internal_consistency(data_name, claims))
 
         verdict = "FAIL" if diffs else "PASS"
         mark = "FAIL" if diffs else "PASS"
