@@ -9,6 +9,14 @@ Usage:
   python3 -m tools.aoe3_harness.cli gate
   python3 -m tools.aoe3_harness.cli status
   python3 -m tools.aoe3_harness.cli capture --civ <name> --surface <name> [--out <path>]
+  python3 -m tools.aoe3_harness.cli input key <vk_hex>
+  python3 -m tools.aoe3_harness.cli input keydown <vk_hex>
+  python3 -m tools.aoe3_harness.cli input keyup <vk_hex>
+  python3 -m tools.aoe3_harness.cli input click <x> <y>
+  python3 -m tools.aoe3_harness.cli input move <x> <y>
+  python3 -m tools.aoe3_harness.cli input state
+  python3 -m tools.aoe3_harness.cli dll verify
+  python3 -m tools.aoe3_harness.cli dll status
 
 Subcommands:
   deploy    Run deploy_to_mod.py (and optionally validate_xs_scripts.py with --check)
@@ -18,6 +26,8 @@ Subcommands:
   gate      Run run_all_validators.py (full static gate, no game)
   status    Print state.json summary: which passes complete, civ coverage
   capture   Screenshot the AoE3 window for a specific civ/surface combination
+  input     Inject keyboard/mouse input into the running game via anw_hook.dll pipe
+  dll       Inspect anw_hook.dll files (static, no game launch)
 
 All subcommands accept --dry-run (passed through to deploy/launch).
 """
@@ -277,6 +287,140 @@ def cmd_capture(args: argparse.Namespace) -> int:
         return 1
 
 
+def cmd_input(args: argparse.Namespace) -> int:
+    """Inject keyboard/mouse input into the game via the anw_hook.dll named pipe.
+
+    Requires the game to be running with anw_hook.dll loaded
+    (WINEDLLOVERRIDES="anw_hook=n,b").  Connects to the Wine Unix socket,
+    sends the command, and prints the response.
+
+    Args:
+        args: Parsed namespace with ``input_cmd`` and optional ``vk``, ``x``,
+              ``y`` attributes.
+
+    Returns:
+        0 on success, 1 on error.
+    """
+    from tools.aoe3_harness.dll_client import DllClient, DllClientError
+
+    try:
+        with DllClient() as client:
+            if args.input_cmd == "state":
+                print(client.state())
+
+            elif args.input_cmd == "key":
+                vk = int(args.vk, 16) if args.vk.startswith("0x") else int(args.vk, 16)
+                client.press_key(vk)
+                print(f"OK (pressed vk={args.vk})")
+
+            elif args.input_cmd == "keydown":
+                vk = int(args.vk, 16) if args.vk.startswith("0x") else int(args.vk, 16)
+                client.key_down(vk)
+                print(f"OK (key_down vk={args.vk})")
+
+            elif args.input_cmd == "keyup":
+                vk = int(args.vk, 16) if args.vk.startswith("0x") else int(args.vk, 16)
+                client.key_up(vk)
+                print(f"OK (key_up vk={args.vk})")
+
+            elif args.input_cmd == "click":
+                client.click(args.x, args.y)
+                print(f"OK (click {args.x},{args.y})")
+
+            elif args.input_cmd == "move":
+                client.move(args.x, args.y)
+                print(f"OK (move {args.x},{args.y})")
+
+            else:
+                print(f"[cli/input] Unknown input subcommand: {args.input_cmd}", file=sys.stderr)
+                return 1
+
+    except ConnectionError as exc:
+        print(
+            f"[cli/input] Could not connect to anw_hook pipe: {exc}\n"
+            "  Is the game running with WINEDLLOVERRIDES=\"anw_hook=n,b\"?",
+            file=sys.stderr,
+        )
+        return 1
+    except DllClientError as exc:
+        print(f"[cli/input] DLL error: {exc}", file=sys.stderr)
+        return 1
+
+    return 0
+
+
+def cmd_dll(args: argparse.Namespace) -> int:
+    """Inspect anw_hook.dll files on disk (static, no game launch).
+
+    dll verify  — run ``file`` on each DLL and print results
+    dll status  — check which DLL files exist in system32 + game data dir
+
+    Args:
+        args: Parsed namespace with ``dll_cmd`` attribute.
+
+    Returns:
+        0 on success, 1 if any expected files are missing (status only).
+    """
+    import subprocess
+
+    from tools.aoe3_harness.dll_client import DLL_GAME_DATA_PATH, DLL_NAMES, DLL_SYSTEM32_PATH
+
+    dll_src = REPO_ROOT / "tools" / "aoe3_harness" / "dll"
+
+    if args.dll_cmd == "verify":
+        print("\n[dll verify] Source DLL artifacts:")
+        all_ok = True
+        for name in DLL_NAMES:
+            path = dll_src / name
+            if path.exists():
+                result = subprocess.run(
+                    ["file", str(path)], capture_output=True, text=True
+                )
+                print(f"  {result.stdout.strip()}")
+                if "PE32+" not in result.stdout:
+                    print(f"  WARNING: {name} does not appear to be PE32+")
+                    all_ok = False
+            else:
+                print(f"  {path}: NOT FOUND")
+                all_ok = False
+
+        print("\n[dll verify] Wine paths:")
+        for drop_dir in (DLL_SYSTEM32_PATH, DLL_GAME_DATA_PATH):
+            for name in DLL_NAMES:
+                path = drop_dir / name
+                status = "OK" if path.exists() else "MISSING"
+                print(f"  [{status}] {path}")
+
+        return 0 if all_ok else 1
+
+    elif args.dll_cmd == "status":
+        print("\n[dll status] Wine prefix DLL locations:")
+        missing: list[Path] = []
+        for drop_dir in (DLL_SYSTEM32_PATH, DLL_GAME_DATA_PATH):
+            for name in DLL_NAMES:
+                path = drop_dir / name
+                if path.exists():
+                    size = path.stat().st_size
+                    print(f"  [OK     ] {path} ({size} bytes)")
+                else:
+                    print(f"  [MISSING] {path}")
+                    missing.append(path)
+
+        if missing:
+            print(
+                f"\n  {len(missing)} file(s) missing. "
+                "Run: cd tools/aoe3_harness/dll && ./build.sh all",
+            )
+            return 1
+        else:
+            print("\n  All DLL files present.")
+            return 0
+
+    else:
+        print(f"[cli/dll] Unknown dll subcommand: {args.dll_cmd}", file=sys.stderr)
+        return 1
+
+
 def main() -> int:
     """Entry point for the ANW test harness CLI.
 
@@ -319,6 +463,47 @@ def main() -> int:
         help="output PNG path (default: artifacts/validation/visual_art/<civ>/<surface>.png)",
     )
 
+    # Phase 2: input injection via anw_hook.dll named pipe
+    p_input = sub.add_parser(
+        "input",
+        help="inject keyboard/mouse input via anw_hook.dll pipe (game must be running)",
+    )
+    input_sub = p_input.add_subparsers(dest="input_cmd", required=True)
+
+    p_key = input_sub.add_parser("key", help="inject key press (down+up) for vk_hex")
+    p_key.add_argument("vk", help="virtual key code in hex, e.g. 0x57")
+
+    p_kd = input_sub.add_parser("keydown", help="inject WM_KEYDOWN for vk_hex")
+    p_kd.add_argument("vk", help="virtual key code in hex, e.g. 0x57")
+
+    p_ku = input_sub.add_parser("keyup", help="inject WM_KEYUP for vk_hex")
+    p_ku.add_argument("vk", help="virtual key code in hex, e.g. 0x57")
+
+    p_click = input_sub.add_parser("click", help="inject left-click at (x, y)")
+    p_click.add_argument("x", type=int, help="client-area x coordinate")
+    p_click.add_argument("y", type=int, help="client-area y coordinate")
+
+    p_move = input_sub.add_parser("move", help="inject mouse-move to (x, y)")
+    p_move.add_argument("x", type=int, help="client-area x coordinate")
+    p_move.add_argument("y", type=int, help="client-area y coordinate")
+
+    input_sub.add_parser("state", help="print DLL STATE response (heartbeat)")
+
+    # Phase 2: DLL file inspection (static, no game launch)
+    p_dll = sub.add_parser(
+        "dll",
+        help="inspect anw_hook.dll files (static, no game launch)",
+    )
+    dll_sub = p_dll.add_subparsers(dest="dll_cmd", required=True)
+    dll_sub.add_parser(
+        "verify",
+        help="run 'file' on each DLL and show PE32+ confirmation",
+    )
+    dll_sub.add_parser(
+        "status",
+        help="check which DLL files exist in system32 + game data dir",
+    )
+
     args = ap.parse_args()
 
     # Propagate --dry-run to subcommands that don't define it themselves
@@ -333,6 +518,8 @@ def main() -> int:
         "gate": cmd_gate,
         "status": cmd_status,
         "capture": cmd_capture,
+        "input": cmd_input,
+        "dll": cmd_dll,
     }
     return dispatch[args.cmd](args)
 

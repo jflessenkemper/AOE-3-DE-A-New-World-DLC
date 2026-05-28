@@ -6,4 +6,4 @@ Public API:
     from tools.aoe3_harness.validator import validate_pass
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
