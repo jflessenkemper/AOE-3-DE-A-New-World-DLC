@@ -2,16 +2,21 @@
 # static_verify.sh — Static verification of anw harness DLL artifacts.
 #
 # Runs all checks that can be verified WITHOUT launching the game:
-#   1. PE32+ file type for hello_anw.dll and anw_hook.dll
-#   2. DLL imports for anw_hook.dll (KERNEL32, USER32, msvcrt expected in stub build)
-#   3. Key symbols defined/exported in anw_hook.dll
-#   4. Python syntax check: dll_client.py
-#   5. CLI --help shows input + dll subcommands
-#   6. build.sh syntax check
+#   1-2.  PE32+ file type for hello_anw.dll and anw_hook.dll
+#   3-4.  DLL imports for anw_hook.dll (KERNEL32, USER32 expected)
+#   5-9.  Key symbols defined in anw_hook.dll
+#   10.   Python syntax check: dll_client.py
+#   11.   Python syntax check: cli.py
+#   12-13. CLI --help shows 'input' and 'dll' subcommands
+#   14.   CLI dll status exits 0
+#   15.   build.sh passes bash -n
+#   16.   static_verify.sh passes bash -n
 #
 # Usage:
 #   cd tools/aoe3_harness/dll
-#   ./static_verify.sh
+#   ./static_verify.sh [--quiet]
+#
+#   --quiet   Print only the final PASS/FAIL summary (no per-check output)
 #
 # Exit code: 0 = all checks passed, 1 = one or more checks failed.
 #
@@ -24,41 +29,75 @@ set -uo pipefail
 REPO_ROOT="/var/home/jflessenkemper/AOE-3-DE-A-New-World"
 DLL_DIR="${REPO_ROOT}/tools/aoe3_harness/dll"
 
+# Parse --quiet flag
+QUIET=0
+for arg in "$@"; do
+    if [ "${arg}" = "--quiet" ]; then
+        QUIET=1
+    fi
+done
+
 PASS=0
 FAIL=0
+
+# Emit output only when not in quiet mode
+qecho() {
+    if [ "${QUIET}" -eq 0 ]; then
+        echo "$@"
+    fi
+}
 
 check() {
     local label="$1"
     local cmd="$2"
     local expected_pattern="$3"
 
-    # Use a temp file to avoid command substitution truncating large output
     local tmpout
     tmpout=$(mktemp)
     eval "${cmd}" > "${tmpout}" 2>&1
     if grep -qE "${expected_pattern}" "${tmpout}"; then
-        echo "[PASS] ${label}"
+        qecho "[PASS] ${label}"
         PASS=$((PASS + 1))
     else
+        # Always print failures, even in quiet mode
         echo "[FAIL] ${label}"
-        echo "       Command: ${cmd}"
-        echo "       Expected pattern: ${expected_pattern}"
-        echo "       Output tail:"
-        tail -5 "${tmpout}" | sed 's/^/         /'
+        if [ "${QUIET}" -eq 0 ]; then
+            echo "       Command: ${cmd}"
+            echo "       Expected pattern: ${expected_pattern}"
+            echo "       Output tail:"
+            tail -5 "${tmpout}" | sed 's/^/         /'
+        fi
         FAIL=$((FAIL + 1))
     fi
     rm -f "${tmpout}"
 }
 
-echo "========================================"
-echo "  ANW Phase 2 Static Verification"
-echo "========================================"
-echo ""
+qecho "========================================"
+qecho "  ANW Phase 2 Static Verification"
+qecho "========================================"
+qecho ""
 
 # --------------------------------------------------------------------------
-# 1. PE32+ file type checks
+# Pre-flight: confirm build artifacts exist before running binary checks.
 # --------------------------------------------------------------------------
-echo "--- DLL file types ---"
+ARTIFACTS_MISSING=0
+for dll in hello_anw.dll anw_hook.dll; do
+    if [ ! -f "${DLL_DIR}/${dll}" ]; then
+        echo "[WARN] Build artifact missing: ${DLL_DIR}/${dll}"
+        ARTIFACTS_MISSING=1
+    fi
+done
+if [ "${ARTIFACTS_MISSING}" -eq 1 ]; then
+    echo "[WARN] One or more DLL artifacts are missing."
+    echo "[WARN] Run: bash ${DLL_DIR}/build.sh all"
+    echo "[WARN] Continuing with remaining checks (binary checks will fail)."
+fi
+qecho ""
+
+# --------------------------------------------------------------------------
+# 1-2. PE32+ file type checks
+# --------------------------------------------------------------------------
+qecho "--- DLL file types ---"
 
 check "hello_anw.dll is PE32+" \
     "file '${DLL_DIR}/hello_anw.dll'" \
@@ -69,10 +108,10 @@ check "anw_hook.dll is PE32+" \
     "PE32\+"
 
 # --------------------------------------------------------------------------
-# 2. DLL import check (requires mingw objdump — run inside gs-build if needed)
+# 3-4. DLL import check
 # --------------------------------------------------------------------------
-echo ""
-echo "--- DLL imports (anw_hook.dll) ---"
+qecho ""
+qecho "--- DLL imports (anw_hook.dll) ---"
 
 if command -v x86_64-w64-mingw32-objdump &>/dev/null; then
     OBJDUMP="x86_64-w64-mingw32-objdump"
@@ -88,15 +127,15 @@ check "anw_hook.dll imports USER32.dll" \
     "${OBJDUMP} -p '${DLL_DIR}/anw_hook.dll'" \
     "USER32"
 
-# In stub build, dxgi.dll/d3d11.dll are NOT imported (they're inside #ifdef blocks)
-# This is expected and correct.  Document it explicitly:
-echo "       Note: dxgi.dll/d3d11.dll absent from imports in stub build — expected."
+# dxgi.dll and d3d11.dll are loaded via GetProcAddress at runtime (not static imports).
+# This is intentional — see install_present_hook() in anw_dxgi_hook.c.
+qecho "       Note: dxgi.dll/d3d11.dll absent from imports (runtime-loaded via GetProcAddress — expected)."
 
 # --------------------------------------------------------------------------
-# 3. Key symbols in anw_hook.dll
+# 5-9. Key symbols in anw_hook.dll
 # --------------------------------------------------------------------------
-echo ""
-echo "--- Key symbols (anw_hook.dll) ---"
+qecho ""
+qecho "--- Key symbols (anw_hook.dll) ---"
 
 if command -v x86_64-w64-mingw32-nm &>/dev/null; then
     NM="x86_64-w64-mingw32-nm"
@@ -124,11 +163,16 @@ check "worker_thread defined in anw_hook.dll" \
     "${NM} '${DLL_DIR}/anw_hook.dll'" \
     "worker_thread"
 
+# Verify Present_hook is compiled in (always-on since hardening pass 2026-05-29)
+check "Present_hook compiled into anw_hook.dll" \
+    "${NM} '${DLL_DIR}/anw_hook.dll'" \
+    "Present_hook"
+
 # --------------------------------------------------------------------------
-# 4. Python syntax check: dll_client.py
+# 10-11. Python syntax checks
 # --------------------------------------------------------------------------
-echo ""
-echo "--- Python syntax ---"
+qecho ""
+qecho "--- Python syntax ---"
 
 check "dll_client.py compiles" \
     "python3 -m py_compile '${REPO_ROOT}/tools/aoe3_harness/dll_client.py' && echo OK" \
@@ -139,10 +183,10 @@ check "cli.py compiles" \
     "^OK$"
 
 # --------------------------------------------------------------------------
-# 5. CLI --help shows new subcommands
+# 12-14. CLI subcommands
 # --------------------------------------------------------------------------
-echo ""
-echo "--- CLI subcommands ---"
+qecho ""
+qecho "--- CLI subcommands ---"
 
 check "cli.py --help shows 'input' subcommand" \
     "cd '${REPO_ROOT}' && python3 -m tools.aoe3_harness.cli --help" \
@@ -157,10 +201,10 @@ check "cli.py dll status exits 0" \
     "OK|All DLL files present"
 
 # --------------------------------------------------------------------------
-# 6. build.sh syntax check
+# 15-16. Shell script syntax checks
 # --------------------------------------------------------------------------
-echo ""
-echo "--- Shell script syntax ---"
+qecho ""
+qecho "--- Shell script syntax ---"
 
 check "build.sh passes bash -n" \
     "bash -n '${DLL_DIR}/build.sh' && echo OK" \
@@ -173,7 +217,7 @@ check "static_verify.sh passes bash -n" \
 # --------------------------------------------------------------------------
 # Summary
 # --------------------------------------------------------------------------
-echo ""
+qecho ""
 echo "========================================"
 echo "  Results: ${PASS} PASS, ${FAIL} FAIL"
 echo "========================================"

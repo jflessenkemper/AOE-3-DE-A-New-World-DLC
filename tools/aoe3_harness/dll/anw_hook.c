@@ -51,11 +51,65 @@
 
 /* -------------------------------------------------------------------------
  * Module globals
+ *
+ * Thread-safety audit (hardening pass 2026-05-29):
+ *
+ * g_pipe_handle:
+ *   Written by the worker thread (inside the pipe loop) and read by DllMain
+ *   DLL_PROCESS_DETACH (for CancelIoEx).  This is a data race.
+ *   Fix: all accesses go through atomic_pipe_set / atomic_pipe_get using
+ *   InterlockedExchangePointer, which provides sequential-consistency
+ *   semantics on x86_64.
+ *
+ * g_worker_thread:
+ *   Written once in DLL_PROCESS_ATTACH, read once in DLL_PROCESS_DETACH.
+ *   These are serialised by the OS DLL_PROCESS_ATTACH/DETACH call ordering,
+ *   so no additional synchronisation is required.
+ *
+ * g_quit:
+ *   Accessed via InterlockedExchange / InterlockedCompareExchange throughout.
+ *   Correct.
+ *
+ * log_write():
+ *   Opens and closes the log file on every call (fopen "a" + fclose).
+ *   Multiple concurrent log_write() calls will interleave at the file-level
+ *   on Windows (each fclose flushes and releases the file handle atomically).
+ *   Individual log lines may be interleaved but will not be corrupted.
+ *   This is acceptable for a diagnostic log.
+ *
+ * Leaks:
+ *   Every CreateNamedPipeW is paired with CloseHandle in the same iteration.
+ *   g_worker_thread is CloseHandle'd in DLL_PROCESS_DETACH.
+ *   No HeapAlloc/LocalAlloc calls.
+ *
+ * DllMain restrictions:
+ *   DllMain does NOT call LoadLibrary, does NOT block, does NOT wait on
+ *   synchronisation primitives during ATTACH.  DETACH uses WaitForSingleObject
+ *   with a 2-second timeout — this is a known design trade-off accepted to
+ *   avoid leaving MinHook patches installed (which would crash the process
+ *   if DETACH returns before MH_Uninitialize runs).
+ *
+ * Buffer bounds:
+ *   pipe_readline: reads at most buf_size-1 bytes, always null-terminates.
+ *   pipe_writeline: snprintf into RESP_BUF_SIZE(512)-byte buf with limit
+ *     sizeof(buf)-2 = 510; buf[510]='\r', buf[511]='\n' are within bounds.
+ *   dispatch_command "ERR unknown command": uses %.200s to cap cmd echo.
  * -------------------------------------------------------------------------*/
 
-static HANDLE g_pipe_handle  = INVALID_HANDLE_VALUE;
-static HANDLE g_worker_thread = NULL;
-static volatile LONG g_quit  = 0;  /* set to 1 by QUIT command */
+static volatile HANDLE g_pipe_handle  = INVALID_HANDLE_VALUE;  /* guarded by atomic helpers */
+static HANDLE          g_worker_thread = NULL;
+static volatile LONG   g_quit          = 0;  /* set to 1 by QUIT command */
+
+/* Atomically store a HANDLE value.  On x86_64 pointer stores are naturally
+ * atomic, but InterlockedExchangePointer also provides the necessary memory
+ * fence so the DLL_PROCESS_DETACH thread sees the current value. */
+static inline void atomic_pipe_set(HANDLE h) {
+    InterlockedExchangePointer((volatile PVOID*)&g_pipe_handle, (PVOID)h);
+}
+static inline HANDLE atomic_pipe_get(void) {
+    return (HANDLE)InterlockedCompareExchangePointer(
+        (volatile PVOID*)&g_pipe_handle, NULL, NULL);
+}
 
 /* -------------------------------------------------------------------------
  * Logging helpers
@@ -317,7 +371,7 @@ static DWORD WINAPI worker_thread(LPVOID param) {
             continue;
         }
 
-        g_pipe_handle = pipe;
+        atomic_pipe_set(pipe);
         log_write("[worker] Pipe created, waiting for client...");
 
         /* Block until a client connects */
@@ -326,7 +380,7 @@ static DWORD WINAPI worker_thread(LPVOID param) {
             log_write("[worker] ConnectNamedPipe failed: error %lu",
                       (unsigned long)GetLastError());
             CloseHandle(pipe);
-            g_pipe_handle = INVALID_HANDLE_VALUE;
+            atomic_pipe_set(INVALID_HANDLE_VALUE);
             continue;
         }
 
@@ -351,7 +405,7 @@ static DWORD WINAPI worker_thread(LPVOID param) {
 
         DisconnectNamedPipe(pipe);
         CloseHandle(pipe);
-        g_pipe_handle = INVALID_HANDLE_VALUE;
+        atomic_pipe_set(INVALID_HANDLE_VALUE);
     }
 
     log_write("[worker] Worker thread exiting");
@@ -391,9 +445,14 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD reason, LPVOID reserved) {
         /* Signal worker to stop */
         InterlockedExchange(&g_quit, 1);
 
-        /* Close any open pipe so ConnectNamedPipe unblocks */
-        if (g_pipe_handle != INVALID_HANDLE_VALUE) {
-            CancelIoEx(g_pipe_handle, NULL);
+        /* Cancel any in-progress I/O so ConnectNamedPipe / ReadFile unblocks.
+         * Use atomic_pipe_get to avoid a data race with the worker thread
+         * that may be writing g_pipe_handle concurrently. */
+        {
+            HANDLE cur_pipe = atomic_pipe_get();
+            if (cur_pipe != INVALID_HANDLE_VALUE) {
+                CancelIoEx(cur_pipe, NULL);
+            }
         }
 
         /* Brief wait for worker to clean up (avoid dangling MH hooks) */
