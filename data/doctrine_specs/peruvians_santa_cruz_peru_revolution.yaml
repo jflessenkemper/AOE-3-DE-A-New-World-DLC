@@ -1,0 +1,24 @@
+# Doctrine spec for Peruvians Santa Cruz Peru Revolution
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Peruvians Santa Cruz Peru Revolution
+civ_label: Peruvians
+leader_label: Andrés de Santa Cruz
+
+doctrine_label: Andean Terrace Fortress
+doctrine_summary: Andean fort line and native levy
+doctrine_prose: >-
+  Tier-walls the high ground in two or three concentric stone rings, anchors
+  outposts in the gaps, and never overextends. A slow snowball to a tightly
+  defended Industrial timing rather than an early aggressive game.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 0  # home_fortress
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 480000  # 8min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [0.7, 1.0]  # normalized distance to enemy TC

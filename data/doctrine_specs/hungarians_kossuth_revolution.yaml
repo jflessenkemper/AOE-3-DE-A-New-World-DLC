@@ -1,0 +1,26 @@
+# Doctrine spec for Hungarians Kossuth Revolution
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Hungarians Kossuth Revolution
+civ_label: Hungarians
+leader_label: Lajos Kossuth
+
+doctrine_label: Steppe Cavalry Wedge
+doctrine_summary: Honved hussar uprising
+doctrine_prose: >-
+  Over-builds Stables and runs cavalry-heavy compositions. The base is loosely
+  walled so horsemen can pour out fast, and the AI keeps constant pressure rather
+  than waiting for a deathball.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 5  # forward_operational
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 360000  # 6min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [1.1, 1.3]  # normalized distance to enemy TC
+  expects_forward: true
+  expects_cavalry: true

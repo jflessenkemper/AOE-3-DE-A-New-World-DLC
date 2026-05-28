@@ -1,0 +1,28 @@
+# Doctrine spec for Indians Akbar
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Indians Akbar
+civ_label: Indians
+leader_label: Shivaji Maharaj
+
+doctrine_label: Ganimi Kava Raid
+doctrine_summary: Maratha Ganimi Kava raid
+doctrine_prose: >-
+  Opens with Sowar cavalry raids and Sepoy screens from Colonial on (forward-base
+  style enables at age 2). The hill-fort line anchors ground already taken rather
+  than a home base. Howdah Elephants and Mansabdar units commit once the raid has
+  bled the opponent's economy; the Maratha Confederacy expands outward, not
+  inward.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 0  # home_fortress
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 420000  # 7min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [1.0, 1.3]  # normalized distance to enemy TC
+  expects_forward: true
+  expects_cavalry: true

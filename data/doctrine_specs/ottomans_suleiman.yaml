@@ -1,0 +1,25 @@
+# Doctrine spec for Ottomans Suleiman
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Ottomans Suleiman
+civ_label: Ottomans
+leader_label: Suleiman
+
+doctrine_label: Siege Train Concentration
+doctrine_summary: Sublime Porte gunpowder empire
+doctrine_prose: >-
+  Over-builds Artillery Foundries and stockpiles cannons. Every push is a slow
+  siege column with infantry escort, and walls are stone-and-forward to give the
+  guns a safe staging line.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 0  # home_fortress
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 480000  # 8min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [0.8, 1.1]  # normalized distance to enemy TC
+  expects_artillery: true

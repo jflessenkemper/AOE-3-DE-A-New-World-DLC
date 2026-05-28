@@ -1,0 +1,26 @@
+# Doctrine spec for Dutch Maurice Nassau
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Dutch Maurice Nassau
+civ_label: Dutch
+leader_label: Maurice of Nassau
+
+doctrine_label: Naval Mercantile Compound
+doctrine_summary: Stadtholder drill-and-bank
+doctrine_prose: >-
+  Builds the docks first. Two or three Docks plus a full fishing fleet come
+  before the second barracks, then a wall ring locks down the harbor. Land army
+  arrives via naval shipments and mercenary contracts — the home city pays for
+  the war.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 2  # harbor_compound
+  first_military_building: dock
+  first_dock_before_ms: 360000  # 6min 0s
+  first_wall_before_ms: 900000  # 15min 0s
+  military_distance_band: [0.9, 1.2]  # normalized distance to enemy TC
+  expects_naval: true

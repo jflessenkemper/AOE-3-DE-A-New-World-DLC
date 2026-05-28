@@ -1,0 +1,23 @@
+# Doctrine spec for Japanese Tokugawa Ieyasu
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Japanese Tokugawa Ieyasu
+civ_label: Japanese
+leader_label: Tokugawa Ieyasu
+
+doctrine_label: Shrine or Trade Node Spread
+doctrine_summary: Bakufu shrine-and-musket order
+doctrine_prose: >-
+  Plants shrines, Trading Posts, or fishing posts the moment the route is found,
+  then defends them with isolated towers and fast cavalry response. The XP and
+  resource trickle from these structures funds everything else.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 5  # forward_operational
+  first_military_building: trading_post_or_market
+  military_distance_band: [1.0, 1.3]  # normalized distance to enemy TC
+  expects_treaty: true

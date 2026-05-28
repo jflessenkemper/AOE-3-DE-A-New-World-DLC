@@ -1,0 +1,25 @@
+# Doctrine spec for Egyptians Muhammad Ali Revolution
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Egyptians Muhammad Ali Revolution
+civ_label: Egyptians
+leader_label: Muhammad Ali Pasha
+
+doctrine_label: Highland Citadel
+doctrine_summary: Nizam-i Cedid modernization
+doctrine_prose: >-
+  Fortifies a single high-ground position with stone walls, layered towers, and a
+  fort. Slow to expand and slow to push, but extremely hard to dislodge once
+  entrenched. Builds wide only after the citadel is unbreakable.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 0  # home_fortress
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 480000  # 8min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [0.7, 1.0]  # normalized distance to enemy TC
+  expects_artillery: true

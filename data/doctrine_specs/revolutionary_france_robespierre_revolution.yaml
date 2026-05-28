@@ -1,0 +1,26 @@
+# Doctrine spec for Revolutionary France Robespierre Revolution
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Revolutionary France Robespierre Revolution
+civ_label: French Republic
+leader_label: Maximilien Robespierre
+
+doctrine_label: Republican Levee
+doctrine_summary: Levée-en-masse Republic
+doctrine_prose: >-
+  Mass-produces cheap line infantry from many barracks and trains General units
+  to inspire them. Civic-style layout — production hugs the Town Center, Outposts
+  call up militia, and shipments favor more of the same line over elite
+  alternatives.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_french_robespierre.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 4  # rolling_front
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 360000  # 6min 0s
+  first_wall_before_ms: 900000  # 15min 0s
+  military_distance_band: [0.8, 1.1]  # normalized distance to enemy TC
+  expects_infantry: true

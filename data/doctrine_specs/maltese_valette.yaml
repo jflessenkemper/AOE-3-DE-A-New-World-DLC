@@ -1,0 +1,25 @@
+# Doctrine spec for Maltese Valette
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Maltese Valette
+civ_label: Maltese
+leader_label: Valette
+
+doctrine_label: Highland Citadel
+doctrine_summary: Great Siege bastion defense
+doctrine_prose: >-
+  Fortifies a single high-ground position with stone walls, layered towers, and a
+  fort. Slow to expand and slow to push, but extremely hard to dislodge once
+  entrenched. Builds wide only after the citadel is unbreakable.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 0  # home_fortress
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 480000  # 8min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [0.7, 1.0]  # normalized distance to enemy TC
+  expects_artillery: true

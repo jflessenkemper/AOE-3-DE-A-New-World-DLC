@@ -1,0 +1,29 @@
+# Doctrine spec for South Africans Kruger Boer Revolution
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: South Africans Kruger Boer Revolution
+civ_label: South Africans
+leader_label: Paul Kruger
+
+doctrine_label: Naval Mercantile Compound
+doctrine_summary: Boer commando trader-cavalry
+doctrine_prose: >-
+  Plays a hybrid trader-cavalry game keyed to map type. On coastal spawns the AI
+  builds Docks first to set up a mercantile compound — the Cape trade hub funds
+  the war — and a wall ring screens the harbor. Inland, the Boer commando carries
+  the fight: mounted infantry on swift horses, a single fort serves as a laager
+  command post, and forward outposts press out into the veldt. Home-city
+  shipments and mercenary contracts keep the cavalry stream fed.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 2  # harbor_compound
+  first_military_building: dock
+  first_dock_before_ms: 360000  # 6min 0s
+  first_wall_before_ms: 900000  # 15min 0s
+  military_distance_band: [0.9, 1.2]  # normalized distance to enemy TC
+  expects_cavalry: true
+  expects_naval: true

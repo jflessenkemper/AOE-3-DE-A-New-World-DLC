@@ -1,0 +1,24 @@
+# Doctrine spec for French Louis XVIII Bourbon
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: French Louis XVIII Bourbon
+civ_label: French Louis
+leader_label: Louis XVIII
+
+doctrine_label: Compact Fortified Core
+doctrine_summary: Bourbon Restoration court army
+doctrine_prose: >-
+  Clusters every production building tight around the Town Center, walls early
+  with stone, and only walks out for nearby resources. Expects to be sieged, not
+  skirmished — the AI hunkers in and counter-attacks from a hardened core.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 0  # home_fortress
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 480000  # 8min 0s
+  first_wall_before_ms: 600000  # 10min 0s
+  military_distance_band: [0.7, 0.9]  # normalized distance to enemy TC

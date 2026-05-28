@@ -1,0 +1,23 @@
+# Doctrine spec for Romanians Cuza Revolution
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Romanians Cuza Revolution
+civ_label: Romanians
+leader_label: Alexandru Ioan Cuza
+
+doctrine_label: Civic Militia Center
+doctrine_summary: Danubian Principalities consolidation
+doctrine_prose: >-
+  Tight civic core. The AI relies on settler-callable defenses — Town Centers and
+  Outposts that summon militia — rather than a forward army. Reactive: hits hard
+  when threatened, less aggressive on the open map.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 3  # perimeter_ring
+  first_military_building: outpost
+  military_distance_band: [0.8, 1.1]  # normalized distance to enemy TC
+  expects_forward: false

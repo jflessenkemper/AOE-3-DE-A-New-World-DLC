@@ -1,0 +1,27 @@
+# Doctrine spec for Germans Frederick Great
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Germans Frederick Great
+civ_label: Germans
+leader_label: Frederick the Great
+
+doctrine_label: Republican Levee
+doctrine_summary: Hohenzollern oblique-order shock
+doctrine_prose: >-
+  Drills a Musketeer-and-Skirmisher line backed by Uhlan cavalry on the flanks.
+  Production hugs the Town Center in early Colonial, then projects a forward base
+  from Fortress onward. Cavalry weight escalates significantly in the mid-game —
+  the oblique hammer wing grows until it rivals the infantry core.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 4  # rolling_front
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 360000  # 6min 0s
+  first_wall_before_ms: 900000  # 15min 0s
+  military_distance_band: [0.8, 1.1]  # normalized distance to enemy TC
+  expects_cavalry: true
+  expects_infantry: true

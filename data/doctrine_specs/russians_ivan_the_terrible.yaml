@@ -1,0 +1,29 @@
+# Doctrine spec for Russians Ivan the Terrible
+# Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
+
+schema_version: 1
+data_name: Russians Ivan the Terrible
+civ_label: Russians
+leader_label: Ivan the Terrible
+
+doctrine_label: Cossack Voisko
+doctrine_summary: Oprichnik terror
+doctrine_prose: >-
+  Plays an offensive, fortified game suited to the Tsar: massed Streltsy
+  musketeer blocks form the backbone, Oprichnik cavalry hits as a shock arm, and
+  a siege train accompanies the army for fortress reduction. Frontier palisades
+  and Blockhouses anchor the eastern marches; the Tsar pushes a forward base
+  early to project terror onto rival capitals.
+
+portrait_path: resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png
+
+# Behavioural claims — validated by tools/validation/validate_doctrine_compliance.py
+claims:
+  wall_strategy: 3  # perimeter_ring
+  first_military_building: barracks_or_stable
+  first_barracks_before_ms: 420000  # 7min 0s
+  first_wall_before_ms: 720000  # 12min 0s
+  military_distance_band: [0.8, 1.1]  # normalized distance to enemy TC
+  expects_forward: true
+  expects_infantry: true
+  expects_artillery: true
