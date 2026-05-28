@@ -66,30 +66,28 @@ USER_CFG_PATH: Path = (
 # documents the convention: "to turn off +XYZ add -XYZ to your user.cfg" --
 # meaning the engine reads user.cfg for +/- overrides on the same flags it
 # parses from game.cfg/production.cfg.
-_REQUIRED_TOKENS: tuple[str, ...] = ("developer", "+ixsLog", "+cxsLog")
+_REQUIRED_TOKENS: tuple[str, ...] = ("developer", "+ixsLog", "+cxsLog", "generateAIEchoesOutput")
 
 _DEV_CFG_CONTENT = """\
 // user.cfg -- personal developer overrides for Legendary Leaders AI probe capture
 //
-// These three tokens together enable aiEcho() probe output to Age3Log.txt:
-//   developer  -- engine developer mode
-//   +ixsLog    -- XS info-level logging (overrides "//+ixsLog" in game.cfg:85)
-//   +cxsLog    -- XS console-XS logging (overrides "//+cxsLog" in game.cfg:87)
+// These four tokens together enable aiEcho() probe output to Age3Log.txt
+// and per-AI demuxed output to Age3DEAIOutputPlayer<N>.txt:
+//   developer              -- engine developer mode
+//   +ixsLog                -- XS info-level logging (overrides "//+ixsLog" in game.cfg:85)
+//   +cxsLog                -- XS console-XS logging (overrides "//+cxsLog" in game.cfg:87)
+//   generateAIEchoesOutput -- demux aiEcho() per AI player to Age3DEAIOutputPlayer<N>.txt
 //
-// Without ALL THREE, aiEcho() calls are silently dropped and [LLP v=2 ...]
-// lines never appear in the log file.  The bare "developer" token alone is
-// INSUFFICIENT: dev mode toggles UI/keybinds but does not route XS output.
-//
-// Mechanism: AoE3 DE reads game.cfg, then production.cfg (FINAL builds), then
-// the user's Startup/user.cfg as +/- overrides.  See game.cfg line 84:
-//   "XS setup - for correct default handling of messages -
-//    to turn off +XYZ add -XYZ to your user.cfg"
+// Without developer+ixsLog+cxsLog, aiEcho() calls are silently dropped.
+// generateAIEchoesOutput is a bare token (NOT key=value); it was added in
+// Update 61213 and fixed (empty-file bug) in a subsequent 2022 patch.
 //
 // Remove this file to revert to production mode.
 
 developer
 +ixsLog
 +cxsLog
+generateAIEchoesOutput
 """
 
 

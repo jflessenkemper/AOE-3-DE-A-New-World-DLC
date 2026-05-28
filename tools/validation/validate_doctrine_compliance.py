@@ -205,14 +205,85 @@ RUNTIME_TO_SPEC_LEADER = {
     "usman":      "muhammadu",   # Hausa:    engine 'usman'      → spec leader Muhammadu Kanta
 }
 
+# ANW civs emit civ=<numeric-engine-id> (e.g. civ_131) or an unrelated vanilla
+# civ name, so the standard "probe_civ + leader" join cannot resolve them.
+# Instead, for every anw* personality key we map directly to the full
+# playstyle_spec.json data-name.  Spec keys verified verbatim from
+# playstyle_spec.json (schema_version 2, 40 civs).
+RUNTIME_LDR_TO_SPEC_KEY: dict[str, str] = {
+    # key → spec key (verbatim)
+    "anwargentines":       "Argentines San Martin Revolution",         # spec: "Argentines San Martin Revolution"
+    "anwaztecs":           "Aztecs Montezuma",                         # spec: "Aztecs Montezuma"
+    "anwbarbary":          "Barbary Barbarossa Corsair Revolution",     # spec: "Barbary Barbarossa Corsair Revolution"
+    "anwbrazil":           "Brazil Pedro Revolution",                  # spec: "Brazil Pedro Revolution"
+    "anwbritish":          "British Elizabeth",                        # spec: "British Elizabeth"
+    "anwcanadians":        "Canadians Brock Revolution",               # spec: "Canadians Brock Revolution"
+    "anwchileans":         "Chileans OHiggins Revolution",             # spec: "Chileans OHiggins Revolution"
+    "anwchinese":          "Chinese Kangxi",                           # spec: "Chinese Kangxi"
+    "anwcolumbians":       "Columbians Bolivar Colombia Revolution",   # spec: "Columbians Bolivar Colombia Revolution"
+    "anwdutch":            "Dutch Maurice Nassau",                     # spec: "Dutch Maurice Nassau"
+    "anwegyptians":        "Egyptians Muhammad Ali Revolution",        # spec: "Egyptians Muhammad Ali Revolution"
+    "anwethiopians":       "Ethiopians Menelik",                       # spec: "Ethiopians Menelik"
+    "anwfinnish":          "Finnish Mannerheim Revolution",            # spec: "Finnish Mannerheim Revolution"
+    "anwfrench":           "French Louis XVIII Bourbon",               # spec: "French Louis XVIII Bourbon"
+    "anwgermans":          "Germans Frederick Great",                  # spec: "Germans Frederick Great"
+    "anwhaitians":         "Haitians Louverture Revolution",           # spec: "Haitians Louverture Revolution"
+    "anwhaudenosaunee":    "Haudenosaunee Hiawatha Iroquois",          # spec: "Haudenosaunee Hiawatha Iroquois"
+    "anwhausa":            "Hausa Usman dan Fodio",                    # spec: "Hausa Usman dan Fodio"
+    "anwhungarians":       "Hungarians Kossuth Revolution",            # spec: "Hungarians Kossuth Revolution"
+    "anwinca":             "Inca Pachacuti",                           # spec: "Inca Pachacuti"
+    "anwindians":          "Indians Akbar",                            # spec: "Indians Akbar"
+    "anwindonesians":      "Indonesians Diponegoro Revolution",        # spec: "Indonesians Diponegoro Revolution"
+    "anwitalians":         "Italians Garibaldi",                       # spec: "Italians Garibaldi"
+    "anwjapanese":         "Japanese Tokugawa Ieyasu",                 # spec: "Japanese Tokugawa Ieyasu"
+    "anwlakota":           "Lakota Crazy Horse",                       # spec: "Lakota Crazy Horse"
+    "anwmaltese":          "Maltese Valette",                          # spec: "Maltese Valette"
+    "anwmayans":           "Mayans Canek Maya Revolution",             # spec: "Mayans Canek Maya Revolution"
+    "anwmexicans":         "Mexicans Hidalgo Standard",                # spec: "Mexicans Hidalgo Standard"
+    "anwnapoleonicfrance": "Napoleonic France Napoleon Bonaparte Revolution",  # spec: "Napoleonic France Napoleon Bonaparte Revolution"
+    "anwottomans":         "Ottomans Suleiman",                        # spec: "Ottomans Suleiman"
+    "anwperuvians":        "Peruvians Santa Cruz Peru Revolution",     # spec: "Peruvians Santa Cruz Peru Revolution"
+    "anwportuguese":       "Portuguese Henry Navigator",               # spec: "Portuguese Henry Navigator"
+    "anwrevfrance":        "Revolutionary France Robespierre Revolution",  # spec: "Revolutionary France Robespierre Revolution"
+    "anwromanians":        "Romanians Cuza Revolution",                # spec: "Romanians Cuza Revolution"
+    "anwrussians":         "Russians Ivan the Terrible",               # spec: "Russians Ivan the Terrible"
+    "anwsouthafricans":    "South Africans Kruger Boer Revolution",    # spec: "South Africans Kruger Boer Revolution"
+    "anwspanish":          "Spanish Isabella Castile",                 # spec: "Spanish Isabella Castile"
+    "anwswedes":           "Swedes Gustavus Adolphus Swedish",         # spec: "Swedes Gustavus Adolphus Swedish"
+    "anwtexians":          "Texians Sam Houston Texas Revolution",     # spec: "Texians Sam Houston Texas Revolution"
+    "anwusa":              "United States Washington",                 # spec: "United States Washington"
+}
+
+# Probe actors that should be silently skipped rather than reported as
+# unmatched.  Reasons:
+#   "test"          — synthetic sentinel emitted by the test harness (civ=test)
+#   "anwcalifornians" — civ was removed from the mod; dead personality file
+#                       still present but no spec entry exists for it.
+_SKIP_LDR: frozenset[str] = frozenset({"anwcalifornians"})
+_SKIP_CIV: frozenset[str] = frozenset({"test"})
+
 # When the engine emits civ=British ldr=elizabeth, we want the spec key
 # "British Elizabeth". The leader fragment is appended title-cased; for
-# revolutions ("RvltModNapoleonicFrance") we lowercase-match against the
-# spec's leader_label/data_name slug.
+# ANW civs the full spec key is returned via RUNTIME_LDR_TO_SPEC_KEY above.
 def _resolve_spec_key(probe_civ: str, probe_ldr: str, spec: dict[str, Any]) -> Optional[str]:
     """Return the playstyle_spec.json key for a (civ, leader) tuple, or
-    None if no fuzzy match is plausible."""
+    None if no fuzzy match is plausible.
+
+    Returns the sentinel value ``_SKIP`` (empty string) when the actor is
+    a known dead/test entry that should be silently skipped.
+    """
+    # Skip test harness sentinel and removed civs.
+    if probe_civ.lower() in _SKIP_CIV or probe_ldr.lower() in _SKIP_LDR:
+        return ""  # sentinel: caller treats "" as "skip silently"
+
     civs = spec.get("civs", {})
+
+    # 0) Direct full-key lookup for ANW anw* personality keys.
+    #    These civs emit civ=<numeric-engine-id> so the civ-join approach
+    #    below cannot work; we bypass it entirely.
+    direct = RUNTIME_LDR_TO_SPEC_KEY.get(probe_ldr.lower())
+    if direct is not None:
+        return direct if direct in civs else None
 
     # Apply the runtime→spec leader rename bridge first, so subsequent
     # candidates use the spec-side slug (e.g. wellington → elizabeth).
@@ -1229,13 +1300,18 @@ _DEFAULT_LOG_ROOT = Path(__file__).resolve().parents[2] / "artifacts" / "validat
 
 
 def _auto_discover_logs(root: Path) -> list[Path]:
-    """Return every match.log under the conventional artifact root.
-
-    Sorted to keep the report deterministic between invocations on the same
-    set of inputs."""
+    """Return every match.log and Age3DEAIOutputPlayer*.txt under the
+    conventional artifact root. match.log is the primary source;
+    per-player files are included as supplementary (defense in depth).
+    Sorted to keep the report deterministic between invocations."""
     if not root.exists():
         return []
-    return sorted(root.rglob("match.log"))
+    paths: list[Path] = []
+    # Primary: per-match slices of Age3Log.txt
+    paths.extend(sorted(root.rglob("match.log")))
+    # Supplementary: per-AI demuxed output (Phase 0 addition)
+    paths.extend(sorted(root.rglob("Age3DEAIOutputPlayer*.txt")))
+    return paths
 
 
 def main() -> int:
@@ -1247,6 +1323,9 @@ def main() -> int:
                     help="one or more match-log paths to scan for [LLP v=2 …]. "
                          "If omitted, auto-discovers match.log files under "
                          "artifacts/validation/ai_playstyle/")
+    ap.add_argument("--ai-logs", type=Path, nargs="+", default=None,
+                    help="explicit Age3DEAIOutputPlayer*.txt files to also scan "
+                         "(supplementary to --logs; both are parsed)")
     ap.add_argument("--civ", action="append", default=[],
                     help="filter to this civ token (repeatable). Matches the "
                          "engine `civ=` field, e.g. ANWBritish.")
@@ -1271,7 +1350,31 @@ def main() -> int:
     ap.add_argument("--allow-empty", action="store_true",
                     help="exit 0 when no probes are found (useful for "
                          "release smoke runs against an empty artifact tree)")
+    ap.add_argument("--static-mode", action="store_true",
+                    help="offline mode: run the static spec-vs-XS doctrine check "
+                         "(validate_spec_vs_xs_doctrine.py logic) instead of "
+                         "consuming runtime log probes. Exits 0 if all civs pass.")
     args = ap.parse_args()
+
+    # ── Static mode: delegate to validate_spec_vs_xs_doctrine subprocess ──
+    if args.static_mode:
+        import subprocess
+        here = Path(__file__).resolve().parent
+        static_validator = here / "validate_spec_vs_xs_doctrine.py"
+        if not static_validator.exists():
+            print(f"[static-mode] ERROR: {static_validator} not found", file=sys.stderr)
+            return 2
+        print("[static-mode] doctrine_compliance — running static spec-vs-XS doctrine check "
+              "(no live log probes needed)")
+        result = subprocess.run(
+            [sys.executable, str(static_validator)],
+            cwd=Path(__file__).resolve().parents[2],
+        )
+        if result.returncode == 0:
+            print("[static-mode] doctrine_compliance — PASS (spec-vs-XS static check passed)")
+        else:
+            print("[static-mode] doctrine_compliance — FAIL (spec-vs-XS static check failed)")
+        return result.returncode
 
     if not args.spec.exists():
         print(f"missing spec {args.spec}", file=sys.stderr)
@@ -1282,6 +1385,8 @@ def main() -> int:
     # artifact root so callers can do `validate_doctrine_compliance.py --civ X`
     # without specifying log files by hand.
     log_paths = args.logs if args.logs else _auto_discover_logs(_DEFAULT_LOG_ROOT)
+    if args.ai_logs:
+        log_paths = list(log_paths) + list(args.ai_logs)
     if not log_paths:
         msg = (f"error: no logs provided and none found under "
                f"{_DEFAULT_LOG_ROOT}")
@@ -1325,6 +1430,9 @@ def main() -> int:
         spec_key = _resolve_spec_key(civ, ldr, spec)
         if spec_key is None:
             unmatched.append((civ, ldr))
+            continue
+        if spec_key == "":
+            # Silently skip known dead/test actors (see _SKIP_LDR / _SKIP_CIV).
             continue
         spec_key_to_actor[spec_key] = (civ, ldr)
         claims = spec["civs"][spec_key].get("claims", {})
