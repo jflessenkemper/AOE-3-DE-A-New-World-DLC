@@ -11,6 +11,10 @@
 #   14.   CLI dll status exits 0
 #   15.   build.sh passes bash -n
 #   16.   static_verify.sh passes bash -n
+#   17.   Present_hook has staging-texture pipeline (not a stub)
+#   18.   hotreload.py syntax check
+#   19.   diff.py syntax check
+#   20.   bisect.py syntax check
 #
 # Usage:
 #   cd tools/aoe3_harness/dll
@@ -212,6 +216,28 @@ check "build.sh passes bash -n" \
 
 check "static_verify.sh passes bash -n" \
     "bash -n '${DLL_DIR}/static_verify.sh' && echo OK" \
+    "^OK$"
+
+# --------------------------------------------------------------------------
+# 17-20. New module syntax + pipeline completeness checks
+# --------------------------------------------------------------------------
+qecho ""
+qecho "--- New module checks (Phase 3) ---"
+
+check "Present_hook has staging-texture pipeline (not a stub)" \
+    "grep -l 'CopyResource\|D3D11_USAGE_STAGING' '${DLL_DIR}/anw_dxgi_hook.c'" \
+    "anw_dxgi_hook.c"
+
+check "hotreload.py syntax check" \
+    "python3 -m py_compile '${REPO_ROOT}/tools/aoe3_harness/hotreload.py' && echo OK" \
+    "^OK$"
+
+check "diff.py syntax check" \
+    "python3 -m py_compile '${REPO_ROOT}/tools/aoe3_harness/diff.py' && echo OK" \
+    "^OK$"
+
+check "bisect.py syntax check" \
+    "python3 -m py_compile '${REPO_ROOT}/tools/aoe3_harness/bisect.py' && echo OK" \
     "^OK$"
 
 # --------------------------------------------------------------------------

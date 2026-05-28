@@ -1,5 +1,9 @@
 # tools/aoe3_harness — ANW Harness Package
 
+**Phase 3 status (2026-05-29):** DXGI pixel pipeline implemented, hot-reload
+watcher added, screenshot diff module added, git-bisect wrapper added.
+Live-game validation of DXGI pipeline still required (see verification checklist).
+
 The ANW (A New World) harness automates AoE3 DE gameplay for AI data capture.
 It consists of a Win32 DLL injected into the game process, a Unix socket bridge,
 and Python client + CLI tools.
@@ -18,7 +22,7 @@ tools/aoe3_harness/
     anw_dxgi_hook.h    — public header
     anw_input.h        — public header
     build.sh           — one-shot cross-compile script (distrobox gs-build)
-    static_verify.sh   — 17-check static verification (no game needed)
+    static_verify.sh   — 20-check static verification (no game needed)
     minhook/           — MinHook submodule (vtable hooking library)
   dll_client.py        — Python DllClient: Unix socket → Win32 named pipe
   cli.py               — CLI: `python3 -m tools.aoe3_harness.cli`
@@ -42,7 +46,8 @@ Architecture reference: `artifacts/harness_design/phase2_dll_architecture.md`
      verified against `/usr/x86_64-w64-mingw32/sys-root/mingw/include/dxgi.h`).
    - Creates a Win32 named pipe `\\.\pipe\anwhook`.
    - Serves `\r\n`-terminated line commands: `STATE`, `KEY`, `CLICK`, `MOVE`,
-     `SCREENSHOT`, `QUIT`.
+     `SCREENSHOT` (IMPLEMENTED — BMP output via staging-texture pipeline;
+     TODO: live-game DXVK validation needed), `QUIT`.
 3. Wine exposes the named pipe as a Unix domain socket under
    `/tmp/.wine-<uid>/server-<dev>-<ino>/pipe/anwhook`.
 4. `DllClient` connects to that socket and sends commands.
@@ -77,7 +82,7 @@ The build script checks that the game is NOT running before overwriting the DLL
 ```bash
 cd /var/home/jflessenkemper/AOE-3-DE-A-New-World
 bash tools/aoe3_harness/dll/static_verify.sh
-# Expected: 17 PASS, 0 FAIL
+# Expected: 20 PASS, 0 FAIL
 ```
 
 In quiet mode:
@@ -93,7 +98,73 @@ bash tools/aoe3_harness/dll/static_verify.sh --quiet
 cd /var/home/jflessenkemper/AOE-3-DE-A-New-World
 python3 -m pytest tools/aoe3_harness/tests/test_dll_client.py -v
 # 41 tests, 100% line coverage of dll_client.py
+
+python3 -m pytest tools/aoe3_harness/tests/test_diff.py -v
+# Pixel diff tests (identical / black-vs-white / small region / heatmap / threshold)
 ```
+
+---
+
+## Hot-Reload (XS Auto-Deploy)
+
+Watches `game/ai/**/*.xs`, `data/*.xml`, `RandMaps/*.xs` for changes and
+re-deploys via `deploy_to_mod.py` on every save.  The game does not need to
+be running.
+
+```bash
+# Start the watcher (foreground; Ctrl-C to stop)
+python3 -m tools.aoe3_harness.cli hotreload start
+
+# Or directly
+python3 -m tools.aoe3_harness.hotreload
+```
+
+Install `inotify_simple` for event-driven (non-polling) mode:
+
+```bash
+pip install inotify_simple
+```
+
+Without it the watcher falls back to 1s stat() polling automatically.
+
+---
+
+## Screenshot Diffing
+
+Compare two PNG screenshots pixel-by-pixel:
+
+```bash
+# Report changed-pixel percentage + changed region bbox
+python3 -m tools.aoe3_harness.cli diff before.png after.png
+
+# With heatmap output (red = changed, black = unchanged)
+python3 -m tools.aoe3_harness.cli diff before.png after.png --output heatmap.png
+```
+
+Run diff unit tests:
+
+```bash
+python3 -m pytest tools/aoe3_harness/tests/test_diff.py -v
+```
+
+---
+
+## Doctrine Bisect
+
+Find which commit broke a doctrine probe:
+
+```bash
+python3 -m tools.aoe3_harness.cli bisect \
+    --probe wall.closure \
+    --civ ANWFrench \
+    --target 0.6 \
+    --good abc1234 \
+    --bad def5678
+```
+
+This runs `git bisect start` and writes `.git/bisect_test_anw.sh`.  The inner
+loop requires launching the game manually at each step until `exhibition_runner`
+supports autonomous mode.
 
 ---
 
@@ -113,7 +184,7 @@ step-by-step checklist. Summary:
 ## CLI
 
 ```bash
-# Query DLL status
+# Query DLL status (game must be running)
 python3 -m tools.aoe3_harness.cli input state
 
 # Inject key press (W = 0x57)
@@ -124,6 +195,16 @@ python3 -m tools.aoe3_harness.cli input click 960 540
 
 # Check DLL files are in place
 python3 -m tools.aoe3_harness.cli dll status
+
+# Request a screenshot (game must be running with DXGI hook active)
+# Output is a BMP file; convert to PNG with: python3 -c "from PIL import Image; Image.open('frame.bmp').save('frame.png')"
+python3 -m tools.aoe3_harness.cli input state  # then use DllClient.screenshot() directly
+
+# Watch XS files and auto-deploy (game need not be running)
+python3 -m tools.aoe3_harness.cli hotreload start
+
+# Diff two screenshots
+python3 -m tools.aoe3_harness.cli diff before.png after.png --output heatmap.png
 ```
 
 ---

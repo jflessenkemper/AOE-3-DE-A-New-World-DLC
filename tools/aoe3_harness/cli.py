@@ -17,6 +17,9 @@ Usage:
   python3 -m tools.aoe3_harness.cli input state
   python3 -m tools.aoe3_harness.cli dll verify
   python3 -m tools.aoe3_harness.cli dll status
+  python3 -m tools.aoe3_harness.cli hotreload start
+  python3 -m tools.aoe3_harness.cli diff <before.png> <after.png> [--output heatmap.png]
+  python3 -m tools.aoe3_harness.cli bisect --probe <name> --civ <token> --target <float> --good <sha> --bad <sha>
 
 Subcommands:
   deploy    Run deploy_to_mod.py (and optionally validate_xs_scripts.py with --check)
@@ -28,6 +31,9 @@ Subcommands:
   capture   Screenshot the AoE3 window for a specific civ/surface combination
   input     Inject keyboard/mouse input into the running game via anw_hook.dll pipe
   dll       Inspect anw_hook.dll files (static, no game launch)
+  hotreload Watch XS/XML source files and auto-deploy on save (game need not be running)
+  diff      Compare two screenshots pixel-by-pixel; optionally write a heatmap PNG
+  bisect    Set up git-bisect to find the commit that broke a doctrine probe
 
 All subcommands accept --dry-run (passed through to deploy/launch).
 """
@@ -421,6 +427,94 @@ def cmd_dll(args: argparse.Namespace) -> int:
         return 1
 
 
+def cmd_hotreload(args: argparse.Namespace) -> int:
+    """Start the XS hot-reload watcher (foreground; Ctrl-C to stop).
+
+    Watches ``game/ai/**/*.xs``, ``data/*.xml``, ``RandMaps/*.xs`` and
+    re-deploys via ``deploy_to_mod.py`` whenever a file changes.  The game
+    does not need to be running — when the user next launches AoE3 it picks
+    up the updated mod files automatically.
+
+    Args:
+        args: Parsed namespace with ``hotreload_cmd`` attribute.
+
+    Returns:
+        0 on success / clean exit (Ctrl-C).
+    """
+    if args.hotreload_cmd == "start":
+        from tools.aoe3_harness.hotreload import run as hotreload_run
+        hotreload_run()
+    return 0
+
+
+def cmd_diff(args: argparse.Namespace) -> int:
+    """Compare two screenshots pixel-by-pixel and report the difference.
+
+    Loads both PNGs, computes per-pixel RGB deltas, and reports the fraction
+    of changed pixels, the maximum colour delta, and the bounding box of the
+    changed region.  If ``--output`` is supplied, also writes a heatmap PNG
+    (red = changed, black = unchanged).
+
+    Args:
+        args: Parsed namespace with ``before``, ``after``, and optional
+              ``output`` attributes.
+
+    Returns:
+        0 on success, 1 on error (missing file, import failure, etc.).
+    """
+    from tools.aoe3_harness.diff import compare_screenshots
+
+    before = Path(args.before)
+    after  = Path(args.after)
+    out    = Path(args.output) if args.output else None
+
+    try:
+        result = compare_screenshots(before, after, output_path=out)
+    except FileNotFoundError as exc:
+        print(f"[cli/diff] ERROR: {exc}", file=sys.stderr)
+        return 1
+    except ImportError as exc:
+        print(f"[cli/diff] ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"[cli/diff] Changed pixels: {result.pct_pixels_changed:.2%}")
+    print(f"[cli/diff] Max colour delta: {result.max_color_delta}")
+    if result.bbox:
+        print(f"[cli/diff] Changed region (l,t,r,b): {result.bbox}")
+    else:
+        print("[cli/diff] No changed pixels detected.")
+    if result.output_path:
+        print(f"[cli/diff] Heatmap written: {result.output_path}")
+    return 0
+
+
+def cmd_bisect(args: argparse.Namespace) -> int:
+    """Start a git-bisect session to find which XS commit broke a probe.
+
+    Runs ``git bisect start <bad> <good>``, writes a test script that
+    deploys and prompts for manual game testing, and prints the operator
+    workflow.  Live game testing is required at each bisect step until
+    ``exhibition_runner`` supports autonomous mode.
+
+    Args:
+        args: Parsed namespace with ``probe``, ``civ``, ``target``, ``good``,
+              and ``bad`` attributes.
+
+    Returns:
+        0 on success, 1 on git error.
+    """
+    from tools.aoe3_harness.bisect import run_bisect
+
+    return run_bisect(
+        repo_root=REPO_ROOT,
+        probe=args.probe,
+        civ=args.civ,
+        target=args.target,
+        good_sha=args.good,
+        bad_sha=args.bad,
+    )
+
+
 def main() -> int:
     """Entry point for the ANW test harness CLI.
 
@@ -504,6 +598,44 @@ def main() -> int:
         help="check which DLL files exist in system32 + game data dir",
     )
 
+    # Phase 3: Hot-reload watcher
+    p_hotreload = sub.add_parser(
+        "hotreload",
+        help="watch XS/XML source files and auto-deploy on save (game need not be running)",
+    )
+    hotreload_sub = p_hotreload.add_subparsers(dest="hotreload_cmd", required=True)
+    hotreload_sub.add_parser(
+        "start",
+        help="start the watcher in the foreground (Ctrl-C to stop)",
+    )
+
+    # Phase 3: Screenshot diff
+    p_diff = sub.add_parser(
+        "diff",
+        help="compare two screenshots pixel-by-pixel and report the difference",
+    )
+    p_diff.add_argument("before", help="baseline screenshot PNG path")
+    p_diff.add_argument("after",  help="new screenshot PNG path to compare")
+    p_diff.add_argument(
+        "--output",
+        default=None,
+        help="write heatmap PNG to this path (red=changed, black=unchanged)",
+    )
+
+    # Phase 3: Git bisect wrapper
+    p_bisect = sub.add_parser(
+        "bisect",
+        help="set up git-bisect to find the commit that broke a doctrine probe",
+    )
+    p_bisect.add_argument("--probe",  required=True, help="probe name, e.g. wall.closure")
+    p_bisect.add_argument("--civ",    required=True, help="civ token, e.g. ANWFrench")
+    p_bisect.add_argument(
+        "--target", required=True, type=float,
+        help="minimum acceptable probe value, e.g. 0.6",
+    )
+    p_bisect.add_argument("--good", required=True, help="known-good commit SHA")
+    p_bisect.add_argument("--bad",  required=True, help="known-bad commit SHA")
+
     args = ap.parse_args()
 
     # Propagate --dry-run to subcommands that don't define it themselves
@@ -511,15 +643,18 @@ def main() -> int:
         args.dry_run = False
 
     dispatch = {
-        "deploy": cmd_deploy,
-        "run": cmd_run,
-        "validate": cmd_validate,
-        "report": cmd_report,
-        "gate": cmd_gate,
-        "status": cmd_status,
-        "capture": cmd_capture,
-        "input": cmd_input,
-        "dll": cmd_dll,
+        "deploy":     cmd_deploy,
+        "run":        cmd_run,
+        "validate":   cmd_validate,
+        "report":     cmd_report,
+        "gate":       cmd_gate,
+        "status":     cmd_status,
+        "capture":    cmd_capture,
+        "input":      cmd_input,
+        "dll":        cmd_dll,
+        "hotreload":  cmd_hotreload,
+        "diff":       cmd_diff,
+        "bisect":     cmd_bisect,
     }
     return dispatch[args.cmd](args)
 

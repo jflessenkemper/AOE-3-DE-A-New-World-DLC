@@ -3,16 +3,12 @@
  *
  * Implements §2 of artifacts/harness_design/phase2_dll_architecture.md.
  *
- * NOTE (2026-05-29): DXGI screenshot hook is STUBBED in this build.
- * The Present vtable hook requires runtime verification of the vtable index
- * (architecture doc §2 warns: "verify index via dxgi.h before hardcoding").
- * Without live-game testing the index cannot be confirmed correct, and shipping
- * a wrong index silently corrupts the swap-chain call, crashing the game.
+ * STATUS (2026-05-29): IMPLEMENTED — staging-texture pixel pipeline complete.
+ * vtable[8] verified against MinGW dxgi.h (IUnknown:3 + IDXGIObject:4 +
+ * IDXGIDeviceSubObject:1 = 8 base methods before IDXGISwapChain::Present).
  *
- * The stub responds with ERR DXGI_NOT_IMPLEMENTED to SCREENSHOT pipe commands.
- * All other hook machinery (MinHook init/cleanup) is fully wired so the only
- * change needed to enable screenshots is: uncomment the MH_CreateHook call in
- * anw_dxgi_hook.c once vtable[8] is verified against dxgi.h.
+ * TODO(live-game): validate DXVK staging texture Map() returns correct pixels.
+ * See artifacts/harness_design/phase2_verification_checklist.md §5-§6.
  */
 
 #ifndef ANW_DXGI_HOOK_H
@@ -57,5 +53,16 @@ int dxgi_request_screenshot(const char *path_utf8);
  * dxgi_screenshot_pending() — Returns non-zero if a screenshot request is outstanding.
  */
 int dxgi_screenshot_pending(void);
+
+/*
+ * dxgi_screenshot_hresult() — Returns the HRESULT from the last screenshot attempt.
+ *
+ * Returns:
+ *   0        (S_OK) — screenshot written successfully
+ *   non-zero        — HRESULT error code from the failed pipeline stage
+ *
+ * Only valid after dxgi_screenshot_pending() has returned 0 (request complete).
+ */
+LONG dxgi_screenshot_hresult(void);
 
 #endif /* ANW_DXGI_HOOK_H */

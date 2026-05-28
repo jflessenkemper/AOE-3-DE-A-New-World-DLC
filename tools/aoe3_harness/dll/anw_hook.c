@@ -41,7 +41,10 @@
  * -------------------------------------------------------------------------*/
 
 #define PIPE_NAME       L"\\\\.\\pipe\\anwhook"
+/* Log path: try Z:\tmp first (maps to host /tmp if not sandboxed), then
+ * fall back to a path that's always writable: C:\users\steamuser\AppData\Local\Temp */
 #define LOG_PATH        "Z:\\tmp\\anw_hook.log"
+#define LOG_PATH_FALLBACK "C:\\users\\steamuser\\AppData\\Local\\Temp\\anw_hook.log"
 #define PIPE_BUF_SIZE   4096
 #define CMD_BUF_SIZE    1024
 #define RESP_BUF_SIZE   512
@@ -116,7 +119,9 @@ static inline HANDLE atomic_pipe_get(void) {
  * -------------------------------------------------------------------------*/
 
 static void log_write(const char *fmt, ...) {
+    /* Try primary log path first; fall back to AppData if Z: is sandboxed */
     FILE *fp = fopen(LOG_PATH, "a");
+    if (!fp) fp = fopen(LOG_PATH_FALLBACK, "a");
     if (!fp) return;
 
     /* Timestamp */
@@ -294,23 +299,34 @@ static int dispatch_command(HANDLE pipe, const char *cmd) {
         const char *path = cmd + 11;
         int rc = dxgi_request_screenshot(path);
         if (rc == -1) {
-            pipe_writeline(pipe, "ERR DXGI_NOT_IMPLEMENTED");
+            pipe_writeline(pipe, "ERR DXGI_NOT_INSTALLED");
         } else if (rc == -2) {
             pipe_writeline(pipe, "ERR path too long");
         } else {
             /* Use CMD_BUF_SIZE (1024) to accommodate long paths without truncation */
             char resp[CMD_BUF_SIZE];
-            /* Block until screenshot is done (Present hook clears the flag) */
+            /* Block until Present hook clears the request flag.
+             * Poll interval: 1ms; timeout: 5 seconds. */
+#define SCREENSHOT_POLL_INTERVAL_MS  1
+#define SCREENSHOT_TIMEOUT_MS        5000
             int waited = 0;
-            while (dxgi_screenshot_pending() && waited < 5000) {
-                Sleep(10);
-                waited += 10;
+            while (dxgi_screenshot_pending() &&
+                   waited < SCREENSHOT_TIMEOUT_MS) {
+                Sleep(SCREENSHOT_POLL_INTERVAL_MS);
+                waited += SCREENSHOT_POLL_INTERVAL_MS;
             }
             if (dxgi_screenshot_pending()) {
                 pipe_writeline(pipe, "ERR SCREENSHOT timeout");
             } else {
-                snprintf(resp, sizeof(resp), "OK %s", path);
-                pipe_writeline(pipe, resp);
+                LONG hr = dxgi_screenshot_hresult();
+                if (hr != 0) {
+                    snprintf(resp, sizeof(resp),
+                             "ERR HRESULT 0x%08lx", (unsigned long)(DWORD)hr);
+                    pipe_writeline(pipe, resp);
+                } else {
+                    snprintf(resp, sizeof(resp), "OK %s", path);
+                    pipe_writeline(pipe, resp);
+                }
             }
         }
         return 0;

@@ -1187,3 +1187,63 @@ A human can read through this list to confirm the implementation is complete.
 | Distrobox gs-build | Fedora 43, ID `4d4878c05d81` |
 | Harness package | `/var/home/jflessenkemper/AOE-3-DE-A-New-World/tools/aoe3_harness/` |
 | Artifact root | `/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation/ai_playstyle/` |
+
+---
+
+## Phase 3 — "Until Perfect" Hardening (2026-05-29)
+
+**Status: COMPLETE — all static work delivered**
+**Base commits:** `03b6c5d` / `08a9625`
+
+### Completed Items
+
+| Item | File(s) | Status |
+|------|---------|--------|
+| DXGI staging-texture pixel pipeline (BMP output) | `dll/anw_dxgi_hook.c` | IMPLEMENTED — live-game DXVK validation pending |
+| Inline BMP encoder (no libpng dependency) | `dll/anw_dxgi_hook.c` | IMPLEMENTED |
+| D3D11 type forward-declarations (d3d11.h absent) | `dll/anw_dxgi_hook.c` | IMPLEMENTED |
+| `dxgi_screenshot_hresult()` API for error reporting | `dll/anw_dxgi_hook.h`, `dll/anw_hook.c` | IMPLEMENTED |
+| SCREENSHOT poll interval named constant (1ms) | `dll/anw_hook.c` | IMPLEMENTED |
+| Hot-reload XS watcher (`inotify_simple` + poll fallback) | `hotreload.py` | IMPLEMENTED |
+| Screenshot diff + heatmap module | `diff.py` | IMPLEMENTED |
+| Screenshot diff unit tests (8 test cases) | `tests/test_diff.py` | IMPLEMENTED |
+| Git-bisect doctrine regression wrapper | `bisect.py` | IMPLEMENTED |
+| CLI: `hotreload start` subcommand | `cli.py` | IMPLEMENTED |
+| CLI: `diff <before> <after> [--output]` subcommand | `cli.py` | IMPLEMENTED |
+| CLI: `bisect --probe --civ --target --good --bad` | `cli.py` | IMPLEMENTED |
+| `static_verify.sh` expanded: 16 → 20 checks | `dll/static_verify.sh` | IMPLEMENTED |
+| README updated (hotreload, diff, bisect sections; 20 PASS note) | `README.md` | UPDATED |
+
+### Design Decisions Taken Without Input
+
+1. **d3d11.h absent** — MinGW cross-toolchain on this host has no D3D11 headers.
+   Forward-declared all required D3D11 types manually, using MSDN SDK field
+   ordering.  Vtable slot counts verified against MSDN reference documentation.
+   Alternative (using distrobox to pull mingw64-directx-headers) would require
+   a rebuild; the forward-declaration approach avoids that dependency.
+
+2. **BMP output format** — Chose BMP (54-byte header + raw pixels) over raw BGRA
+   because BMP is self-describing (width/height/format in header) and viewable
+   without a custom reader.  Python `DllClient.screenshot()` docstring updated to
+   say "BMP output" rather than "raw BGRA".
+
+3. **`dxgi_screenshot_hresult()` added** — The original SCREENSHOT command could
+   only report "OK" or "timeout".  Added a shared HRESULT store so the pipe
+   command can report the actual D3D11 error code when the pipeline fails
+   (e.g. `ERR HRESULT 0x887a0005` = DXGI_ERROR_DEVICE_REMOVED).
+
+4. **ERR string changed** — `ERR DXGI_NOT_IMPLEMENTED` renamed to
+   `ERR DXGI_NOT_INSTALLED` to accurately reflect the condition (hook not
+   installed because D3D device creation failed in headless env).
+
+5. **inotify_simple fallback** — Hot-reload uses inotify_simple if available,
+   falls back to 1s polling.  `inotify_simple` was not added to requirements.txt
+   (not confirmed as present in the env); the fallback is always available.
+
+### Still Deferred to Live-Game
+
+- DXVK staging texture pipeline correctness (Map() returns valid BGRA/RGBA pixels)
+- Confirm `DXGI_FORMAT_B8G8R8A8_UNORM` vs `DXGI_FORMAT_R8G8B8A8_UNORM` for AoE3 back-buffer
+  (relevant if BMP colors appear swapped — swap R/B channels in write_bmp() if needed)
+- `exhibition_runner` non-interactive mode (required for `git bisect run` full automation)
+- Screenshot/diff validation with actual game frames
