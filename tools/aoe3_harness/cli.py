@@ -9,6 +9,7 @@ Usage:
   python3 -m tools.aoe3_harness.cli gate
   python3 -m tools.aoe3_harness.cli status
   python3 -m tools.aoe3_harness.cli capture --civ <name> --surface <name> [--out <path>]
+  python3 -m tools.aoe3_harness.cli input ping
   python3 -m tools.aoe3_harness.cli input key <vk_hex>
   python3 -m tools.aoe3_harness.cli input keydown <vk_hex>
   python3 -m tools.aoe3_harness.cli input keyup <vk_hex>
@@ -311,7 +312,11 @@ def cmd_input(args: argparse.Namespace) -> int:
 
     try:
         with DllClient() as client:
-            if args.input_cmd == "state":
+            if args.input_cmd == "ping":
+                client.ping()
+                print("PONG (connection verified)")
+
+            elif args.input_cmd == "state":
                 print(client.state())
 
             elif args.input_cmd == "key":
@@ -343,8 +348,9 @@ def cmd_input(args: argparse.Namespace) -> int:
 
     except ConnectionError as exc:
         print(
-            f"[cli/input] Could not connect to anw_hook pipe: {exc}\n"
-            "  Is the game running with WINEDLLOVERRIDES=\"anw_hook=n,b\"?",
+            f"[cli/input] Could not connect to input pipe: {exc}\n"
+            "  Is the game running with LD_PRELOAD=anw_preload.so set? "
+            "(launch via harness: python3 -m tools.aoe3_harness.cli run --pass N)",
             file=sys.stderr,
         )
         return 1
@@ -581,7 +587,8 @@ def main() -> int:
     p_move.add_argument("x", type=int, help="client-area x coordinate")
     p_move.add_argument("y", type=int, help="client-area y coordinate")
 
-    input_sub.add_parser("state", help="print DLL STATE response (heartbeat)")
+    input_sub.add_parser("ping", help="send PING and verify PONG (connection check)")
+    input_sub.add_parser("state", help="print STATE response (heartbeat)")
 
     # Phase 2: DLL file inspection (static, no game launch)
     p_dll = sub.add_parser(
@@ -636,11 +643,37 @@ def main() -> int:
     p_bisect.add_argument("--good", required=True, help="known-good commit SHA")
     p_bisect.add_argument("--bad",  required=True, help="known-bad commit SHA")
 
+    # Telemetry: parse probe logs and emit HTML report
+    p_telemetry = sub.add_parser(
+        "telemetry",
+        help="parse [LLP v=2] probe logs and render telemetry HTML report",
+    )
+    telemetry_sub = p_telemetry.add_subparsers(dest="telemetry_cmd", required=True)
+    p_tel_parse = telemetry_sub.add_parser(
+        "parse",
+        help="parse a log file and emit an HTML report",
+    )
+    p_tel_parse.add_argument("log_path", help="path to Age3Log.txt or similar")
+    p_tel_parse.add_argument(
+        "--output",
+        default=None,
+        help="output HTML path (default: artifacts/validation/telemetry_report.html)",
+    )
+
     args = ap.parse_args()
 
     # Propagate --dry-run to subcommands that don't define it themselves
     if not hasattr(args, "dry_run"):
         args.dry_run = False
+
+    def cmd_telemetry(args: argparse.Namespace) -> int:
+        """Delegate to telemetry.main_cli() with reconstructed argv."""
+        from tools.aoe3_harness.telemetry import main_cli as telemetry_main_cli
+
+        tel_argv = [args.telemetry_cmd, args.log_path]
+        if hasattr(args, "output") and args.output:
+            tel_argv += ["--output", args.output]
+        return telemetry_main_cli(tel_argv)
 
     dispatch = {
         "deploy":     cmd_deploy,
@@ -655,6 +688,7 @@ def main() -> int:
         "hotreload":  cmd_hotreload,
         "diff":       cmd_diff,
         "bisect":     cmd_bisect,
+        "telemetry":  cmd_telemetry,
     }
     return dispatch[args.cmd](args)
 

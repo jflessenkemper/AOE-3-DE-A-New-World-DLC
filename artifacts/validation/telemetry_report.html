@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ANW Telemetry Report</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #1a1a2e; color: #e0e0f0;
+         margin: 0; padding: 16px; }
+  h1   { color: #a8c8ff; font-size: 22px; margin-bottom: 4px; }
+  .meta { font-size: 12px; color: #888; margin-bottom: 20px; }
+  .civ-section { border: 1px solid #334; border-radius: 8px; margin: 14px 0;
+                  padding: 12px; background: #16213e; }
+  .civ-section h2 { color: #7db8ff; font-size: 17px; margin: 0 0 10px 0; }
+  .probe-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .probe-chart { background: #0f3460; border: 1px solid #556; border-radius: 6px;
+                  padding: 8px; }
+  .probe-chart h3 { margin: 0 0 6px 0; font-size: 12px; color: #9ac; }
+  svg { display: block; }
+  .no-numeric { font-size: 11px; color: #779; font-style: italic; padding: 20px 10px; }
+  .summary { border: 2px solid #3a6; border-radius: 6px; padding: 10px 14px;
+              background: #0d2a18; margin-bottom: 16px; font-size: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; margin-top: 6px; }
+  th { background: #223; color: #aac; text-align: left; padding: 4px 8px; }
+  td { padding: 3px 8px; border-bottom: 1px solid #334; }
+</style>
+</head>
+<body>
+<h1>ANW Telemetry Report</h1>
+<div class="meta">Source: /tmp/synthetic_telemetry.txt</div>
+<div class="summary"><b>2</b> player(s) / civ(s) found &nbsp;|&nbsp; <b>5</b> total probe events &nbsp;|&nbsp; <b>3</b> distinct probe name(s)<br><span style="font-size:12px;color:#9ac;">Probes: ai.attack, econ.idle, wall.closure</span></div><section class="civ-section"><h2>player_1</h2><details><summary style="font-size:12px;color:#779;cursor:pointer;">Event table (3 total)</summary><table><tr><th>tick_ms</th><th>probe</th><th>player</th><th>params</th></tr><tr><td>1000</td><td>wall.closure</td><td>1</td><td style='font-family:monospace;font-size:10px;'>pct=0.3</td></tr><tr><td>2000</td><td>wall.closure</td><td>1</td><td style='font-family:monospace;font-size:10px;'>pct=0.55</td></tr><tr><td>3000</td><td>wall.closure</td><td>1</td><td style='font-family:monospace;font-size:10px;'>pct=0.72</td></tr></table></details><div class="probe-grid"><div class="probe-chart"><h3>wall.closure <span style="font-weight:normal;color:#668;">(3 events)</span></h3><svg width="220" height="100" aria-label="probe:wall.closure"><rect width="220" height="100" fill="#0a1628" rx="4"/><line x1="30" y1="8" x2="30" y2="82" stroke="#446" stroke-width="1"/><line x1="30" y1="82" x2="212" y2="82" stroke="#446" stroke-width="1"/><text x="27" y="85.0" text-anchor="end" font-size="9" fill="#779">0.3</text><text x="27" y="48.0" text-anchor="end" font-size="9" fill="#779">0.51</text><text x="27" y="11.0" text-anchor="end" font-size="9" fill="#779">0.72</text><text x="30" y="96" font-size="9" fill="#779">1000</text><text x="212" y="96" text-anchor="end" font-size="9" fill="#779">3000</text><polyline points="30.0,82.0 121.0,38.0 212.0,8.0" fill="none" stroke="#4a9eff" stroke-width="1.5" opacity="0.9"/><circle cx="30.0" cy="82.0" r="2.5" fill="#4a9eff" opacity="0.85"/><circle cx="121.0" cy="38.0" r="2.5" fill="#4a9eff" opacity="0.85"/><circle cx="212.0" cy="8.0" r="2.5" fill="#4a9eff" opacity="0.85"/></svg></div></div></section><section class="civ-section"><h2>player_2</h2><details><summary style="font-size:12px;color:#779;cursor:pointer;">Event table (2 total)</summary><table><tr><th>tick_ms</th><th>probe</th><th>player</th><th>params</th></tr><tr><td>1500</td><td>econ.idle</td><td>2</td><td style='font-family:monospace;font-size:10px;'>count=4</td></tr><tr><td>2500</td><td>ai.attack</td><td>2</td><td style='font-family:monospace;font-size:10px;'>n=7</td></tr></table></details><div class="probe-grid"><div class="probe-chart"><h3>ai.attack <span style="font-weight:normal;color:#668;">(1 events)</span></h3><svg width="220" height="100" aria-label="probe:ai.attack"><rect width="220" height="100" fill="#0a1628" rx="4"/><line x1="30" y1="8" x2="30" y2="82" stroke="#446" stroke-width="1"/><line x1="30" y1="82" x2="212" y2="82" stroke="#446" stroke-width="1"/><text x="27" y="85.0" text-anchor="end" font-size="9" fill="#779">7</text><text x="27" y="48.0" text-anchor="end" font-size="9" fill="#779">7</text><text x="27" y="11.0" text-anchor="end" font-size="9" fill="#779">7</text><text x="30" y="96" font-size="9" fill="#779">2500</text><text x="212" y="96" text-anchor="end" font-size="9" fill="#779">2500</text><polyline points="30.0,82.0" fill="none" stroke="#4a9eff" stroke-width="1.5" opacity="0.9"/><circle cx="30.0" cy="82.0" r="2.5" fill="#4a9eff" opacity="0.85"/></svg></div><div class="probe-chart"><h3>econ.idle <span style="font-weight:normal;color:#668;">(1 events)</span></h3><svg width="220" height="100" aria-label="probe:econ.idle"><rect width="220" height="100" fill="#0a1628" rx="4"/><line x1="30" y1="8" x2="30" y2="82" stroke="#446" stroke-width="1"/><line x1="30" y1="82" x2="212" y2="82" stroke="#446" stroke-width="1"/><text x="27" y="85.0" text-anchor="end" font-size="9" fill="#779">4</text><text x="27" y="48.0" text-anchor="end" font-size="9" fill="#779">4</text><text x="27" y="11.0" text-anchor="end" font-size="9" fill="#779">4</text><text x="30" y="96" font-size="9" fill="#779">1500</text><text x="212" y="96" text-anchor="end" font-size="9" fill="#779">1500</text><polyline points="30.0,82.0" fill="none" stroke="#4a9eff" stroke-width="1.5" opacity="0.9"/><circle cx="30.0" cy="82.0" r="2.5" fill="#4a9eff" opacity="0.85"/></svg></div></div></section></body>
+</html>

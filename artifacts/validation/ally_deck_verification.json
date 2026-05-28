@@ -1,0 +1,684 @@
+{
+  "_meta": {
+    "total": 40,
+    "static_pass": 27,
+    "visual_pass": 0,
+    "visual_skipped": 1
+  },
+  "civs": [
+    {
+      "civ": "ANWArgentines",
+      "homecity_xml": "data/anwhomecityargentines.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWArgentines']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWAztecs",
+      "homecity_xml": "data/anwhomecityaztecs.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWAztecs']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWBarbary",
+      "homecity_xml": "data/anwhomecitybarbary.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWBarbary']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWBrazil",
+      "homecity_xml": "data/anwhomecitybrazil.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWBrazil']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWBritish",
+      "homecity_xml": "data/anwhomecitybritish.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWBritish']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "SKIPPED",
+      "visual_reason": "no 04_ally_homecity.png",
+      "notes": []
+    },
+    {
+      "civ": "ANWCanadians",
+      "homecity_xml": "data/anwhomecitycanadians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWCanadians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWChileans",
+      "homecity_xml": "data/anwhomecitychileans.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWChileans']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWChinese",
+      "homecity_xml": "data/anwhomecitychinese.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWChinese']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWColumbians",
+      "homecity_xml": "data/anwhomecitycolumbians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWColumbians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWDutch",
+      "homecity_xml": "data/anwhomecitydutch.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWDutch']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCCavalryCombatDutch",
+        "HCMercenaryLoyalty",
+        "HCMortarsDamageDutchTeam",
+        "HCNativeChampionsDutchTeam"
+      ],
+      "missing_in_xml": [
+        "DEHCBlueGuards",
+        "DEHCBuckriders",
+        "DEHCFlemishRevolution",
+        "HCDutchEastIndiaCompany"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWEgyptians",
+      "homecity_xml": "data/anwhomecityegyptians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWEgyptians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWEthiopians",
+      "homecity_xml": "data/anwhomecityethiopians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWEthiopians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWFinnish",
+      "homecity_xml": "data/anwhomecityfinnish.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWFinnish']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWFrench",
+      "homecity_xml": "data/anwhomecityfrench.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWFrench']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCEarlySkirmishersTeam",
+        "HCHandCavalryDamageFrenchTeam",
+        "HCRoyalDecreeFrench",
+        "HCRoyalMint"
+      ],
+      "missing_in_xml": [
+        "DEHCAncienRegime",
+        "DEHCCentSuisses",
+        "DEHCColbertismTeam",
+        "DEHCMercsGiantGrenadiers"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWGermans",
+      "homecity_xml": "data/anwhomecitygermans.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWGermans']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCExplorerGerman",
+        "HCShipSettlerWagons1"
+      ],
+      "missing_in_xml": [
+        "DEHCGermanTongue",
+        "HCXPMasterSurgeons"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWHaitians",
+      "homecity_xml": "data/anwhomecityhaitians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWHaitians']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCPrivateers2"
+      ],
+      "missing_in_xml": [
+        "HCXPAssassins"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWHaudenosaunee",
+      "homecity_xml": "data/anwhomecityhaudenosaunee.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWHaudenosaunee']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWHausa",
+      "homecity_xml": "data/anwhomecityhausa.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWHausa']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWHungarians",
+      "homecity_xml": "data/anwhomecityhungarians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWHungarians']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "DEHCShipBattleshipRepeat",
+        "HCAdvancedDock",
+        "HCExoticHardwoods",
+        "HCShipSettlers1"
+      ],
+      "missing_in_xml": [
+        "DEHCLegionHungarian",
+        "HCXPLandGrab",
+        "HCXPMasterSurgeons",
+        "HCXPWhaleOil"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWInca",
+      "homecity_xml": "data/anwhomecityinca.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWInca']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWIndians",
+      "homecity_xml": "data/anwhomecityindians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWIndians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWIndonesians",
+      "homecity_xml": "data/anwhomecityindonesians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWIndonesians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWItalians",
+      "homecity_xml": "data/anwhomecityitalians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWItalians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWJapanese",
+      "homecity_xml": "data/anwhomecityjapanese.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWJapanese']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWLakota",
+      "homecity_xml": "data/anwhomecitylakota.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWLakota']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWMaltese",
+      "homecity_xml": "data/anwhomecitymaltese.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWMaltese']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWMayans",
+      "homecity_xml": "data/anwhomecitymayans.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWMayans']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWMexicans",
+      "homecity_xml": "data/anwhomecitymexicans.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWMexicans']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWNapoleonicFrance",
+      "homecity_xml": "data/anwhomecitynapoleonicfrance.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWNapoleonicFrance']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCExoticHardwoods",
+        "HCFencingSchool",
+        "HCNavalGunners"
+      ],
+      "missing_in_xml": [
+        "DEHCColbertismTeam",
+        "DEHCFrenchRoyalArmy",
+        "HCXPLandGrab"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWOttomans",
+      "homecity_xml": "data/anwhomecityottomans.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWOttomans']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCRoyalDecreeOttoman",
+        "HCShipAbusGuns2"
+      ],
+      "missing_in_xml": [
+        "DEHCFlightArchery",
+        "HCJanissaryCost"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWPeruvians",
+      "homecity_xml": "data/anwhomecityperuvians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWPeruvians']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCShipSettlers1",
+        "HCShipSettlers2"
+      ],
+      "missing_in_xml": [
+        "HCXPRanchingLlama",
+        "HCXPTercioTactics"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWPortuguese",
+      "homecity_xml": "data/anwhomecityportuguese.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWPortuguese']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "DEHCShipBattleshipRepeat",
+        "HCArtilleryHitpointsPortugueseTeam",
+        "HCNavalCombat",
+        "HCNavalGunners",
+        "HCRangedInfantryHitpointsPortugueseTeam",
+        "HCShipPortugueseExpForce"
+      ],
+      "missing_in_xml": [
+        "DEHCEstremozGuns",
+        "DEHCGrapeshot",
+        "DEHCHandMortar",
+        "DEHCMachuPicchu",
+        "DEHCWettinAllies1",
+        "HCXPHouseofBraganca"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWRevFrance",
+      "homecity_xml": "data/anwhomecityrevfrance.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWRevFrance']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCEarlySkirmishersTeam",
+        "HCShipFoodCrates1"
+      ],
+      "missing_in_xml": [
+        "DEHCShipBalloonsFrench",
+        "HCXPColbertism"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWRomanians",
+      "homecity_xml": "data/anwhomecityromanians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWRomanians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWRussians",
+      "homecity_xml": "data/anwhomecityrussians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWRussians']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCBlockhouseCannon",
+        "HCCavalryCombatRussian",
+        "HCExplorerRussian",
+        "HCRoyalDecreeRussian",
+        "HCShipHalberdiersRussian1"
+      ],
+      "missing_in_xml": [
+        "DEHCHandMortar",
+        "DEHCMercsGiantGrenadiers",
+        "DEHCMercsPandours",
+        "DEHCPhanarAllies1",
+        "DEHCSoldierTorps"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWSouthAfricans",
+      "homecity_xml": "data/anwhomecitysouthafricans.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWSouthAfricans']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWSpanish",
+      "homecity_xml": "data/anwhomecityspanish.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWSpanish']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCHandCavalryCombatSpanish",
+        "HCHandCavalryDamageSpanish",
+        "HCHandInfantryCombatSpanish",
+        "HCShipGalleons",
+        "HCShipSpanishSquare",
+        "HCSpanishGalleons",
+        "HCSpanishTreasureFleet"
+      ],
+      "missing_in_xml": [
+        "DEHCBarbacoa",
+        "DEHCBourbonAllies1",
+        "DEHCCharreada",
+        "DEHCHandMortar",
+        "DEHCMachuPicchu",
+        "DEHCNewSpainViceroyalty",
+        "HCXPTercioTactics"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWSwedes",
+      "homecity_xml": "data/anwhomecityswedes.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWSwedes']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWTexians",
+      "homecity_xml": "data/anwhomecitytexians.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWTexians']",
+      "json_card_count": 25,
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    },
+    {
+      "civ": "ANWUSA",
+      "homecity_xml": "data/anwhomecityusa.xml",
+      "homecity_deck_name": "$$71332$$Beginner",
+      "homecity_card_count": 25,
+      "json_deck_source": "decks_anw.json['ANWUSA']",
+      "json_card_count": 25,
+      "extra_in_xml": [
+        "HCFrontierDefenses",
+        "HCFrontierDefenses2"
+      ],
+      "missing_in_xml": [
+        "DEHCFedFertileLowlands",
+        "DEHCLouisianaPurchase"
+      ],
+      "static_check": "FAIL",
+      "visual_check": "FAIL",
+      "visual_reason": false,
+      "notes": []
+    }
+  ]
+}
