@@ -71,12 +71,16 @@ class HarnessState:
         uptime_ms:  Milliseconds since AOE3DEHarness started.
         internal_w: Internal (output) resolution width in pixels.
         internal_h: Internal (output) resolution height in pixels.
+        ready:      1 when the inner game window has been mapped and has
+                    committed its first composited frame (i.e. the game is
+                    past the splash screen and on the main menu); 0 otherwise.
     """
 
     pid: int
     uptime_ms: int
     internal_w: int
     internal_h: int
+    ready: int = 0
 
 
 @dataclass(frozen=True)
@@ -352,7 +356,12 @@ class HarnessClient:
 
         Sends ``STATE`` and parses the response into a :class:`HarnessState`.
 
-        Wire response: ``STATE pid=<N> uptime=<N>ms w=<N> h=<N>``
+        Wire response:
+            ``OK pid=<N> uptime_ms=<N> internal_w=<N> internal_h=<N> ready=<0|1>``
+
+        ``ready=1`` means the inner game window has been mapped and has
+        committed its first composited frame (i.e. past the splash screen).
+        ``ready=0`` means no client window is compositing yet.
 
         Returns:
             A :class:`HarnessState` dataclass.
@@ -363,9 +372,7 @@ class HarnessClient:
             HarnessConnectionError: on socket failure.
         """
         resp = self.send_raw("STATE")
-        if not resp.startswith("STATE"):
-            self._raise_err("STATE", resp)
-        payload = resp[len("STATE"):].strip()
+        payload = self._require_ok("STATE", resp)
         fields: dict[str, str] = {}
         for token in payload.split():
             if "=" in token:
@@ -373,19 +380,54 @@ class HarnessClient:
                 fields[k] = v
         try:
             pid = int(fields["pid"])
-            uptime_ms = int(fields["uptime"].rstrip("ms"))
-            internal_w = int(fields["w"])
-            internal_h = int(fields["h"])
+            uptime_ms = int(fields["uptime_ms"])
+            internal_w = int(fields["internal_w"])
+            internal_h = int(fields["internal_h"])
         except (KeyError, ValueError) as exc:
             raise HarnessProtocolError(
                 f"Cannot parse STATE response: {resp!r}"
             ) from exc
+        ready = int(fields.get("ready", "0"))
         return HarnessState(
             pid=pid,
             uptime_ms=uptime_ms,
             internal_w=internal_w,
             internal_h=internal_h,
+            ready=ready,
         )
+
+    def wait_for_ready(self, timeout: float = 60.0) -> HarnessState:
+        """Poll STATE until ``ready=1`` or *timeout* seconds elapse.
+
+        The harness sets ``ready=1`` once the inner game window has been
+        mapped and has committed its first composited frame.  Polling every
+        0.5 s is sufficient to detect this transition without busy-waiting.
+
+        Args:
+            timeout: Wall-clock seconds to wait before raising (default: 60.0).
+
+        Returns:
+            The :class:`HarnessState` snapshot at the moment ``ready=1`` was
+            observed.
+
+        Raises:
+            HarnessTimeoutError:    if ``ready`` has not become 1 within
+                                    *timeout* seconds.
+            HarnessConnectionError: on socket failure.
+            HarnessProtocolError:   if STATE cannot be parsed.
+        """
+        deadline = time.monotonic() + timeout
+        while True:
+            s = self.state()
+            if s.ready:
+                return s
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise HarnessTimeoutError(
+                    f"Timed out waiting for harness ready=1 after {timeout}s "
+                    f"(last uptime_ms={s.uptime_ms})"
+                )
+            time.sleep(min(0.5, remaining))
 
     def key(self, vk: int) -> None:
         """Inject a key tap (KEY_DOWN + gap + KEY_UP) for a virtual key code.
