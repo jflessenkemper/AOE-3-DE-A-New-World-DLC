@@ -1,8 +1,8 @@
-"""vk.py — Win32 virtual key code constants for the gamescope-anw harness.
+"""vk.py — Win32 virtual key code constants for the AOE3DEHarness.
 
-Values match the Win32 Virtual-Key codes accepted by the gamescope-anw
+Values match the Win32 Virtual-Key codes accepted by the AOE3DEHarness
 keymap (``ASAP-Australia/AOE-3-DE-Harness``).  All constants are plain
-integers so they can be passed directly to :class:`GamescopeClient` verb
+integers so they can be passed directly to :class:`HarnessClient` verb
 methods (``key``, ``key_down``, ``key_up``).
 
 Reference: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
