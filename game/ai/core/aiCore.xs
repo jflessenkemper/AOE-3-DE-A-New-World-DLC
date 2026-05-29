@@ -1091,7 +1091,7 @@ minInterval 20
 //
 //   myEnemyCount       bits 20..16 = terr_s         (5 bits)
 //                      bits 15..11 = heading        (5 bits)
-//                      bits 10..08 = age            (3 bits, 1..5)
+//                      bits 10..08 = age            (3 bits, 0..4, 0=Discovery)
 //                      bits 07..00 = civ            (8 bits, 0..255)
 //
 //   lastMapID          score, clamped to 0..(2^23 - 1) = ~8.3M
