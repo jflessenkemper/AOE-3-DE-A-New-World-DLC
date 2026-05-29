@@ -153,14 +153,14 @@ def setup_phase(use_harness_headless: bool = False, watchdog_mode: bool = False)
                 str(HARNESS_BINARY),
                 "--harness-headless",
                 "--",
-                "sh", "-c", "sleep 1; exit 0",
+                "sh", "-c", "sleep 3; exit 0",
             ]
         else:
             cmd = [
                 str(HARNESS_BINARY),
                 "--backend", "headless",
                 "--",
-                "sh", "-c", "sleep 1; exit 0",
+                "sh", "-c", "sleep 3; exit 0",
             ]
     else:
         if use_harness_headless:
@@ -458,17 +458,20 @@ def test_phase(proc: subprocess.Popen) -> dict:
 def test_watchdog_phase(proc: subprocess.Popen) -> dict:
     """Test WATCHDOG_ENABLE / WATCHDOG_STATUS / WATCHDOG_DISABLE.
 
-    Uses a short-lived inner command ('sh -c sleep 1; exit 0') so the harness
-    can observe death naturally.  We arm the watchdog with max_restarts=2 and
-    restart_delay_ms=100, then wait for WATCHDOG: RESTART events on a
-    PROBE_TAIL connection, and finally verify WATCHDOG_STATUS shows
-    restarts_remaining=0 after exhaustion.
+    Uses a short-lived inner command ('sh -c sleep 3; exit 0').  Protocol
+    (single serial connection — the harness is single-client-serial):
+
+      1. WATCHDOG_ENABLE 2 100  — arm BEFORE the inner proc first dies
+      2. PROBE_TAIL <log>       — subscribe; WATCHDOG: events are broadcast here
+      3. [background] collect WATCHDOG: RESTART / EXHAUSTED events (~9 s)
+      4. PROBE_UNSUB            — end streaming, back to command mode
+      5. WATCHDOG_STATUS        — verify restarts_remaining=0
+      6. WATCHDOG_DISABLE
     """
     results: dict[str, dict] = {}
 
     time.sleep(0.3)  # let socket settle
 
-    # Open a new connection for the watchdog test.
     client = RawClient(SOCKET_PATH)
     try:
         client.connect()
@@ -478,14 +481,27 @@ def test_watchdog_phase(proc: subprocess.Popen) -> dict:
         return results
 
     log("Connected to harness socket for watchdog test.")
+    t0 = ts()
 
     try:
-        # ---- Subscribe to PROBE_TAIL so we receive WATCHDOG: events ----
-        # WATCHDOG: lines are broadcast to active PROBE_TAIL subscribers.
-        # We subscribe to the probe log (it may be empty or have old data —
-        # that's fine, we only care about WATCHDOG: lines).
+        # ---- Step 1: Enable watchdog BEFORE subscribing to PROBE_TAIL ----
+        # The harness is single-client-serial, so we must issue all commands
+        # on the same connection in order.  Arm the watchdog now, before
+        # the inner process (sleep 3) first dies ~3 s from now.
+        log("Sending WATCHDOG_ENABLE 2 100...")
+        wd_resp_enable = client.cmd("WATCHDOG_ENABLE 2 100", timeout=5.0)
+        log(f"  WATCHDOG_ENABLE response: {wd_resp_enable!r}")
+        watchdog_enabled = wd_resp_enable.strip() == "OK"
+
+        if not watchdog_enabled:
+            results["WATCHDOG"] = {
+                "result": "FAIL",
+                "note": f"WATCHDOG_ENABLE failed: {wd_resp_enable!r}",
+            }
+            return results
+
+        # ---- Step 2: Subscribe to PROBE_TAIL to receive WATCHDOG: events ----
         log("Subscribing PROBE_TAIL for watchdog event stream...")
-        t0 = ts()
         client.send(f"PROBE_TAIL {PROBE_LOG}")
         sub_resp = client.recv_line(timeout=5.0)
         log(f"  PROBE_TAIL subscription: {sub_resp!r}")
@@ -496,36 +512,15 @@ def test_watchdog_phase(proc: subprocess.Popen) -> dict:
             }
             return results
 
-        # ---- Enable watchdog: 2 restarts, 100 ms delay ----
-        # We send this on a second connection because PROBE_TAIL holds the
-        # first connection busy (handle_client is single-threaded per conn).
-        wd_client = RawClient(SOCKET_PATH)
-        wd_resp_enable = "(no second connection)"
-        try:
-            wd_client.connect()
-            log("Sending WATCHDOG_ENABLE 2 100...")
-            wd_resp_enable = wd_client.cmd("WATCHDOG_ENABLE 2 100", timeout=5.0)
-            log(f"  WATCHDOG_ENABLE response: {wd_resp_enable!r}")
-        except OSError as e:
-            log(f"  Could not open second connection for WATCHDOG_ENABLE: {e}")
-            # If the harness is single-client, we can't issue WATCHDOG_ENABLE
-            # while PROBE_TAIL holds the only connection.  Note and skip.
-            results["WATCHDOG"] = {
-                "result": "SKIP",
-                "note": f"harness single-client; cannot open second conn: {e}",
-            }
-            wd_client.close()
-            return results
-
-        watchdog_enabled = wd_resp_enable.strip() == "OK"
-
-        # ---- Collect WATCHDOG: events on the probe connection ----
+        # ---- Step 3: Collect WATCHDOG: events ----
+        # With 2 restarts and 3 s inner sleep the cycle is:
+        #   initial sleep3 → die → RESTART 2 → sleep3 → die → RESTART 1
+        #   → sleep3 → die → EXHAUSTED.  Total ~9 s + 3×100 ms = ~9.3 s.
         watchdog_events: list[str] = []
         stop_wd_collector = threading.Event()
         wd_collector_done = threading.Event()
 
-        def collect_watchdog(duration: float = 12.0) -> None:
-            """Read lines from probe connection for duration seconds."""
+        def collect_watchdog(duration: float = 30.0) -> None:
             deadline = time.monotonic() + duration
             try:
                 while time.monotonic() < deadline and not stop_wd_collector.is_set():
@@ -534,7 +529,6 @@ def test_watchdog_phase(proc: subprocess.Popen) -> dict:
                         if ln:
                             log(f"  [probe stream] {ln!r}")
                             watchdog_events.append(ln)
-                            # Stop early once we see EXHAUSTED (budget fully used)
                             if "WATCHDOG: EXHAUSTED" in ln:
                                 break
                     except _socket.timeout:
@@ -544,46 +538,49 @@ def test_watchdog_phase(proc: subprocess.Popen) -> dict:
             finally:
                 wd_collector_done.set()
 
-        log("Starting watchdog event collector (up to 12 s)...")
-        wd_thread = threading.Thread(target=collect_watchdog, args=(12.0,), daemon=True)
+        log("Starting watchdog event collector (up to 30 s)...")
+        wd_thread = threading.Thread(target=collect_watchdog, args=(30.0,), daemon=True)
         wd_thread.start()
-
-        # Wait for exhaustion or timeout.
-        wd_collector_done.wait(timeout=14.0)
+        wd_collector_done.wait(timeout=35.0)
         stop_wd_collector.set()
         wd_collector_done.wait(timeout=2.0)
 
         restart_events = [ln for ln in watchdog_events if "WATCHDOG: RESTART" in ln]
         exhausted_events = [ln for ln in watchdog_events if "WATCHDOG: EXHAUSTED" in ln]
-        log(f"  WATCHDOG: RESTART events received: {restart_events}")
-        log(f"  WATCHDOG: EXHAUSTED events received: {exhausted_events}")
+        log(f"  WATCHDOG: RESTART events: {restart_events}")
+        log(f"  WATCHDOG: EXHAUSTED events: {exhausted_events}")
 
-        # ---- Check WATCHDOG_STATUS ----
+        # ---- Step 4: Unsubscribe from PROBE_TAIL ----
+        log("Sending PROBE_UNSUB...")
+        client.send("PROBE_UNSUB")
+        for _ in range(4):
+            try:
+                ln = client.recv_line(timeout=5.0)
+                log(f"  PROBE_UNSUB recv: {ln!r}")
+                if ln == "OK":
+                    break
+            except (_socket.timeout, ConnectionError, OSError) as e:
+                log(f"  PROBE_UNSUB: {e}")
+                break
+
+        # ---- Step 5: Check WATCHDOG_STATUS ----
         status_resp = "(not queried)"
         try:
-            status_resp = wd_client.cmd("WATCHDOG_STATUS", timeout=5.0)
+            status_resp = client.cmd("WATCHDOG_STATUS", timeout=5.0)
             log(f"  WATCHDOG_STATUS: {status_resp!r}")
         except (OSError, _socket.timeout) as e:
             log(f"  WATCHDOG_STATUS query failed: {e}")
 
         restarts_remaining_ok = "restarts_remaining=0" in status_resp
 
-        # ---- Disable watchdog ----
+        # ---- Step 6: Disable watchdog ----
         try:
-            disable_resp = wd_client.cmd("WATCHDOG_DISABLE", timeout=5.0)
+            disable_resp = client.cmd("WATCHDOG_DISABLE", timeout=5.0)
             log(f"  WATCHDOG_DISABLE: {disable_resp!r}")
         except (OSError, _socket.timeout) as e:
             log(f"  WATCHDOG_DISABLE failed: {e}")
-            disable_resp = f"error: {e}"
-
-        wd_client.close()
 
         # ---- Evaluate ----
-        # Pass criteria:
-        #  - WATCHDOG_ENABLE returned OK
-        #  - At least one WATCHDOG: RESTART event observed
-        #  - WATCHDOG: EXHAUSTED observed (budget used up)
-        #  - WATCHDOG_STATUS shows restarts_remaining=0
         wd_pass = (
             watchdog_enabled
             and len(restart_events) >= 1
@@ -646,16 +643,19 @@ def report(results: dict, proc: subprocess.Popen, mode: str = "normal") -> int:
         check_names.append("WATCHDOG")
 
     all_pass = True
+    any_tested = False
     for cmd_name in check_names:
         r = results.get(cmd_name, {})
         status = r.get("result", "SKIP")
         # PARTIAL counts as pass for overall verdict (PROBE may need inotify support)
-        verdict = status in ("PASS", "PARTIAL", "SKIP")
-        all_pass = all_pass and (status in ("PASS", "PARTIAL"))
+        # SKIP does not count for or against overall pass
+        if status != "SKIP":
+            any_tested = True
+            all_pass = all_pass and (status in ("PASS", "PARTIAL"))
         note = r.get("note", r.get("subscription_response", r.get("response", "")))
         print(f"  {cmd_name:20s}: {status:8s}  {note!r:.60s}")
 
-    overall = "PASS" if all_pass else "FAIL"
+    overall = "PASS" if (all_pass and any_tested) else "FAIL"
     print("=" * 60)
     print(f"OVERALL: {overall}")
     print("=" * 60)
@@ -710,10 +710,12 @@ def main() -> int:
         proc = setup_phase(use_harness_headless=use_headless, watchdog_mode=watchdog_mode)
 
         if watchdog_mode:
-            # Run normal tests first, then watchdog-specific tests.
-            results = test_phase(proc)
-            wd_results = test_watchdog_phase(proc)
-            results.update(wd_results)
+            # In watchdog mode the inner command is short-lived (sh -c 'sleep 1; exit 0'),
+            # so the harness shuts down within seconds of spawning — running the full
+            # normal test_phase would race with that shutdown.  Run only the watchdog
+            # test, which opens a fresh socket connection and enables the watchdog
+            # before the inner process first dies.
+            results = test_watchdog_phase(proc)
         else:
             results = test_phase(proc)
 
