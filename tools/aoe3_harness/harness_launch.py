@@ -205,7 +205,7 @@ def _wait_for_socket(
         time.sleep(min(poll_interval, max(remaining, 0)))
     raise HarnessConnectionError(
         f"AOE3DEHarness socket {socket_path} did not appear within {timeout}s. "
-        "Check that AOE3DEHarness was launched with --harness-mode --harness-socket."
+        "Check that AOE3DEHarness was launched and is running."
     )
 
 
@@ -217,29 +217,36 @@ def _wait_for_socket(
 def harness_launch(
     gs_binary: Optional[Path] = None,
     socket_path: Optional[Path] = None,
-    resolution: tuple[int, int] = (1920, 1080),
-    window: tuple[int, int] = (1280, 720),
+    resolution: Optional[tuple[int, int]] = None,
+    window: Optional[tuple[int, int]] = None,
     exe: Path = AOE3_EXE,
     socket_timeout: float = 30.0,
     connect_timeout: float = 30.0,
 ) -> tuple[subprocess.Popen[bytes], HarnessClient]:
     """Validate, spawn, and connect to AOE3DEHarness.
 
+    The AOE3DEHarness binary self-configures all defaults (1920x1080,
+    borderless, harness mode ON, socket at /tmp/AOE3DEHarness.sock), so
+    calling this with no arguments produces the minimal launch command.
+
     Steps:
         1. Validate binaries.
-        2. Compute socket path.
-        3. Spawn AOE3DEHarness as a non-blocking subprocess.
-        4. Poll for the socket file.
-        5. Connect a :class:`HarnessClient`.
+        2. Spawn AOE3DEHarness as a non-blocking subprocess.
+        3. Poll for the socket file.
+        4. Connect a :class:`HarnessClient`.
 
     Args:
         gs_binary:       Path to the AOE3DEHarness binary.  Defaults to
                          ``DEFAULT_GS_BINARY``; overridden by env var
                          ``AOE3DE_HARNESS_BINARY``.
-        socket_path:     Unix-domain socket path.  Defaults to
-                         ``_default_socket_path()``.
-        resolution:      Internal resolution ``(w, h)`` (default: 1920x1080).
-        window:          Window size ``(w, h)`` (default: 1280x720).
+        socket_path:     Override Unix-domain socket path.  ``None`` = connect
+                         to the binary's hardcoded ``/tmp/AOE3DEHarness.sock``.
+                         When specified, also passes ``--harness-socket`` to
+                         the binary so it creates the socket at that path.
+        resolution:      Override internal resolution ``(w, h)``.  ``None`` =
+                         use the binary's hardcoded 1920x1080.
+        window:          Override window size ``(w, h)``.  ``None`` = use the
+                         binary's hardcoded 1920x1080.
         exe:             Path to AoE3DE_s.exe.
         socket_timeout:  Seconds to wait for the socket file to appear.
         connect_timeout: Seconds to wait for the socket to accept connections.
@@ -256,8 +263,9 @@ def harness_launch(
     if gs_binary is None:
         env_bin = os.environ.get("AOE3DE_HARNESS_BINARY")
         gs_binary = Path(env_bin) if env_bin else DEFAULT_GS_BINARY
-    if socket_path is None:
-        socket_path = _default_socket_path()
+
+    # The effective socket path for polling/connecting: use override or hardcoded default.
+    effective_socket = socket_path if socket_path is not None else _default_socket_path()
 
     # Preflight
     _check_gs_binary(gs_binary)
@@ -265,11 +273,11 @@ def harness_launch(
 
     # Remove stale socket if present from a previous crashed session
     try:
-        socket_path.unlink()
+        effective_socket.unlink()
     except FileNotFoundError:
         pass
 
-    # Build command
+    # Build command — only pass socket_path flag when overriding
     cmd = build_gamescope_cmd(
         gs_binary=gs_binary,
         socket_path=socket_path,
@@ -288,12 +296,12 @@ def harness_launch(
     print(f"[harness_launch] Launched AOE3DEHarness — PID {proc.pid}")
 
     # Poll for socket
-    print(f"[harness_launch] Waiting for socket {socket_path} ...")
-    _wait_for_socket(socket_path, timeout=socket_timeout)
+    print(f"[harness_launch] Waiting for socket {effective_socket} ...")
+    _wait_for_socket(effective_socket, timeout=socket_timeout)
     print(f"[harness_launch] Socket appeared; connecting ...")
 
     # Connect client
-    client = HarnessClient(socket_path)
+    client = HarnessClient(effective_socket)
     client.connect(timeout=connect_timeout)
     print("[harness_launch] Connected to AOE3DEHarness socket.")
     return proc, client
@@ -340,8 +348,10 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m tools.aoe3_harness.harness_launch",
         description=(
-            "Launch AoE3 DE under AOE3DEHarness harness mode and connect "
-            "the Python control socket."
+            "Launch AoE3 DE under AOE3DEHarness and connect the Python control "
+            "socket.  The binary self-configures all defaults (1920x1080, "
+            "borderless, harness mode ON, socket /tmp/AOE3DEHarness.sock); "
+            "all flags here are optional overrides for testing."
         ),
     )
     parser.add_argument(
@@ -350,23 +360,23 @@ def build_arg_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="PATH",
         help=(
-            "Unix-domain socket path (default: $XDG_RUNTIME_DIR/AOE3DEHarness.sock "
-            "or /tmp/AOE3DEHarness.sock)."
+            "Override Unix-domain socket path (default: /tmp/AOE3DEHarness.sock, "
+            "hardcoded in binary)."
         ),
     )
     parser.add_argument(
         "--resolution",
         type=_parse_resolution,
-        default=(1920, 1080),
+        default=None,
         metavar="WxH",
-        help="Internal AOE3DEHarness resolution (default: 1920x1080).",
+        help="Override internal AOE3DEHarness resolution (default: hardcoded 1920x1080).",
     )
     parser.add_argument(
         "--window",
         type=_parse_resolution,
-        default=(1280, 720),
+        default=None,
         metavar="WxH",
-        help="AOE3DEHarness window size (default: 1280x720).",
+        help="Override AOE3DEHarness window size (default: hardcoded 1920x1080).",
     )
     parser.add_argument(
         "--gs-binary",

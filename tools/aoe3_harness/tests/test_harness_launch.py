@@ -71,19 +71,30 @@ class TestParseResolution(unittest.TestCase):
 
 
 class TestBuildGamescopeCmd(unittest.TestCase):
-    def test_contains_harness_flags(self) -> None:
-        cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/AOE3DEHarness"),
-            socket_path=Path("/tmp/test.sock"),
-        )
-        self.assertIn("--harness-mode", cmd)
-        self.assertIn("--harness-socket", cmd)
-        self.assertIn("/tmp/test.sock", cmd)
+    def test_minimal_command_no_optional_flags(self) -> None:
+        """Default call emits no harness/resolution/window/borderless flags."""
+        cmd = build_gamescope_cmd(gs_binary=Path("/fake/AOE3DEHarness"))
+        self.assertNotIn("--harness-mode", cmd)
+        self.assertNotIn("--harness-socket", cmd)
+        self.assertNotIn("-W", cmd)
+        self.assertNotIn("-H", cmd)
+        self.assertNotIn("-w", cmd)
+        self.assertNotIn("-h", cmd)
+        self.assertNotIn("-b", cmd)
 
-    def test_resolution_args(self) -> None:
+    def test_socket_override_appends_flag(self) -> None:
+        """When socket_path is given, --harness-socket <path> is appended."""
         cmd = build_gamescope_cmd(
             gs_binary=Path("/fake/AOE3DEHarness"),
-            socket_path=Path("/tmp/test.sock"),
+            socket_path=Path("/tmp/custom.sock"),
+        )
+        self.assertIn("--harness-socket", cmd)
+        self.assertIn("/tmp/custom.sock", cmd)
+        self.assertNotIn("--harness-mode", cmd)
+
+    def test_resolution_override_appends_flags(self) -> None:
+        cmd = build_gamescope_cmd(
+            gs_binary=Path("/fake/AOE3DEHarness"),
             resolution=(2560, 1440),
         )
         idx_W = cmd.index("-W")
@@ -91,10 +102,9 @@ class TestBuildGamescopeCmd(unittest.TestCase):
         self.assertEqual(cmd[idx_W + 1], "2560")
         self.assertEqual(cmd[idx_H + 1], "1440")
 
-    def test_window_args(self) -> None:
+    def test_window_override_appends_flags(self) -> None:
         cmd = build_gamescope_cmd(
             gs_binary=Path("/fake/AOE3DEHarness"),
-            socket_path=Path("/tmp/test.sock"),
             window=(800, 600),
         )
         idx_w = cmd.index("-w")
@@ -103,25 +113,12 @@ class TestBuildGamescopeCmd(unittest.TestCase):
         self.assertEqual(cmd[idx_h + 1], "600")
 
     def test_separator_present(self) -> None:
-        cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/AOE3DEHarness"),
-            socket_path=Path("/tmp/test.sock"),
-        )
+        cmd = build_gamescope_cmd(gs_binary=Path("/fake/AOE3DEHarness"))
         self.assertIn("--", cmd)
 
     def test_binary_is_first_arg(self) -> None:
-        cmd = build_gamescope_cmd(
-            gs_binary=Path("/custom/AOE3DEHarness"),
-            socket_path=Path("/tmp/test.sock"),
-        )
+        cmd = build_gamescope_cmd(gs_binary=Path("/custom/AOE3DEHarness"))
         self.assertEqual(cmd[0], "/custom/AOE3DEHarness")
-
-    def test_borderless_flag(self) -> None:
-        cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/AOE3DEHarness"),
-            socket_path=Path("/tmp/test.sock"),
-        )
-        self.assertIn("-b", cmd)
 
 
 # ---------------------------------------------------------------------------
@@ -130,14 +127,14 @@ class TestBuildGamescopeCmd(unittest.TestCase):
 
 
 class TestDefaultSocketPath(unittest.TestCase):
-    def test_uses_xdg_runtime_dir(self) -> None:
-        with patch.dict(os.environ, {"XDG_RUNTIME_DIR": "/run/user/1234"}):
-            path = _default_socket_path()
-        self.assertEqual(path, Path("/run/user/1234/AOE3DEHarness.sock"))
+    def test_always_returns_tmp_path(self) -> None:
+        """Binary hardcodes /tmp/AOE3DEHarness.sock; Python matches it."""
+        path = _default_socket_path()
+        self.assertEqual(path, Path("/tmp/AOE3DEHarness.sock"))
 
-    def test_fallback_when_no_xdg_runtime_dir(self) -> None:
-        env = {k: v for k, v in os.environ.items() if k != "XDG_RUNTIME_DIR"}
-        with patch.dict(os.environ, env, clear=True):
+    def test_xdg_runtime_dir_ignored(self) -> None:
+        """XDG_RUNTIME_DIR no longer affects the default socket path."""
+        with patch.dict(os.environ, {"XDG_RUNTIME_DIR": "/run/user/1234"}):
             path = _default_socket_path()
         self.assertEqual(path, Path("/tmp/AOE3DEHarness.sock"))
 
@@ -218,8 +215,8 @@ class TestArgParsing(unittest.TestCase):
     def test_defaults(self) -> None:
         args = self._parse([])
         self.assertIsNone(args.socket)  # type: ignore[attr-defined]
-        self.assertEqual(args.resolution, (1920, 1080))  # type: ignore[attr-defined]
-        self.assertEqual(args.window, (1280, 720))  # type: ignore[attr-defined]
+        self.assertIsNone(args.resolution)  # type: ignore[attr-defined]
+        self.assertIsNone(args.window)  # type: ignore[attr-defined]
         self.assertIsNone(args.gs_binary)  # type: ignore[attr-defined]
 
     def test_socket_override(self) -> None:
