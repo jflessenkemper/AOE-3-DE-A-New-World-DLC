@@ -1,0 +1,202 @@
+[
+  {
+    "token": "ANWArgentines",
+    "display_name": "Argentines",
+    "homecity_xml": "anwhomecityargentines.xml"
+  },
+  {
+    "token": "ANWAztecs",
+    "display_name": "Aztecs",
+    "homecity_xml": "anwhomecityaztecs.xml"
+  },
+  {
+    "token": "ANWBarbary",
+    "display_name": "Barbary",
+    "homecity_xml": "anwhomecitybarbary.xml"
+  },
+  {
+    "token": "ANWBrazil",
+    "display_name": "Brazil",
+    "homecity_xml": "anwhomecitybrazil.xml"
+  },
+  {
+    "token": "ANWBritish",
+    "display_name": "British",
+    "homecity_xml": "anwhomecitybritish.xml"
+  },
+  {
+    "token": "ANWCanadians",
+    "display_name": "Canadians",
+    "homecity_xml": "anwhomecitycanadians.xml"
+  },
+  {
+    "token": "ANWChileans",
+    "display_name": "Chileans",
+    "homecity_xml": "anwhomecitychileans.xml"
+  },
+  {
+    "token": "ANWChinese",
+    "display_name": "Chinese",
+    "homecity_xml": "anwhomecitychinese.xml"
+  },
+  {
+    "token": "ANWColumbians",
+    "display_name": "Colombians",
+    "homecity_xml": "anwhomecitycolumbians.xml"
+  },
+  {
+    "token": "ANWDutch",
+    "display_name": "Dutch",
+    "homecity_xml": "anwhomecitydutch.xml"
+  },
+  {
+    "token": "ANWEgyptians",
+    "display_name": "Egyptians",
+    "homecity_xml": "anwhomecityegyptians.xml"
+  },
+  {
+    "token": "ANWEthiopians",
+    "display_name": "Ethiopians",
+    "homecity_xml": "anwhomecityethiopians.xml"
+  },
+  {
+    "token": "ANWFinnish",
+    "display_name": "Finnish",
+    "homecity_xml": "anwhomecityfinnish.xml"
+  },
+  {
+    "token": "ANWFrench",
+    "display_name": "French",
+    "homecity_xml": "anwhomecityfrench.xml"
+  },
+  {
+    "token": "ANWGermans",
+    "display_name": "Germans",
+    "homecity_xml": "anwhomecitygermans.xml"
+  },
+  {
+    "token": "ANWHaitians",
+    "display_name": "Haitians",
+    "homecity_xml": "anwhomecityhaitians.xml"
+  },
+  {
+    "token": "ANWHaudenosaunee",
+    "display_name": "Haudenosaunee",
+    "homecity_xml": "anwhomecityhaudenosaunee.xml"
+  },
+  {
+    "token": "ANWHausa",
+    "display_name": "Hausa",
+    "homecity_xml": "anwhomecityhausa.xml"
+  },
+  {
+    "token": "ANWHungarians",
+    "display_name": "Hungarians",
+    "homecity_xml": "anwhomecityhungarians.xml"
+  },
+  {
+    "token": "ANWInca",
+    "display_name": "Inca",
+    "homecity_xml": "anwhomecityinca.xml"
+  },
+  {
+    "token": "ANWIndians",
+    "display_name": "Indians",
+    "homecity_xml": "anwhomecityindians.xml"
+  },
+  {
+    "token": "ANWIndonesians",
+    "display_name": "Indonesians",
+    "homecity_xml": "anwhomecityindonesians.xml"
+  },
+  {
+    "token": "ANWItalians",
+    "display_name": "Italians",
+    "homecity_xml": "anwhomecityitalians.xml"
+  },
+  {
+    "token": "ANWJapanese",
+    "display_name": "Japanese",
+    "homecity_xml": "anwhomecityjapanese.xml"
+  },
+  {
+    "token": "ANWLakota",
+    "display_name": "Lakota",
+    "homecity_xml": "anwhomecitylakota.xml"
+  },
+  {
+    "token": "ANWMaltese",
+    "display_name": "Maltese",
+    "homecity_xml": "anwhomecitymaltese.xml"
+  },
+  {
+    "token": "ANWMayans",
+    "display_name": "Mayans",
+    "homecity_xml": "anwhomecitymayans.xml"
+  },
+  {
+    "token": "ANWMexicans",
+    "display_name": "Mexicans",
+    "homecity_xml": "anwhomecitymexicans.xml"
+  },
+  {
+    "token": "ANWNapoleonicFrance",
+    "display_name": "Napoleonic France",
+    "homecity_xml": "anwhomecitynapoleonicfrance.xml"
+  },
+  {
+    "token": "ANWOttomans",
+    "display_name": "Ottomans",
+    "homecity_xml": "anwhomecityottomans.xml"
+  },
+  {
+    "token": "ANWPeruvians",
+    "display_name": "Peruvians",
+    "homecity_xml": "anwhomecityperuvians.xml"
+  },
+  {
+    "token": "ANWPortuguese",
+    "display_name": "Portuguese",
+    "homecity_xml": "anwhomecityportuguese.xml"
+  },
+  {
+    "token": "ANWRevFrance",
+    "display_name": "Revolutionary France",
+    "homecity_xml": "anwhomecityrevfrance.xml"
+  },
+  {
+    "token": "ANWRomanians",
+    "display_name": "Romanians",
+    "homecity_xml": "anwhomecityromanians.xml"
+  },
+  {
+    "token": "ANWRussians",
+    "display_name": "Russians",
+    "homecity_xml": "anwhomecityrussians.xml"
+  },
+  {
+    "token": "ANWSouthAfricans",
+    "display_name": "South Africans",
+    "homecity_xml": "anwhomecitysouthafricans.xml"
+  },
+  {
+    "token": "ANWSpanish",
+    "display_name": "Spanish",
+    "homecity_xml": "anwhomecityspanish.xml"
+  },
+  {
+    "token": "ANWSwedes",
+    "display_name": "Swedes",
+    "homecity_xml": "anwhomecityswedes.xml"
+  },
+  {
+    "token": "ANWTexians",
+    "display_name": "Texians",
+    "homecity_xml": "anwhomecitytexians.xml"
+  },
+  {
+    "token": "ANWUSA",
+    "display_name": "USA",
+    "homecity_xml": "anwhomecityusa.xml"
+  }
+]
