@@ -40,7 +40,7 @@ Architecture reference: `artifacts/harness_design/phase2_dll_architecture.md`
 
 ## How It Works
 
-1. `anw_hook.dll` is injected into the AoE3 DE process via `WINEDLLOVERRIDES`.
+1. `anw_hook.dll` is injected into the AoE3 DE process automatically by the harness.
 2. `DllMain` spawns a worker thread that:
    - Initialises MinHook and hooks `IDXGISwapChain::Present` (vtable slot 8,
      verified against `/usr/x86_64-w64-mingw32/sys-root/mingw/include/dxgi.h`).
@@ -174,7 +174,7 @@ See `artifacts/harness_design/phase2_verification_checklist.md` for the full
 step-by-step checklist. Summary:
 
 1. Restore `AoE3DE_s.exe.relaunch_blocked` → `AoE3DE_s.exe`
-2. Launch with `WINEDLLOVERRIDES="anw_hook=n,b"` via `umu-run`
+2. Launch the game (the harness auto-injects the DLL)
 3. Check `/tmp/anw_hook.log` for "Pipe created, waiting for client..."
 4. Run `python3 -m tools.aoe3_harness.cli input state` → `ALIVE pid=... tick=0`
 5. Test KEY, CLICK, SCREENSHOT commands
@@ -243,7 +243,7 @@ tail -f /tmp/anw_hook.log
 
 | Problem | Cause | Fix |
 |---------|-------|-----|
-| `/tmp/anw_hook.log` absent | DLL not loaded | Check `WINEDLLOVERRIDES` env var |
+| `/tmp/anw_hook.log` absent | DLL not loaded | Verify harness launcher is configured |
 | `ConnectionError` from DllClient | Wineserver socket not found | Check `/tmp/.wine-1000/` for server dirs |
 | Build: "AoE3DE_s.exe appears to be running" | Wine zombie processes | Restart wineserver: `wineserver -k` |
 | KEY has no effect | Game not in focus | Bring game window to foreground |
