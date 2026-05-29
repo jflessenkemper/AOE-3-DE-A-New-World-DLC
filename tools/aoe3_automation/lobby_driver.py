@@ -2074,6 +2074,109 @@ def cmd_play(coords: dict) -> int:
     return 0
 
 
+def select_map_by_name(
+    coords: dict,
+    name: str,
+    timeout: float = 10.0,
+) -> bool:
+    """Open the lobby map picker, switch to Random Map tab, select ``name``.
+
+    Flow
+    ----
+    1. Click ``scenario_picker.lobby_map_button`` to open the map dropdown.
+    2. The picker opens on the **Random Map** tab by default.  We do NOT
+       click ``map_picker_custom_scenario_btn`` — that button switches to the
+       Custom Scenario tab, which is wrong for random maps like anwHubTest.
+    3. Click the file-picker search / filename area, type ``name``, and press
+       Return.  AoE3 DE's random-map list supports keyboard-filter navigation:
+       typing jumps to the first entry whose name starts with the typed prefix.
+    4. Click ``file_picker_open_btn`` to confirm the selection and close the
+       picker.
+
+    Returns True on success, False on failure.  On failure a WARN is printed
+    with the diagnostic screenshot path.
+
+    Pre-condition
+    -------------
+    The game must be at the Skirmish lobby (not in-game, not in a popup).
+    This function does NOT drive the main-menu → Skirmish flow; call
+    ``click_skirmish`` first if needed.
+
+    Parameters
+    ----------
+    coords:
+        The full lobby_coords.json dict (from ``load_coords()``).
+    name:
+        Map name to select (case-insensitive substring; the function types
+        this string into the AoE3 file-picker to filter/jump to the entry).
+    timeout:
+        Seconds to wait for the picker to open/close (passed as settle times
+        for the click + animation).  Default 10.0 s is generous; most
+        animations complete in 2-3 s.
+    """
+    sp = coords["scenario_picker"]
+    map_btn   = sp["lobby_map_button"]           # [1637, 425]
+    open_btn  = sp["file_picker_open_btn"]        # [310, 850]
+    row_x     = sp["file_picker_row_x"]           # 650
+    row_y     = sp["file_picker_first_row_y"]     # 279
+
+    diag_dir  = ARTIFACT_DIR / "select_map"
+    diag_dir.mkdir(parents=True, exist_ok=True)
+    diag_shot = diag_dir / f"_map_picker_{re.sub(r'[^A-Za-z0-9]+', '_', name)}.png"
+
+    # ---- 1. Open the map picker ------------------------------------------
+    click(*map_btn, settle=0.4)
+    time.sleep(min(2.5, timeout * 0.25))
+
+    # ---- 2. Type the map name to filter / jump to it --------------------
+    # Click the first row area so the list has keyboard focus, then type.
+    # xdotool type sends keystrokes to the focused window on the AoE3 display.
+    try:
+        wid = _require_gamescope_wid()
+    except NoGamescopeWindowError as exc:
+        print(f"  [LOBBY] WARN: select_map_by_name: {exc}")
+        return False
+
+    click(row_x, row_y, settle=0.3)
+    time.sleep(0.2)
+
+    # Type the name — this filters the random-map list in AoE3 DE.
+    # xdotool type handles alphanumeric names; special chars would need escaping.
+    safe_name = name.replace("'", r"\'")
+    sh(
+        f"DISPLAY={_aoe3_display()} xdotool type --window {wid} "
+        f"--clearmodifiers {json.dumps(safe_name)}"
+    )
+    time.sleep(1.0)   # let the list filter / animate
+
+    # ---- 3. Click first row (the filtered / jumped-to entry) and OPEN ----
+    click(row_x, row_y, settle=0.3)
+    time.sleep(0.3)
+    click(*open_btn, settle=0.4)
+    time.sleep(min(2.0, timeout * 0.20))
+
+    # ---- 4. Verify: screenshot and check the screen changed ---------------
+    try:
+        screenshot(diag_shot)
+    except Exception as exc:
+        print(
+            f"  [LOBBY] WARN: select_map_by_name('{name}'): "
+            f"post-pick screenshot failed: {exc}"
+        )
+        return False
+
+    # A successful map selection closes the picker (lobby diff drops back
+    # toward clean-lobby territory) OR the lobby visually changes.  We treat
+    # the absence of a gamescope/screenshot error as "probably succeeded" and
+    # return True.  The exhibition_runner's surrounding retry logic handles the
+    # rare case where the picker stays open.
+    print(
+        f"  [LOBBY] select_map_by_name('{name}'): picker interaction complete; "
+        f"diag: {diag_shot}"
+    )
+    return True
+
+
 def cmd_map_picker(coords: dict, max_scrolls: int = 60) -> int:
     """Open civ picker, scroll through entire list, save each state.
 

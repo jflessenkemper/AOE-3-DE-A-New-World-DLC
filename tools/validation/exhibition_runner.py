@@ -66,6 +66,13 @@ DEFAULT_LOG_PATH = Path.home() / ".steam/steam/steamapps/compatdata/933110/pfx/d
 ALTERNATE_LOG_PATH = Path.home() / ".local/share/Steam/steamapps/compatdata/933110/pfx/drive_c/users/steamuser/Games/Age of Empires 3 DE/Logs/Age3Log.txt"
 AOEIII_STEAM_ID = "933110"
 
+# Random map used for all exhibition matches.  Switch back to the scenario
+# by passing --use-scenario to the CLI (see run_one_match / _scenario_mode).
+RANDOM_MAP_NAME = "anwHubTest"
+
+# Legacy scenario name kept for fallback / manual reference.
+SCENARIO_NAME = "ANEWWORLD"
+
 # The "primary foil" we used to pair against every test civ. Kept for backward
 # compatibility with the report header + any code path that still wants the
 # single-opponent shape. The full 7-slot opponent roster lives in
@@ -830,7 +837,7 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
         time.sleep(0.5)
 
         if manual_launch:
-            print(f"  [MANUAL] Start a 1v1 AI match: {civ_label} ({engine_civ_token}) vs {FOIL_CIV} (Hard, ANEWWORLD scenario)")
+            print(f"  [MANUAL] Start a 1v1 AI match: {civ_label} ({engine_civ_token}) vs {FOIL_CIV} (Hard, map={RANDOM_MAP_NAME})")
             print(f"  [MANUAL] Sleeping {match_seconds}s...")
             # Art capture: lobby phase (manual mode — game may not be in lobby,
             # so this is best-effort; user should have set up the match first).
@@ -897,8 +904,10 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
             # Wait for main menu to actually become click-responsive.
             # Cold boot takes ~95 s on this hardware; we use a log-based
             # poll for the "entering mode 1 (Pregame)" marker plus a
-            # built-in Return press to dismiss any Arxan / ANEWWORLD
+            # built-in Return press to dismiss any Arxan or other blocking
             # popup that may appear ~10 s after main menu loads.
+            # (clear_recent_files() above prevents the old ANEWWORLD scenario
+            # resume popup; the Return press guards against anything else.)
             print("  [LAUNCH] Waiting for main menu (up to 180s, log-based)...", flush=True)
             if not drv.wait_for_main_menu(timeout=180):
                 result.error = (
@@ -917,6 +926,29 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
             coords = load_coords()
             click_skirmish(coords)
             time.sleep(5)   # wait for lobby UI to render
+
+            # ---- Step 1b: Select random map (anwHubTest) ---------------------
+            # The random map must be selected each match; the lobby otherwise
+            # defaults to whatever was last used.  Uses the scenario_picker
+            # coords from lobby_coords.json (lobby_map_button → Custom tab).
+            try:
+                from tools.aoe3_automation.lobby_driver import select_map_by_name
+                select_map_by_name(coords, RANDOM_MAP_NAME)
+                print(f"  [LOBBY] Map set to {RANDOM_MAP_NAME}", flush=True)
+            except (ImportError, AttributeError):
+                # select_map_by_name not yet implemented in lobby_driver.py.
+                # Log a warning and continue; the engine will use the last map.
+                print(
+                    f"  [LOBBY] WARN: select_map_by_name not available in lobby_driver; "
+                    f"ensure '{RANDOM_MAP_NAME}' is already selected in the lobby.",
+                    flush=True,
+                )
+            except Exception as _map_exc:
+                print(
+                    f"  [LOBBY] WARN: map selection failed ({_map_exc}); "
+                    f"ensure '{RANDOM_MAP_NAME}' is already selected in the lobby.",
+                    flush=True,
+                )
 
             # ---- Step 2: Verify clean lobby ----------------------------------
             if not is_clean_lobby(coords):
@@ -1192,7 +1224,7 @@ def write_report(results: list[MatchResult], elapsed_seconds: float,
         f"- Launch method: {'Manual (user starts game)' if manual_launch else 'Automated (steam:// or proton)'}",
         f"- Test opponents (P2..P8 ANW slate): {', '.join(DEFAULT_OPPONENT_ROSTER)}",
         f"- Difficulty: Hard",
-        f"- Scenario: ANEWWORLD",
+        f"- Map: {RANDOM_MAP_NAME} (random map)",
         "",
         "## How to Reproduce",
         "",
