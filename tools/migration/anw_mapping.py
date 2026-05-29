@@ -18,8 +18,8 @@ them and broke ~50 pytest cases. Both are derivable from ``BASE_CIVS`` /
 ``REVOLUTION_CIVS`` in ``tools/validation/validate_terrain_heading.py``:
 - Base civs: dict-key matches a ``cCiv<Token>`` entry. ``old_civ_token`` is
   the dict-key (e.g. ``British``, ``DEAmericans``).
-- Revolution civs: dict-key starts with ``ANW`` and maps to a ``RvltMod<...>``
-  entry. ``old_civ_token`` is the matching ``RvltMod<...>`` form.
+- Revolution civs: dict-key starts with ``ANW`` and maps to a ``ANW<...>``
+  entry. ``old_civ_token`` is the matching ``ANW<...>`` form.
 The mapping table below covers all 24 ANW-prefixed revolution civs.
 """
 from __future__ import annotations
@@ -36,13 +36,13 @@ AnwCiv = namedtuple(
 )
 
 
-# Map ANW-prefixed revolution token → matching RvltMod<...> token used in
+# Map ANW-prefixed revolution token → matching ANW<...> token used in
 # leaderCommon.xs / leader_revolution_commanders.xs. The names diverge in
-# a handful of cases (e.g. ANWRevFrance → RvltModRevolutionaryFrance); the
-# rest are a literal "ANW" → "RvltMod" prefix swap. Verified against
+# a handful of cases (e.g. ANWRevFrance → ANWRevFrance); the
+# rest are a literal "ANW" → "ANW" prefix swap. Verified against
 # BASE_CIVS/REVOLUTION_CIVS in tools/validation/validate_terrain_heading.py.
 _ANW_TO_RVLT_OVERRIDES: dict[str, str] = {
-    "ANWRevFrance": "RvltModRevolutionaryFrance",
+    "ANWRevFrance": "ANWRevFrance",
 }
 
 
@@ -50,7 +50,7 @@ def _derive_rvlt_token(anw_token: str) -> str:
     if anw_token in _ANW_TO_RVLT_OVERRIDES:
         return _ANW_TO_RVLT_OVERRIDES[anw_token]
     if anw_token.startswith("ANW"):
-        return "RvltMod" + anw_token[3:]
+        return "ANW" + anw_token[3:]
     return anw_token
 
 
@@ -99,14 +99,13 @@ _TOKEN_TO_SLUG: dict[str, str] = {
     "ANWColumbians":         "Columbians",
     "ANWEgyptians":          "Egyptians",
     "ANWFinnish":            "Finnish",
-    "ANWFrenchCanadians":    "Lower Canada",
     "ANWHaitians":           "Haitians",
     "ANWHungarians":         "Hungarians",
     "ANWIndonesians":        "Indonesians",
     "ANWMayans":             "Mayans",
     "ANWNapoleonicFrance":   "Napoleonic France",
     "ANWPeruvians":          "Peruvians",
-    "ANWRevFrance":          "Revolutionary France",
+    "ANWRevFrance":          "French Republic",
     "ANWRomanians":          "Romanians",
     "ANWSouthAfricans":      "South Africans",
     "ANWTexians":            "Texians",
@@ -178,7 +177,6 @@ ANW_DEFERRED_SLUGS: set[str] = {"Americans", "Mexicans (Revolution)"}
 ANW_NON_PICKER_TOKENS: set[str] = {
     "ANWAmericans",         # American Revolution — base DEAmericans variant
     "ANWMexicans",          # Mexican Revolution — base DEMexicans variant
-    "ANWFrenchCanadians",   # Lower Canada Patriotes — Papineau revolution
     # Mexican cluster revolutions (merged 2026-05-17 — no longer lobby picks)
 }
 

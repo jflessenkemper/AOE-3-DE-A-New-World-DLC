@@ -11,8 +11,8 @@ if __package__ is None or __package__ == "":
 from tools.validation.common import REPO_ROOT, build_repo_root_parser, child_elements, get_child_text, local_name, repo_relative
 
 
-DEFAULT_HOMECITY_GLOB = "rvltmodhomecity*.xml"
-DEFAULT_NAME_PREFIXES = ("RvltMod",)
+DEFAULT_HOMECITY_GLOB = "anwhomecity*.xml"
+DEFAULT_NAME_PREFIXES = ("ANW",)
 
 
 def iter_target_civs(root: ET.Element, name_prefixes: tuple[str, ...] | None):

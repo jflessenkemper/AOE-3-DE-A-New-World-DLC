@@ -11,11 +11,11 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanGreatBombardSelect">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanGreatBombardSelect">
           </soundset>
         </choice>
@@ -60,7 +60,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <targetlogic>
             <choice name="default">
               <soundset name="OttomanGreatBombardAcknowledge">
@@ -72,7 +72,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <targetlogic>
             <choice name="default">
               <soundset name="OttomanGreatBombardAcknowledge">

@@ -25,8 +25,8 @@ TECH_TAGS = (
     "TreatyTech",
     "EmpireWarsTech",
 )
-DEFAULT_CIV_PREFIXES = ("RvltMod",)
-DEFAULT_TECH_PREFIXES = ("RvltMod",)
+DEFAULT_CIV_PREFIXES = ("ANW",)
+DEFAULT_TECH_PREFIXES = ("ANW",)
 
 
 def iter_civs(root: ET.Element):

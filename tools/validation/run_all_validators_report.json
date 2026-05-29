@@ -1,0 +1,628 @@
+{
+  "run_id": "20260529_012456",
+  "overall": "FAIL",
+  "counts": {
+    "PASS": 64,
+    "FAIL": 4,
+    "SKIP": 0,
+    "TIMEOUT": 0,
+    "ERROR": 0
+  },
+  "total": 68,
+  "include_live": false,
+  "fast": true,
+  "results": [
+    {
+      "name": "mod_version_metadata",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.0439508369890973,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/mod_version_metadata.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "xml_well_formed",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 1.923593735002214,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/xml_well_formed.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "packaged_mod",
+      "verdict": "PASS",
+      "rc": 1,
+      "duration_s": 4.257612936999067,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/packaged_mod.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civmods_ui",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05609120399458334,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civmods_ui.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civ_loadability",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05280824500368908,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civ_loadability.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civ_homecities",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.1050848360027885,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civ_homecities.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civ_crossrefs",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.06958997300534975,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civ_crossrefs.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "playstyles",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.07182730300701223,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/playstyles.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "playercolors",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05234233399096411,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/playercolors.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "homecity_cards",
+      "verdict": "FAIL",
+      "rc": 1,
+      "duration_s": 0.15307397200376727,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/homecity_cards.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "personality_overrides",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.02330485799757298,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/personality_overrides.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "leader_vs_spec",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.046373638993827626,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/leader_vs_spec.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "playstyle_modal",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.056886573001975194,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/playstyle_modal.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "doctrine_compliance",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.12243444299383555,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/doctrine_compliance.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "probes_vs_spec",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.06107874998997431,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/probes_vs_spec.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "ai_behaviour_map",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.12762585800373927,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/ai_behaviour_map.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "protomods",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04157099399890285,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/protomods.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "techtree",
+      "verdict": "FAIL",
+      "rc": 1,
+      "duration_s": 0.05394050799077377,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/techtree.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "xs_scripts",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 3.043552773000556,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/xs_scripts.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "stringtables",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04531520699674729,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/stringtables.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "art_pixel_perfect",
+      "verdict": "PASS",
+      "rc": 1,
+      "duration_s": 1.5166901699994924,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/art_pixel_perfect.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "art_coverage",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04411558699212037,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/art_coverage.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civmods_art_consistency",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04853053799888585,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civmods_art_consistency.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "ddt_format",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.07079326300299726,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/ddt_format.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "homecity_visuals",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.09642682499543298,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/homecity_visuals.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "homecity_assets_exist",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.13111475000914652,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/homecity_assets_exist.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "visuals",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.17334389399911743,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/visuals.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "terrain_heading",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04842559700773563,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/terrain_heading.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "dev_subtrees",
+      "verdict": "PASS",
+      "rc": 1,
+      "duration_s": 0.03350948099978268,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/dev_subtrees.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "deck_card_effects",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.19814033000147901,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/deck_card_effects.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "no_locid_duplicates",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.03852503700181842,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/no_locid_duplicates.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "string_resolution",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04977540198888164,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/string_resolution.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "no_orphan_xml",
+      "verdict": "PASS",
+      "rc": 1,
+      "duration_s": 0.03934036700229626,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/no_orphan_xml.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "personality_active",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.03875272900040727,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/personality_active.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civ_distinguishability",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05241033200582024,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civ_distinguishability.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "personality_lobby",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.043568337001488544,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/personality_lobby.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "age_up_politicians",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.06471098199835978,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/age_up_politicians.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "offline_picker",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.06122915699961595,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/offline_picker.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "offline_matrix",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.21154041899717413,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/offline_matrix.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civ_tech_resolution",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.1928973370086169,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civ_tech_resolution.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "homecity_leader_match",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.18570217199157923,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/homecity_leader_match.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "no_homecity_doubles",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.0540214179927716,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/no_homecity_doubles.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "blurb_coverage",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.043620778000331484,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/blurb_coverage.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "proto_unit_references",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.2625306589907268,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/proto_unit_references.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "icon_path_existence",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.15471058399998583,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/icon_path_existence.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "doctrine_template_drift",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.03998547399532981,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/doctrine_template_drift.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "spec_vs_xs_doctrine",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05566897300013807,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/spec_vs_xs_doctrine.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "doctrine_prose_theme",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.040231558989034966,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/doctrine_prose_theme.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "hub_test_coverage",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.0409877839992987,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/hub_test_coverage.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "hub_test_roster",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.08450686100695748,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/hub_test_roster.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "probe_tag_drift",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05691934999777004,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/probe_tag_drift.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "spec_internal_consistency",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.06667962500068825,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/spec_internal_consistency.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "ai_behaviour_map",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.20747041699360125,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/ai_behaviour_map.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "hub_test_triggers",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04152604899718426,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/hub_test_triggers.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "hub_test_probe_coverage",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05534885900851805,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/hub_test_probe_coverage.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "xs_sim_doctrine",
+      "verdict": "FAIL",
+      "rc": 1,
+      "duration_s": 3.0301715609966777,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/xs_sim_doctrine.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "per_civ_wall_knobs",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.8054598880116828,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/per_civ_wall_knobs.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "civ_asset_existence",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.08736546199361328,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/civ_asset_existence.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "html_reference",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.03047709900420159,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/html_reference.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "html_vs_mod",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05166928700054996,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/html_vs_mod.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "live_mod_install",
+      "verdict": "FAIL",
+      "rc": 1,
+      "duration_s": 0.5048657769948477,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/live_mod_install.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "runtime_logs",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.06271035700046923,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/runtime_logs.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "live_picker",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.05817592800303828,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/live_picker.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "input_harness",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.04313523600285407,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/input_harness.txt",
+      "stderr_first_lines": ""
+    },
+    {
+      "name": "self_civ_loadability",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.08174121499178,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/self_civ_loadability.txt",
+      "stderr_first_lines": "test_base_format_in_cache_passes (__main__.TestDiffAgainstCache.test_base_format_in_cache_passes) ... ok\ntest_base_format_missing_warns (__main__.TestDiffAgainstCache.test_base_format_missing_warns) ... ok\ntest_digit_prefix_always_fails (__main__.TestDiffAgainstCache.test_digit_prefix_always_fails) ... ok\ntest_empty_cache (__main__.TestDiffAgainstCache.test_empty_cache) ... ok\ntest_classifies_each_civ (__main__.TestLoadFromCivmods.test_classifies_each_civ) ... ok"
+    },
+    {
+      "name": "self_art_pixel_perfect",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.42687149600533303,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/self_art_pixel_perfect.txt",
+      "stderr_first_lines": "test_civ_filter_limits_scope (__main__.TestEndToEnd.test_civ_filter_limits_scope) ... ok\ntest_civ_filter_unknown_civ_returns_empty (__main__.TestEndToEnd.test_civ_filter_unknown_civ_returns_empty) ... ok\ntest_deployed_drift_detected (__main__.TestEndToEnd.test_deployed_drift_detected) ... ok\ntest_html_civmods_mismatch_is_FAIL (__main__.TestEndToEnd.test_html_civmods_mismatch_is_FAIL) ... ok\ntest_inventory_includes_civ (__main__.TestEndToEnd.test_inventory_includes_civ) ... ok"
+    },
+    {
+      "name": "self_scenario_binary",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.12062732799677178,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/self_scenario_binary.txt",
+      "stderr_first_lines": "test_diff_modified_body (__main__.DiffTests.test_diff_modified_body) ... ok\ntest_diff_passthru_same_body_different_zlib (__main__.DiffTests.test_diff_passthru_same_body_different_zlib) ... ok\ntest_diff_template_against_self (__main__.DiffTests.test_diff_template_against_self) ... ok\ntest_parse_dummy_scenario (__main__.ParseTests.test_parse_dummy_scenario) ... ok\ntest_parse_known_good_template (__main__.ParseTests.test_parse_known_good_template) ... ok"
+    },
+    {
+      "name": "self_test_validator",
+      "verdict": "PASS",
+      "rc": 0,
+      "duration_s": 0.135622848989442,
+      "notes": "",
+      "stdout_path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/validation_runs/run_20260529_012456/self_test_validator.txt",
+      "stderr_first_lines": "test_synth_per_civ_passes_against_enriched (__main__.TestEndToEnd.test_synth_per_civ_passes_against_enriched)\nEnsures our synthetic generator + validator agree. ... ok\ntest_aggregates_multiple_civs (__main__.TestParser.test_aggregates_multiple_civs) ... ok\ntest_extracts_basic_probe (__main__.TestParser.test_extracts_basic_probe) ... ok\ntest_handles_no_detail (__main__.TestParser.test_handles_no_detail) ... ok"
+    }
+  ]
+}

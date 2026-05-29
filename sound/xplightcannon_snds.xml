@@ -15,7 +15,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAge0Maya">
+        <choice name="ANWAge0Maya">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
@@ -114,7 +114,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModAge0Maya">
+        <choice name="ANWAge0Maya">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">

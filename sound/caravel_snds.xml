@@ -131,59 +131,55 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchCaravelSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchCaravelSelect">
           </soundset>
         </choice>
@@ -328,59 +324,55 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchCaravelAcknowledge">
-          </soundset>
-        </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchCaravelAcknowledge">
           </soundset>
         </choice>

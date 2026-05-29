@@ -161,7 +161,7 @@
           </skinlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerSelect">
@@ -181,7 +181,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerSelect">
@@ -201,7 +201,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerSelect">
@@ -213,7 +213,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <skinlogic>
             <choice name="none">
               <soundset name="PortugueseExplorerSelect">
@@ -225,7 +225,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerSelect">
@@ -245,7 +245,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerSelect">
@@ -265,7 +265,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerSelect">
@@ -285,7 +285,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerSelect">
@@ -297,7 +297,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <skinlogic>
             <choice name="none">
               <soundset name="DESwedishExplorerSelect">
@@ -313,7 +313,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerSelect">
@@ -329,23 +329,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <skinlogic>
-            <choice name="none">
-              <soundset name="FrenchExplorerSelect">
-              </soundset>
-            </choice>
-            <choice name="1">
-              <soundset name="FrenchFemplorerSelect">
-              </soundset>
-            </choice>
-            <choice name="3">
-              <soundset name="FrenchFemplorerSelect">
-              </soundset>
-            </choice>
-          </skinlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <skinlogic>
             <choice name="none">
               <soundset name="GermanExplorerSelect">
@@ -361,7 +345,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerSelect">
@@ -369,7 +353,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerSelect">
@@ -389,7 +373,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerSelect">
@@ -405,7 +389,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerSelect">
@@ -425,7 +409,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <skinlogic>
             <choice name="none">
               <soundset name="RussianExplorerSelect">
@@ -437,7 +421,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerSelect">
@@ -758,7 +742,7 @@
           </skinlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -778,7 +762,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -798,7 +782,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -810,7 +794,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -822,7 +806,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -842,7 +826,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -862,7 +846,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -882,7 +866,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -894,7 +878,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -910,7 +894,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -926,23 +910,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <skinlogic>
-            <choice name="none">
-              <soundset name="GenericMaleDeath">
-              </soundset>
-            </choice>
-            <choice name="1">
-              <soundset name="GenericFemaleDeath">
-              </soundset>
-            </choice>
-            <choice name="3">
-              <soundset name="GenericFemaleDeath">
-              </soundset>
-            </choice>
-          </skinlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -958,7 +926,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -966,7 +934,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -986,7 +954,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -1002,7 +970,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -1022,7 +990,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -1034,7 +1002,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <skinlogic>
             <choice name="none">
               <soundset name="GenericMaleDeath">
@@ -1447,7 +1415,7 @@
           </skinlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1499,7 +1467,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1551,7 +1519,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1579,7 +1547,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1607,7 +1575,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1659,7 +1627,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1711,7 +1679,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1763,7 +1731,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1791,7 +1759,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1831,7 +1799,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1871,47 +1839,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <skinlogic>
-            <choice name="none">
-              <targetlogic>
-                <choice name="default">
-                  <soundset name="FrenchExplorerAcknowledge">
-                  </soundset>
-                </choice>
-                <choice name="enemy">
-                  <soundset name="FrenchExplorerAttack">
-                  </soundset>
-                </choice>
-              </targetlogic>
-            </choice>
-            <choice name="1">
-              <targetlogic>
-                <choice name="default">
-                  <soundset name="FrenchFemplorerAcknowledge">
-                  </soundset>
-                </choice>
-                <choice name="enemy">
-                  <soundset name="FrenchFemplorerAttack">
-                  </soundset>
-                </choice>
-              </targetlogic>
-            </choice>
-            <choice name="3">
-              <targetlogic>
-                <choice name="default">
-                  <soundset name="FrenchFemplorerAcknowledge">
-                  </soundset>
-                </choice>
-                <choice name="enemy">
-                  <soundset name="FrenchFemplorerAttack">
-                  </soundset>
-                </choice>
-              </targetlogic>
-            </choice>
-          </skinlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1951,7 +1879,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -1967,7 +1895,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -2019,7 +1947,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -2059,7 +1987,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -2111,7 +2039,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -2139,7 +2067,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <skinlogic>
             <choice name="none">
               <targetlogic>
@@ -2202,75 +2130,71 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="GermanExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchExplorerClaim">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianExplorerClaim">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchExplorerClaim">
           </soundset>
         </choice>
@@ -2437,7 +2361,7 @@
           </skinlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerDisabled">
@@ -2457,7 +2381,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerDisabled">
@@ -2477,7 +2401,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerDisabled">
@@ -2489,7 +2413,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <skinlogic>
             <choice name="none">
               <soundset name="PortugueseExplorerDisabled">
@@ -2501,7 +2425,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerDisabled">
@@ -2521,7 +2445,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerDisabled">
@@ -2541,7 +2465,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerDisabled">
@@ -2561,7 +2485,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerDisabled">
@@ -2573,7 +2497,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <skinlogic>
             <choice name="none">
               <soundset name="DESwedishExplorerDisabled">
@@ -2589,7 +2513,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerDisabled">
@@ -2605,23 +2529,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <skinlogic>
-            <choice name="none">
-              <soundset name="FrenchExplorerDisabled">
-              </soundset>
-            </choice>
-            <choice name="1">
-              <soundset name="FrenchFemplorerDisabled">
-              </soundset>
-            </choice>
-            <choice name="3">
-              <soundset name="FrenchFemplorerDisabled">
-              </soundset>
-            </choice>
-          </skinlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <skinlogic>
             <choice name="none">
               <soundset name="GermanExplorerDisabled">
@@ -2637,7 +2545,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerDisabled">
@@ -2645,7 +2553,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerDisabled">
@@ -2665,7 +2573,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerDisabled">
@@ -2681,7 +2589,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerDisabled">
@@ -2701,7 +2609,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <skinlogic>
             <choice name="none">
               <soundset name="RussianExplorerDisabled">
@@ -2713,7 +2621,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerDisabled">
@@ -2884,7 +2792,7 @@
           </skinlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerRevived">
@@ -2904,7 +2812,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRevived">
@@ -2924,7 +2832,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerRevived">
@@ -2936,7 +2844,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <skinlogic>
             <choice name="none">
               <soundset name="PortugueseExplorerRevived">
@@ -2948,7 +2856,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerRevived">
@@ -2968,7 +2876,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRevived">
@@ -2988,7 +2896,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRevived">
@@ -3008,7 +2916,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerRevived">
@@ -3020,7 +2928,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <skinlogic>
             <choice name="none">
               <soundset name="DESwedishExplorerRevived">
@@ -3036,7 +2944,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerRevived">
@@ -3052,23 +2960,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <skinlogic>
-            <choice name="none">
-              <soundset name="FrenchExplorerRevived">
-              </soundset>
-            </choice>
-            <choice name="1">
-              <soundset name="FrenchFemplorerRevived">
-              </soundset>
-            </choice>
-            <choice name="3">
-              <soundset name="FrenchFemplorerRevived">
-              </soundset>
-            </choice>
-          </skinlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <skinlogic>
             <choice name="none">
               <soundset name="GermanExplorerRevived">
@@ -3084,7 +2976,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerRevived">
@@ -3092,7 +2984,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRevived">
@@ -3112,7 +3004,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerRevived">
@@ -3128,7 +3020,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRevived">
@@ -3148,7 +3040,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <skinlogic>
             <choice name="none">
               <soundset name="RussianExplorerRevived">
@@ -3160,7 +3052,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerRevived">
@@ -3331,7 +3223,7 @@
           </skinlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerRansomed">
@@ -3351,7 +3243,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRansomed">
@@ -3371,7 +3263,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerRansomed">
@@ -3383,7 +3275,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <skinlogic>
             <choice name="none">
               <soundset name="PortugueseExplorerRansomed">
@@ -3395,7 +3287,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <skinlogic>
             <choice name="none">
               <soundset name="BritishExplorerRansomed">
@@ -3415,7 +3307,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRansomed">
@@ -3435,7 +3327,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRansomed">
@@ -3455,7 +3347,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <skinlogic>
             <choice name="none">
               <soundset name="OttomanExplorerRansomed">
@@ -3467,7 +3359,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <skinlogic>
             <choice name="none">
               <soundset name="DESwedishExplorerRansomed">
@@ -3483,7 +3375,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerRansomed">
@@ -3499,23 +3391,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <skinlogic>
-            <choice name="none">
-              <soundset name="FrenchExplorerRansomed">
-              </soundset>
-            </choice>
-            <choice name="1">
-              <soundset name="FrenchFemplorerRansomed">
-              </soundset>
-            </choice>
-            <choice name="3">
-              <soundset name="FrenchFemplorerRansomed">
-              </soundset>
-            </choice>
-          </skinlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <skinlogic>
             <choice name="none">
               <soundset name="GermanExplorerRansomed">
@@ -3531,7 +3407,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerRansomed">
@@ -3539,7 +3415,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRansomed">
@@ -3559,7 +3435,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <skinlogic>
             <choice name="none">
               <soundset name="FrenchExplorerRansomed">
@@ -3575,7 +3451,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <skinlogic>
             <choice name="none">
               <soundset name="SpanishExplorerRansomed">
@@ -3595,7 +3471,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <skinlogic>
             <choice name="none">
               <soundset name="RussianExplorerRansomed">
@@ -3607,7 +3483,7 @@
             </choice>
           </skinlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <skinlogic>
             <choice name="none">
               <soundset name="DutchExplorerRansomed">

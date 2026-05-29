@@ -1,12 +1,13 @@
 {
   "notes": [
-    "Calibrate P2 personality dropdown. Try clicking Random Personality with various offsets."
+    "Calibrate P2 personality dropdown. Try clicking Random Personality with various offsets.",
+    "2026-05-11: screenshot paths were rewritten from the legacy AOE-3-DE-Legendary-Leaders-AI worktree to artifacts/personality_calibration/ in the active A-New-World repo."
   ],
   "steps": [
     {"action": "sleep", "seconds": 2},
-    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc/.claude/session_2026-04-22-artifacts/personality_calibration/10_setup.png"},
+    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/personality_calibration/10_setup.png"},
     {"action": "click_text", "texts": ["RANDOM PERSONALITY", "Random Personality"], "timeout": 8, "partial": true, "matchIndex": 0, "offset": [150, 0]},
     {"action": "sleep", "seconds": 2},
-    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc/.claude/session_2026-04-22-artifacts/personality_calibration/11_off150.png"}
+    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/personality_calibration/11_off150.png"}
   ]
 }

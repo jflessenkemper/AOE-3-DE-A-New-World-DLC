@@ -4,7 +4,7 @@
 Checks per `game/ai/*.personality`:
   • <icon> path resolves to an existing PNG file with a valid header
   • <forcedciv> value resolves to a real civ:
-      - in our `data/civmods.xml` (RvltMod*), or
+      - in our `data/civmods.xml` (ANW*), or
       - in the base-game civ allowlist
   • <chatset> is non-empty (audio is base-game; can't verify locally)
 
@@ -32,6 +32,17 @@ ART_LEADERS = REPO / "art" / "ui" / "leaders"
 SP_AVATARS = REPO / "resources" / "images" / "icons" / "singleplayer"
 FLAGS = REPO / "resources" / "images" / "icons" / "flags"
 CIVMODS = REPO / "data" / "civmods.xml"
+
+# Base-game avatar PNG filenames that live in the base game install, not in
+# this repo.  The validator skips the file-existence check for these paths so
+# personality files that legitimately reference them still pass.
+BASE_GAME_AVATARS = {
+    "cpai_avatar_random.png",
+    "cpai_avatar_aztec.png",
+    "cpai_avatar_iroquois.png",
+    "cpai_avatar_sioux.png",
+    "cpai_avatar_usa.png",
+}
 
 # Base-game civs the personality `forcedciv` may reference. Lower-cased on
 # both sides at compare time so "British"/"british"/"DEEthiopians" all match.
@@ -91,7 +102,8 @@ def _load_civmods() -> set[str]:
     if not CIVMODS.exists():
         return set()
     txt = CIVMODS.read_text(encoding="utf-8", errors="ignore")
-    return {m.lower() for m in re.findall(r"<Name>([^<]+)</Name>", txt)}
+    # civmods.xml uses lowercase <name> tags inside <civ> blocks.
+    return {m.lower() for m in re.findall(r"<name>([^<]+)</name>", txt)}
 
 
 # -----------------------------------------------------------------------------
@@ -116,10 +128,14 @@ def validate_art_coverage(repo_root: Path = REPO) -> list[str]:
         if not icon:
             findings.append(f"{p.name}: missing <icon>")
         else:
-            icon_path = repo_root / icon
-            err = _check_image(icon_path)
-            if err:
-                findings.append(f"{p.name}: <icon>={icon} {err}")
+            icon_fname = Path(icon).name
+            if icon_fname in BASE_GAME_AVATARS:
+                pass  # base-game asset — not shipped in this repo, skip check
+            else:
+                icon_path = repo_root / icon
+                err = _check_image(icon_path)
+                if err:
+                    findings.append(f"{p.name}: <icon>={icon} {err}")
 
         # 2. <forcedciv> → known civ
         fc = (info["forcedciv"] or "").lower()

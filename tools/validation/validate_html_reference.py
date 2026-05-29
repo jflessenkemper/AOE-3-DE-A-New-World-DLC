@@ -101,11 +101,42 @@ _MARKER_ALIASES: dict[str, set[str]] = {
 #     locks in the current state so further drift is caught.
 _DEFERRED_SECTION: set[str] = {"Americans", "Mexicans (Revolution)"}
 _DEFERRED_BLOCKS: set[str] = {
-    "Aztecs", "British", "Chinese", "Dutch", "Ethiopians",
-    "Germans", "Haudenosaunee", "Hausa", "Inca", "Indians",
-    "Italians", "Japanese", "Lakota", "Maltese",
-    "Ottomans", "Portuguese", "Russians", "Spanish", "Swedes",
-    "United States",
+    "Aztec Triple Alliance", "Bourbon France", "British Empire",
+    "Qing Dynasty", "Dutch Republic", "Ethiopian Empire",
+    "German Empire", "Haudenosaunee Confederacy", "Sokoto Caliphate",
+    "Inca Empire", "Maratha Empire", "Kingdom of Italy",
+    "Tokugawa Shogunate", "Lakota Sioux", "Knights of Malta",
+    "Ottoman Empire", "Portuguese Empire", "Russian Empire",
+    "Spanish Empire", "Swedish Empire", "United States",
+}
+
+# Legacy short-form labels accepted in `<span class="nation-header">`
+# text. The data layer (anw_mapping.py) uses canonical full names
+# ("Aztec Triple Alliance") for routing, but the rendered HTML keeps
+# the shorter base-game labels ("Aztecs") for visual continuity. This
+# map lets the validator accept either form when checking that a
+# section's nation-header text mentions its civ.
+_NATION_HEADER_LEGACY_ALIASES: dict[str, set[str]] = {
+    "Aztec Triple Alliance": {"Aztecs"},
+    "British Empire": {"British"},
+    "Qing Dynasty": {"Chinese"},
+    "Dutch Republic": {"Dutch"},
+    "Ethiopian Empire": {"Ethiopians"},
+    "Bourbon France": {"French"},
+    "German Empire": {"Germans"},
+    "Haudenosaunee Confederacy": {"Haudenosaunee"},
+    "Sokoto Caliphate": {"Hausa"},
+    "Inca Empire": {"Inca"},
+    "Maratha Empire": {"Indians"},
+    "Kingdom of Italy": {"Italians"},
+    "Tokugawa Shogunate": {"Japanese"},
+    "Lakota Sioux": {"Lakota"},
+    "Knights of Malta": {"Maltese"},
+    "Ottoman Empire": {"Ottomans"},
+    "Portuguese Empire": {"Portuguese"},
+    "Russian Empire": {"Russians"},
+    "Spanish Empire": {"Spanish"},
+    "Swedish Empire": {"Swedes"},
 }
 
 
@@ -146,9 +177,13 @@ def validate_html_reference(repo_root: Path) -> list[str]:
             issues.append(f"{civ_slug}: missing well-formed `<span class=\"nation-header\">`")
         else:
             header_text = header.group(2).strip()
-            # Must mention the civ slug (or its base form for parenthetical).
+            # Must mention the civ slug (or its base form for parenthetical,
+            # or a documented legacy short-form alias).
             base_slug = civ_slug.split(" (")[0]
-            if base_slug not in header_text and civ_slug not in header_text:
+            legacy_aliases = _NATION_HEADER_LEGACY_ALIASES.get(civ_slug, set())
+            if (base_slug not in header_text
+                    and civ_slug not in header_text
+                    and not any(a in header_text for a in legacy_aliases)):
                 issues.append(
                     f"{civ_slug}: nation-header text '{header_text}' does not mention civ name"
                 )

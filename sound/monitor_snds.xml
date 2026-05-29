@@ -121,71 +121,67 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchMonitorSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishMonitorSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianMonitorSelect">
           </soundset>
         </choice>
@@ -320,71 +316,67 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchMonitorAcknowledge">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishMonitorAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianMonitorAcknowledge">
           </soundset>
         </choice>

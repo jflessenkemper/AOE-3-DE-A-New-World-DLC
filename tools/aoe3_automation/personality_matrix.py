@@ -24,8 +24,9 @@ os.environ["GAMESCOPE_WAYLAND_DISPLAY"] = "gamescope-0"
 os.environ["WAYLAND_DISPLAY"] = "gamescope-0"
 XDO = {**os.environ, "DISPLAY": ":1"}
 
-REPO = Path("/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc")
-ART = REPO / ".claude/session_2026-04-22-artifacts/personality_matrix"
+# 2026-05-11: was hardcoded under AOE-3-DE-Legendary-Leaders-AI worktree.
+REPO = Path(__file__).resolve().parents[2]
+ART = REPO / "artifacts" / "personality_matrix"
 ART.mkdir(parents=True, exist_ok=True)
 LOG = ART / "run.log"
 
@@ -66,32 +67,30 @@ OVERRIDES = [
     ("washington", "George Washington"),
     ("William",    "Maurice of Nassau"),
     # Mod revolution civs (26)
-    ("rvltmodamericans",          "Thomas Jefferson"),
-    ("rvltmodargentines",         "José de San Martín"),
-    ("rvltmodbajacalifornians",   "Juan Bautista Alvarado"),
-    ("rvltmodbarbary",            "Hayreddin Barbarossa"),
-    ("rvltmodbrazil",             "Pedro I of Brazil"),
-    ("rvltmodcalifornians",       "Mariano Vallejo"),
-    ("rvltmodcanadians",          "Isaac Brock"),
-    ("rvltmodcentralamericans",   "Francisco Morazán"),
-    ("rvltmodchileans",           "Bernardo O'Higgins"),
-    ("rvltmodcolumbians",         "Simón Bolívar"),
-    ("rvltmodegyptians",          "Muhammad Ali Pasha"),
-    ("rvltmodfinnish",            "Carl Gustaf Mannerheim"),
-    ("rvltmodfrenchcanadians",    "Louis-Joseph Papineau"),
-    ("rvltmodhaitians",           "Toussaint L'Ouverture"),
-    ("rvltmodhungarians",         "Lajos Kossuth"),
-    ("rvltmodindonesians",        "Prince Diponegoro"),
-    ("rvltmodmayans",             "Jacinto Canek"),
-    ("rvltmodmexicans",           "Miguel Hidalgo"),
-    ("rvltmodnapoleonicfrance",   "Napoleon Bonaparte"),
-    ("rvltmodperuvians",          "Andrés de Santa Cruz"),
-    ("rvltmodrevolutionaryfrance","Maximilien Robespierre"),
-    ("rvltmodriogrande",          "Antonio Canales Rosillo"),
-    ("rvltmodromanians",          "Alexandru Ioan Cuza"),
-    ("rvltmodsouthafricans",      "Paul Kruger"),
-    ("rvltmodtexians",            "Sam Houston"),
-    ("rvltmodyucatan",            "Felipe Carrillo Puerto"),
+    ("anwamericans",          "Thomas Jefferson"),
+    ("anwargentines",         "José de San Martín"),
+    ("anwbarbary",            "Hayreddin Barbarossa"),
+    ("anwbrazil",             "Pedro I of Brazil"),
+    ("anwcalifornians",       "Mariano Vallejo"),
+    ("anwcanadians",          "Isaac Brock"),
+    ("anwcentralamericans",   "Francisco Morazán"),
+    ("anwchileans",           "Bernardo O'Higgins"),
+    ("anwcolumbians",         "Simón Bolívar"),
+    ("anwegyptians",          "Muhammad Ali Pasha"),
+    ("anwfinnish",            "Carl Gustaf Mannerheim"),
+    ("anwhaitians",           "Toussaint L'Ouverture"),
+    ("anwhungarians",         "Lajos Kossuth"),
+    ("anwindonesians",        "Prince Diponegoro"),
+    ("anwmayans",             "Jacinto Canek"),
+    ("anwmexicans",           "Miguel Hidalgo"),
+    ("anwnapoleonicfrance",   "Napoleon Bonaparte"),
+    ("anwperuvians",          "Andrés de Santa Cruz"),
+    ("anwrevfrance","Maximilien Robespierre"),
+    ("anwriogrande",          "Antonio Canales Rosillo"),
+    ("anwromanians",          "Alexandru Ioan Cuza"),
+    ("anwsouthafricans",      "Paul Kruger"),
+    ("anwtexians",            "Sam Houston"),
+    ("anwyucatan",            "Felipe Carrillo Puerto"),
 ]
 
 

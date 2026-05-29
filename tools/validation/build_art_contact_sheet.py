@@ -339,6 +339,57 @@ def _capture_cell(capture: dict | None, label: str) -> str:
     )
 
 
+def _text_cell(label: str, body: str, *, missing: bool = False) -> str:
+    """Plain text cell — used for non-image data (deck name, file lists)."""
+    colour = "#a01010" if missing else "#222"
+    bg = "#fde0e0" if missing else "#f8f8ff"
+    border = "#e09090" if missing else "#aab"
+    return (
+        '<div style="display:inline-block;margin:4px;vertical-align:top;'
+        f'width:220px;border:1px dashed {border};padding:4px 6px;'
+        f'background:{bg};font-size:12px;">'
+        f'<b style="font-size:11px;color:#444;">{html.escape(label)}</b><br>'
+        f'<span style="color:{colour};">{body}</span>'
+        "</div>"
+    )
+
+
+def _homecity_files_cell(files: list[str], label: str = "Home City Visual Files") -> str:
+    """Cell showing count + listed paths of homecity idle animation file refs.
+
+    These are engine-art XML paths (not mod-repo files), so missing-on-disk
+    is expected and not flagged as an error.
+    """
+    count = len(files)
+    if not files:
+        body = '<span style="color:#888;">(none found)</span>'
+        return _text_cell(label, body)
+    items = "".join(
+        f'<li style="font-family:monospace;font-size:10px;color:#445;">'
+        f'{html.escape(f)}</li>'
+        for f in files
+    )
+    body = (
+        f'<span style="color:#1f7a1f;font-weight:600;">{count} file ref(s)</span>'
+        f'<ul style="margin:4px 0 0 12px;padding:0;list-style:disc;">{items}</ul>'
+    )
+    return (
+        '<div style="display:inline-block;margin:4px;vertical-align:top;'
+        'width:260px;border:1px dashed #99a;padding:4px 6px;'
+        'background:#fcfcff;font-size:12px;">'
+        f'<b style="font-size:11px;color:#444;">{html.escape(label)}</b><br>'
+        + body
+        + "</div>"
+    )
+
+
+def _primary_deck_cell(deck_name: str) -> str:
+    """Cell showing the primary deck name for a civ."""
+    if not deck_name:
+        return _text_cell("Primary Deck", "— not found —", missing=True)
+    return _text_cell("Primary Deck", html.escape(deck_name))
+
+
 def _readiness_banner(records: list[dict], inv_civs: dict[str, dict]) -> str:
     """Top banner summarizing custom-portrait and flag readiness across ANW civs.
 
@@ -490,6 +541,11 @@ def _civ_row(rec: dict, anw_extra: dict | None) -> str:
         cells.append(_capture_cell(
             captures.get("home_city_walking_animation_thumbnail"),
             "home_city_walking_animation_thumbnail"))
+
+        # ---- v1.0 release readiness: home city visual files + primary deck ----
+        idle_files = anw_extra.get("homecity_idle_animation_files") or []
+        cells.append(_homecity_files_cell(idle_files))
+        cells.append(_primary_deck_cell(anw_extra.get("primary_deck_name", "")))
 
     # Quick consistency check: HTML flag vs civmods homecity flag
     consistency = []

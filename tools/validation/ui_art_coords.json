@@ -1,0 +1,96 @@
+{
+  "_doc": "Pixel coordinates of UI locations where civ-specific art renders, at 1920x1080 (gamescope native). Confidence levels: HIGH=measured from a fresh screenshot, MEDIUM=inferred from row-spacing on a measured anchor, LOW=guessed from common AoE3 layouts. Use validate_art_visual.py to consume. The 'kind' tells which inventory key the cropped pixels should be perceptually compared against (e.g. p1_civ_flag → civmods_flag_wpf or html_flag).",
+  "_calibrated": "2026-05-08 (Single Player Skirmish lobby, 8-player FFA layout, base-game civ list — ANW mod active but no civ pre-selected)",
+  "screen": {"w": 1920, "h": 1080},
+
+  "skirmish_lobby": {
+    "_layout_doc": "8 player rows. P1 = self (host), shows user's Steam avatar + name + chosen civ flag + color. P2..P8 = AI slots, each shows civ portrait button + flag + color. Row 1 begins at y≈150 and rows are spaced 106px apart (extrapolation matches existing lobby_coords.json y=170, 276, 382, ...).",
+    "p1_user_avatar": {
+      "x": 20, "y": 160, "w": 110, "h": 90,
+      "described": "Steam profile avatar (NOT mod art) — left of P1 name",
+      "confidence": "HIGH",
+      "kind": "user_avatar_skip"
+    },
+    "p1_civ_flag": {
+      "x": 575, "y": 168, "w": 105, "h": 82,
+      "described": "P1 chosen-civ flag — middle of row",
+      "confidence": "HIGH",
+      "kind": "civmods_flag_wpf"
+    },
+    "p1_color_swatch": {
+      "x": 945, "y": 168, "w": 70, "h": 64,
+      "described": "P1 color swatch (yellow box with rank number)",
+      "confidence": "HIGH",
+      "kind": "color_swatch_skip"
+    },
+
+    "p2_civ_portrait_btn": {
+      "x": 480, "y": 274, "w": 90, "h": 80,
+      "described": "P2 small civ-portrait button (?-icon when no civ set, leader portrait when set). Click target = civ picker.",
+      "confidence": "HIGH",
+      "kind": "civmods_portrait_wpf"
+    },
+    "p2_civ_flag": {
+      "x": 575, "y": 274, "w": 105, "h": 82,
+      "described": "P2 chosen-civ flag",
+      "confidence": "MEDIUM",
+      "kind": "civmods_flag_wpf"
+    },
+    "p2_color_swatch": {
+      "x": 945, "y": 274, "w": 70, "h": 64,
+      "described": "P2 color swatch",
+      "confidence": "MEDIUM",
+      "kind": "color_swatch_skip"
+    },
+
+    "_row_spacing_y": 106,
+    "_extrapolation_doc": "P3..P8 = same x; y = 274 + (slot-2) * 106. So P3=380, P4=486, P5=592, P6=698, P7=804, P8=910. Confidence MEDIUM because we only directly observed P1+P2; row-spacing comes from measured opponent_civ_pickers in lobby_coords.json."
+  },
+
+  "civ_picker": {
+    "_layout_doc": "Modal opens centered in left half of screen, ~700px tall. Lists 10 civs at a time, sorted alphabetically. Each row: small 64x64 flag icon + civ name. Picker has OK / Deck Builder / Cancel buttons at the bottom.",
+    "modal_bg_topleft": {"x": 70, "y": 30, "w": 670, "h": 940, "described": "Picker modal bounds", "confidence": "HIGH", "kind": "modal_chrome_skip"},
+    "row_y_start": 296,
+    "row_spacing": 64,
+    "row_count_visible": 10,
+    "row_flag_icon": {
+      "x_offset": 90, "y_offset_from_row_center": -22, "w": 44, "h": 44,
+      "described": "Small flag icon at left of each civ row in the picker. Click ROW (not just flag) to select. Cropped pHash of this 44x44 icon = HTML flag thumbnail.",
+      "confidence": "MEDIUM",
+      "kind": "civmods_flag_wpf"
+    },
+    "ok_button": {"x": 215, "y": 962, "described": "matches lobby_coords.json", "confidence": "HIGH"},
+    "cancel_button": {"x": 645, "y": 962, "described": "matches lobby_coords.json", "confidence": "HIGH"}
+  },
+
+  "in_match_hud": {
+    "_doc": "These values are LOW-confidence — not directly measured this session. Captured from common AoE3 DE 1920x1080 layout knowledge. Validate by re-measuring once a match is running. The HUD 'leader portrait' typically lives top-right above the ESC menu button.",
+    "leader_portrait": {
+      "x": 1660, "y": 30, "w": 80, "h": 80,
+      "described": "Top-right player portrait",
+      "confidence": "LOW",
+      "kind": "civmods_portrait_wpf"
+    },
+    "civ_flag_minimap_corner": {
+      "x": 1820, "y": 5, "w": 80, "h": 50,
+      "described": "Top-right flag, above resources bar",
+      "confidence": "LOW",
+      "kind": "civmods_flag_wpf"
+    }
+  },
+
+  "home_city": {
+    "_doc": "Home City scene, F8 menu. Coords LOW — not screenshotted this session.",
+    "civ_flag_banner": {
+      "x": 30, "y": 30, "w": 200, "h": 120,
+      "described": "Large civ flag banner in HC view",
+      "confidence": "LOW",
+      "kind": "civmods_flag_wpf"
+    }
+  },
+
+  "main_menu": {
+    "skirmish_button": {"x": 130, "y": 482, "confidence": "HIGH",
+      "described": "navigation only; no civ art rendered here"}
+  }
+}

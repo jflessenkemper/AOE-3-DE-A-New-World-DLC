@@ -1,6 +1,6 @@
 <animfile>
   <component>hat<logic type="Tech"><none><assetreference></assetreference></none><derevolutioncanadafrench><assetreference type="GrannyModel"><file>units\infantry_ranged\coureur\coureur_du_bois_hat_milice</file></assetreference></derevolutioncanadafrench><derevolutioncanadabritish><assetreference type="GrannyModel"><file>units\infantry_ranged\coureur\coureur_du_bois_hat_milice</file></assetreference></derevolutioncanadabritish>
-  <RvltModAge0FrenchCanadians><assetreference type="GrannyModel"><file>units\infantry_ranged\coureur\coureur_du_bois_hat_milice</file></assetreference></RvltModAge0FrenchCanadians><RvltModAge0Canadians><assetreference type="GrannyModel"><file>units\infantry_ranged\coureur\coureur_du_bois_hat_milice</file></assetreference></RvltModAge0Canadians>
+  <ANWAge0Canadians><assetreference type="GrannyModel"><file>units\infantry_ranged\coureur\coureur_du_bois_hat_milice</file></assetreference></ANWAge0Canadians>
   </logic></component>
   <anim>Idle<component>hat</component></anim>
 </animfile>

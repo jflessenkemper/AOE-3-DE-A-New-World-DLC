@@ -81,6 +81,49 @@ STRATEGY_NAMES: dict[int, str] = {
 }
 
 
+def check_shared_prose_consistency(civs: dict) -> list[dict]:
+    """Stronger invariant: every civ sharing a `doctrine_prose` template
+    MUST share the same `wall_strategy`.
+
+    Doctrine prose is intentionally templated — civs with the same
+    engine doctrine reuse the same player-facing prose (e.g. 6 ws=5
+    forward-push civs share "Forward Operational Line" prose). That's
+    by design.
+
+    But if someone changes one civ's `wall_strategy` without updating
+    the shared prose, the prose now mis-describes that civ. The
+    keyword-theme check above can miss this when the new strategy
+    happens to share vocabulary with the old (e.g. ws=3 → ws=5 both
+    use "forward").
+
+    This check catches it: any duplicate-prose group with mixed
+    wall_strategy values is a hard FAIL.
+    """
+    from collections import defaultdict
+    groups: dict[str, list[str]] = defaultdict(list)
+    for token, civ in civs.items():
+        prose = (civ.get("doctrine_prose") or "").strip()
+        if prose:
+            groups[prose].append(token)
+
+    violations = []
+    for prose, tokens in groups.items():
+        if len(tokens) < 2:
+            continue
+        ws_per_civ = {
+            t: civs[t].get("claims", {}).get("wall_strategy") for t in tokens
+        }
+        ws_set = set(ws_per_civ.values())
+        if len(ws_set) > 1:
+            violations.append({
+                "prose_head": prose[:60],
+                "civs": tokens,
+                "ws_per_civ": ws_per_civ,
+                "ws_values": sorted(ws_set, key=lambda x: x if x is not None else -1),
+            })
+    return violations
+
+
 def evaluate_civ(token: str, civ: dict) -> dict:
     """Return verdict + diagnostics for one civ entry."""
     claims = civ.get("claims", {}) or {}
@@ -150,10 +193,35 @@ def main() -> int:
     failed = len(fails)
     total = len(results)
     print()
-    if failed == 0:
-        print(f"PASS — {passed}/{total} civs have theme-aligned doctrine prose")
+
+    # Stronger invariant: shared prose template ↔ shared wall_strategy.
+    shared_violations = check_shared_prose_consistency(civs)
+    print(f"  Shared-prose-template consistency check:")
+    if not shared_violations:
+        print(f"    PASS — all duplicate-prose groups share a single wall_strategy")
     else:
+        print(f"    FAIL — {len(shared_violations)} duplicate-prose groups have mixed wall_strategy:")
+        for v in shared_violations:
+            print(f"      prose [{v['prose_head']}...]")
+            print(f"        ws values present: {v['ws_values']}")
+            for t, ws in v["ws_per_civ"].items():
+                print(f"          ws={ws}  {t}")
+    print()
+
+    keyword_pass = failed == 0
+    shared_pass = not shared_violations
+    overall_pass = keyword_pass and shared_pass
+
+    if overall_pass:
+        print(f"PASS — {passed}/{total} civs have theme-aligned doctrine prose"
+              f" + shared templates lock to single wall_strategy")
+    elif not keyword_pass and not shared_pass:
+        print(f"FAIL — {failed}/{total} keyword mismatch + "
+              f"{len(shared_violations)} shared-prose template inconsistencies")
+    elif not keyword_pass:
         print(f"FAIL — {failed}/{total} civs have prose disconnected from wall_strategy")
+    else:
+        print(f"FAIL — {len(shared_violations)} shared-prose templates have mixed wall_strategy")
 
     report = {
         "civs": results,
@@ -162,7 +230,8 @@ def main() -> int:
             "passed": passed,
             "failed": failed,
         },
-        "passed": failed == 0,
+        "shared_prose_violations": shared_violations,
+        "passed": overall_pass,
     }
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
@@ -170,7 +239,7 @@ def main() -> int:
             json.dump(report, fh, indent=2)
         print(f"Report: {args.json_out}")
 
-    return 0 if failed == 0 else 1
+    return 0 if overall_pass else 1
 
 
 if __name__ == "__main__":

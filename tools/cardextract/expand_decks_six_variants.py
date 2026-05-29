@@ -69,7 +69,15 @@ def expand(path: Path) -> bool:
 
 
 def main():
-    targets = sorted(DATA.glob("rvltmodhomecity*.xml"))
+    # File-name prefix was renamed `anwhomecity*` → `anwhomecity*` when
+    # the mod was rebranded from "Revolution Mod / Legendary Leaders" to
+    # "A New World". The old glob pattern silently matched zero files, so
+    # the standard 6-deck-slot expansion never ran in production. As a
+    # result every allied AI showed "Hidden — 0/25 cards" because the
+    # only deck slot ("A New World") didn't match any of the engine's
+    # six string-table deck identifiers (Beginner / Land / Naval /
+    # Tycoon / TreatyNoNat / TreatyNative).
+    targets = sorted(DATA.glob("anwhomecity*.xml"))
     ok = 0
     for p in targets:
         if expand(p):

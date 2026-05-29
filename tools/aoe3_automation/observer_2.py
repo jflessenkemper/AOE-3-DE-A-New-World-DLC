@@ -11,8 +11,9 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 GS_ENV = {**os.environ, 'GAMESCOPE_WAYLAND_DISPLAY': 'gamescope-0', 'WAYLAND_DISPLAY': 'gamescope-0', 'XDG_RUNTIME_DIR': '/run/user/1000'}
 X_ENV = {**os.environ, 'DISPLAY': ':1'}
 
-REPO = Path("/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc")
-ART = REPO / ".claude/session_2026-04-23-artifacts/observer2"
+# 2026-05-11: was hardcoded under AOE-3-DE-Legendary-Leaders-AI worktree.
+REPO = Path(__file__).resolve().parents[2]
+ART = REPO / "artifacts" / "observer2"
 ART.mkdir(parents=True, exist_ok=True)
 LOG = ART / "run.log"
 

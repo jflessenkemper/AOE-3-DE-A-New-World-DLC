@@ -2,7 +2,7 @@
 
 Two transformations:
 
-  1. RENAME the 26 existing `RvltMod{X}` `<Civ>` blocks → `ANW{X}` (PascalCase
+  1. RENAME the 26 existing `ANW{X}` `<Civ>` blocks → `ANW{X}` (PascalCase
      replacement throughout each block: Civ Name, AgeTech tech names,
      HomeCityFilename, MultipleBlockUnit names, etc.)
 
@@ -59,19 +59,19 @@ CIVMODS_OUT = REPO / "data" / "civmods.anw.xml"
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Step 1 — rename RvltMod → ANW in existing 26 rev-civ blocks
+# Step 1 — rename ANW → ANW in existing 26 rev-civ blocks
 # ──────────────────────────────────────────────────────────────────────────────
 
 
 def rename_rvlt_blocks(text: str) -> tuple[str, int]:
-    """Rename every `RvltMod{X}` and `rvltmod{x}` token to its ANW equivalent.
+    """Rename every `ANW{X}` and `anw{x}` token to its ANW equivalent.
 
     Two distinct tokens to handle:
-      - PascalCase civ tokens (e.g. `RvltModBarbary` → `ANWBarbary`)
-      - lowercase filename stems (e.g. `rvltmodhomecitybarbary` →
+      - PascalCase civ tokens (e.g. `ANWBarbary` → `ANWBarbary`)
+      - lowercase filename stems (e.g. `anwhomecitybarbary` →
         `anwhomecitybarbary`)
-      - tech name compounds (e.g. `RvltModColonializeCanadians` →
-        `ANWColonializeCanadians`) — these match the `RvltMod...` pattern
+      - tech name compounds (e.g. `ANWColonializeCanadians` →
+        `ANWColonializeCanadians`) — these match the `ANW...` pattern
         with civ-suffix that may not be in the ANW_CIVS table; we transform
         the prefix only.
 
@@ -80,21 +80,21 @@ def rename_rvlt_blocks(text: str) -> tuple[str, int]:
     count = 0
 
     # First pass: civ-token-keyed rename (uses anw_token_map for civmods Names
-    # to avoid accidentally renaming a generic `RvltMod` prefix to a wrong
+    # to avoid accidentally renaming a generic `ANW` prefix to a wrong
     # ANW token).
     civ_token_pairs = sorted(
         ((c.old_civ_token, c.anw_token) for c in iter_anw_civs() if c.is_revolution),
         key=lambda p: -len(p[0]),  # longest first to avoid prefix collisions
     )
     for old, new in civ_token_pairs:
-        # Word-boundary substitution to avoid matching e.g. "RvltModBarbary" inside
-        # "RvltModBarbaryHelper". Use lookahead/behind for non-word chars.
+        # Word-boundary substitution to avoid matching e.g. "ANWBarbary" inside
+        # "ANWBarbaryHelper". Use lookahead/behind for non-word chars.
         new_text, n = re.subn(rf"\b{re.escape(old)}\b", new, text)
         if n:
             text = new_text
             count += n
 
-    # Second pass: rename the lowercase homecity filename stems (rvltmodhomecity*)
+    # Second pass: rename the lowercase homecity filename stems (anwhomecity*)
     homecity_pairs = sorted(
         ((c.old_homecity_stem, "anwhomecity" + c.anw_stem[3:])
          for c in iter_anw_civs() if c.is_revolution),
@@ -106,17 +106,17 @@ def rename_rvlt_blocks(text: str) -> tuple[str, int]:
             text = new_text
             count += n
 
-    # Third pass: rename remaining `RvltMod{X}` tech-name compounds → `ANW{X}`.
-    # These are mod-defined tech names (e.g. RvltModColonializeCanadians) whose
-    # suffix is a civ-derivative. Pattern is `RvltMod` followed by uppercase ASCII.
-    new_text, n = re.subn(r"\bRvltMod(?=[A-Z])", "ANW", text)
+    # Third pass: rename remaining `ANW{X}` tech-name compounds → `ANW{X}`.
+    # These are mod-defined tech names (e.g. ANWColonializeCanadians) whose
+    # suffix is a civ-derivative. Pattern is `ANW` followed by uppercase ASCII.
+    new_text, n = re.subn(r"\bANW(?=[A-Z])", "ANW", text)
     if n:
         text = new_text
         count += n
 
-    # Fourth pass: lowercase variant `rvltmod` followed by lowercase letter
-    # (covers any stragglers like `rvltmodage0NapoleonicFrench` if any exist).
-    new_text, n = re.subn(r"\brvltmod(?=[a-z])", "anw", text)
+    # Fourth pass: lowercase variant `anw` followed by lowercase letter
+    # (covers any stragglers like `anwage0NapoleonicFrench` if any exist).
+    new_text, n = re.subn(r"\banw(?=[a-z])", "anw", text)
     if n:
         text = new_text
         count += n

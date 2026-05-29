@@ -219,7 +219,7 @@ def run_runtime_stage(repo_root: Path, log_path: Path, suite_names: list[str],
             "Next: run the deterministic scenario or test map, then rerun this stage with --runtime-log-path.",
             "Scenario spec: Scenario/TEST_SCENARIO_SETUP.md",
             "Automation matrix: Scenario/CHECKLIST_AUTOMATION_MATRIX.md",
-            "Skirmish arena: RandMaps/Legendary Leaders Test.md",
+            "Scenario binary: Scenario/ANEWWORLD.age3Yscn",
         ]
         return StageResult(name="Runtime Log Validation", status="skipped", summary=summary, details=details)
 

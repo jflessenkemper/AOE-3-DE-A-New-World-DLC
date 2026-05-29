@@ -17,7 +17,7 @@
 ### What is done (all static, no game launch required)
 
 - [x] **Track 1 — Smart Walls** — `game/ai/core/aiBuildingsWalls.xs` rewritten with real chokepoint detection, water/cliff avoidance, wall-tier progression by age, gate-placement logic. All XS static checks pass.
-- [x] **Track 4 — FrenchCanadians audit** — `artifacts/validation/civ_naming_audit.md` written (refreshed 2026-05-28). Verdict: `ANWFrenchCanadians` is legacy dead code; `ANWCanadians` (Brock) is the single active Canadian variant. User decision required before any action.
+- [x] **Track 4 — FrenchCanadians removed** — `ANWFrenchCanadians` (Papineau) fully purged from sound XMLs, art templates, tools, and docs. `ANWCanadians` (Brock) is the sole active Canadian variant.
 - [x] **Track 2a — art_inventory.py extended** — walkers for `diplomacy_panel_art`, `scoreboard_portrait_art`, `postgame_flag_art`, `homecity_visual_scene`, `captured_screenshots`. JSON rows emitted into `tools/validation/art_inventory.json`.
 - [x] **Track 2b — build_art_contact_sheet.py extended** — new columns: Diplomacy Portrait, Scoreboard Portrait, Post-game Flag, Custom Leader (hi-res), plus four capture columns (MISSING-until-game-captured placeholders). Top-of-page summary banner shows PASS/MISSING-SOME/MISSING-ALL counts.
 - [x] **Track 2c — verify_ally_deck.py** — full XML-vs-JSON deck cross-check for all 40 ANW civs. Produces `ally_deck_compliance.json` + `.md` + `ally_deck_verification.json`. Reports 27/40 PASS, 13 FAIL (card name drift in `decks.json` vs homecity XMLs — see notes below).
@@ -72,13 +72,13 @@ The following items require a running game (EXE is `.relaunch_blocked` — do no
 - `artifacts/validation/telemetry_report.html` — synthetic demo report (5.6 KB)
 - CLI: `python3 -m tools.aoe3_harness.cli telemetry parse <log_path>`
 
-### Track 4 — FrenchCanadians Audit
+### Track 4 — FrenchCanadians Removed
 
-**Status:** COMPLETE (read-only, no code changes)
+**Status:** COMPLETE — civ fully purged (2026-05-29)
 
-- `artifacts/validation/civ_naming_audit.md` — comprehensive audit (refreshed 2026-05-28)
-- Finding: `ANWFrenchCanadians` is legacy dead code in 78 files (48 sound XMLs, art templates). The active Canadian civ is `ANWCanadians` (Brock). "Lower Canada" appears only as a display string (locID 494006) and flavor text — no active dispatch.
-- Recommendation: A (keep status quo) or B (activate Papineau as second variant). Decision deferred to user.
+- `ANWFrenchCanadians` (Papineau) removed from all sound XMLs, art templates, tools, and docs.
+- `ANWCanadians` (Brock) remains as the sole active Canadian revolution civ.
+- 47 sound XMLs cleaned, 4 art XMLs cleaned, 10+ tool files updated.
 
 ---
 

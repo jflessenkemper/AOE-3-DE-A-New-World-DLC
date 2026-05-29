@@ -1,13 +1,16 @@
 """Screenshot the AoE3 game window without grabbing the cursor.
 
 User constraint: no Claude Preview / kwin MCP / Claude-in-Chrome — those move the
-real cursor. We use ``import -window <wid>`` (ImageMagick X11) as primary and
-``grim -g "x,y wxh"`` (Wayland portal) as fallback. Both are pure pixel reads.
+real cursor. We use ``spectacle --background --nonotify --fullscreen`` as primary
+(confirmed working via calibration session, captures full Wayland screen via KDE
+portal). ``import -window`` is NOT suitable for gamescope (returns 1-bit empty
+image). ``grim`` is NOT suitable (compositor doesn't support wlr_screencopy_v1).
 
-This requires AoE3 to be in borderless windowed mode (NOT exclusive fullscreen),
-otherwise DXVK direct-scanout bypasses Plasma's compositor and the pixels are
-invisible to standard tools. The harness's launcher must verify this in user
-config before launching; see launch.py.
+Calibration findings (artifacts/calibration/input_test_matrix.md):
+- AoE3 runs inside gamescope nested Xwayland at DISPLAY=:1
+- Gamescope window is a Wayland surface, invisible to xdotool on :0
+- Actual X11 window class in gamescope: ``steam_app_933110`` (NOT ``AoE3DE_s``)
+- ``spectacle`` captures the full KDE Plasma Wayland screen correctly
 """
 
 from __future__ import annotations
@@ -29,20 +32,28 @@ def find_aoe3_window() -> Optional[int]:
     Returns:
         An integer X11 window id if AoE3 is running, or None if not found.
     """
-    # Primary: xdotool search by class
-    try:
-        result = subprocess.run(
-            ["xdotool", "search", "--class", "AoE3DE_s"],
-            capture_output=True,
-            text=True,
-            timeout=5,
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            wids = [int(w) for w in result.stdout.strip().splitlines() if w.strip()]
-            if wids:
-                return wids[0]
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        pass
+    # Primary: xdotool search by class on gamescope's nested Xwayland (DISPLAY=:1).
+    # Calibration verified: AoE3 window class in gamescope is "steam_app_933110",
+    # NOT "AoE3DE_s". The gamescope Xwayland server is on DISPLAY=:1.
+    for display in (":1", ":0"):
+        env_extra = {"DISPLAY": display}
+        import os
+        env = dict(os.environ)
+        env.update(env_extra)
+        try:
+            result = subprocess.run(
+                ["xdotool", "search", "--class", "steam_app_933110"],
+                capture_output=True,
+                text=True,
+                timeout=5,
+                env=env,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                wids = [int(w) for w in result.stdout.strip().splitlines() if w.strip()]
+                if wids:
+                    return wids[0]
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            pass
 
     # Fallback: xwininfo tree scan
     try:
@@ -69,14 +80,17 @@ def find_aoe3_window() -> Optional[int]:
 
 
 def capture_window(wid: int, out_path: Path) -> bool:
-    """Capture AoE3 window pixels via ``import -window <wid> <out_path>``.
+    """Capture the full Wayland screen via ``spectacle --background --nonotify --fullscreen``.
 
-    Does NOT focus, raise, or move the window.  Uses ImageMagick's ``import``
-    command which reads the composited framebuffer via X11 (requires borderless
-    windowed mode; see module docstring).
+    The ``wid`` parameter is accepted for API compatibility but is NOT used —
+    gamescope renders as a Wayland surface that is invisible to X11 ``import``
+    tools.  The calibration session (artifacts/calibration/input_test_matrix.md)
+    confirmed that ``spectacle`` via the KDE portal is the only working method.
+
+    Does NOT grab the cursor or focus any window.
 
     Args:
-        wid: X11 window id (as returned by find_aoe3_window()).
+        wid: X11 window id (unused; kept for API compatibility).
         out_path: Output path for the PNG file.
 
     Returns:
@@ -85,31 +99,37 @@ def capture_window(wid: int, out_path: Path) -> bool:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     try:
         result = subprocess.run(
-            ["import", "-window", str(wid), str(out_path)],
+            [
+                "spectacle",
+                "--background",
+                "--nonotify",
+                "--fullscreen",
+                "--output", str(out_path),
+            ],
             capture_output=True,
             text=True,
             timeout=30,
         )
-        if result.returncode == 0 and out_path.exists() and out_path.stat().st_size > 0:
-            print(f"[harness/capture] Captured window 0x{wid:x} -> {out_path}")
+        if result.returncode == 0 and out_path.exists() and out_path.stat().st_size > 1000:
+            print(f"[harness/capture] Captured full screen via spectacle -> {out_path}")
             return True
         else:
+            err = result.stderr.strip() or result.stdout.strip()
             print(
-                f"[harness/capture] ERROR: import failed for wid 0x{wid:x}: "
-                f"{result.stderr.strip()}",
+                f"[harness/capture] ERROR: spectacle failed (rc={result.returncode}): {err}",
                 file=sys.stderr,
             )
             return False
     except FileNotFoundError:
         print(
-            "[harness/capture] ERROR: ImageMagick 'import' not found. "
-            "Install via: sudo dnf install ImageMagick",
+            "[harness/capture] ERROR: 'spectacle' not found. "
+            "Install via: sudo dnf install spectacle",
             file=sys.stderr,
         )
         return False
     except subprocess.TimeoutExpired:
         print(
-            f"[harness/capture] ERROR: import timed out for wid 0x{wid:x}",
+            "[harness/capture] ERROR: spectacle timed out",
             file=sys.stderr,
         )
         return False

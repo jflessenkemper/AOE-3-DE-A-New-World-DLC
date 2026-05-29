@@ -107,11 +107,11 @@ STANDARD: dict[str, dict] = {
         "buildstyle": "Naval Mercantile Compound",
     },
 
-    # Russians — Catherine the Great — Romanov column-and-cossack mass
+    # Russians — Ivan the Terrible — Streltsy mass + Oprichnik shock + siege train
     "homecityrussians": {
         "keywords": ["russian", "strelet", "cossack", "oprichnik", "kalmuck",
                      "bashkir", "ataman", "blockhouse", "siberian", "romanov",
-                     "catherine", "petrine", "boyar"],
+                     "catherine", "ivan", "kremlin", "petrine", "boyar"],
         "must_include": ["HCShipStrelets3", "HCShipCossacks3", "HCExplorerRussian", "HCRoyalDecreeRussian"],
         "must_exclude": [],
         "buildstyle": "Cossack Voisko",
@@ -276,7 +276,7 @@ STANDARD: dict[str, dict] = {
 
 REVOLUTION: dict[str, dict] = {
     # Napoleon Bonaparte — Grande Armée Grand Battery empire
-    "rvltmodhomecitynapoleon": {
+    "anwhomecitynapoleon": {
         "keywords": ["napoleon", "imperial", "oldguard", "grandbattery", "flyingbattery",
                      "hundreddays", "continental", "sister", "client", "horsehunter",
                      "rustam", "tirail", "cuirass", "balloon", "genie", "bosniak",
@@ -288,7 +288,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Robespierre — Levée-en-masse Republic
-    "rvltmodhomecityrevolutionaryfrance": {
+    "anwhomecityrevolutionaryfrance": {
         "keywords": ["bastille", "guillotine", "robespierre", "cantinier",
                      "supremebeing", "horsehunter", "client", "revolutionar",
                      "frenchroyal", "tirail", "skirmisher", "musketeer", "general",
@@ -299,7 +299,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Toussaint Louverture — Mass infantry insurrection
-    "rvltmodhomecityhaiti": {
+    "anwhomecityhaiti": {
         "keywords": ["haiti", "vodou", "sevites", "amazon", "akan", "marque",
                      "picket", "citizenship", "pirate", "privateer", "african",
                      "letter", "louverture", "saintdomingue"],
@@ -309,7 +309,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Jose de San Martin — Granadero shock-cavalry liberation
-    "rvltmodhomecityargentina": {
+    "anwhomecityargentina": {
         "keywords": ["argentina", "argentine", "blandengue", "criollo", "sanmartin",
                      "trattoria", "cattle", "mortar", "pampa", "gaucho",
                      "liberation", "lombardy", "marvelous", "granadero", "andes"],
@@ -319,7 +319,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Pedro I of Brazil — Imperial line and Hessian reserve
-    "rvltmodhomecitybrazil": {
+    "anwhomecitybrazil": {
         "keywords": ["brazil", "carioca", "ordenanca", "samba", "bandeirante",
                      "candomble", "ironclad", "amazon", "rainforest", "pedro",
                      "imperial", "hessian", "lusobrazilian"],
@@ -329,7 +329,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Bernardo O'Higgins — Balanced Republican infantry
-    "rvltmodhomecitychile": {
+    "anwhomecitychile": {
         "keywords": ["chile", "chilean", "huaso", "pacific", "andes", "ohiggins",
                      "valparaiso", "fronda", "carrera", "patria"],
         "must_include": ["DEHCExtensiveFortificationsEuropean"],
@@ -338,7 +338,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Simon Bolivar — Llanero liberation sweeps
-    "rvltmodhomecitycolumbia": {
+    "anwhomecitycolumbia": {
         "keywords": ["columbia", "colombia", "bolivar", "llanero", "panama",
                      "magdalena", "andean", "granadine", "venezuela"],
         "must_include": ["DEHCLiberationMarch"],
@@ -347,7 +347,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Mexicans (Revolution) — Hidalgo — Grito de Dolores levée
-    "rvltmodhomecitymexicans": {
+    "anwhomecitymexicans": {
         "keywords": ["mexican", "soldado", "salinero", "insurgent", "cazador",
                      "agave", "puebla", "hidalgo", "guerrero", "criollo",
                      "alhondiga", "dolores", "grito", "morelos"],
@@ -357,7 +357,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Sam Houston — Republic of Texas militia
-    "rvltmodhomecitytexas": {
+    "anwhomecitytexas": {
         "keywords": ["texas", "ranger", "lancer", "burnet", "alamo", "sanjacinto",
                      "frontier", "ironclad", "fortwagon", "robberbaron",
                      "empresario", "gonzales", "sharpshooter", "haciendawagon",
@@ -367,17 +367,8 @@ REVOLUTION: dict[str, dict] = {
         "buildstyle": "Forward Operational Line",
     },
 
-    # Mariano Vallejo — Ranchero defense and trade
-    "rvltmodhomecitycalifornia": {
-        "keywords": ["california", "californio", "frontier", "gold", "ranchero",
-                     "vaquero", "missionary", "padre", "vallejo", "sonoma"],
-        "must_include": ["DEHCFedMXFortifiedHaciendas"],
-        "must_exclude": [],
-        "buildstyle": "Distributed Economic Network",
-    },
-
     # Juan Bautista Alvarado — Californio frontier horse raids
-    "rvltmodhomecitybajacalifornians": {
+    "anwhomecitybajacalifornians": {
         "keywords": ["baja", "california", "ranchero", "californio", "gold",
                      "vaquero", "padre", "frontier", "alvarado", "mision"],
         "must_include": [],
@@ -385,17 +376,8 @@ REVOLUTION: dict[str, dict] = {
         "buildstyle": "Mobile Frontier Scatter",
     },
 
-    # Francisco Morazan — Federal Republic native muster
-    "rvltmodhomecitycentralamericans": {
-        "keywords": ["central", "criollo", "panama", "campesino", "guatemala",
-                     "nicaragua", "morazan", "filibuster", "federation"],
-        "must_include": ["DEHCCriollos"],
-        "must_exclude": [],
-        "buildstyle": "Distributed Economic Network",
-    },
-
     # Jacinto Canek — Indigenous insurrection mass
-    "rvltmodhomecitymaya": {
+    "anwhomecitymaya": {
         "keywords": ["maya", "yucatan", "jaguar", "calendar", "stelae", "ritual",
                      "milpa", "mayapan", "chichen", "canek", "uprising"],
         "must_include": [],
@@ -403,17 +385,8 @@ REVOLUTION: dict[str, dict] = {
         "buildstyle": "Jungle Guerrilla Network",
     },
 
-    # Felipe Carrillo Puerto — Maya levy uprising
-    "rvltmodhomecityyucatan": {
-        "keywords": ["yucatan", "maya", "campeche", "henequen", "castas", "merida",
-                     "guerra", "milpa", "carrillo", "uprising"],
-        "must_include": ["DEHCCampecheFortifications"],
-        "must_exclude": [],
-        "buildstyle": "Jungle Guerrilla Network",
-    },
-
     # Antonio Canales Rosillo — Rio Grande Republic horse
-    "rvltmodhomecityriogrande": {
+    "anwhomecityriogrande": {
         "keywords": ["riogrande", "rio", "ranchero", "frontier", "lancer",
                      "cattle", "vaquero", "norteno", "juarez", "canales"],
         "must_include": [],
@@ -422,7 +395,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Andres de Santa Cruz — Andean fort line and native levy
-    "rvltmodhomecityperu": {
+    "anwhomecityperu": {
         "keywords": ["peru", "andean", "inca", "huaylas", "tupac", "potosi",
                      "cuzco", "ayacucho", "santacruz", "confederation"],
         "must_include": ["DEHCExtensiveFortificationsEuropean"],
@@ -430,17 +403,8 @@ REVOLUTION: dict[str, dict] = {
         "buildstyle": "Andean Terrace Fortress",
     },
 
-    # Louis-Joseph Papineau — Patriote militia and Iroquois
-    "rvltmodhomecityfrenchcanada": {
-        "keywords": ["quebec", "canad", "voyageur", "coureur", "metis", "fur",
-                     "habitant", "patriot", "papineau", "iroquois"],
-        "must_include": ["DEHCREVQuebec", "DEHCREVNativeAlliesCanada"],
-        "must_exclude": [],
-        "buildstyle": "Civic Militia Center",
-    },
-
     # Isaac Brock — Blockhouse infantry frontier
-    "rvltmodhomecitycanada": {
+    "anwhomecitycanada": {
         "keywords": ["canad", "mountie", "voyageur", "metis", "habitant", "lumber",
                      "fur", "redcoat", "loyalist", "doublestack", "brock",
                      "fencible", "blockhouse"],
@@ -450,7 +414,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Thomas Jefferson — Continental Army Fabian-to-Yorktown (Revolution US)
-    "rvltmodhomecityamericans": {
+    "anwhomecityamericans": {
         "keywords": ["american", "united", "pioneer", "minute", "ranger",
                      "carbine", "frontier", "regular", "musketeer", "continental",
                      "washington", "franklin", "gatling", "jefferson", "yorktown",
@@ -461,7 +425,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Carl Gustaf Emil Mannerheim — Mannerheim-line ski infantry
-    "rvltmodhomecityfinland": {
+    "anwhomecityfinland": {
         "keywords": ["finland", "finnish", "jaeger", "torp", "sissi", "lake",
                      "sami", "saimaa", "karelian", "mannerheim", "ski"],
         "must_include": [],
@@ -470,7 +434,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Lajos Kossuth — Honved hussar uprising
-    "rvltmodhomecityhungary": {
+    "anwhomecityhungary": {
         "keywords": ["hungar", "magyar", "hussar", "pandour", "honved", "hajduk",
                      "kossuth", "frontier"],
         "must_include": [],
@@ -479,7 +443,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Alexandru Ioan Cuza — Danubian Principalities consolidation
-    "rvltmodhomecityromania": {
+    "anwhomecityromania": {
         "keywords": ["romania", "carpathian", "calarasi", "vlach", "boyar",
                      "wallachia", "moldavia", "transylvania", "cuza", "danubian"],
         "must_include": [],
@@ -488,7 +452,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Paul Kruger — Boer commando trader-cavalry
-    "rvltmodhomecitysouthafricans": {
+    "anwhomecitysouthafricans": {
         "keywords": ["south", "africa", "boer", "afrikaner", "kommando",
                      "voortrekker", "trek", "zulu", "kimberley", "kruger",
                      "diamond"],
@@ -498,7 +462,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Muhammad Ali Pasha — Nizam-i Cedid modernization
-    "rvltmodhomecityegypt": {
+    "anwhomecityegypt": {
         "keywords": ["egypt", "muhammadali", "mameluke", "fellah", "nizami",
                      "pasha", "nile", "alexandria", "cairo", "bedouin", "nizam",
                      "modernization"],
@@ -508,7 +472,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Hayreddin Barbarossa — Corsair raider economy
-    "rvltmodhomecitybarbary": {
+    "anwhomecitybarbary": {
         "keywords": ["barbary", "berber", "corsair", "salerover", "sale", "crabat",
                      "dey", "janissary", "algiers", "tunis", "tripoli", "barbarossa",
                      "letter", "marque", "raider", "naval"],
@@ -518,7 +482,7 @@ REVOLUTION: dict[str, dict] = {
     },
 
     # Prince Diponegoro — Java War guerrilla and kraton
-    "rvltmodhomecityindonesians": {
+    "anwhomecityindonesians": {
         "keywords": ["indon", "java", "sumatra", "aceh", "jong", "kraton",
                      "lantaka", "wokou", "majapahit", "spice", "bali",
                      "diponegoro", "javawar"],

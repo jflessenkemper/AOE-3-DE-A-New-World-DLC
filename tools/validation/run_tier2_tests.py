@@ -32,11 +32,11 @@ def init_directories():
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Create placeholder for each civ
-    for civ in ANW_CIVS:
-        civ_log = LOGS_DIR / f"{civ.anw_token}_scenario.log"
+    # Create placeholder for each civ. ANW_CIVS is a dict keyed by ANW token.
+    for anw_token in ANW_CIVS:
+        civ_log = LOGS_DIR / f"{anw_token}_scenario.log"
         if not civ_log.exists():
-            civ_log.write_text(f"# Awaiting TIER 2 test execution for {civ.anw_token}\n")
+            civ_log.write_text(f"# Awaiting TIER 2 test execution for {anw_token}\n")
 
     print(f"✓ Initialized {len(ANW_CIVS)} log placeholders in {LOGS_DIR}")
 

@@ -21,36 +21,36 @@ DATA = REPO / "data"
 # Each base is a folder like "british" → `british\british_homecity.xml`
 MAPPING = {
     # North America
-    "rvltmodhomecityamericans":        "british",    # US is British-descended
-    "rvltmodhomecitycanada":           "british",    # Canadian Dominion
-    "rvltmodhomecityfrenchcanada":     "french",     # Québec
-    "rvltmodhomecitytexas":            "mexico",     # Texian uses Mexican architecture closer
-    "rvltmodhomecitycalifornia":       "mexico",     # Californio
-    "rvltmodhomecitybajacalifornians": "mexico",     # Baja Californio
-    "rvltmodhomecitycentralamericans": "spanish",    # Colonial Central America
-    "rvltmodhomecityriogrande":        "mexico",
-    "rvltmodhomecityyucatan":          "mexico",
-    "rvltmodhomecitymaya":             "mexico",
+    "anwhomecityamericans":        "british",    # US is British-descended
+    "anwhomecitycanada":           "british",    # Canadian Dominion
+    "anwhomecityfrenchcanada":     "french",     # Québec
+    "anwhomecitytexas":            "mexico",     # Texian uses Mexican architecture closer
+    "anwhomecitycalifornia":       "mexico",     # Californio
+    "anwhomecitybajacalifornians": "mexico",     # Baja Californio
+    "anwhomecitycentralamericans": "spanish",    # Colonial Central America
+    "anwhomecityriogrande":        "mexico",
+    "anwhomecityyucatan":          "mexico",
+    "anwhomecitymaya":             "mexico",
     # South America — Spanish/Portuguese colonial
-    "rvltmodhomecitybrazil":           "portuguese",
-    "rvltmodhomecityargentina":        "spanish",
-    "rvltmodhomecitychile":            "spanish",
-    "rvltmodhomecityperu":             "spanish",
-    "rvltmodhomecitycolumbia":         "spanish",
-    "rvltmodhomecityhaiti":            "french",     # French colonial Saint-Domingue
+    "anwhomecitybrazil":           "portuguese",
+    "anwhomecityargentina":        "spanish",
+    "anwhomecitychile":            "spanish",
+    "anwhomecityperu":             "spanish",
+    "anwhomecitycolumbia":         "spanish",
+    "anwhomecityhaiti":            "french",     # French colonial Saint-Domingue
     # Europe East/North
-    "rvltmodhomecityromania":          "german",     # Mitteleuropa
-    "rvltmodhomecityhungary":          "german",
-    "rvltmodhomecityfinland":          "russian",    # Grand Duchy of Finland
+    "anwhomecityromania":          "german",     # Mitteleuropa
+    "anwhomecityhungary":          "german",
+    "anwhomecityfinland":          "russian",    # Grand Duchy of Finland
     # Revolutionary France — use French visuals to match flag
-    "rvltmodhomecitynapoleon":            "french",
-    "rvltmodhomecityrevolutionaryfrance": "french",
+    "anwhomecitynapoleon":            "french",
+    "anwhomecityrevolutionaryfrance": "french",
     # Africa / MENA
-    "rvltmodhomecityegypt":            "ottoman",
-    "rvltmodhomecitybarbary":          "ottoman",
-    "rvltmodhomecitysouthafricans":    "dutch",      # Afrikaner / Dutch heritage
+    "anwhomecityegypt":            "ottoman",
+    "anwhomecitybarbary":          "ottoman",
+    "anwhomecitysouthafricans":    "dutch",      # Afrikaner / Dutch heritage
     # Asia / Indian Ocean
-    "rvltmodhomecityindonesians":      "dutch",      # Dutch East Indies
+    "anwhomecityindonesians":      "dutch",      # Dutch East Indies
 }
 
 

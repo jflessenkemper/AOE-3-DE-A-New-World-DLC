@@ -11,7 +11,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAge0Peruvians">
+        <choice name="ANWAge0Peruvians">
           <soundset name="SpanishSettlerMaleSelect">
           </soundset>
         </choice>
@@ -40,7 +40,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAge0Peruvians">
+        <choice name="ANWAge0Peruvians">
           <soundset name="SpanishSettlerMaleAcknowledge">
           </soundset>
         </choice>

@@ -39,8 +39,35 @@ def invalidate_cache() -> None:
     _CACHE = None
 
 
+def _is_x_display_alive(display: str, *, timeout: float = 3.0) -> bool:
+    """Return True iff an X server actually answers on this display.
+
+    Stale `/tmp/.X*-lock` files outlive their Xwayland processes — e.g. after
+    a gamescope crash. Filtering on lock-file existence alone causes
+    detect_aoe3_display() to spend seconds polling dead displays before
+    falling through. xdpyinfo is the cheapest live-connect probe (~50 ms on
+    success, rc=1 with "unable to open display" on stale).
+    """
+    env = {**os.environ, "DISPLAY": display}
+    try:
+        res = subprocess.run(
+            ["xdpyinfo"], env=env, capture_output=True,
+            text=True, timeout=timeout,
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return False
+    return res.returncode == 0 and "name of display" in res.stdout
+
+
 def _x_displays() -> list[str]:
-    """Return all candidate X displays from /tmp/.X*-lock files, lowest first."""
+    """Return live X displays only, lowest-numbered first.
+
+    Lock-file scan finds candidates; aliveness probe filters out displays
+    whose Xwayland process has died but whose lock file still exists.
+    Display :0 (host KDE session) is included for completeness but will
+    never own the AoE3 gamescope window — it's filtered out by the AoE3
+    window-presence check downstream regardless.
+    """
     candidates: list[str] = []
     for lock in sorted(glob.glob("/tmp/.X*-lock")):
         n = lock.removeprefix("/tmp/.X").removesuffix("-lock")
@@ -50,7 +77,11 @@ def _x_displays() -> list[str]:
     env_display = os.environ.get("DISPLAY", "")
     if env_display and env_display not in candidates:
         candidates.insert(0, env_display)
-    return candidates
+    # Filter out displays whose X server no longer answers. This is the
+    # primary defence against a crash-then-restart cycle leaving stale
+    # locks behind.
+    alive = [d for d in candidates if _is_x_display_alive(d)]
+    return alive
 
 
 def _gamescope_sockets() -> list[str]:
@@ -69,19 +100,32 @@ _XWININFO_RE = re.compile(
 )
 
 
-def _has_aoe3_window(display: str) -> bool:
-    """Return True if 'Age of Empires III' window exists on this X display."""
+def _has_aoe3_window(display: str, *, timeout: float = 5.0) -> bool:
+    """Return True if 'Age of Empires III' window exists on this X display.
+
+    Both probes carry strict timeouts because a wedged-but-not-dead Xwayland
+    (rare, but observed after Proton + gamescope OOM events) can hang
+    wmctrl/xwininfo for tens of seconds and stall the whole detection loop.
+    """
     env = {**os.environ, "DISPLAY": display}
     # Try wmctrl first (fast on EWMH-capable displays).
-    res = subprocess.run(
-        ["wmctrl", "-lG"], env=env, capture_output=True, text=True
-    )
-    if res.returncode == 0 and WINDOW_TITLE_SUBSTR in res.stdout:
-        return True
-    # Fallback: xwininfo (works on gamescope nested Xwayland).
-    res2 = subprocess.run(
-        ["xwininfo", "-root", "-tree"], env=env, capture_output=True, text=True
-    )
+    try:
+        res = subprocess.run(
+            ["wmctrl", "-lG"], env=env, capture_output=True,
+            text=True, timeout=timeout,
+        )
+        if res.returncode == 0 and WINDOW_TITLE_SUBSTR in res.stdout:
+            return True
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        pass  # fall through to xwininfo
+    # Fallback: xwininfo (works on gamescope nested Xwayland, no EWMH).
+    try:
+        res2 = subprocess.run(
+            ["xwininfo", "-root", "-tree"], env=env, capture_output=True,
+            text=True, timeout=timeout,
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return False
     if res2.returncode == 0:
         for line in res2.stdout.splitlines():
             if WINDOW_TITLE_SUBSTR in line:
@@ -104,6 +148,90 @@ def _gs_socket_works(gs_socket: str, *, timeout: int = 5) -> bool:
         return res.returncode == 0
     except (subprocess.TimeoutExpired, FileNotFoundError):
         return False
+
+
+def _gs_socket_resolution(gs_socket: str, *, timeout: int = 8) -> Optional[tuple[int, int]]:
+    """Return (width, height) by taking a probe screenshot via gamescopectl.
+
+    Multiple gamescope instances can answer to ``gamescopectl status`` simultaneously,
+    so we identify the AoE3 instance by matching its render resolution against the
+    AoE3 X display (which is 1920x1080 for AoE3 DE in our launcher).
+    Returns None if the screenshot fails or cannot be measured.
+    """
+    import tempfile, struct
+    env = {
+        **os.environ,
+        "GAMESCOPE_WAYLAND_DISPLAY": gs_socket,
+        "WAYLAND_DISPLAY": gs_socket,
+    }
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
+        probe_path = f.name
+    try:
+        try:
+            os.unlink(probe_path)
+        except FileNotFoundError:
+            pass
+        res = subprocess.run(
+            ["gamescopectl", "screenshot", probe_path],
+            env=env, capture_output=True, timeout=timeout,
+        )
+        if res.returncode != 0:
+            return None
+        # gamescopectl writes async; poll briefly.
+        deadline = time.time() + 5.0
+        while time.time() < deadline:
+            try:
+                if os.path.getsize(probe_path) > 1024:
+                    break
+            except (FileNotFoundError, OSError):
+                pass
+            time.sleep(0.2)
+        try:
+            with open(probe_path, "rb") as f:
+                data = f.read(32)
+        except (FileNotFoundError, OSError):
+            return None
+        # PNG IHDR: bytes 16..24 = width, height (big-endian uint32 each)
+        if len(data) < 24 or data[:8] != b"\x89PNG\r\n\x1a\n":
+            return None
+        width, height = struct.unpack(">II", data[16:24])
+        return (width, height)
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return None
+    finally:
+        try:
+            os.unlink(probe_path)
+        except FileNotFoundError:
+            pass
+
+
+def _x_display_resolution(display: str) -> Optional[tuple[int, int]]:
+    """Return (width, height) of the X root window on the given display, or None."""
+    env = {**os.environ, "DISPLAY": display}
+    try:
+        res = subprocess.run(
+            ["xwininfo", "-root"], env=env, capture_output=True, text=True, timeout=5
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return None
+    if res.returncode != 0:
+        return None
+    w = h = None
+    for line in res.stdout.splitlines():
+        line = line.strip()
+        if line.startswith("Width:"):
+            try:
+                w = int(line.split(":", 1)[1].strip())
+            except ValueError:
+                pass
+        elif line.startswith("Height:"):
+            try:
+                h = int(line.split(":", 1)[1].strip())
+            except ValueError:
+                pass
+    if w and h:
+        return (w, h)
+    return None
 
 
 def detect_aoe3_display(*, use_cache: bool = True) -> tuple[str, str]:
@@ -138,12 +266,26 @@ def detect_aoe3_display(*, use_cache: bool = True) -> tuple[str, str]:
             f"(checked: {displays}). Is the game running?"
         )
 
-    # Find the first gamescope socket that responds to gamescopectl.
+    # Pair the AoE3 X display with the gamescope that renders at the same
+    # resolution. Multiple gamescope instances may both answer ``status``,
+    # but only one of them actually owns the AoE3 framebuffer.
+    aoe3_res = _x_display_resolution(aoe3_display)
     aoe3_gs: Optional[str] = None
-    for gs in sockets:
-        if _gs_socket_works(gs):
-            aoe3_gs = gs
-            break
+    if aoe3_res is not None:
+        for gs in sockets:
+            if not _gs_socket_works(gs):
+                continue
+            gs_res = _gs_socket_resolution(gs)
+            if gs_res == aoe3_res:
+                aoe3_gs = gs
+                break
+
+    if aoe3_gs is None:
+        # Secondary path: take any responsive socket (legacy behaviour).
+        for gs in sockets:
+            if _gs_socket_works(gs):
+                aoe3_gs = gs
+                break
 
     if aoe3_gs is None:
         # Hard fallback: derive from display number (offset -1 for display :1 -> gamescope-0).

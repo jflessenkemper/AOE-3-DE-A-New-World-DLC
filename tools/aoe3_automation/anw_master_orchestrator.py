@@ -48,6 +48,14 @@ ESC_RESIGN_Y = 330  # rough
 VIEW_POSTGAME = (1245, 760)
 QUIT_TOP_LEFT = (50, 30)
 
+# Score panel P2 row (AI player 2) — click on flag/avatar jumps camera to AI base.
+# Empirically derived from British 10_british_ai_base.png reference.
+SCORE_P2_FLAG = (1430, 49)
+# AI Imperial wait: at Speed 5 (5x), AI naturally reaches Imperial in 4-5 real
+# minutes from skirmish start. Our cheats put US in Imperial ~2min in; need
+# additional ~3min for AI to catch up.
+AI_IMPERIAL_WAIT_S = 180
+
 # ANW civs (40 total) - matches data/anwhomecity*.xml
 ANW_CIVS = [
     "Argentines", "Aztecs", "Barbary", "Brazil", "British",
@@ -177,6 +185,42 @@ def capture_age_ups(civ, env, tc_xy=TC_DEFAULT):
         time.sleep(wait_s)
 
 
+def capture_civ_gameplay(civ, env, d):
+    """RELIABLE flow: NO dialog clicks. Just enter game, wait for AI to build,
+    take HUD shot, reveal map, take overhead. Two surfaces per civ:
+
+      03_hud.png — in-game HUD with player base after ~2min settle
+      11_revealed_map.png — same scene with full map revealed (shows AI bases)
+
+    Why this replaces the broken age-up/tech-tree flow: coordinate-based clicks
+    on TC + age-up button + ESC > TECHNOLOGY TREE produced wrong-dialog
+    captures for every civ except British (which was captured manually).
+    Coordinates that work for British's HUD layout hit different buttons on
+    other civs (Quit dialog for Chileans, Open File dialog for Aztecs, etc).
+    """
+    out_dir = ART_ROOT / f'ANW{civ}' / 'full'
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    log(f'  speed 5 + wait 120s for AI to build')
+    try:
+        d.set_speed(5)
+    except Exception:
+        pass
+    time.sleep(120)
+
+    out_path = out_dir / '03_hud.png'
+    screenshot(str(out_path))
+    log(f'  saved {out_path}')
+
+    log(f'  reveal map cheat')
+    cheat('x marks the spot', env)
+    time.sleep(4)
+
+    out_path = out_dir / '11_revealed_map.png'
+    screenshot(str(out_path))
+    log(f'  saved {out_path}')
+
+
 def resign_and_return(d):
     """Resign, dismiss postgame, return to main menu."""
     log('  resigning...')
@@ -233,7 +277,7 @@ def main():
     for idx, civ in enumerate(civs):
         log(f'=== [{idx+1}/{len(civs)}] {civ} ===')
 
-        if args.resume and has_capture(civ, '05_tech_tree.png'):
+        if args.resume and has_capture(civ, '11_revealed_map.png'):
             log(f'  SKIP (already captured)')
             skipped.append(civ)
             continue
@@ -299,18 +343,11 @@ def main():
             d.set_speed(5)
             time.sleep(0.5)
 
-            if not args.tech_tree_only:
-                log(f'  capture age-ups')
-                try:
-                    capture_age_ups(civ, env, tc_xy=TC_DEFAULT)
-                except Exception as e:
-                    log(f'  age-up capture threw {type(e).__name__}: {e}')
-
-            log(f'  capture tech tree')
+            log(f'  capture gameplay (HUD + revealed map)')
             try:
-                capture_tech_tree_only(civ, env)
+                capture_civ_gameplay(civ, env, d)
             except Exception as e:
-                log(f'  tech tree capture threw {type(e).__name__}: {e}')
+                log(f'  gameplay capture threw {type(e).__name__}: {e}')
 
             log(f'  resign and return')
             resign_and_return(d)

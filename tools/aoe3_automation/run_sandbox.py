@@ -24,7 +24,11 @@ APP_ID = 933110
 PROFILE_RELATIVE_PATH = Path("Games/Age of Empires 3 DE/76561198170207043")
 DEFAULT_FLOW = REPO_ROOT / "tools" / "aoe3_automation" / "flows" / "launch_and_capture_menu.json"
 DEFAULT_ARTIFACT_ROOT = REPO_ROOT / "tools" / "aoe3_automation" / "artifacts" / "sandbox_runs"
-DEFAULT_RANDOM_MAP = "Legendary Leaders Test"
+# 2026-05-11: was "Legendary Leaders Test" — that custom randmap was retired
+# in favor of the ANEWWORLD scenario (Scenario/ANEWWORLD.age3Yscn). Default
+# is now None so the sandbox uses whatever the user picks at the lobby; pass
+# --random-map <BaseName> only when a specific randmap needs publishing.
+DEFAULT_RANDOM_MAP: str | None = None
 
 
 @dataclass(frozen=True)

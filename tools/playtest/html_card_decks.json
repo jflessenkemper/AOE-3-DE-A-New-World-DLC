@@ -107,7 +107,7 @@
       "Dutch Paintings",
       "3 Merchants",
       "2 Merchants",
-      "Peace of Münster",
+      "Peace of M\u00fcnster",
       "Bank Wagon",
       "4 Merchants",
       "Infantry Attack",
@@ -218,7 +218,7 @@
       "Mercenary Camps",
       "Hire Bosniaks",
       "Hire Pandours",
-      "Adler von Lübeck",
+      "Adler von L\u00fcbeck",
       "Princely Bavarian Chevaulegers",
       "Advanced Artillery",
       "1 Falconet +3 Uhlans",
@@ -494,7 +494,7 @@
     "leader_display": "Miguel Hidalgo",
     "data_name": "Mexicans Hidalgo Standard",
     "deck": [
-      "Alhóndiga de Granaditas",
+      "Alh\u00f3ndiga de Granaditas",
       "Barbacoa",
       "Comandante",
       "Cathedral Construction",
@@ -516,7 +516,7 @@
       "Guerilla Tactics",
       "Charreada",
       "Land of Hidalgo",
-      "Chimayó Genizarios",
+      "Chimay\u00f3 Genizarios",
       "33 Insurgentes",
       "1 Frigate"
     ]
@@ -529,11 +529,11 @@
     "deck": [
       "Agha",
       "City Defense",
-      "3 Yörüks",
-      "2 Yörüks",
+      "3 Y\u00f6r\u00fcks",
+      "2 Y\u00f6r\u00fcks",
       "Palace Intrigue",
       "Matrakci School",
-      "5 Yörüks",
+      "5 Y\u00f6r\u00fcks",
       "6 Muhbirs",
       "Cebeci",
       "5 Sipahis",
@@ -541,7 +541,7 @@
       "Enderun School",
       "8 Berber Allies",
       "10 Muhbirs",
-      "Topçular",
+      "Top\u00e7ular",
       "6 Abus Gunners",
       "12 Janissaries",
       "2 Great Bombards",
@@ -577,7 +577,7 @@
       "TEAM Gunpowder Infantry Hitpoints",
       "4 Dragoons",
       "3 Organ Guns",
-      "Nossa Senhora da Conceição",
+      "Nossa Senhora da Concei\u00e7\u00e3o",
       "1 Battleship",
       "Gunpowder Infantry Combat",
       "6 Dragoons",
@@ -719,10 +719,10 @@
       "1 Ironclad +1 Steamer"
     ]
   },
-  "rvltmodargentines": {
-    "civ_id": "cRvltModArgentines",
-    "leader": "rvltmodargentines",
-    "leader_display": "José de San Martín",
+  "anwargentines": {
+    "civ_id": "cANWArgentines",
+    "leader": "anwargentines",
+    "leader_display": "Jos\u00e9 de San Mart\u00edn",
     "data_name": "Argentines San Martin Revolution",
     "deck": [
       "San Martin",
@@ -752,15 +752,15 @@
       "Industrial Revolution"
     ]
   },
-  "rvltmodbarbary": {
-    "civ_id": "cRvltModBarbary",
-    "leader": "rvltmodbarbary",
+  "anwbarbary": {
+    "civ_id": "cANWBarbary",
+    "leader": "anwbarbary",
     "leader_display": "Hayreddin Barbarossa",
     "data_name": "Barbary Barbarossa Corsair Revolution",
     "deck": [
       "Corsair Captain",
-      "Salé Rovers",
-      "Aïr Berbers",
+      "Sal\u00e9 Rovers",
+      "A\u00efr Berbers",
       "16 Barbary Warriors",
       "15 Berber Allies",
       "Barbary Combat",
@@ -785,9 +785,9 @@
       "Ottoman Mercenary Army"
     ]
   },
-  "rvltmodbrazil": {
-    "civ_id": "cRvltModBrazil",
-    "leader": "rvltmodbrazil",
+  "anwbrazil": {
+    "civ_id": "cANWBrazil",
+    "leader": "anwbrazil",
     "leader_display": "Pedro I",
     "data_name": "Brazil Pedro Revolution",
     "deck": [
@@ -808,7 +808,7 @@
       "10 Cassadores",
       "6 Soldados",
       "2 Ironclads",
-      "Nossa Senhora da Conceição",
+      "Nossa Senhora da Concei\u00e7\u00e3o",
       "1 Battleship",
       "Carracks",
       "Estremoz Field Guns",
@@ -818,42 +818,9 @@
       "3 Gatling Guns"
     ]
   },
-  "rvltmodcalifornians": {
-    "civ_id": "cRvltModCalifornians",
-    "leader": "rvltmodcalifornians",
-    "leader_display": "Mariano Vallejo",
-    "data_name": "Californians Vallejo Revolution",
-    "deck": [
-      "8 Settlers",
-      "Fortified Haciendas",
-      "California Haciendas",
-      "Rancheros",
-      "Ranchos",
-      "San Diego Port",
-      "San Francisco Bay",
-      "Frontier Defenses",
-      "Frontier Defenses",
-      "California Ranching",
-      "Advanced Frontier Defenses",
-      "California Statehood",
-      "Refrigeration",
-      "Lancers of California",
-      "California Robber Barons",
-      "20 Californios",
-      "1 Gold Prospector Wagon",
-      "1 Ironclad",
-      "2 Hacienda Wagons",
-      "TEAM Alta California Territory",
-      "Exotic Hardwoods",
-      "3 Captured Galleons",
-      "1 Frigate",
-      "Cavalry Combat",
-      "Factory"
-    ]
-  },
-  "rvltmodcanadians": {
-    "civ_id": "cRvltModCanadians",
-    "leader": "rvltmodcanadians",
+  "anwcanadians": {
+    "civ_id": "cANWCanadians",
+    "leader": "anwcanadians",
     "leader_display": "Isaac Brock",
     "data_name": "Canadians Brock Revolution",
     "deck": [
@@ -881,45 +848,12 @@
       "15 Elk",
       "7 Grizzlies",
       "13 Rangers",
-      "Métis Pathfinders"
+      "M\u00e9tis Pathfinders"
     ]
   },
-  "rvltmodcentralamericans": {
-    "civ_id": "cRvltModCentralAmericans",
-    "leader": "rvltmodcentralamericans",
-    "leader_display": "Francisco Morazán",
-    "data_name": "Central Americans Morazan Revolution",
-    "deck": [
-      "4 Settlers",
-      "Criollos",
-      "Town Militia",
-      "Exotic Hardwoods",
-      "Santamaria's Fire",
-      "Advanced Frontier Defenses",
-      "6 Revolutionaries",
-      "1 Falconet",
-      "1 Ironclad",
-      "Frontier Defenses",
-      "2 Culverins",
-      "Refrigeration",
-      "3 Captured Galleons",
-      "Cavalry Combat",
-      "1 Frigate",
-      "TEAM Alta California Territory",
-      "Campeche Fortifications",
-      "Cantinas",
-      "Tehuantepec Route",
-      "Central American Infantry",
-      "Central American Cavalry",
-      "2 Captured Galleons",
-      "Guerilla Tactics",
-      "Leather Soldiers",
-      "Factory"
-    ]
-  },
-  "rvltmodchileans": {
-    "civ_id": "cRvltModChileans",
-    "leader": "rvltmodchileans",
+  "anwchileans": {
+    "civ_id": "cANWChileans",
+    "leader": "anwchileans",
     "leader_display": "Bernardo O'Higgins",
     "data_name": "Chileans OHiggins Revolution",
     "deck": [
@@ -945,15 +879,15 @@
       "Marvelous Year",
       "10 Mapuche Allies",
       "TEAM 1 Heavy Cannon",
-      "Nuestras Señoras",
+      "Nuestras Se\u00f1oras",
       "Industrial Revolution",
       "3 Gatling Guns"
     ]
   },
-  "rvltmodcolumbians": {
-    "civ_id": "cRvltModColumbians",
-    "leader": "rvltmodcolumbians",
-    "leader_display": "Simón Bolívar",
+  "anwcolumbians": {
+    "civ_id": "cANWColumbians",
+    "leader": "anwcolumbians",
+    "leader_display": "Sim\u00f3n Bol\u00edvar",
     "data_name": "Columbians Bolivar Colombia Revolution",
     "deck": [
       "Liberation March",
@@ -983,9 +917,9 @@
       "3 Gatling Guns"
     ]
   },
-  "rvltmodegyptians": {
-    "civ_id": "cRvltModEgyptians",
-    "leader": "rvltmodegyptians",
+  "anwegyptians": {
+    "civ_id": "cANWEgyptians",
+    "leader": "anwegyptians",
     "leader_display": "Muhammad Ali",
     "data_name": "Egyptians Muhammad Ali Revolution",
     "deck": [
@@ -1015,9 +949,9 @@
       "Hire Gatling Camels"
     ]
   },
-  "rvltmodfinnish": {
-    "civ_id": "cRvltModFinnish",
-    "leader": "rvltmodfinnish",
+  "anwfinnish": {
+    "civ_id": "cANWFinnish",
+    "leader": "anwfinnish",
     "leader_display": "Carl Gustaf Mannerheim",
     "data_name": "Finnish Mannerheim Revolution",
     "deck": [
@@ -1048,9 +982,9 @@
       "Industrial Revolution"
     ]
   },
-  "rvltmodhungarians": {
-    "civ_id": "cRvltModHungarians",
-    "leader": "rvltmodhungarians",
+  "anwhungarians": {
+    "civ_id": "cANWHungarians",
+    "leader": "anwhungarians",
     "leader_display": "Lajos Kossuth",
     "data_name": "Hungarians Kossuth Revolution",
     "deck": [
@@ -1081,42 +1015,9 @@
       "Industrial Revolution"
     ]
   },
-  "rvltmodfrenchcanadians": {
-    "civ_id": "cRvltModFrenchCanadians",
-    "leader": "rvltmodfrenchcanadians",
-    "leader_display": "Louis-Joseph Papineau",
-    "data_name": "French Canadians Papineau Revolution",
-    "deck": [
-      "2 Coureurs",
-      "4 Coureurs",
-      "16 Musketeers",
-      "Quebec",
-      "Native American Allies",
-      "Furrier",
-      "Militia Officer",
-      "TEAM Great Buffalo Hunt",
-      "Hire Irish Brigadiers",
-      "Cent-Suisses",
-      "4 War Canoes",
-      "Hire Armored Pistoleers",
-      "Hire Giant Grenadiers",
-      "French Royal Army",
-      "4 Hanover Allies",
-      "TEAM Ranged Infantry Attack",
-      "Permanent Active Militia",
-      "Fencibles",
-      "14 Blackwatch Highlanders",
-      "Hudson Bay Company",
-      "15 Elk",
-      "7 Grizzlies",
-      "12 Skirmishers",
-      "Canadian Loyalists",
-      "Métis Voyageurs"
-    ]
-  },
-  "rvltmodhaitians": {
-    "civ_id": "cRvltModHaitians",
-    "leader": "rvltmodhaitians",
+  "anwhaitians": {
+    "civ_id": "cANWHaitians",
+    "leader": "anwhaitians",
     "leader_display": "Toussaint Louverture",
     "data_name": "Haitians Louverture Revolution",
     "deck": [
@@ -1147,9 +1048,9 @@
       "Royal Mint"
     ]
   },
-  "rvltmodindonesians": {
-    "civ_id": "cRvltModIndonesians",
-    "leader": "rvltmodindonesians",
+  "anwindonesians": {
+    "civ_id": "cANWIndonesians",
+    "leader": "anwindonesians",
     "leader_display": "Diponegoro",
     "data_name": "Indonesians Diponegoro Revolution",
     "deck": [
@@ -1180,15 +1081,15 @@
       "9 Wettin Allies"
     ]
   },
-  "rvltmodmayans": {
-    "civ_id": "cRvltModMayans",
-    "leader": "rvltmodmayans",
+  "anwmayans": {
+    "civ_id": "cANWMayans",
+    "leader": "anwmayans",
     "leader_display": "Jacinto Canek",
     "data_name": "Mayans Canek Maya Revolution",
     "deck": [
       "Jungle Villages",
       "Old Kowoj Traditions",
-      "Nojpetén",
+      "Nojpet\u00e9n",
       "Jungle Warfare",
       "Pok Ta Pok",
       "Cenotes",
@@ -1204,17 +1105,17 @@
       "Henequen Industry",
       "Yucatecan",
       "Kinship Ties",
-      "María Uicab",
+      "Mar\u00eda Uicab",
       "Kuchkabal",
       "11 Cruzob Infantry",
-      "Solís Shredders",
+      "Sol\u00eds Shredders",
       "Food Silos",
       "24 Mayan Allies",
       "3 Captured Galleons"
     ]
   },
   "napoleon": {
-    "civ_id": "cRvltModNapoleonicFrance",
+    "civ_id": "cANWNapoleonicFrance",
     "leader": "napoleon",
     "leader_display": "Napoleon Bonaparte",
     "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
@@ -1235,7 +1136,7 @@
       "Theaters",
       "7 Wittelsbach Allies",
       "Fencing School",
-      "Génie Troops",
+      "G\u00e9nie Troops",
       "French Royal Army",
       "National Guard",
       "Hire Bosniaks",
@@ -1246,16 +1147,16 @@
       "Naval Gunners"
     ]
   },
-  "rvltmodperuvians": {
-    "civ_id": "cRvltModPeruvians",
-    "leader": "rvltmodperuvians",
-    "leader_display": "Andrés de Santa Cruz",
+  "anwperuvians": {
+    "civ_id": "cANWPeruvians",
+    "leader": "anwperuvians",
+    "leader_display": "Andr\u00e9s de Santa Cruz",
     "data_name": "Peruvians Santa Cruz Peru Revolution",
     "deck": [
       "Extensive Fortifications",
       "American Allies",
       "Alpaca Wool",
-      "Junín Hussars",
+      "Jun\u00edn Hussars",
       "Lima",
       "Hire Irish Brigadiers",
       "Theaters",
@@ -1279,9 +1180,9 @@
       "Industrial Revolution"
     ]
   },
-  "rvltmodrevolutionaryfrance": {
-    "civ_id": "cRvltModRevolutionaryFrance",
-    "leader": "rvltmodrevolutionaryfrance",
+  "anwrevfrance": {
+    "civ_id": "cANWRevFrance",
+    "leader": "anwrevfrance",
     "leader_display": "Maximilien Robespierre",
     "data_name": "Revolutionary France Robespierre Revolution",
     "deck": [
@@ -1289,7 +1190,7 @@
       "Guillotine",
       "Reign of Robespierre",
       "Cult of the Supreme Being",
-      "Cantinières",
+      "Cantini\u00e8res",
       "National Guard",
       "Horse Hunters",
       "Client States",
@@ -1312,9 +1213,9 @@
       "Valmy"
     ]
   },
-  "rvltmodriogrande": {
-    "civ_id": "cRvltModRioGrande",
-    "leader": "rvltmodriogrande",
+  "anwriogrande": {
+    "civ_id": "cANWRioGrande",
+    "leader": "anwriogrande",
     "leader_display": "Antonio Canales Rosillo",
     "data_name": "Rio Grande Canales Rosillo Revolution",
     "deck": [
@@ -1345,9 +1246,9 @@
       "Cavalry Combat"
     ]
   },
-  "rvltmodromanians": {
-    "civ_id": "cRvltModRomanians",
-    "leader": "rvltmodromanians",
+  "anwromanians": {
+    "civ_id": "cANWRomanians",
+    "leader": "anwromanians",
     "leader_display": "Alexandru Ioan Cuza",
     "data_name": "Romanians Cuza Revolution",
     "deck": [
@@ -1378,9 +1279,9 @@
       "Industrial Revolution"
     ]
   },
-  "rvltmodsouthafricans": {
-    "civ_id": "cRvltModSouthAfricans",
-    "leader": "rvltmodsouthafricans",
+  "anwsouthafricans": {
+    "civ_id": "cANWSouthAfricans",
+    "leader": "anwsouthafricans",
     "leader_display": "Paul Kruger",
     "data_name": "South Africans Kruger Boer Revolution",
     "deck": [
@@ -1411,9 +1312,9 @@
       "9 Habsburg Allies"
     ]
   },
-  "rvltmodtexians": {
-    "civ_id": "cRvltModTexians",
-    "leader": "rvltmodtexians",
+  "anwtexians": {
+    "civ_id": "cANWTexians",
+    "leader": "anwtexians",
     "leader_display": "Sam Houston",
     "data_name": "Texians Sam Houston Texas Revolution",
     "deck": [
@@ -1442,39 +1343,6 @@
       "2 Hacienda Wagons",
       "1 Ironclad",
       "Texas Marines"
-    ]
-  },
-  "rvltmodyucatan": {
-    "civ_id": "cRvltModYucatan",
-    "leader": "rvltmodyucatan",
-    "leader_display": "Felipe Carrillo Puerto",
-    "data_name": "Yucatan Carrillo Puerto Revolution",
-    "deck": [
-      "8 Settlers",
-      "Campeche Fortifications",
-      "Solís Shredders",
-      "Food Silos",
-      "Plan of Mérida",
-      "Jungle Warfare",
-      "2 Captured Galleons",
-      "Chipotle Tactics",
-      "TEAM Copper Canyon",
-      "Mayan Supporters",
-      "Amparo",
-      "Frontier Defenses",
-      "Crates of 1,000 Food",
-      "Cords of 1,000 Wood",
-      "1 Ironclad",
-      "16 Salteadores",
-      "2 Hacienda Wagons",
-      "16 Yucateco Insurgentes",
-      "Chests of 1,000 Coin",
-      "24 Mayan Allies",
-      "3 Captured Galleons",
-      "1 Frigate",
-      "Cavalry Combat",
-      "Guerilla Tactics",
-      "Leather Soldiers"
     ]
   }
 }

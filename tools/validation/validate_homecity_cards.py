@@ -11,8 +11,8 @@ if __package__ is None or __package__ == "":
 from tools.validation.common import REPO_ROOT, build_repo_root_parser, child_elements, get_attr_case_insensitive, get_child_text, local_name, repo_relative
 
 
-DEFAULT_HOMECITY_GLOB = "rvltmodhomecity*.xml"
-DEFAULT_TECH_PREFIXES = ("RvltMod", "HCREV", "DEHCREV")
+DEFAULT_HOMECITY_GLOB = "anwhomecity*.xml"
+DEFAULT_TECH_PREFIXES = ("ANW", "HCREV", "DEHCREV")
 
 
 def load_techtree_names(techtree_file: Path) -> set[str]:

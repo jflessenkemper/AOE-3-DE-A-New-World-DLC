@@ -1,6 +1,6 @@
 """ANW namespace migration tools.
 
-These modules unify the mod's two civ-architectures (base-game-patched + rvltmod)
+These modules unify the mod's two civ-architectures (base-game-patched + anw)
 into a single `ANW{Civ}` namespace where every civ is fully mod-owned. See
 `tools/migration/anw_token_map.py` for the canonical 48-civ mapping.
 

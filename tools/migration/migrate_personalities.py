@@ -13,7 +13,7 @@ For each AnwCiv:
                                                 (inside playerNames)
 
 The chatsetsmods.xml chatset names are renamed to match (e.g. `wellington`
-→ `anw_british`, `rvltmodbarbary` → `anw_barbary`). Every quote stays bound
+→ `anw_british`, `anwbarbary` → `anw_barbary`). Every quote stays bound
 to the same English text + sound + stringID — only the wrapping `name=` attr
 changes.
 

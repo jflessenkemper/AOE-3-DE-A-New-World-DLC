@@ -265,7 +265,7 @@ PACKS: list[TestPack] = [
         p4_civ_idx=4,   # Brazilians        [map: idx 4 → "Brazilians"]
         description=(
             "Revolution civs on Pampas. Validates event.delta age==5 "
-            "and chatset matches rvltmod prefix."
+            "and chatset matches anw prefix."
         ),
         expected_civs=[
             (32, "NapoleonicFrance"), (33, "Ottomans"), (31, "Mexicans"), (4, "Brazilians"),

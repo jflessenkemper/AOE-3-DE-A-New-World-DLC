@@ -39,7 +39,7 @@ def iter_target_civs(root: ET.Element, name_prefixes: tuple[str, ...] | None):
         yield civ
 
 
-def validate_civmods_ui(repo_root: Path = REPO_ROOT, name_prefixes: tuple[str, ...] | None = ("RvltMod",)) -> list[str]:
+def validate_civmods_ui(repo_root: Path = REPO_ROOT, name_prefixes: tuple[str, ...] | None = ("ANW",)) -> list[str]:
     civmods_path = repo_root / "data" / "civmods.xml"
     root = ET.parse(civmods_path).getroot()
     errors: list[str] = []
@@ -82,7 +82,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    prefixes = None if args.all_civs else tuple(args.name_prefix or ["RvltMod"])
+    prefixes = None if args.all_civs else tuple(args.name_prefix or ["ANW"])
     errors = validate_civmods_ui(args.repo_root.resolve(), prefixes)
 
     if errors:

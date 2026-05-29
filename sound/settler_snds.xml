@@ -179,95 +179,95 @@
               </soundset>
             </choice>
 			
-            <choice name="RvltModAmericans">
+            <choice name="ANWAmericans">
               <soundset name="DEAmericanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModArgentines">
+            <choice name="ANWArgentines">
               <soundset name="SpanishSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModBajaCalifornians">
+            <choice name="ANWBajaCalifornians">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModBarbary">
+            <choice name="ANWBarbary">
               <soundset name="DEBerberVMSelect">
               </soundset>
             </choice>
-            <choice name="RvltModBrazil">
+            <choice name="ANWBrazil">
               <soundset name="PortugueseSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModCalifornians">
+            <choice name="ANWCalifornians">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModCanadians">
+            <choice name="ANWCanadians">
               <soundset name="BritishSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModCentralAmericans">
+            <choice name="ANWCentralAmericans">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModChileans">
+            <choice name="ANWChileans">
               <soundset name="SpanishSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModColumbians">
+            <choice name="ANWColumbians">
               <soundset name="SpanishSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModEgyptians">
+            <choice name="ANWEgyptians">
               <soundset name="OttomanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModFinnish">
+            <choice name="ANWFinnish">
               <soundset name="DESwedishSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModHaitians">
+            <choice name="ANWHaitians">
               <soundset name="FrenchSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModHungarians">
+            <choice name="ANWHungarians">
               <soundset name="GermanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModIndonesians">
+            <choice name="ANWIndonesians">
               <soundset name="DutchSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModMexicans">
+            <choice name="ANWMexicans">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModPeruvians">
+            <choice name="ANWPeruvians">
               <soundset name="SpanishSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModRioGrande">
+            <choice name="ANWRioGrande">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModRomanians">
+            <choice name="ANWRomanians">
               <soundset name="RussianSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModSouthAfricans">
+            <choice name="ANWSouthAfricans">
               <soundset name="DutchSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModTexians">
+            <choice name="ANWTexians">
               <soundset name="DEAmericanSettlerMaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModYucatan">
+            <choice name="ANWYucatan">
               <soundset name="DEMexicanSettlerMaleSelect">
               </soundset>
             </choice>
@@ -450,95 +450,95 @@
               </soundset>
             </choice>
 			
-            <choice name="RvltModAmericans">
+            <choice name="ANWAmericans">
               <soundset name="DEAmericanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModArgentines">
+            <choice name="ANWArgentines">
               <soundset name="SpanishSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModBajaCalifornians">
+            <choice name="ANWBajaCalifornians">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModBarbary">
+            <choice name="ANWBarbary">
               <soundset name="DEBerberVFSelect">
               </soundset>
             </choice>
-            <choice name="RvltModBrazil">
+            <choice name="ANWBrazil">
               <soundset name="PortugueseSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModCalifornians">
+            <choice name="ANWCalifornians">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModCanadians">
+            <choice name="ANWCanadians">
               <soundset name="BritishSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModCentralAmericans">
+            <choice name="ANWCentralAmericans">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModChileans">
+            <choice name="ANWChileans">
               <soundset name="SpanishSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModColumbians">
+            <choice name="ANWColumbians">
               <soundset name="SpanishSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModEgyptians">
+            <choice name="ANWEgyptians">
               <soundset name="OttomanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModFinnish">
+            <choice name="ANWFinnish">
               <soundset name="DESwedishSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModHaitians">
+            <choice name="ANWHaitians">
               <soundset name="FrenchSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModHungarians">
+            <choice name="ANWHungarians">
               <soundset name="GermanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModIndonesians">
+            <choice name="ANWIndonesians">
               <soundset name="DutchSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModMexicans">
+            <choice name="ANWMexicans">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModPeruvians">
+            <choice name="ANWPeruvians">
               <soundset name="SpanishSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModRioGrande">
+            <choice name="ANWRioGrande">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModRomanians">
+            <choice name="ANWRomanians">
               <soundset name="RussianSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModSouthAfricans">
+            <choice name="ANWSouthAfricans">
               <soundset name="DutchSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModTexians">
+            <choice name="ANWTexians">
               <soundset name="DEAmericanSettlerFemaleSelect">
               </soundset>
             </choice>
-            <choice name="RvltModYucatan">
+            <choice name="ANWYucatan">
               <soundset name="DEMexicanSettlerFemaleSelect">
               </soundset>
             </choice>
@@ -2127,7 +2127,7 @@
               </targetlogic>
             </choice>
 			
-            <choice name="RvltModAmericans">
+            <choice name="ANWAmericans">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DEAmericanSettlerMaleAcknowledge">
@@ -2167,7 +2167,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModArgentines">
+            <choice name="ANWArgentines">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerMaleAcknowledge">
@@ -2207,7 +2207,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModBajaCalifornians">
+            <choice name="ANWBajaCalifornians">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -2247,7 +2247,7 @@
                     </choice>
                   </targetlogic>
             </choice>
-            <choice name="RvltModBarbary">
+            <choice name="ANWBarbary">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DEBerberVMAcknowledge">
@@ -2287,7 +2287,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModBrazil">
+            <choice name="ANWBrazil">
               <targetlogic>
                 <choice name="default">
                   <soundset name="PortugueseSettlerMaleAcknowledge">
@@ -2327,7 +2327,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModCalifornians">
+            <choice name="ANWCalifornians">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -2367,7 +2367,7 @@
                     </choice>
                   </targetlogic>
             </choice>
-            <choice name="RvltModCanadians">
+            <choice name="ANWCanadians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="BritishSettlerMaleAcknowledge">
@@ -2407,7 +2407,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModCentralAmericans">
+            <choice name="ANWCentralAmericans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -2447,7 +2447,7 @@
                     </choice>
                   </targetlogic>
             </choice>
-            <choice name="RvltModChileans">
+            <choice name="ANWChileans">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerMaleAcknowledge">
@@ -2487,7 +2487,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModColumbians">
+            <choice name="ANWColumbians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerMaleAcknowledge">
@@ -2527,7 +2527,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModEgyptians">
+            <choice name="ANWEgyptians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="OttomanSettlerMaleAcknowledge">
@@ -2567,7 +2567,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModFinnish">
+            <choice name="ANWFinnish">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DESwedishSettlerMaleAcknowledge">
@@ -2607,7 +2607,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModHaitians">
+            <choice name="ANWHaitians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="FrenchSettlerMaleAcknowledge">
@@ -2647,7 +2647,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModHungarians">
+            <choice name="ANWHungarians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="GermanSettlerMaleAcknowledge">
@@ -2687,7 +2687,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModIndonesians">
+            <choice name="ANWIndonesians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DutchSettlerMaleAcknowledge">
@@ -2727,7 +2727,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -2767,7 +2767,7 @@
                     </choice>
                   </targetlogic>
             </choice>
-            <choice name="RvltModMexicans">
+            <choice name="ANWMexicans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -2807,7 +2807,7 @@
                     </choice>
                   </targetlogic>
             </choice>
-            <choice name="RvltModPeruvians">
+            <choice name="ANWPeruvians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerMaleAcknowledge">
@@ -2847,7 +2847,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModRioGrande">
+            <choice name="ANWRioGrande">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -2887,7 +2887,7 @@
                     </choice>
                   </targetlogic>
             </choice>
-            <choice name="RvltModRomanians">
+            <choice name="ANWRomanians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="RussianSettlerMaleAcknowledge">
@@ -2927,7 +2927,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModSouthAfricans">
+            <choice name="ANWSouthAfricans">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DutchSettlerMaleAcknowledge">
@@ -2967,7 +2967,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModTexians">
+            <choice name="ANWTexians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DEAmericanSettlerMaleAcknowledge">
@@ -3007,7 +3007,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModYucatan">
+            <choice name="ANWYucatan">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerMaleAcknowledge">
@@ -4600,7 +4600,7 @@
               </targetlogic>
             </choice>
 			
-            <choice name="RvltModAmericans">
+            <choice name="ANWAmericans">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DEAmericanSettlerFemaleAcknowledge">
@@ -4640,7 +4640,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModArgentines">
+            <choice name="ANWArgentines">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerFemaleAcknowledge">
@@ -4680,7 +4680,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModBajaCalifornians">
+            <choice name="ANWBajaCalifornians">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">
@@ -4720,7 +4720,7 @@
                     </choice>
                   </targetlogic>
                 </choice>
-            <choice name="RvltModBarbary">
+            <choice name="ANWBarbary">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DEBerberVFAcknowledge">
@@ -4760,7 +4760,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModBrazil">
+            <choice name="ANWBrazil">
               <targetlogic>
                 <choice name="default">
                   <soundset name="PortugueseSettlerFemaleAcknowledge">
@@ -4800,7 +4800,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModCalifornians">
+            <choice name="ANWCalifornians">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">
@@ -4840,7 +4840,7 @@
                     </choice>
                   </targetlogic>
                 </choice>
-            <choice name="RvltModCanadians">
+            <choice name="ANWCanadians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="BritishSettlerFemaleAcknowledge">
@@ -4880,7 +4880,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModCentralAmericans">
+            <choice name="ANWCentralAmericans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">
@@ -4920,7 +4920,7 @@
                     </choice>
                   </targetlogic>
                 </choice>
-            <choice name="RvltModChileans">
+            <choice name="ANWChileans">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerFemaleAcknowledge">
@@ -4960,7 +4960,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModColumbians">
+            <choice name="ANWColumbians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerFemaleAcknowledge">
@@ -5000,7 +5000,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModEgyptians">
+            <choice name="ANWEgyptians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="OttomanSettlerFemaleAcknowledge">
@@ -5040,7 +5040,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModFinnish">
+            <choice name="ANWFinnish">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DESwedishSettlerFemaleAcknowledge">
@@ -5080,7 +5080,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModHaitians">
+            <choice name="ANWHaitians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="FrenchSettlerFemaleAcknowledge">
@@ -5120,7 +5120,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModHungarians">
+            <choice name="ANWHungarians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="GermanSettlerFemaleAcknowledge">
@@ -5160,7 +5160,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModIndonesians">
+            <choice name="ANWIndonesians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DutchSettlerFemaleAcknowledge">
@@ -5200,7 +5200,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">
@@ -5240,7 +5240,7 @@
                     </choice>
                   </targetlogic>
                 </choice>
-            <choice name="RvltModMexicans">
+            <choice name="ANWMexicans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">
@@ -5280,7 +5280,7 @@
                     </choice>
                   </targetlogic>
                 </choice>
-            <choice name="RvltModPeruvians">
+            <choice name="ANWPeruvians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="SpanishSettlerFemaleAcknowledge">
@@ -5320,7 +5320,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModRioGrande">
+            <choice name="ANWRioGrande">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">
@@ -5360,7 +5360,7 @@
                     </choice>
                   </targetlogic>
                 </choice>
-            <choice name="RvltModRomanians">
+            <choice name="ANWRomanians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="RussianSettlerFemaleAcknowledge">
@@ -5400,7 +5400,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModSouthAfricans">
+            <choice name="ANWSouthAfricans">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DutchSettlerFemaleAcknowledge">
@@ -5440,7 +5440,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModTexians">
+            <choice name="ANWTexians">
               <targetlogic>
                 <choice name="default">
                   <soundset name="DEAmericanSettlerFemaleAcknowledge">
@@ -5480,7 +5480,7 @@
                 </choice>
               </targetlogic>
             </choice>
-            <choice name="RvltModYucatan">
+            <choice name="ANWYucatan">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="DEMexicanSettlerFemaleAcknowledge">

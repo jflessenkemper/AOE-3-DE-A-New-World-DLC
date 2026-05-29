@@ -1,12 +1,15 @@
 {
-  "notes": ["Navigate to Skirmish → P1 picker → pick British → Deck Builder. Verify only Legendary Leaders deck shows."],
+  "notes": [
+    "Navigate to Skirmish -> P1 picker -> pick British -> Deck Builder. Verify only the ANW deck shows.",
+    "2026-05-11: screenshot paths rewritten from the legacy AOE-3-DE-Legendary-Leaders-AI worktree to artifacts/xmb_test/ in the active A-New-World repo. Note text rewritten from 'Legendary Leaders deck' to 'ANW deck'."
+  ],
   "steps": [
     {"action": "sleep", "seconds": 2},
     {"action": "click", "x": 80, "y": 490},
     {"action": "sleep", "seconds": 4},
-    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc/.claude/session_2026-04-23-artifacts/xmb_test/01_setup.png"},
+    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/xmb_test/01_setup.png"},
     {"action": "click", "x": 585, "y": 176},
     {"action": "sleep", "seconds": 3},
-    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc/.claude/session_2026-04-23-artifacts/xmb_test/02_picker.png"}
+    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/xmb_test/02_picker.png"}
   ]
 }

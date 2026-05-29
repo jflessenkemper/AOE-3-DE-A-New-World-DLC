@@ -2,14 +2,28 @@
 """
 ANEWWORLD Scenario Tester — Direct scenario launcher and trigger validator.
 
-This script bypasses the image-matching UI automation and directly tests
-the ANEWWORLD.age3Yscn scenario by:
-1. Launching AOE3 with the scenario loaded (via command line or config)
-2. Letting it run for 10 minutes (or until game end)
-3. Parsing Age3Log.txt for trigger validation
-4. Generating validation report
+⚠ DEPRECATED (2026-05-12) — use ``tools/validation/run_scenario_test.py``.
 
-Usage:
+This script was built around the legacy trigger-based pipeline
+(``[AGEUP]``, ``[UNITS_TRAINED]``, ``[BUILDINGS]``, etc. patterns scraped
+from ``Age3Log.txt``). Two findings made it unusable:
+
+  1. AoE3 DE FINAL_RELEASE builds strip ``aiEcho()`` from the log entirely,
+     so trigger-style probes never reach Age3Log.txt.
+  2. The triggers themselves never made it into the ``.age3Yscn`` binary
+     — existing trigger-injection tooling
+     (``tools/validation/scenario_trigger_builder.py``,
+     ``trigger_injector.py``) admits in its docstrings that "actual
+     injection is risky without full format understanding".
+
+Use ``tools/validation/run_scenario_test.py`` instead — it uses the
+personality-channel pipeline (``Game/AI/<leader>.personality`` uservars)
+which DOES survive FINAL_RELEASE, and integrates with the validator at
+``tools/validation/validate_personality_vs_spec.py``.
+
+See ``Scenario/TEST_LOOP.md`` for the canonical test-loop workflow.
+
+Legacy usage (kept for reference only):
     python3 tools/aoe3_automation/anewworld_scenario_tester.py [--civ CIV_TOKEN] [--dry-run]
 """
 

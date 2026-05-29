@@ -105,9 +105,7 @@ SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
     "Barbary Barbarossa Corsair Revolution":               "ANWBarbary",
     "Brazil Pedro Revolution":                             "ANWBrazil",
     "British Elizabeth":                                   "ANWBritish",
-    "Californians Vallejo Revolution":                     "RvltModCalifornians",
     "Canadians Brock Revolution":                          "ANWCanadians",
-    "Central Americans Morazan Revolution":                "RvltModCentralAmericans",
     "Chileans OHiggins Revolution":                        "ANWChileans",
     "Chinese Kangxi":                                      "ANWChinese",
     "Columbians Bolivar Colombia Revolution":              "ANWColumbians",
@@ -115,7 +113,6 @@ SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
     "Egyptians Muhammad Ali Revolution":                   "ANWEgyptians",
     "Ethiopians Menelik":                                  "ANWEthiopians",
     "Finnish Mannerheim Revolution":                       "ANWFinnish",
-    "French Canadians Papineau Revolution":                "RvltModFrenchCanadians",
     "French Louis XVIII Bourbon":                          "ANWFrench",
     "Germans Frederick Great":                             "ANWGermans",
     "Haitians Louverture Revolution":                      "ANWHaitians",
@@ -123,11 +120,11 @@ SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
     "Hausa Usman dan Fodio":                               "ANWHausa",
     "Hungarians Kossuth Revolution":                       "ANWHungarians",
     "Inca Pachacuti":                                      "ANWInca",
-    "Indians Akbar":                                       "ANWIndians",
+    "Indians Shivaji Maharaj Maratha":                     "ANWIndians",
     "Indonesians Diponegoro Revolution":                   "ANWIndonesians",
     "Italians Garibaldi":                                  "ANWItalians",
     "Japanese Tokugawa Ieyasu":                            "ANWJapanese",
-    "Lakota Crazy Horse":                                  "ANWLakota",
+    "Lakota Gall":                                         "ANWLakota",
     "Maltese Valette":                                     "ANWMaltese",
     "Mayans Canek Maya Revolution":                        "ANWMayans",
     "Mexicans Hidalgo Standard":                           "ANWMexicans",
@@ -136,15 +133,14 @@ SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
     "Peruvians Santa Cruz Peru Revolution":                "ANWPeruvians",
     "Portuguese Henry Navigator":                          "ANWPortuguese",
     "Revolutionary France Robespierre Revolution":         "ANWRevFrance",
-    "Rio Grande Canales Rosillo Revolution":               "RvltModRioGrande",
+    "Rio Grande Canales Rosillo Revolution":               "ANWRioGrande",
     "Romanians Cuza Revolution":                           "ANWRomanians",
-    "Russians Catherine":                                  "ANWRussians",
+    "Russians Ivan Terrible":                              "ANWRussians",
     "South Africans Kruger Boer Revolution":               "ANWSouthAfricans",
     "Spanish Isabella Castile":                            "ANWSpanish",
     "Swedes Gustavus Adolphus Swedish":                    "ANWSwedes",
     "Texians Sam Houston Texas Revolution":                "ANWTexians",
     "United States Washington":                            "ANWUSA",
-    "Yucatan Pat Revolution":                              "RvltModYucatan",
 }
 
 
@@ -303,7 +299,7 @@ def _compute_xs_doctrine(block: str,
     ``block`` is the primary dispatch block (from llApplyBuildStyleForActiveCiv).
     ``override_block`` is an optional secondary block (from
     initLegendaryRevolutionCommander) that can further override doctrine
-    values AFTER the primary block runs. For RvltMod* civs the revolution
+    values AFTER the primary block runs. For ANW* civs the revolution
     commanders file runs second and its overrides win.
 
     Returns dict with keys: wall_strategy (int), first_military_building (str),
@@ -456,7 +452,7 @@ def main() -> int:
         return 2
     print(f"  Scoped to llApplyBuildStyleForActiveCiv ({len(apply_fn_body)} chars)")
 
-    # Load leader_revolution_commanders.xs (for RvltMod* overrides).
+    # Load leader_revolution_commanders.xs (for ANW* overrides).
     rev_fn_body: str | None = None
     if args.xs_revolution.exists():
         rev_raw = args.xs_revolution.read_text(encoding="utf-8")
@@ -490,11 +486,11 @@ def main() -> int:
             failures.append(data_name)
             continue
 
-        # For RvltMod* civs, also fetch the override block from
+        # For ANW* civs, also fetch the override block from
         # initLegendaryRevolutionCommander which runs after llApplyBuildStyleForActiveCiv
         # and can override doctrine values (e.g. resetting gLLForwardBaseEarliestMs).
         override_block: str | None = None
-        if xs_token.startswith("RvltMod") and rev_fn_body is not None:
+        if xs_token.startswith("ANW") and rev_fn_body is not None:
             override_block = _extract_dispatch_block(rev_fn_body, xs_token)
 
         actual = _compute_xs_doctrine(block, override_block)

@@ -1,18 +1,18 @@
 """Phase 3 of the ANW migration: rewrite stringmods.xml + randomnamemods.xml +
 techtreemods.xml + playercolors.xml under the ANW namespace.
 
-This is mostly mechanical text substitution: every `RvltMod{X}` token gets
-replaced with `ANW{X}`, and every lowercase `rvltmod{x}` filename stem gets
+This is mostly mechanical text substitution: every `ANW{X}` token gets
+replaced with `ANW{X}`, and every lowercase `anw{x}` filename stem gets
 replaced with `anw{x}` (preserving the homecity-prefix where present).
 
   PascalCase replacements:
-      RvltModBarbary       → ANWBarbary       (civ token)
-      RvltModColonializeCanadians → ANWColonializeCanadians  (mod tech)
-      RvltMod (generic prefix when followed by uppercase) → ANW
+      ANWBarbary       → ANWBarbary       (civ token)
+      ANWColonializeCanadians → ANWColonializeCanadians  (mod tech)
+      ANW (generic prefix when followed by uppercase) → ANW
 
   Lowercase replacements:
-      rvltmodhomecitybarbary → anwhomecitybarbary           (homecity stem)
-      rvltmodbarbary       → anwbarbary       (personality stem)
+      anwhomecitybarbary → anwhomecitybarbary           (homecity stem)
+      anwbarbary       → anwbarbary       (personality stem)
 
 The 22 base civs (British, Dutch, Aztec, …) currently reuse vanilla
 string IDs (< 400000). After migration, those base civs will use new
@@ -20,7 +20,7 @@ mod-owned IDs in the 410000-410999 range so the mod is fully self-
 contained. Adding those new strings is a separate concern (handled by
 the vanilla extraction pass — out of scope for this script). What this
 script DOES do: rename existing 4xxxxx string IDs/keys that mention
-RvltMod tokens, so the existing strings keep working under their new
+ANW tokens, so the existing strings keep working under their new
 ANW names.
 
 Outputs (default — dry-run):
@@ -62,7 +62,7 @@ TARGETS = [
 
 
 def transform(text: str) -> tuple[str, int]:
-    """Apply RvltMod → ANW + rvltmod → anw substitutions.
+    """Apply ANW → ANW + anw → anw substitutions.
 
     Same logic as `build_anw_civmods.rename_rvlt_blocks` but extracted to
     operate on arbitrary text. Returns (new_text, replacement_count).
@@ -70,7 +70,7 @@ def transform(text: str) -> tuple[str, int]:
     count = 0
 
     # Phase 1: civ-token rename via the canonical map (longest first to avoid
-    # prefix collisions e.g. RvltModMexicans before RvltMod generic).
+    # prefix collisions e.g. ANWMexicans before ANW generic).
     civ_token_pairs = sorted(
         ((c.old_civ_token, c.anw_token) for c in iter_anw_civs() if c.is_revolution),
         key=lambda p: -len(p[0]),
@@ -93,8 +93,8 @@ def transform(text: str) -> tuple[str, int]:
             text = new_text
             count += n
 
-    # Phase 3: lowercase personality stems (rvltmodbarbary → anwbarbary).
-    # These are independent of homecity stems (homecity is rvltmodhomecity*).
+    # Phase 3: lowercase personality stems (anwbarbary → anwbarbary).
+    # These are independent of homecity stems (homecity is anwhomecity*).
     personality_pairs = sorted(
         ((c.old_personality_stem, c.anw_stem) for c in iter_anw_civs() if c.is_revolution),
         key=lambda p: -len(p[0]),
@@ -105,13 +105,13 @@ def transform(text: str) -> tuple[str, int]:
             text = new_text
             count += n
 
-    # Phase 4: catch any remaining `RvltMod{X}` (mod tech compounds, etc.)
-    new_text, n = re.subn(r"\bRvltMod(?=[A-Z])", "ANW", text)
+    # Phase 4: catch any remaining `ANW{X}` (mod tech compounds, etc.)
+    new_text, n = re.subn(r"\bANW(?=[A-Z])", "ANW", text)
     if n:
         text = new_text
         count += n
 
-    new_text, n = re.subn(r"\brvltmod(?=[a-z])", "anw", text)
+    new_text, n = re.subn(r"\banw(?=[a-z])", "anw", text)
     if n:
         text = new_text
         count += n

@@ -50,9 +50,7 @@ FLAGS = [
     "Flag_Baja_Californian.png",
     "Flag_Barbary.png",
     "Flag_Brazilian.png",
-    "Flag_Californian.png",
     "Flag_Canadians.png",
-    "Flag_Central_American.png",
     "Flag_Chilean.png",
     "Flag_Colombian.png",
     "Flag_Egyptians.png",
@@ -70,7 +68,6 @@ FLAGS = [
     "Flag_Romanians.png",
     "Flag_South_African.png",
     "Flag_Texan.png",
-    "Flag_Yucatan.png",
     "Flag_French_Revolution.png",  # extra for Napoleonic France slot
     "Flag_Moroccan.png",          # filler to reach 48 unique-looking tiles
 ]

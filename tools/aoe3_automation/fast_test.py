@@ -14,14 +14,14 @@ LOG_FILE = ARTIFACT_DIR / "log.jsonl"
 
 # Mod civs
 MOD_CIVS = [
-    "RvltModNapoleonicFrance", "RvltModRevolutionaryFrance", "RvltModAmericans",
-    "RvltModMexicans", "RvltModCanadians", "RvltModFrenchCanadians",
-    "RvltModBrazil", "RvltModArgentines", "RvltModChileans", "RvltModPeruvians",
-    "RvltModColumbians", "RvltModHaitians", "RvltModIndonesians", "RvltModSouthAfricans",
-    "RvltModFinnish", "RvltModHungarians", "RvltModRomanians", "RvltModBarbary",
-    "RvltModEgyptians", "RvltModCentralAmericans", "RvltModBajaCalifornians",
-    "RvltModYucatan", "RvltModRioGrande", "RvltModMayans",
-    "RvltModCalifornians", "RvltModTexians"
+    "ANWNapoleonicFrance", "ANWRevFrance", "ANWAmericans",
+    "ANWMexicans", "ANWCanadians",
+    "ANWBrazil", "ANWArgentines", "ANWChileans", "ANWPeruvians",
+    "ANWColumbians", "ANWHaitians", "ANWIndonesians", "ANWSouthAfricans",
+    "ANWFinnish", "ANWHungarians", "ANWRomanians", "ANWBarbary",
+    "ANWEgyptians", "ANWBajaCalifornians",
+    "ANWRioGrande", "ANWMayans",
+    "ANWTexians"
 ]
 
 def get_window_geom():

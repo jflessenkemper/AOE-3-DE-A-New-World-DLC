@@ -39,32 +39,32 @@
           </techlogic>
         </choice>
 		
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="DEMexicanGeneralSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="DEMexicanGeneralSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="DEMexicanGeneralSelect">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="DEMexicanGeneralSelect">
           </soundset>
         </choice>
 		
-		<choice name="RvltModBajaCalifornians">
+		<choice name="ANWBajaCalifornians">
           <soundset name="DEAmericanGeneralSelect">
           </soundset>
         </choice>
-		<choice name="RvltModCalifornians">
+		<choice name="ANWCalifornians">
           <soundset name="DEAmericanGeneralSelect">
           </soundset>
         </choice>
-		<choice name="RvltModTexians">
+		<choice name="ANWTexians">
           <soundset name="DEAmericanGeneralSelect">
           </soundset>
         </choice>
@@ -165,7 +165,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanGeneralAcknowledge">
@@ -177,7 +177,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanGeneralAcknowledge">
@@ -189,7 +189,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanGeneralAcknowledge">
@@ -201,7 +201,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanGeneralAcknowledge">
@@ -214,7 +214,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEAmericanGeneralAcknowledge">
@@ -226,7 +226,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEAmericanGeneralAcknowledge">
@@ -238,7 +238,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEAmericanGeneralAcknowledge">
@@ -291,32 +291,32 @@
           </techlogic>
         </choice>
 		
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="GenericMaleDeath">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="GenericMaleDeath">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="GenericMaleDeath">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="GenericMaleDeath">
           </soundset>
         </choice>
 		
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEAmericanGeneralDisabled">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="DEAmericanGeneralDisabled">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEAmericanGeneralDisabled">
           </soundset>
         </choice>
@@ -361,32 +361,32 @@
           </techlogic>
         </choice>
 		
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="DEMexicanGeneralRevived">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="DEMexicanGeneralRevived">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="DEMexicanGeneralRevived">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="DEMexicanGeneralRevived">
           </soundset>
         </choice>
 		
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEAmericanGeneralRevived">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="DEAmericanGeneralRevived">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEAmericanGeneralRevived">
           </soundset>
         </choice>
@@ -431,32 +431,32 @@
           </techlogic>
         </choice>
 		
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="DEMexicanGeneralRansomed">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="DEMexicanGeneralRansomed">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="DEMexicanGeneralRansomed">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="DEMexicanGeneralRansomed">
           </soundset>
         </choice>
 		
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEAmericanGeneralRansomed">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="DEAmericanGeneralRansomed">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEAmericanGeneralRansomed">
           </soundset>
         </choice>

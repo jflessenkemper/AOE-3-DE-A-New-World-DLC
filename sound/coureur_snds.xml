@@ -19,7 +19,7 @@
           </variationlogic>
         </choice>
 		
-        <choice name="RvltModAge0NapoleonicFrench">
+        <choice name="ANWAge0NapoleonicFrench">
           <variationlogic>
             <choice name="0">
               <soundset name="FrenchSettlerMaleSelect">
@@ -52,7 +52,7 @@
           </variationlogic>
         </choice>
 		
-        <choice name="RvltModAge0NapoleonicFrench">
+        <choice name="ANWAge0NapoleonicFrench">
           <variationlogic>
             <choice name="0">
               <soundset name="GenericMaleGrunt">
@@ -85,7 +85,7 @@
           </variationlogic>
         </choice>
 		
-        <choice name="RvltModAge0NapoleonicFrench">
+        <choice name="ANWAge0NapoleonicFrench">
           <variationlogic>
             <choice name="0">
               <soundset name="GenericMaleDeath">
@@ -110,7 +110,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAge0NapoleonicFrench">
+        <choice name="ANWAge0NapoleonicFrench">
           <soundset name="MilitaryBirth">
           </soundset>
         </choice>
@@ -243,7 +243,7 @@
           </variationlogic>
         </choice>
 		
-        <choice name="RvltModAge0NapoleonicFrench">
+        <choice name="ANWAge0NapoleonicFrench">
           <variationlogic>
             <choice name="0">
               <targetlogic>

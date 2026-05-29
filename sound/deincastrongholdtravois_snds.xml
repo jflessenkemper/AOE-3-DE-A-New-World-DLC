@@ -107,7 +107,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="DEIncaVillagerMaleSelect">
           </soundset>
         </choice>
@@ -1020,7 +1020,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEIncaVillagerMaleAcknowledge">

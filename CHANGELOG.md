@@ -4,6 +4,10 @@ All notable changes to **AOE 3 DE - A New World** are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased] — 2026-05-26
+
+- Dropped Yucatan/Californians/CentralAmericans civs (no nation-card content).
+
 ## [1.0.0] — 2026-05-20 (Public Release)
 
 ### Added
@@ -112,9 +116,9 @@ captured a clean resign on every match.
 - **40 ANW civilizations** in the lobby picker (`data/civmods.xml`) —
   22 base civs + 18 revolution civs promoted to top-level pickable
   nations. Two additional revolution-only variants
-  (`ANWFrenchCanadians`, `ANWAmericans`) trigger in-game from the
-  Lower Canada Patriotes and American-Revolution political choices
-  without being directly lobby-selectable.
+  (`ANWAmericans`) triggers in-game from the American-Revolution
+  political choice without being directly lobby-selectable.
+  `ANWFrenchCanadians` (Papineau) has been removed.
 - **Per-leader AI doctrine** (`game/ai/leaders/*.xs`) — distinct build orders,
   military comp, and explorer-escort posture per nation.
 - **Leader-escort doctrine** — AI treats its explorer as the battlefield

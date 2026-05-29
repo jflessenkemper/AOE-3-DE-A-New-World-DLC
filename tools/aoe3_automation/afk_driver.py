@@ -18,7 +18,8 @@ import traceback
 
 # --- Configuration ---
 ARTIFACT_DIR = Path("/tmp/aoe_test/afk_run")
-REPO_DIR = Path("/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc")
+# 2026-05-11: was hardcoded under AOE-3-DE-Legendary-Leaders-AI worktree.
+REPO_DIR = Path(__file__).resolve().parents[2]
 LOG_FILE = ARTIFACT_DIR / "log.jsonl"
 UI_ANCHORS_FILE = ARTIFACT_DIR / "ui_anchors.json"
 CIVS_MANIFEST = ARTIFACT_DIR / "civs_manifest.json"
@@ -42,32 +43,28 @@ AI_MATCH_TIMEOUT = 720  # 12 min per AI observer match
 
 # Mod civs (extracted from civmods.xml)
 MOD_CIVS = [
-    "RvltModNapoleonicFrance",
-    "RvltModRevolutionaryFrance",
-    "RvltModAmericans",
-    "RvltModMexicans",
-    "RvltModCanadians",
-    "RvltModFrenchCanadians",
-    "RvltModBrazil",
-    "RvltModArgentines",
-    "RvltModChileans",
-    "RvltModPeruvians",
-    "RvltModColumbians",
-    "RvltModHaitians",
-    "RvltModIndonesians",
-    "RvltModSouthAfricans",
-    "RvltModFinnish",
-    "RvltModHungarians",
-    "RvltModRomanians",
-    "RvltModBarbary",
-    "RvltModEgyptians",
-    "RvltModCentralAmericans",
-    "RvltModBajaCalifornians",
-    "RvltModYucatan",
-    "RvltModRioGrande",
-    "RvltModMayans",
-    "RvltModCalifornians",
-    "RvltModTexians",
+    "ANWNapoleonicFrance",
+    "ANWRevFrance",
+    "ANWAmericans",
+    "ANWMexicans",
+    "ANWCanadians",
+    "ANWBrazil",
+    "ANWArgentines",
+    "ANWChileans",
+    "ANWPeruvians",
+    "ANWColumbians",
+    "ANWHaitians",
+    "ANWIndonesians",
+    "ANWSouthAfricans",
+    "ANWFinnish",
+    "ANWHungarians",
+    "ANWRomanians",
+    "ANWBarbary",
+    "ANWEgyptians",
+    "ANWBajaCalifornians",
+    "ANWRioGrande",
+    "ANWMayans",
+    "ANWTexians",
 ]
 
 # Base civs (detected from game, not comprehensive)
@@ -540,14 +537,13 @@ class GameDriver:
             return 0
 
         ai_civs = [
-            "RvltModBarbary",
-            "RvltModHaitians",
-            "RvltModBrazil",
-            "RvltModRomanians",
-            "RvltModCalifornians",
-            "RvltModTexians",
-            "RvltModSouthAfricans",
-            "RvltModIndonesians"
+            "ANWBarbary",
+            "ANWHaitians",
+            "ANWBrazil",
+            "ANWRomanians",
+            "ANWTexians",
+            "ANWSouthAfricans",
+            "ANWIndonesians"
         ]
 
         passed = 0

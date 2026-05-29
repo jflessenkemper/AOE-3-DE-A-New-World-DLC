@@ -129,103 +129,99 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEAmericanSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanImamSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortuguesePriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanImamSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchSurgeonSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEAmericanSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="SpanishPriestSelect">
           </soundset>
         </choice>
@@ -372,99 +368,95 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEAmericanSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanImamAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortuguesePriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanImamAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchSurgeonAcknowledge">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEAmericanSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="SpanishPriestAcknowledge">
           </soundset>
         </choice>

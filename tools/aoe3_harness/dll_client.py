@@ -214,6 +214,20 @@ class DllClient:
     # Public command API
     # ------------------------------------------------------------------
 
+    def ping(self) -> bool:
+        """Send PING and verify PONG response.
+
+        Returns:
+            True if PONG received.
+
+        Raises:
+            DllClientError: if the response is not ``PONG``.
+        """
+        resp = self._send("PING")
+        if resp != "PONG":
+            raise DllClientError(f"Expected PONG, got: {resp}")
+        return True
+
     def state(self) -> str:
         """Query the DLL worker thread status.
 

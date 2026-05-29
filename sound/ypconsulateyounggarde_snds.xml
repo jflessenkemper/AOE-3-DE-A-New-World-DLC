@@ -39,7 +39,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchGrenadierSelect">
           </soundset>
         </choice>
@@ -132,7 +132,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchGrenadierAcknowledge">

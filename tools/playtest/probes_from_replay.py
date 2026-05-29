@@ -161,6 +161,44 @@ BUILD_STYLE_NAMES: dict[int, str] = {
     14: "AndeanTerraceFortress",
 }
 
+# First-military-building names: v2 pack collapses 5 values to 4 (barracks
+# and stable share enum 2).  We expose the old-style enum (0/1/2/4) so
+# downstream code (validate_personality_vs_spec.py) needs no changes.
+# v2 enum 0→old 0(none), 1→old 1(dock), 2→old 2(barracks_or_stable),
+# 3→old 4(trading_post).
+FIRST_MIL_BUILDING_NAMES: dict[int, str] = {
+    0: "none",
+    1: "dock",
+    2: "barracks_or_stable",
+    4: "trading_post",
+}
+
+# v2 raw 2-bit enum → old-style enum used by downstream validators.
+_FIRST_MIL_V2_TO_OLD: dict[int, int] = {0: 0, 1: 1, 2: 2, 3: 4}
+
+# Spec claim string → set of old-enum values that satisfy the claim.
+FIRST_MIL_CLAIM_TO_ENUM: dict[str, set[int]] = {
+    "dock":                   {1},
+    "barracks_or_stable":     {2},
+    "trading_post_or_market": {4},
+}
+
+# Sentinel inside the 14-bit milestone-secs field meaning "never built"
+# (legacy v1 pack only).
+NEVER_BUILT_SECS = 16383
+
+# Bit-0 of ll_playstyle_v2a — set ⇒ v2 playstyle pack present in custom key.
+# (Previously this was bit 23 of myEnemyCount, but empirical testing proved
+# that the engine truncates myEnemyCount to bits 0..20 at flush — the sentinel
+# never landed.  Custom ll_* keys survive, but are stored as float32; a single
+# pack ~2^28 silently lost low bits.  v2 is now split across TWO keys:
+# ll_playstyle_v2a (bits 0..22, float32-exact, max 8388607) and
+# ll_playstyle_v2b (wall_q5 in bits 4..0).  Bit 0 of v2a is the sentinel.)
+PLAYSTYLE_V2_SENTINEL_BIT = 1  # bit 0 of ll_playstyle_v2a
+
+# Legacy: bit-23 of iWonLastGame was the v1 playstyle sentinel.
+PLAYSTYLE_SENTINEL_BIT = 1 << 23  # kept for import compat; same value
+
 
 @dataclass
 class PersonalityProbe:
@@ -181,6 +219,25 @@ class PersonalityProbe:
     age: int                  # ll_age  (0=Discovery..4=Imperial)
     score: int                # ll_score
     match_ms: int             # ll_match_ms
+    # ── Playstyle-extension pack v2 (2026-05-13, split into two float32-safe keys) ─
+    # Populated when ll_playstyle_v2a key is present AND its bit 0 is 1 (v2), OR
+    # when iWonLastGame carries the legacy v1 sentinel (bit 23).  If
+    # has_playstyle is False every field below is its zero-value (do not use
+    # for spec validation — fall back to wall_strategy only).
+    has_playstyle: bool = False
+    # Milestone fire times in ms. None ⇒ that building type never built.
+    first_dock_ms: Optional[int] = None
+    first_barracks_ms: Optional[int] = None
+    first_wall_ms: Optional[int] = None
+    first_stable_ms: Optional[int] = None
+    first_trading_post_ms: Optional[int] = None
+    # First military building enum (see FIRST_MIL_BUILDING_NAMES). 0 = none.
+    first_military_building: int = 0
+    # Forward-base milestone fired during the match.
+    expects_forward_observed: bool = False
+    # Quantised military distance multiplier (5 bits = 0.0..1.94 in 0.0625
+    # steps). Stored as the recovered float, NOT the raw q5 int.
+    military_distance: float = 0.0
 
     @property
     def civ_name(self) -> str:
@@ -205,6 +262,13 @@ class PersonalityProbe:
     @property
     def build_style_name(self) -> str:
         return BUILD_STYLE_NAMES.get(self.style, f"style_{self.style}")
+
+    @property
+    def first_military_building_name(self) -> str:
+        return FIRST_MIL_BUILDING_NAMES.get(
+            self.first_military_building,
+            f"mil_{self.first_military_building}",
+        )
 
     def to_llp_line(self) -> str:
         """Emit a synthetic [LLP v=2 ...] line compatible with replay_probes.py."""
@@ -259,9 +323,18 @@ def _parse_uservars(xml_text: str) -> list[dict[str, float]]:
 # 2026-04-29: AoE3-DE silently drops <uservars> entries whose key isn't on a
 # hardcoded engine whitelist (iWonLastGame, lastGameDifficulty, myAllyCount,
 # myEnemyCount, wasMyAllyLastGame, lastMapID, etc.). Custom ll_* keys never
-# survive serialisation. Workaround in aiCore.xs::llWritePersonalityProbe()
-# bit-packs probe data into the numeric whitelisted slots; this decoder
-# reverses that pack. See aiCore.xs for the canonical layout description.
+# survive serialisation per original understanding.
+#
+# 2026-05-13 UPDATE: Empirical testing showed that (a) the engine also
+# truncates the upper bits of whitelisted slots (myEnemyCount to bits 0..20,
+# wasMyAllyLastGame to bits 0..15, etc.) but (b) custom ll_* keys written via
+# aiPersonalitySetPlayerUserVar ARE preserved — however the engine stores them
+# as float32, so integers >2^24 lose low bits.  The original single
+# ll_playstyle_v2 (~2^28) silently dropped bit 0 (sentinel).  Playstyle v2
+# data is now split into ll_playstyle_v2a (bits 0..22, float32-exact, max
+# 8388607) and ll_playstyle_v2b (wall_q5 in bits 4..0).
+# The v1 base data (ally/enemy/score/secs/bias) is still in whitelisted slots
+# using only the bits the engine preserves.
 SENTINEL_BIT = 1 << 23  # bit 23 of myAllyCount — set ⇒ probe wrote
 
 
@@ -286,19 +359,25 @@ def _find_probe_block(blocks: list[dict[str, float]]) -> Optional[dict[str, floa
     return None
 
 
-def _unpack_probe(block: dict[str, float]) -> dict[str, int]:
+def _unpack_probe(block: dict[str, float]) -> dict:
     """Reverse the bit-pack from llWritePersonalityProbe.
 
-    Returns a dict with raw integer fields mirroring the old ll_* names so
-    downstream code (PersonalityProbe constructor) can stay numeric.
+    Supports v2 (ll_playstyle_v2a + ll_playstyle_v2b custom keys, bit 0 of
+    v2a = sentinel) and v1 legacy (iWonLastGame bit 23 sentinel).  The broken
+    "bit 23 of myEnemyCount" path has been removed — empirical testing proved
+    the engine truncates myEnemyCount to bits 0..20 at flush so that sentinel
+    never lands.  The original single ll_playstyle_v2 was dropped because the
+    engine stores uservars as float32 and ~2^28 values lose their low bits.
+    Returns a dict with integer and float fields that feed the PersonalityProbe
+    constructor.
     """
     ally   = int(round(block.get("myallycount",        0))) & 0x00FFFFFF
-    enemy  = int(round(block.get("myenemycount",       0))) & 0x00FFFFFF
-    score  = int(round(block.get("lastmapid",          0)))
-    secs   = int(round(block.get("lastgamedifficulty", 0)))
-    bias   = int(round(block.get("wasmyallylastgame",  0))) & 0xFFFF
+    enemy  = int(round(block.get("myenemycount",       0))) & 0x001FFFFF  # only bits 0..20 survive
+    score_raw = int(round(block.get("lastmapid",          0))) & 0x0001FFFF  # only bits 0..16 survive
+    secs_raw  = int(round(block.get("lastgamedifficulty", 0))) & 0x00003FFF  # only bits 0..13 survive
+    bias   = int(round(block.get("wasmyallylastgame",  0))) & 0x0000FFFF  # only bits 0..15 survive
 
-    # myAllyCount layout (mirrors aiCore.xs):
+    # myAllyCount layout:
     #   sentinel(1)<<23 | pid(5)<<18 | style(5)<<13 | walls(4)<<9
     #   | wstrat(3)<<6 | terr_p(6)
     pid     = (ally >> 18) & 0x1F
@@ -309,15 +388,112 @@ def _unpack_probe(block: dict[str, float]) -> dict[str, int]:
     if terrp > 31:
         terrp &= 0x1F  # safety — only 5 valid bits
 
-    # myEnemyCount layout: terr_s(5)<<16 | heading(5)<<11 | age(3)<<8 | civ(8)
+    # myEnemyCount low bits: terr_s(5)<<16 | heading(5)<<11 | age(3)<<8 | civ(8)
     terrs   = (enemy >> 16) & 0x1F
     heading = (enemy >> 11) & 0x1F
     age     = (enemy >>  8) & 0x07
     civ_id  =  enemy        & 0xFF
 
-    # wasMyAllyLastGame: terr_bias_q8(8)<<8 | head_bias_q8(8)
+    # wasMyAllyLastGame low bits: terr_bias_q8(8)<<8 | head_bias_q8(8)
     tbias_q8 = (bias >> 8) & 0xFF
     hbias_q8 =  bias       & 0xFF
+
+    # ── Detect pack version ───────────────────────────────────────────────
+    # v2: look for ll_playstyle_v2a custom key; bit 0 = sentinel.
+    # ll_playstyle_v2b carries wall_q5 in bits 4..0 (separate key to keep
+    # both values within float32-exact range, i.e. ≤2^23-1 = 8388607).
+    pack_a = block.get("ll_playstyle_v2a")
+    pack_b = block.get("ll_playstyle_v2b")
+    v2_raw = int(round(pack_a)) if pack_a is not None else 0
+    has_playstyle_v2 = pack_a is not None and bool(v2_raw & PLAYSTYLE_V2_SENTINEL_BIT)
+
+    # Legacy v1: iWonLastGame bit 23 sentinel, only if v2 absent.
+    won_raw = int(round(block.get("iwonlastgame", 0))) & 0x00FFFFFF
+    has_playstyle_v1 = (not has_playstyle_v2) and bool(won_raw & PLAYSTYLE_SENTINEL_BIT)
+
+    has_playstyle = has_playstyle_v2 or has_playstyle_v1
+
+    first_dock_ms: Optional[int] = None
+    first_barracks_ms: Optional[int] = None
+    first_wall_ms: Optional[int] = None
+    first_stable_ms: Optional[int] = None
+    first_trading_post_ms: Optional[int] = None
+    first_mil_type_old = 0  # old-style enum (0/1/2/4)
+    expects_forward = False
+    mdist_float = 0.0
+
+    if has_playstyle_v2:
+        # ── v2 ll_playstyle_v2a / ll_playstyle_v2b decode ─────────────────
+        # ll_playstyle_v2a layout (bits 0..22; bit 23 reserved=0):
+        #   bit  0     = sentinel (already checked)
+        #   bits 2..1  = first_mil_type_v2
+        #   bit  3     = expects_forward
+        #   bits 8..4  = mdist_q5
+        #   bit  9     = first_dock_built
+        #   bit  10    = first_stable_built
+        #   bits 17..11 = dock_q7   (127=never)
+        #   bits 22..18 = barracks_q5 (31=never)
+        # ll_playstyle_v2b layout (bits 4..0):
+        #   bits 4..0  = wall_q5   (31=never)
+        mil_type_v2  = (v2_raw >>  1) & 0x03
+        fwd_bit      = (v2_raw >>  3) & 0x01
+        mdist_q5     = (v2_raw >>  4) & 0x1F
+        dock_built   = bool((v2_raw >>  9) & 0x01)
+        stable_built = bool((v2_raw >> 10) & 0x01)
+        dock_q7      = (v2_raw >> 11) & 0x7F
+        barracks_q5  = (v2_raw >> 18) & 0x1F
+        # wall_q5 comes from ll_playstyle_v2b bits 4..0; default 31=never if absent
+        v2b_raw  = int(round(pack_b)) if pack_b is not None else 31
+        wall_q5  = v2b_raw & 0x1F
+
+        # Decode timestamps
+        first_dock_ms = None if dock_q7 == 127 else dock_q7 * 4 * 1000
+        first_barracks_ms = None if barracks_q5 == 31 else barracks_q5 * 32 * 1000
+        first_wall_ms = None if wall_q5 == 31 else wall_q5 * 32 * 1000
+        # first_stable_ms: boolean only (built-but-unknown-time sentinel = 0)
+        first_stable_ms = 0 if stable_built else None
+        # first_trading_post_ms: inferred from mil_type_v2 == 3
+        first_trading_post_ms = 0 if mil_type_v2 == 3 else None
+
+        # Map v2 2-bit enum → old-style enum (0/1/2/4)
+        first_mil_type_old = _FIRST_MIL_V2_TO_OLD.get(mil_type_v2, 0)
+        expects_forward = bool(fwd_bit)
+        mdist_float = mdist_q5 / 16.0
+
+        # Base v1 fields come from their whitelisted slots (no high-bit extension)
+        # score_raw and secs_raw are already masked to their true widths above.
+
+    elif has_playstyle_v1:
+        # ── v1 legacy decode (iWon/iBeat/heBeat/iCarried/heCarried slots) ─
+        beat_raw     = int(round(block.get("ibeathimlasttime",    0))) & 0x00FFFFFF
+        he_beat_raw  = int(round(block.get("hebeatmelasttime",    0))) & 0x00FFFFFF
+        carry_raw    = int(round(block.get("icarriedhimlasttime", 0))) & 0x00FFFFFF
+        he_carry_raw = int(round(block.get("hecarriedmelasttime", 0))) & 0x00FFFFFF
+
+        def _v1_secs_or_none(packed: int) -> Optional[int]:
+            v = packed & 0x3FFF
+            return None if v >= NEVER_BUILT_SECS else v
+
+        dock_secs     = _v1_secs_or_none(won_raw)
+        barracks_secs = _v1_secs_or_none(beat_raw)
+        wall_secs     = _v1_secs_or_none(he_beat_raw)
+        stable_secs   = _v1_secs_or_none(carry_raw)
+        tp_secs       = _v1_secs_or_none(he_carry_raw)
+
+        first_dock_ms          = None if dock_secs is None else dock_secs * 1000
+        first_barracks_ms      = None if barracks_secs is None else barracks_secs * 1000
+        first_wall_ms          = None if wall_secs is None else wall_secs * 1000
+        first_stable_ms        = None if stable_secs is None else stable_secs * 1000
+        first_trading_post_ms  = None if tp_secs is None else tp_secs * 1000
+
+        # v1 enum: bits 16..14 of heCarriedMeLastTime
+        first_mil_type_v1 = (he_carry_raw >> 14) & 0x07
+        # v1 used 5 values (0=none,1=dock,2=barracks,3=stable,4=tp); remap to old-style
+        _v1_to_old = {0: 0, 1: 1, 2: 2, 3: 2, 4: 4}
+        first_mil_type_old = _v1_to_old.get(first_mil_type_v1, 0)
+        expects_forward = bool((he_carry_raw >> 17) & 0x01)
+        mdist_q5 = (he_carry_raw >> 18) & 0x1F
+        mdist_float = mdist_q5 / 16.0
 
     return {
         "pid":             pid,
@@ -329,17 +505,37 @@ def _unpack_probe(block: dict[str, float]) -> dict[str, int]:
         "heading":         heading,
         "age":             age,
         "civ_id":          civ_id,
-        "score":           score,
-        "match_ms":        secs * 1000,
+        "score":           score_raw,
+        "match_ms":        secs_raw * 1000,
         # quantised biases recovered as floats in [0..1]
         "terrain_bias":    tbias_q8 / 255.0,
         "heading_bias":    hbias_q8 / 255.0,
+        # Playstyle-extension fields (zero/None when has_playstyle == False)
+        "has_playstyle":            has_playstyle,
+        "first_dock_ms":            first_dock_ms,
+        "first_barracks_ms":        first_barracks_ms,
+        "first_wall_ms":            first_wall_ms,
+        "first_stable_ms":          first_stable_ms,
+        "first_trading_post_ms":    first_trading_post_ms,
+        "first_military_building":  first_mil_type_old,
+        "expects_forward_observed": expects_forward,
+        "military_distance":        mdist_float,
     }
 
 
 def parse_personality_file(path: Path) -> Optional[PersonalityProbe]:
     """Read a .personality file and return a PersonalityProbe if our packed
     probe data is present (sentinel bit set in myAllyCount).
+
+    Selection strategy (2026-05-13 update):
+      - Collect all sentinel-tagged blocks.
+      - If every block agrees on wall_strategy, return the block with the
+        highest match_ms (longest real match). This upgrades cases where
+        the first block is a 3s preinit record but later blocks from real
+        60s+ matches carry the confirmed wall_strategy.
+      - If blocks disagree on wall_strategy (e.g. a civ used different
+        doctrines across different game sessions), fall back to the first
+        block to preserve the existing behaviour.
 
     Returns None if no probe-tagged record exists in the file.
     """
@@ -355,9 +551,27 @@ def parse_personality_file(path: Path) -> Optional[PersonalityProbe]:
         return None
 
     blocks = _parse_uservars(text)
-    probe_block = _find_probe_block(blocks)
-    if probe_block is None:
+
+    # Collect all sentinel blocks.
+    probe_blocks = [b for b in blocks if _is_probe_block(b)]
+    if not probe_blocks:
         return None
+
+    # Check wall_strategy consensus across all blocks.
+    def _wstrat(b: dict[str, float]) -> int:
+        ally = int(round(b.get("myallycount", 0))) & 0x00FFFFFF
+        return (ally >> 6) & 0x07
+
+    wstrats = {_wstrat(b) for b in probe_blocks}
+    if len(wstrats) == 1:
+        # All blocks agree — pick the one with the highest match_ms.
+        probe_block = max(
+            probe_blocks,
+            key=lambda b: b.get("lastgamedifficulty", 0.0),
+        )
+    else:
+        # Disagreement — fall back to first block (preserves old behaviour).
+        probe_block = probe_blocks[0]
 
     fields = _unpack_probe(probe_block)
     return PersonalityProbe(
@@ -376,6 +590,15 @@ def parse_personality_file(path: Path) -> Optional[PersonalityProbe]:
         age=fields["age"],
         score=fields["score"],
         match_ms=fields["match_ms"],
+        has_playstyle=fields["has_playstyle"],
+        first_dock_ms=fields["first_dock_ms"],
+        first_barracks_ms=fields["first_barracks_ms"],
+        first_wall_ms=fields["first_wall_ms"],
+        first_stable_ms=fields["first_stable_ms"],
+        first_trading_post_ms=fields["first_trading_post_ms"],
+        first_military_building=fields["first_military_building"],
+        expects_forward_observed=fields["expects_forward_observed"],
+        military_distance=fields["military_distance"],
     )
 
 

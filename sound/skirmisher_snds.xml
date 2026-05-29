@@ -89,63 +89,59 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishSkirmisherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishDragoonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishSkirmisherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishDragoonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishDragoonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="FinnishHakkapeliittasSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchSkirmisherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchSkirmisherSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanSkirmisherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchSkirmisherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishDragoonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchSkirmisherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishDragoonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianMusketeerSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchSkirmisherSelect">
           </soundset>
         </choice>
@@ -454,7 +450,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishSkirmisherAcknowledge">
@@ -466,7 +462,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishDragoonAcknowledge">
@@ -478,7 +474,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishSkirmisherAcknowledge">
@@ -490,7 +486,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishDragoonAcknowledge">
@@ -502,7 +498,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishDragoonAcknowledge">
@@ -514,7 +510,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <targetlogic>
             <choice name="default">
               <soundset name="FinnishHakkapeliittasAcknowledge">
@@ -526,7 +522,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchSkirmisherAcknowledge">
@@ -538,19 +534,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <targetlogic>
-            <choice name="default">
-              <soundset name="FrenchSkirmisherAcknowledge">
-              </soundset>
-            </choice>
-            <choice name="enemy">
-              <soundset name="FrenchSkirmisherAttack">
-              </soundset>
-            </choice>
-          </targetlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <targetlogic>
             <choice name="default">
               <soundset name="GermanSkirmisherAcknowledge">
@@ -562,7 +546,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchSkirmisherAcknowledge">
@@ -574,7 +558,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishDragoonAcknowledge">
@@ -586,7 +570,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchSkirmisherAcknowledge">
@@ -598,7 +582,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishDragoonAcknowledge">
@@ -610,7 +594,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <targetlogic>
             <choice name="default">
               <soundset name="RussianMusketeerAcknowledge">
@@ -622,7 +606,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchSkirmisherAcknowledge">

@@ -39,7 +39,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="AztecCanoeSelect">
           </soundset>
         </choice>
@@ -96,7 +96,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="AztecCanoeAcknowledge">
           </soundset>
         </choice>

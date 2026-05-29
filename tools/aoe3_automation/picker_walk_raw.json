@@ -1,0 +1,1135 @@
+{
+  "_doc": "Live walk of SELECT CIVILIZATION picker. norm_name -> (scroll, row, raw_text).",
+  "scroll_states_walked": 81,
+  "rows_visible": 10,
+  "row_y_start": 301,
+  "row_spacing": 64,
+  "row_x_center": 440,
+  "entries": {
+    "TIINIESSE": {
+      "scroll": 0,
+      "row": 0,
+      "raw_text": "tI ‘ .. = I = nies Se . ="
+    },
+    "DELHI": {
+      "scroll": 0,
+      "row": 1,
+      "raw_text": "DELHI)"
+    },
+    "TENOCHTITLAN": {
+      "scroll": 0,
+      "row": 2,
+      "raw_text": "TENOCHTITLAN)"
+    },
+    "WASHINGTONDC": {
+      "scroll": 0,
+      "row": 3,
+      "raw_text": "WASHINGTON. D. C.)"
+    },
+    "STOCKHOLM": {
+      "scroll": 0,
+      "row": 4,
+      "raw_text": "STOCKHOLM)"
+    },
+    "SEVILLE": {
+      "scroll": 0,
+      "row": 5,
+      "raw_text": "SEVILLE)"
+    },
+    "STPETERSBURG": {
+      "scroll": 0,
+      "row": 6,
+      "raw_text": "ST. PETERSBURG)"
+    },
+    "LISBON": {
+      "scroll": 0,
+      "row": 7,
+      "raw_text": "LISBON)"
+    },
+    "ISTANBUL": {
+      "scroll": 0,
+      "row": 8,
+      "raw_text": "ISTANBUL)"
+    },
+    "MEXICOCITY": {
+      "scroll": 0,
+      "row": 9,
+      "raw_text": "MEXICO CITY)"
+    },
+    "RR": {
+      "scroll": 1,
+      "row": 0,
+      "raw_text": "rr"
+    },
+    "A": {
+      "scroll": 1,
+      "row": 3,
+      "raw_text": "a"
+    },
+    "C": {
+      "scroll": 1,
+      "row": 4,
+      "raw_text": "c"
+    },
+    "AEFOEIESES": {
+      "scroll": 1,
+      "row": 5,
+      "raw_text": "a =e foe ie : Ses!"
+    },
+    "WJELAII": {
+      "scroll": 2,
+      "row": 0,
+      "raw_text": "WJELAII)"
+    },
+    "IENOCHIILLAN": {
+      "scroll": 2,
+      "row": 1,
+      "raw_text": "IENOCHIILLAN)"
+    },
+    "VWASHTINGIONUV": {
+      "scroll": 2,
+      "row": 2,
+      "raw_text": "VWASHTINGION, UV. ©.)"
+    },
+    "SLOCKHOLM": {
+      "scroll": 2,
+      "row": 3,
+      "raw_text": "SLOCKHOLM)"
+    },
+    "JEVILLE": {
+      "scroll": 2,
+      "row": 4,
+      "raw_text": "JEVILLE)"
+    },
+    "OLFELERSBURKRG": {
+      "scroll": 2,
+      "row": 5,
+      "raw_text": "Ol. FELERSBURKRG)"
+    },
+    "ISLANDUL": {
+      "scroll": 2,
+      "row": 7,
+      "raw_text": "ISLANDUL)"
+    },
+    "MLEAICOOLLY": {
+      "scroll": 2,
+      "row": 8,
+      "raw_text": "MLEAICO Olly)"
+    },
+    "VALLELA": {
+      "scroll": 2,
+      "row": 9,
+      "raw_text": "VALLE! LA)"
+    },
+    "VALLETTA": {
+      "scroll": 3,
+      "row": 8,
+      "raw_text": "VALLETTA)"
+    },
+    "BEIJING": {
+      "scroll": 3,
+      "row": 9,
+      "raw_text": "BEIJING)"
+    },
+    "MMEXIGCORGRY": {
+      "scroll": 4,
+      "row": 6,
+      "raw_text": "MM EXI1GCOrG ry)"
+    },
+    "BEITING": {
+      "scroll": 4,
+      "row": 8,
+      "raw_text": "BEITING)"
+    },
+    "GREATCOUNCIL": {
+      "scroll": 4,
+      "row": 9,
+      "raw_text": "(GREAT COUNCIL)"
+    },
+    "OLFELERSBURG": {
+      "scroll": 6,
+      "row": 2,
+      "raw_text": "Ol. FELERSBURG)"
+    },
+    "MLEAICOOLLLY": {
+      "scroll": 6,
+      "row": 5,
+      "raw_text": "MLEAICO OlLLY)"
+    },
+    "DELJING": {
+      "scroll": 6,
+      "row": 7,
+      "raw_text": "DELJING)"
+    },
+    "UREALCOUNCIL": {
+      "scroll": 6,
+      "row": 8,
+      "raw_text": "UREAL COUNCIL)"
+    },
+    "AMSERKUDAM": {
+      "scroll": 6,
+      "row": 9,
+      "raw_text": "AMS 1 ERKUDAM)"
+    },
+    "AMSTERDAM": {
+      "scroll": 7,
+      "row": 8,
+      "raw_text": "AMSTERDAM)"
+    },
+    "EDO": {
+      "scroll": 7,
+      "row": 9,
+      "raw_text": "EDO)"
+    },
+    "GONDAR": {
+      "scroll": 8,
+      "row": 9,
+      "raw_text": "(GONDAR)"
+    },
+    "MLEAICOOLY": {
+      "scroll": 10,
+      "row": 2,
+      "raw_text": "MLEAICO OLY)"
+    },
+    "AMSLERKUDAM": {
+      "scroll": 10,
+      "row": 6,
+      "raw_text": "[AMS LERKUDAM)"
+    },
+    "EVDO": {
+      "scroll": 10,
+      "row": 7,
+      "raw_text": "EVDO)"
+    },
+    "GONDARKR": {
+      "scroll": 10,
+      "row": 8,
+      "raw_text": "GONDARKR)"
+    },
+    "VENICE": {
+      "scroll": 10,
+      "row": 9,
+      "raw_text": "VENICE)"
+    },
+    "CAUGHNAWAGA": {
+      "scroll": 11,
+      "row": 9,
+      "raw_text": "CAUGHNAWAGA)"
+    },
+    "PARIS": {
+      "scroll": 12,
+      "row": 9,
+      "raw_text": "PARIS)"
+    },
+    "VALLEILA": {
+      "scroll": 14,
+      "row": 0,
+      "raw_text": "VALLEI LA)"
+    },
+    "GREALCOUNCIL": {
+      "scroll": 14,
+      "row": 2,
+      "raw_text": "GREAL COUNCIL)"
+    },
+    "AMSLLERKDAM": {
+      "scroll": 14,
+      "row": 3,
+      "raw_text": "AMS lL ERKDAM)"
+    },
+    "GONDARK": {
+      "scroll": 14,
+      "row": 5,
+      "raw_text": "GONDARK)"
+    },
+    "FAKIS": {
+      "scroll": 14,
+      "row": 8,
+      "raw_text": "FAKIS)"
+    },
+    "DEKLIN": {
+      "scroll": 14,
+      "row": 9,
+      "raw_text": "DEKLIN)"
+    },
+    "BERLIN": {
+      "scroll": 15,
+      "row": 8,
+      "raw_text": "BERLIN)"
+    },
+    "CUZCO": {
+      "scroll": 15,
+      "row": 9,
+      "raw_text": "CUZCO)"
+    },
+    "GWZED": {
+      "scroll": 16,
+      "row": 8,
+      "raw_text": "GWZeD)"
+    },
+    "KANO": {
+      "scroll": 16,
+      "row": 9,
+      "raw_text": "KANO)"
+    },
+    "IAMSLERKUDAM": {
+      "scroll": 18,
+      "row": 0,
+      "raw_text": "IAMS LERKUDAM)"
+    },
+    "CLVDO": {
+      "scroll": 18,
+      "row": 1,
+      "raw_text": "CLVDO)"
+    },
+    "GWONDARK": {
+      "scroll": 18,
+      "row": 2,
+      "raw_text": "GWONDARK)"
+    },
+    "FARIS": {
+      "scroll": 18,
+      "row": 5,
+      "raw_text": "FARIS)"
+    },
+    "WULCO": {
+      "scroll": 18,
+      "row": 7,
+      "raw_text": "WULCO)"
+    },
+    "KRGENTINESDUENOSAIKES": {
+      "scroll": 18,
+      "row": 9,
+      "raw_text": "KRGENTINES (DUENOS AIKES)"
+    },
+    "RGENTINESBUENOSAIRES": {
+      "scroll": 19,
+      "row": 8,
+      "raw_text": "RGENTINES (BUENOS AIRES)"
+    },
+    "ZTECEMPIRETENOCHTITLAN": {
+      "scroll": 19,
+      "row": 9,
+      "raw_text": "ZTEC EMPIRE (TENOCHTITLAN)"
+    },
+    "AJACALIFORNIANSLAPAZ": {
+      "scroll": 20,
+      "row": 9,
+      "raw_text": "AJA CALIFORNIANS (LA PAZ)"
+    },
+    "KRGENTINESDUENOSAILKEDS": {
+      "scroll": 22,
+      "row": 6,
+      "raw_text": "KRGENTINES (DUENOS AILKEDS)"
+    },
+    "ZIECCEMPIRELENOCHIIILAN": {
+      "scroll": 22,
+      "row": 7,
+      "raw_text": "ZIECC EMPIRE (LENOCHIIILAN)"
+    },
+    "AJACALIFORNIANSLAFAZ": {
+      "scroll": 22,
+      "row": 8,
+      "raw_text": "AJA CALIFORNIANS (LA FAZ)"
+    },
+    "AKDARYUALGIERS": {
+      "scroll": 22,
+      "row": 9,
+      "raw_text": "AKDARY UALGIERS)"
+    },
+    "ARBARYALGIERS": {
+      "scroll": 23,
+      "row": 8,
+      "raw_text": "ARBARY (ALGIERS)"
+    },
+    "RAZILIANSRIODEJANEIRO": {
+      "scroll": 23,
+      "row": 9,
+      "raw_text": "RAZILIANS (RIO DE JANEIRO)"
+    },
+    "RITAINLONDON": {
+      "scroll": 24,
+      "row": 9,
+      "raw_text": "RITAIN (LONDON)"
+    },
+    "CULCO": {
+      "scroll": 26,
+      "row": 1,
+      "raw_text": "CULCO)"
+    },
+    "KRGENTINESDUENOSAIKEDS": {
+      "scroll": 26,
+      "row": 3,
+      "raw_text": "KRGENTINES (DUENOS AIKEDS)"
+    },
+    "ZICUEMPIRELENOCHIIILAN": {
+      "scroll": 26,
+      "row": 4,
+      "raw_text": "ZICU EMPIRE (LENOCHIIILAN)"
+    },
+    "RAZILIANSKIODEJANEIRO": {
+      "scroll": 26,
+      "row": 7,
+      "raw_text": "RAZILIANS (KIO DE JANEIRO)"
+    },
+    "RILAINLONDON": {
+      "scroll": 26,
+      "row": 8,
+      "raw_text": "RILAIN (LONDON)"
+    },
+    "RIILISHLONDON": {
+      "scroll": 26,
+      "row": 9,
+      "raw_text": "RIiLISH (LONDON)"
+    },
+    "RITISHLONDON": {
+      "scroll": 27,
+      "row": 8,
+      "raw_text": "RITISH (LONDON)"
+    },
+    "ALIFORNIANSSONOMA": {
+      "scroll": 27,
+      "row": 9,
+      "raw_text": "ALIFORNIANS (SONOMA)"
+    },
+    "ANADIANSQUEBEC": {
+      "scroll": 28,
+      "row": 9,
+      "raw_text": "ANADIANS (QUEBEC)"
+    },
+    "RILISHLONDON": {
+      "scroll": 30,
+      "row": 6,
+      "raw_text": "RILISH (LONDON)"
+    },
+    "JPINADIANSCLUEBEC": {
+      "scroll": 30,
+      "row": 8,
+      "raw_text": "JPINADIANS (CLUEBEC)"
+    },
+    "ENIRALAMERICANSGUALEMALAUILY": {
+      "scroll": 30,
+      "row": 9,
+      "raw_text": "ENIRAL AMERICANS (GUALEMALA UILY)"
+    },
+    "ENTRALAMERICANSGUATEMALACITY": {
+      "scroll": 31,
+      "row": 8,
+      "raw_text": "ENTRAL AMERICANS (GUATEMALA CITY)"
+    },
+    "HILEANSSANTIAGO": {
+      "scroll": 31,
+      "row": 9,
+      "raw_text": "HILEANS (SANTIAGO)"
+    },
+    "HINABEITING": {
+      "scroll": 32,
+      "row": 9,
+      "raw_text": "HINA (BEITING)"
+    },
+    "RIILLISHTLONDON": {
+      "scroll": 34,
+      "row": 3,
+      "raw_text": "RIiLlIsHt (LONDON)"
+    },
+    "AINADIANSCLUEBEC": {
+      "scroll": 34,
+      "row": 5,
+      "raw_text": "AINADIANS (CLUEBEC)"
+    },
+    "FAILEANDSLOANLIAGO": {
+      "scroll": 34,
+      "row": 7,
+      "raw_text": "FAILEANDS (LOAN LIAGO)"
+    },
+    "LINADELJING": {
+      "scroll": 34,
+      "row": 8,
+      "raw_text": "LINA (DELJING)"
+    },
+    "OLOMDIANSDOGOTA": {
+      "scroll": 34,
+      "row": 9,
+      "raw_text": "OLOMDIANS (DOGOTA)"
+    },
+    "HINABEIJING": {
+      "scroll": 35,
+      "row": 7,
+      "raw_text": "HINA (BEIJING)"
+    },
+    "OLOMBIANSBOGOTA": {
+      "scroll": 35,
+      "row": 8,
+      "raw_text": "OLOMBIANS (BOGOTA)"
+    },
+    "GYPTIANSCAIRO": {
+      "scroll": 35,
+      "row": 9,
+      "raw_text": "GYPTIANS (CAIRO)"
+    },
+    "THIOPIAGONDAR": {
+      "scroll": 36,
+      "row": 9,
+      "raw_text": "THIOPIA (GONDAR)"
+    },
+    "RIILLISSHTLONDON": {
+      "scroll": 38,
+      "row": 0,
+      "raw_text": "RIiLlIsSHt (LONDON)"
+    },
+    "AINADIANSCQUEBEC": {
+      "scroll": 38,
+      "row": 2,
+      "raw_text": "AINADIANS (CQUEBEC)"
+    },
+    "MIILEANDSOANTIAGO": {
+      "scroll": 38,
+      "row": 4,
+      "raw_text": "MIILEANDS (OAN TIAGO)"
+    },
+    "LLINADELJING": {
+      "scroll": 38,
+      "row": 5,
+      "raw_text": "LLINA (DELJING)"
+    },
+    "OLOMDBIANSDOGOTA": {
+      "scroll": 38,
+      "row": 6,
+      "raw_text": "OLOMDBIANS (DOGOTA)"
+    },
+    "GYFIIANSCALRO": {
+      "scroll": 38,
+      "row": 7,
+      "raw_text": "GYFIIANS (CALRO)"
+    },
+    "LARIOFIAGONDAR": {
+      "scroll": 38,
+      "row": 8,
+      "raw_text": "LARIOFIA (GONDAR)"
+    },
+    "INNISHFLELSINKI": {
+      "scroll": 38,
+      "row": 9,
+      "raw_text": "INNISH (FLELSINKI)"
+    },
+    "INNISHHELSINKI": {
+      "scroll": 39,
+      "row": 8,
+      "raw_text": "INNISH (HELSINKI)"
+    },
+    "RANCEPARIS": {
+      "scroll": 39,
+      "row": 9,
+      "raw_text": "RANCE (PARIS)"
+    },
+    "RENCHCANADIANSQUEBEC": {
+      "scroll": 40,
+      "row": 9,
+      "raw_text": "RENCH CANADIANS (QUEBEC)"
+    },
+    "MIILEANDSSANTIAGO": {
+      "scroll": 42,
+      "row": 1,
+      "raw_text": "MIILEANDS (SANTIAGO)"
+    },
+    "TINADELJING": {
+      "scroll": 42,
+      "row": 2,
+      "raw_text": "TINA (DELJING)"
+    },
+    "GYFITLIANSCALRO": {
+      "scroll": 42,
+      "row": 4,
+      "raw_text": "GYFITLIANS (CALRO)"
+    },
+    "ILMIOFLAGONDAR": {
+      "scroll": 42,
+      "row": 5,
+      "raw_text": "ILMIOFLA (GONDAR)"
+    },
+    "KAINCEFARIS": {
+      "scroll": 42,
+      "row": 7,
+      "raw_text": "KAINCE (FARIS)"
+    },
+    "KENCHCANADIANSCLUEBEC": {
+      "scroll": 42,
+      "row": 8,
+      "raw_text": "KENCH CANADIANS (CLUEBEC)"
+    },
+    "ICERMANYDERKLIN": {
+      "scroll": 42,
+      "row": 9,
+      "raw_text": "ICERMANY (DERKLIN)"
+    },
+    "RERMANYBERLIN": {
+      "scroll": 43,
+      "row": 8,
+      "raw_text": "rERMANY (BERLIN)"
+    },
+    "AITIANSPORTAUPRINCE": {
+      "scroll": 43,
+      "row": 9,
+      "raw_text": "[AITIANS (PORT-AU-PRINCE)"
+    },
+    "TFERMANYBERLIN": {
+      "scroll": 44,
+      "row": 7,
+      "raw_text": "TFERMANY (BERLIN)"
+    },
+    "UNGARIANSBUDA": {
+      "scroll": 44,
+      "row": 9,
+      "raw_text": "[UNGARIANS (BUDA)"
+    },
+    "OLOMDBDIANSDOGOTA": {
+      "scroll": 46,
+      "row": 0,
+      "raw_text": "OLOMDBDIANS (DOGOTA)"
+    },
+    "GYFILIANSCALRO": {
+      "scroll": 46,
+      "row": 1,
+      "raw_text": "GYFILIANS (CALRO)"
+    },
+    "LMIOFLAGONDAR": {
+      "scroll": 46,
+      "row": 2,
+      "raw_text": "LMIOFLA (GONDAR)"
+    },
+    "KRAINCEFARIS": {
+      "scroll": 46,
+      "row": 4,
+      "raw_text": "KRAINCE (FARIS)"
+    },
+    "KRENCHCANADIANSCLUEBEC": {
+      "scroll": 46,
+      "row": 5,
+      "raw_text": "KRENCH CANADIANS (CLUEBEC)"
+    },
+    "PCRMANYDEKLIN": {
+      "scroll": 46,
+      "row": 6,
+      "raw_text": "PCRMANY (DEKLIN)"
+    },
+    "LALLIANSFORIAUFRINCE": {
+      "scroll": 46,
+      "row": 7,
+      "raw_text": "LALLIANS (FORI-AU-F RINCE)"
+    },
+    "LUNGARIANSDUDA": {
+      "scroll": 46,
+      "row": 8,
+      "raw_text": "LUNGARIANS (DUDA)"
+    },
+    "NCAEMPIRECUZCO": {
+      "scroll": 46,
+      "row": 9,
+      "raw_text": "NCA EMPIRE (CUZCO)"
+    },
+    "ERMANYBERLIN": {
+      "scroll": 47,
+      "row": 5,
+      "raw_text": "-ERMANY (BERLIN)"
+    },
+    "NDONESIANSYOGYAKARTA": {
+      "scroll": 47,
+      "row": 9,
+      "raw_text": "NDONESIANS (YOGYAKARTA)"
+    },
+    "NIDONESIANSYOGYAKARTA": {
+      "scroll": 48,
+      "row": 8,
+      "raw_text": "NI DONESIANS (YOGYAKARTA)"
+    },
+    "ROQUOISCONFEDERACYCAUGHNAWAGA": {
+      "scroll": 48,
+      "row": 9,
+      "raw_text": "2ROQUOIS CONFEDERACY (CAUGHNAWAGA)"
+    },
+    "PCRMANYDERKLIN": {
+      "scroll": 50,
+      "row": 3,
+      "raw_text": "PCRMANY (DERKLIN)"
+    },
+    "NDOWNESIANSTOGYAKARIA": {
+      "scroll": 50,
+      "row": 7,
+      "raw_text": "NDOWNESIANS (TOGYAKARIA)"
+    },
+    "LOQUOTSCONFEDERACYCAUGHNAWAGA": {
+      "scroll": 50,
+      "row": 8,
+      "raw_text": "LOQUOTS CONFEDERACY (CAUGHNAWAGA)"
+    },
+    "LALYVENICE": {
+      "scroll": 50,
+      "row": 9,
+      "raw_text": "LALY (VENICE)"
+    },
+    "ALYVENICE": {
+      "scroll": 51,
+      "row": 8,
+      "raw_text": "[ALY (VENICE)"
+    },
+    "PANKYOTO": {
+      "scroll": 51,
+      "row": 9,
+      "raw_text": "\\PAN (KYOTO)"
+    },
+    "TALYVENICE": {
+      "scroll": 52,
+      "row": 7,
+      "raw_text": "&TALY (VENICE)"
+    },
+    "LPANKYOTO": {
+      "scroll": 52,
+      "row": 8,
+      "raw_text": "L\\PAN (KYOTO)"
+    },
+    "AKOTAGREATCOUNCIL": {
+      "scroll": 52,
+      "row": 9,
+      "raw_text": "AKOTA (GREAT COUNCIL)"
+    },
+    "IERMANYDEKLIN": {
+      "scroll": 54,
+      "row": 0,
+      "raw_text": "IERMANY (DEKLIN)"
+    },
+    "AFAINRYOTO": {
+      "scroll": 54,
+      "row": 7,
+      "raw_text": "AFAIN ({RYOTO)"
+    },
+    "AKOTAGRKREALCOUNCIL": {
+      "scroll": 54,
+      "row": 8,
+      "raw_text": "AKOTA ({GRKREAL COUNCIL)"
+    },
+    "LALIAVALLELA": {
+      "scroll": 54,
+      "row": 9,
+      "raw_text": "LALIA (VALLE! LA)"
+    },
+    "LALTAVALLETTA": {
+      "scroll": 55,
+      "row": 8,
+      "raw_text": "LALTA (VALLETTA)"
+    },
+    "LAYANSCHANSANTACRUZ": {
+      "scroll": 55,
+      "row": 9,
+      "raw_text": "LAYANS (CHAN SANTA CRUZ)"
+    },
+    "AALTAVALLETTA": {
+      "scroll": 56,
+      "row": 7,
+      "raw_text": "AALTA (VALLETTA)"
+    },
+    "AAYANSCHANSANTACRUZ": {
+      "scroll": 56,
+      "row": 8,
+      "raw_text": "AAYANS (CHAN SANTA CRUZ)"
+    },
+    "AEXICOMEXICOCITY": {
+      "scroll": 56,
+      "row": 9,
+      "raw_text": "AEXICO (MEXICO CITY)"
+    },
+    "NCAEMPFIRECUZCO": {
+      "scroll": 58,
+      "row": 0,
+      "raw_text": "NCA EMPFIRE (CUZCO)"
+    },
+    "NDONESIANSTOGYAKARIA": {
+      "scroll": 58,
+      "row": 1,
+      "raw_text": "NDONESIANS (TOGYAKARIA)"
+    },
+    "AFAINKRYOTO": {
+      "scroll": 58,
+      "row": 4,
+      "raw_text": "AFAIN (KRYOTO)"
+    },
+    "AKOTAGREALCOUNCIL": {
+      "scroll": 58,
+      "row": 5,
+      "raw_text": "AKOTA ({GREAL COUNCIL)"
+    },
+    "LALIAVALLEILA": {
+      "scroll": 58,
+      "row": 6,
+      "raw_text": "LALIA (VALLEI LA)"
+    },
+    "LAYANSCHANSANILACRUZ": {
+      "scroll": 58,
+      "row": 7,
+      "raw_text": "LAYANS (CHAN SANILA CRUZ)"
+    },
+    "LEAICOMLEAICOULY": {
+      "scroll": 58,
+      "row": 8,
+      "raw_text": "LEAICO (MLEAICO UL Y)"
+    },
+    "LUGHALINVIAVELA": {
+      "scroll": 58,
+      "row": 9,
+      "raw_text": "LUGHAL INVIA (VELA)"
+    },
+    "LEXICOMEXICOCITY": {
+      "scroll": 59,
+      "row": 7,
+      "raw_text": "LEXICO (MEXICO CITY)"
+    },
+    "LUGHALINDIADELHI": {
+      "scroll": 59,
+      "row": 8,
+      "raw_text": "LUGHAL INDIA (DELHI)"
+    },
+    "IAPOLEONICFRENCHPARIS": {
+      "scroll": 59,
+      "row": 9,
+      "raw_text": "IAPOLEONIC FRENCH (PARIS)"
+    },
+    "AUGHALINDIADELHI": {
+      "scroll": 60,
+      "row": 7,
+      "raw_text": "AUGHAL INDIA (DELHI)"
+    },
+    "IETHERLANDSNEDERLAND": {
+      "scroll": 60,
+      "row": 9,
+      "raw_text": "IETHERLANDS (NEDERLAND)"
+    },
+    "AFAINRKRYOTO": {
+      "scroll": 62,
+      "row": 1,
+      "raw_text": "AFAIN ({RKRYOTO)"
+    },
+    "LUGHALINDIAVELA": {
+      "scroll": 62,
+      "row": 6,
+      "raw_text": "LUGHAL INDIA (VELA)"
+    },
+    "AFOLEONICPRENCHFARIS": {
+      "scroll": 62,
+      "row": 7,
+      "raw_text": "(AFOLEONIC PRENCH (FARIS)"
+    },
+    "ELARERLANDSUNEVDERLAND": {
+      "scroll": 62,
+      "row": 8,
+      "raw_text": "(EL ARERLANDS UNEVDERLAND)"
+    },
+    "PTYLOMANEMPIRELSLANBUL": {
+      "scroll": 62,
+      "row": 9,
+      "raw_text": "PTY LOMAN EMPIRE (LS LANBUL)"
+    },
+    "UGHALINDIADELHI": {
+      "scroll": 63,
+      "row": 5,
+      "raw_text": "{UGHAL INDIA (DELHI)"
+    },
+    "YTTOMANEMPIREISTANBUL": {
+      "scroll": 63,
+      "row": 8,
+      "raw_text": "YTTOMAN EMPIRE (ISTANBUL)"
+    },
+    "ERUVIANSLIMA": {
+      "scroll": 63,
+      "row": 9,
+      "raw_text": "ERUVIANS (LIMA)"
+    },
+    "ITTOMANEMPIREISTANBUL": {
+      "scroll": 64,
+      "row": 7,
+      "raw_text": "ITTOMAN EMPIRE (ISTANBUL)"
+    },
+    "ORTUGALLISBON": {
+      "scroll": 64,
+      "row": 9,
+      "raw_text": "ORTUGAL (LISBON)"
+    },
+    "LAYANSCHANSANLACRUZ": {
+      "scroll": 66,
+      "row": 1,
+      "raw_text": "LAYANS (CHAN SANLA CRUZ)"
+    },
+    "APOLEONICPRENCHFARIS": {
+      "scroll": 66,
+      "row": 4,
+      "raw_text": "(APOLEONIC PRENCH (FARIS)"
+    },
+    "ELRERLANDSUNEVDERLAND": {
+      "scroll": 66,
+      "row": 5,
+      "raw_text": "(EL RERLANDS UNEVDERLAND)"
+    },
+    "PTLOMANEMPIRELSLANBUL": {
+      "scroll": 66,
+      "row": 6,
+      "raw_text": "PT LOMAN EMPIRE (LS LANBUL)"
+    },
+    "ERUVIANDSLIMA": {
+      "scroll": 66,
+      "row": 7,
+      "raw_text": "ERUVIANDS (LIMA)"
+    },
+    "ORTLUGALLISBON": {
+      "scroll": 66,
+      "row": 8,
+      "raw_text": "ORTLUGAL (LISBON)"
+    },
+    "EVOLULIONARYPRENCHFARIS": {
+      "scroll": 66,
+      "row": 9,
+      "raw_text": "EVOLU LIONARY PRENCH (FARIS)"
+    },
+    "EVOLUTIONARYFRENCHPARIS": {
+      "scroll": 67,
+      "row": 8,
+      "raw_text": "EVOLUTIONARY FRENCH (PARIS)"
+    },
+    "OGRANDEANSLAREDO": {
+      "scroll": 67,
+      "row": 9,
+      "raw_text": "1O GRANDEANS (LAREDO)"
+    },
+    "GRANDEANSLAREDO": {
+      "scroll": 68,
+      "row": 8,
+      "raw_text": "10 GRANDEANS (LAREDO)"
+    },
+    "OMANIANSBUCHAREST": {
+      "scroll": 68,
+      "row": 9,
+      "raw_text": "OMANIANS (BUCHAREST)"
+    },
+    "APFOLEONICPRENCHFARIS": {
+      "scroll": 70,
+      "row": 1,
+      "raw_text": "(APFOLEONIC PRENCH (FARIS)"
+    },
+    "PTYLOMANEMPIREISLANBUL": {
+      "scroll": 70,
+      "row": 3,
+      "raw_text": "PTY LOMAN EMPIRE (IS LANBUL)"
+    },
+    "IOGRANDEANSLAKEVDO": {
+      "scroll": 70,
+      "row": 7,
+      "raw_text": "IO GRANDEANS (LAKEVDO)"
+    },
+    "OMANIANSDUCTIARES": {
+      "scroll": 70,
+      "row": 8,
+      "raw_text": "OMANIANS (DUCTIARES 1)"
+    },
+    "USSIAOTFELERSBURG": {
+      "scroll": 70,
+      "row": 9,
+      "raw_text": "USSIA (OT. FELERSBURG)"
+    },
+    "EVOLULIONARYFRENCHFARIS": {
+      "scroll": 71,
+      "row": 0,
+      "raw_text": "EVOLULIONARY FRENCH (FARIS)"
+    },
+    "OMANIANSDUCHTIARES": {
+      "scroll": 71,
+      "row": 2,
+      "raw_text": "OMANIANS (DUCHTIARES 1)"
+    },
+    "UKOTLORANO": {
+      "scroll": 71,
+      "row": 4,
+      "raw_text": "UKOTLO (RANO)"
+    },
+    "UUILHAPRICANDSFRELORIA": {
+      "scroll": 71,
+      "row": 5,
+      "raw_text": "UUILH APRICANDS (FRE LORIA)"
+    },
+    "FAINSEVILLE": {
+      "scroll": 71,
+      "row": 6,
+      "raw_text": "FAIN (SEVILLE)"
+    },
+    "WEUENSOLOCKHOLM": {
+      "scroll": 71,
+      "row": 7,
+      "raw_text": "WEUEN (SO LOCKHOLM)"
+    },
+    "ELAIANSLAUSLIN": {
+      "scroll": 71,
+      "row": 8,
+      "raw_text": "ELAIANS LAUSLIN)"
+    },
+    "NITEDSLALESWASHINGIONUV": {
+      "scroll": 71,
+      "row": 9,
+      "raw_text": "NITED SLALES (WASHINGION, UV. ©.)"
+    },
+    "LININIOLZLLLLELOLINNI": {
+      "scroll": 73,
+      "row": 0,
+      "raw_text": "LiNINIOLZL LLLELOLINNI"
+    },
+    "INPUINNULVLLSVINIIOO": {
+      "scroll": 73,
+      "row": 1,
+      "raw_text": "INPUINNUL VL LSVINiI oO}"
+    },
+    "INLINUEEPUNTLTIINDVRQEDEL": {
+      "scroll": 73,
+      "row": 2,
+      "raw_text": "INL INU EE PUNT LTIIND VRQ EDEL}"
+    },
+    "PLINIVLAAINEULINLIIN": {
+      "scroll": 73,
+      "row": 3,
+      "raw_text": "PLINIVLAAINE \\ULINLIIN]"
+    },
+    "PANELIZAINOLEVINETSNLTINIINUIL": {
+      "scroll": 73,
+      "row": 4,
+      "raw_text": "PANEL IZAINO LEVINE TSN LT INIINU IL}"
+    },
+    "PLWINNISLINISUNDLDULSN": {
+      "scroll": 73,
+      "row": 5,
+      "raw_text": "PLWINNISLINISUND LDU LSN\\)"
+    },
+    "NYALIVVIRTINTWEVLLAL": {
+      "scroll": 73,
+      "row": 6,
+      "raw_text": "NYA LivVir tint \\weVLLAL /}"
+    },
+    "NIJUWAINDLOLANAINDODLEXALAAVINALINISY": {
+      "scroll": 73,
+      "row": 7,
+      "raw_text": "NIJUWAINDLOLANAINDOD LEXA LAAVINALINI SY)"
+    },
+    "NYYMVPORSVINEELAINETDVRUITLINIANVVENTS": {
+      "scroll": 73,
+      "row": 8,
+      "raw_text": "NYY MV PO RS VINE ELAINE TD VR UITLINIANV VENTS"
+    },
+    "IOGRANDEANSLAREDO": {
+      "scroll": 75,
+      "row": 8,
+      "raw_text": "IO GRANDEANS (LAREDO)"
+    },
+    "MEMTEEEEEE": {
+      "scroll": 76,
+      "row": 0,
+      "raw_text": "me mt ee ee ee"
+    },
+    "MMAMMAEEOEMAYYMMEEE": {
+      "scroll": 76,
+      "row": 1,
+      "raw_text": "mm a mm a ee oem a yy mm eee"
+    },
+    "EMLEES": {
+      "scroll": 76,
+      "row": 2,
+      "raw_text": "—  ——— em 5 le eS"
+    },
+    "EELLYOARE": {
+      "scroll": 76,
+      "row": 4,
+      "raw_text": "— ee ll YO A 1 re >"
+    },
+    "EEEEFOAEEEEAEEEETS": {
+      "scroll": 76,
+      "row": 5,
+      "raw_text": "ee ee FO a ee ee a ee ee TS"
+    },
+    "MMMEAEESEEEEEPOEYEE": {
+      "scroll": 76,
+      "row": 6,
+      "raw_text": "mm me a ee Se ee ee Po ey ee"
+    },
+    "AAEEEEEE": {
+      "scroll": 76,
+      "row": 7,
+      "raw_text": "a a ee ee ee"
+    },
+    "EEEEEEEOEEEEEEEEOEEEEAERREES": {
+      "scroll": 76,
+      "row": 8,
+      "raw_text": "ee eee ee Oe ee eee Ee OEE = ee aerre eS"
+    },
+    "EEOEA": {
+      "scroll": 76,
+      "row": 9,
+      "raw_text": "ee oe | —, _— — A"
+    },
+    "LLJNITLEIAALLINLAISNVLLYLLIGMI": {
+      "scroll": 77,
+      "row": 0,
+      "raw_text": "LLJNITLE IAAL LINL/AISN VL LYLLIGMI}"
+    },
+    "SAATANIALENVININLINDINELLISFRINIO": {
+      "scroll": 77,
+      "row": 1,
+      "raw_text": "SAAT ANIALENVININ LINDIN\\ EL Li sfrinio/"
+    },
+    "PLIPTILINESAVINIYZOLINELLINLIVINGI": {
+      "scroll": 77,
+      "row": 2,
+      "raw_text": "PL IPTILINESAVINIYZO LINEL/LINLIVINGI }"
+    },
+    "PEINJIVUAAINLIVVIRLINDLLOLSAUINDUL": {
+      "scroll": 77,
+      "row": 3,
+      "raw_text": "PE INJIVUAAIN LivVir LIND LLOLSAUINDUL]"
+    },
+    "LINWVIIAINOLIV": {
+      "scroll": 77,
+      "row": 4,
+      "raw_text": "LINW VIIAINO LIV)"
+    },
+    "WAINTWAALLLIODVUIN": {
+      "scroll": 77,
+      "row": 5,
+      "raw_text": "WAINT WAAL LLIODVUIN]"
+    },
+    "ELVAYJLULINJINAVINELINLINWITLIRVINTTO": {
+      "scroll": 77,
+      "row": 6,
+      "raw_text": "ELVAYJLULINJINAVINE LINLINWIT Li rvintto}"
+    },
+    "ANYWINPUNLLIUINDLLILVINELLV": {
+      "scroll": 77,
+      "row": 7,
+      "raw_text": "ANY WINPUNLLIUIND LLILVINEL LV]"
+    },
+    "NJIVUIAINIDAINOLUDUUTISPAINEOL": {
+      "scroll": 77,
+      "row": 8,
+      "raw_text": "NJIVUIAINIDAINO LUDUUTISPAINE OL /"
+    },
+    "AJOOIITINLOLELILINODUINA": {
+      "scroll": 77,
+      "row": 9,
+      "raw_text": "AJOOIITIN LOL. ELI LINODU INA)"
+    },
+    "USSIASTPETERSBURG": {
+      "scroll": 78,
+      "row": 8,
+      "raw_text": "USSIA (ST. PETERSBURG)"
+    },
+    "OKOTOKANO": {
+      "scroll": 78,
+      "row": 9,
+      "raw_text": "OKOTO (KANO)"
+    },
+    "OUTHAFRICANSPRETORIA": {
+      "scroll": 79,
+      "row": 9,
+      "raw_text": "OUTH AFRICANS (PRETORIA)"
+    }
+  }
+}

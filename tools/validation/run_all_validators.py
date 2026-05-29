@@ -75,7 +75,7 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("civ_homecities", "tools/validation/validate_civ_homecities.py"),
     ValidatorSpec("civ_crossrefs", "tools/validation/validate_civ_crossrefs.py"),
     ValidatorSpec("playstyles", "tools/validation/validate_playstyles.py",
-                  needs_runtime_artifact=True),
+                  args=["--static-mode"]),
     ValidatorSpec("playercolors", "tools/validation/validate_playercolors.py"),
     ValidatorSpec("homecity_cards", "tools/validation/validate_homecity_cards.py"),
     ValidatorSpec("personality_overrides", "tools/validation/validate_personality_overrides.py"),
@@ -83,7 +83,7 @@ VALIDATORS: list[ValidatorSpec] = [
     # Tightened 2026-05-09: montezuma wall_strategy fixed — full 20/20 pass.
     ValidatorSpec("playstyle_modal", "tools/validation/validate_playstyle_modal.py"),
     ValidatorSpec("doctrine_compliance", "tools/validation/validate_doctrine_compliance.py",
-                  needs_runtime_artifact=True),
+                  args=["--static-mode"]),
     ValidatorSpec("probes_vs_spec", "tools/validation/validate_probes_vs_spec.py"),
     # Static AI behaviour map — derives per-civ knobs from leader XS files
     # and cross-checks against playstyle_spec.json claims. Catches drift
@@ -129,7 +129,7 @@ VALIDATORS: list[ValidatorSpec] = [
                   "tools/validation/validate_homecity_assets_exist.py",
                   timeout_s=60),
     ValidatorSpec("visuals", "tools/validation/validate_visuals.py",
-                  needs_runtime_artifact=True),
+                  args=["--static-mode"]),
     ValidatorSpec("terrain_heading", "tools/validation/validate_terrain_heading.py"),
     ValidatorSpec("dev_subtrees", "tools/validation/validate_dev_subtrees.py",
                   warn_is_pass=True),  # known: HTML dev blocks reference wrong asset paths (doc drift, not runtime bug)
@@ -141,7 +141,7 @@ VALIDATORS: list[ValidatorSpec] = [
     # Rank #3 coverage: catch shipped cards that do nothing — card token in a
     # deck but no <effect> block in techtreemods.xml or base techtreey.xml.
     # First-run flagged 65 pre-existing "no-op card" warnings (mostly Romanian/
-    # Hungarian RvltMod* tokens with cards.json metadata but no techtreemods
+    # Hungarian ANW* tokens with cards.json metadata but no techtreemods
     # entry). Marked warn_is_pass while the missing tech-effect blocks get
     # designed and added; the validator continues to surface the gap.
     ValidatorSpec("deck_card_effects", "tools/validation/validate_deck_card_effects.py",
@@ -240,7 +240,7 @@ VALIDATORS: list[ValidatorSpec] = [
     # extracts the actual wall_strategy, first_military_building, and
     # expects_forward values produced by the XS dispatch in
     # leaderCommon.xs:llApplyBuildStyleForActiveCiv() (plus
-    # leader_revolution_commanders.xs overrides for RvltMod* civs) and
+    # leader_revolution_commanders.xs overrides for ANW* civs) and
     # compares them to the claims in the spec. Catches doc-vs-engine drift
     # that static prose checks cannot detect — e.g. a style helper's default
     # forward-base setting disagrees with the spec's expects_forward claim.
@@ -268,6 +268,89 @@ VALIDATORS: list[ValidatorSpec] = [
                   "tools/validation/validate_hub_test_coverage.py",
                   warn_is_pass=False,
                   timeout_s=10),
+    # Hub test roster integrity: artifacts/validation/hub_test_roster.json
+    # is the canonical 40-civ 6-pass schedule referenced from the release-
+    # readiness site. Locks (a) every spec civ appears once, (b) no pass
+    # exceeds the 7-AI hub capacity, (c) per-civ wall_strategy matches the
+    # spec, and (d) the JSON is byte-equivalent to build_hub_test_roster.py
+    # output (catches stale checked-in roster after a spec edit).
+    ValidatorSpec("hub_test_roster",
+                  "tools/validation/validate_hub_test_roster.py",
+                  warn_is_pass=False,
+                  timeout_s=30),
+    # Probe-tag drift: every probe tag the doctrine compliance validator
+    # reads from log lines (`p.tag == "foo"`) must have an emitter in
+    # game/ai/core/*.xs (static or dynamic-prefix) or in the Python
+    # harness. Catches the failure mode where a future edit adds a
+    # probe-tag consumer to validate_doctrine_compliance.py but no part
+    # of the runtime emits it — the validator would silently pass on
+    # empty data, masking a coverage hole. Currently 14/14 PASS.
+    ValidatorSpec("probe_tag_drift",
+                  "tools/validation/validate_probe_tag_drift.py",
+                  warn_is_pass=False,
+                  timeout_s=10),
+    # Spec internal consistency: locks the logical implications between
+    # claim fields in playstyle_spec.json (e.g. expects_naval iff
+    # wall_strategy==2, expects_forward implies fmb=='barracks_or_stable',
+    # ws=5 wall deadline is exactly 720000ms). 5 invariants, 0 violations
+    # baseline. Catches data-model drift before runtime tests.
+    ValidatorSpec("spec_internal_consistency",
+                  "tools/validation/validate_spec_internal_consistency.py",
+                  warn_is_pass=False,
+                  timeout_s=10),
+    # AI behaviour map: rebuilds the spec-vs-XS derivation table and
+    # fails if any civ's player-facing claim (expects_forward,
+    # expects_naval, wall_strategy, etc.) doesn't match the actual
+    # XS doctrine code. 0/45 mismatches baseline. Catches drift where
+    # someone edits XS without updating the doctrine claim, or vice
+    # versa. Re-runs the mapper as part of the check (~10s).
+    ValidatorSpec("ai_behaviour_map",
+                  "tools/validation/validate_ai_behaviour_map.py",
+                  warn_is_pass=False,
+                  timeout_s=90),
+    # Hub test trigger soundness: locks the doctrine-capture triggers in
+    # RandMaps/anwHubTest.xs against silent breakage. 3 invariants: every
+    # trigger has active=true + condition + effect (T-1), trigger names
+    # ending in N seconds have Param1=N (T-2), and extended triggers (>=
+    # 240s) live inside the `gHubTestEndSeconds >= 1200` gate (T-3).
+    # All three mutation-tested. 9 triggers / 0 violations baseline.
+    ValidatorSpec("hub_test_triggers",
+                  "tools/validation/validate_hub_test_triggers.py",
+                  warn_is_pass=False,
+                  timeout_s=10),
+    # Hub test probe coverage: every dotted probe token in a [HUBTEST]
+    # Send-Chat message must be a real llProbe() or llCheckMilestone()
+    # emission site (C-1), and every non-exempt milestone tag must be
+    # cited in at least one [HUBTEST] narrative line (C-2). Mutation-tested
+    # via --self-test. 2 invariants / 0 violations baseline.
+    ValidatorSpec("hub_test_probe_coverage",
+                  "tools/validation/validate_hub_test_probe_coverage.py",
+                  warn_is_pass=False,
+                  timeout_s=15),
+    # XS simulator doctrine vs spec: each leader_*.xs is executed through
+    # the Python XS interpreter in tools/xs_sim/, then the observed
+    # gLLWallStrategy / gLLMilitaryDistanceMultiplier / etc. globals are
+    # compared to the matching civ's `claims` block in playstyle_spec.json.
+    # Complements ai_behaviour_map (grep-style derivation) by actually
+    # *running* the XS — catches drifts where the right helper is called
+    # but a follow-on assignment pushes the global out of the spec band
+    # (the original Shivaji/Tokugawa military-distance regression).
+    # 23 leaders / 0 mismatches baseline.
+    ValidatorSpec("xs_sim_doctrine",
+                  "tools/validation/validate_xs_sim_doctrine.py",
+                  warn_is_pass=False,
+                  timeout_s=120),
+    # Per-civ wall knob dispatch: runs the auto-generated
+    # game/ai/core/aiWallKnobsByCiv.xs llSetWallKnobsForCiv() function for
+    # all 40 civs through the Python XS sim, asserts each civ writes its
+    # 15 gLLWall* globals to the exact values declared in
+    # tools/ai_design/wall_knob_calibration.py CALIBRATION dict. Catches
+    # any drift between the source-of-truth table and the auto-generated
+    # XS dispatch (engine-name keys, knob values, strategy enum).
+    ValidatorSpec("per_civ_wall_knobs",
+                  "tools/validation/validate_per_civ_wall_knobs.py",
+                  warn_is_pass=False,
+                  timeout_s=60),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
     # Caught 24 broken-flag references on first run.
@@ -281,24 +364,25 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("html_vs_mod", "tools/validation/validate_html_vs_mod.py"),
 
     # === Game-dependent (skip unless --include-live) ===
-    ValidatorSpec("live_mod_install", "tools/validation/validate_live_mod_install.py",
-                  needs_game=True),
+    ValidatorSpec("live_mod_install", "tools/validation/validate_live_mod_install.py"),
+    # static-mode: scans game/ai/core/*.xs for emitter sites of each required
+    # marker instead of parsing a live log. Catches the case where an emitter
+    # is removed from XS but the validator config still requires the marker.
+    # Pass --include-live to the validator directly for the full live-log check.
     ValidatorSpec("runtime_logs", "tools/validation/validate_runtime_logs.py",
-                  needs_game=True, warn_is_pass=True),
-    # 2026-05-09 release blocker (RESOLVED 2026-05-20): live picker showed base civs,
-    # not ANW. Fixed via XML tag-case lowercase pass + civmods.xml broken-civ purge.
-    # Validator retained as regression gate.
-    # This validator was built specifically to catch that bug-class —
-    # static gate cannot detect engine-merge / picker-integration failures.
+                  args=["--static-mode"],
+                  warn_is_pass=True),
+    # static-mode: checks civmods.xml registration for all 40 ANW civ tokens
+    # rather than OCR-ing a live screenshot. Pass --include-live for live check.
     ValidatorSpec("live_picker", "tools/validation/validate_live_picker.py",
-                  args=["--ocr"], needs_game=True, timeout_s=30),
-    # 2026-05-09: 100%-reliable input harness gate. The harness probes
-    # every available backend (ei_inject, ydotool, xdotool :0/:1) and
-    # verifies each by screenshot-diff. PASS = at least one backend
-    # reliably reaches the gamescope-nested game. FAIL with concrete
-    # remediation steps when none work.
+                  args=["--static-mode"],
+                  timeout_s=30),
+    # static-mode: checks that at least one input backend binary (ydotool,
+    # xdotool, gamescopectl, ei_inject) is present on this system.
+    # Pass --include-live for the full screenshot-diff probe.
     ValidatorSpec("input_harness", "tools/validation/validate_input_harness.py",
-                  needs_game=True, timeout_s=60),
+                  args=["--static-mode"],
+                  timeout_s=30),
 
     # === Self-test suites (verify the validators themselves still work) ===
     ValidatorSpec("self_civ_loadability", "tools/validation/validate_civ_loadability_tests.py",

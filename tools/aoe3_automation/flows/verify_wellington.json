@@ -1,10 +1,13 @@
 {
-  "notes": ["Cancel civ picker; click P2 personality button (far-left icon)."],
+  "notes": [
+    "Cancel civ picker; click P2 personality button (far-left icon).",
+    "2026-05-11: screenshot path rewritten from legacy AOE-3-DE-Legendary-Leaders-AI worktree to artifacts/verify_wellington/ in active repo."
+  ],
   "steps": [
     {"action": "click_text", "texts": ["CANCEL", "Cancel"], "timeout": 5, "partial": true, "optional": true},
     {"action": "sleep", "seconds": 2},
     {"action": "click", "x": 40, "y": 282},
     {"action": "sleep", "seconds": 2},
-    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-Legendary-Leaders-AI/.claude/worktrees/hungry-banzai-e122dc/.claude/session_2026-04-22-artifacts/verify_wellington/06_p2_portrait.png"}
+    {"action": "screenshot", "path": "/var/home/jflessenkemper/AOE-3-DE-A-New-World/artifacts/verify_wellington/06_p2_portrait.png"}
   ]
 }

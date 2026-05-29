@@ -240,20 +240,10 @@ INTENTIONAL_NOTES = {
         "Leader renamed Crazy Horse → Chief Gall (Little Bighorn "
         "envelopment, not pure speed-raid). Intentional per 3e0d00b."
     ),
-    "ANWYucatan": (
-        "Portrait file is `yucatan_carrillo_puerto.png` even though spec key "
-        "says \"Yucatan Pat Revolution\". Both are real Yucatec figures; "
-        "substitution is intentional."
-    ),
     "ANWTexians": (
-        "ai_behaviour_map.py previously read the vanilla RvltModTexians "
+        "ai_behaviour_map.py previously read the vanilla ANWTexians "
         "block instead of the ANWTexians block (mapper artefact, fixed). "
         "Actual dispatch is cavalry-aggressive with forward base."
-    ),
-    "ANWFrenchCanadians": (
-        "Kept as FrenchCanadians, not LowerCanada (152 references vs 2 "
-        "doc-only mentions; rename would touch 140+ files). Forward base "
-        "intentionally disabled — Papineau was a reactive leader."
     ),
     "ANWRomanians": (
         "Forward base intentionally disabled — Cuza's 1859 was internal "

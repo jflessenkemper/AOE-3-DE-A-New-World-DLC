@@ -121,43 +121,39 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortuguesePriestSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchSurgeonSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianSurgeonSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchSurgeonSelect">
           </soundset>
         </choice>
@@ -548,7 +544,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishSurgeonAcknowledge">
@@ -558,7 +554,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <targetlogic>
             <choice name="default">
               <soundset name="PortuguesePriestAcknowledge">
@@ -568,7 +564,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishSurgeonAcknowledge">
@@ -578,11 +574,11 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishSurgeonAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchSurgeonAcknowledge">
@@ -592,17 +588,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <targetlogic>
-            <choice name="default">
-              <soundset name="FrenchSurgeonAcknowledge">
-              </soundset>
-            </choice>
-            <choice name="enemy">
-            </choice>
-          </targetlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <targetlogic>
             <choice name="default">
               <soundset name="GermanSurgeonAcknowledge">
@@ -612,7 +598,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchSurgeonAcknowledge">
@@ -622,7 +608,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <targetlogic>
             <choice name="default">
               <soundset name="RussianSurgeonAcknowledge">
@@ -632,7 +618,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchSurgeonAcknowledge">

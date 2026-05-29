@@ -1,73 +1,209 @@
 {
-  "_doc": "Pixel-coord map for AoE3 DE Skirmish lobby at 1920x1080. Empirically verified 2026-04-28 against game v100.15.59076.0 P2 with Legendary Leaders AI mod. Use with lobby_driver.py.",
+  "_doc": "Pixel-coord map for AoE3 DE Skirmish lobby at 1920x1080. Empirically verified 2026-04-28 against game v100.15.59076.0 P2 with Legendary Leaders AI mod. Use with lobby_driver.py. 2026-05-07: skirmish_button shifted from y=488 (now Multiplayer) to y=482 after a content patch added a row.",
   "main_menu": {
-    "skirmish_button": [130, 488]
+    "skirmish_button": [
+      130,
+      482
+    ]
   },
   "lobby": {
-    "p1_civ_picker": [630, 170],
-    "p1_color_dropdown": [1015, 170],
-    "p1_color_dropdown_arrow": [1085, 170],
+    "p1_civ_picker": [
+      630,
+      170
+    ],
+    "p1_color_dropdown": [
+      1015,
+      170
+    ],
+    "p1_color_dropdown_arrow": [
+      1085,
+      170
+    ],
     "back_button_keynav": "Escape",
-    "play_button": [1700, 1029],
-    "_opponent_pickers_doc": "Civ picker buttons for AI slots P2..P8. P1 is at y=170; in_game_driver.py empirically measured P2/P3/P4 at y=276/382/488 (106px row spacing). P5..P8 extrapolated with the same delta — verified-good coords if the lobby has 8 player rows visible (FFA 1v7 default). x=630 matches p1_civ_picker. Used by matrix_runner --opponent-civs to test up to 8 civs per match.",
+    "play_button": [
+      1700,
+      1029
+    ],
+    "_opponent_pickers_doc": "Civ picker buttons for AI slots P2..P8. P1 is at y=170; in_game_driver.py empirically measured P2/P3/P4 at y=276/382/488 (106px row spacing). P5..P8 extrapolated with the same delta \u2014 verified-good coords if the lobby has 8 player rows visible (FFA 1v7 default). x=630 matches p1_civ_picker. Used by matrix_runner --opponent-civs to test up to 8 civs per match.",
     "opponent_civ_pickers": [
-      [630, 276],
-      [630, 382],
-      [630, 488],
-      [630, 594],
-      [630, 700],
-      [630, 806],
-      [630, 912]
+      [
+        630,
+        276
+      ],
+      [
+        630,
+        382
+      ],
+      [
+        630,
+        488
+      ],
+      [
+        630,
+        594
+      ],
+      [
+        630,
+        700
+      ],
+      [
+        630,
+        806
+      ],
+      [
+        630,
+        912
+      ]
     ],
     "right_column_dropdowns": {
       "x_center": 1645,
-      "map":                [1645, 395],
-      "game_mode":          [1645, 472],
-      "game_rules":         [1645, 546],
-      "starting_age":       [1645, 631],
-      "ending_age":         [1645, 681],
-      "difficulty":         [1645, 729],
-      "starting_resources": [1645, 778],
-      "game_speed":         [1645, 825]
+      "map": [
+        1645,
+        395
+      ],
+      "game_mode": [
+        1645,
+        472
+      ],
+      "game_rules": [
+        1645,
+        546
+      ],
+      "starting_age": [
+        1645,
+        631
+      ],
+      "ending_age": [
+        1645,
+        681
+      ],
+      "difficulty": [
+        1645,
+        729
+      ],
+      "starting_resources": [
+        1645,
+        778
+      ],
+      "game_speed": [
+        1645,
+        825
+      ]
     },
     "right_column_radios": {
-      "player_handicap": [1530, 883],
-      "record_game":     [1530, 923],
-      "free_for_all":    [1530, 957]
-    }
+      "player_handicap": [
+        1530,
+        883
+      ],
+      "record_game": [
+        1530,
+        923
+      ],
+      "free_for_all": [
+        1530,
+        957
+      ]
+    },
+    "back_button": [
+      50,
+      25
+    ]
   },
   "civ_picker": {
-    "_doc": "Opened by clicking lobby.p1_civ_picker. List shows 10 civs at a time, alphabetical. Wheel-down at scroll_anchor scrolls ~0.74 rows per click (use picker_scroll_table.json for accurate scroll counts). Row label centers empirically detected at Y=284, 348, 412, ..., 860 with spacing 64.",
-    "row_y_start": 296,
+    "_doc": "Opened by clicking lobby.p1_civ_picker. List shows 10 civs at a time, alphabetical. Wheel-down at scroll_anchor scrolls ~0.74 rows per click (use picker_scroll_table.json for accurate scroll counts). Row centers Y=301, 365, 428, 494, 558, 622, 685, 751, 814, 877 (\u0394\u224864). (Calibrated 2026-05-08 against the SELECT HOME CITY picker; SELECT CIVILIZATION picker has different layout \u2014 see PATH_B_NOTES.md.)",
+    "row_y_start": 301,
     "row_spacing": 64,
     "row_count_visible": 10,
     "row_x_center": 440,
-    "scroll_anchor": [440, 500],
-    "ok_button":           [215, 962],
-    "deck_builder_button": [425, 962],
-    "cancel_button":       [645, 962]
+    "scroll_anchor": [
+      440,
+      500
+    ],
+    "ok_button": [
+      215,
+      962
+    ],
+    "deck_builder_button": [
+      425,
+      962
+    ],
+    "cancel_button": [
+      645,
+      962
+    ],
+    "_leader_name_crop_doc": "Crop region used to OCR each picker row's leader/civ-name text. Per-row crop is derived as (x0, y_center+y0_off, x1, y_center+y1_off) where y_center = row_y_start + row*row_spacing. Empirically tuned 2026-05-08 (live game, ANWBritish probe). x0=180 starts AFTER the leader flag/portrait icon (those bleed garbage into OCR if included). y0_off=-25/+25 keeps inside the highlighted-row band without catching adjacent rows. The OCR helper itself does 4x upscale + grayscale on the resulting crop to make tesseract reliable on the small Trajan caps.",
+    "leader_name_crop": {
+      "x0": 160,
+      "x1": 700,
+      "y0_off": -22,
+      "y1_off": 22
+    },
+    "_opp_leader_name_crop_doc": "Crop region for verifying opponent (P2..P8) civ selection. Same form as leader_name_crop. The opponent picker is the SAME picker overlay as P1 (it opens centred on the screen) so the same crop coords apply.",
+    "opp_leader_name_crop": {
+      "x0": 180,
+      "x1": 700,
+      "y0_off": -22,
+      "y1_off": 22
+    }
   },
   "popups": {
     "_doc": "Y-positions of options in each dropdown popup. The popup typically expands DOWN from the dropdown header. X-center may differ from header x because popups can flow left/right.",
     "difficulty": {
       "x_center": 1780,
-      "easy":     766,
+      "easy": 766,
       "standard": 792,
       "moderate": 817,
-      "hard":     843,
-      "hardest":  868,
-      "extreme":  894
+      "hard": 843,
+      "hardest": 868,
+      "extreme": 894
     },
     "game_speed": {
       "x_center": 1660,
-      "slow":   863,
+      "slow": 863,
       "medium": 885,
-      "fast":   917
+      "fast": 917
     }
   },
   "diff_thresholds": {
     "_doc": "AE-pixel-count thresholds for state detection. Below noise_floor = same screen. Above significant_change = real UI state change.",
     "noise_floor": 30000,
     "significant_change": 100000
+  },
+  "scenario_picker": {
+    "lobby_map_button": [
+      1637,
+      425
+    ],
+    "map_picker_custom_scenario_btn": [
+      700,
+      128
+    ],
+    "file_picker_row_x": 650,
+    "file_picker_first_row_y": 279,
+    "file_picker_row_height": 47,
+    "file_picker_open_btn": [
+      310,
+      850
+    ],
+    "file_picker_cancel_btn": [
+      310,
+      905
+    ],
+    "file_picker_delete_btn": [
+      310,
+      790
+    ],
+    "file_picker_open_saved_btn": [
+      310,
+      730
+    ],
+    "anw_coverage_row_index": {
+      "A": 1,
+      "B": 2,
+      "C": 3,
+      "D": 4,
+      "E": 5,
+      "F": 6
+    }
   }
 }

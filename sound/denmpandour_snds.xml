@@ -23,7 +23,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="RussianPikemanSelect">
           </soundset>
         </choice>
@@ -68,7 +68,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <targetlogic>
             <choice name="default">
               <soundset name="RussianPikemanAcknowledge">

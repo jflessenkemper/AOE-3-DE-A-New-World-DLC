@@ -367,7 +367,7 @@ def consolidate(static_pass: bool) -> tuple[list[CivCoverage], dict]:
                 this_leader_key and this_leader_key in leaders_init
             )
             # Soft fallback: revolution civs sometimes emit a generic
-            # "rvltmod*" prefix instead of a per-leader key. Any matching
+            # "anw*" prefix instead of a per-leader key. Any matching
             # prefix credits the civ.
             if not leader_init_pass and leaders_init:
                 if any(k.startswith("rvlt") for k in leaders_init):

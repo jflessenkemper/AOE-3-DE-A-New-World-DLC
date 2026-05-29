@@ -27,7 +27,10 @@ from pathlib import Path
 if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from tools.migration.anw_mapping import ANW_CIVS_BY_SLUG, ANW_DEFERRED_SLUGS  # noqa: E402
+from tools.migration.anw_mapping import (  # noqa: E402
+    ANW_CIVS_BY_SLUG, ANW_DEFERRED_SLUGS, ANW_NON_PICKER_TOKENS,
+    engine_token_for,
+)
 
 REPO = Path(__file__).resolve().parents[2]
 HTML = REPO / "a_new_world.html"
@@ -119,9 +122,21 @@ def validate_html_vs_mod(repo_root: Path | None = None) -> list[str]:
             # HTML section not authored yet; skip chip-count check but
             # still verify the home-city XML exists.
             continue
-        summary_cards = deck_summary_cards(decks, anw_civ.anw_token)
+        if anw_civ.anw_token in ANW_NON_PICKER_TOKENS:
+            # Revolution-mechanic variant — has HTML section + art but no
+            # decks_anw.json deck (engine-only, not skirmish-pickable).
+            # Still verify portrait/flag art exists below.
+            for kind in ("portrait", "flag"):
+                p = html_assets.get(slug, {}).get(kind, "")
+                if p and not (repo / p).is_file():
+                    errors.append(f"{slug}: {kind} image missing on disk: {p}")
+            continue
+        # decks_anw.json keys 22 legacy civs by base-game tokens
+        # (XPAztec, British, …) rather than the canonical ANW namespace.
+        deck_key = engine_token_for(anw_civ.anw_token)
+        summary_cards = deck_summary_cards(decks, deck_key)
         if summary_cards is None:
-            errors.append(f"{slug}: no entry '{anw_civ.anw_token}' in decks_anw.json")
+            errors.append(f"{slug}: no entry '{deck_key}' in decks_anw.json")
             continue
         rendered = html_decks.get(slug, [])
         if len(summary_cards) != 25:
@@ -163,10 +178,22 @@ def main() -> int:
         if slug in ANW_DEFERRED_SLUGS:
             # HTML section not authored yet; skip chip validation
             continue
+        if anw_civ.anw_token in ANW_NON_PICKER_TOKENS:
+            # Revolution-mechanic variant: HTML+art exist, but the civ has no
+            # decks_anw.json entry (it's not skirmish-pickable). Still verify
+            # portrait/flag art is on disk.
+            for kind in ("portrait", "flag"):
+                p = html_assets.get(slug, {}).get(kind, "")
+                if p and not (REPO / p).is_file():
+                    errors.append(f"{slug}: {kind} image missing on disk: {p}")
+            continue
         # 2. Deck summary present
-        summary_cards = deck_summary_cards(decks, anw_civ.anw_token)
+        # decks_anw.json keys 22 legacy civs by base-game tokens
+        # (XPAztec, British, …) rather than the canonical ANW namespace.
+        deck_key = engine_token_for(anw_civ.anw_token)
+        summary_cards = deck_summary_cards(decks, deck_key)
         if summary_cards is None:
-            errors.append(f"{slug}: no entry '{anw_civ.anw_token}' in decks_anw.json")
+            errors.append(f"{slug}: no entry '{deck_key}' in decks_anw.json")
             continue
         # 3. Summary should have exactly 25 cards
         rendered = html_decks.get(slug, [])

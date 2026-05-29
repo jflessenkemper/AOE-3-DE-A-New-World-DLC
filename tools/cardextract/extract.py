@@ -29,32 +29,28 @@ ICON_OUT.mkdir(parents=True, exist_ok=True)
 
 # civ id → display name + deck filename
 CIVS = {
-    "Americans":         "rvltmodhomecityamericans.xml",
-    "Argentines":        "rvltmodhomecityargentina.xml",
-    "BajaCalifornians":  "rvltmodhomecitybajacalifornians.xml",
-    "Barbary":           "rvltmodhomecitybarbary.xml",
-    "Brazilians":        "rvltmodhomecitybrazil.xml",
-    "Californians":      "rvltmodhomecitycalifornia.xml",
-    "Canadians":         "rvltmodhomecitycanada.xml",
-    "CentralAmericans":  "rvltmodhomecitycentralamericans.xml",
-    "Chileans":          "rvltmodhomecitychile.xml",
-    "Colombians":        "rvltmodhomecitycolumbia.xml",
-    "Egyptians":         "rvltmodhomecityegypt.xml",
-    "Finns":             "rvltmodhomecityfinland.xml",
-    "FrenchCanadians":   "rvltmodhomecityfrenchcanada.xml",
-    "Haitians":          "rvltmodhomecityhaiti.xml",
-    "Hungarians":        "rvltmodhomecityhungary.xml",
-    "Indonesians":       "rvltmodhomecityindonesians.xml",
-    "Mayans":            "rvltmodhomecitymaya.xml",
-    "Mexicans":          "rvltmodhomecitymexicans.xml",
-    "NapoleonicFrance":  "rvltmodhomecitynapoleon.xml",
-    "Peruvians":         "rvltmodhomecityperu.xml",
-    "RevolutionaryFr":   "rvltmodhomecityrevolutionaryfrance.xml",
-    "RioGrande":         "rvltmodhomecityriogrande.xml",
-    "Romanians":         "rvltmodhomecityromania.xml",
-    "SouthAfricans":     "rvltmodhomecitysouthafricans.xml",
-    "Texians":           "rvltmodhomecitytexas.xml",
-    "Yucatans":          "rvltmodhomecityyucatan.xml",
+    "Americans":         "anwhomecityamericans.xml",
+    "Argentines":        "anwhomecityargentina.xml",
+    "BajaCalifornians":  "anwhomecitybajacalifornians.xml",
+    "Barbary":           "anwhomecitybarbary.xml",
+    "Brazilians":        "anwhomecitybrazil.xml",
+    "Canadians":         "anwhomecitycanada.xml",
+    "Chileans":          "anwhomecitychile.xml",
+    "Colombians":        "anwhomecitycolumbia.xml",
+    "Egyptians":         "anwhomecityegypt.xml",
+    "Finns":             "anwhomecityfinland.xml",
+    "Haitians":          "anwhomecityhaiti.xml",
+    "Hungarians":        "anwhomecityhungary.xml",
+    "Indonesians":       "anwhomecityindonesians.xml",
+    "Mayans":            "anwhomecitymaya.xml",
+    "Mexicans":          "anwhomecitymexicans.xml",
+    "NapoleonicFrance":  "anwhomecitynapoleon.xml",
+    "Peruvians":         "anwhomecityperu.xml",
+    "RevolutionaryFr":   "anwhomecityrevolutionaryfrance.xml",
+    "RioGrande":         "anwhomecityriogrande.xml",
+    "Romanians":         "anwhomecityromania.xml",
+    "SouthAfricans":     "anwhomecitysouthafricans.xml",
+    "Texians":           "anwhomecitytexas.xml",
 }
 
 
@@ -109,7 +105,7 @@ def load_game_meta() -> tuple[dict, dict]:
 
 # ── augment with mod-defined card techs ──────────────────────────────────
 def load_mod_techs() -> dict[str, dict]:
-    """Parse data/techtreemods.xml for RvltMod* card techs.
+    """Parse data/techtreemods.xml for ANW* card techs.
 
     The mod uses unusual whitespace ('name =' with space) and lowercase tags
     inconsistently, so we go through ET with permissive parsing.

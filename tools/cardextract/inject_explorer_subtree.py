@@ -8,7 +8,7 @@ personality.
 
 Respects the design rule: base-game French (Bourbon Restoration / Louis XVIII)
 never gets Napoleonic cosmetic or cards. Napoleon is tied to
-RvltModNapoleonicFrance only.
+ANWNapoleonicFrance only.
 
 Idempotent via <!-- EXPLORER-START civ -->...<!-- EXPLORER-END --> markers.
 Re-running replaces prior injection.

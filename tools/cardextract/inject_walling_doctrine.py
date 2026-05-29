@@ -6,6 +6,16 @@ citation. Appears between <!-- WALLING-START <civ> --> / <!-- WALLING-END
 summary line of each civ.
 
 Idempotent.
+
+.. note::
+   This file's CIV_TO_DOCTRINE table is historical reference text only —
+   the *runtime* wall doctrine for each civ is defined in
+   ``tools/ai_design/wall_knob_calibration.CALIBRATION`` which emits
+   ``game/ai/core/aiWallKnobsByCiv.xs``. The validator
+   ``validate_spec_internal_consistency`` (invariant I-6) locks
+   ``playstyle_spec.json:claims.wall_strategy`` against CALIBRATION;
+   this file is not in that loop. Entries here may drift from
+   CALIBRATION over time; CALIBRATION wins.
 """
 from __future__ import annotations
 
@@ -39,7 +49,7 @@ DOCTRINES = {
     "Mexicans (Revolution)":("Urban Barricade", "Hidalgo's Grito de Dolores clergy-led revolt — parish churches and hacienda walls as strongpoints (Alhóndiga de Granaditas). Tight urban insurrection, open country left exposed."),
     "Ottomans":             ("Fortress Ring", "Theodosian walls of Constantinople + Suleiman's adaptation to cannon age. Triple-ring fortress walls with moat — the Byzantine gift Suleiman expanded after 1453."),
     "Portuguese":           ("Coastal Batteries", "Portuguese Discovery-era coastal fortresses (Elmina, Mombasa, Ormuz, Goa): sea-facing gun platforms with a single land-side ring. Prince Henry's colonial school."),
-    "Russians":             ("Fortress Ring", "Moscow Kremlin + Russian kremlin system (Nizhny, Kazan, Astrakhan). Catherine the Great's 18th-century kremlin expansion: stone ring walls with cylindrical watchtowers."),
+    "Russians":             ("Frontier Palisades", "Ivan the Terrible's steppe-frontier kremlin system (Kazan 1552, Astrakhan 1556): timber-then-stone palisade ring with sentinel watchtowers and Oprichnik flank screen."),
     "Spanish":              ("Coastal Batteries", "Spanish presidio system (Havana, Cartagena, San Juan, St. Augustine). Isabella's conquistador-era walled harbor compounds. Sea-facing artillery + land-side ring."),
     "Swedes":               ("Urban Barricade", "Gustavus Adolphus' fortified core cities (Stockholm, Göteborg). Carolean redoubts added outer field positions but the urban perimeter stayed Renaissance-trace tight."),
     "United States":        ("Frontier Palisades", "American frontier blockhouse doctrine: Fort Detroit, Fort Pitt, Fort Niagara. Wood palisades with corner blockhouses — Washington's Continental Army built them in days, not months."),
@@ -49,7 +59,7 @@ DOCTRINES = {
     "Argentines":           ("Mobile — No Walls", "Argentine Fortín system — small cavalry outposts on the Pampa frontier against indigenous raids. San Martín's Army of the Andes crossed, it didn't wall."),
     "Baja Californians":    ("Frontier Palisades", "Adobe mission-presidio ring (Loreto, Santo Domingo): low walls, corner watchtowers, inner chapel as keep. Alvarado's pronunciamiento-era defenses."),
     "Barbary":              ("Coastal Batteries", "Algiers, Tunis, Tripoli corsair harbors: massive sea-facing gun batteries (Penon, Kasbah). Barbarossa-era naval fortress doctrine."),
-    "Brazil":               ("Coastal Batteries", "Portuguese colonial fortaleza chain (Forte de São João, Santa Cruz, Lage). Pedro I's empire kept the Rio bay gun-battery ring but left the interior open."),
+    "Brazil":               ("Frontier Palisades", "Pedro I's distributed plantation economy: light palisade frontier protecting Mills, Plantations, and Markets across multiple resource patches; Atlantic coast fortaleza chain (Forte de São João, Santa Cruz, Lage) as fallback."),
     "Californians":         ("Frontier Palisades", "El Presidio de Sonoma, Presidio de Monterey: adobe wall + corner bastions + interior barracks. Vallejo's Californio ranchero defense network."),
     "Canadians":            ("Frontier Palisades", "War of 1812 blockhouse system (Fort Wellington, Fort Henry, Fort Malden). Brock's militia-based wood-wall + blockhouse frontier defense."),
     "Central Americans":    ("Frontier Palisades", "Federal Republic of Central America presidios — Spanish-colonial compact walled compounds kept during Morazán's unification wars. Wood + adobe, not stone."),

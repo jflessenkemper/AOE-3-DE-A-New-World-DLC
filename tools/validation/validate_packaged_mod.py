@@ -27,9 +27,29 @@ DEV_ONLY_TOP_LEVEL = {
     ".venv",
     "age-of-pirates",
     "age-of-pirates-main",
+    "artifacts",
+    "docs",
+    "logs",
     "reference-mods",
     "tests",
     "tools",
+}
+
+# Allow-list of top-level entries that legitimately ship in a release. Anything
+# else at repo root (dev docs, validation reports, session notes, run scripts,
+# state JSON, top-level HTML reference, recorded replays, etc.) is filtered
+# out of the packaged tree even if it's not in DEV_ONLY_TOP_LEVEL.
+RELEASE_TOP_LEVEL = {
+    "art",
+    "data",
+    "game",
+    "modinfo.json",
+    "mod.xml",
+    "RandMaps",
+    "resources",
+    "Scenario",
+    "sound",
+    "thumbnail.jpg",
 }
 
 
@@ -55,7 +75,14 @@ def format_packaged_mod_report(result: PackageValidationResult) -> str:
 
 
 def should_exclude_top_level(path: Path) -> bool:
-    return path.name in DEV_ONLY_TOP_LEVEL or path.name.startswith(".")
+    if path.name.startswith("."):
+        return True
+    if path.name in DEV_ONLY_TOP_LEVEL:
+        return True
+    # Allow-list mode: anything not on the release manifest is dev cruft.
+    if path.name not in RELEASE_TOP_LEVEL:
+        return True
+    return False
 
 
 def build_packaged_tree(repo_root: Path, packaged_root: Path) -> list[str]:

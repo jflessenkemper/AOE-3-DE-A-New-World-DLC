@@ -14,7 +14,7 @@ from tools.validation.validate_packaged_mod import build_packaged_tree
 
 
 LIVE_MOD_RELATIVE_PATH = Path(
-    "Games/Age of Empires 3 DE/76561198170207043/mods/local/Legendary Leaders AI"
+    "Games/Age of Empires 3 DE/76561198170207043/mods/local/A New World"
 )
 
 GAME_PAYLOAD_TOP_LEVEL = {

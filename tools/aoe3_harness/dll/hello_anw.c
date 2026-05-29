@@ -5,7 +5,9 @@ static FILE *g_log = NULL;
 
 static void open_log(void) {
     if (g_log) return;
+    /* Try Z:\tmp (host /tmp), fall back to AppData\Local\Temp if sandboxed */
     g_log = fopen("Z:\\tmp\\anw_dll.log", "a");
+    if (!g_log) g_log = fopen("C:\\users\\steamuser\\AppData\\Local\\Temp\\anw_dll.log", "a");
     if (g_log) {
         SYSTEMTIME st;
         GetLocalTime(&st);

@@ -169,103 +169,99 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="OttomanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchFalconetSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanMusketeerSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="DEMexicanFalconetSelect">
           </soundset>
         </choice>
@@ -954,7 +950,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishFalconetAcknowledge">
@@ -966,7 +962,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishFalconetAcknowledge">
@@ -978,7 +974,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">
@@ -990,7 +986,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <targetlogic>
             <choice name="default">
               <soundset name="OttomanFalconetAcknowledge">
@@ -1002,7 +998,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <targetlogic>
             <choice name="default">
               <soundset name="PortugueseFalconetAcknowledge">
@@ -1014,7 +1010,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">
@@ -1026,7 +1022,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishFalconetAcknowledge">
@@ -1038,7 +1034,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">
@@ -1050,7 +1046,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishFalconetAcknowledge">
@@ -1062,7 +1058,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishFalconetAcknowledge">
@@ -1074,7 +1070,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <targetlogic>
             <choice name="default">
               <soundset name="OttomanFalconetAcknowledge">
@@ -1086,7 +1082,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <targetlogic>
             <choice name="default">
               <soundset name="DESwedishFalconetAcknowledge">
@@ -1098,7 +1094,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchFalconetAcknowledge">
@@ -1110,19 +1106,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <targetlogic>
-            <choice name="default">
-              <soundset name="FrenchFalconetAcknowledge">
-              </soundset>
-            </choice>
-            <choice name="enemy">
-              <soundset name="FrenchFalconetAttack">
-              </soundset>
-            </choice>
-          </targetlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <targetlogic>
             <choice name="default">
               <soundset name="GermanMusketeerAcknowledge">
@@ -1134,7 +1118,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchFalconetAcknowledge">
@@ -1146,7 +1130,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">
@@ -1158,7 +1142,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishFalconetAcknowledge">
@@ -1170,7 +1154,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchFalconetAcknowledge">
@@ -1182,7 +1166,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishFalconetAcknowledge">
@@ -1194,7 +1178,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">
@@ -1206,7 +1190,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <targetlogic>
             <choice name="default">
               <soundset name="RussianFalconetAcknowledge">
@@ -1218,7 +1202,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchFalconetAcknowledge">
@@ -1230,7 +1214,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">
@@ -1242,7 +1226,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanFalconetAcknowledge">

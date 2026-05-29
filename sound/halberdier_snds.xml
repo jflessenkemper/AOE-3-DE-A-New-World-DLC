@@ -89,55 +89,51 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishPikemanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseHalberdierSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishPikemanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishPikemanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchGendarmeSelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchGendarmeSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanDopplesoldnerSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchHalberdierSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishPikemanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchGendarmeSelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishPikemanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianHalberdierSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchHalberdierSelect">
           </soundset>
         </choice>
@@ -498,7 +494,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishPikemanAcknowledge">
@@ -510,7 +506,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <targetlogic>
             <choice name="default">
               <soundset name="PortugueseHalberdierAcknowledge">
@@ -522,7 +518,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishPikemanAcknowledge">
@@ -534,7 +530,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishPikemanAcknowledge">
@@ -546,7 +542,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchGendarmeAcknowledge">
@@ -558,19 +554,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <targetlogic>
-            <choice name="default">
-              <soundset name="FrenchGendarmeAcknowledge">
-              </soundset>
-            </choice>
-            <choice name="enemy">
-              <soundset name="FrenchGendarmeAttack">
-              </soundset>
-            </choice>
-          </targetlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <targetlogic>
             <choice name="default">
               <soundset name="GermanDopplesoldnerAcknowledge">
@@ -582,7 +566,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchHalberdierAcknowledge">
@@ -594,7 +578,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishPikemanAcknowledge">
@@ -606,7 +590,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchGendarmeAcknowledge">
@@ -618,7 +602,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishPikemanAcknowledge">
@@ -630,7 +614,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <targetlogic>
             <choice name="default">
               <soundset name="RussianHalberdierAcknowledge">
@@ -642,7 +626,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchHalberdierAcknowledge">

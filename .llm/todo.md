@@ -111,7 +111,7 @@ Tenth pass (prior): gruesome portrait fix, Italian Savoy shield, Gall string cle
 **Tenth pass (this session)** — fixes applied:
 1. **Gruesome ANWMayans portrait replaced**: was Canek-on-the-wheel
    execution scene; now a dignified Caste War rebel statue with machete
-   (sourced from orphan ANWYucatan `cpai_avatar_yucatan_carrillo_puerto.png`,
+   (sourced from `cpai_avatar_yucatan_carrillo_puerto.png`,
    256×256 RGBA). DDT also regenerated via `tools/cardextract/png_to_ddt.py`
    so the legacy `<smallportraittexture>` path also shows the statue.
 2. **Italian flag Risorgimento-accurate**: Savoy cross shield (white
@@ -127,8 +127,7 @@ Tenth pass (prior): gruesome portrait fix, Italian Savoy shield, Gall string cle
    files keep `crazy_horse` filename and `Crazyhorse` personality ID
    (load-bearing; documented in `leader_crazy_horse.xs` header).
 4. **Orphan placeholders deleted**: pink-text placeholder PNGs
-   `cpai_avatar_anwmayans.png`, `cpai_avatar_anwyucatan.png`, plus
-   their stale .ddt artifact `cpai_avatar_anwyucatan.ddt`.
+   `cpai_avatar_anwmayans.png` and stale .ddt artifacts.
 5. **Wavy loading-flag consistency confirmed**: direct multimodal Read
    of all 40 `loading_flag.png` captures — 39 wavy, 1 broken capture
    (ANWBritish — purely a capture-pipeline artifact, gitignored, not
@@ -150,8 +149,8 @@ Ninth pass (prior): SA Vierkleur fix — see
 - [x] Track 2: Visual confirmation — all 40 ANW civ portraits + flags pixel-reviewed;
       40/40 PASS; 11 aesthetic anachronisms flagged (user decision, skip by default)
 - [x] Track 3: Doctrine compliance — playstyle_modal validator PASS; probes_vs_spec PASS
-- [x] Track 4: FrenchCanadians vs LowerCanada — ANWCanadians = playable Province of Canada;
-      RvltModFrenchCanadians = revolution state "Lower Canada" (string 494006). No rename needed.
+- [x] Track 4: FrenchCanadians removed — ANWCanadians (Brock) is the sole active Canadian civ;
+      ANWFrenchCanadians (Papineau) was legacy dead code, now fully purged from repo.
 - [x] Flag art: all 40 civs' postgameflagtexture / postgameflagiconwpf /
       homecityflagbuttonset fully audited and corrected (commits 9ea750e → 99c0653 → 503c069)
 - [x] ANWRevFrance rollover string (400102) split from ANWNapoleonicFrance (400020)

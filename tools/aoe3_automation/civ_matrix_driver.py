@@ -122,14 +122,13 @@ IN_GAME_MENU = (1880, 25)
 
 
 CIV_LIST_MOD = [
-    "RvltModNapoleonicFrance", "RvltModRevolutionaryFrance", "RvltModAmericans",
-    "RvltModMexicans", "RvltModCanadians", "RvltModFrenchCanadians",
-    "RvltModBrazil", "RvltModArgentines", "RvltModChileans", "RvltModPeruvians",
-    "RvltModColumbians", "RvltModHaitians", "RvltModIndonesians",
-    "RvltModSouthAfricans", "RvltModFinnish", "RvltModHungarians",
-    "RvltModRomanians", "RvltModBarbary", "RvltModEgyptians",
-    "RvltModCentralAmericans", "RvltModBajaCalifornians", "RvltModYucatan",
-    "RvltModRioGrande", "RvltModMayans", "RvltModCalifornians", "RvltModTexians",
+    "ANWNapoleonicFrance", "ANWRevFrance", "ANWAmericans",
+    "ANWMexicans", "ANWCanadians",
+    "ANWBrazil", "ANWArgentines", "ANWChileans", "ANWPeruvians",
+    "ANWColumbians", "ANWHaitians", "ANWIndonesians",
+    "ANWSouthAfricans", "ANWFinnish", "ANWHungarians",
+    "ANWRomanians", "ANWBarbary", "ANWEgyptians",
+    "ANWRioGrande", "ANWMayans", "ANWTexians",
 ]
 
 
@@ -229,7 +228,7 @@ def main() -> int:
     # - Close picker
     # Full selection + match-start is Phase 2; not all civs completed in Phase 1.
     for civ in CIV_LIST_MOD:
-        tag = civ.replace("RvltMod", "").lower()
+        tag = civ.replace("ANW", "").lower()
         log({"event": "civ_picker_probe", "civ": civ})
         click_xy(P1_CIV_FLAG[0], P1_CIV_FLAG[1])
         time.sleep(2.0)

@@ -1,12 +1,12 @@
-"""Unit tests for tools/aoe3_harness/gamescope_client.py.
+"""Unit tests for tools/aoe3_harness/harness_client.py.
 
 All tests use a mock socket server running in a background thread so no real
-gamescope process is required.  Run with:
+AOE3DEHarness process is required.  Run with:
 
     cd /var/home/jflessenkemper/AOE-3-DE-A-New-World
-    python3 -m pytest tools/aoe3_harness/tests/test_gamescope_client.py -v
+    python3 -m pytest tools/aoe3_harness/tests/test_harness_client.py -v
 
-Coverage target: 80%+ of gamescope_client.py, all public methods and all
+Coverage target: 80%+ of harness_client.py, all public methods and all
 error paths exercised.
 """
 
@@ -26,15 +26,15 @@ _REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from tools.aoe3_harness.gamescope_client import (  # noqa: E402
-    GamescopeClient,
-    GamescopeCommandError,
-    GamescopeConnectionError,
-    GamescopeError,
-    GamescopeProtocolError,
-    GamescopeShuttingDownError,
-    GamescopeState,
-    GamescopeTimeoutError,
+from tools.aoe3_harness.harness_client import (  # noqa: E402
+    HarnessClient,
+    HarnessCommandError,
+    HarnessConnectionError,
+    HarnessError,
+    HarnessProtocolError,
+    HarnessShuttingDownError,
+    HarnessState,
+    HarnessTimeoutError,
     ScreenshotResult,
 )
 
@@ -103,11 +103,11 @@ class _MockServer:
                 pass
 
 
-def _make_client_with_mock_socket(responses: list[bytes]) -> GamescopeClient:
-    """Return a GamescopeClient with an already-injected mock socket."""
+def _make_client_with_mock_socket(responses: list[bytes]) -> HarnessClient:
+    """Return a HarnessClient with an already-injected mock socket."""
     sock = MagicMock(spec=socket.socket)
     sock.recv.side_effect = responses + [b""]
-    client = GamescopeClient("/fake/path.sock")
+    client = HarnessClient("/fake/path.sock")
     client._sock = sock
     return client, sock
 
@@ -118,33 +118,33 @@ def _make_client_with_mock_socket(responses: list[bytes]) -> GamescopeClient:
 
 
 class TestExceptionHierarchy(unittest.TestCase):
-    def test_all_errors_subclass_gamescope_error(self) -> None:
+    def test_all_errors_subclass_harness_error(self) -> None:
         for cls in (
-            GamescopeConnectionError,
-            GamescopeProtocolError,
-            GamescopeCommandError,
-            GamescopeTimeoutError,
-            GamescopeShuttingDownError,
+            HarnessConnectionError,
+            HarnessProtocolError,
+            HarnessCommandError,
+            HarnessTimeoutError,
+            HarnessShuttingDownError,
         ):
             with self.subTest(cls=cls.__name__):
-                self.assertTrue(issubclass(cls, GamescopeError))
+                self.assertTrue(issubclass(cls, HarnessError))
 
     def test_shutting_down_subclasses_command_error(self) -> None:
-        self.assertTrue(issubclass(GamescopeShuttingDownError, GamescopeCommandError))
+        self.assertTrue(issubclass(HarnessShuttingDownError, HarnessCommandError))
 
     def test_command_error_attributes(self) -> None:
-        err = GamescopeCommandError("SCREENSHOT", "TIMEOUT", "timed out")
+        err = HarnessCommandError("SCREENSHOT", "TIMEOUT", "timed out")
         self.assertEqual(err.verb, "SCREENSHOT")
         self.assertEqual(err.code, "TIMEOUT")
         self.assertEqual(err.detail, "timed out")
 
     def test_command_error_no_detail(self) -> None:
-        err = GamescopeCommandError("KEY", "INVALID_VK")
+        err = HarnessCommandError("KEY", "INVALID_VK")
         self.assertIn("INVALID_VK", str(err))
         self.assertEqual(err.detail, "")
 
     def test_shutting_down_error_code(self) -> None:
-        err = GamescopeShuttingDownError("CLICK")
+        err = HarnessShuttingDownError("CLICK")
         self.assertEqual(err.code, "HARNESS_SHUTTING_DOWN")
 
 
@@ -159,7 +159,7 @@ class TestConnect(unittest.TestCase):
         server = _MockServer([("STATE", "STATE pid=1 uptime=0ms w=1920 h=1080")])
         server.start()
         try:
-            client = GamescopeClient(server.socket_path)
+            client = HarnessClient(server.socket_path)
             client.connect(timeout=5.0)
             self.assertIsNotNone(client._sock)
             client.close()
@@ -167,9 +167,9 @@ class TestConnect(unittest.TestCase):
             server.stop()
 
     def test_connect_timeout_raises(self) -> None:
-        """connect() raises GamescopeConnectionError if socket never appears."""
-        client = GamescopeClient("/tmp/nonexistent_gamescope_test_9999.sock")
-        with self.assertRaises(GamescopeConnectionError) as ctx:
+        """connect() raises HarnessConnectionError if socket never appears."""
+        client = HarnessClient("/tmp/nonexistent_harness_test_9999.sock")
+        with self.assertRaises(HarnessConnectionError) as ctx:
             client.connect(timeout=0.15)
         self.assertIn("nonexistent", str(ctx.exception))
 
@@ -195,7 +195,7 @@ class TestConnect(unittest.TestCase):
             t = threading.Thread(target=_delayed_server, daemon=True)
             t.start()
 
-            client = GamescopeClient(sock_path)
+            client = HarnessClient(sock_path)
             client.connect(timeout=5.0)
             client.close()
             t.join(timeout=2.0)
@@ -204,7 +204,7 @@ class TestConnect(unittest.TestCase):
         server = _MockServer([])
         server.start()
         try:
-            with GamescopeClient(server.socket_path) as client:
+            with HarnessClient(server.socket_path) as client:
                 self.assertIsNotNone(client._sock)
             self.assertIsNone(client._sock)
         finally:
@@ -214,9 +214,9 @@ class TestConnect(unittest.TestCase):
         server = _MockServer([])
         server.start()
         try:
-            client_ref: Optional[GamescopeClient] = None
+            client_ref: Optional[HarnessClient] = None
             try:
-                with GamescopeClient(server.socket_path) as client:
+                with HarnessClient(server.socket_path) as client:
                     client_ref = client
                     raise RuntimeError("deliberate")
             except RuntimeError:
@@ -226,7 +226,7 @@ class TestConnect(unittest.TestCase):
             server.stop()
 
     def test_close_idempotent(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock()
         client._sock = mock_sock
         client.close()
@@ -234,7 +234,7 @@ class TestConnect(unittest.TestCase):
         self.assertIsNone(client._sock)
 
     def test_close_swallows_oserror(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock()
         mock_sock.close.side_effect = OSError("already closed")
         client._sock = mock_sock
@@ -244,7 +244,7 @@ class TestConnect(unittest.TestCase):
         server = _MockServer([])
         server.start()
         try:
-            client = GamescopeClient(server.socket_path)
+            client = HarnessClient(server.socket_path)
             client.connect(timeout=5.0)
             old_sock = client._sock
             client.reconnect(timeout=5.0)
@@ -273,39 +273,39 @@ class TestSendRaw(unittest.TestCase):
         self.assertEqual(result, "OK some data")
 
     def test_raises_connection_error_when_not_connected(self) -> None:
-        client = GamescopeClient("/fake/path")
-        with self.assertRaises(GamescopeConnectionError):
+        client = HarnessClient("/fake/path")
+        with self.assertRaises(HarnessConnectionError):
             client.send_raw("STATE")
 
     def test_raises_connection_error_on_eof(self) -> None:
         client, _ = _make_client_with_mock_socket([b""])
-        with self.assertRaises(GamescopeConnectionError):
+        with self.assertRaises(HarnessConnectionError):
             client.send_raw("STATE")
 
     def test_raises_timeout_error_on_socket_timeout(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock(spec=socket.socket)
         mock_sock.recv.side_effect = socket.timeout("timed out")
         client._sock = mock_sock
-        with self.assertRaises(GamescopeTimeoutError):
+        with self.assertRaises(HarnessTimeoutError):
             client.send_raw("STATE")
 
     def test_raises_connection_error_on_oserror(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock(spec=socket.socket)
         mock_sock.sendall.side_effect = OSError("broken pipe")
         client._sock = mock_sock
-        with self.assertRaises(GamescopeConnectionError):
+        with self.assertRaises(HarnessConnectionError):
             client.send_raw("STATE")
 
     def test_raises_protocol_error_when_line_too_long(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock(spec=socket.socket)
         # Return a chunk without a newline but large enough to hit the limit
         # We need recv to be called enough times to exceed _LINE_MAX
         mock_sock.recv.return_value = b"X" * 4096
         client._sock = mock_sock
-        with self.assertRaises(GamescopeProtocolError):
+        with self.assertRaises(HarnessProtocolError):
             client.send_raw("STATE")
 
     def test_strips_whitespace_from_response(self) -> None:
@@ -320,7 +320,7 @@ class TestSendRaw(unittest.TestCase):
 
 
 class TestState(unittest.TestCase):
-    def _make(self, response: str) -> GamescopeClient:
+    def _make(self, response: str) -> HarnessClient:
         client, _ = _make_client_with_mock_socket(
             [f"STATE pid=1234 uptime=5000ms w=1920 h=1080\n".encode()]
             if response == "valid"
@@ -333,7 +333,7 @@ class TestState(unittest.TestCase):
             [b"STATE pid=1234 uptime=5000ms w=1920 h=1080\n"]
         )
         result = client.state()
-        self.assertIsInstance(result, GamescopeState)
+        self.assertIsInstance(result, HarnessState)
         self.assertEqual(result.pid, 1234)
         self.assertEqual(result.uptime_ms, 5000)
         self.assertEqual(result.internal_w, 1920)
@@ -351,18 +351,18 @@ class TestState(unittest.TestCase):
 
     def test_state_err_response_raises_command_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR INTERNAL_ERROR detail\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.state()
         self.assertEqual(ctx.exception.code, "INTERNAL_ERROR")
 
     def test_state_malformed_response_raises_protocol_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"STATE pid=bad_not_int\n"])
-        with self.assertRaises(GamescopeProtocolError):
+        with self.assertRaises(HarnessProtocolError):
             client.state()
 
     def test_state_unexpected_response_raises_protocol_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"GARBAGE RESPONSE\n"])
-        with self.assertRaises(GamescopeProtocolError):
+        with self.assertRaises(HarnessProtocolError):
             client.state()
 
 
@@ -386,7 +386,7 @@ class TestKeyVerbs(unittest.TestCase):
 
     def test_key_err_raises_command_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR INVALID_VK\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.key(0xFF)
         self.assertEqual(ctx.exception.verb, "KEY")
 
@@ -398,7 +398,7 @@ class TestKeyVerbs(unittest.TestCase):
 
     def test_key_down_err_raises(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR INVALID_VK\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.key_down(0x00)
         self.assertEqual(ctx.exception.verb, "KEY_DOWN")
 
@@ -410,7 +410,7 @@ class TestKeyVerbs(unittest.TestCase):
 
     def test_key_up_err_raises(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR INVALID_VK\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.key_up(0x00)
         self.assertEqual(ctx.exception.verb, "KEY_UP")
 
@@ -418,7 +418,7 @@ class TestKeyVerbs(unittest.TestCase):
         client, _ = _make_client_with_mock_socket(
             [b"ERR HARNESS_SHUTTING_DOWN\n"]
         )
-        with self.assertRaises(GamescopeShuttingDownError):
+        with self.assertRaises(HarnessShuttingDownError):
             client.key(0x57)
 
 
@@ -436,7 +436,7 @@ class TestMoveClick(unittest.TestCase):
 
     def test_move_err_raises(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR OUT_OF_RANGE\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.move(99999, 99999)
         self.assertEqual(ctx.exception.verb, "MOVE")
 
@@ -448,7 +448,7 @@ class TestMoveClick(unittest.TestCase):
 
     def test_click_err_raises(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR OUT_OF_RANGE\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.click(0, 0)
         self.assertEqual(ctx.exception.verb, "CLICK")
 
@@ -456,7 +456,7 @@ class TestMoveClick(unittest.TestCase):
         client, _ = _make_client_with_mock_socket(
             [b"ERR HARNESS_SHUTTING_DOWN\n"]
         )
-        with self.assertRaises(GamescopeShuttingDownError):
+        with self.assertRaises(HarnessShuttingDownError):
             client.click(960, 540)
 
 
@@ -485,19 +485,19 @@ class TestScreenshot(unittest.TestCase):
 
     def test_screenshot_timeout_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR TIMEOUT capture timed out\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.screenshot("/tmp/frame.png")
         self.assertEqual(ctx.exception.code, "TIMEOUT")
 
     def test_screenshot_failed_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR FAILED write error\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.screenshot("/tmp/frame.png")
         self.assertEqual(ctx.exception.code, "FAILED")
 
     def test_screenshot_invalid_path_error(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR INVALID_PATH\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.screenshot("/bad/path")
         self.assertEqual(ctx.exception.code, "INVALID_PATH")
 
@@ -505,12 +505,12 @@ class TestScreenshot(unittest.TestCase):
         client, _ = _make_client_with_mock_socket(
             [b"ERR HARNESS_SHUTTING_DOWN\n"]
         )
-        with self.assertRaises(GamescopeShuttingDownError):
+        with self.assertRaises(HarnessShuttingDownError):
             client.screenshot("/tmp/frame.png")
 
     def test_screenshot_malformed_ok_response(self) -> None:
         client, _ = _make_client_with_mock_socket([b"OK no_fields_here\n"])
-        with self.assertRaises(GamescopeProtocolError):
+        with self.assertRaises(HarnessProtocolError):
             client.screenshot("/tmp/frame.png")
 
 
@@ -527,14 +527,14 @@ class TestQuit(unittest.TestCase):
         self.assertEqual(sent, "QUIT\n")
 
     def test_quit_swallows_connection_error(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock(spec=socket.socket)
         mock_sock.sendall.side_effect = OSError("pipe closed")
         client._sock = mock_sock
         client.quit()  # should not raise
 
     def test_quit_swallows_timeout_error(self) -> None:
-        client = GamescopeClient("/fake/path")
+        client = HarnessClient("/fake/path")
         mock_sock = MagicMock(spec=socket.socket)
         mock_sock.sendall.side_effect = socket.timeout("timed out")
         client._sock = mock_sock
@@ -552,9 +552,9 @@ class TestMidCommandDisconnect(unittest.TestCase):
         server = _MockServer([("STATE", None)])  # None = close connection
         server.start()
         try:
-            client = GamescopeClient(server.socket_path)
+            client = HarnessClient(server.socket_path)
             client.connect(timeout=5.0)
-            with self.assertRaises(GamescopeConnectionError):
+            with self.assertRaises(HarnessConnectionError):
                 client.state()
         finally:
             server.stop()
@@ -570,7 +570,7 @@ class TestMidCommandDisconnect(unittest.TestCase):
             srv1.bind(str(sock_path))
             srv1.listen(1)
 
-            client = GamescopeClient(sock_path)
+            client = HarnessClient(sock_path)
             client.connect(timeout=5.0)
             # Accept on server side
             conn, _ = srv1.accept()
@@ -621,17 +621,17 @@ class TestMidCommandDisconnect(unittest.TestCase):
 class TestMalformedResponses(unittest.TestCase):
     def test_garbage_response_to_key(self) -> None:
         client, _ = _make_client_with_mock_socket([b"GIBBERISH 123\n"])
-        with self.assertRaises(GamescopeProtocolError):
+        with self.assertRaises(HarnessProtocolError):
             client.key(0x57)
 
     def test_garbage_response_to_move(self) -> None:
         client, _ = _make_client_with_mock_socket([b"NOPE\n"])
-        with self.assertRaises(GamescopeProtocolError):
+        with self.assertRaises(HarnessProtocolError):
             client.move(100, 100)
 
     def test_err_without_code_handled(self) -> None:
         client, _ = _make_client_with_mock_socket([b"ERR\n"])
-        with self.assertRaises(GamescopeCommandError) as ctx:
+        with self.assertRaises(HarnessCommandError) as ctx:
             client.click(0, 0)
         self.assertEqual(ctx.exception.code, "UNKNOWN")
 

@@ -173,95 +173,91 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <soundset name="BritishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <soundset name="SpanishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <soundset name="PortugueseLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <soundset name="BritishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <soundset name="SpanishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <soundset name="SpanishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <soundset name="DESwedishHussarSelect">
           </soundset>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <soundset name="FrenchHeavyCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModHaitians">
-          <soundset name="FrenchHeavyCavalrySelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <soundset name="GermanLandsknechtSelect">
           </soundset>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchHussarSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <soundset name="SpanishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <soundset name="FrenchHeavyCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <soundset name="SpanishLightCavalrySelect">
           </soundset>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RussianHalberdierSelect">
           </soundset>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <soundset name="DutchHussarSelect">
           </soundset>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <soundset name="DEMexicanChinacoSelect">
           </soundset>
         </choice>
@@ -1604,7 +1600,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModAmericans">
+        <choice name="ANWAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishLightCavalryAcknowledge">
@@ -1616,7 +1612,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModArgentines">
+        <choice name="ANWArgentines">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishLightCavalryAcknowledge">
@@ -1628,7 +1624,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBajaCalifornians">
+        <choice name="ANWBajaCalifornians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">
@@ -1640,7 +1636,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModBrazil">
+        <choice name="ANWBrazil">
           <targetlogic>
             <choice name="default">
               <soundset name="PortugueseLightCavalryAcknowledge">
@@ -1652,7 +1648,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCalifornians">
+        <choice name="ANWCalifornians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">
@@ -1664,7 +1660,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCanadians">
+        <choice name="ANWCanadians">
           <targetlogic>
             <choice name="default">
               <soundset name="BritishLightCavalryAcknowledge">
@@ -1676,7 +1672,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModCentralAmericans">
+        <choice name="ANWCentralAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">
@@ -1688,7 +1684,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModChileans">
+        <choice name="ANWChileans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishLightCavalryAcknowledge">
@@ -1700,7 +1696,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModColumbians">
+        <choice name="ANWColumbians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishLightCavalryAcknowledge">
@@ -1712,7 +1708,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFinnish">
+        <choice name="ANWFinnish">
           <targetlogic>
             <choice name="default">
               <soundset name="DESwedishHussarAcknowledge">
@@ -1724,7 +1720,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModFrenchCanadians">
+        <choice name="ANWHaitians">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchHeavyCavalryAcknowledge">
@@ -1736,19 +1732,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModHaitians">
-          <targetlogic>
-            <choice name="default">
-              <soundset name="FrenchHeavyCavalryAcknowledge">
-              </soundset>
-            </choice>
-            <choice name="enemy">
-              <soundset name="FrenchHeavyCavalryAttack">
-              </soundset>
-            </choice>
-          </targetlogic>
-        </choice>
-        <choice name="RvltModHungarians">
+        <choice name="ANWHungarians">
           <targetlogic>
             <choice name="default">
               <soundset name="GermanLandsknechtAcknowledge">
@@ -1760,7 +1744,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchHussarAcknowledge">
@@ -1772,7 +1756,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">
@@ -1784,7 +1768,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModMexicans">
+        <choice name="ANWMexicans">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishLightCavalryAcknowledge">
@@ -1796,7 +1780,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModNapoleonicFrance">
+        <choice name="ANWNapoleonicFrance">
           <targetlogic>
             <choice name="default">
               <soundset name="FrenchHeavyCavalryAcknowledge">
@@ -1808,7 +1792,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModPeruvians">
+        <choice name="ANWPeruvians">
           <targetlogic>
             <choice name="default">
               <soundset name="SpanishLightCavalryAcknowledge">
@@ -1820,7 +1804,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRioGrande">
+        <choice name="ANWRioGrande">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">
@@ -1832,7 +1816,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <targetlogic>
             <choice name="default">
               <soundset name="RussianHalberdierAcknowledge">
@@ -1844,7 +1828,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModSouthAfricans">
+        <choice name="ANWSouthAfricans">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchHussarAcknowledge">
@@ -1856,7 +1840,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModTexians">
+        <choice name="ANWTexians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">
@@ -1868,7 +1852,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModYucatan">
+        <choice name="ANWYucatan">
           <targetlogic>
             <choice name="default">
               <soundset name="DEMexicanChinacoAcknowledge">

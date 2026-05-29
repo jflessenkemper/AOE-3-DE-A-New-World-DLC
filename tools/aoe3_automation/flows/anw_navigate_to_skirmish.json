@@ -1,0 +1,70 @@
+{
+  "notes": [
+    "Drive AoE3 DE from the Main Menu to the Skirmish lobby.",
+    "Pre-condition: game launched, main menu visible (left vertical text menu",
+    "CONTINUE/LOAD/STORY/HISTORICAL/SKIRMISH/MULTIPLAYER/...).",
+    "Post-condition: Skirmish lobby loaded, lobby_driver/scripted_scenarios",
+    "can run from here.",
+    "",
+    "OCR-driven (no template captures). threshold:140 cleans up the dark-on-",
+    "wood Trajan caps; partial:true tolerates per-frame OCR noise. NO 'region'",
+    "field — locate_text_with_capture does NOT add the region offset back to",
+    "OCR coords (locate_image_with_capture does, OCR doesn't), so a region",
+    "would make every click_text land off-target by (region_left, region_top).",
+    "Full-frame OCR is plenty fast for menu navigation (~1s/attempt).",
+    "",
+    "If a transient popup is on top of the menu (mod-loaded toast, sign-in",
+    "prompt), the optional Esc clears it before the click."
+  ],
+  "steps": [
+    {
+      "action": "screenshot",
+      "path": "../artifacts/anw_nav/01_main_menu.png"
+    },
+    {
+      "action": "press",
+      "key": "esc",
+      "presses": 1,
+      "interval": 0.2,
+      "optional": true
+    },
+    {
+      "action": "sleep",
+      "seconds": 0.6
+    },
+    {
+      "action": "click_text",
+      "texts": ["SKIRMISH", "Skirmish", "skirmish"],
+      "timeout": 30,
+      "grayscale": true,
+      "threshold": 140,
+      "partial": true,
+      "psm": 6
+    },
+    {
+      "action": "sleep",
+      "seconds": 4
+    },
+    {
+      "action": "screenshot",
+      "path": "../artifacts/anw_nav/02_after_skirmish_click.png"
+    },
+    {
+      "action": "wait_text",
+      "texts": ["SINGLE PLAYER SKIRMISH", "Single Player Skirmish", "GAME RULES", "Game Rules", "PLAY"],
+      "timeout": 45,
+      "grayscale": true,
+      "threshold": 140,
+      "partial": true,
+      "psm": 6
+    },
+    {
+      "action": "sleep",
+      "seconds": 1
+    },
+    {
+      "action": "screenshot",
+      "path": "../artifacts/anw_nav/03_at_lobby.png"
+    }
+  ]
+}

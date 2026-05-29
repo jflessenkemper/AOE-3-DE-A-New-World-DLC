@@ -127,6 +127,10 @@ def _kbGetPlayerID(args, gs, interp):  return gs.player_id
 def _kbGetPop(args, gs, interp):       return gs.pop
 def _kbGetPopCap(args, gs, interp):    return gs.pop_cap
 
+# Revolution civ check — key for the aggregator dispatch in
+# leader_revolution_commanders.xs / leader_revolution_support.xs.
+def _civIsRevolution(args, gs, interp): return gs.is_revolution
+
 def _kbResourceGet(args, gs, interp):
     # kbResourceGet(cResourceFood) — args[0] is the resource enum int
     r = int(args[0])
@@ -203,6 +207,9 @@ BUILTINS: dict[str, Callable] = {
     "kbGetPop":         _kbGetPop,
     "kbGetPopCap":      _kbGetPopCap,
     "kbResourceGet":    _kbResourceGet,
+
+    # revolution check
+    "civIsRevolution":  _civIsRevolution,
 
     # ai queries
     "aiGetMilitaryUnitCount": _aiGetMilitaryUnitCount,

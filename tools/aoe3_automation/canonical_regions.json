@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "Canonical pixel-region crops for ANW automated visual checks. All boxes are",
+    "(left, top, right, bottom) in 1920x1080 coords (gamescope native + the",
+    "lobby_coords.json baseline). Adding a new check is JSON-only — bump the",
+    "scripted_scenarios.py version comment when you change a calibrated value.",
+    "",
+    "Calibration source: visually verified against",
+    "artifacts/scripted_scenarios/lobby_state__none/_state.png on 2026-05-10",
+    "(post-DLC layout — left-aligned header, player rows on left, game-options",
+    "panel on right). Earlier values were calibrated for an obsolete centered",
+    "layout and produced wood-grain crops."
+  ],
+  "lobby": {
+    "match_setup_header":          [40, 55, 760, 120],
+    "player_slot_p1_full":         [30, 130, 900, 250],
+    "player_slot_p1_name":         [120, 150, 470, 200],
+    "player_slot_p1_civ_portrait": [490, 140, 700, 250],
+    "map_preview":                 [1330, 75, 1740, 380],
+    "game_options_header":         [1340, 540, 1790, 605],
+    "game_options_panel":          [1340, 70, 1900, 1010],
+    "play_button":                 [1530, 990, 1880, 1075]
+  },
+  "picker_civilization_mode": {
+    "_comment": "After clicking the civ slot in CIVILIZATION layout. The picker portrait sits in the upper-left of the modal.",
+    "civ_portrait":   [180, 180, 460, 470],
+    "civ_name_label": [180, 480, 720, 540],
+    "leader_label":   [180, 540, 720, 600],
+    "scroll_strip":   [180, 220, 240, 1020]
+  },
+  "picker_homecity_mode": {
+    "_comment": "After toggling the picker to SELECT HOME CITY layout. The home-city panel uses a wider portrait and a different font.",
+    "homecity_portrait": [180, 180, 540, 560],
+    "homecity_label":    [180, 580, 760, 640],
+    "leader_label":      [180, 640, 760, 700]
+  },
+  "ingame": {
+    "_comment": "In-match HUD regions. Captured during observation, never during the match-start fade.",
+    "top_resource_bar":  [0, 0, 1920, 70],
+    "minimap":           [1610, 800, 1900, 1060],
+    "build_area_center": [560, 240, 1360, 840],
+    "score_panel":       [1610, 70, 1900, 250],
+    "command_panel":     [1280, 850, 1610, 1060]
+  }
+}

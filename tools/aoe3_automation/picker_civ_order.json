@@ -1,0 +1,211 @@
+{
+  "_doc": "Canonical SELECT CIVILIZATION picker cache. Live walk + civ-label-priority matcher.",
+  "schema_version": 6,
+  "picker_layout": "SELECT_CIVILIZATION_alphabetical",
+  "rows_visible": 10,
+  "row_y_start": 301,
+  "row_spacing": 64,
+  "row_x_center": 440,
+  "entries": {
+    "ANWArgentines": {
+      "scroll_count": 18,
+      "click_row": 9,
+      "raw_ocr": "KRGENTINES (DUENOS AIKES)"
+    },
+    "ANWAztecs": {
+      "scroll_count": 19,
+      "click_row": 9,
+      "raw_ocr": "ZTEC EMPIRE (TENOCHTITLAN)"
+    },
+    "ANWBarbary": {
+      "scroll_count": 23,
+      "click_row": 8,
+      "raw_ocr": "ARBARY (ALGIERS)"
+    },
+    "ANWBrazil": {
+      "scroll_count": 23,
+      "click_row": 9,
+      "raw_ocr": "RAZILIANS (RIO DE JANEIRO)"
+    },
+    "ANWBritish": {
+      "scroll_count": 24,
+      "click_row": 9,
+      "raw_ocr": "RITAIN (LONDON)"
+    },
+    "ANWCanadians": {
+      "scroll_count": 28,
+      "click_row": 9,
+      "raw_ocr": "ANADIANS (QUEBEC)"
+    },
+    "ANWChileans": {
+      "scroll_count": 31,
+      "click_row": 9,
+      "raw_ocr": "HILEANS (SANTIAGO)"
+    },
+    "ANWChinese": {
+      "scroll_count": 35,
+      "click_row": 7,
+      "raw_ocr": "HINA (BEIJING)"
+    },
+    "ANWColumbians": {
+      "scroll_count": 35,
+      "click_row": 8,
+      "raw_ocr": "OLOMBIANS (BOGOTA)"
+    },
+    "ANWDutch": {
+      "scroll_count": 60,
+      "click_row": 9,
+      "raw_ocr": "IETHERLANDS (NEDERLAND)"
+    },
+    "ANWEgyptians": {
+      "scroll_count": 35,
+      "click_row": 9,
+      "raw_ocr": "GYPTIANS (CAIRO)"
+    },
+    "ANWEthiopians": {
+      "scroll_count": 36,
+      "click_row": 9,
+      "raw_ocr": "THIOPIA (GONDAR)"
+    },
+    "ANWFinnish": {
+      "scroll_count": 38,
+      "click_row": 9,
+      "raw_ocr": "INNISH (FLELSINKI)"
+    },
+    "ANWFrench": {
+      "scroll_count": 39,
+      "click_row": 9,
+      "raw_ocr": "RANCE (PARIS)"
+    },
+    "ANWGermans": {
+      "scroll_count": 43,
+      "click_row": 8,
+      "raw_ocr": "rERMANY (BERLIN)"
+    },
+    "ANWHaitians": {
+      "scroll_count": 43,
+      "click_row": 9,
+      "raw_ocr": "[AITIANS (PORT-AU-PRINCE)"
+    },
+    "ANWHaudenosaunee": {
+      "scroll_count": 48,
+      "click_row": 9,
+      "raw_ocr": "2ROQUOIS CONFEDERACY (CAUGHNAWAGA)"
+    },
+    "ANWHausa": {
+      "scroll_count": 71,
+      "click_row": 4,
+      "raw_ocr": "UKOTLO (RANO)"
+    },
+    "ANWHungarians": {
+      "scroll_count": 44,
+      "click_row": 9,
+      "raw_ocr": "[UNGARIANS (BUDA)"
+    },
+    "ANWInca": {
+      "scroll_count": 46,
+      "click_row": 9,
+      "raw_ocr": "NCA EMPIRE (CUZCO)"
+    },
+    "ANWIndians": {
+      "scroll_count": 59,
+      "click_row": 8,
+      "raw_ocr": "LUGHAL INDIA (DELHI)"
+    },
+    "ANWIndonesians": {
+      "scroll_count": 47,
+      "click_row": 9,
+      "raw_ocr": "NDONESIANS (YOGYAKARTA)"
+    },
+    "ANWItalians": {
+      "scroll_count": 50,
+      "click_row": 9,
+      "raw_ocr": "LALY (VENICE)"
+    },
+    "ANWJapanese": {
+      "scroll_count": 51,
+      "click_row": 9,
+      "raw_ocr": "\\PAN (KYOTO)"
+    },
+    "ANWLakota": {
+      "scroll_count": 4,
+      "click_row": 9,
+      "raw_ocr": "(GREAT COUNCIL)"
+    },
+    "ANWMaltese": {
+      "scroll_count": 55,
+      "click_row": 8,
+      "raw_ocr": "LALTA (VALLETTA)"
+    },
+    "ANWMayans": {
+      "scroll_count": 55,
+      "click_row": 9,
+      "raw_ocr": "LAYANS (CHAN SANTA CRUZ)"
+    },
+    "ANWMexicans": {
+      "scroll_count": 56,
+      "click_row": 9,
+      "raw_ocr": "AEXICO (MEXICO CITY)"
+    },
+    "ANWNapoleonicFrance": {
+      "scroll_count": 39,
+      "click_row": 9,
+      "raw_ocr": "RANCE (PARIS)"
+    },
+    "ANWOttomans": {
+      "scroll_count": 63,
+      "click_row": 8,
+      "raw_ocr": "YTTOMAN EMPIRE (ISTANBUL)"
+    },
+    "ANWPeruvians": {
+      "scroll_count": 63,
+      "click_row": 9,
+      "raw_ocr": "ERUVIANS (LIMA)"
+    },
+    "ANWPortuguese": {
+      "scroll_count": 64,
+      "click_row": 9,
+      "raw_ocr": "ORTUGAL (LISBON)"
+    },
+    "ANWRevFrance": {
+      "scroll_count": 67,
+      "click_row": 8,
+      "raw_ocr": "EVOLUTIONARY FRENCH (PARIS)"
+    },
+    "ANWRomanians": {
+      "scroll_count": 68,
+      "click_row": 9,
+      "raw_ocr": "OMANIANS (BUCHAREST)"
+    },
+    "ANWRussians": {
+      "scroll_count": 70,
+      "click_row": 9,
+      "raw_ocr": "USSIA (OT. FELERSBURG)"
+    },
+    "ANWSouthAfricans": {
+      "scroll_count": 79,
+      "click_row": 9,
+      "raw_ocr": "OUTH AFRICANS (PRETORIA)"
+    },
+    "ANWSpanish": {
+      "scroll_count": 71,
+      "click_row": 6,
+      "raw_ocr": "FAIN (SEVILLE)"
+    },
+    "ANWSwedes": {
+      "scroll_count": 71,
+      "click_row": 7,
+      "raw_ocr": "WEUEN (SO LOCKHOLM)"
+    },
+    "ANWTexians": {
+      "scroll_count": 71,
+      "click_row": 8,
+      "raw_ocr": "ELAIANS LAUSLIN)"
+    },
+    "ANWUSA": {
+      "scroll_count": 71,
+      "click_row": 9,
+      "raw_ocr": "NITED SLALES (WASHINGION, UV. ©.)"
+    }
+  }
+}

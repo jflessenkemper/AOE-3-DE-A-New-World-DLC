@@ -1,6 +1,6 @@
 {
   "_doc": "Picker scroll calibration. Each wheel-down click advances the list by a fractional row. Maps scroll_count -> top_visible_civ_index. Used by lobby_driver.set_civ_by_index to compute exact scroll count needed. Empirically derived 2026-04-28 from artifacts/lobby_driver/picker_map/picker_scroll_NN.png.",
-  "total_civs": 49,
+  "total_civs": 46,
   "rows_visible": 10,
   "civ_names": [
     "Random Personality",
@@ -11,9 +11,7 @@
     "Barbary States",
     "Brazil",
     "Britain",
-    "California",
     "Canada",
-    "Central America",
     "Chile",
     "China",
     "Egypt",
@@ -50,8 +48,7 @@
     "Spain",
     "Sweden",
     "Texas",
-    "United States",
-    "Yucatan"
+    "United States"
   ],
   "scroll_to_top_idx": {
     "0": 0,

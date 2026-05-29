@@ -66,7 +66,7 @@ python3 tools/validation/exhibition_runner.py --manual-launch --match-seconds 18
 ```
 
 **Flow:**
-1. Script prints: `[MANUAL] Start a 1v1 AI match: British vs RvltModNapoleonicFrance (Hard, Legendary Leaders Test)`
+1. Script prints: `[MANUAL] Start a 1v1 AI match: British vs ANWNapoleonicFrance (Hard, ANEWWORLD scenario)`
 2. You manually start the game and queue the match with those exact civ/difficulty/scenario
 3. Script sleeps for 180s
 4. Script kills the game and parses the log
@@ -90,7 +90,7 @@ This is slower (manual overhead) but 100% reliable.
 
 ```bash
 # Test just two civs
-python3 tools/validation/exhibition_runner.py --only homecitybritish rvltmodhomecitynapoleon
+python3 tools/validation/exhibition_runner.py --only homecitybritish anwhomecitynapoleon
 
 # Resume from French (handy if a run was interrupted)
 python3 tools/validation/exhibition_runner.py --start-from homecityfrench
@@ -201,7 +201,7 @@ This tells you exactly what to fix for each failed civ.
 
 To speed up a test run:
 ```bash
-python3 tools/validation/exhibition_runner.py --match-seconds 60 --only homecitybritish rvltmodhomecitynapoleon
+python3 tools/validation/exhibition_runner.py --match-seconds 60 --only homecitybritish anwhomecitynapoleon
 ```
 
 ## Further Reading

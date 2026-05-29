@@ -266,7 +266,7 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
             "TC ring along the imperial road",
         ],
     },
-    "Indians Shivaji Maharaj Maratha": {
+    "Indians Akbar": {
         "imperialPsTitle": "Maratha Confederacy Empire",
         "imperialBsProse": "Shivaji's 1674 Chhatrapati coronation: a 300-fort Killa network, Ganimi Kava raid columns scaled to imperial range, and the Ashtapradhan ministerial structure speeding tech.",
         "imperialCombatDoctrine": "Aggressive raid-imperial — multi-column Ganimi Kava deep into Mughal territory anchored by hill-fort safe-points.",
@@ -344,7 +344,7 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
             "Post-road surveillance net",
         ],
     },
-    "Lakota Gall Sioux": {
+    "Lakota Crazy Horse": {
         "imperialPsTitle": "Greater Sioux Nation",
         "imperialBsProse": "Gall's pre-Reservation vision: Lakota sovereignty over Powder River, Black Hills, and Big Horn — buffalo-hunt mobility shared between economy and army, Cheyenne-Arapaho alliances scaling the lodge count.",
         "imperialCombatDoctrine": "Aggressive — maximum cavalry pressure with trail-of-burned-forts harassment to drive bluecoats off the map.",
@@ -474,7 +474,7 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
             "Naval screen substitutes for land defense",
         ],
     },
-    "Russians Ivan Terrible": {
+    "Russians Ivan the Terrible": {
         "imperialPsTitle": "Tsardom of All Russia",
         "imperialBsProse": "Ivan's 1547 Tsardom: Kazan and Astrakhan annexations, Streltsy permanent musketeer corps, Oprichnik shock cavalry, and Volga-Caspian river-fort expansion.",
         "imperialCombatDoctrine": "Aggressive — Streltsy mass plus Oprichnik shock terror, with river-borne expansion eastward.",
@@ -682,32 +682,6 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
             "Coastal naval shield",
         ],
     },
-    "Californians Vallejo Revolution": {
-        "imperialPsTitle": "Sonoma Frontier Empire",
-        "imperialBsProse": "Vallejo's military-administrative jurisdiction in northern California: defensive mission-presidio dominion, Russian-American Co. trade ties, and a Bear-Flag-Revolt collapse event late.",
-        "imperialCombatDoctrine": "Defensive — hold the territory rather than expand; presidio fort line plus tallow-trade ties.",
-        "imperialAges": {
-            "Discovery":  "Sonoma command organizes the northern frontier.",
-            "Colonial":   "Mission-presidio garrisons patrol the frontier.",
-            "Fortress":   "Cattle-and-tallow trade with Fort Ross strengthens the eco.",
-            "Industrial": "Presidio fort line hardens; native auxiliaries integrated.",
-            "Imperial":   "Sonoma apex: defensive presidio dominion, trade-post bonus, Bear-Flag-Revolt late debuff under US pressure.",
-        },
-        "imperialEcoBullets": [
-            "Cattle-and-tallow trade trickle",
-            "Russian-American Co. trade-post bonus",
-            "Mission estate distributed economic network",
-        ],
-        "imperialMilitaryBullets": [
-            "Vaquero auxiliary cavalry",
-            "Presidio garrisons hold ground",
-            "Native militia mustered locally",
-        ],
-        "imperialDefenseBullets": [
-            "Presidio fort line",
-            "Late Bear-Flag-Revolt collapse event",
-        ],
-    },
     "Canadians Brock Revolution": {
         "imperialPsTitle": "British North American Imperium",
         "imperialBsProse": "Brock's 1812 defense: empire-defended-from-within with Tecumseh's Confederacy, blockhouse fort line, and Royal Navy lake control.",
@@ -732,32 +706,6 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
         "imperialDefenseBullets": [
             "Blockhouse fort line on the frontier",
             "Compact fortified core",
-        ],
-    },
-    "Central Americans Morazan Revolution": {
-        "imperialPsTitle": "Federal Republic of Central America",
-        "imperialBsProse": "Morazan's federal imperium: Guatemala, El Salvador, Honduras, Nicaragua, and Costa Rica under one flag — liberal-reform civic anchor, native muster, coffee and mahogany economy.",
-        "imperialCombatDoctrine": "Combined — liberal-republic federal levy plus native auxiliaries spread across five provinces.",
-        "imperialAges": {
-            "Discovery":  "Federal flag raised over five provinces; first liberal reforms enacted.",
-            "Colonial":   "Maya and Pipil militia recruitment opens.",
-            "Fortress":   "Coffee plantations and mahogany lumberyards mature.",
-            "Industrial": "Town center radius bonus from liberal-reform civic anchor.",
-            "Imperial":   "Federal Republic apex: distributed economic network across five provinces, native muster, civic-radius bonus.",
-        },
-        "imperialEcoBullets": [
-            "Coffee trade-post scaling",
-            "Mahogany lumber-yield bonus",
-            "Liberal-reform town center radius",
-        ],
-        "imperialMilitaryBullets": [
-            "Maya and Pipil native muster",
-            "Federal levy line infantry",
-            "Distributed five-province army",
-        ],
-        "imperialDefenseBullets": [
-            "Distributed economic network depth",
-            "Provincial militia centers",
         ],
     },
     "Chileans OHiggins Revolution": {
@@ -1072,32 +1020,6 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
             "Late Thermidor collapse risk",
         ],
     },
-    "Rio Grande Canales Rosillo Revolution": {
-        "imperialPsTitle": "Republic of the Rio Grande 1840",
-        "imperialBsProse": "Canales' separatist republic on the Texas-Tamaulipas-Coahuila borderlands: short-lived imperial reach over Northern Mexico with vaquero and Chinaco horse mass.",
-        "imperialCombatDoctrine": "Aggressive raid — fastest cavalry at Imperial, frontier-scatter buildstyle scaled up.",
-        "imperialAges": {
-            "Discovery":  "Borderlands republic declared; first vaquero cadres ride.",
-            "Colonial":   "Chinaco lancer regiments begin border raids.",
-            "Fortress":   "Frontier scatter buildstyle expands across the borderlands.",
-            "Industrial": "Northern Mexico reach asserted; Centralist counter-pressure mounts.",
-            "Imperial":   "Rio Grande apex: fastest cavalry, scaled-up frontier scatter, late Centralist-Mexican collapse event.",
-        },
-        "imperialEcoBullets": [
-            "Border-raid loot trickle",
-            "Vaquero ranching coin",
-            "Frontier trade-post tolls",
-        ],
-        "imperialMilitaryBullets": [
-            "Vaquero and Chinaco horse mass",
-            "Fastest Imperial cavalry",
-            "Border-raid frontier columns",
-        ],
-        "imperialDefenseBullets": [
-            "Mobile frontier scatter depth",
-            "Late Centralist-Mexican collapse event",
-        ],
-    },
     "Romanians Cuza Revolution": {
         "imperialPsTitle": "United Principalities Imperium",
         "imperialBsProse": "Cuza's 1859-66 union of Wallachia and Moldavia: proto-Romanian imperial reach toward Transylvania and Dobruja, land-reform peasant levy, mixed line-infantry trained in three traditions.",
@@ -1174,32 +1096,6 @@ IMPERIAL_PLAYSTYLE_DATA: dict[str, dict] = {
         "imperialDefenseBullets": [
             "Frontier counter-punch doctrine",
             "Forward operational line on the border",
-        ],
-    },
-    "Yucatan Carrillo Puerto Revolution": {
-        "imperialPsTitle": "Yucatecan Socialist Imperium",
-        "imperialBsProse": "Carrillo Puerto's 1922-24 governorship: Apostle-of-the-Maya-Race agrarian-socialist regional autonomy, henequen plantation economy, Mayan auxiliary levy.",
-        "imperialCombatDoctrine": "Defensive — agrarian-socialist regional autonomy with Mayan native auxiliaries holding Yucatecan ground.",
-        "imperialAges": {
-            "Discovery":  "Socialist governorship asserts regional autonomy.",
-            "Colonial":   "Henequen plantation reorganization buffs villager output.",
-            "Fortress":   "Mayan auxiliary levy ships native warriors.",
-            "Industrial": "Anti-Mexican-federal stance hardens; agrarian reforms institutionalize.",
-            "Imperial":   "Yucatecan socialist apex: henequen-coin trickle, Mayan native shipments, late 1924 collapse political event.",
-        },
-        "imperialEcoBullets": [
-            "Henequen plantation coin trickle",
-            "Villager-reorganization socialist buff",
-            "Agrarian-reform civic anchor",
-        ],
-        "imperialMilitaryBullets": [
-            "Mayan auxiliary native warrior shipments",
-            "Indigenous-levee mass infantry",
-            "Jungle guerrilla skirmishers",
-        ],
-        "imperialDefenseBullets": [
-            "Yucatecan jungle-guerrilla network",
-            "Late 1924 collapse political event",
         ],
     },
 }

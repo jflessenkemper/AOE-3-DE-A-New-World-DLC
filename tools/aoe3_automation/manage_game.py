@@ -59,18 +59,40 @@ LIVE_MOD_PATH = (
     Path.home()
     / ".local/share/Steam/steamapps/compatdata"
     / str(APP_ID)
-    / "pfx/drive_c/users/steamuser/Games/Age of Empires 3 DE/76561198170207043/mods/local/Legendary Leaders AI"
+    / "pfx/drive_c/users/steamuser/Games/Age of Empires 3 DE/76561198170207043/mods/local/A New World"
 )
 
 # Directories that exist in the repo but should NOT be copied to the live
 # install. Mirrors tools/validation/validate_packaged_mod.py DEV_ONLY_TOP_LEVEL.
+#
+# IMPORTANT: sync uses `--delete-excluded` (see cmd_sync) so anything matching
+# these patterns gets pruned from the live install too — not just kept out of
+# new syncs. The 2026-05-11 0x5 incident was caused by 6 GB of stale .git,
+# .venv, .claude, artifacts/, tools/, etc. left over from earlier syncs that
+# pre-dated these excludes, slowing the engine's mod walk enough to time out
+# Xwayland :2.
 RSYNC_EXCLUDES = (
-    "/.*",
+    "/.*",                     # dotfiles/dotdirs: .git, .venv, .claude, .vscode, .clone, .pytest_cache, .gitignore, etc.
     "/age-of-pirates",
     "/age-of-pirates-main",
     "/reference-mods",
     "/tests",
     "/tools",
+    "/docs",
+    "/artifacts",
+    "/logs",
+    "/*.md",                   # root-level markdown (CHANGELOG, README, MOD_HISTORY, etc.)
+    "/*.txt",                  # root-level txt notes (session_notes_*, ANW_*.txt, etc.)
+    "/*.sh",                   # root-level shell scripts (run_anw_*.sh, comprehensive_test.sh, etc.)
+    "/*.html",                 # root-level reference HTML (a_new_world.html, DEVELOPMENT_REFERENCE.html, map_3d.html)
+    "/*.age3Yrec",             # leftover replays
+    "/blurb_database.json",
+    "/civ_string_id_map.json",
+    "/enriched_reference.json",
+    "/PLAYSTYLE_SPECIFICATIONS.json",
+    "/playstyle_spec.json",
+    "/reference_matrix.json",
+    "/test_scenarios.json",
 )
 
 
@@ -222,7 +244,11 @@ def cmd_sync(args: argparse.Namespace) -> int:
 
     src = str(REPO_ROOT) + os.sep
     dst = str(LIVE_MOD_PATH) + os.sep
-    cmd = ["rsync", "-a", "--checksum", "--delete", *excludes, src, dst]
+    # --delete-excluded ensures excluded paths get pruned from the live
+    # install, not just kept out of new syncs. Required to clean up cruft
+    # that pre-dated the current exclude list (see RSYNC_EXCLUDES comment).
+    cmd = ["rsync", "-a", "--checksum", "--delete", "--delete-excluded",
+           *excludes, src, dst]
     if args.dry_run:
         cmd.insert(1, "-n")
     print("Running:", " ".join(cmd))

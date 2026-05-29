@@ -4,7 +4,7 @@
     "desc": "Enables Musketeers and Halberdiers to benefit from Combat promotions to receive extra hitpoints and damage for each defeated enemy military unit.",
     "icon": "french_royal_army.png"
   },
-  "RvltModHCMercsMamelukes": {
+  "ANWHCMercsMamelukes": {
     "name": "Hire Mamelukes",
     "desc": "Enables Mamelukes to be hired as mercenaries.",
     "icon": "mameluke.png"

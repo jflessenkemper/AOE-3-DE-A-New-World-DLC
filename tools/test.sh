@@ -100,7 +100,7 @@ if [[ $status -eq 0 ]]; then
   echo
   echo "Mod inventory:"
   printf "  base civs:        %s homecity files\n" "$(ls data/homecity*.xml 2>/dev/null | wc -l)"
-  printf "  revolution civs:  %s homecity files\n" "$(ls data/rvltmodhomecity*.xml 2>/dev/null | wc -l)"
+  printf "  revolution civs:  %s homecity files\n" "$(ls data/anwhomecity*.xml 2>/dev/null | wc -l)"
   printf "  leader XS files:  %s\n" "$(find game/ai/leaders -name 'leader_*.xs' 2>/dev/null | wc -l)"
   printf "  workflows:        %s GitHub Actions checks\n" "$(ls .github/workflows/*.yml 2>/dev/null | wc -l)"
   printf "  validators:       %s static checks\n" "$(ls tools/validation/validate_*.py 2>/dev/null | wc -l)"

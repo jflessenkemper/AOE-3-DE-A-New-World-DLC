@@ -108,7 +108,7 @@ NAMED_LEADER_DISPATCH = {
     "cCivFrench":       ("leader_bourbon.xs",     "initLeaderBourbon",     "French Louis XVIII Bourbon"),
     "cCivBritish":      ("leader_wellington.xs",  "initLeaderWellington",  "British Elizabeth"),
     "cCivGermans":      ("leader_frederick.xs",   "initLeaderFrederick",   "Germans Frederick Great"),
-    "cCivRussians":     ("leader_catherine.xs",   "initLeaderCatherine",   "Russians Catherine"),
+    "cCivRussians":     ("leader_catherine.xs",   "initLeaderCatherine",   "Russians Ivan the Terrible"),
     "cCivSpanish":      ("leader_isabella.xs",    "initLeaderIsabella",    "Spanish Isabella Castile"),
     "cCivOttomans":     ("leader_suleiman.xs",    "initLeaderSuleiman",    "Ottomans Suleiman"),
     "cCivPortuguese":   ("leader_henry.xs",       "initLeaderHenry",       "Portuguese Henry Navigator"),
@@ -128,36 +128,32 @@ NAMED_LEADER_DISPATCH = {
     "cCivXPSioux":      ("leader_crazy_horse.xs", "initLeaderCrazyHorse",  "Lakota Crazy Horse"),
     "cCivDESwedish":    ("leader_gustavus.xs",    "initLeaderGustavus",    "Swedes Gustavus Adolphus Swedish"),
     # Napoleonic France is gated through rvlt check first.
-    "RvltModNapoleonicFrance": ("leader_napoleon.xs", "initLeaderNapoleon", "Napoleonic France Napoleon Bonaparte Revolution"),
+    "ANWNapoleonicFrance": ("leader_napoleon.xs", "initLeaderNapoleon", "Napoleonic France Napoleon Bonaparte Revolution"),
 }
 
 # Revolution civs handled in leader_revolution_commanders.xs.
 # Reference: game/ai/leaders/leader_revolution_commanders.xs.
 # Map rvltName → spec key.
 REV_LEADER_SPEC = {
-    "RvltModCanadians":            "Canadians Brock Revolution",
-    "RvltModRevolutionaryFrance":  "Revolutionary France Robespierre Revolution",
-    "RvltModFrenchCanadians":      "French Canadians Papineau Revolution",
-    "RvltModBrazil":               "Brazil Pedro Revolution",
-    "RvltModArgentines":           "Argentines San Martin Revolution",
-    "RvltModChileans":             "Chileans OHiggins Revolution",
-    "RvltModPeruvians":            "Peruvians Santa Cruz Peru Revolution",
-    "RvltModColumbians":           "Columbians Bolivar Colombia Revolution",
-    "RvltModHaitians":             "Haitians Louverture Revolution",
-    "RvltModIndonesians":          "Indonesians Diponegoro Revolution",
-    "RvltModSouthAfricans":        "South Africans Kruger Boer Revolution",
-    "RvltModFinnish":              "Finnish Mannerheim Revolution",
-    "RvltModHungarians":           "Hungarians Kossuth Revolution",
-    "RvltModRomanians":            "Romanians Cuza Revolution",
-    "RvltModEgyptians":            "Egyptians Muhammad Ali Revolution",
-    "RvltModBarbary":              "Barbary Barbarossa Corsair Revolution",
-    "RvltModYucatan":              "Yucatan Pat Revolution",
-    "RvltModMayans":               "Mayans Canek Maya Revolution",
-    "RvltModTexians":              "Texians Sam Houston Texas Revolution",
-    "RvltModRioGrande":            "Rio Grande Canales Rosillo Revolution",
-    "RvltModCalifornians":         "Californians Vallejo Revolution",
-    "RvltModBajaCalifornians":     None,  # may not be in spec
-    "RvltModCentralAmericans":     "Central Americans Morazan Revolution",
+    "ANWCanadians":            "Canadians Brock Revolution",
+    "ANWRevFrance":  "Revolutionary France Robespierre Revolution",
+    "ANWBrazil":               "Brazil Pedro Revolution",
+    "ANWArgentines":           "Argentines San Martin Revolution",
+    "ANWChileans":             "Chileans OHiggins Revolution",
+    "ANWPeruvians":            "Peruvians Santa Cruz Peru Revolution",
+    "ANWColumbians":           "Columbians Bolivar Colombia Revolution",
+    "ANWHaitians":             "Haitians Louverture Revolution",
+    "ANWIndonesians":          "Indonesians Diponegoro Revolution",
+    "ANWSouthAfricans":        "South Africans Kruger Boer Revolution",
+    "ANWFinnish":              "Finnish Mannerheim Revolution",
+    "ANWHungarians":           "Hungarians Kossuth Revolution",
+    "ANWRomanians":            "Romanians Cuza Revolution",
+    "ANWEgyptians":            "Egyptians Muhammad Ali Revolution",
+    "ANWBarbary":              "Barbary Barbarossa Corsair Revolution",
+    "ANWMayans":               "Mayans Canek Maya Revolution",
+    "ANWTexians":              "Texians Sam Houston Texas Revolution",
+    "ANWRioGrande":            "Rio Grande Canales Rosillo Revolution",
+    "ANWBajaCalifornians":     None,  # may not be in spec
 }
 
 # ── Block-level parser ───────────────────────────────────────────────────
@@ -346,6 +342,9 @@ def parse_block(body: str) -> dict:
     m = re.search(r"gLLForwardBaseEarliestMs\s*=\s*(-?\d+)", body)
     if m:
         out["forward_base"]["earliest_ms"] = int(m.group(1))
+    # Note: the broader scan for ``llEnableForwardBaseStyle()`` in
+    # age-rules (outside the init block) happens at the caller level
+    # in derive_for_civ — see the ``style_enabled`` set after parse_block.
     return out
 
 # Find revolution-civ blocks inside leader_revolution_commanders.xs.
@@ -477,7 +476,11 @@ def check_claims(spec_claims: dict, behaviour: dict) -> list[dict]:
         fb = behaviour.get("forward_base", {})
         sp = behaviour.get("strongpoint", {})
         eff_ms = fb.get("earliest_ms") or fb.get("earliest_ms_from_style")
-        fwd_enabled = (eff_ms is not None and eff_ms <= 480000) or sp.get("prefer_forward_base")
+        fwd_enabled = (
+            (eff_ms is not None and eff_ms <= 480000)
+            or sp.get("prefer_forward_base")
+            or fb.get("style_enabled") is True
+        )
         if not fwd_enabled:
             mm.append({
                 "claim": "expects_forward",
@@ -550,6 +553,11 @@ def derive_all() -> dict:
         if not body:
             continue
         parsed = parse_block(body)
+        # Detect ``llEnableForwardBaseStyle()`` anywhere in the full
+        # leader source (including age-rules) — leaders like Shivaji
+        # opt into the forward axis via the age-2 rule, not init.
+        if re.search(r"\bllEnableForwardBaseStyle\s*\(", src):
+            parsed.setdefault("forward_base", {})["style_enabled"] = True
         cb = CivBehaviour(spec_key=spec_key, source_file=str(xs_path.relative_to(ROOT)))
         for k, v in parsed.items():
             if hasattr(cb, k):

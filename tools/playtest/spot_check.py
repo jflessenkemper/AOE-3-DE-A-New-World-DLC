@@ -8,7 +8,7 @@ Expected layout:
         ...
 
 Filename stem (case-insensitive) must match either the civ id
-(`cCivBritish`, `RvltModNapoleonicFrance`) or one of the labels in
+(`cCivBritish`, `ANWNapoleonicFrance`) or one of the labels in
 `expectations.CIV_LABELS` (or a unique prefix of it). Optional `_<seq>`
 suffix is allowed for multiple shots of the same civ:
 `british_8min.png`, `british_15min.png`.

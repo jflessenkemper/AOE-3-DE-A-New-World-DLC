@@ -52,6 +52,7 @@ from tools.migration.anw_mapping import (  # noqa: E402
     ANW_CIVS_BY_SLUG,
     ANW_DEFERRED_SLUGS,
     ANW_HOMECITY_MAP,
+    engine_token_for,
 )
 from tools.validation.validate_personality_overrides import (  # noqa: E402
     load_string_table,
@@ -260,7 +261,7 @@ def load_homecity_meta(homecity_basename: str) -> tuple[StringRef, str, str]:
     """Return (HC name string-ref, HC civ token, HC flag relative path).
 
     The base-game homecity*.xml uses `<civ>` (token) + a localized `<name>`.
-    Mod rvltmodhomecity*.xml does the same.
+    Mod anwhomecity*.xml does the same.
     """
     path = REPO / "data" / f"{homecity_basename}.xml"
     if not path.is_file():
@@ -344,7 +345,10 @@ def collect_civ(slug: str, *, civmods_index: dict[str, ET.Element], strings: dic
         raise ValueError(f"slug {slug!r} not in ANW_CIVS_BY_SLUG")
 
     # Personality file — use the new ANW-migrated name
-    personality_path = AI_DIR / f"{anw_civ.anw_stem}.personality"
+    # Personality files live at game/ai/anw{stem}.personality for every ANW
+    # civ (both base-civ overlays and revolution civs). The stem itself
+    # doesn't include the "anw" prefix — see anw_mapping._build_anw_civs.
+    personality_path = AI_DIR / f"anw{anw_civ.anw_stem}.personality"
     pinfo = parse_personality(personality_path) if personality_path.is_file() else {
         "nameID": None, "tooltipID": None, "forcedciv": None, "icon": None, "chatset": None,
     }
@@ -379,10 +383,17 @@ def collect_civ(slug: str, *, civmods_index: dict[str, ET.Element], strings: dic
     )
 
     # ── civmods.xml fields (all 48 civs have entries post-apply) ─────────────────
-    civ_el = civmods_index.get(anw_civ.anw_token)
+    # civmods.xml is keyed by the engine token (e.g. "Russians"), while the
+    # ANW mapping uses canonical tokens like "ANWRussians". Translate via
+    # engine_token_for() so base-civ slugs (British, Russian, …) resolve.
+    civmods_key = engine_token_for(anw_civ.anw_token)
+    civ_el = civmods_index.get(civmods_key)
 
     if civ_el is None:
-        raise ValueError(f"ANW civ {anw_civ.anw_token!r} has no civmods.xml entry")
+        raise ValueError(
+            f"ANW civ {anw_civ.anw_token!r} (engine token {civmods_key!r}) "
+            "has no civmods.xml entry"
+        )
 
     # Surface 1: civ-picker name
     display_id = get_civmod_field(civ_el, "DisplayNameID")
@@ -463,9 +474,17 @@ def collect_civ(slug: str, *, civmods_index: dict[str, ET.Element], strings: dic
     civ.player_summary_hc_civ = hc_civ
 
     # ── Surface 5 / 14: deck (Deck Builder = Player Summary deck) ──────────────
-    # All 48 civs use decks_anw.json with ANW token as key
-    deck = decks_anw.get(anw_civ.anw_token, {})
-    civ.deck_source = f"data/decks_anw.json[{anw_civ.anw_token!r}]"
+    # decks_anw.json is keyed by a mix of ANW tokens and engine tokens
+    # (the 12 base civs we overlay — Aztecs, Chinese, Indians, … — keep
+    # their engine token as the deck key). Try ANW token first, then fall
+    # back to engine token.
+    deck_key = anw_civ.anw_token
+    if deck_key not in decks_anw:
+        engine_key = engine_token_for(anw_civ.anw_token)
+        if engine_key in decks_anw:
+            deck_key = engine_key
+    deck = decks_anw.get(deck_key, {})
+    civ.deck_source = f"data/decks_anw.json[{deck_key!r}]"
 
     civ.deck_name = '"A New World"'
     cards_by_age: list[list[tuple[str, str, str]]] = [[], [], [], [], []]
@@ -509,11 +528,10 @@ def _render_anw_blurb(slug: str) -> str | None:
     label headers — civ bonus, unique units, unique buildings, playstyle,
     age up. Replaces the inconsistent vanilla rollover prose.
     """
-    if not _ANW_BLURBS or _anw_by_slug is None:
+    if not _ANW_BLURBS:
         return None
-    try:
-        anw = _anw_by_slug(slug)
-    except KeyError:
+    anw = ANW_CIVS_BY_SLUG.get(slug)
+    if anw is None:
         return None
     entry = _ANW_BLURBS.get(anw.anw_token)
     if not entry:
@@ -639,37 +657,40 @@ def render_dev_table(civ: CivAssets) -> str:
     ]
 
     rows.append(_section_head("Provenance"))
-    if _anw_by_slug is not None:
-        try:
-            anw = _anw_by_slug(civ.slug)
-        except KeyError:
-            anw = None
-        if anw is not None:
-            rows.append(_row(
-                "Civ token",
-                f'<code class="dev-id">{html.escape(anw.anw_token)}</code>',
-                context="civmods.xml &lt;Civ&gt;&lt;Name&gt; + .personality &lt;forcedciv&gt;",
-            ))
-            rows.append(_row(
-                "Personality file",
-                f'<code class="dev-path">game/ai/{html.escape(anw.new_personality_filename)}</code>',
-            ))
-            rows.append(_row(
-                "Homecity file",
-                f'<code class="dev-path">data/{html.escape(anw.new_homecity_filename)}</code>',
-            ))
+    # ANW_CIVS_BY_SLUG is keyed by the same slug the dev block uses, so we can
+    # look up canonical token / filenames without the legacy `_anw_by_slug`
+    # helper (which referenced an older dataclass shape).
+    anw = ANW_CIVS_BY_SLUG.get(civ.slug)
+    if anw is not None:
+        personality_filename = f"anw{anw.anw_stem}.personality"
+        rows.append(_row(
+            "Civ token",
+            f'<code class="dev-id">{html.escape(anw.anw_token)}</code>',
+            context="civmods.xml &lt;Civ&gt;&lt;Name&gt; + .personality &lt;forcedciv&gt;",
+        ))
+        rows.append(_row(
+            "Personality file",
+            f'<code class="dev-path">game/ai/{html.escape(personality_filename)}</code>',
+        ))
+        rows.append(_row(
+            "Homecity file",
+            f'<code class="dev-path">data/{html.escape(anw.new_homecity_filename)}</code>',
+        ))
+        if civ.chatset_name:
             rows.append(_row(
                 "Chatset",
-                f'<code class="dev-id">{html.escape(anw.chatset_new)}</code>',
+                f'<code class="dev-id">{html.escape(civ.chatset_name)}</code>',
                 context="game/ai/chatsetsmods.xml",
             ))
-            rows.append(_row(
-                "Deck key",
-                f'<code class="dev-id">data/decks_anw.json[&quot;{html.escape(anw.anw_token)}&quot;]</code>',
-            ))
-        else:
-            rows.append(_row("Personality file",
-                             f'<code class="dev-path">game/ai/{html.escape(civ.leader_personality)}</code>'))
+        # Use the same resolved deck source string as the Deck Builder row.
+        # decks_anw.json is keyed by a mix of ANW tokens and engine tokens
+        # (XPAztec, DEEthiopians, ...), so the canonical key isn't always
+        # anw.anw_token. civ.deck_source captures whichever key actually has
+        # the deck after resolution.
+        rows.append(_row(
+            "Deck key",
+            f'<code class="dev-id">{html.escape(civ.deck_source)}</code>',
+        ))
     else:
         rows.append(_row("Personality file",
                          f'<code class="dev-path">game/ai/{html.escape(civ.leader_personality)}</code>'))

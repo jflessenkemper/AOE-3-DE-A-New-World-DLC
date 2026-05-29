@@ -7,13 +7,13 @@ the country is the civ's identity; the leader belongs to the personality.
 
 Correct architecture:
   - civmods.xml <DisplayNameID> → country string (base-game default, unchanged)
-  - rvltmod*.personality <nameID> → NEW mod string (leader name)
+  - anw*.personality <nameID> → NEW mod string (leader name)
 
 This script:
   1. Allocates leader-name strings at IDs LEADER_ID_BASE + offset (default 490250+)
   2. Writes those entries into stringmods.xml under MOD-CIV-LEADER-NAMES markers
   3. REMOVES any prior overrides at the civ DisplayNameIDs (80806-80835 etc.)
-  4. Rewrites rvltmod*.personality files' <nameID> and <playerNames><nameID>
+  4. Rewrites anw*.personality files' <nameID> and <playerNames><nameID>
      to point to the new leader IDs.
 
 Idempotent.
@@ -38,32 +38,28 @@ PERSIST_CIV_NAMES = {
 
 # (personality_filename_stem, leader_display_name, civ_display_name_id_to_unoverride)
 MOD_LEADERS = [
-    ("rvltmodnapoleonicfrance",   "Napoleon Bonaparte",        490003),
-    ("rvltmodrevolutionaryfrance","Maximilien Robespierre",    490001),
-    ("rvltmodamericans",          "Thomas Jefferson",          80829),
-    ("rvltmodmexicans",           "Miguel Hidalgo",            80830),
-    ("rvltmodcanadians",          "Isaac Brock",               80807),
-    ("rvltmodfrenchcanadians",    "Louis-Joseph Papineau",     110319),
-    ("rvltmodbrazil",             "Pedro I of Brazil",         80831),
-    ("rvltmodargentines",         "José de San Martín",        80833),
-    ("rvltmodchileans",           "Bernardo O'Higgins",        80835),
-    ("rvltmodperuvians",          "Andrés de Santa Cruz",      80832),
-    ("rvltmodcolumbians",         "Simón Bolívar",             80834),
-    ("rvltmodhaitians",           "Toussaint L'Ouverture",     80828),
-    ("rvltmodindonesians",        "Prince Diponegoro",         80811),
-    ("rvltmodsouthafricans",      "Paul Kruger",               80813),
-    ("rvltmodfinnish",            "Carl Gustaf Mannerheim",    80809),
-    ("rvltmodhungarians",         "Lajos Kossuth",             80810),
-    ("rvltmodromanians",          "Alexandru Ioan Cuza",       80812),
-    ("rvltmodbarbary",            "Hayreddin Barbarossa",      80806),
-    ("rvltmodegyptians",          "Muhammad Ali Pasha",        80808),
-    ("rvltmodcentralamericans",   "Francisco Morazán",         112802),
-    ("rvltmodbajacalifornians",   "Juan Bautista Alvarado",    112806),
-    ("rvltmodyucatan",            "Felipe Carrillo Puerto",    112810),
-    ("rvltmodriogrande",          "Antonio Canales Rosillo",   112814),
-    ("rvltmodmayans",             "Jacinto Canek",             112816),
-    ("rvltmodcalifornians",       "Mariano Vallejo",           112822),
-    ("rvltmodtexians",            "Sam Houston",               112826),
+    ("anwnapoleonicfrance",   "Napoleon Bonaparte",        490003),
+    ("anwrevfrance","Maximilien Robespierre",    490001),
+    ("anwamericans",          "Thomas Jefferson",          80829),
+    ("anwmexicans",           "Miguel Hidalgo",            80830),
+    ("anwcanadians",          "Isaac Brock",               80807),
+    ("anwbrazil",             "Pedro I of Brazil",         80831),
+    ("anwargentines",         "José de San Martín",        80833),
+    ("anwchileans",           "Bernardo O'Higgins",        80835),
+    ("anwperuvians",          "Andrés de Santa Cruz",      80832),
+    ("anwcolumbians",         "Simón Bolívar",             80834),
+    ("anwhaitians",           "Toussaint L'Ouverture",     80828),
+    ("anwindonesians",        "Prince Diponegoro",         80811),
+    ("anwsouthafricans",      "Paul Kruger",               80813),
+    ("anwfinnish",            "Carl Gustaf Mannerheim",    80809),
+    ("anwhungarians",         "Lajos Kossuth",             80810),
+    ("anwromanians",          "Alexandru Ioan Cuza",       80812),
+    ("anwbarbary",            "Hayreddin Barbarossa",      80806),
+    ("anwegyptians",          "Muhammad Ali Pasha",        80808),
+    ("anwbajacalifornians",   "Juan Bautista Alvarado",    112806),
+    ("anwriogrande",          "Antonio Canales Rosillo",   112814),
+    ("anwmayans",             "Jacinto Canek",             112816),
+    ("anwtexians",            "Sam Houston",               112826),
 ]
 
 

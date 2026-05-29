@@ -117,32 +117,54 @@ LEADER_KEY_RX = re.compile(r'gLLLeaderKey\s*=\s*"([a-zA-Z_]+)"')
 
 def parse_leader_file(path: Path, helpers: dict[str, dict[str, Any]]) -> dict[str, Any]:
     """Pull every llUse*Style() call + post-call gLL* override out of a
-    leader file. Last write wins (engine semantics)."""
+    leader file. Last write wins (engine semantics).
+
+    For wall_strategy, any explicit ``gLLWallStrategy = cLLWallStrategy<X>``
+    assignment that appears *after* the last llUse*Style() call in the file
+    is treated as a spec override and takes precedence over the helper's
+    default. This avoids false-positives when a leader file intentionally
+    overrides the helper's wall strategy (e.g. Montezuma, Pachacuti).
+    """
     text = path.read_text(encoding="utf-8", errors="replace")
 
-    style_calls = re.findall(r"(llUse\w+Style)\s*\(", text)
-    direct_walls = WALL_ASSIGN_RX.findall(text)
+    # Find position of last style-helper call so we can check for
+    # post-helper gLLWallStrategy overrides.
+    style_call_matches = list(re.finditer(r"(llUse\w+Style)\s*\(", text))
+    style_calls = [m.group(1) for m in style_call_matches]
     direct_mdist = re.findall(r"gLLMilitaryDistanceMultiplier\s*=\s*([\d.]+)", text)
 
     style = style_calls[-1] if style_calls else None
     style_info = helpers.get(style, {}) if style else {}
 
-    # Effective wall_strategy: last gLLWallStrategy assignment in file
-    # wins (these typically come from inside llUse*Style() bodies via
-    # llConfigureBuildStyleProfile, but leader files can override).
+    # Effective wall_strategy: start from the style helper's default, then
+    # check for any explicit gLLWallStrategy assignment that appears AFTER
+    # the last helper call in this leader file. Such post-helper overrides
+    # are intentional spec overrides and must take precedence.
     effective_wall = style_info.get("wall_strategy")
-    if direct_walls:
-        last = direct_walls[-1]
-        # Only count it as an override if the leader file *itself* sets
-        # the strategy outside the style helper. Style helpers live in
-        # leaderCommon.xs, so leader_*.xs's own writes always count.
-        effective_wall = WALL_STRAT_INT.get(last, effective_wall)
+    wall_override_const: Optional[str] = None
+
+    if style_call_matches:
+        helper_end_pos = style_call_matches[-1].end()
+        post_helper_text = text[helper_end_pos:]
+        post_walls = WALL_ASSIGN_RX.findall(post_helper_text)
+        if post_walls:
+            # Last post-helper assignment wins.
+            wall_override_const = post_walls[-1]
+            effective_wall = WALL_STRAT_INT.get(wall_override_const, effective_wall)
+    else:
+        # No style helper at all — check the whole file for a direct assign.
+        direct_walls = WALL_ASSIGN_RX.findall(text)
+        if direct_walls:
+            wall_override_const = direct_walls[-1]
+            effective_wall = WALL_STRAT_INT.get(wall_override_const, effective_wall)
 
     return {
         "file": path.name,
         "selected_style": style,
         "style_wall_strategy": style_info.get("wall_strategy"),
         "effective_wall_strategy": effective_wall,
+        # Non-None when a post-helper direct assignment overrides the style.
+        "wall_strategy_override_const": wall_override_const,
         "build_style": style_info.get("build_style"),
         "leader_key_assigns": LEADER_KEY_RX.findall(text),
         "mdist_overrides": [float(x) for x in direct_mdist],
@@ -177,7 +199,7 @@ def _spec_key_for_leader(slug: str, runtime_keys: list[str],
         ll = (v.get("leader_label") or "").lower()
         if target in ll:
             return k
-        # Fall back to data-name slug match (revolutions: 'rvltmodbrazil'
+        # Fall back to data-name slug match (revolutions: 'anwbrazil'
         # → data-name 'Brazil Pedro II' won't match leader_label, but
         # the runtime slug matches the chatset key one-to-one — for
         # revolutions the LEADER files are revolution_commanders /
@@ -206,13 +228,19 @@ def check_leader(parsed: dict[str, Any], spec_entry: dict[str, Any]) -> list[tup
             out.append((WARN, "wall_strategy",
                 f"no llUse*Style() call found; spec wants {WALL_STRAT_NAME.get(expected,'?')}({expected})"))
         elif actual != expected:
+            via_str = parsed['selected_style']
+            if parsed.get("wall_strategy_override_const"):
+                via_str = f"gLLWallStrategy override after {via_str}"
             out.append((FAIL, "wall_strategy",
                 f"file picks {WALL_STRAT_NAME.get(actual,'?')}({actual}) "
-                f"via {parsed['selected_style']}, spec wants "
+                f"via {via_str}, spec wants "
                 f"{WALL_STRAT_NAME.get(expected,'?')}({expected})"))
         else:
+            via_str = parsed['selected_style']
+            if parsed.get("wall_strategy_override_const"):
+                via_str = f"gLLWallStrategy override after {via_str}"
             out.append((PASS, "wall_strategy",
-                f"{WALL_STRAT_NAME.get(actual,'?')} (via {parsed['selected_style']})"))
+                f"{WALL_STRAT_NAME.get(actual,'?')} (via {via_str})"))
 
     # Military distance band — last gLLMilitaryDistanceMultiplier
     # override in the leader file vs. the band claim. If the leader file

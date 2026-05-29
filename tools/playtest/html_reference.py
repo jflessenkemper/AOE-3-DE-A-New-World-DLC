@@ -157,7 +157,6 @@ def _classify(prose: str) -> tuple[Optional[int], dict[str, bool], list[str]]:
 MULTI_TOKEN_CIVS = frozenset({
     "French Canadians", "French Louis",
     "Baja Californians",
-    "Central Americans",
     "Napoleonic France",
     "Revolutionary France",
     "Rio Grande",

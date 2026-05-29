@@ -58,7 +58,7 @@ _AOE3_GAME_DATA: Path = (
 )
 
 USER_CFG_PATH: Path = _AOE3_GAME_DATA / "Startup" / "user.cfg"
-USER_PROFILE_XML: Path = _AOE3_GAME_DATA / "Player" / "UserProfile.xml"
+USER_PROFILE_XML: Path = _AOE3_GAME_DATA / "Users" / "UserProfile.xml"
 SCENARIO_DIR: Path = _AOE3_GAME_DATA / "Scenario"
 
 # ---------------------------------------------------------------------------

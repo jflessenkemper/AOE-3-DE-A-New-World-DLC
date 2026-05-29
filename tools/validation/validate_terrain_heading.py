@@ -57,32 +57,28 @@ BASE_CIVS = (
 )
 
 REVOLUTION_CIVS = (
-    "RvltModAmericans",
-    "RvltModArgentines",
-    "RvltModBajaCalifornians",
-    "RvltModBarbary",
-    "RvltModBrazil",
-    "RvltModCalifornians",
-    "RvltModCanadians",
-    "RvltModCentralAmericans",
-    "RvltModChileans",
-    "RvltModColumbians",
-    "RvltModEgyptians",
-    "RvltModFinnish",
-    "RvltModFrenchCanadians",
-    "RvltModHaitians",
-    "RvltModHungarians",
-    "RvltModIndonesians",
-    "RvltModMayans",
-    "RvltModMexicans",
-    "RvltModNapoleonicFrance",
-    "RvltModPeruvians",
-    "RvltModRevolutionaryFrance",
-    "RvltModRioGrande",
-    "RvltModRomanians",
-    "RvltModSouthAfricans",
-    "RvltModTexians",
-    "RvltModYucatan",
+    "ANWAmericans",
+    "ANWArgentines",
+    "ANWBajaCalifornians",
+    "ANWBarbary",
+    "ANWBrazil",
+    "ANWCanadians",
+    "ANWChileans",
+    "ANWColumbians",
+    "ANWEgyptians",
+    "ANWFinnish",
+    "ANWHaitians",
+    "ANWHungarians",
+    "ANWIndonesians",
+    "ANWMayans",
+    "ANWMexicans",
+    "ANWNapoleonicFrance",
+    "ANWPeruvians",
+    "ANWRevFrance",
+    "ANWRioGrande",
+    "ANWRomanians",
+    "ANWSouthAfricans",
+    "ANWTexians",
 )
 
 ANW_CIVS = (
@@ -130,7 +126,17 @@ ANW_CIVS = (
     "ANWUSA",
 )
 
-EXPECTED_TOTAL = len(BASE_CIVS) + len(REVOLUTION_CIVS) + len(ANW_CIVS)  # 88
+# Vanilla-compatibility branches kept in the XS files for defensive fallback
+# when a player revolts INTO one of these civs via the base game.  They are
+# NOT ANW civs — no nation-card content — so they're excluded from the roster
+# check but silently tolerated rather than flagged as unexpected.
+VANILLA_COMPAT_CIVS = frozenset({
+    "ANWCalifornians",
+    "ANWCentralAmericans",
+    "ANWYucatan",
+})
+
+EXPECTED_TOTAL = len(BASE_CIVS) + len(REVOLUTION_CIVS) + len(ANW_CIVS)
 
 TERRAIN_CONST_RE = re.compile(r"\bcLLTerrain[A-Za-z]+\b")
 HEADING_CONST_RE = re.compile(r"\bcLLHeading[A-Za-z]+\b")
@@ -296,8 +302,12 @@ def validate_terrain_heading(repo_root: Path = REPO_ROOT) -> list[str]:
 
     for label, branch_body in branches:
         if label not in expected:
+            if label in VANILLA_COMPAT_CIVS:
+                # Vanilla-compatibility fallback branch — intentionally kept in
+                # XS but not an ANW civ.  Silently skip.
+                continue
             # Tolerate experimental branches but flag them so they don't drift.
-            issues.append(f"{label}: unexpected civ branch (not in known 48-civ roster)")
+            issues.append(f"{label}: unexpected civ branch (not in known ANW roster)")
             continue
         issues.extend(_check_branch(label, branch_body, terrain_consts, heading_consts))
 

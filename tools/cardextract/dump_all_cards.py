@@ -28,7 +28,7 @@ OUT = REPO / "docs" / "CARD_INDEX.txt"
 def categorize(card_id: str) -> str:
     """Best-effort DLC/source bucket based on card-id naming convention."""
     cid = card_id.lower()
-    if cid.startswith("rvltmod"):
+    if cid.startswith("anw"):
         return "Mod (Legendary Leaders revolution civs)"
     if "revmx" in cid or "mexico" in cid or "chinaco" in cid or "salteador" in cid or "soldado" in cid or "yucateco" in cid:
         return "Mexico DLC"

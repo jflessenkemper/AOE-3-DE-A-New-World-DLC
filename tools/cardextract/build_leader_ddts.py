@@ -1,5 +1,24 @@
 """Build leader-specific .ddt portraits from source PNGs.
 
+DEPRECATED — DO NOT USE. See ``png_to_ddt.py`` instead.
+
+Bug: this script writes 64x64 DXT1 pixel data into a header that claims
+``format=1``. Per the canonical AoE3 DE DDT spec (see ``png_to_ddt.py``),
+``format=1`` means *uncompressed BGRA32*, NOT DXT1 (which would be format=4).
+The engine reads the format byte, tries to decode 2048 bytes as BGRA32,
+gets garbage, and silently renders an empty portrait slot. The 2026-05-12
+live test confirmed the failure mode: lobby AI rows had no portrait at all
+when ``<smallportraittexture>`` pointed at a leader-specific DDT built here.
+
+Use this instead:
+
+    from png_to_ddt import png_to_ddt
+    png_to_ddt(src_png, dst_ddt, size=128)
+
+which produces a 128x128 BGRA32 DDT with the correct 24-byte header
+(matching the format the engine actually accepts, and matching the
+working ANW custom-civ DDTs at 65,560 bytes).
+
 Reads <icon> from every game/ai/*.personality and writes a 64x64 DXT1 .ddt
 to art/ui/singleplayer/ using the same base name. The mod loader picks these
 up to override base-game civ-level portraits in chat bubbles, scoreboards,

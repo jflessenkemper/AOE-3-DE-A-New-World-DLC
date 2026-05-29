@@ -35,11 +35,11 @@
           </civlogic>
         </choice>
 		
-        <choice name="RvltModAge0Hungarians">
+        <choice name="ANWAge0Hungarians">
           <soundset name="GermanCaravelSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Romanians">
+        <choice name="ANWAge0Romanians">
           <soundset name="RussianCaravelSelect">
           </soundset>
         </choice>
@@ -88,11 +88,11 @@
           </civlogic>
         </choice>
 		
-        <choice name="RvltModAge0Hungarians">
+        <choice name="ANWAge0Hungarians">
           <soundset name="GermanCaravelAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Romanians">
+        <choice name="ANWAge0Romanians">
           <soundset name="RussianCaravelAcknowledge">
           </soundset>
         </choice>

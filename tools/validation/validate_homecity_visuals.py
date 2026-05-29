@@ -15,7 +15,7 @@ leading directory of ``<visual>`` / ``<watervisual>`` / ``<backgroundvisual>``
 / ``<camera>`` / ``<widescreencamera>``.
 
 A small allow-list permits a single intentional exception:
-``RvltModMexicans`` uses ``revolution\\revolution_homecity.xml`` paired with
+``ANWMexicans`` uses ``revolution\\revolution_homecity.xml`` paired with
 ``revolution\\pathable_area.gr2`` — internally consistent.
 """
 
@@ -37,7 +37,7 @@ from tools.validation.common import (
 )
 
 
-DEFAULT_HOMECITY_GLOBS = ("homecity*.xml", "rvltmodhomecity*.xml")
+DEFAULT_HOMECITY_GLOBS = ("homecity*.xml", "anwhomecity*.xml")
 
 # Fields whose first path segment must match <pathdata>'s first path segment.
 NAMESPACE_FIELDS = (

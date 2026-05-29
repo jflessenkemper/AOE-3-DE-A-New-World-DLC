@@ -125,7 +125,7 @@ Civ coverage (matrix labels A..F):
 |-------|-------------------------------|
 | A | Argentines, Aztecs, BajaCalifornians, Barbary, Brazil, British, Californians, Canadians |
 | B | CentralAmericans, Chileans, Chinese, Columbians, Dutch, Egyptians, Ethiopians, Finnish |
-| C | French, FrenchCanadians, Germans, Haitians, Haudenosaunee, Hausa, Hungarians, Inca |
+| C | French, Germans, Haitians, Haudenosaunee, Hausa, Hungarians, Inca, Indonesians |
 | D | Indians, Indonesians, Italians, Japanese, Lakota, Maltese, Mayans, Mexicans |
 | E | NapoleonicFrance, Ottomans, Peruvians, Portuguese, RevFrance, RioGrande, Romanians, Russians |
 | F | SouthAfricans, Spanish, Swedes, Texians, USA, Yucatan, British*, French* |

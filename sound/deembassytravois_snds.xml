@@ -55,55 +55,51 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModAge0BajaCalifornia">
+        <choice name="ANWAge0BajaCalifornia">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0California">
+        <choice name="ANWAge0California">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Canadians">
+        <choice name="ANWAge0Canadians">
           <soundset name="NootkaClubmanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0CentralAmericans">
+        <choice name="ANWAge0CentralAmericans">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0FrenchCanadians">
-          <soundset name="NootkaClubmanSelect">
-          </soundset>
-        </choice>
-        <choice name="RvltModAge0Haitians">
+        <choice name="ANWAge0Haitians">
           <soundset name="DEHausaVMSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Indonesians">
+        <choice name="ANWAge0Indonesians">
           <soundset name="DutchSettlerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Maya">
+        <choice name="ANWAge0Maya">
           <soundset name="MayaHolcanSpearmanSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Mexicans">
+        <choice name="ANWAge0Mexicans">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0RioGrande">
+        <choice name="ANWAge0RioGrande">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Romanians">
+        <choice name="ANWAge0Romanians">
           <soundset name="GreekMilitarySelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Texas">
+        <choice name="ANWAge0Texas">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
-        <choice name="RvltModAge0Yucatan">
+        <choice name="ANWAge0Yucatan">
           <soundset name="AztecVillagerMaleSelect">
           </soundset>
         </choice>
@@ -298,7 +294,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModAge0BajaCalifornia">
+        <choice name="ANWAge0BajaCalifornia">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">
@@ -312,7 +308,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0California">
+        <choice name="ANWAge0California">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">
@@ -326,7 +322,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Canadians">
+        <choice name="ANWAge0Canadians">
           <targetlogic>
             <choice name="default">
               <soundset name="NootkaClubmanAcknowledge">
@@ -340,7 +336,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0CentralAmericans">
+        <choice name="ANWAge0CentralAmericans">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">
@@ -354,21 +350,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0FrenchCanadians">
-          <targetlogic>
-            <choice name="default">
-              <soundset name="NootkaClubmanAcknowledge">
-              </soundset>
-            </choice>
-            <choice name="enemy">
-            </choice>
-            <choice name="build">
-              <soundset name="NootkaClubmanAcknowledge">
-              </soundset>
-            </choice>
-          </targetlogic>
-        </choice>
-        <choice name="RvltModAge0Haitians">
+        <choice name="ANWAge0Haitians">
           <targetlogic>
             <choice name="default">
               <soundset name="DEHausaVMAcknowledge">
@@ -382,7 +364,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Indonesians">
+        <choice name="ANWAge0Indonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchSettlerMaleAcknowledge">
@@ -394,7 +376,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Maya">
+        <choice name="ANWAge0Maya">
           <targetlogic>
             <choice name="default">
               <soundset name="MayaHolcanSpearmanAcknowledge">
@@ -406,7 +388,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Mexicans">
+        <choice name="ANWAge0Mexicans">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">
@@ -420,7 +402,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0RioGrande">
+        <choice name="ANWAge0RioGrande">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">
@@ -434,7 +416,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Romanians">
+        <choice name="ANWAge0Romanians">
           <targetlogic>
             <choice name="default">
               <soundset name="GreekMilitaryAcknowledge">
@@ -448,7 +430,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Texas">
+        <choice name="ANWAge0Texas">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">
@@ -462,7 +444,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModAge0Yucatan">
+        <choice name="ANWAge0Yucatan">
           <targetlogic>
             <choice name="default">
               <soundset name="AztecVillagerMaleAcknowledge">

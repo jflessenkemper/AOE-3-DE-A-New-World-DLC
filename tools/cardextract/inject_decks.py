@@ -3,7 +3,7 @@
 Reads:
   - data/cards.json                 {card_name: {name, desc, icon}}
   - data/decks.json                 {civ: {age_str: [card_names...]}}  ← age lookup
-  - data/rvltmodhomecity*.xml       the actual `<default>` deck the AI plays,
+  - data/anwhomecity*.xml       the actual `<default>` deck the AI plays,
                                     wrapped in <!-- LL-DEFAULT-DECK-START -->
                                     /<!-- LL-DEFAULT-DECK-END --> markers by
                                     `build_default_decks.py`.
@@ -15,7 +15,7 @@ in the pool are bucketed as Discovery.
 
 Edits a_new_world.html in place:
   - Replaces (or inserts) a marker block <!-- DECK-START civ -->...<!-- DECK-END --> immediately
-    after each `<code>rvltmodhomecity<key>.xml</code>` paragraph in the 26 revolution
+    after each `<code>anwhomecity<key>.xml</code>` paragraph in the 26 revolution
     nation blocks.
   - Idempotent: re-running replaces the previous block.
 
@@ -36,32 +36,31 @@ DECKS_PATH = REPO / "data" / "decks.json"
 
 # civ id → mod home city filename stem (matches what's already in the HTML)
 CIV_FILES = {
-    "Americans":         "rvltmodhomecityamericans.xml",
-    "Argentines":        "rvltmodhomecityargentina.xml",
-    "BajaCalifornians":  "rvltmodhomecitybajacalifornians.xml",
-    "Barbary":           "rvltmodhomecitybarbary.xml",
-    "Brazilians":        "rvltmodhomecitybrazil.xml",
-    "Californians":      "rvltmodhomecitycalifornia.xml",
-    "Canadians":         "rvltmodhomecitycanada.xml",
-    "CentralAmericans":  "rvltmodhomecitycentralamericans.xml",
-    "Chileans":          "rvltmodhomecitychile.xml",
-    "Colombians":        "rvltmodhomecitycolumbia.xml",
-    "Egyptians":         "rvltmodhomecityegypt.xml",
-    "Finns":             "rvltmodhomecityfinland.xml",
-    "FrenchCanadians":   "rvltmodhomecityfrenchcanada.xml",
-    "Haitians":          "rvltmodhomecityhaiti.xml",
-    "Hungarians":        "rvltmodhomecityhungary.xml",
-    "Indonesians":       "rvltmodhomecityindonesians.xml",
-    "Mayans":            "rvltmodhomecitymaya.xml",
-    "Mexicans":          "rvltmodhomecitymexicans.xml",
-    "NapoleonicFrance":  "rvltmodhomecitynapoleon.xml",
-    "Peruvians":         "rvltmodhomecityperu.xml",
-    "RevolutionaryFr":   "rvltmodhomecityrevolutionaryfrance.xml",
-    "RioGrande":         "rvltmodhomecityriogrande.xml",
-    "Romanians":         "rvltmodhomecityromania.xml",
-    "SouthAfricans":     "rvltmodhomecitysouthafricans.xml",
-    "Texians":           "rvltmodhomecitytexas.xml",
-    "Yucatans":          "rvltmodhomecityyucatan.xml",
+    "Americans":         "anwhomecityamericans.xml",
+    "Argentines":        "anwhomecityargentina.xml",
+    "BajaCalifornians":  "anwhomecitybajacalifornians.xml",
+    "Barbary":           "anwhomecitybarbary.xml",
+    "Brazilians":        "anwhomecitybrazil.xml",
+    "Californians":      "anwhomecitycalifornia.xml",
+    "Canadians":         "anwhomecitycanada.xml",
+    "CentralAmericans":  "anwhomecitycentralamericans.xml",
+    "Chileans":          "anwhomecitychile.xml",
+    "Colombians":        "anwhomecitycolumbia.xml",
+    "Egyptians":         "anwhomecityegypt.xml",
+    "Finns":             "anwhomecityfinland.xml",
+    "Haitians":          "anwhomecityhaiti.xml",
+    "Hungarians":        "anwhomecityhungary.xml",
+    "Indonesians":       "anwhomecityindonesians.xml",
+    "Mayans":            "anwhomecitymaya.xml",
+    "Mexicans":          "anwhomecitymexicans.xml",
+    "NapoleonicFrance":  "anwhomecitynapoleon.xml",
+    "Peruvians":         "anwhomecityperu.xml",
+    "RevolutionaryFr":   "anwhomecityrevolutionaryfrance.xml",
+    "RioGrande":         "anwhomecityriogrande.xml",
+    "Romanians":         "anwhomecityromania.xml",
+    "SouthAfricans":     "anwhomecitysouthafricans.xml",
+    "Texians":           "anwhomecitytexas.xml",
+    "Yucatans":          "anwhomecityyucatan.xml",
 }
 
 AGE_LABELS = {

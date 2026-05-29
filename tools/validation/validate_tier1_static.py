@@ -20,8 +20,15 @@ from pathlib import Path
 repo_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(repo_root))
 
-from tools.migration.anw_token_map import ANW_CIVS
-from tools.migration.anw_mapping import ANW_CIVS_BY_SLUG, ANW_DEFERRED_SLUGS
+# Import the AnwCiv namedtuple list (NOT the dict-shape ANW_CIVS in
+# anw_token_map.py — that one is keyed by token and the values don't expose
+# the anw_stem/slug fields this validator needs).
+from tools.migration.anw_mapping import (
+    ANW_CIVS,
+    ANW_CIVS_BY_SLUG,
+    ANW_DEFERRED_SLUGS,
+    engine_token_for,
+)
 
 print("\n" + "="*80)
 print("TIER 1: COMPREHENSIVE STATIC VALIDATION SUITE")
@@ -57,7 +64,9 @@ homecity_files = {f.stem: f for f in data_dir.glob("anwhomecity*.xml")}
 
 missing_homecities = []
 for civ in ANW_CIVS:
-    expected_stem = f"anwhomecity{civ.anw_stem[3:]}"  # anw_stem is "anwbritish" → homecity suffix is "british"
+    # anw_stem is e.g. "british" (no "anw" prefix); homecity file is
+    # data/anwhomecity{stem}.xml — its .stem on disk is "anwhomecity{stem}".
+    expected_stem = f"anwhomecity{civ.anw_stem}"
     if expected_stem not in homecity_files:
         missing_homecities.append((civ.slug, civ.anw_token))
 
@@ -78,7 +87,8 @@ personality_files = {f.stem.lower(): f for f in ai_dir.glob("anw*.personality")}
 
 missing_personalities = []
 for civ in ANW_CIVS:
-    stem = civ.anw_stem.lower()  # anwbritish
+    # Personality filename is anw{stem}.personality, e.g. anwbritish.personality.
+    stem = f"anw{civ.anw_stem.lower()}"
     if stem not in personality_files:
         missing_personalities.append((civ.slug, civ.anw_token))
 
@@ -101,21 +111,25 @@ deck_issues = []
 age_distribution_issues = []
 
 for civ in ANW_CIVS:
+    # decks_anw.json is keyed by a mix of ANW tokens and engine tokens
+    # (e.g. ANWBritish, but XPAztec for the Aztecs civ). Fall back to the
+    # engine token when the ANW token has no direct entry.
     token = civ.anw_token
+    deck_key = token if token in decks else engine_token_for(token)
 
-    if token not in decks:
-        deck_issues.append(f"{token}: NOT IN decks_anw.json")
+    if deck_key not in decks:
+        deck_issues.append(f"{token}: NOT IN decks_anw.json (also tried {deck_key!r})")
         continue
 
     # Check total
-    total = sum(len(cards) for cards in decks[token].values())
+    total = sum(len(cards) for cards in decks[deck_key].values())
     if total != 25:
         deck_issues.append(f"{token}: {total} cards (expected 25)")
 
     # Check age distribution (no age should be empty or overcrowded)
     for age_idx in range(5):
         age_str = str(age_idx)
-        age_count = len(decks[token].get(age_str, []))
+        age_count = len(decks[deck_key].get(age_str, []))
         if age_count > 10:
             age_distribution_issues.append(f"{token}: Age {age_idx} has {age_count} cards (max 10)")
 

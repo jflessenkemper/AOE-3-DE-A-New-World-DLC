@@ -1,4 +1,4 @@
-"""Rename every deck slot in `data/rvltmodhomecity*.xml` to its country name.
+"""Rename every deck slot in `data/anwhomecity*.xml` to its country name.
 
 Each revolution civ ships 6 identical deck slots (Beginner / Land / Naval /
 Tycoon / TreatyNoNat / TreatyNative) all carrying the same AOE 3 DE - A New World
@@ -26,32 +26,32 @@ DATA = REPO / "data"
 
 # Filename → display name shown in the in-game Deck Builder.
 COUNTRY_FOR = {
-    "rvltmodhomecityamericans.xml": "Americans",
-    "rvltmodhomecityargentina.xml": "Argentina",
-    "rvltmodhomecitybajacalifornians.xml": "Baja California",
-    "rvltmodhomecitybarbary.xml": "Barbary States",
-    "rvltmodhomecitybrazil.xml": "Brazil",
-    "rvltmodhomecitycalifornia.xml": "California",
-    "rvltmodhomecitycanada.xml": "Canada",
-    "rvltmodhomecitycentralamericans.xml": "Central America",
-    "rvltmodhomecitychile.xml": "Chile",
-    "rvltmodhomecitycolumbia.xml": "Colombia",
-    "rvltmodhomecityegypt.xml": "Egypt",
-    "rvltmodhomecityfinland.xml": "Finland",
-    "rvltmodhomecityfrenchcanada.xml": "French Canada",
-    "rvltmodhomecityhaiti.xml": "Haiti",
-    "rvltmodhomecityhungary.xml": "Hungary",
-    "rvltmodhomecityindonesians.xml": "Indonesia",
-    "rvltmodhomecitymaya.xml": "Maya",
-    "rvltmodhomecitymexicans.xml": "Mexico",
-    "rvltmodhomecitynapoleon.xml": "Napoleonic France",
-    "rvltmodhomecityperu.xml": "Peru",
-    "rvltmodhomecityrevolutionaryfrance.xml": "Revolutionary France",
-    "rvltmodhomecityriogrande.xml": "Rio Grande",
-    "rvltmodhomecityromania.xml": "Romania",
-    "rvltmodhomecitysouthafricans.xml": "South Africa",
-    "rvltmodhomecitytexas.xml": "Texas",
-    "rvltmodhomecityyucatan.xml": "Yucatán",
+    "anwhomecityamericans.xml": "Americans",
+    "anwhomecityargentina.xml": "Argentina",
+    "anwhomecitybajacalifornians.xml": "Baja California",
+    "anwhomecitybarbary.xml": "Barbary States",
+    "anwhomecitybrazil.xml": "Brazil",
+    "anwhomecitycalifornia.xml": "California",
+    "anwhomecitycanada.xml": "Canada",
+    "anwhomecitycentralamericans.xml": "Central America",
+    "anwhomecitychile.xml": "Chile",
+    "anwhomecitycolumbia.xml": "Colombia",
+    "anwhomecityegypt.xml": "Egypt",
+    "anwhomecityfinland.xml": "Finland",
+    "anwhomecityfrenchcanada.xml": "French Canada",
+    "anwhomecityhaiti.xml": "Haiti",
+    "anwhomecityhungary.xml": "Hungary",
+    "anwhomecityindonesians.xml": "Indonesia",
+    "anwhomecitymaya.xml": "Maya",
+    "anwhomecitymexicans.xml": "Mexico",
+    "anwhomecitynapoleon.xml": "Napoleonic France",
+    "anwhomecityperu.xml": "Peru",
+    "anwhomecityrevolutionaryfrance.xml": "Revolutionary France",
+    "anwhomecityriogrande.xml": "Rio Grande",
+    "anwhomecityromania.xml": "Romania",
+    "anwhomecitysouthafricans.xml": "South Africa",
+    "anwhomecitytexas.xml": "Texas",
+    "anwhomecityyucatan.xml": "Yucatán",
 }
 
 # Matches a stringtable-style deck name. Captures leading whitespace so we
@@ -80,7 +80,7 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true", help="show what would change, don't write")
     args = ap.parse_args()
 
-    found = sorted(p.name for p in DATA.glob("rvltmodhomecity*.xml"))
+    found = sorted(p.name for p in DATA.glob("anwhomecity*.xml"))
     expected = set(COUNTRY_FOR)
     missing_files = expected - set(found)
     unexpected_files = set(found) - expected

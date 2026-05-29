@@ -552,6 +552,20 @@ def extract_ocr_entries(region: list[int] | None, grayscale: bool, threshold: in
     temp_dir = Path(__file__).resolve().parent / "artifacts" / ".tmp"
     temp_dir.mkdir(parents=True, exist_ok=True)
 
+    # When the caller passes a region, capture_screen() crops to it and
+    # tesseract returns box coords relative to the crop's top-left. Without
+    # adding the region origin back, downstream click_text/wait_text would
+    # land off-target by (region_left, region_top) — which is exactly the
+    # 2026-05-10 lobby-flow bug. Mirror locate_image_with_capture's behavior
+    # and apply the offset here so OCR-driven flows can finally use `region`
+    # for speed without click misalignment.
+    offset_x = 0
+    offset_y = 0
+    if region is not None:
+        normalized = normalize_region(region)
+        if normalized is not None:
+            offset_x, offset_y, _, _ = normalized
+
     with tempfile.NamedTemporaryFile(dir=temp_dir, suffix=".png", delete=False) as handle:
         screenshot_path = Path(handle.name)
     screenshot_path.unlink(missing_ok=True)
@@ -586,8 +600,8 @@ def extract_ocr_entries(region: list[int] | None, grayscale: bool, threshold: in
             "text": raw_text,
             "normalized": normalize_ocr_string(raw_text),
             "token": normalize_ocr_token(raw_text),
-            "left": int(data["left"][index]),
-            "top": int(data["top"][index]),
+            "left": int(data["left"][index]) + offset_x,
+            "top": int(data["top"][index]) + offset_y,
             "width": int(data["width"][index]),
             "height": int(data["height"][index]),
             "block": int(data["block_num"][index]),

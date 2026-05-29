@@ -189,7 +189,7 @@ def load_all_civs():
             import re
             names = re.findall(r'<Name>([^<]+)</Name>', content)
             for name in names:
-                if name not in base_civs and name.startswith('RvltMod'):
+                if name not in base_civs and name.startswith('ANW'):
                     mod_civs.append(name)
         else:
             log_error(f"civmods.xml not found at {xml_path}")

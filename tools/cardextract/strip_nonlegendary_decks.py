@@ -48,7 +48,7 @@ def process(path: Path) -> str:
 
 
 def main():
-    targets = sorted(list(DATA.glob("homecity*.xml")) + list(DATA.glob("rvltmodhomecity*.xml")))
+    targets = sorted(list(DATA.glob("homecity*.xml")) + list(DATA.glob("anwhomecity*.xml")))
     counts = {"stripped": 0, "already_ll_only": 0, "no_ll_found": 0,
               "no_decks_section": 0, "no_wrapper": 0}
     for f in targets:

@@ -5,14 +5,14 @@ Both inputs have the same shape — an outer dict keyed by civ identifier, with
 each value being `{"0": [card_ids], "1": [card_ids], ...}` (one age per key,
 0 = Discovery through 4 = Imperial). Only the outer keys differ between the
 two files: standard uses civ slugs (e.g. "British", "MexicansStd") while
-legendary uses homecity stems (e.g. "rvltmodhomecitybarbary").
+legendary uses homecity stems (e.g. "anwhomecitybarbary").
 
 After the merge:
 
   decks_anw.json["ANWBritish"]      = decks_standard.json["British"]
   decks_anw.json["ANWMexicans"]     = decks_standard.json["MexicansStd"]
   decks_anw.json["ANWUSA"]          = decks_standard.json["UnitedStates"]
-  decks_anw.json["ANWBarbary"]      = decks_legendary.json["rvltmodhomecitybarbary"]
+  decks_anw.json["ANWBarbary"]      = decks_legendary.json["anwhomecitybarbary"]
   ... (48 entries total)
 
 Card IDs inside each deck are unchanged (cards.json keys, civ-agnostic).

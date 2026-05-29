@@ -108,9 +108,9 @@ def parse_probes(data: bytes) -> list[ProbeRecord]:
 
 def _expect_index() -> dict[str, CivExpectation]:
     """Index expectations by both engine civ_id (cCivBritish) and rvltName
-    (RvltModBrazil) — the probe carries `civ=<rvltName>` from kbGetCivName(),
+    (ANWBrazil) — the probe carries `civ=<rvltName>` from kbGetCivName(),
     which for base civs is e.g. "British", and for revolutions is the
-    "RvltModBrazil" form. So we index by every plausible key shape."""
+    "ANWBrazil" form. So we index by every plausible key shape."""
     out: dict[str, CivExpectation] = {}
     for e in load_expectations():
         out[e.civ_id] = e

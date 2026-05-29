@@ -179,7 +179,7 @@
               </soundset>
             </choice>
 			
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
               <soundset name="MayaHolcanSpearmanSelect">
               </soundset>
             </choice>
@@ -362,7 +362,7 @@
               </soundset>
             </choice>
 			
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
               <soundset name="AztecVillagerFemaleSelect">
               </soundset>
             </choice>
@@ -1951,7 +1951,7 @@
               </targetlogic>
             </choice>
 			
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="MayaHolcanSpearmanAcknowledge">
@@ -3544,7 +3544,7 @@
               </targetlogic>
             </choice>
 			
-            <choice name="RvltModMayans">
+            <choice name="ANWMayans">
                   <targetlogic>
                     <choice name="default">
                       <soundset name="AztecVillagerFemaleAcknowledge">

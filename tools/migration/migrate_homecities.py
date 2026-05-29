@@ -7,7 +7,7 @@ For each AnwCiv (base + rev = 48, but base "Aztecs" and "Haudenosaunee" /
   Source:  data/{old_homecity_stem}.xml
   Dest:    data/{new_homecity_stem}.xml
            e.g. data/homecitybritish.xml → data/anwhomecitybritish.xml
-                data/rvltmodhomecitybarbary.xml → data/anwhomecitybarbary.xml
+                data/anwhomecitybarbary.xml → data/anwhomecitybarbary.xml
 
   In-file edit:
     <civ>X</civ>  →  <civ>{anw_token}</civ>

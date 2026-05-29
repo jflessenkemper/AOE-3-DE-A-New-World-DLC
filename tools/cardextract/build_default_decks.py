@@ -1,6 +1,6 @@
 """Standardise the AI's default deck for every revolution civ.
 
-Each `data/rvltmodhomecity*.xml` file already contains a single `<deck>` block
+Each `data/anwhomecity*.xml` file already contains a single `<deck>` block
 flagged `<default>` — that is the deck the AI auto-picks when playing the civ.
 Today they vary wildly in size (13–25 cards) and are named with inconsistent
 localisation tokens (`$$41682$$`, `$$71332$$Beginner`).
@@ -30,34 +30,30 @@ DECKS_JSON = DATA / "decks.json"
 TARGET_SIZE = 25
 DECK_NAME = "Legendary Leaders"
 
-# decks.json civ key → rvltmodhomecity*.xml stem
+# decks.json civ key → anwhomecity*.xml stem
 CIV_FILE = {
-    "Americans":         "rvltmodhomecityamericans.xml",
-    "Argentines":        "rvltmodhomecityargentina.xml",
-    "BajaCalifornians":  "rvltmodhomecitybajacalifornians.xml",
-    "Barbary":           "rvltmodhomecitybarbary.xml",
-    "Brazilians":        "rvltmodhomecitybrazil.xml",
-    "Californians":      "rvltmodhomecitycalifornia.xml",
-    "Canadians":         "rvltmodhomecitycanada.xml",
-    "CentralAmericans":  "rvltmodhomecitycentralamericans.xml",
-    "Chileans":          "rvltmodhomecitychile.xml",
-    "Colombians":        "rvltmodhomecitycolumbia.xml",
-    "Egyptians":         "rvltmodhomecityegypt.xml",
-    "Finns":             "rvltmodhomecityfinland.xml",
-    "FrenchCanadians":   "rvltmodhomecityfrenchcanada.xml",
-    "Haitians":          "rvltmodhomecityhaiti.xml",
-    "Hungarians":        "rvltmodhomecityhungary.xml",
-    "Indonesians":       "rvltmodhomecityindonesians.xml",
-    "Mayans":            "rvltmodhomecitymaya.xml",
-    "Mexicans":          "rvltmodhomecitymexicans.xml",
-    "NapoleonicFrance":  "rvltmodhomecitynapoleon.xml",
-    "Peruvians":         "rvltmodhomecityperu.xml",
-    "RevolutionaryFr":   "rvltmodhomecityrevolutionaryfrance.xml",
-    "RioGrande":         "rvltmodhomecityriogrande.xml",
-    "Romanians":         "rvltmodhomecityromania.xml",
-    "SouthAfricans":     "rvltmodhomecitysouthafricans.xml",
-    "Texians":           "rvltmodhomecitytexas.xml",
-    "Yucatans":          "rvltmodhomecityyucatan.xml",
+    "Americans":         "anwhomecityamericans.xml",
+    "Argentines":        "anwhomecityargentina.xml",
+    "BajaCalifornians":  "anwhomecitybajacalifornians.xml",
+    "Barbary":           "anwhomecitybarbary.xml",
+    "Brazilians":        "anwhomecitybrazil.xml",
+    "Canadians":         "anwhomecitycanada.xml",
+    "Chileans":          "anwhomecitychile.xml",
+    "Colombians":        "anwhomecitycolumbia.xml",
+    "Egyptians":         "anwhomecityegypt.xml",
+    "Finns":             "anwhomecityfinland.xml",
+    "Haitians":          "anwhomecityhaiti.xml",
+    "Hungarians":        "anwhomecityhungary.xml",
+    "Indonesians":       "anwhomecityindonesians.xml",
+    "Mayans":            "anwhomecitymaya.xml",
+    "Mexicans":          "anwhomecitymexicans.xml",
+    "NapoleonicFrance":  "anwhomecitynapoleon.xml",
+    "Peruvians":         "anwhomecityperu.xml",
+    "RevolutionaryFr":   "anwhomecityrevolutionaryfrance.xml",
+    "RioGrande":         "anwhomecityriogrande.xml",
+    "Romanians":         "anwhomecityromania.xml",
+    "SouthAfricans":     "anwhomecitysouthafricans.xml",
+    "Texians":           "anwhomecitytexas.xml",
 }
 
 # Match the FIRST <deck>...</deck> block, capturing its inner body so we can

@@ -8,7 +8,7 @@ causing the in-game scoreboard / lobby to show base-game default instead of
 our mod-intended leader name.
 
 For each .personality file under game/ai/ (both base-game overrides AND
-rvltmod* mod civs):
+anw* mod civs):
   - Parse nameID + tooltipID
   - Look up those IDs in data/strings/english/stringmods.xml
   - Confirm each resolves to a non-empty string

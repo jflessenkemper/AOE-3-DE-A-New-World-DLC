@@ -1,10 +1,10 @@
-"""Unit tests for tools/aoe3_harness/gs_launch.py.
+"""Unit tests for tools/aoe3_harness/harness_launch.py.
 
 All tests that involve subprocess spawning or binary existence checks use
-mocks; no real gamescope process or AoE3 installation is required.  Run with:
+mocks; no real AOE3DEHarness process or AoE3 installation is required.  Run with:
 
     cd /var/home/jflessenkemper/AOE-3-DE-A-New-World
-    python3 -m pytest tools/aoe3_harness/tests/test_gs_launch.py -v
+    python3 -m pytest tools/aoe3_harness/tests/test_harness_launch.py -v
 """
 
 from __future__ import annotations
@@ -25,8 +25,8 @@ _REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from tools.aoe3_harness.gamescope_client import GamescopeConnectionError  # noqa: E402
-from tools.aoe3_harness.gs_launch import (  # noqa: E402
+from tools.aoe3_harness.harness_client import HarnessConnectionError  # noqa: E402
+from tools.aoe3_harness.harness_launch import (  # noqa: E402
     DEFAULT_GS_BINARY,
     _check_aoe3_exe,
     _check_gs_binary,
@@ -35,7 +35,7 @@ from tools.aoe3_harness.gs_launch import (  # noqa: E402
     _wait_for_socket,
     build_arg_parser,
     build_gamescope_cmd,
-    gs_launch,
+    harness_launch,
 )
 
 
@@ -73,7 +73,7 @@ class TestParseResolution(unittest.TestCase):
 class TestBuildGamescopeCmd(unittest.TestCase):
     def test_contains_harness_flags(self) -> None:
         cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/gamescope"),
+            gs_binary=Path("/fake/AOE3DEHarness"),
             socket_path=Path("/tmp/test.sock"),
         )
         self.assertIn("--harness-mode", cmd)
@@ -82,7 +82,7 @@ class TestBuildGamescopeCmd(unittest.TestCase):
 
     def test_resolution_args(self) -> None:
         cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/gamescope"),
+            gs_binary=Path("/fake/AOE3DEHarness"),
             socket_path=Path("/tmp/test.sock"),
             resolution=(2560, 1440),
         )
@@ -93,7 +93,7 @@ class TestBuildGamescopeCmd(unittest.TestCase):
 
     def test_window_args(self) -> None:
         cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/gamescope"),
+            gs_binary=Path("/fake/AOE3DEHarness"),
             socket_path=Path("/tmp/test.sock"),
             window=(800, 600),
         )
@@ -104,21 +104,21 @@ class TestBuildGamescopeCmd(unittest.TestCase):
 
     def test_separator_present(self) -> None:
         cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/gamescope"),
+            gs_binary=Path("/fake/AOE3DEHarness"),
             socket_path=Path("/tmp/test.sock"),
         )
         self.assertIn("--", cmd)
 
     def test_binary_is_first_arg(self) -> None:
         cmd = build_gamescope_cmd(
-            gs_binary=Path("/custom/gamescope"),
+            gs_binary=Path("/custom/AOE3DEHarness"),
             socket_path=Path("/tmp/test.sock"),
         )
-        self.assertEqual(cmd[0], "/custom/gamescope")
+        self.assertEqual(cmd[0], "/custom/AOE3DEHarness")
 
     def test_borderless_flag(self) -> None:
         cmd = build_gamescope_cmd(
-            gs_binary=Path("/fake/gamescope"),
+            gs_binary=Path("/fake/AOE3DEHarness"),
             socket_path=Path("/tmp/test.sock"),
         )
         self.assertIn("-b", cmd)
@@ -133,13 +133,13 @@ class TestDefaultSocketPath(unittest.TestCase):
     def test_uses_xdg_runtime_dir(self) -> None:
         with patch.dict(os.environ, {"XDG_RUNTIME_DIR": "/run/user/1234"}):
             path = _default_socket_path()
-        self.assertEqual(path, Path("/run/user/1234/gamescope-anw.sock"))
+        self.assertEqual(path, Path("/run/user/1234/AOE3DEHarness.sock"))
 
     def test_fallback_when_no_xdg_runtime_dir(self) -> None:
         env = {k: v for k, v in os.environ.items() if k != "XDG_RUNTIME_DIR"}
         with patch.dict(os.environ, env, clear=True):
             path = _default_socket_path()
-        self.assertEqual(path, Path("/tmp/gamescope-anw.sock"))
+        self.assertEqual(path, Path("/tmp/AOE3DEHarness.sock"))
 
 
 # ---------------------------------------------------------------------------
@@ -150,7 +150,7 @@ class TestDefaultSocketPath(unittest.TestCase):
 class TestCheckGsBinary(unittest.TestCase):
     def test_missing_binary_raises_file_not_found(self) -> None:
         with self.assertRaises(FileNotFoundError):
-            _check_gs_binary(Path("/nonexistent/gamescope_binary_xyz"))
+            _check_gs_binary(Path("/nonexistent/AOE3DEHarness_binary_xyz"))
 
     def test_non_executable_raises_permission_error(self) -> None:
         with tempfile.NamedTemporaryFile() as f:
@@ -185,7 +185,7 @@ class TestWaitForSocket(unittest.TestCase):
             _wait_for_socket(sock_path, timeout=1.0)  # should not raise
 
     def test_socket_never_appears_raises(self) -> None:
-        with self.assertRaises(GamescopeConnectionError):
+        with self.assertRaises(HarnessConnectionError):
             _wait_for_socket(
                 Path("/tmp/never_appears_xyz_12345.sock"),
                 timeout=0.15,
@@ -235,26 +235,26 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.window, (800, 600))  # type: ignore[attr-defined]
 
     def test_gs_binary_override(self) -> None:
-        args = self._parse(["--gs-binary", "/custom/gamescope"])
-        self.assertEqual(args.gs_binary, Path("/custom/gamescope"))  # type: ignore[attr-defined]
+        args = self._parse(["--gs-binary", "/custom/AOE3DEHarness"])
+        self.assertEqual(args.gs_binary, Path("/custom/AOE3DEHarness"))  # type: ignore[attr-defined]
 
 
 # ---------------------------------------------------------------------------
-# Tests: gs_launch() integration (mocked binaries + subprocess)
+# Tests: harness_launch() integration (mocked binaries + subprocess)
 # ---------------------------------------------------------------------------
 
 
-class TestGsLaunch(unittest.TestCase):
+class TestHarnessLaunch(unittest.TestCase):
     def test_gs_binary_missing_raises(self) -> None:
         with self.assertRaises(FileNotFoundError):
-            gs_launch(gs_binary=Path("/nonexistent/gamescope_xyz"))
+            harness_launch(gs_binary=Path("/nonexistent/AOE3DEHarness_xyz"))
 
     def test_aoe3_exe_missing_raises(self) -> None:
         with tempfile.NamedTemporaryFile() as f:
             gs_bin = Path(f.name)
             os.chmod(gs_bin, 0o755)
             with self.assertRaises(FileNotFoundError):
-                gs_launch(
+                harness_launch(
                     gs_binary=gs_bin,
                     exe=Path("/nonexistent/AoE3DE_s.exe"),
                 )
@@ -273,8 +273,8 @@ class TestGsLaunch(unittest.TestCase):
             mock_proc.poll.return_value = None
 
             with patch("subprocess.Popen", return_value=mock_proc):
-                with self.assertRaises(GamescopeConnectionError):
-                    gs_launch(
+                with self.assertRaises(HarnessConnectionError):
+                    harness_launch(
                         gs_binary=gs_bin,
                         socket_path=sock_path,
                         exe=exe,
@@ -282,7 +282,7 @@ class TestGsLaunch(unittest.TestCase):
                     )
 
     def test_graceful_shutdown_sends_sigterm(self) -> None:
-        """gs_launch returns (proc, client); caller can SIGTERM the proc."""
+        """harness_launch returns (proc, client); caller can SIGTERM the proc."""
         with tempfile.NamedTemporaryFile() as f_gs, \
              tempfile.NamedTemporaryFile(suffix=".exe") as f_exe, \
              tempfile.TemporaryDirectory() as tmpdir:
@@ -296,11 +296,11 @@ class TestGsLaunch(unittest.TestCase):
             mock_proc.poll.return_value = 0  # already exited
 
             # We intercept Popen so that after it's "called", we create the
-            # socket as the real gamescope would do.
+            # socket as the real AOE3DEHarness would do.
             srv = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
             def _fake_popen(cmd, **kwargs):  # type: ignore[no-untyped-def]
-                # Bind the server socket now (simulates gamescope creating it)
+                # Bind the server socket now (simulates AOE3DEHarness creating it)
                 srv.bind(str(sock_path))
                 srv.listen(1)
                 # Accept in a background thread so client.connect() can succeed
@@ -316,7 +316,7 @@ class TestGsLaunch(unittest.TestCase):
                 return mock_proc
 
             with patch("subprocess.Popen", side_effect=_fake_popen):
-                proc, client = gs_launch(
+                proc, client = harness_launch(
                     gs_binary=gs_bin,
                     socket_path=sock_path,
                     exe=exe,

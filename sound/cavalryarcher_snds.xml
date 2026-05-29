@@ -57,11 +57,11 @@
         <choice name="Tupi">
         </choice>
 		
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanCavalryArcherSelect">
           </soundset>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <soundset name="RomanianMilitarySelect">
           </soundset>
         </choice>
@@ -622,7 +622,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <targetlogic>
             <choice name="default">
               <soundset name="OttomanCavalryArcherAcknowledge">
@@ -648,7 +648,7 @@
             </choice>
           </targetlogic>
         </choice>
-        <choice name="RvltModRomanians">
+        <choice name="ANWRomanians">
           <targetlogic>
             <choice name="default">
               <soundset name="RomanianMilitaryAcknowledge">

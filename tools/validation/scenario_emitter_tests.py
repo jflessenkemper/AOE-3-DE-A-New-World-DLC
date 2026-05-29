@@ -22,6 +22,7 @@ Tests prove:
 """
 from __future__ import annotations
 
+import argparse
 import io
 import json
 import struct
@@ -199,8 +200,8 @@ class EmitterTests(unittest.TestCase):
                 continue
             self.assertEqual(orig, new, f"slot {i} P5 should be unchanged but differs")
 
-    def test_playbook_matrix_emits_46_civs(self) -> None:
-        """Six playbook scenarios must collectively bind all 46 ANW civ tokens."""
+    def test_playbook_matrix_emits_40_civs(self) -> None:
+        """Six playbook scenarios must collectively bind all 40 ANW civ tokens."""
         bound = set()
         for label in ("A", "B", "C", "D", "E", "F"):
             civs = se.PLAYBOOK_MATRIX[label]
@@ -212,13 +213,13 @@ class EmitterTests(unittest.TestCase):
                 self.assertEqual(hc, se.civ_to_hcname(slot_civ))
                 self.assertEqual(ai, "aiLoaderStandard")
                 bound.add(slot_civ)
-        # All 46 ANW civs must be in the union
+        # All 40 ANW civs must be in the union
         try:
             from tools.migration.anw_token_map import ANW_CIVS
         except ImportError:
             self.skipTest("anw_token_map not importable")
         all_anw = set(ANW_CIVS.keys())
-        # F has 2 fillers (ANWBritish/ANWFrench - already in the matrix). Allow them.
+        # F holds 8 filler slots (all already covered in A-E). Allow them.
         self.assertTrue(all_anw.issubset(bound),
                         f"missing civs in playbook: {all_anw - bound}")
 
@@ -243,8 +244,8 @@ class EmitterTests(unittest.TestCase):
 class CivMappingTests(unittest.TestCase):
     def test_anw_civ_to_hcname(self) -> None:
         self.assertEqual(se.civ_to_hcname("ANWBritish"), "anwhomecitybritish.xml")
-        self.assertEqual(se.civ_to_hcname("ANWBajaCalifornians"),
-                         "anwhomecitybajacalifornians.xml")
+        self.assertEqual(se.civ_to_hcname("ANWArgentines"),
+                         "anwhomecityargentines.xml")
         self.assertEqual(se.civ_to_hcname("ANWBrazil"), "anwhomecitybrazil.xml")
         self.assertEqual(se.civ_to_hcname("ANWUSA"), "anwhomecityusa.xml")
         self.assertEqual(se.civ_to_hcname("ANWNapoleonicFrance"),
@@ -260,6 +261,219 @@ class CivMappingTests(unittest.TestCase):
             back = se.hcname_to_civ(hc)
             # Comparison case-insensitive (display capitalization differs).
             self.assertEqual(back.lower(), civ.lower())
+
+
+class TrailerTests(unittest.TestCase):
+    """Cover the CRC32-trailer algorithm and the recompute_trailer flag.
+
+    Verified against four real .age3Yscn files in
+    tools/validation/SCENARIO_TRAILER_ANALYSIS.md:
+        Bombard_Brawl       -> 45069598
+        _test_template      -> b7383381
+        QuickSavegame       -> 16558739
+        QuickSavegame.bak   -> b3a30be2
+    These tests assert the algorithm matches against any present sample.
+    """
+
+    KNOWN_TRAILERS = {
+        # Filename relative to REPO unless absolute
+        REPO / "Scenario" / "_test_template.age3Yscn": "b7383381",
+    }
+
+    def test_template_known_trailer(self) -> None:
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        raw = TEMPLATE.read_bytes()
+        expected = se.compute_crc32_trailer(raw[:-4])
+        self.assertEqual(expected.hex(), "b7383381")
+        self.assertEqual(raw[-4:], expected)
+
+    def test_verify_trailer_template(self) -> None:
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        self.assertTrue(se.verify_trailer(TEMPLATE))
+
+    def test_verify_trailer_rejects_corruption(self) -> None:
+        """Flipping any byte must invalidate the CRC32."""
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        raw = TEMPLATE.read_bytes()
+        with tempfile.NamedTemporaryFile(suffix=".age3Yscn", delete=False) as fh:
+            corrupted = bytearray(raw)
+            # Flip a byte in the middle (zlib stream area).
+            corrupted[len(corrupted) // 2] ^= 0x01
+            fh.write(bytes(corrupted))
+            tmp_path = Path(fh.name)
+        try:
+            self.assertFalse(se.verify_trailer(tmp_path),
+                             "corrupted file should fail trailer verification")
+        finally:
+            tmp_path.unlink(missing_ok=True)
+
+    def test_verify_trailer_too_short(self) -> None:
+        """Files under 12 bytes are unconditionally invalid (no trailer slot)."""
+        with tempfile.NamedTemporaryFile(suffix=".age3Yscn", delete=False) as fh:
+            fh.write(b"l33t\x00\x00")
+            tmp_path = Path(fh.name)
+        try:
+            self.assertFalse(se.verify_trailer(tmp_path))
+        finally:
+            tmp_path.unlink(missing_ok=True)
+
+    def test_pack_scenario_recomputes_trailer(self) -> None:
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        _raw, body = se.load_scenario(TEMPLATE)
+        packed = se.pack_scenario(body, recompute_trailer=True)
+        # 4-byte trailer at end must equal CRC32(packed_minus_trailer + 4 zeroes).
+        expected = se.compute_crc32_trailer(packed[:-4])
+        self.assertEqual(packed[-4:], expected,
+                         "pack_scenario(recompute_trailer=True) must emit CRC32 trailer")
+
+    def test_pack_scenario_warns_on_explicit_trailer_with_recompute(self) -> None:
+        """Explicit `trailer` + `recompute_trailer=True` -> warning + recompute wins."""
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        _raw, body = se.load_scenario(TEMPLATE)
+        bogus = b"\xde\xad\xbe\xef"
+        # Capture stderr while packing.
+        saved_err = sys.stderr
+        sys.stderr = captured = io.StringIO()
+        try:
+            packed = se.pack_scenario(body, trailer=bogus, recompute_trailer=True)
+        finally:
+            sys.stderr = saved_err
+        self.assertNotEqual(packed[-4:], bogus,
+                            "recompute_trailer=True must ignore explicit trailer")
+        self.assertIn("ignoring explicit", captured.getvalue())
+
+    def test_pack_scenario_explicit_trailer_when_recompute_false(self) -> None:
+        """recompute_trailer=False appends caller-supplied trailer verbatim."""
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        _raw, body = se.load_scenario(TEMPLATE)
+        bogus = b"\xde\xad\xbe\xef"
+        packed = se.pack_scenario(body, trailer=bogus, recompute_trailer=False)
+        self.assertEqual(packed[-4:], bogus)
+
+    def test_emitted_scenario_trailer_round_trips(self) -> None:
+        """End-to-end: bind civs, pack with recompute_trailer, verify_trailer == True."""
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        _raw, body = se.load_scenario(TEMPLATE)
+        new_body = se.set_player_bindings(
+            body, se.PLAYBOOK_MATRIX["A"], ai_loader="aiLoaderStandard"
+        )
+        packed = se.pack_scenario(new_body, recompute_trailer=True)
+        with tempfile.NamedTemporaryFile(suffix=".age3Yscn", delete=False) as fh:
+            fh.write(packed)
+            tmp_path = Path(fh.name)
+        try:
+            self.assertTrue(se.verify_trailer(tmp_path),
+                            "freshly emitted scenario must self-verify CRC32 trailer")
+        finally:
+            tmp_path.unlink(missing_ok=True)
+
+
+class CarrierTests(unittest.TestCase):
+    """Cover find_default_carrier + the BB-carrier emit-anewworld + emit-playbook
+    code paths. Skipped if the stock Bombard_Brawl.age3Yscn is not on disk.
+    """
+
+    def setUp(self) -> None:
+        try:
+            self.carrier = se.find_default_carrier()
+        except FileNotFoundError:
+            self.skipTest("Bombard_Brawl carrier not on disk")
+
+    def test_carrier_loads_and_validates(self) -> None:
+        """The carrier must already be CRC32-trailer-valid (stock AoE3DE file)."""
+        self.assertTrue(se.verify_trailer(self.carrier),
+                        f"stock carrier {self.carrier} has wrong CRC32 trailer")
+
+    def test_carrier_has_9_bp_records(self) -> None:
+        """BB has exactly 9 player BP records (Gaia + 8 slots)."""
+        _raw, body = se.load_scenario(self.carrier)
+        bps = se.find_bp_records(body)
+        self.assertEqual(len(bps), 9,
+                         f"BB carrier should have 9 BP records, got {len(bps)}")
+
+    def test_emit_anewworld_via_bb_carrier(self) -> None:
+        """End-to-end: emit ANEWWORLD.age3Yscn from BB; verify trailer + bindings."""
+        with tempfile.TemporaryDirectory() as td:
+            out_path = Path(td) / "ANEWWORLD.age3Yscn"
+            args = argparse.Namespace(template=None, out=str(out_path))
+            rc = se.cmd_emit_anewworld(args)
+            self.assertEqual(rc, 0, "emit-anewworld should exit 0")
+            self.assertTrue(out_path.exists())
+            self.assertTrue(se.verify_trailer(out_path),
+                            "emitted ANEWWORLD must pass CRC32 verification")
+            # Reload and check bindings match ANEWWORLD_CIVS / ANEWWORLD_LOADERS.
+            _raw, body = se.load_scenario(out_path)
+            bindings = se.get_player_bindings(body)
+            self.assertEqual(len(bindings), 9)
+            for civ, loader, (hc, ai, _pid) in zip(
+                se.ANEWWORLD_CIVS, se.ANEWWORLD_LOADERS, bindings[1:9]
+            ):
+                self.assertEqual(hc, se.civ_to_hcname(civ),
+                                 f"slot bound to wrong civ: {hc!r} vs {civ!r}")
+                self.assertEqual(ai, loader,
+                                 f"slot bound to wrong loader: {ai!r} vs {loader!r}")
+
+    def test_carrier_version_check_passes_for_bb(self) -> None:
+        """BB body version must be within the engine-supported range."""
+        ver, ok, msg = se.check_carrier_version(self.carrier)
+        self.assertTrue(ok, msg)
+        self.assertLessEqual(ver, se.SUPPORTED_BG_VERSION_MAX,
+                             f"BB body version {ver} exceeds engine max")
+
+    def test_carrier_version_check_rejects_template(self) -> None:
+        """_test_template.age3Yscn is a v105 quick-save; must be flagged."""
+        if not TEMPLATE.exists():
+            self.skipTest(f"template not found: {TEMPLATE}")
+        ver, ok, msg = se.check_carrier_version(TEMPLATE)
+        self.assertFalse(ok, f"template should be flagged (got {ver=} {ok=})")
+        self.assertGreater(ver, se.SUPPORTED_BG_VERSION_MAX,
+                           f"template body version {ver} should exceed max")
+        self.assertIn("QUICK-SAVE", msg)
+
+    def test_emit_playbook_via_bb_carrier(self) -> None:
+        """End-to-end: emit ANW_Coverage_A..F from BB; verify all 6 trailers + civ coverage."""
+        with tempfile.TemporaryDirectory() as td:
+            out_dir = Path(td)
+            args = argparse.Namespace(
+                template=None,
+                out_dir=str(out_dir),
+                ai="aiLoaderStandard",
+            )
+            rc = se.cmd_emit_playbook(args)
+            self.assertEqual(rc, 0, "emit-playbook should exit 0")
+            bound_civs: set = set()
+            for label in ("A", "B", "C", "D", "E", "F"):
+                p = out_dir / f"ANW_Coverage_{label}.age3Yscn"
+                self.assertTrue(p.exists(), f"missing {p}")
+                self.assertTrue(se.verify_trailer(p),
+                                f"{p.name} fails CRC32 verification")
+                _raw, body = se.load_scenario(p)
+                bindings = se.get_player_bindings(body)
+                self.assertEqual(len(bindings), 9)
+                # P1 (slot 1) must be human (loader = '')
+                self.assertEqual(bindings[1][1], "",
+                                 f"{p.name}: P1 should be human, got loader={bindings[1][1]!r}")
+                # P2..P8 must be AI
+                for slot in range(2, 9):
+                    self.assertEqual(bindings[slot][1], "aiLoaderStandard",
+                                     f"{p.name}: slot {slot} loader wrong")
+                for civ, (hc, _ai, _pid) in zip(
+                    se.PLAYBOOK_MATRIX[label], bindings[1:9]
+                ):
+                    self.assertEqual(hc, se.civ_to_hcname(civ))
+                    bound_civs.add(civ)
+            # The 6 scenarios together should cover all 40 unique ANW civs.
+            self.assertGreaterEqual(
+                len(bound_civs), 40,
+                f"playbook only covers {len(bound_civs)} civs, expected >= 40"
+            )
 
 
 def main() -> int:

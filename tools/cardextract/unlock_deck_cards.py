@@ -6,7 +6,7 @@ starts at HC level 1, so any deck card with level > 1 is dropped from the
 Deck Builder display — that's why Chileans showed 13/25 instead of 25/25.
 
 For the curated Legendary Leaders deck we want every card playable from the
-very first match. This script walks each rvltmodhomecity*.xml, finds the
+very first match. This script walks each anwhomecity*.xml, finds the
 Legendary Leaders deck, and for every card in that deck also sets its
 corresponding <cards>/<card>/<level> entry in the pool to 0.
 
@@ -54,7 +54,7 @@ def unlock(path: Path) -> tuple[int, int]:
 
 
 def main():
-    targets = sorted(DATA.glob("rvltmodhomecity*.xml"))
+    targets = sorted(DATA.glob("anwhomecity*.xml"))
     total_lowered = 0
     for p in targets:
         lowered, deck = unlock(p)

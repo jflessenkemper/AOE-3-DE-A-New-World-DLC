@@ -34,10 +34,20 @@ from tools.validation.common import (
 
 
 def load_civmods_names(civmods_path: Path) -> set[str]:
+    """Return only PLAYABLE civmods entries — those with main=1.
+
+    Civmods may include suppression entries with ``<main>0</main>`` to
+    hide base-game civs from pickers; those don't need playercolor
+    bindings (they aren't selectable).
+    """
     root = ET.parse(civmods_path).getroot()
     names: set[str] = set()
     for civ in child_elements(root):
         if local_name(civ.tag) != "civ":
+            continue
+        # Skip suppression entries (main != 1)
+        main_text = (get_child_text(civ, "Main") or "").strip()
+        if main_text and main_text != "1":
             continue
         name = get_child_text(civ, "Name")
         if name:

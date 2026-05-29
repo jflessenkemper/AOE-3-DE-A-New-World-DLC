@@ -93,16 +93,15 @@ primary review surface.
    - Consolidates static + art + spec + runtime checks into single HTML
    - First run: 30/45 PASS · 15 WARN · 0 FAIL · verdict SHIP WITH KNOWN GAPS
 
-5. **FrenchCanadians audit** (`artifacts/validation/civ_naming_audit.md`)
-   - Conclusion: **keep FrenchCanadians as-is**. 152 references vs 2
-     doc-only mentions of LowerCanada. Rename would touch 140+ files.
+5. **FrenchCanadians removed** — `ANWFrenchCanadians` (Papineau) fully purged.
+   - All sound XML routing blocks, art templates, tool mappings deleted.
+   - `ANWCanadians` (Brock) remains as the sole active Canadian revolution civ.
 
 6. **Visual confirmation of all 45 civs**
    - 40 unique-art civs verified via `civ_art_review.html` → 4.2MB PNG
      rendered + read multimodally (no broken images, all flags correct)
-   - 5 revolution civs (Californians, CentralAmericans, FrenchCanadians,
-     RioGrande, Yucatan) share parent civ's home city + have their own
-     leader portrait — all 5 leader portraits visually confirmed
+   - RioGrande shares parent civ's
+     home city + have their own leader portrait — both confirmed
 
 7. **Validator suite gate**: 42/49 PASS (7 SKIP = live-game-required,
    not run because no game running)
@@ -117,10 +116,6 @@ primary review surface.
   - "Indians Akbar" doctrine → Shivaji Maharaj portrait
   - "Russians Catherine" doctrine → Ivan the Terrible portrait
   - "Lakota Crazy Horse" doctrine → Chief Gall portrait
-
-- **Yucatan**: spec key is "Yucatan Pat Revolution" but the portrait
-  filename is `cpai_avatar_yucatan_carrillo_puerto.png` (both real
-  Yucatec figures; substitution is intentional).
 
 ---
 
@@ -145,8 +140,7 @@ If you want to flip the 15 WARNs to PASS:
 python3 tools/aoe3_automation/launch_anw_game.py
 
 # Then in-game, run an AI-vs-AI skirmish in observer mode with 8 AI slots
-# picking 8 of the WARN civs (Californians, Canadians, CentralAmericans,
-# FrenchCanadians, Germans, Haitians, Haudenosaunee, Hausa).
+# picking 8 of the WARN civs (Canadians, Germans, Haitians, Haudenosaunee, Hausa).
 # Play at max speed (Insert key) for ~20 game minutes, then resign.
 
 # Harvest probe data:
@@ -218,7 +212,7 @@ and the actual leader dispatch. All 4 now fixed:
 
 Plus 2 soft mismatches escalated:
 
-5. FrenchCanadians forward base disabled (Papineau is reactive) (9c0c39c)
+5. FrenchCanadians removed entirely (Papineau civ dropped) (this commit)
 6. Romanians forward base disabled (Cuza 1859 was internal) (9c0c39c)
 
 ## Player-facing blurb audit (added overnight)

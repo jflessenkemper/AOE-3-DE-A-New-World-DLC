@@ -144,7 +144,7 @@ Useful variants:
 ```bash
 python3 tools/aoe3_automation/run_sandbox.py --dry-run
 python3 tools/aoe3_automation/run_sandbox.py --skip-launch --skip-flow
-python3 tools/aoe3_automation/run_sandbox.py --scenario "Legendary Leaders Test" --skip-flow
+python3 tools/aoe3_automation/run_sandbox.py --scenario ANEWWORLD --skip-flow
 ```
 
 `run_sandbox.py` is the preferred entrypoint for this repo when debugging custom RMS, scenario payloads, or live-install drift because it closes the gap between repo state and what AoE3 actually loads.

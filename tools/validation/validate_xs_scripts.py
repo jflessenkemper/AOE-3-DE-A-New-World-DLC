@@ -207,50 +207,116 @@ def check_duplicate_names(file_path: Path, lines: list[str], repo_root: Path) ->
 
 
 def check_duplicate_locals(file_path: Path, lines: list[str], repo_root: Path) -> list[str]:
+    """Flag duplicate variable declarations inside the same ``function``.
+
+    The AoE3 DE XS VM hoists local declarations to function scope and rejects
+    redeclarations with ``XS Error 0014: '<name>' is already defined``,
+    even when the two declarations sit in disjoint ``{ }`` blocks
+    (verified empirically: ``vector fallback`` collision in
+    aiBuildingsWalls.xs:218 and :275 inside sibling if-blocks at function
+    top level).
+
+    Scope quirks observed in the live engine:
+    - ``rule`` bodies appear to tolerate the same pattern (base-game
+      ``aiCore.xs`` and ``aiEconomy.xs`` ship with sibling-if-block
+      redeclarations and load cleanly), so we do NOT flag duplicates
+      inside rules.
+    - Lambda bodies (``[](...) -> type { ... }``) are their own function,
+      so we skip declarations inside them.
+    - Loop-control declarations like ``for (int i = 0; ...)`` are also
+      loop-scoped — but the regex matches `int|bool|float|string|vector`
+      at start-of-line, so loop headers don't match anyway.
+
+    Net effect: this catches the exact bug class that just crashed the live
+    engine (sibling-if redeclare in a function body) without false-flagging
+    base-game rules or lambda-local rebindings.
+    """
     issues: list[str] = []
     pending: Block | None = None
     active: Block | None = None
+    # Lambda nesting depth — when > 0 we're inside one or more lambda
+    # bodies and should not track declarations against the outer function.
+    lambda_depth = 0
+    lambda_brace_at_open: list[int] = []  # brace_depth at the `{` of each open lambda
+    rel_path = repo_relative(file_path, repo_root)
 
     for index, line in enumerate(lines, start=1):
+        scan_line = line.split("//", 1)[0]
+
         if active is None:
             if pending is None:
-                if match := FUNCTION_RE.match(line):
+                if match := FUNCTION_RE.match(scan_line):
                     pending = Block("function", match.group(1), index, index)
-                elif match := RULE_RE.match(line):
+                elif match := RULE_RE.match(scan_line):
                     pending = Block("rule", match.group(1), index, index)
 
-            if pending is not None and "{" in line:
+            if pending is not None and "{" in scan_line:
                 active = pending
                 active.body_start_line = index
-                active.brace_depth = line.count("{") - line.count("}")
+                active.brace_depth = scan_line.count("{") - scan_line.count("}")
                 pending = None
+                lambda_depth = 0
+                lambda_brace_at_open = []
                 continue
 
-        else:
-            stripped = line.strip()
-            if match := LOCAL_DECLARATION_RE.match(line):
-                name = match.group(2)
-                in_loop_body = (
-                    any("for (" in previous for previous in active.recent_nonempty_lines)
-                    and any(previous == "{" for previous in active.recent_nonempty_lines[-2:])
-                )
-                if in_loop_body and name in active.declarations:
-                    rel_path = repo_relative(file_path, repo_root)
-                    first_line = active.declarations[name]
-                    issues.append(
-                        f"{rel_path}:{index}: duplicate local '{name}' in {active.kind} '{active.name}' (first declared on line {first_line})"
-                    )
-                elif in_loop_body:
-                    active.declarations[name] = index
+        if active is not None:
+            stripped = scan_line.strip()
 
-            active.brace_depth += line.count("{")
-            active.brace_depth -= line.count("}")
+            # Lambda open: `[](...) -> ... {` or `[]() -> ... {`. Count each
+            # `[]` as opening a new lambda whose `{` is on the same or next
+            # line. We approximate by toggling on the `[](` literal; the
+            # accompanying `{` (which may be on this line or the next) gets
+            # counted by the generic brace tracker below. Track the brace
+            # depth at which the lambda's `{` sits so we know when it closes.
+            if "[](" in scan_line or "[]()" in scan_line:
+                # The brace pairing with this lambda is the next `{` we see.
+                # Mark the depth-at-open as the current depth + 1 (post-`{`).
+                lambda_brace_at_open.append(active.brace_depth + 1)
+                lambda_depth += 1
+
+            if match := LOCAL_DECLARATION_RE.match(scan_line):
+                name = match.group(2)
+                in_for_control = stripped.startswith("for (")
+                # Only flag inside `function`, outside any lambda.
+                if (
+                    not in_for_control
+                    and active.kind == "function"
+                    and lambda_depth == 0
+                ):
+                    if name in active.declarations:
+                        first_line = active.declarations[name]
+                        issues.append(
+                            f"{rel_path}:{index}: duplicate local '{name}' "
+                            f"in {active.kind} '{active.name}' "
+                            f"(first declared on line {first_line}) — "
+                            f"XS hoists locals to function scope; rename one"
+                        )
+                    else:
+                        active.declarations[name] = index
+
+            # Brace tracking — both for the active function/rule scope and
+            # for collapsing lambda nesting back down.
+            open_count = scan_line.count("{")
+            close_count = scan_line.count("}")
+            active.brace_depth += open_count
+            active.brace_depth -= close_count
+
+            # Pop any lambdas whose closing `}` we just crossed. A lambda
+            # opened at depth D is closed when active.brace_depth drops
+            # below D.
+            while lambda_brace_at_open and active.brace_depth < lambda_brace_at_open[-1]:
+                lambda_brace_at_open.pop()
+                lambda_depth = max(0, lambda_depth - 1)
+
             if stripped:
                 active.recent_nonempty_lines.append(stripped)
                 if len(active.recent_nonempty_lines) > 4:
                     active.recent_nonempty_lines.pop(0)
-            if active.brace_depth <= 0:
+            if active.brace_depth <= 0 and index > active.body_start_line:
                 active = None
+                pending = None
+                lambda_depth = 0
+                lambda_brace_at_open = []
 
     return issues
 

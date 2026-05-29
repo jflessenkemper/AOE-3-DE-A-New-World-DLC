@@ -11,7 +11,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <soundset name="DutchPikemanSelect">
           </soundset>
         </choice>
@@ -56,7 +56,7 @@
           </targetlogic>
         </choice>
 		
-        <choice name="RvltModIndonesians">
+        <choice name="ANWIndonesians">
           <targetlogic>
             <choice name="default">
               <soundset name="DutchPikemanAcknowledge">

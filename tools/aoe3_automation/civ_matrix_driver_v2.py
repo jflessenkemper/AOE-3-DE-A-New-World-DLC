@@ -108,10 +108,8 @@ PICKER_LIST = [
     "Barbary States (Algiers)",        # 3  mod
     "Brazilians (Rio de Janeiro)",     # 4  mod
     "British (London)",                # 5
-    "Californians (Sonoma)",           # 6  mod
-    "Canadians (Québec)",              # 7  mod
-    "Central Americans (Guatemala City)",  # 8  mod
-    "Chileans (Santiago)",             # 9  mod
+    "Canadians (Québec)",              # 6  mod
+    "Chileans (Santiago)",             # 7  mod
     # continues past visible area — scroll needed
     "Chinese",                         # 10
     "Columbians",                      # 11 mod
@@ -148,14 +146,12 @@ PICKER_LIST = [
     "Swedes",                          # 42
     "Texians",                         # 43 mod
     "Baja Californians",               # ??? alphabetically should be near B
-    "Yucatan",                         # 45 mod  (alphabetically Y last)
 ]
 
-# 5 user-requested civs with their alphabetical indices
+# 4 user-requested civs with their alphabetical indices
 TARGETS = [
     ("brazil",            4),
-    ("central_americans", 8),
-    ("romanians",         38),
+    ("romanians",         36),
     ("barbary",           3),
 ]
 

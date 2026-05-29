@@ -1416,7 +1416,6 @@ def collect_paths_for_civ(civ_token, civ_el, hc, art_inventory):
         "usa":              ["united_states", "anwusa"],
         "napoleonicfrance": ["napoleonic_france", "anwnapoleonicfrance"],
         "revfrance":        ["anwrevfrance"],
-        "frenchcanadians":  ["french_canadians", "anwfrenchcanadians"],
         "swedes":           ["swedish", "anwswedes"],
         "iroquois":         ["haudenosaunee", "anwhaudenosaunee"],
         "sioux":            ["lakota", "anwsioux"],
@@ -1701,7 +1700,6 @@ _AVATAR_ALIASES = {
     "usa":              ["united_states", "anwusa"],
     "napoleonicfrance": ["napoleonic_france", "anwnapoleonicfrance"],
     "revfrance":        ["anwrevfrance"],
-    "frenchcanadians":  ["french_canadians", "anwfrenchcanadians"],
     "swedes":           ["swedish", "anwswedes"],
     "iroquois":         ["haudenosaunee", "anwhaudenosaunee"],
     "sioux":            ["lakota", "anwsioux"],
@@ -2422,7 +2420,7 @@ def _politician_display_name(tech_name: str) -> str:
     # Strip civ-specific suffix (British, French, Spanish, etc.).
     # Order longest-first so "Ottomans" wins over "Ottoman" when present.
     for civ_suffix in (
-        "FederalMX", "SouthAfricans", "FrenchCanadians",
+        "FederalMX", "SouthAfricans",
         "British", "French", "Spanish", "Portuguese", "Dutch", "Germans",
         "German", "Russians", "Russian", "Ottomans", "Ottoman",
         "Italians", "Italian", "Maltese", "Swedish", "Swedes", "Chinese",
@@ -2921,7 +2919,7 @@ _CIV_LEADER_KEY: dict = {
     "ANWNapoleonicFrance": "napoleon",
     "ANWRevFrance":        "napoleon",
     # ANW revolution civs handled inside leader_revolution_commanders.xs.
-    # The shared file dispatches per-civ via `if (rvltName == "RvltMod<X>")`;
+    # The shared file dispatches per-civ via `if (rvltName == "ANW<X>")`;
     # collect_leader_ai_for_civ uses _REVOLUTION_BRANCH below to extract
     # just that civ's branch body.
     "ANWArgentines":     "revolution_commanders",
@@ -2942,26 +2940,26 @@ _CIV_LEADER_KEY: dict = {
     "ANWTexians":        "revolution_commanders",
 }
 
-# Map civ_token -> "RvltMod<X>" branch name for civs handled inside
+# Map civ_token -> "ANW<X>" branch name for civs handled inside
 # leader_revolution_commanders.xs. Used by collect_leader_ai_for_civ to
-# locate the per-civ `else if (rvltName == "RvltMod<X>") { … }` block.
+# locate the per-civ `else if (rvltName == "ANW<X>") { … }` block.
 _REVOLUTION_BRANCH: dict = {
-    "ANWArgentines":     "RvltModArgentines",
-    "ANWBarbary":        "RvltModBarbary",
-    "ANWBrazil":         "RvltModBrazil",
-    "ANWCanadians":      "RvltModCanadians",
-    "ANWChileans":       "RvltModChileans",
-    "ANWColumbians":     "RvltModColumbians",
-    "ANWEgyptians":      "RvltModEgyptians",
-    "ANWFinnish":        "RvltModFinnish",
-    "ANWHaitians":       "RvltModHaitians",
-    "ANWHungarians":     "RvltModHungarians",
-    "ANWIndonesians":    "RvltModIndonesians",
-    "ANWMayans":         "RvltModMayans",
-    "ANWPeruvians":      "RvltModPeruvians",
-    "ANWRomanians":      "RvltModRomanians",
-    "ANWSouthAfricans":  "RvltModSouthAfricans",
-    "ANWTexians":        "RvltModTexians",
+    "ANWArgentines":     "ANWArgentines",
+    "ANWBarbary":        "ANWBarbary",
+    "ANWBrazil":         "ANWBrazil",
+    "ANWCanadians":      "ANWCanadians",
+    "ANWChileans":       "ANWChileans",
+    "ANWColumbians":     "ANWColumbians",
+    "ANWEgyptians":      "ANWEgyptians",
+    "ANWFinnish":        "ANWFinnish",
+    "ANWHaitians":       "ANWHaitians",
+    "ANWHungarians":     "ANWHungarians",
+    "ANWIndonesians":    "ANWIndonesians",
+    "ANWMayans":         "ANWMayans",
+    "ANWPeruvians":      "ANWPeruvians",
+    "ANWRomanians":      "ANWRomanians",
+    "ANWSouthAfricans":  "ANWSouthAfricans",
+    "ANWTexians":        "ANWTexians",
 }
 
 # Pattern to extract numeric float / boolean values from XS code
@@ -3040,7 +3038,7 @@ def collect_leader_ai_for_civ(civ_token: str) -> dict:
     # ── Find the function body to parse ────────────────────────────────────────
     # For most civs we want the initLeader<Name>() body. For ANW revolution
     # civs sharing leader_revolution_commanders.xs we extract just that civ's
-    # `if/else if (rvltName == "RvltMod<X>") { ... }` branch instead.
+    # `if/else if (rvltName == "ANW<X>") { ... }` branch instead.
     rvlt_branch = _REVOLUTION_BRANCH.get(civ_token)
     if rvlt_branch:
         # Locate `(rvltName == "<branch>")` then walk forward to the matching

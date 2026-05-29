@@ -45,6 +45,10 @@ class GameState:
         "wall_segment": 0, "outpost": 0, "fort": 0,
     })
 
+    # Revolution flag — set True when simulating a revolution civ so that
+    # civIsRevolution() returns True and the aggregator dispatch fires.
+    is_revolution: bool = False
+
     # Map / posture
     map_class: str = "land"           # "land", "coastal", "island", "naval"
     has_water: bool = False

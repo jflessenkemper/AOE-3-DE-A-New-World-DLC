@@ -19,11 +19,11 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="DEBerberImamSelect">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanImamSelect">
           </soundset>
         </choice>
@@ -60,11 +60,11 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModBarbary">
+        <choice name="ANWBarbary">
           <soundset name="DEBerberImamAcknowledge">
           </soundset>
         </choice>
-        <choice name="RvltModEgyptians">
+        <choice name="ANWEgyptians">
           <soundset name="OttomanImamAcknowledge">
           </soundset>
         </choice>

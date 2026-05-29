@@ -173,11 +173,8 @@ _ALLY_FLAG_Y = 276
 # ANW civs, and including them in the denominator distorts the 100%-
 # coverage target. The civ_label values must match playstyle_spec entries.
 _STUB_CIV_LABELS: frozenset[str] = frozenset({
-    "Californians",
-    "Central Americans",
     "Lower Canada",
     "Rio Grande",
-    "Yucatan",
 })
 
 _CIV_LABEL_TO_ANW: dict[str, str] = {
@@ -214,6 +211,10 @@ _CIV_LABEL_TO_ANW: dict[str, str] = {
     "Peruvians":            "ANWPeruvians",
     "Portuguese":           "ANWPortuguese",
     "Revolutionary France": "ANWRevFrance",
+    # 2026-05-26: the playstyle_spec civ_label for the Robespierre entry is
+    # "French Republic" (not "Revolutionary France" — that's the data_name
+    # prefix). Without this alias the runner left RevFrance UNRESOLVED.
+    "French Republic":      "ANWRevFrance",
     "Romanians":            "ANWRomanians",
     "Russians":             "ANWRussians",
     "South Africans":       "ANWSouthAfricans",
@@ -1463,10 +1464,9 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
         action="store_true",
         help=(
             "Suppress the 'skipping N stub civs' INFO line. Stub civs "
-            "(Californians, Central Americans, Lower Canada, Rio Grande, "
-            "Yucatan) have NO civmods.xml entry and CANNOT be tested — the "
-            "engine cannot bind them to a player slot. This flag only "
-            "suppresses the skip-message for quieter output."
+            "(Lower Canada, Rio Grande) have NO civmods.xml entry and CANNOT "
+            "be tested — the engine cannot bind them to a player slot. This "
+            "flag only suppresses the skip-message for quieter output."
         ),
     )
 

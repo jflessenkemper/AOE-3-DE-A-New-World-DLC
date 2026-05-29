@@ -91,7 +91,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="MayaHolcanSpearmanSelect">
           </soundset>
         </choice>
@@ -196,7 +196,7 @@
           </soundset>
         </choice>
 		
-        <choice name="RvltModMayans">
+        <choice name="ANWMayans">
           <soundset name="MayaHolcanSpearmanAcknowledge">
           </soundset>
         </choice>

@@ -725,7 +725,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 **Signature placement quirk.** Grid town with central cathedral-and-plaza-mayor plus outlying hacienda compound — the Laws-of-the-Indies template replicated everywhere.
 
-**Open research questions.** Hidalgo-era insurgent doctrine differs from established viceregal geography; the Rev-civ (RvltModMexicans) captures the insurgent phase better.
+**Open research questions.** Hidalgo-era insurgent doctrine differs from established viceregal geography; the Rev-civ (ANWMexicans) captures the insurgent phase better.
 
 ---
 
@@ -997,7 +997,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Americans (RvltModAmericans)
+### Americans (ANWAmericans)
 
 **Historical era & geography.** Jeffersonian republic, early 19th c. Louisiana Purchase doubled the nation; Lewis and Clark expansion west.
 
@@ -1041,7 +1041,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Argentines (RvltModArgentines)
+### Argentines (ANWArgentines)
 
 **Historical era & geography.** Argentine independence under San Martin, 1810s. Pampas core, Andean transit, Rio de la Plata estuary.
 
@@ -1085,7 +1085,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Baja Californians (RvltModBajaCalifornians)
+### Baja Californians (ANWBajaCalifornians)
 
 **Historical era & geography.** Mexican Baja California under Alvarado, 1830s–40s. Peninsular frontier with Jesuit/Franciscan mission-presidio geography; arid desert coast.
 
@@ -1129,7 +1129,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Barbary (RvltModBarbary)
+### Barbary (ANWBarbary)
 
 **Historical era & geography.** Barbary corsair states (Algiers, Tunis, Tripoli) under Ottoman-vassal / autonomous beys, 16th–19th c. Leader anchor: Barbarossa (Hayreddin) / Algiers corsair power.
 
@@ -1173,7 +1173,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Brazil (RvltModBrazil)
+### Brazil (ANWBrazil)
 
 **Historical era & geography.** Empire of Brazil under Pedro I, 1822 onward. Atlantic coast capitals (Rio, Salvador, Recife); sertao interior; sugar/coffee plantation economy.
 
@@ -1217,7 +1217,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Californians (RvltModCalifornians)
+### Californians (ANWCalifornians)
 
 **Historical era & geography.** Alta California under Vallejo / Bear Flag Revolt, 1830s–1840s. Mission-presidio-rancho triad along the coast.
 
@@ -1261,7 +1261,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Canadians (RvltModCanadians)
+### Canadians (ANWCanadians)
 
 **Historical era & geography.** British Canada under Isaac Brock, War of 1812 era. Great Lakes / St Lawrence frontier; British North America defending against US invasion.
 
@@ -1305,7 +1305,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Central Americans (RvltModCentralAmericans)
+### Central Americans (ANWCentralAmericans)
 
 **Historical era & geography.** Federal Republic of Central America under Morazan, 1823–1838. Highland volcanic spine; Caribbean-Pacific trans-isthmus.
 
@@ -1349,7 +1349,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Chileans (RvltModChileans)
+### Chileans (ANWChileans)
 
 **Historical era & geography.** Chilean republic under O'Higgins, 1818 onward. Long narrow country between Andes and Pacific; central valley core.
 
@@ -1393,7 +1393,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Columbians (RvltModColumbians)
+### Columbians (ANWColumbians)
 
 **Historical era & geography.** Gran Colombia under Bolivar, 1819–1831. Andean spine from Venezuelan Llanos to Ecuadorian sierra.
 
@@ -1437,7 +1437,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Egyptians (RvltModEgyptians)
+### Egyptians (ANWEgyptians)
 
 **Historical era & geography.** Muhammad Ali's Egypt, early 19th c. Nile valley modernization; Ottoman-vassal autonomy.
 
@@ -1481,7 +1481,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Finnish (RvltModFinnish)
+### Finnish (ANWFinnish)
 
 **Historical era & geography.** Grand Duchy / Independent Finland under Mannerheim, late 19th to mid 20th c. Forest-lake terrain; Mannerheim Line defense doctrine against Soviet threat.
 
@@ -1525,51 +1525,9 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### French Canadians (RvltModFrenchCanadians)
-
-**Historical era & geography.** Lower Canada under Papineau, Patriote Rebellion 1837. St Lawrence seigneuries; rural Francophone agrarian identity.
-
-**Starting TC preference.**
-- Primary terrain: river (St Lawrence)
-- Secondary terrain: forest_edge
-- Evidence: Every Lower Canadian settlement sits along the St Lawrence-Richelieu corridor. [strong]
-
-**House / residential placement.** Seigneurial rang long-lot farm fronting the river with pignon-roof farmhouse; church-village cluster at rang center.
-- Axis: river_terrace
-- Evidence: French-Canadian rang geography is textbook historical geography. [strong]
-
-**Economic building placement.** Grist mill on each seigneury; riverside fur-trade wharves; timber rafts downriver.
-- Axis: river
-- Evidence: Lower Canada rural-economic historiography. [strong]
-
-**Military building placement.** Patriote militias mustered at parish churches; minimal fixed architecture (it's an insurgent civ).
-- Posture: clustered_central (parish muster) + mobile_satellite
-- Evidence: 1837 Rebellion historiography (Greer, Patriots and the People). [strong]
-
-**Religious / cultural building placement.** Catholic parish church with twin-spire silhouette at rang center; cross on adjacent hill.
-- Axis: center + hilltop (cross)
-- Evidence: Quebec parish-church architectural typology. [strong]
-
-**Trade / market placement.** Montreal and Quebec harbors; riverside fur-trade wharves.
-- Axis: river
-- Evidence: Lower Canada commercial-historiography. [strong]
-
-**Defensive architecture.** Patriote barricades at Saint-Denis/Saint-Charles in 1837; no fixed wall doctrine (insurgent).
-- Wall archetype: UrbanBarricade
-- Wall placement logic: village_palisades
-- Evidence: 1837 Rebellion battle sites (Saint-Denis, Saint-Charles, Saint-Eustache). [strong]
-
-**Expansion heading.** Along the St Lawrence rang-corridor; limited (defensive rather than expansionist).
-- along_coast (river) + upriver
-- Evidence: Lower Canada rang-expansion historiography. [strong]
-
-**Signature placement quirk.** Long-lot rang farms ribboning the St Lawrence with twin-spire parish churches every few kilometers — a linear, water-oriented Francophone silhouette.
-
-**Open research questions.** None critical.
-
 ---
 
-### Haitians (RvltModHaitians)
+### Haitians (ANWHaitians)
 
 **Historical era & geography.** Haitian Revolution under Toussaint Louverture, 1790s–1803. Caribbean island; plantation-to-citadel transformation.
 
@@ -1613,7 +1571,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Hungarians (RvltModHungarians)
+### Hungarians (ANWHungarians)
 
 **Historical era & geography.** Hungarian Revolution under Kossuth, 1848–1849. Pannonian plain; Danube-Tisza river network; Habsburg-era fortress inheritance.
 
@@ -1657,7 +1615,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Indonesians (RvltModIndonesians)
+### Indonesians (ANWIndonesians)
 
 **Historical era & geography.** Java War under Prince Diponegoro, 1825–1830. Javanese kraton-city geography; central Java volcanic valleys.
 
@@ -1701,7 +1659,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Mayans (RvltModMayans)
+### Mayans (ANWMayans)
 
 **Historical era & geography.** Caste War of Yucatan under Jacinto Canek era (historically earlier Canek 1761 rebellion; Caste War 1847 onward). Yucatan peninsula karst plain, cenote settlement, Chan Santa Cruz rebel capital.
 
@@ -1745,7 +1703,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Mexicans (Revolution) (RvltModMexicans)
+### Mexicans (Revolution) (ANWMexicans)
 
 **Historical era & geography.** Mexican War of Independence under Hidalgo, 1810 onward. Central Mexican altiplano; mine-towns, haciendas, and parish-insurgent geography.
 
@@ -1789,7 +1747,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Revolutionary France (RvltModRevolutionaryFrance)
+### Revolutionary France (ANWRevFrance)
 
 **Historical era & geography.** French First Republic under Robespierre, Terror era 1793–1794. Paris-centric; levee en masse frontier armies.
 
@@ -1833,7 +1791,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Napoleonic France (RvltModNapoleonicFrance)
+### Napoleonic France (ANWNapoleonicFrance)
 
 **Historical era & geography.** First French Empire under Napoleon post-1804 coronation. Grand Empire from Madrid to Moscow; forward-based army, Grande Armee doctrine.
 
@@ -1877,7 +1835,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Peruvians (RvltModPeruvians)
+### Peruvians (ANWPeruvians)
 
 **Historical era & geography.** Peru-Bolivian Confederation under Santa Cruz, 1836–1839. Andean altiplano; Lima coast; Cusco-La Paz spine.
 
@@ -1921,7 +1879,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Rio Grande (RvltModRioGrande)
+### Rio Grande (ANWRioGrande)
 
 **Historical era & geography.** Republic of the Rio Grande, 1840, under Antonio Canales. Border region between Texas and northern Mexico; Laredo-based.
 
@@ -1965,7 +1923,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Romanians (RvltModRomanians)
+### Romanians (ANWRomanians)
 
 **Historical era & geography.** United Principalities under Cuza, 1859–1866. Wallachia and Moldavia merged; Carpathian-Danube geography.
 
@@ -2009,7 +1967,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### South Africans (RvltModSouthAfricans)
+### South Africans (ANWSouthAfricans)
 
 **Historical era & geography.** South African Republic (Transvaal) under Kruger, late 19th c. Boer commando / laager frontier doctrine; Voortrekker heritage.
 
@@ -2053,7 +2011,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Texians (RvltModTexians)
+### Texians (ANWTexians)
 
 **Historical era & geography.** Republic of Texas under Sam Houston, 1836–1846. San Jacinto-era frontier republic; Anglo-Tejano coexistence; Comanche frontier.
 
@@ -2097,7 +2055,7 @@ Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British
 
 ---
 
-### Yucatan (RvltModYucatan)
+### Yucatan (ANWYucatan)
 
 **Historical era & geography.** Yucatan socialist period under Carrillo Puerto, 1920s (but civ conceptually covers the long Caste-War-to-early-20th-c. Yucatan). Karst peninsula; henequen plantation economy; Maya majority.
 

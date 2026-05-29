@@ -6,7 +6,7 @@ that downstream verifiers compare against the actual game state.
 
 Each `CivExpectation` carries:
   * civ_id           — the ANW token (e.g., `ANWBritish`,
-                       `ANWAmericansRev` for revolutions).
+                       `ANWRevFrance` for revolutions).
   * label            — human-readable display label ("British",
                        "Napoleonic France").
   * leader_key       — the `gLLLeaderKey` string the leader portrait /
@@ -45,8 +45,10 @@ from tools.validation.validate_terrain_heading import (  # noqa: E402
     _extract_apply_body,
     _split_branches,
 )
-from tools.migration.anw_mapping import ANW_HOMECITY_MAP  # noqa: E402
-from tools.migration.anw_token_map import ANW_CIVS, by_slug  # noqa: E402
+from tools.migration.anw_mapping import (  # noqa: E402
+    ANW_CIVS,
+    ANW_HOMECITY_MAP,
+)
 
 LEADER_COMMON = REPO_ROOT / "game/ai/leaders/leaderCommon.xs"
 CIVMODS = REPO_ROOT / "data/civmods.xml"
@@ -79,9 +81,61 @@ HEADING_AXIS = {
     "cLLHeadingAny": "none",
 }
 
-# ANW token → display label. Built from ANW_CIVS to ensure all 48 civs
-# are consistently labeled across the ANW namespace (Phase 6).
-CIV_LABELS = {c.anw_token: c.leader_display for c in ANW_CIVS}
+# ANW token → display label. Originally a hand-curated dict keyed by the
+# legacy cCiv*/ANW* tokens; Phase 6 migrated keys to the post-rename
+# ANW tokens. Tests and replay-probe assertions reference these literal
+# strings ("British (Elizabeth I)", "Aztecs", etc.), so the strings cannot
+# be derived from ANW_CIVS metadata without breaking the test contract.
+# 2026-05-10: re-pinned to the legacy values, re-keyed to ANW tokens, after
+# the dict-shape ANW_CIVS refactor lost the original CIV_LABELS dict.
+CIV_LABELS: dict[str, str] = {
+    # Base civs (BASE_CIVS in validate_terrain_heading.py)
+    "British": "British (Elizabeth I)",
+    "Chinese": "Chinese",
+    "DEAmericans": "Americans",
+    "DEEthiopians": "Ethiopians",
+    "DEHausa": "Hausa",
+    "DEInca": "Inca",
+    "DEItalians": "Italians",
+    "DEMaltese": "Maltese",
+    "DEMexicans": "Mexicans",
+    "DESwedish": "Swedish",
+    "Dutch": "Dutch",
+    "French": "French (Louis XVIII)",
+    "Germans": "Germans",
+    "Indians": "Indians",
+    "Japanese": "Japanese",
+    "Ottomans": "Ottomans",
+    "Portuguese": "Portuguese",
+    "Russians": "Russians (Ivan IV)",
+    "Spanish": "Spanish",
+    "XPAztec": "Aztecs",
+    "XPIroquois": "Iroquois (Haudenosaunee)",
+    "XPSioux": "Lakota (Chief Gall)",
+    # Revolution civs (ANW-prefixed in the new dict; mapped from the legacy
+    # ANW* labels). DEAmericans above is the base USA; the Americans
+    # Revolution doesn't have an ANW-prefix counterpart in the current dict.
+    "ANWAmericans": "Americans (Revolution)",
+    "ANWArgentines": "Argentina",
+    "ANWBarbary": "Barbary States",
+    "ANWBrazil": "Brazil",
+    "ANWCanadians": "Canada",
+    "ANWChileans": "Chile",
+    "ANWColumbians": "Colombia",
+    "ANWEgyptians": "Egypt",
+    "ANWFinnish": "Finland",
+    "ANWHaitians": "Haiti",
+    "ANWHungarians": "Hungary",
+    "ANWIndonesians": "Indonesia",
+    "ANWMayans": "Maya",
+    "ANWMexicans": "Mexico (Revolution)",
+    "ANWNapoleonicFrance": "Napoleonic France",
+    "ANWPeruvians": "Peru",
+    "ANWRevFrance": "Revolutionary France",
+    "ANWRomanians": "Romania",
+    "ANWSouthAfricans": "South Africa",
+    "ANWTexians": "Texas",
+}
 
 
 @dataclass(frozen=True)
@@ -215,14 +269,32 @@ def _resolve_homecity_filename(anw_token: str) -> Path | None:
 
     ANW_HOMECITY_MAP is keyed by anw_stem (e.g., 'anwbritish'),
     so we need to look up the ANW civ and extract its stem.
+
+    Revolution civs that don't have their own homecity XML inherit the
+    parent civ's homecity at runtime (e.g. ANWAmericans → anwhomecityusa).
+    The fallback table below captures those mappings so deck-name resolution
+    still produces a real string for these civs.
     """
+    # Revolution-from-base-civ inheritance map. Keyed by ANW token; value is
+    # the parent civ's homecity stem.
+    _REVOLUTION_HC_FALLBACK = {
+        "ANWAmericans": "usa",
+    }
     try:
         # Find the ANW civ by token to get its stem
         for civ in ANW_CIVS:
             if civ.anw_token == anw_token:
                 fname = ANW_HOMECITY_MAP.get(civ.anw_stem)
                 if fname:
-                    return DATA_DIR / fname
+                    p = DATA_DIR / fname
+                    if p.exists():
+                        return p
+                # Fall through to parent-civ fallback for revolution civs
+                fallback_stem = _REVOLUTION_HC_FALLBACK.get(anw_token)
+                if fallback_stem:
+                    p = DATA_DIR / f"anwhomecity{fallback_stem}.xml"
+                    if p.exists():
+                        return p
                 return None
     except (KeyError, AttributeError):
         return None
@@ -261,7 +333,7 @@ def load_expectations(repo_root: Path = REPO_ROOT) -> list[CivExpectation]:
 
     # Map BASE_CIVS cCiv* constants to ANW tokens
     const_to_anw_token = _build_civ_const_to_anw_map()
-    # Map RvltMod* strings directly to ANW tokens
+    # Map ANW* strings directly to ANW tokens
     rvlt_to_anw_token = {civ.old_civ_token: civ.anw_token for civ in ANW_CIVS if civ.is_revolution}
 
     out: list[CivExpectation] = []

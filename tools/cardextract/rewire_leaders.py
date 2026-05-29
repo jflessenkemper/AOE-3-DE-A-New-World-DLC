@@ -129,122 +129,102 @@ STANDARD = {
     ],
 }
 
-# Revolution-commanders dispatch: per RvltMod* civ → bespoke block lines.
+# Revolution-commanders dispatch: per ANW* civ → bespoke block lines.
 # (3 of the 26 revolution civs have their own dedicated leader file:
 #  Mexicans=leader_hidalgo, NapoleonicFrance=leader_napoleon,
 #  Americans=leader_washington — they are not in this dispatch.)
 REVOLUTION = {
-    "RvltModCanadians": [
+    "ANWCanadians": [
         "llUseCompactFortifiedCoreStyle(2, false);",
         "gLLEconomicDistanceMultiplier = 0.95;",
         "llSetBuildStrongpointProfile(2, 2, 2, false);",
     ],
-    "RvltModRevolutionaryFrance": [
+    "ANWRevFrance": [
         "llUseRepublicanLeveeStyle(0);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(1, 1, 3, true);",
     ],
-    "RvltModFrenchCanadians": [
-        "llUseCivicMilitiaCenterStyle(1);",
-        "gLLEconomicDistanceMultiplier = 1.05;",
-        "llSetBuildStrongpointProfile(2, 1, 2, false);",
-    ],
-    "RvltModBrazil": [
+    "ANWBrazil": [
         "llUseDistributedEconomicNetworkStyle(2);",
         "gLLEconomicDistanceMultiplier = 1.35;",
     ],
-    "RvltModArgentines": [
+    "ANWArgentines": [
         "llUseForwardOperationalLineStyle(0);",
         "gLLMilitaryDistanceMultiplier = 0.85;",
         "llSetBuildStrongpointProfile(1, 2, 3, true);",
     ],
-    "RvltModChileans": [
+    "ANWChileans": [
         "llUseAndeanTerraceFortressStyle(2);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(2, 2, 2, false);",
     ],
-    "RvltModPeruvians": [
+    "ANWPeruvians": [
         "llUseAndeanTerraceFortressStyle(3);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(3, 2, 2, false);",
     ],
-    "RvltModColumbians": [
+    "ANWColumbians": [
         "llUseForwardOperationalLineStyle(0);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(1, 1, 3, true);",
     ],
-    "RvltModCentralAmericans": [
-        "llUseDistributedEconomicNetworkStyle(1);",
-        "gLLEconomicDistanceMultiplier = 1.25;",
-    ],
-    "RvltModMayans": [
+    "ANWMayans": [
         "llUseJungleGuerrillaNetworkStyle(1);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(2, 1, 2, true);",
     ],
-    "RvltModYucatan": [
-        "llUseJungleGuerrillaNetworkStyle(1);",
-        "gLLMilitaryDistanceMultiplier = 0.90;",
-        "llSetBuildStrongpointProfile(2, 1, 2, true);",
-    ],
-    "RvltModBajaCalifornians": [
+    "ANWBajaCalifornians": [
         "llUseMobileFrontierScatterStyle(0);",
         "gLLHouseDistanceMultiplier = 1.40;",
         "gLLEconomicDistanceMultiplier = 1.50;",
     ],
-    "RvltModCalifornians": [
-        "llUseDistributedEconomicNetworkStyle(1);",
-        "gLLHouseDistanceMultiplier = 1.15;",
-        "gLLEconomicDistanceMultiplier = 1.40;",
-        "llSetBuildStrongpointProfile(2, 1, 1, false);",
-    ],
-    "RvltModRioGrande": [
+    "ANWRioGrande": [
         "llUseMobileFrontierScatterStyle(0);",
         "gLLHouseDistanceMultiplier = 1.35;",
         "gLLTownCenterDistanceMultiplier = 1.50;",
         "llSetBuildStrongpointProfile(1, 0, 2, false);",
     ],
-    "RvltModTexians": [
+    "ANWTexians": [
         "llUseForwardOperationalLineStyle(0);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(2, 1, 3, true);",
     ],
-    "RvltModHaitians": [
+    "ANWHaitians": [
         "llUseJungleGuerrillaNetworkStyle(0);",
         "gLLEconomicDistanceMultiplier = 1.40;",
         "gLLTownCenterDistanceMultiplier = 1.40;",
     ],
-    "RvltModBarbary": [
+    "ANWBarbary": [
         "llUseNavalMercantileCompoundStyle(2);",
         "gLLEconomicDistanceMultiplier = 1.20;",
         "llSetBuildStrongpointProfile(2, 2, 2, true);",
     ],
-    "RvltModEgyptians": [
+    "ANWEgyptians": [
         "llUseHighlandCitadelStyle(4);",
         "gLLHouseDistanceMultiplier = 0.75;",
         "llSetBuildStrongpointProfile(3, 3, 2, false);",
     ],
-    "RvltModSouthAfricans": [
+    "ANWSouthAfricans": [
         "llUseNavalMercantileCompoundStyle(1);",
         "gLLEconomicDistanceMultiplier = 1.25;",
         "llSetBuildStrongpointProfile(2, 1, 2, true);",
     ],
-    "RvltModFinnish": [
+    "ANWFinnish": [
         "llUseCompactFortifiedCoreStyle(3, true);",
         "gLLHouseDistanceMultiplier = 0.80;",
         "llSetBuildStrongpointProfile(3, 2, 2, false);",
     ],
-    "RvltModHungarians": [
+    "ANWHungarians": [
         "llUseSteppeCavalryWedgeStyle(1);",
         "gLLMilitaryDistanceMultiplier = 0.90;",
         "llSetBuildStrongpointProfile(2, 1, 3, true);",
     ],
-    "RvltModRomanians": [
+    "ANWRomanians": [
         "llUseCivicMilitiaCenterStyle(2);",
         "gLLEconomicDistanceMultiplier = 1.10;",
         "llSetBuildStrongpointProfile(2, 1, 2, false);",
     ],
-    "RvltModIndonesians": [
+    "ANWIndonesians": [
         "llUseShrineTradeNodeSpreadStyle(1);",
         "gLLEconomicDistanceMultiplier = 1.40;",
     ],
@@ -303,7 +283,7 @@ def rewire_revolution_commanders(path: Path, mapping: dict) -> None:
     text = path.read_text(encoding="utf-8")
     # Split into per-civ blocks by scanning for the rvltName checks.
     branch_re = re.compile(
-        r'(else\s+if|if)\s*\(\s*rvltName\s*==\s*"(RvltMod\w+)"\s*\)\s*\{',
+        r'(else\s+if|if)\s*\(\s*rvltName\s*==\s*"(ANW\w+)"\s*\)\s*\{',
     )
     edits: list[tuple[int, int, str, str]] = []  # (start, end, civ, replacement)
     matches = list(branch_re.finditer(text))
