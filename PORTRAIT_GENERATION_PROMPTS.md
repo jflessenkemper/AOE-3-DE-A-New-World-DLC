@@ -195,23 +195,7 @@ Make it match the official AOE3 DE leader portraits in tone and color palette.
 
 ---
 
-### 28. Mariano Guadalupe Vallejo (Californians)
-Generate an Age of Empires III: Definitive Edition-style portrait of Mariano Guadalupe Vallejo for the "Californians" civilization.
-
-Style requirements:
-- Historical accuracy (authentic 19th-century California ranchero and statesman: Mexican military dress with California influence, refined but frontier-aware)
-- AOE3 DE aesthetic: Rich golds, deep burgundies, earth tones; dramatic lighting with vignettes
-- Composition: Centered bust portrait, 3/4 angle, showing upper torso + arms
-- Quality: High-resolution (2048×2048px ideal), painterly digital art style
-- Accessories: Include Mexican officer insignia, colorful sash, possibly a rancho symbol; cultured frontier appearance
-- Background: Dark vignette with California mission imagery, Mexican colors, or coastal hints
-- Mood: Pragmatic statesman—cultured, adaptable, shrewd negotiator
-
-Make it match the official AOE3 DE leader portraits in tone and color palette.
-
----
-
-### 29. Isaac Brock (Canadians)
+### 28. Isaac Brock (Canadians)
 Generate an Age of Empires III: Definitive Edition-style portrait of Isaac Brock for the "Canadians" civilization.
 
 Style requirements:
@@ -227,23 +211,7 @@ Make it match the official AOE3 DE leader portraits in tone and color palette.
 
 ---
 
-### 30. Francisco Morazán (Central Americans)
-Generate an Age of Empires III: Definitive Edition-style portrait of Francisco Morazán for the "Central Americans" civilization.
-
-Style requirements:
-- Historical accuracy (authentic early 19th-century Central American unification general: Spanish-American military uniform, formal but campaign-worn)
-- AOE3 DE aesthetic: Rich golds, deep burgundies, earth tones; dramatic lighting with vignettes
-- Composition: Centered bust portrait, 3/4 angle, showing upper torso + arms
-- Quality: High-resolution (2048×2048px ideal), painterly digital art style
-- Accessories: Include military uniform with Central American insignia, decorations, sword; shows experience from unification campaigns
-- Background: Dark vignette with Central American symbols, jungle hints, or federal coat of arms
-- Mood: Unifying reformer—visionary, determined, idealistic about Central American federation
-
-Make it match the official AOE3 DE leader portraits in tone and color palette.
-
----
-
-### 31. Bernardo O'Higgins (Chileans)
+### 29. Bernardo O'Higgins (Chileans)
 Generate an Age of Empires III: Definitive Edition-style portrait of Bernardo O'Higgins for the "Chileans" civilization.
 
 Style requirements:
@@ -334,22 +302,6 @@ Style requirements:
 - Accessories: Include Mexican officer insignia, worn leather accents, pistol or blade; frontier hardened appearance
 - Background: Dark vignette with Rio Grande imagery, Mexican colors, or frontier fort symbolism
 - Mood: Rebel commander—fierce, independent, defiant against central authority
-
-Make it match the official AOE3 DE leader portraits in tone and color palette.
-
----
-
-### 48. Felipe Carrillo Puerto (Yucatan)
-Generate an Age of Empires III: Definitive Edition-style portrait of Felipe Carrillo Puerto for the "Yucatan" civilization.
-
-Style requirements:
-- Historical accuracy (authentic early 20th-century Yucatecan socialist leader: Mexican revolutionary dress with Maya-Yucatan elements, populist bearing)
-- AOE3 DE aesthetic: Rich golds, deep burgundies, earth tones; dramatic lighting with vignettes
-- Composition: Centered bust portrait, 3/4 angle, showing upper torso + arms
-- Quality: High-resolution (2048×2048px ideal), painterly digital art style
-- Accessories: Include Mexican revolutionary insignia, possible traditional Yucatecan elements, symbols of social reform; people's leader bearing
-- Background: Dark vignette with Yucatan Peninsula imagery, Mayan symbols, or Mexican revolutionary colors
-- Mood: Revolutionary socialist—idealistic, populist, champion of indigenous rights
 
 Make it match the official AOE3 DE leader portraits in tone and color palette.
 
