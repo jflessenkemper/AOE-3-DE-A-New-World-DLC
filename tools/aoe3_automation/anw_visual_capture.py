@@ -18,9 +18,23 @@ The captured frames can be compared side-by-side against
 ``static_contact_sheet.html`` to confirm every art surface renders the
 asset that ``data/civmods.xml`` declares.
 
+Manual flow for --all-surfaces:
+  1. Launch AoE3 DE via Steam and start/join a skirmish as the target civ.
+  2. Run:  python3 anw_visual_capture.py --civ ANWBritish --all-surfaces
+  3. The script will print a prompt for each surface (e.g. "Open Diplomacy
+     panel — F10 — then press Enter here.").
+  4. Navigate to that UI screen in-game, then press Enter in the terminal.
+  5. The script calls lobby_driver.screenshot() (passive pixel-read via
+     gamescopectl or X11 import — no mouse movement, no keystrokes).
+  6. Repeat for each of the 5 surfaces; results land in
+     artifacts/validation/visual_art/<civ>/.
+  7. Re-run build_art_contact_sheet.py to refresh the HTML review page.
+
 Usage::
 
     python3 tools/aoe3_automation/anw_visual_capture.py --civ ANWBritish
+    python3 tools/aoe3_automation/anw_visual_capture.py --civ ANWBritish --surface diplomacy_panel
+    python3 tools/aoe3_automation/anw_visual_capture.py --civ ANWBritish --all-surfaces
     python3 tools/aoe3_automation/anw_visual_capture.py --list
 """
 from __future__ import annotations
@@ -51,6 +65,17 @@ STEPS: list[tuple[str, str]] = [
      "Resign (Menu \u2192 Resign) so the post-game screen appears, "
      "then press Enter here."),
 ]
+
+# Surface name → (filename, prompt) mapping for --surface single-surface mode.
+# Keys are the logical surface names used in art_inventory.json captured_screenshots.
+SURFACE_MAP: dict[str, tuple[str, str]] = {
+    "diplomacy_panel":                     STEPS[0],
+    "scoreboard_portrait":                 STEPS[1],
+    "home_city_walking_animation_thumbnail": STEPS[2],
+    "ally_homecity":                       STEPS[3],
+    "postgame_flag":                       STEPS[4],
+}
+VALID_SURFACES = list(SURFACE_MAP.keys())
 
 
 def _display_path(p: Path) -> str:
@@ -177,13 +202,44 @@ def synthesize_all() -> dict[str, int]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="ANW visual-capture orchestrator")
+    ap = argparse.ArgumentParser(
+        description="ANW visual-capture orchestrator — screenshot only, no mouse/keyboard injection.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Examples:\n"
+            "  %(prog)s --civ ANWBritish                          # all 5 surfaces, interactive\n"
+            "  %(prog)s --civ ANWBritish --surface diplomacy_panel  # single surface\n"
+            "  %(prog)s --civ ANWBritish --all-surfaces            # all 5 surfaces (alias)\n"
+            "  %(prog)s --list                                    # list valid civ tokens\n"
+            "  %(prog)s --civ ANWBritish --synthesize             # fill from static art assets\n"
+        ),
+    )
     ap.add_argument("--civ", help="ANW civ token, e.g. ANWBritish")
     ap.add_argument("--out-dir", default=None,
                     help="Override output dir (default: "
                          "artifacts/validation/visual_art/<civ>/)")
     ap.add_argument("--list", action="store_true",
                     help="List the 46 valid ANW civ tokens and exit")
+    ap.add_argument(
+        "--surface",
+        choices=VALID_SURFACES,
+        metavar="SURFACE",
+        help=(
+            "Capture only one surface. Valid values: "
+            + ", ".join(VALID_SURFACES)
+            + ". Output file saved to artifacts/validation/visual_art/<civ>/<surface>.png"
+        ),
+    )
+    ap.add_argument(
+        "--all-surfaces",
+        action="store_true",
+        dest="all_surfaces",
+        help=(
+            "Capture all 5 art surfaces one at a time. The script pauses before each "
+            "capture and waits for Enter — navigate to the correct in-game screen first. "
+            "Equivalent to running --civ <civ> with no --surface flag."
+        ),
+    )
     ap.add_argument("--synthesize", action="store_true",
                     help="Skip the interactive capture and instead copy the "
                          "static art_surfaces references into the "
@@ -219,6 +275,31 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Synthesised {len(written)} PNGs for {args.civ} into "
               f"{_display_path(out_dir)}.")
         return 0
+
+    # --surface: single-surface capture mode.
+    if args.surface:
+        fname, prompt = SURFACE_MAP[args.surface]
+        out_path = out_dir / fname
+        screenshot_fn = _resolve_screenshot()
+        out_dir.mkdir(parents=True, exist_ok=True)
+        print(f"\n[1/1] {prompt}")
+        try:
+            input("")
+        except EOFError:
+            print("  (stdin closed; aborting)", file=sys.stderr)
+            return 1
+        try:
+            screenshot_fn(out_path)
+        except Exception as exc:  # noqa: BLE001
+            print(f"  ERROR: screenshot failed: {exc}", file=sys.stderr)
+            return 1
+        if out_path.exists() and out_path.stat().st_size > 0:
+            print(f"  -> wrote {_display_path(out_path)} ({out_path.stat().st_size:,} bytes)")
+        else:
+            print(f"  WARN: expected file not written: {out_path}", file=sys.stderr)
+        return 0
+
+    # --all-surfaces or default (no --surface flag): run all 5 steps.
     run_capture(args.civ, out_dir)
     return 0
 

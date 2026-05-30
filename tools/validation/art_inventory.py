@@ -66,6 +66,9 @@ RESOURCES = REPO / "resources" / "images"
 ART = REPO / "art"
 CIVMODS = REPO / "data" / "civmods.xml"
 INVENTORY_OUT = Path(__file__).resolve().parent / "art_inventory.json"
+# Track 2 spec requires a copy at this canonical artifacts path so the
+# visual-capture pipeline and contact-sheet tooling can reference it.
+INVENTORY_OUT_ARTIFACTS = REPO / "artifacts" / "validation" / "visual_art" / "art_inventory.json"
 
 DEFAULT_DEPLOYED = Path(
     "/home/jflessenkemper/.local/share/Steam/steamapps/compatdata/933110/pfx/"
@@ -800,8 +803,13 @@ def _cli(argv: Iterable[str] | None = None) -> int:
         json.dump(inv, sys.stdout, indent=2)
         sys.stdout.write("\n")
     else:
-        INVENTORY_OUT.write_text(json.dumps(inv, indent=2) + "\n", encoding="utf-8")
+        payload = json.dumps(inv, indent=2) + "\n"
+        INVENTORY_OUT.write_text(payload, encoding="utf-8")
         print(f"wrote {INVENTORY_OUT.relative_to(REPO)}  ({INVENTORY_OUT.stat().st_size} bytes)")
+        # Also write the canonical Track-2 artifacts path.
+        INVENTORY_OUT_ARTIFACTS.parent.mkdir(parents=True, exist_ok=True)
+        INVENTORY_OUT_ARTIFACTS.write_text(payload, encoding="utf-8")
+        print(f"wrote {INVENTORY_OUT_ARTIFACTS.relative_to(REPO)}  ({INVENTORY_OUT_ARTIFACTS.stat().st_size} bytes)")
         print(
             f"  civs={len(inv['civs'])}  html_imgs={meta['html_img_total']} "
             f"(linked={meta['html_img_with_civ']})  art={meta['art_files_total']}  "
