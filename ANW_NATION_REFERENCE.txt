@@ -460,7 +460,7 @@ Revolution Nations
 
 ------------------------------------------------------------------------
 Nation: Americans
-Civilization ID: RvltModAmericans
+Civilization ID: ANWAmericans
 Leader: Thomas Jefferson
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_americans_jefferson.png
 Portrait description: Thomas Jefferson portrait
@@ -480,7 +480,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Argentines
-Civilization ID: RvltModArgentines
+Civilization ID: ANWArgentines
 Leader: Jose de San Martin
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png
 Portrait description: Jose de San Martin portrait
@@ -500,7 +500,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Barbary
-Civilization ID: RvltModBarbary
+Civilization ID: ANWBarbary
 Leader: Hayreddin Barbarossa
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png
 Portrait description: Hayreddin Barbarossa portrait
@@ -520,7 +520,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Brazil
-Civilization ID: RvltModBrazil
+Civilization ID: ANWBrazil
 Leader: Pedro I of Brazil
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png
 Portrait description: Pedro I of Brazil portrait
@@ -539,28 +539,8 @@ Leader taunt quotes:
 Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
-Nation: Californians
-Civilization ID: RvltModCalifornians
-Leader: Mariano Guadalupe Vallejo
-Portrait asset: resources/images/icons/singleplayer/cpai_avatar_californians_vallejo.png
-Portrait description: Mariano Guadalupe Vallejo portrait
-Flag asset: resources/images/icons/flags/flag_hc_californian.png
-Flag description: California flag
-Elite units: Chinaco, Salteador
-Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
-Expected playstyle: Defensive frontier administration with trade-rich economy and careful cavalry response.
-Expected buildstyle: Civic Militia Center
-Leader encouragement quotes:
-- Conserve strength and strike when it matters.
-- Hold the province together.
-Leader taunt quotes:
-- You threaten the province more than you command it.
-- That advance has no staying power.
-Shared tactical quote set: see the header of this document.
-
-------------------------------------------------------------------------
 Nation: Canadians
-Civilization ID: RvltModCanadians
+Civilization ID: ANWCanadians
 Leader: Isaac Brock
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png
 Portrait description: Isaac Brock portrait
@@ -579,28 +559,8 @@ Leader taunt quotes:
 Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
-Nation: Central Americans
-Civilization ID: RvltModCentralAmericans
-Leader: Francisco Morazan
-Portrait asset: resources/images/icons/singleplayer/cpai_avatar_central_americans_morazan.png
-Portrait description: Francisco Morazan portrait
-Flag asset: resources/images/icons/flags/flag_hc_central_american.png
-Flag description: Federal Republic of Central America flag
-Elite units: Chinaco, Salteador
-Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
-Expected playstyle: Balanced federalist warfare with native alliances and steady tempo.
-Expected buildstyle: Distributed Economic Network
-Leader encouragement quotes:
-- Stand together. Federation is strength.
-- Keep formation and keep faith.
-Leader taunt quotes:
-- A divided command defeats itself.
-- You split what you are too weak to govern.
-Shared tactical quote set: see the header of this document.
-
-------------------------------------------------------------------------
 Nation: Chileans
-Civilization ID: RvltModChileans
+Civilization ID: ANWChileans
 Leader: Bernardo O'Higgins
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png
 Portrait description: Bernardo O'Higgins portrait
@@ -620,7 +580,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Columbians
-Civilization ID: RvltModColumbians
+Civilization ID: ANWColumbians
 Leader: Simon Bolivar
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png
 Portrait description: Simon Bolivar portrait
@@ -640,7 +600,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Egyptians
-Civilization ID: RvltModEgyptians
+Civilization ID: ANWEgyptians
 Leader: Muhammad Ali Pasha
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png
 Portrait description: Muhammad Ali Pasha portrait
@@ -660,7 +620,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Finnish
-Civilization ID: RvltModFinnish
+Civilization ID: ANWFinnish
 Leader: Carl Gustaf Emil Mannerheim
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png
 Portrait description: Carl Gustaf Emil Mannerheim portrait
@@ -679,28 +639,8 @@ Leader taunt quotes:
 Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
-Nation: French Canadians
-Civilization ID: RvltModFrenchCanadians
-Leader: Louis-Joseph Papineau
-Portrait asset: resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png
-Portrait description: Louis-Joseph Papineau portrait
-Flag asset: resources/images/icons/flags/flag_hc_spc_canadian.png
-Flag description: Patriote movement flag
-Elite units: Skirmisher, Cuirassier
-Non-elite units: Musketeers, Hussars, Dragoons, Grenadiers, artillery.
-Expected playstyle: Defensive militia-reformer style with civic endurance and trade resilience.
-Expected buildstyle: Civic Militia Center
-Leader encouragement quotes:
-- Stand firm. Principle must not blink.
-- Give them resolve, not noise.
-Leader taunt quotes:
-- You govern by habit and expect obedience.
-- Even your victories sound like excuses.
-Shared tactical quote set: see the header of this document.
-
-------------------------------------------------------------------------
 Nation: Haitians
-Civilization ID: RvltModHaitians
+Civilization ID: ANWHaitians
 Leader: Toussaint Louverture
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png
 Portrait description: Toussaint Louverture portrait
@@ -720,7 +660,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Hungarians
-Civilization ID: RvltModHungarians
+Civilization ID: ANWHungarians
 Leader: Lajos Kossuth
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png
 Portrait description: Lajos Kossuth portrait
@@ -740,7 +680,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Indonesians
-Civilization ID: RvltModIndonesians
+Civilization ID: ANWIndonesians
 Leader: Prince Diponegoro
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png
 Portrait description: Prince Diponegoro portrait
@@ -760,7 +700,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Mayans
-Civilization ID: RvltModMayans
+Civilization ID: ANWMayans
 Leader: Jacinto Canek
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png
 Portrait description: Jacinto Canek portrait
@@ -780,7 +720,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Mexicans (Revolution)
-Civilization ID: RvltModMexicans
+Civilization ID: ANWMexicans
 Leader: Miguel Hidalgo y Costilla
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png
 Portrait description: Miguel Hidalgo y Costilla portrait
@@ -800,7 +740,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Revolutionary France
-Civilization ID: RvltModRevolutionaryFrance
+Civilization ID: ANWRevFrance
 Quote source civilization ID: French
 Leader: Maximilien Robespierre
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png
@@ -821,7 +761,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Napoleonic France
-Civilization ID: RvltModNapoleonicFrance
+Civilization ID: ANWNapoleonicFrance
 Leader: Napoleon Bonaparte
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png
 Portrait description: Napoleon I in coronation robes portrait
@@ -841,7 +781,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Peruvians
-Civilization ID: RvltModPeruvians
+Civilization ID: ANWPeruvians
 Leader: Andres de Santa Cruz
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png
 Portrait description: Andres de Santa Cruz portrait
@@ -861,7 +801,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Rio Grande
-Civilization ID: RvltModRioGrande
+Civilization ID: ANWRioGrande
 Leader: Antonio Canales Rosillo
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_rio_grande_canales_rosillo.png
 Portrait description: Antonio Canales Rosillo portrait
@@ -881,7 +821,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Romanians
-Civilization ID: RvltModRomanians
+Civilization ID: ANWRomanians
 Leader: Alexandru Ioan Cuza
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png
 Portrait description: Alexandru Ioan Cuza portrait
@@ -901,7 +841,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: South Africans
-Civilization ID: RvltModSouthAfricans
+Civilization ID: ANWSouthAfricans
 Leader: Paul Kruger
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png
 Portrait description: Paul Kruger portrait
@@ -921,7 +861,7 @@ Shared tactical quote set: see the header of this document.
 
 ------------------------------------------------------------------------
 Nation: Texians
-Civilization ID: RvltModTexians
+Civilization ID: ANWTexians
 Leader: Sam Houston
 Portrait asset: resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png
 Portrait description: Sam Houston portrait
@@ -939,22 +879,3 @@ Leader taunt quotes:
 - You forgot the ending before the first shot.
 Shared tactical quote set: see the header of this document.
 
-------------------------------------------------------------------------
-Nation: Yucatan
-Civilization ID: RvltModYucatan
-Leader: Felipe Carrillo Puerto
-Portrait asset: resources/images/icons/singleplayer/cpai_avatar_yucatan_carrillo_puerto.png
-Portrait description: Felipe Carrillo Puerto portrait
-Flag asset: resources/images/icons/flags/flag_hc_yucatan.png
-Flag description: Yucatan flag
-Elite units: Chinaco, Salteador
-Non-elite units: Insurgentes, Soldados, Cuatreros, militia, field guns.
-Expected playstyle: Balanced regional resistance with native support and stubborn territorial play.
-Expected buildstyle: Civic Militia Center
-Leader encouragement quotes:
-- Hold the people close and the line closer.
-- Stand firm. The land remembers loyalty.
-Leader taunt quotes:
-- You rule without listening and fight the same way.
-- Even victory would not clean this disorder.
-Shared tactical quote set: see the header of this document.
