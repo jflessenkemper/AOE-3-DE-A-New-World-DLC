@@ -331,42 +331,42 @@
 <Chatset name="anw_mexicans">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>¡Viva la Virgen de Guadalupe! Caminamos juntos.</String>
+         <String>Long live the Virgin of Guadalupe! We march together.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>491350</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>¡El Grito de Dolores! Spain will hear us from the pulpit itself.</String>
+         <String>The Cry of Dolores! Spain will hear us from the pulpit itself.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>491351</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>La Alhóndiga stands. The iglesias become fortresses when the Republic calls.</String>
+         <String>The Alhóndiga stands. The churches become fortresses when the Republic calls.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>491358</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>A gachupín hides. Our machetes do not tire.</String>
+         <String>A Spaniard hides. Our machetes do not tire.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>491359</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un hijo de Dolores ha caído. The Republic honors him.</String>
+         <String>A son of Dolores has fallen. The Republic honors him.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>491362</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>¡Por la independencia! The parish rises, the viceroy&apos;s men fall.</String>
+         <String>For independence! The parish rises, the viceroy&apos;s men fall.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>491365</StringID>
       </Sentence>
@@ -389,7 +389,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>The alcázar holds. No Moor, no heretic shall pass.</String>
+         <String>The royal citadel holds. No invader, no heretic shall pass.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491408</StringID>
       </Sentence>
@@ -653,7 +653,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>Marshal, field fortifications only. The Grande Armée advances, not hides.</String>
+         <String>Marshal, field fortifications only. The Grand Army advances, it does not hide.</String>
          <Sound>chats\NAPO0000.mp3</Sound>
          <StringID>491708</StringID>
       </Sentence>
@@ -667,7 +667,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un officier brave est tombé. We avenge him with French arms.</String>
+         <String>A brave officer has fallen. We avenge him with French arms.</String>
          <Sound>chats\NAPO0000.mp3</Sound>
          <StringID>491712</StringID>
       </Sentence>
@@ -697,7 +697,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>The stones of Sacsayhuamán fit without mortar. As the land itself.</String>
+         <String>The stones of Sacsayhuaman fit without mortar — as the land itself.</String>
          <Sound>chats\HUAY0000.mp3</Sound>
          <StringID>491758</StringID>
       </Sentence>
@@ -771,42 +771,42 @@
 <Chatset name="anw_argentines">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Seamos libres, lo demás no importa. Avanzamos juntos.</String>
+         <String>Let us be free, all else is secondary. We march together.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491850</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>He cruzado los Andes. Un campo de batalla no me detendrá.</String>
+         <String>I have crossed the Andes. A single battlefield will not stop me.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491851</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>Los fortines de la frontera. No ciudadelas — solo vigías.</String>
+         <String>Frontier blockhouses. Not citadels — only watchtowers.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491858</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>Se esconde. El gaucho no teme paredes.</String>
+         <String>He hides. The gaucho fears no walls.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491859</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un patriota de la Pampa. Los Andes lo recuerdan.</String>
+         <String>A patriot of the Pampas. The Andes will remember him.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491862</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>Como en Chacabuco: los Andes en la espalda, la victoria en el puño.</String>
+         <String>Like at Chacabuco — the Andes at our back, victory in our fist.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491865</StringID>
       </Sentence>
@@ -815,42 +815,42 @@
 <Chatset name="anw_bajacalifornians">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Desde Alta California hasta Baja. Amigos, adelante.</String>
+         <String>From Alta California to Baja. Friends, forward.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491900</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>La Californias no se entregan sin la palabra de sus gobernadores.</String>
+         <String>The Californias do not surrender without the word of their governors.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491901</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>El presidio de Loreto. Adobe y torre. La misión es fortaleza.</String>
+         <String>The Loreto presidio. Adobe and tower. The mission is a fortress.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491908</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>Amurallado como un gringo. Poca imaginación.</String>
+         <String>Walled up like a foreigner. Little imagination.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491909</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un californio caído. Las misiones lo recuerdan.</String>
+         <String>A Californian has fallen. The missions will remember him.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491912</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>El pronunciamiento triunfa. California se defiende.</String>
+         <String>The declaration of independence prevails. California defends herself.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>491915</StringID>
       </Sentence>
@@ -873,7 +873,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>The Kasbah, the Peñón. Sea-facing guns, land-side mur. The harbor endures.</String>
+         <String>The Kasbah, the Peñón. Sea-facing guns, land-side wall. The harbor endures.</String>
          <Sound>chats\SULE0000.mp3</Sound>
          <StringID>491958</StringID>
       </Sentence>
@@ -903,42 +903,42 @@
 <Chatset name="anw_brazil">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Independência ou morte! Marchamos juntos, amigo.</String>
+         <String>Independence or death! We march together, friend.</String>
          <Sound>chats\HENR0000.mp3</Sound>
          <StringID>492000</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>O Brasil é um império novo. Você descobrirá sua força.</String>
+         <String>Brazil is a new empire. You will discover its strength.</String>
          <Sound>chats\HENR0000.mp3</Sound>
          <StringID>492001</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>A fortaleza do Rio guarda a baía. A costa é nossa.</String>
+         <String>The fortress of Rio guards the bay. The coast is ours.</String>
          <Sound>chats\HENR0000.mp3</Sound>
          <StringID>492008</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>Paredes? A marinha imperial não teme pedras.</String>
+         <String>Walls? The imperial navy does not fear stones.</String>
          <Sound>chats\HENR0000.mp3</Sound>
          <StringID>492009</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Um súdito leal caído. O Império o honra.</String>
+         <String>A loyal subject fallen. The Empire honors him.</String>
          <Sound>chats\HENR0000.mp3</Sound>
          <StringID>492012</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>Independência. Brasil é livre, e a vitória é nossa.</String>
+         <String>Independence. Brazil is free, and the victory is ours.</String>
          <Sound>chats\HENR0000.mp3</Sound>
          <StringID>492015</StringID>
       </Sentence>
@@ -954,14 +954,14 @@
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>La Californias tiene sus propios gobernadores. Tú no eres uno.</String>
+         <String>Las Californias has its own governors. You are not one.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492051</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>El Presidio de Sonoma. Adobe y bastión, como los españoles enseñaron.</String>
+         <String>The Presidio of Sonoma. Adobe and bastion, as the Spanish taught.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492058</StringID>
       </Sentence>
@@ -1035,21 +1035,21 @@
 <Chatset name="anw_centralamericans">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Por la Federación Centroamericana. Unidos prosperamos.</String>
+         <String>For the Central American Federation. United we prosper.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492150</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>Los conservadores han aprendido. Tú también aprenderás.</String>
+         <String>The conservatives have learned. You will learn too.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492151</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>Los presidios coloniales. Adobe y palisada. La federación guarda.</String>
+         <String>The colonial presidios. Adobe and palisade. The federation guards.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492158</StringID>
       </Sentence>
@@ -1063,14 +1063,14 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un federalista caído. La Patria Centroamericana lo honra.</String>
+         <String>A federalist fallen. The Central American homeland honors him.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492162</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>La Federación resiste. La causa liberal avanza.</String>
+         <String>The Federation resists. The liberal cause advances.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492165</StringID>
       </Sentence>
@@ -1093,7 +1093,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>El paso del Andes se guarda. Valparaíso es nuestra puerta.</String>
+         <String>The Andean pass is guarded. Valparaíso is our gateway.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492208</StringID>
       </Sentence>
@@ -1107,14 +1107,14 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un huaso valiente caído. El Ejército Libertador lo honra.</String>
+         <String>A brave huaso fallen. The Liberating Army honors him.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492212</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>Como en Maipú: Chile libre, y el campo nuestro.</String>
+         <String>As at Maipú: Chile free, and the field ours.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492215</StringID>
       </Sentence>
@@ -1130,21 +1130,21 @@
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>He liberado cinco naciones. La suya será la sexta.</String>
+         <String>I have liberated five nations. Yours will be the sixth.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492251</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>Los pasos andinos. Boyacá enseñó que la montaña defiende la libertad.</String>
+         <String>The Andean passes. Boyacá taught that the mountain defends liberty.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492258</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>El tirano tras pared. Bolívar los ha cruzado todas.</String>
+         <String>The tyrant behind walls. Bolívar has crossed them all.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492259</StringID>
       </Sentence>
@@ -1252,50 +1252,6 @@
       </Sentence>
    </Tag>
 </Chatset>
-<Chatset name="anw_frenchcanadians">
-   <Tag type="AiChat" name="ToAllyIntro" priority="Background">
-      <Sentence>
-         <String>Pour la patrie canadienne-française. Ensemble, camarade.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492400</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
-      <Sentence>
-         <String>Vous avez oublié la résistance québécoise? Nous la rappellerons.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492401</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
-      <Sentence>
-         <String>La seigneurie tient. Les palissades et les Patriotes.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492408</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
-      <Sentence>
-         <String>Il se cache derrière la pierre. Les Patriotes connaissent les bois.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492409</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
-      <Sentence>
-         <String>Un Patriote tombé. Son nom sera gravé.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492412</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
-      <Sentence>
-         <String>Vive le Québec libre! Le drapeau des Patriotes flotte encore.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492415</StringID>
-      </Sentence>
-   </Tag>
-</Chatset>
 <Chatset name="anw_haitians">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
@@ -1327,7 +1283,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un citoyen noir tombé. Liberté est écrite avec son sang.</String>
+         <String>A black citizen fallen. Liberty is written with his blood.</String>
          <Sound>chats\NAPO0000.mp3</Sound>
          <StringID>492462</StringID>
       </Sentence>
@@ -1343,7 +1299,7 @@
 <Chatset name="anw_hungarians">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Éljen a magyar! Barátom, a szabadság köt minket.</String>
+         <String>Long live the Magyar! My friend, liberty binds us.</String>
          <Sound>chats\FRED0000.mp3</Sound>
          <StringID>492500</StringID>
       </Sentence>
@@ -1452,14 +1408,14 @@
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>Paredes contra la selva? Absurdo español.</String>
+         <String>Walls against the jungle? Spanish absurdity.</String>
          <Sound>chats\CUAU0000.mp3</Sound>
          <StringID>492609</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un maya caído. Los dioses recogen.</String>
+         <String>A Maya fallen. The gods gather.</String>
          <Sound>chats\CUAU0000.mp3</Sound>
          <StringID>492612</StringID>
       </Sentence>
@@ -1475,42 +1431,42 @@
 <Chatset name="anw_mexicansrev">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>¡Viva México! Con la Virgen de Guadalupe caminamos juntos.</String>
+         <String>Long live Mexico! With the Virgin of Guadalupe we march together.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492650</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>¡Por el Grito de Dolores! You shall hear it from every parish.</String>
+         <String>For the Cry of Dolores! You shall hear it from every parish.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492651</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>The Alhóndiga holds. The church bells rally the faithful.</String>
+         <String>The Alhondiga holds. The church bells rally the faithful.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492658</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>El gachupín se esconde. The machetes do not tire.</String>
+         <String>The Spaniard hides. The machetes do not tire.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492659</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un hijo de Dolores ha caído. La Virgen lo recibe.</String>
+         <String>A son of Dolores has fallen. The Virgin receives him.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492662</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>¡Independencia! One more viceroy learns to flee.</String>
+         <String>Independence! One more viceroy learns to flee.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492665</StringID>
       </Sentence>
@@ -1563,14 +1519,14 @@
 <Chatset name="anw_peruvians">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>La Confederación está firme. Juntos, amigo.</String>
+         <String>The Confederation stands firm. Together, friend.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492750</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>Perú y Bolivia son uno. No sabes qué has despertado.</String>
+         <String>Peru and Bolivia are one. You do not know what you have awakened.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492751</StringID>
       </Sentence>
@@ -1584,7 +1540,7 @@
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>Se esconde en el llano. El cóndor sobrevuela.</String>
+         <String>He hides on the plain. The condor flies above.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492759</StringID>
       </Sentence>
@@ -1598,7 +1554,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>La Confederación vence. La historia andina sigue escribiéndose.</String>
+         <String>The Confederation triumphs. Andean history continues to be written.</String>
          <Sound>chats\ISAB0000.mp3</Sound>
          <StringID>492765</StringID>
       </Sentence>
@@ -1651,14 +1607,14 @@
 <Chatset name="anw_riogrande">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>La República del Río Grande, amigo. Libertad del norte.</String>
+         <String>The Republic of Rio Grande, friend. Liberty of the north.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492850</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>Mexico y los gringos querían ambos. Ninguno nos tuvo.</String>
+         <String>Mexico and the gringos both wanted us. Neither had us.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492851</StringID>
       </Sentence>
@@ -1672,21 +1628,21 @@
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>Se amuralla en territorio nuestro. Qué atrevimiento.</String>
+         <String>He walls himself in our territory. What audacity.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492859</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un republicano caído. El norte lo recuerda.</String>
+         <String>A republican fallen. The north remembers him.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492862</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>La República resiste. Del Nueces al Sabinas, es nuestra.</String>
+         <String>The Republic endures. From the Nueces to the Sabinas, it is ours.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>492865</StringID>
       </Sentence>
@@ -1723,14 +1679,14 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un fiu al Moldovei a căzut. Patria îl ține.</String>
+         <String>A son of Moldova has fallen. The homeland keeps him.</String>
          <Sound>chats\FRED0000.mp3</Sound>
          <StringID>492912</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>Ca la unirea — Moldova și Valahia împreună, biruitoare.</String>
+         <String>As at the Union — Moldavia and Wallachia together, victorious.</String>
          <Sound>chats\FRED0000.mp3</Sound>
          <StringID>492915</StringID>
       </Sentence>
@@ -1827,21 +1783,21 @@
 <Chatset name="anw_yucatan">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Henequén y libertad. Caminamos juntos, compañero.</String>
+         <String>Henequen and liberty. We walk together, comrade.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>493050</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>La Casta War enseñó a los hacendados. Tú aprenderás lo mismo.</String>
+         <String>The Caste War taught the hacienda owners. You will learn the same.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>493051</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>Mérida tras sus muros coloniales. Las haciendas fortificadas.</String>
+         <String>Mérida behind her colonial walls. The fortified haciendas.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>493058</StringID>
       </Sentence>
@@ -1855,14 +1811,14 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>Un yucateco caído. El pueblo no olvida.</String>
+         <String>A Yucatecan fallen. The people do not forget.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>493062</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>Henequén, tierra, y victoria. El Yucatán socialista prevalece.</String>
+         <String>Henequen, land, and victory. Socialist Yucatán prevails.</String>
          <Sound>chats\HIDA0000.mp3</Sound>
          <StringID>493065</StringID>
       </Sentence>

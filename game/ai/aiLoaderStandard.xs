@@ -37,6 +37,13 @@ include "leaders\leader_tokugawa.xs";
 include "leaders\leader_crazy_horse.xs";
 include "leaders\leader_gustavus.xs";
 
+// ── Per-civ wall-knob dispatch (auto-generated from
+//    tools/ai_design/wall_knob_calibration.py).
+//    Defines void llSetWallKnobsForCiv(void) which sets all 14
+//    gLLWall* tuning knobs for the active civ. Called from preInit()
+//    AFTER initLeader<Name>() so it overrides leader-set defaults.
+include "core\aiWallKnobsByCiv.xs";
+
 
 //==============================================================================
 /*  Runtime-resolved abstract proto-type IDs.
@@ -123,7 +130,7 @@ void preInit(void)
    {
       initLeaderBourbon();
    }
-   else if (legendaryLeaderCivName == "RvltModNapoleonicFrance")
+   else if (legendaryLeaderCivName == "ANWNapoleonicFrance")
    {
       initLeaderNapoleon();
    }
@@ -218,6 +225,11 @@ void preInit(void)
 
    llAssignLeaderIdentity();
    llApplyBuildStyleForActiveCiv();
+
+   // Per-civ wall-knob calibration (overrides leader-file strategy when
+   // the per-age doctrine table in tools/ai_design/wall_knob_calibration.py
+   // disagrees with the historical leader file).
+   llSetWallKnobsForCiv();
 
    if (aiGetGameMode() == cGameModeEconomyMode)
    {

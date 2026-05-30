@@ -40,8 +40,11 @@ void initLeaderGustavus(void)
    // Spec doctrine = Forward Operational Line. Gustavus pushed forward
    // operating bases ("Lion of the North"), so the Forward helper fits
    // better than the static Siege Train doctrine.
+   // Note: gLLMilitaryDistanceMultiplier is set authoritatively in
+   // leaderCommon.xs llApplyBuildStyleForActiveCiv (cCivDESwedish → 0.85,
+   // mid-band of spec [0.8, 1.1]). Do NOT set it here — the override would
+   // be silently clobbered after this init runs, which is misleading.
    llUseForwardOperationalLineStyle(1);
-   gLLMilitaryDistanceMultiplier = 1.05;  // forward-skewed barracks/foundries.
    llSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 4.0);

@@ -37,6 +37,7 @@ void initLeaderValette(void)
 
    // LL-BUILD-STYLE-BEGIN
    llUseHighlandCitadelStyle(5);
+   gLLMilitaryDistanceMultiplier = 0.75;  // Great Siege of Malta bastion concentration — pull barracks tight to the keep; firmly defensive within spec [0.7,1.0].
    llSetBuildStrongpointProfile(4, 3, 2, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.9, 0.1, 2, 5.0);

@@ -90,12 +90,11 @@ minInterval 50
    if (kbGetAge() == cAge2)
    {
       btRushBoom = 0.0;
-      btOffenseDefense = 0.65;
+      btOffenseDefense = 0.4;        // Spec expects_treaty=true: keep Colonial moderate, no llEnableForwardBaseStyle (forward-base sets btOffenseDefense=1.0 which contradicts treaty posture).
       btBiasInf = 0.8;
       btBiasCav = 0.1;
       btBiasArt = -0.4;
       btBiasNative = 0.8;
-      llEnableForwardBaseStyle();
    }
 }
 
@@ -146,7 +145,7 @@ minInterval 70
       btBiasCav = 0.4;
       btBiasArt = 0.45;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      // Spec expects_treaty=true, no expects_forward: hold the Confederacy line; spread of TPs is the doctrine, not forward camps.
    }
 }
 

@@ -199,20 +199,25 @@ void initCivUnitTypes()
    {
       string rvltName = kbGetCivName(cMyCiv);
 
-      // Napoleonic France and French Canadians use Coureur settlers.
-      if (rvltName == "RvltModNapoleonicFrance" || rvltName == "RvltModFrenchCanadians")
+      // Napoleonic France uses Coureur settlers.
+      // ANW: ANWNapoleonicFrance maps to the same Coureur bucket.
+      // (ANWRevFrance keeps default Settler — Republican Levee doctrine,
+      // not Coureur-based scouting economy.)
+      if (rvltName == "ANWNapoleonicFrance")
       {
          gEconUnit = cUnitTypeCoureur;
       }
 
       // House type: Most revolution civs use standard European houses.
       // Ottoman-derived civs (Barbary, Egypt, Romania) use Mediterranean houses.
-      if (rvltName == "RvltModBarbary" || rvltName == "RvltModEgyptians" || rvltName == "RvltModRomanians")
+      // ANW equivalents: ANWBarbary, ANWEgyptians, ANWRomanians.
+      if (rvltName == "ANWBarbary" || rvltName == "ANWEgyptians" || rvltName == "ANWRomanians")
       {
          gHouseUnit = cUnitTypeHouseMed;
       }
       // Eastern European derivations use Eastern houses.
-      else if (rvltName == "RvltModHungarians" || rvltName == "RvltModFinnish")
+      // ANW equivalents: ANWHungarians, ANWFinnish.
+      else if (rvltName == "ANWHungarians" || rvltName == "ANWFinnish")
       {
          gHouseUnit = cUnitTypeHouseEast;
       }
@@ -222,10 +227,14 @@ void initCivUnitTypes()
       }
 
       // Naval overrides for revolution civs with Sloop/Steamer/Ironclad access.
-      if (rvltName == "RvltModAmericans" || rvltName == "RvltModMexicans" ||
-          rvltName == "RvltModBrazil" || rvltName == "RvltModArgentines" ||
-          rvltName == "RvltModChileans" || rvltName == "RvltModColumbians" ||
-          rvltName == "RvltModPeruvians" || rvltName == "RvltModTexians")
+      // ANW equivalents: the South American + Mexican + Texian set
+      // (ANWSouthAfricans included — colonial Cape navy used the same
+      // 19c steam-sloop / ironclad doctrine).
+      if (rvltName == "ANWAmericans" || rvltName == "ANWMexicans" ||
+          rvltName == "ANWBrazil" || rvltName == "ANWArgentines" ||
+          rvltName == "ANWChileans" || rvltName == "ANWColumbians" ||
+          rvltName == "ANWPeruvians" || rvltName == "ANWTexians" ||
+          rvltName == "ANWSouthAfricans")
       {
          gCaravelUnit = cUnitTypedeSloop;
          gGalleonUnit = cUnitTypedeSteamer;
@@ -233,14 +242,15 @@ void initCivUnitTypes()
       }
 
       // Galley-based navies for European revolution civs with inland/river focus.
-      if (rvltName == "RvltModHungarians" || rvltName == "RvltModRomanians" ||
-          rvltName == "RvltModFinnish")
+      // ANW equivalents: ANWHungarians, ANWRomanians, ANWFinnish.
+      if (rvltName == "ANWHungarians" || rvltName == "ANWRomanians" ||
+          rvltName == "ANWFinnish")
       {
          gCaravelUnit = cUnitTypeGalley;
       }
 
-      // Barbary States use Ottoman-style naval units.
-      if (rvltName == "RvltModBarbary")
+      // Barbary States use Ottoman-style naval units. ANW equivalent: ANWBarbary.
+      if (rvltName == "ANWBarbary")
       {
          gCaravelUnit = cUnitTypeGalley;
       }
@@ -415,7 +425,10 @@ void initArrays(void)
    {
       string rvltName = kbGetCivName(cMyCiv);
 
-      if ((rvltName == "RvltModNapoleonicFrance") || (rvltName == "RvltModFrenchCanadians"))
+      // Napoleonic France cuts settler count to 90% — the
+      // Coureur-based economy produces more value per worker.
+      // ANW: ANWNapoleonicFrance shares the same Coureur bucket.
+      if (rvltName == "ANWNapoleonicFrance")
       {
          for (i = cAge1; <= cAge5)
          {
@@ -423,8 +436,11 @@ void initArrays(void)
          }
       }
 
-      if ((rvltName == "RvltModCanadians") || (rvltName == "RvltModFrenchCanadians") ||
-          (rvltName == "RvltModHaitians") || (rvltName == "RvltModRomanians"))
+      // Defensive/compact-core bucket: Canadians, Haitians,
+      // Romanians — smaller settler caps to free up pop for blockhouse
+      // infantry. ANW equivalents: ANWCanadians, ANWHaitians, ANWRomanians.
+      if ((rvltName == "ANWCanadians") ||
+          (rvltName == "ANWHaitians") || (rvltName == "ANWRomanians"))
       {
          xsArraySetInt(gTargetSettlerCounts, cAge2, 30);
          xsArraySetInt(gTargetSettlerCounts, cAge3, 55);
@@ -432,11 +448,18 @@ void initArrays(void)
          xsArraySetInt(gTargetSettlerCounts, cAge5, 65);
       }
 
-      if ((rvltName == "RvltModAmericans") || (rvltName == "RvltModMexicans") ||
-          (rvltName == "RvltModBrazil") || (rvltName == "RvltModArgentines") ||
-          (rvltName == "RvltModChileans") || (rvltName == "RvltModColumbians") ||
-          (rvltName == "RvltModPeruvians") || (rvltName == "RvltModCalifornians") ||
-          (rvltName == "RvltModTexians") || (rvltName == "RvltModRioGrande"))
+      // Americas + Republican expansion bucket: large settler caps for
+      // wide hacienda economies and forward-operational doctrines.
+      // ANW equivalents: the South American + Mexican + Texian set, plus
+      // ANWSouthAfricans (colonial Cape mercantile economy fits the same
+      // wide-economy profile).
+      // Note: ANWCalifornians + ANWRioGrande remain for upstream
+      // compatibility; ANW dropped Californians/CentralAmericans/Yucatan.
+      if ((rvltName == "ANWAmericans") || (rvltName == "ANWMexicans") ||
+          (rvltName == "ANWBrazil") || (rvltName == "ANWArgentines") ||
+          (rvltName == "ANWChileans") || (rvltName == "ANWColumbians") ||
+          (rvltName == "ANWPeruvians") || (rvltName == "ANWTexians") ||
+          (rvltName == "ANWSouthAfricans"))
       {
          xsArraySetInt(gTargetSettlerCounts, cAge2, 35);
          xsArraySetInt(gTargetSettlerCounts, cAge3, 65);
@@ -444,8 +467,9 @@ void initArrays(void)
          xsArraySetInt(gTargetSettlerCounts, cAge5, 80);
       }
 
-      if ((rvltName == "RvltModMayans") || (rvltName == "RvltModYucatan") ||
-          (rvltName == "RvltModCentralAmericans") || (rvltName == "RvltModBajaCalifornians"))
+      // Mesoamerican bucket: Mayans (and upstream Yucatan/CentralAmericans/
+      // BajaCalifornians). ANW equivalent: ANWMayans only.
+      if (rvltName == "ANWMayans")
       {
          xsArraySetInt(gTargetSettlerCounts, cAge2, 30);
          xsArraySetInt(gTargetSettlerCounts, cAge3, 60);
@@ -453,7 +477,8 @@ void initArrays(void)
          xsArraySetInt(gTargetSettlerCounts, cAge5, 75);
       }
 
-      if (rvltName == "RvltModIndonesians")
+      // Indonesian archipelago bucket: smaller caps, naval-leaning.
+      if (rvltName == "ANWIndonesians")
       {
          xsArraySetInt(gTargetSettlerCounts, cAge2, 25);
          xsArraySetInt(gTargetSettlerCounts, cAge3, 50);
@@ -1646,36 +1671,36 @@ void initPersonality(void)
       btBiasNative = 0.0;
       btBiasTrade = 0.0;
 
-      if ((rvltName == "RvltModNapoleonicFrance") || (rvltName == "RvltModArgentines") ||
-          (rvltName == "RvltModTexians") || (rvltName == "RvltModRioGrande"))
+      if ((rvltName == "ANWNapoleonicFrance") || (rvltName == "ANWArgentines") ||
+          (rvltName == "ANWTexians") || (rvltName == "ANWRioGrande"))
       {
          btOffenseDefense = 0.5;
          btBiasCav = 0.3;
       }
 
-      if ((rvltName == "RvltModHaitians") || (rvltName == "RvltModCanadians") ||
-          (rvltName == "RvltModFrenchCanadians") || (rvltName == "RvltModRomanians"))
+      if ((rvltName == "ANWHaitians") || (rvltName == "ANWCanadians") ||
+          (rvltName == "ANWRomanians"))
       {
          btRushBoom = 0.0;
          btOffenseDefense = -0.2;
          btBiasInf = 0.4;
       }
 
-      if ((rvltName == "RvltModBarbary") || (rvltName == "RvltModChileans") ||
-          (rvltName == "RvltModBrazil") || (rvltName == "RvltModColumbians"))
+      if ((rvltName == "ANWBarbary") || (rvltName == "ANWChileans") ||
+          (rvltName == "ANWBrazil") || (rvltName == "ANWColumbians"))
       {
          btBiasTrade = 0.5;
       }
 
-      if ((rvltName == "RvltModMayans") || (rvltName == "RvltModYucatan") ||
-          (rvltName == "RvltModCentralAmericans") || (rvltName == "RvltModPeruvians"))
+      if ((rvltName == "ANWMayans") || (rvltName == "ANWYucatan") ||
+          (rvltName == "ANWCentralAmericans") || (rvltName == "ANWPeruvians"))
       {
          btBiasNative = 0.5;
          btBiasInf = 0.4;
       }
 
-      if ((rvltName == "RvltModAmericans") || (rvltName == "RvltModMexicans") ||
-          (rvltName == "RvltModSouthAfricans") || (rvltName == "RvltModEgyptians"))
+      if ((rvltName == "ANWAmericans") || (rvltName == "ANWMexicans") ||
+          (rvltName == "ANWSouthAfricans") || (rvltName == "ANWEgyptians"))
       {
          btBiasArt = 0.1;
       }

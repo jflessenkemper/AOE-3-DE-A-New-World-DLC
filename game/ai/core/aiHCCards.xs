@@ -228,21 +228,21 @@ highFrequency // Run every frame until it's disabled.
                   (tech == cTechHCSpiceTrade) || (tech == cTechHCAdvancedTradingPost) ||
                   (tech == cTechHCAdmirality && gWaterMap == false));
 
-               if ((rvltName == "RvltModHaitians") || (rvltName == "RvltModCanadians") ||
-                   (rvltName == "RvltModFrenchCanadians") || (rvltName == "RvltModRomanians"))
+               if ((rvltName == "ANWHaitians") || (rvltName == "ANWCanadians") ||
+                   (rvltName == "ANWRomanians"))
                {
                   exclude = exclude || (tech == cTechHCHeavyFortifications);
                }
 
-               if ((rvltName == "RvltModAmericans") || (rvltName == "RvltModMexicans") ||
-                   (rvltName == "RvltModChileans") || (rvltName == "RvltModColumbians") ||
-                   (rvltName == "RvltModPeruvians"))
+               if ((rvltName == "ANWAmericans") || (rvltName == "ANWMexicans") ||
+                   (rvltName == "ANWChileans") || (rvltName == "ANWColumbians") ||
+                   (rvltName == "ANWPeruvians"))
                {
                   exclude = exclude || (tech == cTechHCShipMortars1) || (tech == cTechHCShipMortars2);
                }
 
-               if ((rvltName == "RvltModBarbary") || (rvltName == "RvltModBrazil") ||
-                   (rvltName == "RvltModSouthAfricans") || (rvltName == "RvltModEgyptians"))
+               if ((rvltName == "ANWBarbary") || (rvltName == "ANWBrazil") ||
+                   (rvltName == "ANWSouthAfricans") || (rvltName == "ANWEgyptians"))
                {
                   exclude = exclude || (tech == cTechHCXPAgents);
                }

@@ -12,7 +12,6 @@
    Civ ID legend (gRvltCivId):
        1  Canadians          - Isaac Brock, infantry-fort frontier
        2  RevolutionaryFrance- Robespierre, levee-en-masse conscription
-       3  FrenchCanadians    - Papineau, Patriote militia + Iroquois levy
        4  Brazil             - Pedro I, Imperial line + Hessian mercenary
        5  Argentines         - San Martin, Granadero shock cavalry
        6  Chileans           - O'Higgins, balanced Republican infantry
@@ -49,8 +48,8 @@ void initLegendaryRevolutionCommander(void)
    string rvltName = kbGetCivName(cMyCiv);
 
    // These three civs are handled by their dedicated leader files.
-   if ((rvltName == "RvltModNapoleonicFrance") || (rvltName == "RvltModAmericans") ||
-       (rvltName == "RvltModMexicans"))
+   if ((rvltName == "ANWNapoleonicFrance") || (rvltName == "ANWAmericans") ||
+       (rvltName == "ANWMexicans"))
    {
       return;
    }
@@ -59,74 +58,50 @@ void initLegendaryRevolutionCommander(void)
    llSetBalancedPersonality();
    gRvltCivId = 0;
 
-   if (rvltName == "RvltModCanadians")
+   // ── ANW revolution civs (24–42) ───────────────────────────────────────────
+   if (rvltName == "ANWArgentines")
    {
-      llVerboseEcho("Legendary Leaders: activating Isaac Brock personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.35;
-      btOffenseDefense = -0.2;
-      btBiasTrade = 0.25;
-      btBiasNative = 0.1;          // Iroquois loyalist allies.
-      llSetMilitaryFocus(0.85, -0.2, 0.35);
-      // LL-BUILD-STYLE-BEGIN
-      llUseCompactFortifiedCoreStyle(2, false);
-      gLLEconomicDistanceMultiplier = 0.95;
-      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: frontier blockhouse defense.
-      llSetBuildStrongpointProfile(2, 2, 2, false);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 9;             // Frontier blockhouses.
-      cvMaxArmyPop = 110;
-      gRvltCivId = 1;
-   }
-   else if (rvltName == "RvltModRevolutionaryFrance")
-   {
-      llVerboseEcho("Legendary Leaders: activating Maximilien Robespierre personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Argentina San Martin personality.");
       llSetAggressivePersonality();
       btRushBoom = 0.05;
       btOffenseDefense = 0.7;
-      btBiasTrade = -0.25;
-      btBiasNative = -0.2;         // Levee-en-masse, no foreign auxiliaries.
-      llSetMilitaryFocus(0.95, 0.0, 0.3);
+      btBiasTrade = -0.15;
+      btBiasNative = 0.1;
+      llSetMilitaryFocus(0.4, 0.85, 0.2);
       // LL-BUILD-STYLE-BEGIN
-      llUseRepublicanLeveeStyle(0);
-      gLLMilitaryDistanceMultiplier = 0.90;
-      llSetBuildStrongpointProfile(1, 1, 3, true);
+      llUseForwardOperationalLineStyle(0);
+      gLLMilitaryDistanceMultiplier = 0.85;
+      llSetBuildStrongpointProfile(1, 2, 3, true);
       // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
       cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 130;          // Conscription mass.
-      gRvltCivId = 2;
+      cvMaxTowers = 3;
+      cvMaxArmyPop = 115;
+      gRvltCivId = 24;
    }
-   else if (rvltName == "RvltModFrenchCanadians")
+   else if (rvltName == "ANWBarbary")
    {
-      llVerboseEcho("Legendary Leaders: activating Louis-Joseph Papineau personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.25;
-      btOffenseDefense = -0.05;
-      btBiasTrade = 0.35;
-      btBiasNative = 0.45;
-      llSetMilitaryFocus(0.7, 0.0, 0.15);
+      llVerboseEcho("Legendary Leaders: activating ANW Barbary Barbarossa personality.");
+      llSetBalancedPersonality();
+      btRushBoom = 0.0;
+      btOffenseDefense = 0.55;
+      btBiasTrade = 0.5;
+      btBiasNative = 0.25;
+      llSetMilitaryFocus(0.4, 0.65, 0.2);
       // LL-BUILD-STYLE-BEGIN
-      llUseCivicMilitiaCenterStyle(1);
-      gLLEconomicDistanceMultiplier = 1.05;
-      llSetBuildStrongpointProfile(2, 1, 2, false);
-      // Spec claim: expects_forward=false. CivicMilitiaCenter style defaults
-      // to forward base at 7 min; Papineau is reactive (1837 Patriote war
-      // was defensive militia), so reset to engine default (20 min = never).
-      gLLForwardBaseEarliestMs = 1200000;
+      llUseNavalMercantileCompoundStyle(2);
+      gLLEconomicDistanceMultiplier = 1.20;
+      llSetBuildStrongpointProfile(2, 2, 2, true);
       // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
+      llSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
       cvOkToBuildForts = true;
-      cvMaxTowers = 7;
-      cvMaxArmyPop = 110;
-      gRvltCivId = 3;
+      cvMaxTowers = 5;
+      cvMaxArmyPop = 115;
+      gRvltCivId = 25;
    }
-   else if (rvltName == "RvltModBrazil")
+   else if (rvltName == "ANWBrazil")
    {
-      llVerboseEcho("Legendary Leaders: activating Pedro I personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Brazil Pedro II personality.");
       llSetBalancedPersonality();
       btRushBoom = -0.15;
       btOffenseDefense = 0.25;
@@ -144,37 +119,42 @@ void initLegendaryRevolutionCommander(void)
       cvOkToBuildForts = true;
       cvMaxTowers = 5;
       cvMaxArmyPop = 115;
-      gRvltCivId = 4;
+      gRvltCivId = 26;
    }
-   else if (rvltName == "RvltModArgentines")
+   else if (rvltName == "ANWCanadians")
    {
-      llVerboseEcho("Legendary Leaders: activating Jose de San Martin personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = -0.15;
+      llVerboseEcho("Legendary Leaders: activating ANW Canadians Brock personality.");
+      llSetDefensivePersonality();
+      btRushBoom = -0.35;
+      btOffenseDefense = -0.2;
+      btBiasTrade = 0.25;
       btBiasNative = 0.1;
-      llSetMilitaryFocus(0.4, 0.85, 0.2);  // Granadero a Caballo dominant.
+      llSetMilitaryFocus(0.85, -0.2, 0.35);
       // LL-BUILD-STYLE-BEGIN
-      llUseForwardOperationalLineStyle(0);
-      gLLMilitaryDistanceMultiplier = 0.85;
-      llSetBuildStrongpointProfile(1, 2, 3, true);
+      llUseCompactFortifiedCoreStyle(2, true);  // earlyWalls=true to meet spec first_wall_before_ms=600000.
+      gLLEconomicDistanceMultiplier = 0.95;
+      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: frontier blockhouse defense.
+      llSetBuildStrongpointProfile(2, 2, 2, false);
       // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+      llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
       cvOkToBuildForts = true;
-      cvMaxTowers = 3;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 5;
+      cvMaxTowers = 9;
+      cvMaxArmyPop = 110;
+      gRvltCivId = 27;
    }
-   else if (rvltName == "RvltModChileans")
+   else if (rvltName == "ANWChileans")
    {
-      llVerboseEcho("Legendary Leaders: activating Bernardo O'Higgins personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Chileans O'Higgins personality.");
+      // Balanced posture matches the defensive AndeanTerraceFortress doctrine
+      // and harmonises with ANWChileans (audit v2 flagged the prior 0.5 /
+      // Aggressive split as a design tension; later Age rules still escalate
+      // offensive bias as the liberation campaign matures).
       llSetBalancedPersonality();
       btRushBoom = -0.1;
       btOffenseDefense = 0.35;
-      btBiasTrade = 0.25;
+      btBiasTrade = 0.2;
       btBiasNative = 0.1;
-      llSetMilitaryFocus(0.7, 0.35, 0.3);
+      llSetMilitaryFocus(0.7, 0.55, 0.3);
       // LL-BUILD-STYLE-BEGIN
       llUseAndeanTerraceFortressStyle(2);
       gLLMilitaryDistanceMultiplier = 0.90;
@@ -182,43 +162,21 @@ void initLegendaryRevolutionCommander(void)
       // Spec override: Chileans O'Higgins doctrine — see playstyle_spec.json
       gLLWallStrategy = cLLWallStrategyFortressRing;
       // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+      llSetLeaderTacticalDoctrine(0.75, 0.25, 2, 3.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 5;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 6;
+      cvMaxArmyPop = 120;
+      gRvltCivId = 28;
    }
-   else if (rvltName == "RvltModPeruvians")
+   else if (rvltName == "ANWColumbians")
    {
-      llVerboseEcho("Legendary Leaders: activating Andres de Santa Cruz personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.3;
-      btOffenseDefense = -0.1;
-      btBiasTrade = 0.2;
-      btBiasNative = 0.55;          // Quechua and Aymara levies.
-      llSetMilitaryFocus(0.7, 0.05, 0.3);
-      // LL-BUILD-STYLE-BEGIN
-      llUseAndeanTerraceFortressStyle(3);
-      gLLMilitaryDistanceMultiplier = 0.90;
-      llSetBuildStrongpointProfile(3, 2, 2, false);
-      // Spec override: Peruvians Santa Cruz doctrine — see playstyle_spec.json
-      gLLWallStrategy = cLLWallStrategyFortressRing;
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 7;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 7;
-   }
-   else if (rvltName == "RvltModColumbians")
-   {
-      llVerboseEcho("Legendary Leaders: activating Simon Bolivar personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Columbians Bolivar personality.");
       llSetAggressivePersonality();
       btRushBoom = 0.05;
       btOffenseDefense = 0.65;
       btBiasTrade = 0.15;
       btBiasNative = 0.2;
-      llSetMilitaryFocus(0.45, 0.7, 0.3);  // Llanero horse-led.
+      llSetMilitaryFocus(0.45, 0.7, 0.3);
       // LL-BUILD-STYLE-BEGIN
       llUseForwardOperationalLineStyle(0);
       gLLMilitaryDistanceMultiplier = 0.90;
@@ -228,11 +186,53 @@ void initLegendaryRevolutionCommander(void)
       cvOkToBuildForts = true;
       cvMaxTowers = 4;
       cvMaxArmyPop = 120;
-      gRvltCivId = 8;
+      gRvltCivId = 29;
    }
-   else if (rvltName == "RvltModHaitians")
+   else if (rvltName == "ANWEgyptians")
    {
-      llVerboseEcho("Legendary Leaders: activating Toussaint Louverture personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Egyptians Muhammad Ali personality.");
+      llSetBalancedPersonality();
+      btRushBoom = -0.15;
+      btOffenseDefense = 0.4;
+      btBiasTrade = 0.35;
+      btBiasNative = 0.0;
+      llSetMilitaryFocus(0.7, 0.3, 0.55);
+      // LL-BUILD-STYLE-BEGIN
+      llUseHighlandCitadelStyle(4);
+      gLLHouseDistanceMultiplier = 0.75;
+      gLLMilitaryDistanceMultiplier = 0.85;  // Nizam-i Cedid citadel — mid-band of spec [0.7,1.0]; mirrors ANWEgyptians.
+      llSetBuildStrongpointProfile(3, 3, 2, false);
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 6;
+      cvMaxArmyPop = 120;
+      gRvltCivId = 30;
+   }
+   else if (rvltName == "ANWFinnish")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW Finnish Mannerheim personality.");
+      llSetDefensivePersonality();
+      btRushBoom = -0.3;
+      btOffenseDefense = -0.05;
+      btBiasTrade = -0.05;
+      btBiasNative = 0.15;
+      llSetMilitaryFocus(0.85, -0.1, 0.4);
+      // LL-BUILD-STYLE-BEGIN
+      llUseCompactFortifiedCoreStyle(3, true);
+      gLLHouseDistanceMultiplier = 0.80;
+      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: Mannerheim Line fortified depth.
+      llSetBuildStrongpointProfile(3, 2, 2, false);
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 9;
+      cvMaxArmyPop = 110;
+      gRvltCivId = 31;
+   }
+   else if (rvltName == "ANWHaitians")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW Haitians Toussaint personality.");
       llSetAggressivePersonality();
       btRushBoom = 0.05;
       btOffenseDefense = 0.7;
@@ -253,11 +253,31 @@ void initLegendaryRevolutionCommander(void)
       cvOkToBuildForts = true;
       cvMaxTowers = 4;
       cvMaxArmyPop = 125;
-      gRvltCivId = 9;
+      gRvltCivId = 32;
    }
-   else if (rvltName == "RvltModIndonesians")
+   else if (rvltName == "ANWHungarians")
    {
-      llVerboseEcho("Legendary Leaders: activating Diponegoro personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Hungarians Kossuth personality.");
+      llSetAggressivePersonality();
+      btRushBoom = 0.05;
+      btOffenseDefense = 0.65;
+      btBiasTrade = 0.15;
+      btBiasNative = 0.0;
+      llSetMilitaryFocus(0.55, 0.7, 0.25);
+      // LL-BUILD-STYLE-BEGIN
+      llUseSteppeCavalryWedgeStyle(1);
+      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: Honved hussar forward charge.
+      llSetBuildStrongpointProfile(2, 1, 3, true);
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 3.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 4;
+      cvMaxArmyPop = 115;
+      gRvltCivId = 33;
+   }
+   else if (rvltName == "ANWIndonesians")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW Indonesians Diponegoro personality.");
       llSetDefensivePersonality();
       btRushBoom = -0.2;
       btOffenseDefense = -0.05;
@@ -282,72 +302,115 @@ void initLegendaryRevolutionCommander(void)
       cvOkToBuildForts = true;
       cvMaxTowers = 7;
       cvMaxArmyPop = 115;
-      gRvltCivId = 10;
+      gRvltCivId = 34;
    }
-   else if (rvltName == "RvltModSouthAfricans")
+   else if (rvltName == "ANWMayans")
    {
-      llVerboseEcho("Legendary Leaders: activating Paul Kruger personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.35;
-      btOffenseDefense = 0.0;
-      btBiasTrade = 0.5;
-      btBiasNative = -0.1;
-      llSetMilitaryFocus(0.4, 0.6, 0.25);  // Boer commando horse.
-      // LL-BUILD-STYLE-BEGIN
-      llUseNavalMercantileCompoundStyle(1);
-      gLLEconomicDistanceMultiplier = 1.25;
-      llSetBuildStrongpointProfile(2, 1, 2, true);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 7;
-      cvMaxArmyPop = 110;
-      gRvltCivId = 11;
-   }
-   else if (rvltName == "RvltModFinnish")
-   {
-      llVerboseEcho("Legendary Leaders: activating Carl Gustaf Mannerheim personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.3;
-      btOffenseDefense = -0.05;
-      btBiasTrade = -0.05;
-      btBiasNative = 0.15;          // Sami auxiliaries.
-      llSetMilitaryFocus(0.85, -0.1, 0.4);
-      // LL-BUILD-STYLE-BEGIN
-      llUseCompactFortifiedCoreStyle(3, true);
-      gLLHouseDistanceMultiplier = 0.80;
-      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: Mannerheim Line fortified depth.
-      llSetBuildStrongpointProfile(3, 2, 2, false);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 9;              // Mannerheim Line.
-      cvMaxArmyPop = 110;
-      gRvltCivId = 12;
-   }
-   else if (rvltName == "RvltModHungarians")
-   {
-      llVerboseEcho("Legendary Leaders: activating Lajos Kossuth personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Mayans Caste War personality.");
       llSetAggressivePersonality();
       btRushBoom = 0.05;
-      btOffenseDefense = 0.65;
-      btBiasTrade = 0.15;
-      btBiasNative = 0.0;
-      llSetMilitaryFocus(0.55, 0.7, 0.25);  // Honved hussar wing.
+      btOffenseDefense = 0.7;
+      btBiasTrade = 0.1;
+      btBiasNative = 0.85;
+      llSetMilitaryFocus(0.95, -0.2, 0.0);
       // LL-BUILD-STYLE-BEGIN
-      llUseSteppeCavalryWedgeStyle(1);
-      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: Honved hussar forward charge.
-      llSetBuildStrongpointProfile(2, 1, 3, true);
+      llUseJungleGuerrillaNetworkStyle(1);
+      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: insurgent network spreads forward.
+      llSetBuildStrongpointProfile(2, 1, 2, true);
+      // Spec override: Mayans Canek doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyChokepointSegments;
       // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 3.5);
+      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 4;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 13;
+      cvMaxArmyPop = 125;
+      gRvltCivId = 35;
    }
-   else if (rvltName == "RvltModRomanians")
+   else if (rvltName == "ANWMexicans")
    {
-      llVerboseEcho("Legendary Leaders: activating Alexandru Ioan Cuza personality.");
+      llVerboseEcho("Legendary Leaders: activating ANW Mexicans Hidalgo personality.");
+      llSetBalancedPersonality();
+      btRushBoom = -0.1;
+      btOffenseDefense = 0.4;
+      btBiasTrade = 0.1;
+      btBiasNative = 0.2;
+      llSetMilitaryFocus(0.75, 0.25, 0.3);
+      // LL-BUILD-STYLE-BEGIN
+      llUseRepublicanLeveeStyle(1);
+      // Spec claim wall_strategy=4 (UrbanBarricade); llUseRepublicanLeveeStyle
+      // sets gLLWallStrategy = cLLWallStrategyUrbanBarricade directly.
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.76, 0.24, 2, 4.0);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 5;
+      cvMaxArmyPop = 120;
+      gRvltCivId = 36;
+   }
+   else if (rvltName == "ANWNapoleonicFrance")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW NapoleonicFrance Napoleon personality.");
+      llSetAggressivePersonality();
+      btRushBoom = 0.1;
+      btOffenseDefense = 0.75;
+      btBiasTrade = 0.0;
+      btBiasNative = -0.1;
+      llSetMilitaryFocus(0.75, 0.55, 0.55);
+      // LL-BUILD-STYLE-BEGIN
+      llUseForwardOperationalLineStyle(0);
+      // Spec claim wall_strategy=5 (MobileNoWalls); llUseForwardOperationalLine
+      // sets gLLWallStrategy = cLLWallStrategyMobileNoWalls directly.
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 4;
+      cvMaxArmyPop = 135;
+      gRvltCivId = 37;
+   }
+   else if (rvltName == "ANWPeruvians")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW Peruvians Santa Cruz personality.");
+      llSetDefensivePersonality();
+      btRushBoom = -0.3;
+      btOffenseDefense = -0.1;
+      btBiasTrade = 0.2;
+      btBiasNative = 0.55;
+      llSetMilitaryFocus(0.7, 0.05, 0.3);
+      // LL-BUILD-STYLE-BEGIN
+      llUseAndeanTerraceFortressStyle(3);
+      gLLMilitaryDistanceMultiplier = 0.90;
+      llSetBuildStrongpointProfile(3, 2, 2, false);
+      // Spec override: Peruvians Santa Cruz doctrine — see playstyle_spec.json
+      gLLWallStrategy = cLLWallStrategyFortressRing;
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 7;
+      cvMaxArmyPop = 115;
+      gRvltCivId = 38;
+   }
+   else if (rvltName == "ANWRevFrance")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW RevFrance Robespierre personality.");
+      llSetAggressivePersonality();
+      btRushBoom = 0.05;
+      btOffenseDefense = 0.7;
+      btBiasTrade = -0.25;
+      btBiasNative = -0.2;
+      llSetMilitaryFocus(0.95, 0.0, 0.3);
+      // LL-BUILD-STYLE-BEGIN
+      llUseRepublicanLeveeStyle(1);  // wallLevel=1 (minimum palisade ring) to satisfy spec first_wall_before_ms=900000; "tight inner defense only" doctrine still preserved.
+      gLLMilitaryDistanceMultiplier = 0.90;
+      llSetBuildStrongpointProfile(1, 1, 3, true);
+      // LL-BUILD-STYLE-END
+      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 4;
+      cvMaxArmyPop = 130;
+      gRvltCivId = 39;
+   }
+   else if (rvltName == "ANWRomanians")
+   {
+      llVerboseEcho("Legendary Leaders: activating ANW Romanians Cuza personality.");
       llSetDefensivePersonality();
       btRushBoom = -0.25;
       btOffenseDefense = 0.05;
@@ -366,462 +429,6 @@ void initLegendaryRevolutionCommander(void)
       cvOkToBuildForts = true;
       cvMaxTowers = 6;
       cvMaxArmyPop = 110;
-      gRvltCivId = 14;
-   }
-   else if (rvltName == "RvltModBarbary")
-   {
-      llVerboseEcho("Legendary Leaders: activating Hayreddin Barbarossa personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.0;
-      btOffenseDefense = 0.65;
-      btBiasTrade = 0.5;            // Corsair tribute.
-      btBiasNative = 0.25;
-      llSetMilitaryFocus(0.4, 0.65, 0.2);
-      // LL-BUILD-STYLE-BEGIN
-      llUseNavalMercantileCompoundStyle(2);
-      gLLEconomicDistanceMultiplier = 1.20;
-      llSetBuildStrongpointProfile(2, 2, 2, true);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 15;
-   }
-   else if (rvltName == "RvltModEgyptians")
-   {
-      llVerboseEcho("Legendary Leaders: activating Muhammad Ali Pasha personality.");
-      llSetBalancedPersonality();
-      btRushBoom = -0.15;
-      btOffenseDefense = 0.4;
-      btBiasTrade = 0.35;
-      btBiasNative = 0.0;
-      llSetMilitaryFocus(0.7, 0.3, 0.55);   // Modern Nizam army.
-      // LL-BUILD-STYLE-BEGIN
-      llUseHighlandCitadelStyle(4);
-      gLLHouseDistanceMultiplier = 0.75;
-      llSetBuildStrongpointProfile(3, 3, 2, false);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 6;
-      cvMaxArmyPop = 120;
-      gRvltCivId = 16;
-   }
-   else if (rvltName == "RvltModCentralAmericans")
-   {
-      llVerboseEcho("Legendary Leaders: activating Francisco Morazan personality.");
-      llSetBalancedPersonality();
-      btRushBoom = -0.1;
-      btOffenseDefense = 0.3;
-      btBiasTrade = 0.3;
-      btBiasNative = 0.5;
-      llSetMilitaryFocus(0.7, 0.25, 0.2);
-      // LL-BUILD-STYLE-BEGIN
-      llUseDistributedEconomicNetworkStyle(1);
-      gLLEconomicDistanceMultiplier = 1.25;
-      // Spec override: military_distance_band [1.1, 1.3]; DistributedEcoNetwork
-      // default is 1.0 which falls below the band floor.
-      gLLMilitaryDistanceMultiplier = 1.10;
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.76, 0.24, 2, 4.0);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 17;
-   }
-   else if (rvltName == "RvltModBajaCalifornians")
-   {
-      // Manuel Pineda Muñoz — Mexican commander of the Baja garrisons during
-      // the U.S. invasion of 1846-48 (defence of La Paz, San José del Cabo,
-      // Mulegé). Coastal-presidio doctrine with mounted Californio militia
-      // sweeping the peninsula's narrow corridor.
-      llVerboseEcho("Legendary Leaders: activating Manuel Pineda Munoz personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.6;
-      btBiasTrade = 0.2;
-      btBiasNative = 0.15;
-      llSetMilitaryFocus(0.3, 0.75, 0.15);  // Californio mounted militia.
-      // LL-BUILD-STYLE-BEGIN
-      llUseMobileFrontierScatterStyle(0);
-      gLLHouseDistanceMultiplier = 1.40;
-      gLLEconomicDistanceMultiplier = 1.50;
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = false;
-      cvMaxTowers = 3;
-      cvMaxArmyPop = 110;
-      gRvltCivId = 18;
-   }
-   else if (rvltName == "RvltModYucatan")
-   {
-      // Jacinto Pat — Maya batab and co-leader of the Caste War (Guerra de
-      // Castas, 1847). Jungle guerrilla operating from the cenote-fed
-      // limestone shelf, lifting Maya milicianos into the Yucatec interior.
-      llVerboseEcho("Legendary Leaders: activating Jacinto Pat personality.");
-      llSetBalancedPersonality();
-      btRushBoom = -0.05;
-      btOffenseDefense = 0.45;
-      btBiasTrade = 0.25;
-      btBiasNative = 0.7;            // Maya levy.
-      llSetMilitaryFocus(0.85, -0.1, 0.15);
-      // LL-BUILD-STYLE-BEGIN
-      llUseJungleGuerrillaNetworkStyle(1);
-      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: guerrilla network pushes out.
-      llSetBuildStrongpointProfile(2, 1, 2, true);
-      // Spec override: Yucatan Pat doctrine — see playstyle_spec.json
-      gLLWallStrategy = cLLWallStrategyChokepointSegments;
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 120;
-      gRvltCivId = 19;
-   }
-   else if (rvltName == "RvltModRioGrande")
-   {
-      llVerboseEcho("Legendary Leaders: activating Antonio Canales Rosillo personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = -0.1;
-      btBiasNative = 0.1;
-      llSetMilitaryFocus(0.4, 0.75, 0.2);
-      // LL-BUILD-STYLE-BEGIN
-      llUseMobileFrontierScatterStyle(0);
-      gLLHouseDistanceMultiplier = 1.35;
-      gLLTownCenterDistanceMultiplier = 1.50;
-      llSetBuildStrongpointProfile(1, 0, 2, false);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 20;
-   }
-   else if (rvltName == "RvltModMayans")
-   {
-      llVerboseEcho("Legendary Leaders: activating Jacinto Canek personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = 0.1;
-      btBiasNative = 0.85;
-      llSetMilitaryFocus(0.95, -0.2, 0.0);
-      // LL-BUILD-STYLE-BEGIN
-      llUseJungleGuerrillaNetworkStyle(1);
-      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: insurgent network spreads forward.
-      llSetBuildStrongpointProfile(2, 1, 2, true);
-      // Spec override: Mayans Canek doctrine — see playstyle_spec.json
-      gLLWallStrategy = cLLWallStrategyChokepointSegments;
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 125;
-      gRvltCivId = 21;
-   }
-   else if (rvltName == "RvltModCalifornians")
-   {
-      llVerboseEcho("Legendary Leaders: activating Mariano Guadalupe Vallejo personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.35;
-      btOffenseDefense = -0.15;
-      btBiasTrade = 0.55;
-      btBiasNative = 0.05;
-      llSetMilitaryFocus(0.4, 0.55, 0.25);
-      // LL-BUILD-STYLE-BEGIN
-      llUseDistributedEconomicNetworkStyle(1);
-      gLLHouseDistanceMultiplier = 1.15;
-      gLLEconomicDistanceMultiplier = 1.40;
-      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: ranchero trade-defense sprawl.
-      llSetBuildStrongpointProfile(2, 1, 1, false);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 6;
-      cvMaxArmyPop = 110;
-      gRvltCivId = 22;
-   }
-   else if (rvltName == "RvltModTexians")
-   {
-      llVerboseEcho("Legendary Leaders: activating Sam Houston personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.25;
-      btOffenseDefense = 0.0;
-      btBiasTrade = 0.15;
-      btBiasNative = 0.05;
-      llSetMilitaryFocus(0.65, 0.45, 0.2);
-      // LL-BUILD-STYLE-BEGIN
-      llUseForwardOperationalLineStyle(0);
-      gLLMilitaryDistanceMultiplier = 0.90;
-      llSetBuildStrongpointProfile(2, 1, 3, true);
-      // LL-BUILD-STYLE-END
-      llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 6;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 23;
-   }
-   // ── ANW revolution civs (24–42) ───────────────────────────────────────────
-   else if (rvltName == "ANWArgentines")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Argentina San Martin personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = -0.15;
-      btBiasNative = 0.1;
-      llSetMilitaryFocus(0.4, 0.85, 0.2);
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 3;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 24;
-   }
-   else if (rvltName == "ANWBarbary")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Barbary Barbarossa personality.");
-      llSetBalancedPersonality();
-      btRushBoom = 0.0;
-      btOffenseDefense = 0.55;
-      btBiasTrade = 0.5;
-      btBiasNative = 0.25;
-      llSetMilitaryFocus(0.4, 0.65, 0.2);
-      llSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 25;
-   }
-   else if (rvltName == "ANWBrazil")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Brazil Pedro II personality.");
-      llSetBalancedPersonality();
-      btRushBoom = -0.15;
-      btOffenseDefense = 0.25;
-      btBiasTrade = 0.35;
-      btBiasNative = 0.15;
-      llSetMilitaryFocus(0.55, 0.35, 0.45);
-      llSetLeaderTacticalDoctrine(0.8, 0.2, 2, 4.0);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 26;
-   }
-   else if (rvltName == "ANWCanadians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Canadians Brock personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.35;
-      btOffenseDefense = -0.2;
-      btBiasTrade = 0.25;
-      btBiasNative = 0.1;
-      llSetMilitaryFocus(0.85, -0.2, 0.35);
-      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: frontier blockhouse defense.
-      llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 9;
-      cvMaxArmyPop = 110;
-      gRvltCivId = 27;
-   }
-   else if (rvltName == "ANWChileans")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Chileans O'Higgins personality.");
-      llSetAggressivePersonality();
-      btRushBoom = -0.1;
-      btOffenseDefense = 0.5;
-      btBiasTrade = 0.2;
-      btBiasNative = 0.1;
-      llSetMilitaryFocus(0.7, 0.55, 0.3);
-      llSetLeaderTacticalDoctrine(0.75, 0.25, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 120;
-      gRvltCivId = 28;
-   }
-   else if (rvltName == "ANWColumbians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Columbians Bolivar personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.65;
-      btBiasTrade = 0.15;
-      btBiasNative = 0.2;
-      llSetMilitaryFocus(0.45, 0.7, 0.3);
-      llSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 120;
-      gRvltCivId = 29;
-   }
-   else if (rvltName == "ANWEgyptians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Egyptians Muhammad Ali personality.");
-      llSetBalancedPersonality();
-      btRushBoom = -0.15;
-      btOffenseDefense = 0.4;
-      btBiasTrade = 0.35;
-      btBiasNative = 0.0;
-      llSetMilitaryFocus(0.7, 0.3, 0.55);
-      llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 6;
-      cvMaxArmyPop = 120;
-      gRvltCivId = 30;
-   }
-   else if (rvltName == "ANWFinnish")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Finnish Mannerheim personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.3;
-      btOffenseDefense = -0.05;
-      btBiasTrade = -0.05;
-      btBiasNative = 0.15;
-      llSetMilitaryFocus(0.85, -0.1, 0.4);
-      gLLMilitaryDistanceMultiplier = 0.85;  // Spec band [0.7,0.9]: Mannerheim Line fortified depth.
-      llSetLeaderTacticalDoctrine(0.86, 0.14, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 9;
-      cvMaxArmyPop = 110;
-      gRvltCivId = 31;
-   }
-   else if (rvltName == "ANWHaitians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Haitians Toussaint personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = 0.15;
-      btBiasNative = 0.65;
-      llSetMilitaryFocus(0.85, 0.15, 0.15);
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 125;
-      gRvltCivId = 32;
-   }
-   else if (rvltName == "ANWHungarians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Hungarians Kossuth personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.65;
-      btBiasTrade = 0.15;
-      btBiasNative = 0.0;
-      llSetMilitaryFocus(0.55, 0.7, 0.25);
-      gLLMilitaryDistanceMultiplier = 1.15;  // Spec band [1.1,1.3]: Honved hussar forward charge.
-      llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 33;
-   }
-   else if (rvltName == "ANWIndonesians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Indonesians Diponegoro personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.2;
-      btOffenseDefense = -0.05;
-      btBiasTrade = 0.3;
-      btBiasNative = 0.55;
-      llSetMilitaryFocus(0.8, -0.1, 0.2);
-      llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 7;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 34;
-   }
-   else if (rvltName == "ANWMayans")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Mayans Caste War personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = 0.1;
-      btBiasNative = 0.85;
-      llSetMilitaryFocus(0.95, -0.2, 0.0);
-      gLLMilitaryDistanceMultiplier = 1.0;   // Spec band [1.0,1.3]: insurgent network spreads forward.
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 125;
-      gRvltCivId = 35;
-   }
-   else if (rvltName == "ANWMexicans")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Mexicans Hidalgo personality.");
-      llSetBalancedPersonality();
-      btRushBoom = -0.1;
-      btOffenseDefense = 0.4;
-      btBiasTrade = 0.1;
-      btBiasNative = 0.2;
-      llSetMilitaryFocus(0.75, 0.25, 0.3);
-      llSetLeaderTacticalDoctrine(0.76, 0.24, 2, 4.0);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 5;
-      cvMaxArmyPop = 120;
-      gRvltCivId = 36;
-   }
-   else if (rvltName == "ANWNapoleonicFrance")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW NapoleonicFrance Napoleon personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.1;
-      btOffenseDefense = 0.75;
-      btBiasTrade = 0.0;
-      btBiasNative = -0.1;
-      llSetMilitaryFocus(0.75, 0.55, 0.55);
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 135;
-      gRvltCivId = 37;
-   }
-   else if (rvltName == "ANWPeruvians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Peruvians Santa Cruz personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.3;
-      btOffenseDefense = -0.1;
-      btBiasTrade = 0.2;
-      btBiasNative = 0.55;
-      llSetMilitaryFocus(0.7, 0.05, 0.3);
-      llSetLeaderTacticalDoctrine(0.84, 0.16, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 7;
-      cvMaxArmyPop = 115;
-      gRvltCivId = 38;
-   }
-   else if (rvltName == "ANWRevFrance")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW RevFrance Robespierre personality.");
-      llSetAggressivePersonality();
-      btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
-      btBiasTrade = -0.25;
-      btBiasNative = -0.2;
-      llSetMilitaryFocus(0.95, 0.0, 0.3);
-      llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 4;
-      cvMaxArmyPop = 130;
-      gRvltCivId = 39;
-   }
-   else if (rvltName == "ANWRomanians")
-   {
-      llVerboseEcho("Legendary Leaders: activating ANW Romanians Cuza personality.");
-      llSetDefensivePersonality();
-      btRushBoom = -0.25;
-      btOffenseDefense = 0.05;
-      btBiasTrade = 0.3;
-      btBiasNative = 0.05;
-      llSetMilitaryFocus(0.65, 0.3, 0.4);
-      llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
-      cvOkToBuildForts = true;
-      cvMaxTowers = 6;
-      cvMaxArmyPop = 110;
       gRvltCivId = 40;
    }
    else if (rvltName == "ANWSouthAfricans")
@@ -833,6 +440,11 @@ void initLegendaryRevolutionCommander(void)
       btBiasTrade = 0.5;
       btBiasNative = -0.1;
       llSetMilitaryFocus(0.4, 0.6, 0.25);
+      // LL-BUILD-STYLE-BEGIN
+      llUseNavalMercantileCompoundStyle(2);  // wallLevel=2 for a full Boer laager / harbor ring (was 1, lighter than spec expects).
+      gLLEconomicDistanceMultiplier = 1.25;
+      llSetBuildStrongpointProfile(2, 1, 2, true);
+      // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 7;
@@ -848,6 +460,11 @@ void initLegendaryRevolutionCommander(void)
       btBiasTrade = 0.1;
       btBiasNative = 0.1;
       llSetMilitaryFocus(0.6, 0.65, 0.25);
+      // LL-BUILD-STYLE-BEGIN
+      llUseForwardOperationalLineStyle(0);
+      gLLMilitaryDistanceMultiplier = 0.90;
+      llSetBuildStrongpointProfile(2, 1, 3, true);
+      // LL-BUILD-STYLE-END
       llSetLeaderTacticalDoctrine(0.75, 0.25, 2, 3.5);
       cvOkToBuildForts = true;
       cvMaxTowers = 5;
@@ -955,8 +572,6 @@ minInterval 50
    if (gRvltCivId == 1)        { btOffenseDefense = -0.05; btBiasInf = 0.85; btBiasCav = -0.2; btBiasArt = -0.1; cvMinNumVills = 32; }
    // Robespierre: levee surge.
    else if (gRvltCivId == 2)   { btOffenseDefense = 0.75; btBiasInf = 0.95; btBiasCav = 0.2; btBiasArt = -0.1; llEnableForwardBaseStyle(); }
-   // Papineau: Patriote militia + Iroquois screen.
-   else if (gRvltCivId == 3)   { btOffenseDefense = 0.0; btBiasInf = 0.85; btBiasCav = 0.05; btBiasArt = -0.2; cvMinNumVills = 32; }
    // Pedro I: Imperial line + Hessian mercenary trickle.
    else if (gRvltCivId == 4)   { btOffenseDefense = 0.4; btBiasInf = 0.7; btBiasCav = 0.45; btBiasArt = 0.2; }
    // San Martin: Granadero a Caballo.
@@ -1004,11 +619,11 @@ minInterval 50
    else if (gRvltCivId == 27)  { btOffenseDefense = -0.05; btBiasInf = 0.85; btBiasCav = -0.2; btBiasArt = -0.1; cvMinNumVills = 32; }          // ANWCanadians
    else if (gRvltCivId == 28)  { btOffenseDefense = 0.55; btBiasInf = 0.75; btBiasCav = 0.65; btBiasArt = 0.05; }                              // ANWChileans
    else if (gRvltCivId == 29)  { btOffenseDefense = 0.7;  btBiasInf = 0.5;  btBiasCav = 0.85; btBiasArt = -0.1; llEnableForwardBaseStyle(); }  // ANWColumbians
-   else if (gRvltCivId == 30)  { btOffenseDefense = 0.45; btBiasInf = 0.85; btBiasCav = 0.35; btBiasArt = 0.1;  }                              // ANWEgyptians
+   else if (gRvltCivId == 30)  { btOffenseDefense = 0.45; btBiasInf = 0.75; btBiasCav = 0.35; btBiasArt = 0.35; }                              // ANWEgyptians (Muhammad Ali: Nizam-i Cedid artillery modernization — Age2 ramps art from 0.1→0.35 to honour expects_artillery=true spec claim; Age3 commits to 0.7)
    else if (gRvltCivId == 31)  { btOffenseDefense = -0.05; btBiasInf = 0.95; btBiasCav = -0.1; btBiasArt = 0.0;  cvMinNumVills = 32; }          // ANWFinnish
    else if (gRvltCivId == 32)  { btOffenseDefense = 0.75; btBiasInf = 1.0;  btBiasCav = 0.1;  btBiasArt = -0.3; llEnableForwardBaseStyle(); }  // ANWHaitians
    else if (gRvltCivId == 33)  { btOffenseDefense = 0.7;  btBiasInf = 0.65; btBiasCav = 0.85; btBiasArt = -0.1; llEnableForwardBaseStyle(); }  // ANWHungarians
-   else if (gRvltCivId == 34)  { btOffenseDefense = 0.0;  btBiasInf = 0.9;  btBiasCav = -0.1; btBiasArt = -0.2; cvMinNumVills = 30; }          // ANWIndonesians
+   else if (gRvltCivId == 34)  { btOffenseDefense = 0.25; btBiasInf = 0.9;  btBiasCav = -0.1; btBiasArt = -0.2; llEnableForwardBaseStyle(); } // ANWIndonesians (spec expects_forward=true)
    else if (gRvltCivId == 35)  { btOffenseDefense = 0.8;  btBiasInf = 1.0;  btBiasCav = -0.2; btBiasArt = -0.4; llEnableForwardBaseStyle(); }  // ANWMayans
    else if (gRvltCivId == 36)  { btOffenseDefense = 0.45; btBiasInf = 0.85; btBiasCav = 0.3;  btBiasArt = -0.1; }                              // ANWMexicans
    else if (gRvltCivId == 37)  { btOffenseDefense = 0.75; btBiasInf = 0.9;  btBiasCav = 0.6;  btBiasArt = 0.2;  llEnableForwardBaseStyle(); }  // ANWNapoleonicFrance

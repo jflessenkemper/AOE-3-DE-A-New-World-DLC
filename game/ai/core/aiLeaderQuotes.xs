@@ -430,7 +430,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You would not survive a winter at Valley Forge.");
    }
-   else if (civName == "RvltModNapoleonicFrance")
+   else if (civName == "ANWNapoleonicFrance")
    {
       if (quoteIndex == 0)
       {
@@ -438,7 +438,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You waste the moment and the map.");
    }
-   else if (civName == "RvltModAmericans")
+   else if (civName == "ANWAmericans")
    {
       if (quoteIndex == 0)
       {
@@ -446,7 +446,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Your cause buckles under poor leadership.");
    }
-   else if (civName == "RvltModMexicans")
+   else if (civName == "ANWMexicans")
    {
       if (quoteIndex == 0)
       {
@@ -454,7 +454,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Your rule shakes before a single volley.");
    }
-   else if (civName == "RvltModCanadians")
+   else if (civName == "ANWCanadians")
    {
       if (quoteIndex == 0)
       {
@@ -462,15 +462,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You rush the woods and call it strategy.");
    }
-   else if (civName == "RvltModFrenchCanadians")
-   {
-      if (quoteIndex == 0)
-      {
-         return ("You govern by habit and expect obedience.");
-      }
-      return ("Even your victories sound like excuses.");
-   }
-   else if (civName == "RvltModBrazil")
+   else if (civName == "ANWBrazil")
    {
       if (quoteIndex == 0)
       {
@@ -478,7 +470,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You bring pomp without vigor.");
    }
-   else if (civName == "RvltModArgentines")
+   else if (civName == "ANWArgentines")
    {
       if (quoteIndex == 0)
       {
@@ -486,7 +478,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You spend men where nerve would suffice.");
    }
-   else if (civName == "RvltModChileans")
+   else if (civName == "ANWChileans")
    {
       if (quoteIndex == 0)
       {
@@ -494,7 +486,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You attack without endurance.");
    }
-   else if (civName == "RvltModPeruvians")
+   else if (civName == "ANWPeruvians")
    {
       if (quoteIndex == 0)
       {
@@ -502,7 +494,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("The Andes grant no pardon to such noise.");
    }
-   else if (civName == "RvltModColumbians")
+   else if (civName == "ANWColumbians")
    {
       if (quoteIndex == 0)
       {
@@ -510,7 +502,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("History does not wait for weaker men.");
    }
-   else if (civName == "RvltModHaitians")
+   else if (civName == "ANWHaitians")
    {
       if (quoteIndex == 0)
       {
@@ -518,7 +510,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You command fear and mistake it for loyalty.");
    }
-   else if (civName == "RvltModIndonesians")
+   else if (civName == "ANWIndonesians")
    {
       if (quoteIndex == 0)
       {
@@ -526,7 +518,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Java has buried stronger arrogance than this.");
    }
-   else if (civName == "RvltModSouthAfricans")
+   else if (civName == "ANWSouthAfricans")
    {
       if (quoteIndex == 0)
       {
@@ -534,7 +526,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Noise is not resolve.");
    }
-   else if (civName == "RvltModFinnish")
+   else if (civName == "ANWFinnish")
    {
       if (quoteIndex == 0)
       {
@@ -542,7 +534,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Such a line would not survive a winter.");
    }
-   else if (civName == "RvltModHungarians")
+   else if (civName == "ANWHungarians")
    {
       if (quoteIndex == 0)
       {
@@ -550,7 +542,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You bow to events before the battle is decided.");
    }
-   else if (civName == "RvltModRomanians")
+   else if (civName == "ANWRomanians")
    {
       if (quoteIndex == 0)
       {
@@ -558,7 +550,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Your command lacks both nerve and order.");
    }
-   else if (civName == "RvltModBarbary")
+   else if (civName == "ANWBarbary")
    {
       if (quoteIndex == 0)
       {
@@ -566,7 +558,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("The sea would have judged you already.");
    }
-   else if (civName == "RvltModEgyptians")
+   else if (civName == "ANWEgyptians")
    {
       if (quoteIndex == 0)
       {
@@ -574,7 +566,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Ambition without administration is just noise.");
    }
-   else if (civName == "RvltModCentralAmericans")
+   else if (civName == "ANWCentralAmericans")
    {
       if (quoteIndex == 0)
       {
@@ -582,7 +574,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You split what you are too weak to govern.");
    }
-   else if (civName == "RvltModBajaCalifornians")
+   else if (civName == "ANWBajaCalifornians")
    {
       if (quoteIndex == 0)
       {
@@ -590,7 +582,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You ride hard and think late.");
    }
-   else if (civName == "RvltModYucatan")
+   else if (civName == "ANWYucatan")
    {
       if (quoteIndex == 0)
       {
@@ -598,7 +590,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Even victory would not clean this disorder.");
    }
-   else if (civName == "RvltModRioGrande")
+   else if (civName == "ANWRioGrande")
    {
       if (quoteIndex == 0)
       {
@@ -606,7 +598,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("Your retreat started before your charge.");
    }
-   else if (civName == "RvltModMayans")
+   else if (civName == "ANWMayans")
    {
       if (quoteIndex == 0)
       {
@@ -614,7 +606,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("You mistake dominion for permanence.");
    }
-   else if (civName == "RvltModCalifornians")
+   else if (civName == "ANWCalifornians")
    {
       if (quoteIndex == 0)
       {
@@ -622,7 +614,7 @@ string llGetLegendaryLeaderInsult(void)
       }
       return ("That advance has no staying power.");
    }
-   else if (civName == "RvltModTexians")
+   else if (civName == "ANWTexians")
    {
       if (quoteIndex == 0)
       {
@@ -815,7 +807,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Hold fast. Resolve carries free men through.");
    }
-   else if (civName == "RvltModNapoleonicFrance")
+   else if (civName == "ANWNapoleonicFrance")
    {
       if (quoteIndex == 0)
       {
@@ -823,7 +815,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Push hard. Let them live in reaction.");
    }
-   else if (civName == "RvltModAmericans")
+   else if (civName == "ANWAmericans")
    {
       if (quoteIndex == 0)
       {
@@ -831,7 +823,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Resolve first. Victory after.");
    }
-   else if (civName == "RvltModMexicans")
+   else if (civName == "ANWMexicans")
    {
       if (quoteIndex == 0)
       {
@@ -839,7 +831,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Push on. Let the cry for liberty answer with powder.");
    }
-   else if (civName == "RvltModCanadians")
+   else if (civName == "ANWCanadians")
    {
       if (quoteIndex == 0)
       {
@@ -847,15 +839,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Steady fire. Waste nothing.");
    }
-   else if (civName == "RvltModFrenchCanadians")
-   {
-      if (quoteIndex == 0)
-      {
-         return ("Stand firm. Principle must not blink.");
-      }
-      return ("Give them resolve, not noise.");
-   }
-   else if (civName == "RvltModBrazil")
+   else if (civName == "ANWBrazil")
    {
       if (quoteIndex == 0)
       {
@@ -863,7 +847,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Push on. Let them see a nation rising.");
    }
-   else if (civName == "RvltModArgentines")
+   else if (civName == "ANWArgentines")
    {
       if (quoteIndex == 0)
       {
@@ -871,7 +855,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Forward. The Andes taught us not to linger.");
    }
-   else if (civName == "RvltModChileans")
+   else if (civName == "ANWChileans")
    {
       if (quoteIndex == 0)
       {
@@ -879,7 +863,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Stay stubborn. Let them tire first.");
    }
-   else if (civName == "RvltModPeruvians")
+   else if (civName == "ANWPeruvians")
    {
       if (quoteIndex == 0)
       {
@@ -887,7 +871,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Advance with order, and let the heights favor us.");
    }
-   else if (civName == "RvltModColumbians")
+   else if (civName == "ANWColumbians")
    {
       if (quoteIndex == 0)
       {
@@ -895,7 +879,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Carry the fire forward.");
    }
-   else if (civName == "RvltModHaitians")
+   else if (civName == "ANWHaitians")
    {
       if (quoteIndex == 0)
       {
@@ -903,7 +887,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Hold your ground with dignity and fire.");
    }
-   else if (civName == "RvltModIndonesians")
+   else if (civName == "ANWIndonesians")
    {
       if (quoteIndex == 0)
       {
@@ -911,7 +895,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Let the land fight beside us.");
    }
-   else if (civName == "RvltModSouthAfricans")
+   else if (civName == "ANWSouthAfricans")
    {
       if (quoteIndex == 0)
       {
@@ -919,7 +903,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Hold steady. Stubborn men outlast empires.");
    }
-   else if (civName == "RvltModFinnish")
+   else if (civName == "ANWFinnish")
    {
       if (quoteIndex == 0)
       {
@@ -927,7 +911,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Order, cold nerve, and exact fire.");
    }
-   else if (civName == "RvltModHungarians")
+   else if (civName == "ANWHungarians")
    {
       if (quoteIndex == 0)
       {
@@ -935,7 +919,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Let resolve outrun their numbers.");
    }
-   else if (civName == "RvltModRomanians")
+   else if (civName == "ANWRomanians")
    {
       if (quoteIndex == 0)
       {
@@ -943,7 +927,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Method first. Glory later.");
    }
-   else if (civName == "RvltModBarbary")
+   else if (civName == "ANWBarbary")
    {
       if (quoteIndex == 0)
       {
@@ -951,7 +935,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Let speed and nerve carry the day.");
    }
-   else if (civName == "RvltModEgyptians")
+   else if (civName == "ANWEgyptians")
    {
       if (quoteIndex == 0)
       {
@@ -959,7 +943,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Advance in order. Let discipline carry the day.");
    }
-   else if (civName == "RvltModCentralAmericans")
+   else if (civName == "ANWCentralAmericans")
    {
       if (quoteIndex == 0)
       {
@@ -967,7 +951,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Keep formation and keep faith.");
    }
-   else if (civName == "RvltModBajaCalifornians")
+   else if (civName == "ANWBajaCalifornians")
    {
       if (quoteIndex == 0)
       {
@@ -975,7 +959,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Raid cleanly. Vanish quickly.");
    }
-   else if (civName == "RvltModYucatan")
+   else if (civName == "ANWYucatan")
    {
       if (quoteIndex == 0)
       {
@@ -983,7 +967,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Stand firm. The land remembers loyalty.");
    }
-   else if (civName == "RvltModRioGrande")
+   else if (civName == "ANWRioGrande")
    {
       if (quoteIndex == 0)
       {
@@ -991,7 +975,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Keep the border moving under them.");
    }
-   else if (civName == "RvltModMayans")
+   else if (civName == "ANWMayans")
    {
       if (quoteIndex == 0)
       {
@@ -999,7 +983,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Hold the line with pride and fury.");
    }
-   else if (civName == "RvltModCalifornians")
+   else if (civName == "ANWCalifornians")
    {
       if (quoteIndex == 0)
       {
@@ -1007,7 +991,7 @@ string llGetLegendaryLeaderCompliment(void)
       }
       return ("Hold the province together.");
    }
-   else if (civName == "RvltModTexians")
+   else if (civName == "ANWTexians")
    {
       if (quoteIndex == 0)
       {

@@ -38,6 +38,7 @@ void initLeaderMenelik(void)
    // LL-BUILD-STYLE-BEGIN
    llUseHighlandCitadelStyle(3);
    gLLHouseDistanceMultiplier = 0.80;
+   gLLMilitaryDistanceMultiplier = 0.85;  // Defensive highland citadel — mid-band of spec [0.7,1.0]; barracks/stables tuck back from front, not at the very ceiling.
    llSetBuildStrongpointProfile(3, 2, 2, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);

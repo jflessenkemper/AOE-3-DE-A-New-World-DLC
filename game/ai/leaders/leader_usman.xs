@@ -108,11 +108,10 @@ minInterval 50
    if (kbGetAge() == cAge2)
    {
       btRushBoom = 0.05;
-      btOffenseDefense = 0.7;
+      btOffenseDefense = 0.45;     // Spec expects_treaty=true: no llEnableForwardBaseStyle in Colonial (would set btOffenseDefense=1.0 and contradict treaty posture).
       btBiasInf = 0.55;
       btBiasCav = 0.7;             // Raider as the early hammer.
       btBiasArt = -0.4;
-      llEnableForwardBaseStyle();
    }
 }
 
@@ -164,7 +163,7 @@ minInterval 70
       btBiasCav = 0.9;
       btBiasArt = 0.55;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      // Spec expects_treaty=true, no expects_forward: keep mass-and-march bias without enabling forward camps.
    }
 }
 

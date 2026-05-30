@@ -38,6 +38,7 @@ void initLeaderPachacuti(void)
    // LL-BUILD-STYLE-BEGIN
    llUseAndeanTerraceFortressStyle(4);
    gLLHouseDistanceMultiplier = 0.75;
+   gLLMilitaryDistanceMultiplier = 0.80;  // Sacsayhuamán-tight concentric fortress — mid-band of spec [0.7,1.0]; barracks ring inside the wall belt, not at the ceiling.
    llSetBuildStrongpointProfile(3, 3, 2, false);
    // Spec override: Inca Pachacuti doctrine — Sacsayhuamán concentric
    // ring fortress (Tier-walls the high ground in two or three concentric

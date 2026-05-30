@@ -27,15 +27,15 @@ void initLegendaryRevolutionSupport(void)
 
    string rvltName = kbGetCivName(cMyCiv);
 
-   if ((rvltName == "RvltModAmericans") || (rvltName == "RvltModMexicans") ||
-       (rvltName == "RvltModChileans") || (rvltName == "RvltModColumbians") ||
-       (rvltName == "RvltModPeruvians") || (rvltName == "RvltModBrazil") ||
-       (rvltName == "RvltModNapoleonicFrance"))
+   if ((rvltName == "ANWAmericans") || (rvltName == "ANWMexicans") ||
+       (rvltName == "ANWChileans") || (rvltName == "ANWColumbians") ||
+       (rvltName == "ANWPeruvians") || (rvltName == "ANWBrazil") ||
+       (rvltName == "ANWNapoleonicFrance"))
    {
       btBiasArt = 0.3;
    }
 
-   if (rvltName == "RvltModRevolutionaryFrance")
+   if (rvltName == "ANWRevFrance")
    {
       btBiasInf = 0.6;
       btBiasArt = 0.0;
@@ -44,31 +44,36 @@ void initLegendaryRevolutionSupport(void)
       btOffenseDefense = 0.4;
    }
 
-   if ((rvltName == "RvltModArgentines") || (rvltName == "RvltModHungarians") ||
-       (rvltName == "RvltModTexians") || (rvltName == "RvltModRioGrande") ||
-       (rvltName == "RvltModCalifornians"))
+   if ((rvltName == "ANWArgentines") || (rvltName == "ANWHungarians") ||
+       (rvltName == "ANWTexians") || (rvltName == "ANWRioGrande") ||
+       (rvltName == "ANWCalifornians"))
    {
       btBiasCav = 0.5;
       btBiasInf = 0.2;
    }
 
-   if ((rvltName == "RvltModCanadians") || (rvltName == "RvltModFrenchCanadians") ||
-       (rvltName == "RvltModHaitians") || (rvltName == "RvltModRomanians") ||
-       (rvltName == "RvltModEgyptians"))
+   if ((rvltName == "ANWCanadians") ||
+       (rvltName == "ANWHaitians") || (rvltName == "ANWRomanians") ||
+       (rvltName == "ANWEgyptians"))
    {
       btRushBoom = -0.2;
       btOffenseDefense = -0.2;
       cvMaxTowers = 6;
    }
 
-   if ((rvltName == "RvltModMayans") || (rvltName == "RvltModYucatan") ||
-       (rvltName == "RvltModCentralAmericans") || (rvltName == "RvltModPeruvians"))
+   if ((rvltName == "ANWMayans") || (rvltName == "ANWYucatan") ||
+       (rvltName == "ANWCentralAmericans") || (rvltName == "ANWPeruvians"))
    {
       btBiasNative = 0.6;
       btBiasTrade = 0.2;
    }
 
    llLogLeaderState("revolution support initialized for " + rvltName);
+   // Boot-time heartbeat probe — matches the pattern in every named leader
+   // file (`llProbe("meta.leader_init", "leader=<name>")`). Without this the
+   // hub-test + compliance probe scrapers can't tell whether the support
+   // layer ever ran for a given revolution civ.
+   llProbe("meta.leader_init", "leader=revolution_support rvlt=" + rvltName);
 }
 
 rule legendaryRevolutionArmyProfile

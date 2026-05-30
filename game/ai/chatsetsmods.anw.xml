@@ -1252,50 +1252,6 @@
       </Sentence>
    </Tag>
 </Chatset>
-<Chatset name="anw_frenchcanadians">
-   <Tag type="AiChat" name="ToAllyIntro" priority="Background">
-      <Sentence>
-         <String>Pour la patrie canadienne-française. Ensemble, camarade.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492400</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
-      <Sentence>
-         <String>Vous avez oublié la résistance québécoise? Nous la rappellerons.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492401</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
-      <Sentence>
-         <String>La seigneurie tient. Les palissades et les Patriotes.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492408</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
-      <Sentence>
-         <String>Il se cache derrière la pierre. Les Patriotes connaissent les bois.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492409</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
-      <Sentence>
-         <String>Un Patriote tombé. Son nom sera gravé.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492412</StringID>
-      </Sentence>
-   </Tag>
-   <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
-      <Sentence>
-         <String>Vive le Québec libre! Le drapeau des Patriotes flotte encore.</String>
-         <Sound>chats\NAPO0000.mp3</Sound>
-         <StringID>492415</StringID>
-      </Sentence>
-   </Tag>
-</Chatset>
 <Chatset name="anw_haitians">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>

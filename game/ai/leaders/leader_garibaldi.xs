@@ -37,7 +37,9 @@ void initLeaderGaribaldi(void)
    llSetMilitaryFocus(0.65, 0.35, 0.25);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseRepublicanLeveeStyle(2);
+   // earlyWalls=true honours spec first_wall_before_ms=900000 (Levee default
+   // is false for revolutionary mobile civs; Garibaldi runs static-base levee).
+   llUseRepublicanLeveeStyle(2, true);
    gLLMilitaryDistanceMultiplier = 0.90;
    llSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END

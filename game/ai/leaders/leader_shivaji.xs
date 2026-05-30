@@ -43,6 +43,12 @@ void initLeaderShivaji(void)
    // helper (which leaves walls off entirely).
    llUseHighlandCitadelStyle(2);
    gLLEconomicDistanceMultiplier = 1.10;
+   // Spec band [1.0, 1.3] with expects_forward=true. The Citadel helper
+   // defaults military to 0.80 (tight core), which contradicts the
+   // "Maratha Confederacy expands outward" doctrine prose. Push barracks/
+   // stables forward to feed the Sowar raids while keeping the citadel
+   // ring tight for the hill-fort defense.
+   gLLMilitaryDistanceMultiplier = 1.05;
    llSetBuildStrongpointProfile(2, 1, 2, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);

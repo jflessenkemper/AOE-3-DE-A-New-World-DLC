@@ -1250,3 +1250,316 @@ minInterval 5
 
    llRetreatEliteCore(anchorUnitID);
 }
+
+//==============================================================================
+/* AI non-elite rout system (Legendary Leaders).
+ *
+ * Behaviour spec (matches tools/validation/runtime_specs/legendary_runtime_suites.json):
+ *
+ *   - Non-elite AI-controlled land military breaks when its hitpoints fall
+ *     under 25% AND no elite/hero support is within 18 m. Broken units
+ *     issue a retreat-to-main-base move command.
+ *   - Elite units and any unit currently controlled by the human player
+ *     keep their orders untouched.
+ *   - Rout is blocked when an elite anchor is close — the screen body
+ *     stays in formation around the elite line; this is the entire point
+ *     of the elite-screen formation built earlier in this file.
+ *
+ * Debug markers (the validator looks for these strings verbatim):
+ *
+ *   "Legendary Leaders: [RULE] AI non-elite rout enabled at 25% health; "
+ *   "elite units hold and human-controlled units keep manual control"
+ *       — one-shot, first tick of the rule, confirms boot.
+ *
+ *   "Legendary Leaders: [UNIT] ai-rout-start unit=<ID>"   — first rout tick
+ *   "Legendary Leaders: [UNIT] ai-rout-move unit=<ID>"    — each subsequent tick still moving
+ *   "Legendary Leaders: [UNIT] ai-rout-arrival unit=<ID>" — within 6 m of destination
+ *   "Legendary Leaders: [UNIT] ai-rout-blocked unit=<ID> reason=elite-support"
+ *       — emitted when a unit would have routed but an elite anchor was
+ *         within range. Confirms the screen-body-stays-in-formation rule.
+ *
+ * Tracking: a single static xsArray of 32 tracked unit IDs plus a parallel
+ * vector array for the per-unit destination. 32 is plenty — a typical AI
+ * army has under 20 active engaged units and rout state only persists for
+ * a few ticks per unit. Slots are reused round-robin; a dead/healed unit
+ * frees its slot.
+ */
+//==============================================================================
+
+extern int gLLAiRoutSlotsArrayID = -1;        // xsArrayCreateInt slots → unitID (-1 = free)
+extern int gLLAiRoutDestArrayID = -1;         // xsArrayCreateVector slots → destination
+extern int gLLAiRoutStartTimeArrayID = -1;    // xsArrayCreateInt slots → start time (s)
+extern int gLLAiRoutSlotCount = 32;
+extern int gLLAiRoutBootMarkerEmitted = 0;
+extern int gLLAiRoutLastDestinationStaleCheck = -1;
+
+const float cLLAiRoutHpThreshold       = 0.25;   // 25% health
+const float cLLAiRoutEliteSupportRange = 18.0;   // metres
+const float cLLAiRoutArrivalTolerance  = 6.0;    // metres — "arrived" radius
+const int   cLLAiRoutMaxLifetimeSecs   = 60;     // give up tracking after this
+
+void llEnsureAiRoutArrays(void)
+{
+   if (gLLAiRoutSlotsArrayID < 0)
+   {
+      gLLAiRoutSlotsArrayID = xsArrayCreateInt(gLLAiRoutSlotCount, -1, "LL ai-rout slots");
+      gLLAiRoutStartTimeArrayID = xsArrayCreateInt(gLLAiRoutSlotCount, -1, "LL ai-rout start time");
+      gLLAiRoutDestArrayID = xsArrayCreateVector(gLLAiRoutSlotCount, cInvalidVector, "LL ai-rout dest");
+   }
+}
+
+int llFindAiRoutSlotForUnit(int unitID = -1)
+{
+   if ((unitID < 0) || (gLLAiRoutSlotsArrayID < 0))
+   {
+      return (-1);
+   }
+   for (slot = 0; < gLLAiRoutSlotCount)
+   {
+      if (xsArrayGetInt(gLLAiRoutSlotsArrayID, slot) == unitID)
+      {
+         return (slot);
+      }
+   }
+   return (-1);
+}
+
+int llClaimAiRoutSlot(int unitID = -1, vector dest = cInvalidVector)
+{
+   if (unitID < 0)
+   {
+      return (-1);
+   }
+   llEnsureAiRoutArrays();
+   int existing = llFindAiRoutSlotForUnit(unitID);
+   if (existing >= 0)
+   {
+      return (existing);
+   }
+   for (slot = 0; < gLLAiRoutSlotCount)
+   {
+      if (xsArrayGetInt(gLLAiRoutSlotsArrayID, slot) < 0)
+      {
+         xsArraySetInt(gLLAiRoutSlotsArrayID, slot, unitID);
+         xsArraySetInt(gLLAiRoutStartTimeArrayID, slot, xsGetTime());
+         xsArraySetVector(gLLAiRoutDestArrayID, slot, dest);
+         return (slot);
+      }
+   }
+   return (-1);
+}
+
+void llReleaseAiRoutSlot(int slot = -1)
+{
+   if ((slot < 0) || (gLLAiRoutSlotsArrayID < 0))
+   {
+      return;
+   }
+   xsArraySetInt(gLLAiRoutSlotsArrayID, slot, -1);
+   xsArraySetInt(gLLAiRoutStartTimeArrayID, slot, -1);
+   xsArraySetVector(gLLAiRoutDestArrayID, slot, cInvalidVector);
+}
+
+vector llChooseAiRoutDestination(void)
+{
+   int mainBaseID = kbBaseGetMainID(cMyID);
+   if (mainBaseID < 0)
+   {
+      return (cInvalidVector);
+   }
+   return (kbBaseGetLocation(cMyID, mainBaseID));
+}
+
+bool llAiRoutHasEliteSupportNearby(vector pos = cInvalidVector)
+{
+   if (pos == cInvalidVector)
+   {
+      return (false);
+   }
+   // Heroes are explicitly counted as elite support per the elite-tactics
+   // formation contract (line 26 of this file). llIsEliteUnit() currently
+   // returns false unconditionally — heroes carry the elite anchor role.
+   int heroQuery = createSimpleUnitQuery(cUnitTypeHero, cMyID, cUnitStateAlive,
+      pos, cLLAiRoutEliteSupportRange);
+   int heroCount = kbUnitQueryExecute(heroQuery);
+   if (heroCount > 0)
+   {
+      return (true);
+   }
+   return (false);
+}
+
+bool llIsAiRoutEligibleUnit(int unitID = -1)
+{
+   if (unitID < 0)
+   {
+      return (false);
+   }
+   if (kbUnitGetPlayerID(unitID) != cMyID)
+   {
+      return (false);
+   }
+   // Heroes are elite anchors; never rout them via this system.
+   if (kbUnitIsType(unitID, cUnitTypeHero) == true)
+   {
+      return (false);
+   }
+   // The explorer (subset of hero) gets its own escort/ransom logic
+   // elsewhere in this file. Skip.
+   if (kbUnitIsType(unitID, cUnitTypeAbstractExplorer) == true)
+   {
+      return (false);
+   }
+   // Out-of-scope: human-controlled units retain manual orders. The XS
+   // engine only ticks rules for the *current* AI player, so any unit
+   // owned by a human player is naturally filtered by the cMyID check
+   // above. The contract is documented in the boot marker for clarity.
+   if (kbUnitGetHealth(unitID) >= cLLAiRoutHpThreshold)
+   {
+      return (false);
+   }
+   return (true);
+}
+
+void llProcessAiRoutTick(void)
+{
+   llEnsureAiRoutArrays();
+
+   // ── Pass 1: reap stale slots (dead units, healed units, expired) ──
+   int now = xsGetTime();
+   for (slot = 0; < gLLAiRoutSlotCount)
+   {
+      int trackedID = xsArrayGetInt(gLLAiRoutSlotsArrayID, slot);
+      if (trackedID < 0)
+      {
+         continue;
+      }
+      // Dead or unknown → release.
+      if (kbUnitGetCurrentHitpoints(trackedID) <= 0)
+      {
+         llReleaseAiRoutSlot(slot);
+         continue;
+      }
+      // Healed back above threshold → release (the unit is fine again).
+      if (kbUnitGetHealth(trackedID) >= (cLLAiRoutHpThreshold + 0.10))
+      {
+         llReleaseAiRoutSlot(slot);
+         continue;
+      }
+      // Expired → release (something else has happened, stop tracking).
+      int startTime = xsArrayGetInt(gLLAiRoutStartTimeArrayID, slot);
+      if ((startTime > 0) && ((now - startTime) > cLLAiRoutMaxLifetimeSecs))
+      {
+         llReleaseAiRoutSlot(slot);
+         continue;
+      }
+      // Arrived → emit and release.
+      vector dest = xsArrayGetVector(gLLAiRoutDestArrayID, slot);
+      vector pos = kbUnitGetPosition(trackedID);
+      if (dest != cInvalidVector)
+      {
+         float distLeft = distance(pos, dest);
+         if (distLeft <= cLLAiRoutArrivalTolerance)
+         {
+            debugLegendaryLeaders("[UNIT] ai-rout-arrival unit=" + trackedID);
+            llProbe("rout.arrival", "unit=" + trackedID +
+               " dist=" + distLeft + " elapsed=" + (now - startTime));
+            llReleaseAiRoutSlot(slot);
+            continue;
+         }
+         // Still moving — emit the tick marker.
+         debugLegendaryLeaders("[UNIT] ai-rout-move unit=" + trackedID);
+      }
+   }
+
+   // ── Pass 2: scan land military for new rout candidates ──
+   vector routDest = llChooseAiRoutDestination();
+   if (routDest == cInvalidVector)
+   {
+      // No main base yet — nothing to rout toward. Bail.
+      return;
+   }
+   int milQuery = createSimpleUnitQuery(cUnitTypeLogicalTypeLandMilitary,
+      cMyID, cUnitStateAlive);
+   int milCount = kbUnitQueryExecute(milQuery);
+   for (i = 0; < milCount)
+   {
+      int unitID = kbUnitQueryGetResult(milQuery, i);
+      if (llIsAiRoutEligibleUnit(unitID) == false)
+      {
+         continue;
+      }
+      vector unitPos = kbUnitGetPosition(unitID);
+      // Elite-support gating — broken unit holds line if an elite anchor
+      // is in range. Per spec, emit the blocked marker once per visit so
+      // the validator can observe the support-screen contract.
+      if (llAiRoutHasEliteSupportNearby(unitPos) == true)
+      {
+         // Only emit-blocked once per tracked unit per tick (we don't have
+         // per-unit tick history, so emit once per tick at low rate).
+         debugLegendaryLeaders("[UNIT] ai-rout-blocked unit=" + unitID +
+            " reason=elite-support");
+         llProbe("rout.blocked", "unit=" + unitID + " reason=elite-support");
+         // If this unit had been routing, cancel — elite arrived to support.
+         int oldSlot = llFindAiRoutSlotForUnit(unitID);
+         if (oldSlot >= 0)
+         {
+            llReleaseAiRoutSlot(oldSlot);
+         }
+         continue;
+      }
+      int existingSlot = llFindAiRoutSlotForUnit(unitID);
+      if (existingSlot < 0)
+      {
+         int newSlot = llClaimAiRoutSlot(unitID, routDest);
+         if (newSlot >= 0)
+         {
+            aiTaskUnitMove(unitID, routDest);
+            debugLegendaryLeaders("[UNIT] ai-rout-start unit=" + unitID);
+            llProbe("rout.start", "unit=" + unitID +
+               " hp=" + kbUnitGetHealth(unitID) +
+               " dest=" + llFmtVec(routDest));
+         }
+      }
+      else
+      {
+         // Already tracked — re-issue the move order in case the unit's
+         // engagement was interrupted and it stopped moving. AoE3's
+         // aiTaskUnitMove is idempotent against an active move order, so
+         // this is cheap.
+         aiTaskUnitMove(unitID, routDest);
+      }
+   }
+}
+
+//==============================================================================
+// legendaryAiRoutMonitor — periodic monitor for the non-elite-rout system.
+//
+// Activated alongside legendaryEliteGuardMonitor in aiCore.xs (early-game
+// hook in age2Monitor). Fires every 4 s — slightly more often than the
+// elite guard's 5 s tick so a broken unit gets its retreat order within a
+// single second of falling under threshold.
+//
+// The first tick emits the boot marker the runtime-logs validator looks
+// for. Subsequent ticks emit per-unit start/move/arrival/blocked markers
+// driven by llProcessAiRoutTick().
+//==============================================================================
+rule legendaryAiRoutMonitor
+inactive
+minInterval 4
+{
+   if (gLLAiRoutBootMarkerEmitted == 0)
+   {
+      // Single literal (no concatenation) so the offline static-emitter
+      // checker in tools/validation/validate_runtime_logs.py can see this
+      // marker as a contiguous substring in the XS source.
+      debugLegendaryLeaders("[RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control");
+      llProbe("rout.boot",
+         "hp_threshold=" + cLLAiRoutHpThreshold +
+         " elite_support_range=" + cLLAiRoutEliteSupportRange +
+         " arrival_tolerance=" + cLLAiRoutArrivalTolerance);
+      gLLAiRoutBootMarkerEmitted = 1;
+   }
+   llLogRuleTick("legendaryAiRoutMonitor");
+   llProcessAiRoutTick();
+}

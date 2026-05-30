@@ -499,32 +499,60 @@ bool civIsDEciv(void)
 bool civIsRevolution(void)
 {
    string name = kbGetCivName(cMyCiv);
-   if (name == "RvltModNapoleonicFrance")  return (true);
-   if (name == "RvltModRevolutionaryFrance") return (true);
-   if (name == "RvltModAmericans")         return (true);
-   if (name == "RvltModMexicans")          return (true);
-   if (name == "RvltModCanadians")         return (true);
-   if (name == "RvltModFrenchCanadians")   return (true);
-   if (name == "RvltModBrazil")            return (true);
-   if (name == "RvltModArgentines")        return (true);
-   if (name == "RvltModChileans")          return (true);
-   if (name == "RvltModPeruvians")         return (true);
-   if (name == "RvltModColumbians")        return (true);
-   if (name == "RvltModHaitians")          return (true);
-   if (name == "RvltModIndonesians")       return (true);
-   if (name == "RvltModSouthAfricans")     return (true);
-   if (name == "RvltModFinnish")           return (true);
-   if (name == "RvltModHungarians")        return (true);
-   if (name == "RvltModRomanians")         return (true);
-   if (name == "RvltModBarbary")           return (true);
-   if (name == "RvltModEgyptians")         return (true);
-   if (name == "RvltModCentralAmericans")  return (true);
-   if (name == "RvltModBajaCalifornians")  return (true);
-   if (name == "RvltModYucatan")           return (true);
-   if (name == "RvltModRioGrande")         return (true);
-   if (name == "RvltModMayans")            return (true);
-   if (name == "RvltModCalifornians")      return (true);
-   if (name == "RvltModTexians")           return (true);
+   if (name == "ANWNapoleonicFrance")  return (true);
+   if (name == "ANWRevFrance") return (true);
+   if (name == "ANWAmericans")         return (true);
+   if (name == "ANWMexicans")          return (true);
+   if (name == "ANWCanadians")         return (true);
+   if (name == "ANWBrazil")            return (true);
+   if (name == "ANWArgentines")        return (true);
+   if (name == "ANWChileans")          return (true);
+   if (name == "ANWPeruvians")         return (true);
+   if (name == "ANWColumbians")        return (true);
+   if (name == "ANWHaitians")          return (true);
+   if (name == "ANWIndonesians")       return (true);
+   if (name == "ANWSouthAfricans")     return (true);
+   if (name == "ANWFinnish")           return (true);
+   if (name == "ANWHungarians")        return (true);
+   if (name == "ANWRomanians")         return (true);
+   if (name == "ANWBarbary")           return (true);
+   if (name == "ANWEgyptians")         return (true);
+   if (name == "ANWCentralAmericans")  return (true);
+   if (name == "ANWBajaCalifornians")  return (true);
+   if (name == "ANWYucatan")           return (true);
+   if (name == "ANWRioGrande")         return (true);
+   if (name == "ANWMayans")            return (true);
+   if (name == "ANWCalifornians")      return (true);
+   if (name == "ANWTexians")           return (true);
+   // ANW-prefixed revolution civs (post-2026-05-20 merge: revolution civs
+   // added as their own picker entries alongside the base game, with the
+   // `ANW` prefix rather than `ANW`). Without these the engine's
+   // dispatch in aiLoaderStandard.xs::preInit falls through and
+   // initLegendaryRevolutionCommander() is never called, so the per-civ
+   // doctrine (San Martín cavalry, Robespierre levee, Diponegoro guerrilla,
+   // ...) silently does not apply. Inner aiSetup.xs branches that key on
+   // `rvltName == "ANW*"` will fall through to defaults for these
+   // tokens (standard European house, standard settler) which is fine —
+   // ANW revolutions don't need the ANW-era special-cases.
+   if (name == "ANWArgentines")            return (true);
+   if (name == "ANWBarbary")               return (true);
+   if (name == "ANWBrazil")                return (true);
+   if (name == "ANWCanadians")             return (true);
+   if (name == "ANWChileans")              return (true);
+   if (name == "ANWColumbians")            return (true);
+   if (name == "ANWEgyptians")             return (true);
+   if (name == "ANWFinnish")               return (true);
+   if (name == "ANWHaitians")              return (true);
+   if (name == "ANWHungarians")            return (true);
+   if (name == "ANWIndonesians")           return (true);
+   if (name == "ANWMayans")                return (true);
+   if (name == "ANWMexicans")              return (true);
+   if (name == "ANWNapoleonicFrance")      return (true);
+   if (name == "ANWPeruvians")             return (true);
+   if (name == "ANWRevFrance")             return (true);
+   if (name == "ANWRomanians")             return (true);
+   if (name == "ANWSouthAfricans")         return (true);
+   if (name == "ANWTexians")               return (true);
    return (false);
 }
 

@@ -41,7 +41,9 @@ void initLeaderFrederick(void)
    // Spec doctrine = Republican Levee (UrbanBarricade walls). Prussian
    // line-infantry musketeer mass fits the Levee helper better than the
    // Siege Train one (which is reserved for Suleiman's cannon doctrine).
-   llUseRepublicanLeveeStyle(2);
+   // earlyWalls=true honours spec first_wall_before_ms=900000 (Levee default
+   // is false for revolutionary mobile civs; Frederick is a static-base civ).
+   llUseRepublicanLeveeStyle(2, true);
    gLLMilitaryDistanceMultiplier = 0.85;
    llSetBuildStrongpointProfile(2, 2, 2, true);
    // LL-BUILD-STYLE-END

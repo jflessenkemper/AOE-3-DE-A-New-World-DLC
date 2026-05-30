@@ -47,7 +47,7 @@ void initLeaderCatherine(void)
 
    // LL-BUILD-STYLE-BEGIN
    llUseCossackVoiskoStyle(1);
-   // Spec override: Russians Catherine doctrine — see playstyle_spec.json
+   // Spec override: Russians Ivan the Terrible doctrine — see playstyle_spec.json
    gLLWallStrategy = cLLWallStrategyFrontierPalisades;
    llSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END

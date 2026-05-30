@@ -199,10 +199,14 @@ void llUseCompactFortifiedCoreStyle(int wallLevel = 3, bool earlyWalls = true)
 void llUseDistributedEconomicNetworkStyle(int wallLevel = 1)
 {
    // Morazán / Central American federation — frontier palisade on scattered nodes.
+   // Note: do NOT call llEnableEarlyForwardBase here. Treaty-leaning civs that
+   // use this style (Hausa Usman, Brazil Pedro) have spec expects_treaty=true
+   // and must not be forced into early forward-base posture. Leaders that
+   // genuinely want a forward base (e.g. Morazán himself) can call
+   // llEnableForwardBaseStyle() explicitly from their leader init or rule.
    llConfigureBuildStyleProfile(cLLBuildStyleDistributedEconomicNetwork, wallLevel, false, 1.15, 1.35, 1.0, 1.35, 1, 1, 1, false);
    gLLWallStrategy = cLLWallStrategyFrontierPalisades;
    gLLMilitaryPlacementPreference = -1;  // genuine spread
-   llEnableEarlyForwardBase(420000);     // 7 min — distributed nodes need time
 }
 
 void llUseForwardOperationalLineStyle(int wallLevel = 1)
@@ -234,7 +238,7 @@ void llUseShrineTradeNodeSpreadStyle(int wallLevel = 1)
 
 void llUseCivicMilitiaCenterStyle(int wallLevel = 1)
 {
-   // Washington / Jefferson / Brock / Papineau — colonial frontier palisades.
+   // Washington / Jefferson / Brock — colonial frontier palisades.
    llConfigureBuildStyleProfile(cLLBuildStyleCivicMilitiaCenter, wallLevel, false, 0.95, 1.05, 0.95, 1.15, 2, 1, 2, false);
    gLLWallStrategy = cLLWallStrategyFrontierPalisades;
    gLLMilitaryPlacementPreference = cBuildingPlacementPreferenceFront;  // militia at frontier
@@ -313,9 +317,14 @@ void llUseCossackVoiskoStyle(int wallLevel = 1)
 // Republican Levee — French Revolution / American / Mexican citizen-army:
 // civic spine of militia centers, town-center decentralised, militia first.
 // Robespierre's Paris barricades; tight inner defense only.
-void llUseRepublicanLeveeStyle(int wallLevel = 1)
+void llUseRepublicanLeveeStyle(int wallLevel = 1, bool earlyWalls = false)
 {
-   llConfigureBuildStyleProfile(cLLBuildStyleRepublicanLevee, wallLevel, false,
+   // earlyWalls defaults false to preserve the mobile civic-uprising opening
+   // for revolutionary civs (Robespierre, Washington, Hidalgo). Static-base
+   // republican-levee civs that the spec gates with first_wall_before_ms
+   // (Frederick=900s, Garibaldi=900s) pass earlyWalls=true to ensure the
+   // engine emits a palisade ring well inside the deadline.
+   llConfigureBuildStyleProfile(cLLBuildStyleRepublicanLevee, wallLevel, earlyWalls,
       0.95, 1.05, 0.90, 1.10, 2, 1, 3, true);
    gLLWallStrategy = cLLWallStrategyUrbanBarricade;
    gLLMilitaryPlacementPreference = cBuildingPlacementPreferenceFront;  // levee marches outward
@@ -488,33 +497,6 @@ void llAssignLeaderIdentity(void)
    else if (cMyCiv == cCivJapanese)     { gLLLeaderKey = "tokugawa";    gLLChatsetKey = "tokugawa"; }
    else if (cMyCiv == cCivXPSioux)      { gLLLeaderKey = "crazyhorse";  gLLChatsetKey = "crazyhorse"; }
    else if (cMyCiv == cCivDESwedish)    { gLLLeaderKey = "gustav";      gLLChatsetKey = "gustav"; }
-   // Revolution civs (26)
-   else if (rvltName == "RvltModAmericans")          { gLLLeaderKey = "rvltmodamericans";          gLLChatsetKey = "rvltmodamericans"; }
-   else if (rvltName == "RvltModArgentines")         { gLLLeaderKey = "rvltmodargentines";         gLLChatsetKey = "rvltmodargentines"; }
-   else if (rvltName == "RvltModBajaCalifornians")   { gLLLeaderKey = "rvltmodbajacalifornians";   gLLChatsetKey = "rvltmodbajacalifornians"; }
-   else if (rvltName == "RvltModBarbary")            { gLLLeaderKey = "rvltmodbarbary";            gLLChatsetKey = "rvltmodbarbary"; }
-   else if (rvltName == "RvltModBrazil")             { gLLLeaderKey = "rvltmodbrazil";             gLLChatsetKey = "rvltmodbrazil"; }
-   else if (rvltName == "RvltModCalifornians")       { gLLLeaderKey = "rvltmodcalifornians";       gLLChatsetKey = "rvltmodcalifornians"; }
-   else if (rvltName == "RvltModCanadians")          { gLLLeaderKey = "rvltmodcanadians";          gLLChatsetKey = "rvltmodcanadians"; }
-   else if (rvltName == "RvltModCentralAmericans")   { gLLLeaderKey = "rvltmodcentralamericans";   gLLChatsetKey = "rvltmodcentralamericans"; }
-   else if (rvltName == "RvltModChileans")           { gLLLeaderKey = "rvltmodchileans";           gLLChatsetKey = "rvltmodchileans"; }
-   else if (rvltName == "RvltModColumbians")         { gLLLeaderKey = "rvltmodcolumbians";         gLLChatsetKey = "rvltmodcolumbians"; }
-   else if (rvltName == "RvltModEgyptians")          { gLLLeaderKey = "rvltmodegyptians";          gLLChatsetKey = "rvltmodegyptians"; }
-   else if (rvltName == "RvltModFinnish")            { gLLLeaderKey = "rvltmodfinnish";            gLLChatsetKey = "rvltmodfinnish"; }
-   else if (rvltName == "RvltModFrenchCanadians")    { gLLLeaderKey = "rvltmodfrenchcanadians";    gLLChatsetKey = "rvltmodfrenchcanadians"; }
-   else if (rvltName == "RvltModHaitians")           { gLLLeaderKey = "rvltmodhaitians";           gLLChatsetKey = "rvltmodhaitians"; }
-   else if (rvltName == "RvltModHungarians")         { gLLLeaderKey = "rvltmodhungarians";         gLLChatsetKey = "rvltmodhungarians"; }
-   else if (rvltName == "RvltModIndonesians")        { gLLLeaderKey = "rvltmodindonesians";        gLLChatsetKey = "rvltmodindonesians"; }
-   else if (rvltName == "RvltModMayans")             { gLLLeaderKey = "rvltmodmayans";             gLLChatsetKey = "rvltmodmayans"; }
-   else if (rvltName == "RvltModMexicans")           { gLLLeaderKey = "rvltmodmexicans";           gLLChatsetKey = "rvltmodmexicans"; }
-   else if (rvltName == "RvltModNapoleonicFrance")   { gLLLeaderKey = "napoleon";                  gLLChatsetKey = "napoleon"; }
-   else if (rvltName == "RvltModPeruvians")          { gLLLeaderKey = "rvltmodperuvians";          gLLChatsetKey = "rvltmodperuvians"; }
-   else if (rvltName == "RvltModRevolutionaryFrance"){ gLLLeaderKey = "rvltmodrevolutionaryfrance"; gLLChatsetKey = "rvltmodrevolutionaryfrance"; }
-   else if (rvltName == "RvltModRioGrande")          { gLLLeaderKey = "rvltmodriogrande";          gLLChatsetKey = "rvltmodriogrande"; }
-   else if (rvltName == "RvltModRomanians")          { gLLLeaderKey = "rvltmodromanians";          gLLChatsetKey = "rvltmodromanians"; }
-   else if (rvltName == "RvltModSouthAfricans")      { gLLLeaderKey = "rvltmodsouthafricans";      gLLChatsetKey = "rvltmodsouthafricans"; }
-   else if (rvltName == "RvltModTexians")            { gLLLeaderKey = "rvltmodtexians";            gLLChatsetKey = "rvltmodtexians"; }
-   else if (rvltName == "RvltModYucatan")            { gLLLeaderKey = "rvltmodyucatan";            gLLChatsetKey = "rvltmodyucatan"; }
    // ANW revolution civs (19)
    else if (rvltName == "ANWArgentines")          { gLLLeaderKey = "anw_argentines";          gLLChatsetKey = "anw_argentines"; }
    else if (rvltName == "ANWBarbary")             { gLLLeaderKey = "anw_barbary";             gLLChatsetKey = "anw_barbary"; }
@@ -635,7 +617,9 @@ void llApplyBuildStyleForActiveCiv(void)
       // Louis XVIII Bourbon — Vauban star-fort doctrine, compact fortified core.
       // Per LEGENDARY_LEADERS_TREE.html: "Compact Fortified Core" not Forward
       // Operational Line (that's Napoleon's revolution variant).
-      llUseCompactFortifiedCoreStyle(2);
+      // wallLevel=3 matches leader_bourbon.xs init so applyBuildStyle does not
+      // silently downgrade Bourbon's wall investment after leader init runs.
+      llUseCompactFortifiedCoreStyle(3, true);
       gLLMilitaryDistanceMultiplier = 0.85;
       llSetBuildStrongpointProfile(2, 2, 3, true);
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainPlain, 0.35);
@@ -647,7 +631,8 @@ void llApplyBuildStyleForActiveCiv(void)
       // HTML reference promises Republican Levee (citizen-soldier brigade), not
       // Siege Train; the doctrine still gets its signature heavy guns through
       // gLLMilitaryDistanceMultiplier and strongpoint profile below.
-      llUseRepublicanLeveeStyle(2);
+      // earlyWalls=true to honour spec first_wall_before_ms=900000 (audit v2 WARN).
+      llUseRepublicanLeveeStyle(2, true);
       gLLMilitaryDistanceMultiplier = 0.85;
       llSetBuildStrongpointProfile(2, 2, 2, true);
       // Oder/Elbe plain — river-and-plain advance, enemy-ward.
@@ -676,6 +661,12 @@ void llApplyBuildStyleForActiveCiv(void)
    {
       // Pachacuti — Sacsayhuamán terraced fortress.
       llUseAndeanTerraceFortressStyle(4);
+      // Spec override: Inca Pachacuti doctrine wants concentric FortressRing
+      // walls (matching ANWInca/ANWChileans/ANWPeruvians). AndeanTerraceFortress
+      // helper defaults to ChokepointSegments(1); explicit override required so
+      // llApplyBuildStyleForActiveCiv (called after initLeaderPachacuti) does
+      // not silently revert the leader's explicit FortressRing choice.
+      gLLWallStrategy = cLLWallStrategyFortressRing;
       gLLHouseDistanceMultiplier = 0.75;
       llSetBuildStrongpointProfile(3, 3, 2, false);
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainPlain, 0.20);
@@ -698,7 +689,8 @@ void llApplyBuildStyleForActiveCiv(void)
    else if (cMyCiv == cCivDEItalians)
    {
       // Garibaldi — Risorgimento volunteer Redshirts marching north.
-      llUseRepublicanLeveeStyle(2);
+      // earlyWalls=true to honour spec first_wall_before_ms=900000 (audit v2 WARN parity with Frederick).
+      llUseRepublicanLeveeStyle(2, true);
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 2, 3, true);
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainRiver, 0.30);
@@ -798,7 +790,7 @@ void llApplyBuildStyleForActiveCiv(void)
    }
 
    // ── REVOLUTION NATIONS (26) — bespoke per-nation profiles ────────────
-   else if (rvltName == "RvltModAmericans")
+   else if (rvltName == "ANWAmericans")
    {
       // Jefferson — Continental Congress republican civic spine, tidewater farms.
       llUseRepublicanLeveeStyle(0);
@@ -807,7 +799,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.30);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.35);
    }
-   else if (rvltName == "RvltModArgentines")
+   else if (rvltName == "ANWArgentines")
    {
       // San Martin — Army of the Andes liberation column across the pampas.
       llUseForwardOperationalLineStyle(0);
@@ -816,7 +808,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainHighland, 0.25);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
    }
-   else if (rvltName == "RvltModBajaCalifornians")
+   else if (rvltName == "ANWBajaCalifornians")
    {
       // Baja Californians — Mission scatter on a long Pacific peninsula.
       llUseMobileFrontierScatterStyle(0);
@@ -825,7 +817,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainDesertOasis, 0.45);
       llSetExpansionHeading(cLLHeadingAlongCoast, 0.50);
    }
-   else if (rvltName == "RvltModBarbary")
+   else if (rvltName == "ANWBarbary")
    {
       // Barbary — Corsair coastal compound, fortified harbour of Algiers/Tunis.
       llUseNavalMercantileCompoundStyle(2);
@@ -834,7 +826,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainDesertOasis, 0.55);
       llSetExpansionHeading(cLLHeadingIslandHop, 0.40);
    }
-   else if (rvltName == "RvltModBrazil")
+   else if (rvltName == "ANWBrazil")
    {
       // Brazil — Empire of Pedro II, sugar economy across Mata Atlântica coast.
       llUseDistributedEconomicNetworkStyle(2);
@@ -842,7 +834,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainJungle, 0.40);
       llSetExpansionHeading(cLLHeadingAlongCoast, 0.35);
    }
-   else if (rvltName == "RvltModCalifornians")
+   else if (rvltName == "ANWCalifornians")
    {
       // Californians — Gold Rush boom across Sierra foothills & central valley.
       llUseDistributedEconomicNetworkStyle(1);
@@ -852,16 +844,16 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainHighland, 0.35);
       llSetExpansionHeading(cLLHeadingFollowTradeRoute, 0.40);
    }
-   else if (rvltName == "RvltModCanadians")
+   else if (rvltName == "ANWCanadians")
    {
       // Canadians — Loyalist garrison along the St Lawrence / Great Lakes.
-      llUseCompactFortifiedCoreStyle(2, false);
+      llUseCompactFortifiedCoreStyle(2, true);  // earlyWalls=true to meet spec first_wall_before_ms=600000.
       gLLEconomicDistanceMultiplier = 0.95;
       llSetBuildStrongpointProfile(2, 2, 2, false);
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.40);
       llSetExpansionHeading(cLLHeadingUpriver, 0.35);
    }
-   else if (rvltName == "RvltModCentralAmericans")
+   else if (rvltName == "ANWCentralAmericans")
    {
       // Morazán — Federal Republic of Central America trade league on isthmus.
       llUseDistributedEconomicNetworkStyle(1);
@@ -869,7 +861,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainCoast, 0.30);
       llSetExpansionHeading(cLLHeadingFollowTradeRoute, 0.35);
    }
-   else if (rvltName == "RvltModChileans")
+   else if (rvltName == "ANWChileans")
    {
       // O'Higgins — Andean column on the Pacific coast.
       llUseAndeanTerraceFortressStyle(2);
@@ -878,7 +870,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainCoast, 0.35);
       llSetExpansionHeading(cLLHeadingAlongCoast, 0.30);
    }
-   else if (rvltName == "RvltModColumbians")
+   else if (rvltName == "ANWColumbians")
    {
       // Bolívar — Gran Colombia liberation drive across Andes and Llanos.
       llUseForwardOperationalLineStyle(0);
@@ -887,7 +879,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainHighland, cLLTerrainJungle, 0.25);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
    }
-   else if (rvltName == "RvltModEgyptians")
+   else if (rvltName == "ANWEgyptians")
    {
       // Muhammad Ali — Mameluke citadel of Cairo, Nile-anchored.
       llUseHighlandCitadelStyle(4);
@@ -897,7 +889,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetExpansionHeading(cLLHeadingUpriver, 0.35);
       llEnableCenterAnchoredCivic(true);
    }
-   else if (rvltName == "RvltModFinnish")
+   else if (rvltName == "ANWFinnish")
    {
       // Mannerheim — Winter War line across Karelian taiga.
       llUseCompactFortifiedCoreStyle(3, true);
@@ -907,16 +899,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetExpansionHeading(cLLHeadingDefensive, 0.0);
       llEnableCenterAnchoredCivic(true);
    }
-   else if (rvltName == "RvltModFrenchCanadians")
-   {
-      // French Canadians — Patriote militia of Lower Canada, riverine parish.
-      llUseCivicMilitiaCenterStyle(1);
-      gLLEconomicDistanceMultiplier = 1.05;
-      llSetBuildStrongpointProfile(2, 1, 2, false);
-      llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.35);
-      llSetExpansionHeading(cLLHeadingUpriver, 0.30);
-   }
-   else if (rvltName == "RvltModHaitians")
+   else if (rvltName == "ANWHaitians")
    {
       // Toussaint / Dessalines — Haitian Revolution jungle ambush, mountain.
       llUseJungleGuerrillaNetworkStyle(0);
@@ -925,7 +908,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainHighland, 0.35);
       llSetExpansionHeading(cLLHeadingOutwardRings, 0.15);
    }
-   else if (rvltName == "RvltModHungarians")
+   else if (rvltName == "ANWHungarians")
    {
       // Kossuth — Hungarian hussar wedge of the 1848 Honvéd across the puszta.
       llUseSteppeCavalryWedgeStyle(1);
@@ -934,7 +917,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.25);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
    }
-   else if (rvltName == "RvltModIndonesians")
+   else if (rvltName == "ANWIndonesians")
    {
       // Diponegoro — Java War jungle-guerrilla campaign (Perang Diponegoro,
       // 1825-1830). HTML reference promises Jungle Guerrilla Network, not
@@ -945,7 +928,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainCoast, 0.40);
       llSetExpansionHeading(cLLHeadingIslandHop, 0.35);
    }
-   else if (rvltName == "RvltModMayans")
+   else if (rvltName == "ANWMayans")
    {
       // Caste War — Maya jungle guerrilla, Yucatán bush huts on limestone shelf.
       llUseJungleGuerrillaNetworkStyle(1);
@@ -954,7 +937,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainJungle, cLLTerrainForestEdge, 0.40);
       llSetExpansionHeading(cLLHeadingOutwardRings, 0.20);
    }
-   else if (rvltName == "RvltModMexicans")
+   else if (rvltName == "ANWMexicans")
    {
       // Hidalgo (revolution) — Grito de Dolores citizen army across Bajío.
       llUseRepublicanLeveeStyle(0);
@@ -963,7 +946,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainDesertOasis, 0.25);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.40);
    }
-   else if (rvltName == "RvltModRevolutionaryFrance")
+   else if (rvltName == "ANWRevFrance")
    {
       // Revolutionary France — Levée en masse of the Year II, Paris radiating.
       llUseRepublicanLeveeStyle(0);
@@ -972,7 +955,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainPlain, 0.30);
       llSetExpansionHeading(cLLHeadingOutwardRings, 0.20);
    }
-   else if (rvltName == "RvltModNapoleonicFrance")
+   else if (rvltName == "ANWNapoleonicFrance")
    {
       // Napoleon Bonaparte (post-1804 Emperor) — Grande Armée operational manoeuvre.
       llUseForwardOperationalLineStyle(1);
@@ -981,7 +964,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.25);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.55);
    }
-   else if (rvltName == "RvltModPeruvians")
+   else if (rvltName == "ANWPeruvians")
    {
       // Túpac Amaru — Andean terrace fortress above the altiplano.
       llUseAndeanTerraceFortressStyle(3);
@@ -991,7 +974,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetExpansionHeading(cLLHeadingOutwardRings, 0.20);
       llEnableCenterAnchoredCivic(true);
    }
-   else if (rvltName == "RvltModRioGrande")
+   else if (rvltName == "ANWRioGrande")
    {
       // Rio Grande — Republic-on-the-frontier ranching scatter, plains.
       llUseMobileFrontierScatterStyle(0);
@@ -1001,7 +984,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.25);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.35);
    }
-   else if (rvltName == "RvltModRomanians")
+   else if (rvltName == "ANWRomanians")
    {
       // Cuza — Romanian unification civic militia, Carpathian-Danube axis.
       llUseCivicMilitiaCenterStyle(2);
@@ -1010,16 +993,16 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainHighland, 0.30);
       llSetExpansionHeading(cLLHeadingUpriver, 0.25);
    }
-   else if (rvltName == "RvltModSouthAfricans")
+   else if (rvltName == "ANWSouthAfricans")
    {
       // Boer Voortrekker — Laager-and-port colonial compound, Cape inland.
-      llUseNavalMercantileCompoundStyle(1);
+      llUseNavalMercantileCompoundStyle(2);  // wallLevel=2 for full Boer laager / Cape harbor ring (was 1).
       gLLEconomicDistanceMultiplier = 1.25;
       llSetBuildStrongpointProfile(2, 1, 2, true);
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainPlain, 0.40);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.35);
    }
-   else if (rvltName == "RvltModTexians")
+   else if (rvltName == "ANWTexians")
    {
       // Houston — Texan revolution forward line at San Jacinto across prairie.
       llUseForwardOperationalLineStyle(0);
@@ -1028,7 +1011,7 @@ void llApplyBuildStyleForActiveCiv(void)
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.30);
       llSetExpansionHeading(cLLHeadingFrontierPush, 0.45);
    }
-   else if (rvltName == "RvltModYucatan")
+   else if (rvltName == "ANWYucatan")
    {
       // Yucatán — Caste War jungle guerrilla on the limestone peninsula.
       llUseJungleGuerrillaNetworkStyle(1);
@@ -1069,7 +1052,7 @@ void llApplyBuildStyleForActiveCiv(void)
    else if (rvltName == "ANWCanadians")
    {
       // Canadians — Loyalist garrison along the St Lawrence / Great Lakes.
-      llUseCompactFortifiedCoreStyle(2, false);
+      llUseCompactFortifiedCoreStyle(2, true);  // earlyWalls=true to meet spec first_wall_before_ms=600000.
       gLLEconomicDistanceMultiplier = 0.95;
       llSetBuildStrongpointProfile(2, 2, 2, false);
       llSetPreferredTerrain(cLLTerrainRiver, cLLTerrainForestEdge, 0.40);
@@ -1205,7 +1188,7 @@ void llApplyBuildStyleForActiveCiv(void)
    else if (rvltName == "ANWSouthAfricans")
    {
       // Boer Voortrekker — Laager-and-port colonial compound, Cape inland.
-      llUseNavalMercantileCompoundStyle(1);
+      llUseNavalMercantileCompoundStyle(2);  // wallLevel=2 for full Boer laager / Cape harbor ring (was 1).
       gLLEconomicDistanceMultiplier = 1.25;
       llSetBuildStrongpointProfile(2, 1, 2, true);
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainPlain, 0.40);
@@ -1278,7 +1261,8 @@ void llApplyBuildStyleForActiveCiv(void)
    else if (rvltName == "ANWFrench")
    {
       // Louis XVIII Bourbon — compact fortified core, Restoration defensive posture.
-      llUseCompactFortifiedCoreStyle(2);
+      // wallLevel=3 matches leader_bourbon.xs (single source of truth).
+      llUseCompactFortifiedCoreStyle(3, true);
       gLLWallStrategy = cLLWallStrategyFortressRing;
       gLLMilitaryDistanceMultiplier = 0.85;
       llSetBuildStrongpointProfile(2, 2, 3, true);
@@ -1288,7 +1272,8 @@ void llApplyBuildStyleForActiveCiv(void)
    else if (rvltName == "ANWGermans")
    {
       // Frederick the Great — Prussian republican-levee + oblique-order march.
-      llUseRepublicanLeveeStyle(2);
+      // earlyWalls=true honours spec first_wall_before_ms=900000.
+      llUseRepublicanLeveeStyle(2, true);
       gLLMilitaryDistanceMultiplier = 0.85;
       llSetBuildStrongpointProfile(2, 2, 2, true);
       llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.30);
@@ -1334,7 +1319,8 @@ void llApplyBuildStyleForActiveCiv(void)
    else if (rvltName == "ANWItalians")
    {
       // Garibaldi — Risorgimento volunteer Redshirts marching north.
-      llUseRepublicanLeveeStyle(2);
+      // earlyWalls=true honours spec first_wall_before_ms=900000.
+      llUseRepublicanLeveeStyle(2, true);
       gLLMilitaryDistanceMultiplier = 0.90;
       llSetBuildStrongpointProfile(2, 2, 3, true);
       llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainRiver, 0.30);

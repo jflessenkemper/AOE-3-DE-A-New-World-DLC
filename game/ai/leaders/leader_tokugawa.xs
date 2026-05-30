@@ -36,6 +36,12 @@ void initLeaderTokugawa(void)
    // LL-BUILD-STYLE-BEGIN
    llUseShrineTradeNodeSpreadStyle(3);
    gLLEconomicDistanceMultiplier = 1.25;
+   // Spec band [1.0, 1.3]. The Shrine/Trade-Node style defaults military
+   // to 0.95 (tight muster), which falls just under the band. The Edo
+   // Bakufu pushes Ashigaru musket lines and shrine garrisons outward
+   // along trade-node corridors — bump military distance slightly so the
+   // garrisons reach the shrines they're meant to defend.
+   gLLMilitaryDistanceMultiplier = 1.05;
    llSetBuildStrongpointProfile(2, 2, 1, false);
    // LL-BUILD-STYLE-END
    llSetLeaderTacticalDoctrine(0.85, 0.15, 2, 4.5);
@@ -147,7 +153,8 @@ minInterval 70
       btBiasCav = 0.45;
       btBiasArt = 0.65;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      // Spec expects_treaty=true with no expects_forward: removed llEnableForwardBaseStyle.
+      // The Bakufu doctrine consolidates shrines and Edo defenses, not aggressive forward camps.
    }
 }
 

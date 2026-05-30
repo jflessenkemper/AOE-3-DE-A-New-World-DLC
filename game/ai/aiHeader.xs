@@ -201,12 +201,33 @@ extern bool    gLLLateWallingEnabled = true;
 // Selects which routine in aiBuildingsWalls.xs plans the Age-1 fortification.
 extern int     cLLWallStrategyFortressRing        = 0;  // Full double ring, all sides — Valette/Pachacuti/Frederick/Suleiman/Catherine/Bourbon
 extern int     cLLWallStrategyChokepointSegments  = 1;  // Segment walls at terrain pinches — Shivaji/Menelik/Kangxi/Andean civs
-extern int     cLLWallStrategyCoastalBatteries    = 2;  // Land-side ring, gun towers at coast — Wellington/Henry/Maurice/Isabella/Barbary
+extern int     cLLWallStrategyCoastalBatteries    = 2;  // Land-side ring, gun towers at coast — Wellington/Henry/Maurice/Barbary
 extern int     cLLWallStrategyFrontierPalisades   = 3;  // Quick wooden ring + blockhouses — Washington/Jefferson/Brock/Kruger/Mannerheim/etc.
-extern int     cLLWallStrategyUrbanBarricade      = 4;  // Tight compact inner ring + towers — Robespierre/Garibaldi/Gustavus
-extern int     cLLWallStrategyMobileNoWalls       = 5;  // Scouts + outposts, no walls — Napoleon/Crazy Horse/Hiawatha/Montezuma/Usman
+extern int     cLLWallStrategyUrbanBarricade      = 4;  // Tight compact inner ring + towers — Robespierre/Garibaldi
+extern int     cLLWallStrategyMobileNoWalls       = 5;  // Scouts + outposts, no walls — Napoleon/Crazy Horse/Hiawatha/Montezuma/Usman/Isabella/Gustavus
 
 extern int     gLLWallStrategy = 0;  // default = FortressRing
+
+// ----- Per-civ wall tuning knobs (read by aiBuildingsWalls.xs) -----------
+// Defaults selected so behaviour is identical to pre-knob code when every
+// leader leaves them at default. Leaders override these in their personality
+// files (game/ai/leaders/leader_<name>.xs or leaderCommon.xs branches).
+// Each knob fires a one-time probe at first read so validators can confirm
+// per-civ values reached the engine: [LLP v=2] wall.tune key=<knob> val=<v>
+extern int     gLLWallRadius                = 18;     // ring/segment radius in tiles  (Pachacuti 14, Wellington 22)
+extern int     gLLWallGateCount             = 3;      // gates per ring  (Bourbon 2, Suleiman 4)
+extern bool    gLLWallTierAge2Stone         = false;  // true=jump to stone at Colonial, false=stay palisade
+extern int     gLLWallTriggerAge            = 2;      // first age that lays a wall  (Robespierre 3, Pachacuti 2)
+extern int     gLLWallSegmentLength         = 12;     // chokepoint segment length in tiles  (Shivaji 8, Menelik 16)
+extern int     gLLWallTowerInterleave       = 6;      // tower every N pieces (0=none)  (Maltese 4, Frederick 8, Crazy Horse 0)
+extern int     gLLWallSecondaryStrategy     = -1;     // fallback strategy if primary impossible (-1=none, else cLLWallStrategy*)
+extern int     gLLWallVillagerCount         = 4;      // vils dispatched to wall plan  (Bourbon turtle 10, Napoleon 2)
+extern float   gLLWallForwardBiasFraction   = 0.5;    // 0.0=hug TC, 1.0=push to choke  (Napoleon 0.8, Pachacuti 0.2)
+extern int     gLLWallOuterRingDelta        = 0;      // outer-ring offset (0=single ring)  (Frederick 8, Suleiman 6)
+extern int     gLLWallEarlyOutpostCount     = 1;      // outposts to plant before first wall  (Lakota/Hauden 4, EU 1)
+extern int     gLLWallRepairAggressiveness  = 1;      // 0=ignore, 1=lazy, 2=normal, 3=instant  (Bourbon 3, Crazy Horse 0)
+extern int     gLLWallClosurePctTarget      = 60;     // closure % counted as "done"  (Frederick 85, FrontierPalisade 55)
+extern bool    gLLWallNoWaterBuild          = true;   // refuse to build into water tiles (true for all by default after water-fix)
 
 extern float   gLLHouseDistanceMultiplier = 1.0;
 extern float   gLLEconomicDistanceMultiplier = 1.0;
