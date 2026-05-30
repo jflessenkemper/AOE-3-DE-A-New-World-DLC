@@ -1,7 +1,7 @@
 {
   "leaders": [
     {
-      "civId": "RvltModNapoleonicFrance",
+      "civId": "ANWNapoleonicFrance",
       "nation": "Napoleonic France",
       "leaderKey": "napoleon",
       "leaderName": "Napoleon Bonaparte",
@@ -14,7 +14,7 @@
       "compliments": ["At last, a battle worthy of my maps.", "You forced me to think. Few opponents manage that."]
     },
     {
-      "civId": "RvltModAmericans",
+      "civId": "ANWAmericans",
       "nation": "Americans",
       "leaderKey": "jefferson",
       "leaderName": "Thomas Jefferson",
@@ -27,7 +27,7 @@
       "compliments": ["You fought with resolve.", "That was a steadier defense than most can manage."]
     },
     {
-      "civId": "RvltModMexicans",
+      "civId": "ANWMexicans",
       "nation": "Mexicans",
       "leaderKey": "hidalgo",
       "leaderName": "Miguel Hidalgo y Costilla",
@@ -40,7 +40,7 @@
       "compliments": ["You fought with conviction.", "That is more than most rulers can claim."]
     },
     {
-      "civId": "RvltModCanadians",
+      "civId": "ANWCanadians",
       "nation": "Canadians",
       "leaderKey": "brock",
       "leaderName": "Isaac Brock",
@@ -53,20 +53,7 @@
       "compliments": ["That attack had backbone.", "You nearly made this defense costly."]
     },
     {
-      "civId": "RvltModFrenchCanadians",
-      "nation": "French Canadians",
-      "leaderKey": "papineau",
-      "leaderName": "Louis-Joseph Papineau",
-      "articleUrl": "https://en.wikipedia.org/wiki/Louis-Joseph_Papineau",
-      "portraitLocalFile": "art/ui/leaders/papineau.png",
-      "smallPortraitFile": "resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png",
-      "voice": { "stability": 0.48, "similarityBoost": 0.68, "style": 0.18, "useSpeakerBoost": true },
-      "voicePrompt": "Defiant civic reformer, educated French Canadian English, rhetorical but controlled, proud and severe.",
-      "insults": ["You govern by habit, not principle.", "An empire of excuses is still an empire in decay."],
-      "compliments": ["You resisted with spirit.", "At least you understand resolve."]
-    },
-    {
-      "civId": "RvltModBrazil",
+      "civId": "ANWBrazil",
       "nation": "Brazil",
       "leaderKey": "pedro_i",
       "leaderName": "Pedro I of Brazil",
@@ -79,7 +66,7 @@
       "compliments": ["That was a respectable advance.", "You show more nerve than most pretenders."]
     },
     {
-      "civId": "RvltModArgentines",
+      "civId": "ANWArgentines",
       "nation": "Argentines",
       "leaderKey": "san_martin",
       "leaderName": "Jose de San Martin",
@@ -92,7 +79,7 @@
       "compliments": ["You kept your line under pressure.", "That was almost worthy of a campaign." ]
     },
     {
-      "civId": "RvltModChileans",
+      "civId": "ANWChileans",
       "nation": "Chileans",
       "leaderKey": "ohiggins",
       "leaderName": "Bernardo O'Higgins",
@@ -105,7 +92,7 @@
       "compliments": ["You fought stubbornly.", "There was steel in that defense."]
     },
     {
-      "civId": "RvltModPeruvians",
+      "civId": "ANWPeruvians",
       "nation": "Peruvians",
       "leaderKey": "santa_cruz",
       "leaderName": "Andres de Santa Cruz",
@@ -118,7 +105,7 @@
       "compliments": ["That was a disciplined push.", "You nearly earned my respect."]
     },
     {
-      "civId": "RvltModColumbians",
+      "civId": "ANWColumbians",
       "nation": "Columbians",
       "leaderKey": "bolivar",
       "leaderName": "Simon Bolivar",
@@ -131,7 +118,7 @@
       "compliments": ["A spirited stand.", "You gave this battle genuine heat."]
     },
     {
-      "civId": "RvltModHaitians",
+      "civId": "ANWHaitians",
       "nation": "Haitians",
       "leaderKey": "louverture",
       "leaderName": "Toussaint Louverture",
@@ -144,7 +131,7 @@
       "compliments": ["You resisted with courage.", "Few enemies keep their dignity so long."]
     },
     {
-      "civId": "RvltModIndonesians",
+      "civId": "ANWIndonesians",
       "nation": "Indonesians",
       "leaderKey": "diponegoro",
       "leaderName": "Prince Diponegoro",
@@ -157,7 +144,7 @@
       "compliments": ["You moved with patience.", "That was a serious challenge."]
     },
     {
-      "civId": "RvltModSouthAfricans",
+      "civId": "ANWSouthAfricans",
       "nation": "South Africans",
       "leaderKey": "kruger",
       "leaderName": "Paul Kruger",
@@ -170,7 +157,7 @@
       "compliments": ["You pushed harder than I expected.", "There was stubbornness in that assault."]
     },
     {
-      "civId": "RvltModFinnish",
+      "civId": "ANWFinnish",
       "nation": "Finnish",
       "leaderKey": "mannerheim",
       "leaderName": "Carl Gustaf Emil Mannerheim",
@@ -183,7 +170,7 @@
       "compliments": ["That defense was properly arranged.", "You understand the value of discipline."]
     },
     {
-      "civId": "RvltModHungarians",
+      "civId": "ANWHungarians",
       "nation": "Hungarians",
       "leaderKey": "kossuth",
       "leaderName": "Lajos Kossuth",
@@ -196,7 +183,7 @@
       "compliments": ["That charge had conviction.", "You fought with uncommon nerve."]
     },
     {
-      "civId": "RvltModRomanians",
+      "civId": "ANWRomanians",
       "nation": "Romanians",
       "leaderKey": "cuza",
       "leaderName": "Alexandru Ioan Cuza",
@@ -209,7 +196,7 @@
       "compliments": ["You organized that attack well.", "There was method in your pressure."]
     },
     {
-      "civId": "RvltModBarbary",
+      "civId": "ANWBarbary",
       "nation": "Barbary",
       "leaderKey": "barbarossa",
       "leaderName": "Hayreddin Barbarossa",
@@ -222,7 +209,7 @@
       "compliments": ["You struck boldly.", "That was not the work of a timid captain."]
     },
     {
-      "civId": "RvltModEgyptians",
+      "civId": "ANWEgyptians",
       "nation": "Egyptians",
       "leaderKey": "muhammad_ali",
       "leaderName": "Muhammad Ali Pasha",
@@ -235,7 +222,7 @@
       "compliments": ["You built pressure intelligently.", "A capable enemy at last."]
     },
     {
-      "civId": "RvltModCentralAmericans",
+      "civId": "ANWCentralAmericans",
       "nation": "Central Americans",
       "leaderKey": "morazan",
       "leaderName": "Francisco Morazan",
@@ -248,7 +235,7 @@
       "compliments": ["That was a determined stand.", "You rallied well under pressure."]
     },
     {
-      "civId": "RvltModBajaCalifornians",
+      "civId": "ANWBajaCalifornians",
       "nation": "Baja Californians",
       "leaderKey": "alvarado",
       "leaderName": "Juan Bautista Alvarado",
@@ -261,7 +248,7 @@
       "compliments": ["That was a bold raid.", "You made the field uneasy for me."]
     },
     {
-      "civId": "RvltModYucatan",
+      "civId": "ANWYucatan",
       "nation": "Yucatan",
       "leaderKey": "carrillo_puerto",
       "leaderName": "Felipe Carrillo Puerto",
@@ -274,7 +261,7 @@
       "compliments": ["You showed tenacity.", "That resistance had conviction."]
     },
     {
-      "civId": "RvltModRioGrande",
+      "civId": "ANWRioGrande",
       "nation": "Rio Grande",
       "leaderKey": "canales_rosillo",
       "leaderName": "Antonio Canales Rosillo",
@@ -287,7 +274,7 @@
       "compliments": ["That was a quick strike.", "You nearly stole the initiative."]
     },
     {
-      "civId": "RvltModMayans",
+      "civId": "ANWMayans",
       "nation": "Mayans",
       "leaderKey": "canek",
       "leaderName": "Jacinto Canek",
@@ -300,7 +287,7 @@
       "compliments": ["You stood longer than I expected.", "There was resolve in that defense."]
     },
     {
-      "civId": "RvltModCalifornians",
+      "civId": "ANWCalifornians",
       "nation": "Californians",
       "leaderKey": "vallejo",
       "leaderName": "Mariano Guadalupe Vallejo",
@@ -313,7 +300,7 @@
       "compliments": ["A careful move.", "You preserved your strength better than most."]
     },
     {
-      "civId": "RvltModTexians",
+      "civId": "ANWTexians",
       "nation": "Texians",
       "leaderKey": "sam_houston",
       "leaderName": "Sam Houston",
