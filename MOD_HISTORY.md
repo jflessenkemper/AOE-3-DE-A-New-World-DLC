@@ -34,7 +34,7 @@ The mod covers **48 civs** split into two groups (pre-migration):
 | Group | Count | Prefix | Personality files | Homecity files | In civmods.xml? |
 |---|---|---|---|---|---|
 | Base-game civs (British, Dutch, Aztec, …) | 22 | `british`, `dutch`, … | leader-named (`wellington.personality`) | `homecity{civ}.xml` | ❌ vanilla-owned |
-| Revolution civs (Barbary, Yucatan, …) | 26 | `RvltMod*` | `rvltmod*.personality` | `rvltmodhomecity*.xml` | ✅ mod-owned |
+| Revolution civs (Barbary, Yucatan, …) | 26 | `ANW*` | `anw*.personality` | `anwhomecity*.xml` | ✅ mod-owned |
 
 The split causes every tool and validator to carry two code paths. The **ANW migration** eliminates it.
 
@@ -144,7 +144,7 @@ Failing checks reference `anwhomecity*.xml` and `anw*.personality` files that do
 |---|---|
 | Mod info | `modinfo.json` |
 | HTML reference | `a_new_world.html` |
-| Civ definitions (current) | `data/civmods.xml` (26 RvltMod blocks) |
+| Civ definitions (current) | `data/civmods.xml` (26 ANW blocks) |
 | Civ definitions (post-migration) | `data/civmods.anw.xml` (48 ANW blocks, apply-ready) |
 | ANW token map | `tools/migration/anw_token_map.py` |
 | Migration orchestrator | `tools/migration/run_anw_migration.py` |

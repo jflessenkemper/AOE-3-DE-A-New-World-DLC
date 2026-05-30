@@ -63,7 +63,7 @@ For each:
 - AI actually plays the doctrine stated in HTML (build order + unit mix matches)
 
 ### 1.4 Revolution-civ spot-check (30 min)
-Pick 3 of the 26 `rvltmod*` civs (e.g. Napoleonic France, Haitians, Finnish) and confirm each:
+Pick 3 of the 26 `anw*` civs (e.g. Napoleonic France, Haitians, Finnish) and confirm each:
 - Appears in civ picker as a top-level civ
 - Loads into a match with correct starting units, tech tree, home city
 - AI plays (not stuck idle)

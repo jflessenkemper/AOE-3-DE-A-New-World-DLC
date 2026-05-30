@@ -4,7 +4,7 @@
 **Validator gate:** PASS — 41/41 offline validators (0 fail, 7 live-only SKIP)
 **Packaged-mod gate:** PASS — `validate_packaged_mod.py` clean against ship rules
 **Smart walls:** SHIPPED (chokepoint detect, closure watchdog, tier dispatch)
-**Probe channel:** Silent (no chat spam, no rvltmod references)
+**Probe channel:** Silent (no chat spam, no anw references)
 **Column site:** DEPLOYED — 40/40 civs, 1758 imgs resolved, 0 broken
   → <https://jflessenkemper.github.io/AOE-3-DE-A-New-World-DLC/a_new_world_columns.html>
 **Mod metadata:** v1.0.0 / `status: release` / 40 civ roster (mod.xml, modinfo.json, CHANGELOG aligned)
@@ -64,8 +64,8 @@ two non-chat channels:
    confirming the channel works.
 
 Removed: the previous `aiChat` broadcast that caused in-game chat
-spam, and any references to `rvltmod` in leader keys (now `anw_<civ>`).
-Verified zero matches for `rvltmod` in the AI sources and current
+spam, and any references to `anw` in leader keys (now `anw_<civ>`).
+Verified zero matches for `anw` in the AI sources and current
 match Age3Log.
 
 ## Visual confirmation — column site (PRIMARY) + contact sheet

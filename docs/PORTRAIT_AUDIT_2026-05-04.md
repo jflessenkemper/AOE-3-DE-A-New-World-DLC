@@ -18,7 +18,7 @@ obvious AI artifacts or wrong-source mismatches?"*
 | Personality | File | Issue |
 |---|---|---|
 | `mayans.personality` | `cpai_avatar_mayans_canek.png` | Not a portrait — multi-figure sacrifice scene, heavy painterly style. Reads as fan-art / AI-generated. |
-| `rvltmodriogrande.personality` | `cpai_avatar_rio_grande_canales_rosillo.png` | Severely pixelated low-res newsprint scan. Visibly half the effective resolution of every other image. |
+| `anwriogrande.personality` | `cpai_avatar_rio_grande_canales_rosillo.png` | Severely pixelated low-res newsprint scan. Visibly half the effective resolution of every other image. |
 | `montezuma.personality` | `cpai_avatar_aztecs_montezuma.png` | Codex folio fragment — tiny stylised figure with bleeding manuscript text ("moteccoma"). Won't read as a leader at thumbnail size. |
 
 ## Action items

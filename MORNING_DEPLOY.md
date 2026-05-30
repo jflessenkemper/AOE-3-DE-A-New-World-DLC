@@ -185,18 +185,13 @@ Last updated: **eighth loop pass (2026-05-25, low-priority column polish + fresh
    (chokepoint detection, water-awareness, coast detection, wall-tier
    wrapper, closure-verification rule + probes). Track 1e (per-gate
    placement) closed as unsupported by the engine.
-5. **FrenchCanadians vs LowerCanada audit** — pre-existing
-   `artifacts/validation/civ_naming_audit.md` confirms the naming is
-   already correct: `ANWCanadians` = playable "Province of Canada";
-   `RvltModFrenchCanadians` = revolution state displayed as "Lower
-   Canada" (string 494006). No rename needed.
-6. **Second loop pass — final mod content committed.** Committed in two
+5. **Second loop pass — final mod content committed.** Committed in two
    new pushes (907b69b + 07a75e2) after the first overnight loop pass:
    - **`leaderCommon.xs`**: 19 bespoke per-civ AI build/terrain/expansion
      profiles for every ANW nation (Argentina through USA).
    - **Wall doctrine overrides** in `leader_revolution_commanders.xs`
      and `leader_catherine.xs`: Chileans/Peruvians → FortressRing;
-     Haitians/Indonesians/Yucatan/Mayans → ChokepointSegments;
+     Haitians/Indonesians/Mayans → ChokepointSegments;
      Russians Catherine → FrontierPalisades.
    - **40 `anwhomecity*.xml`** corrected: hero name strings, `maxcardsperdeck=25`,
      deck content aligned with `decks_anw.json`.
@@ -325,7 +320,6 @@ Of these, only `live_mod_install` is even mildly interesting before publish — 
 - `artifacts/validation/visual_confirmation_report.md` — NEW: per-civ visual confirmation
 - `artifacts/validation/visual_art/civ_art_review.html` — NEW: all 40 civs on one page
 - `artifacts/validation/v1_0_readiness_final.md` — longer readiness summary
-- `artifacts/validation/civ_naming_audit.md` — FrenchCanadians audit
 - `tools/validation/run_all_validators_report.md` — latest validator report
 - `a_new_world_columns.html` — 40-civ review site (also on Pages: https://jflessenkemper.github.io/AOE-3-DE-A-New-World-DLC/a_new_world_columns.html)
 
