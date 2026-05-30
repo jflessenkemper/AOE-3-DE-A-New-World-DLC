@@ -83,7 +83,28 @@ PROBE_RE = re.compile(
 PLAN_CLOSURE_RE = re.compile(
     r"\[LLP v=2\]\s+key=wall\.closure\s+planID=(\d+)\s+coverage=([\d.]+)\s+elapsed=([\d.]+)"
 )
+# Track 1d simplified flat format emitted by verifyWallClosure in the new probe
+# schema (coverage_pct= in 0–100 percent, not the 0–1 closure= fraction):
+#   [LLP v=2] civ=<token> wall.closure coverage_pct=<N> expected_pieces=<N> actual_pieces=<N>
+FLAT_CLOSURE_RE = re.compile(
+    r"\[LLP v=2\]\s+civ=([^\s]+)\s+wall\.closure\s+(.*)"
+)
+# Wall-strategy string probe emitted alongside wall.closure:
+#   [LLP v=2] civ=<token> wall.strategy=<cLLWallStrategy*>
+FLAT_STRATEGY_RE = re.compile(
+    r"\[LLP v=2\]\s+civ=([^\s]+)\s+wall\.strategy=(cLLWallStrategy\w+)"
+)
 KV_RE = re.compile(r'(\w+)=("(?:[^"\\]|\\.)*"|[^\s]+)')
+
+# Map cLLWallStrategy* string token → numeric constant (aiHeader.xs)
+_WALL_STRATEGY_STR_TO_INT: dict[str, int] = {
+    "cLLWallStrategyFortressRing":       0,
+    "cLLWallStrategyChokepointSegments": 1,
+    "cLLWallStrategyCoastalBatteries":   2,
+    "cLLWallStrategyFrontierPalisades":  3,
+    "cLLWallStrategyUrbanBarricade":     4,
+    "cLLWallStrategyMobileNoWalls":      5,
+}
 
 
 @dataclass
@@ -110,6 +131,24 @@ class PlanClosureRecord:
     ldr: str = ""     # filled during merge
 
 
+@dataclass
+class FlatClosureRecord:
+    """Track 1d simplified flat probe format (civ-keyed, no t=/p=/ldr= header).
+
+    Emitted as:
+        [LLP v=2] civ=<token> wall.closure coverage_pct=<N> expected_pieces=<N> actual_pieces=<N>
+
+    ``civ`` is the raw engine token (e.g. ANWCanadians). The validator maps
+    it to a spec key during report generation. ``strategy_str`` is populated
+    separately from a ``wall.strategy=cLLWallStrategy*`` line in the same log.
+    """
+    civ: str
+    coverage_pct: float       # 0–100
+    expected_pieces: int = 0
+    actual_pieces: int = 0
+    strategy_str: str = ""    # cLLWallStrategy* or ""
+
+
 def _parse_kv(s: str) -> dict[str, str]:
     out: dict[str, str] = {}
     for m in KV_RE.finditer(s):
@@ -120,19 +159,28 @@ def _parse_kv(s: str) -> dict[str, str]:
     return out
 
 
-def parse_probes(log_paths: list[Path]) -> tuple[list[Probe], list[PlanClosureRecord]]:
+def parse_probes(log_paths: list[Path]) -> tuple[
+    list[Probe], list[PlanClosureRecord], list[FlatClosureRecord]
+]:
     """Parse all `[LLP v=2]` lines from the given log files.
 
     Returns:
-        (probes, plan_closures) where:
+        (probes, plan_closures, flat_closures) where:
           - probes: list of Probe from the standard bracketed format
           - plan_closures: list of PlanClosureRecord from the flat
             `key=wall.closure planID=…` format emitted by llVerifyWallClosure.
             Each record's civ/ldr is set to the last seen actor in the same
             log; records that appear before any actor header keep civ="" ldr="".
+          - flat_closures: list of FlatClosureRecord from the Track 1d
+            simplified `[LLP v=2] civ=X wall.closure coverage_pct=N …`
+            format. strategy_str is populated from co-located
+            `wall.strategy=cLLWallStrategy*` lines for the same civ.
     """
     probes: list[Probe] = []
     plan_closures: list[PlanClosureRecord] = []
+    flat_closures: list[FlatClosureRecord] = []
+    # Track 1d: accumulate per-civ flat closure max and strategy for this log.
+    flat_civ_max: dict[str, FlatClosureRecord] = {}
     for p in log_paths:
         if not p.exists():
             print(f"warn: log {p} missing", file=sys.stderr)
@@ -164,7 +212,47 @@ def parse_probes(log_paths: list[Path]) -> tuple[list[Probe], list[PlanClosureRe
                         civ=last_civ,
                         ldr=last_ldr,
                     ))
-    return probes, plan_closures
+                    continue
+                # Track 1d: flat wall.strategy= probe
+                ms = FLAT_STRATEGY_RE.search(line)
+                if ms:
+                    civ_tok = ms.group(1)
+                    strat = ms.group(2)
+                    if civ_tok not in flat_civ_max:
+                        flat_civ_max[civ_tok] = FlatClosureRecord(
+                            civ=civ_tok, coverage_pct=0.0
+                        )
+                    flat_civ_max[civ_tok].strategy_str = strat
+                    continue
+                # Track 1d: flat wall.closure coverage_pct= probe
+                mf = FLAT_CLOSURE_RE.search(line)
+                if mf:
+                    civ_tok = mf.group(1)
+                    kv = _parse_kv(mf.group(2))
+                    try:
+                        pct = float(kv.get("coverage_pct", "0"))
+                    except (TypeError, ValueError):
+                        pct = 0.0
+                    try:
+                        exp = int(kv.get("expected_pieces", "0"))
+                    except (TypeError, ValueError):
+                        exp = 0
+                    try:
+                        act = int(kv.get("actual_pieces", "0"))
+                    except (TypeError, ValueError):
+                        act = 0
+                    if civ_tok not in flat_civ_max:
+                        flat_civ_max[civ_tok] = FlatClosureRecord(
+                            civ=civ_tok, coverage_pct=pct,
+                            expected_pieces=exp, actual_pieces=act,
+                        )
+                    else:
+                        if pct > flat_civ_max[civ_tok].coverage_pct:
+                            flat_civ_max[civ_tok].coverage_pct = pct
+                            flat_civ_max[civ_tok].expected_pieces = exp
+                            flat_civ_max[civ_tok].actual_pieces = act
+    flat_closures.extend(flat_civ_max.values())
+    return probes, plan_closures, flat_closures
 
 
 def aggregate_plan_closures(
@@ -1040,9 +1128,50 @@ def _render_wall_section(wall_per_civ: dict[str, WallClosureSummary]) -> list[st
     return out
 
 
+def _render_flat_closure_section(
+    flat_closures: list["FlatClosureRecord"],
+) -> list[str]:
+    """Format the ## Wall Closure (Track 1d) section from flat civ-keyed probes.
+
+    Per-civ table: civ | strategy | max_coverage | status
+
+    Status ladder (matches the Task 3a spec):
+        PASS-exempt  — cLLWallStrategyMobileNoWalls (no walls expected)
+        PASS         — max coverage_pct >= 60
+        WARN         — 40 <= max coverage_pct < 60
+        FAIL         — max coverage_pct < 40
+        FAIL(no-probe) — civ had no wall.closure probe and is not exempt
+    """
+    if not flat_closures:
+        return []
+
+    out: list[str] = [
+        "",
+        "## Wall Closure (Track 1d)",
+        "",
+        f"  {'civ':<32} {'strategy':<36} {'max_coverage':>12} {'status':<14}",
+        "  " + "-" * 96,
+    ]
+    for rec in sorted(flat_closures, key=lambda r: r.civ):
+        strat = rec.strategy_str or "(unknown)"
+        pct_str = f"{rec.coverage_pct:.1f}%" if rec.coverage_pct else "—"
+        if rec.strategy_str == "cLLWallStrategyMobileNoWalls":
+            status = "PASS-exempt"
+        elif rec.coverage_pct >= 60.0:
+            status = "PASS"
+        elif rec.coverage_pct >= 40.0:
+            status = "WARN"
+        else:
+            status = "FAIL"
+        out.append(f"  {rec.civ:<32} {strat:<36} {pct_str:>12} {status:<14}")
+    return out
+
+
 def render_text(per_civ: dict[str, list[ClaimResult]],
-                wall_per_civ: dict[str, WallClosureSummary] | None = None) -> str:
+                wall_per_civ: dict[str, WallClosureSummary] | None = None,
+                flat_closures: "list[FlatClosureRecord] | None" = None) -> str:
     wall_per_civ = wall_per_civ or {}
+    flat_closures = flat_closures or []
     out: list[str] = []
 
     # Release readiness banner first — short, scannable summary at the top.
@@ -1078,6 +1207,7 @@ def render_text(per_civ: dict[str, list[ClaimResult]],
             out.append(line)
 
     out.extend(_render_wall_section(wall_per_civ))
+    out.extend(_render_flat_closure_section(flat_closures))
 
     out.append("\n" + "=" * 78)
     out.append(f"SUMMARY: {overall[PASS]} pass / {overall[FAIL]} fail "
@@ -1396,13 +1526,14 @@ def main() -> int:
             return 0
         return 2
 
-    probes, plan_closures = parse_probes(log_paths)
+    probes, plan_closures, flat_closures = parse_probes(log_paths)
     if args.civ:
         wanted = set(args.civ)
         probes = [p for p in probes if p.civ in wanted]
         plan_closures = [r for r in plan_closures if r.civ in wanted]
+        flat_closures = [r for r in flat_closures if r.civ in wanted]
 
-    if not probes and not plan_closures:
+    if not probes and not plan_closures and not flat_closures:
         print("error: no [LLP v=2 …] probes found in any log", file=sys.stderr)
         if args.allow_empty:
             print("Release Readiness: PASS (no probes found, --allow-empty)")
@@ -1454,7 +1585,7 @@ def main() -> int:
         if pct is not None:
             plan_cov_per_civ[spec_key] = pct
 
-    text = render_text(per_civ, wall_per_civ)
+    text = render_text(per_civ, wall_per_civ, flat_closures)
     if unmatched:
         text += "\n\nUnmatched probe actors (no spec entry):\n"
         for civ, ldr in unmatched:

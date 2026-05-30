@@ -145,6 +145,7 @@ int llGetLegendaryWallGateCount(bool lateGame = false)
 }
 
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: llComputeThreatVector
 // SMART WALLS — Track 1.2b: threat-vector tracking.
 //
 // Computes the centroid of all visible enemy land-military units. Returns
@@ -197,6 +198,7 @@ vector llComputeThreatVector()
    return (result);
 }
 
+// ANW 2026-05-30 SMART-WALLS: llGetForwardBiasedWallCenter
 // Shift the wall ring center slightly along the base's front vector (toward
 // the likely enemy arc). A full ring still surrounds the base, but the
 // extra bias thickens wall coverage on the contested side where it matters
@@ -316,6 +318,7 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
 }
 
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: llDetectChokepointVector
 // SMART WALLS — Track 1.1a: chokepoint detection.
 //
 // Walks the AI's base area and its border areas once per match (cached) to
@@ -464,6 +467,7 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
 }
 
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: llSelectWallType
 // SMART WALLS — Track 1.1c: wall-type / tier dispatch.
 //
 // Only cBuildWallPlanWallTypeRing is confirmed in the engine vocabulary
@@ -504,6 +508,7 @@ int llSelectWallType(int wallStrategy = -1, int age = 1)
 }
 
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: llCountPerimeterGaps
 // SMART WALLS — Track 1.2a: natural-wall gap detection.
 //
 // Walks the proposed wall ring at 8 sample points (every 45°) and counts how
@@ -553,6 +558,7 @@ int llCountPerimeterGaps(vector baseCenter = cInvalidVector,
 }
 
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: llComputeAdaptiveRadius
 // SMART WALLS — Track 1.2c: adaptive wall radius.
 //
 // Scales the base radius from llGetLegendaryWallRadius(lateGame) by the
@@ -729,6 +735,7 @@ int llPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector
 }
 
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: llDetectCoastVector
 // SMART WALLS — Track 1.1b EXTENSION: coastline exploitation.
 //
 // llGetForwardBiasedWallCenter handles AVOIDANCE (walks inland if biased
@@ -1427,6 +1434,7 @@ minInterval 30
    // Stay active: if this plan ever dies, re-create it next tick.
 }
 //==============================================================================
+// ANW 2026-05-30 SMART-WALLS: rule verifyWallClosure
 // RULE verifyWallClosure
 // SMART WALLS — Track 1.1d: closure verification + escalation.
 //

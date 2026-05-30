@@ -1,6 +1,38 @@
 # ANW Release-Readiness TODO
 
-## STATUS: ✅ COMPLETE — 2026-05-25 (thirteenth pass: static AI Behaviour Map — review the AI without playing)
+## STATUS: ✅ COMPLETE + Track 3 wall closure audit extended — 2026-05-30
+
+### Track 3 progress (2026-05-30)
+
+- [x] **3a. validate_doctrine_compliance.py extended** — added Track 1d flat probe parsers:
+  - `FLAT_CLOSURE_RE`: parses `[LLP v=2] civ=X wall.closure coverage_pct=N expected_pieces=N actual_pieces=N`
+  - `FLAT_STRATEGY_RE`: parses `[LLP v=2] civ=X wall.strategy=cLLWallStrategy*`
+  - `FlatClosureRecord` dataclass (per-civ max coverage_pct + strategy_str)
+  - `_render_flat_closure_section()`: emits `## Wall Closure (Track 1d)` table (civ | strategy | max_coverage | status)
+  - Verdict ladder: PASS-exempt (MobileNoWalls), PASS (≥60%), WARN (40–59%), FAIL (<40%)
+  - `parse_probes()` now returns 3-tuple: `(probes, plan_closures, flat_closures)`
+  - `_WALL_STRATEGY_STR_TO_INT` lookup table wired in
+
+- [x] **3b. Smoke-test passed**:
+  - `--help` parses cleanly
+  - Fixture `/tmp/test_closure.log` → ANWCanadians=PASS (72.5%), ANWInca=PASS-exempt
+
+- [x] **3c. exhibition_runner.py confirmed ready**:
+  - Runs 40-civ matrix by default (no `--civs all` flag needed — omitting `--only` covers all resolved civs)
+  - Per-civ logs written to `artifacts/validation/ai_playstyle/<token>/match.log`
+  - Fully autonomous (no human input required), dry-run confirmed
+  - Full matrix command (4hr live op — DO NOT run without game available):
+    ```
+    python3 tools/validation/exhibition_runner.py --match-seconds 180 --no-art-capture
+    ```
+  - Then validate:
+    ```
+    python3 tools/validation/validate_doctrine_compliance.py --allow-fail
+    ```
+
+- [ ] **Next**: Run full 40-civ matrix when game is available; review `## Wall Closure (Track 1d)` section in output for any FAILs/WARNs across all civs.
+
+---
 
 All tracks completed. Mod is deploy-ready. Validators **42/49 PASS, 0 FAIL**.
 Latest re-run: 2026-05-25 21:26.
