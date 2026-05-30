@@ -498,7 +498,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCShipWarElephant</name>
+      <name>ANWHCShipWarElephant</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1800,7 +1800,7 @@
       <tech>HCREVShipColonialMilitia</tech>
       <tech>DEHCREVShipJavaSpearman</tech>
       <tech>DEHCREVShipCetbang</tech>
-      <tech>RvltModHCShipWarElephant</tech>
+      <tech>ANWHCShipWarElephant</tech>
       <tech>DEHCREVKratonGuards</tech>
       <tech>DEHCREVLantakas</tech>
     </obtainabletechs>
@@ -1848,7 +1848,7 @@
       <tech>HCREVShipColonialMilitia</tech>
       <tech>DEHCREVShipJavaSpearman</tech>
       <tech>DEHCREVShipCetbang</tech>
-      <tech>RvltModHCShipWarElephant</tech>
+      <tech>ANWHCShipWarElephant</tech>
       <tech>DEHCREVKratonGuards</tech>
       <tech>DEHCREVLantakas</tech>
     </activetechs>

@@ -210,7 +210,7 @@
       <displayunitcount>10</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCJaguncos</name>
+      <name>ANWHCJaguncos</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -281,7 +281,7 @@
       <age>0</age>
     </card>
     <card>
-      <name>RvltModHCUffizi</name>
+      <name>ANWHCUffizi</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>-1</prereqtech>
@@ -1804,7 +1804,7 @@
       <tech x="5.6" y="4.0">HCShipCoveredWagons2</tech>
       <tech x="6.5" y="1.0">HCExplorerPortuguese</tech>
       <tech x="6.5" y="5.0">HCShipBandeirantes</tech>
-      <tech x="3.0" y="1.0">RvltModHCUffizi</tech>
+      <tech x="3.0" y="1.0">ANWHCUffizi</tech>
     </obtainabletechs>
     <activetechs>
       <tech x="1.0" y="1.0">HCShipFoodCrates1</tech>
@@ -1834,7 +1834,7 @@
       <tech x="5.6" y="4.0">HCShipCoveredWagons2</tech>
       <tech x="6.5" y="1.0">HCExplorerPortuguese</tech>
       <tech x="6.5" y="5.0">HCShipBandeirantes</tech>
-      <tech x="3.0" y="1.0">RvltModHCUffizi</tech>
+      <tech x="3.0" y="1.0">ANWHCUffizi</tech>
     </activetechs>
     <validunits>
     </validunits>
@@ -2098,7 +2098,7 @@
       <tech x="5.4" y="3.0">DEHCREVBonifacio</tech>
       <tech x="5.4" y="3.0">DEHCREVMinasGerais</tech>
       <tech x="5.4" y="3.0">DEHCREVWildlife</tech>
-      <tech x="5.4" y="3.0">RvltModHCJaguncos</tech>
+      <tech x="5.4" y="3.0">ANWHCJaguncos</tech>
       <tech x="5.4" y="3.0">DEHCREVCattleDeliveryBrazil</tech>
     </obtainabletechs>
     <activetechs>
@@ -2129,7 +2129,7 @@
       <tech x="5.4" y="3.0">DEHCREVBonifacio</tech>
       <tech x="5.4" y="3.0">DEHCREVMinasGerais</tech>
       <tech x="5.4" y="3.0">DEHCREVWildlife</tech>
-      <tech x="5.4" y="3.0">RvltModHCJaguncos</tech>
+      <tech x="5.4" y="3.0">ANWHCJaguncos</tech>
       <tech x="5.4" y="3.0">DEHCREVCattleDeliveryBrazil</tech>
     </activetechs>
     <validunits>

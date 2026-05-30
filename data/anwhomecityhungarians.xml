@@ -350,7 +350,7 @@
       <age>1</age>
     </card>
     <card>
-      <name>RvltModHCMilitaryFrontier</name>
+      <name>ANWHCMilitaryFrontier</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -366,7 +366,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCMagyarHussarsAlt</name>
+      <name>ANWHCMagyarHussarsAlt</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -425,7 +425,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCMagyarGrenadiers</name>
+      <name>ANWHCMagyarGrenadiers</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -582,7 +582,7 @@
       <displayunitcount>1</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCShipFortWagonOutpost</name>
+      <name>ANWHCShipFortWagonOutpost</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -863,7 +863,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCShipEuropeanFleet</name>
+      <name>ANWHCShipEuropeanFleet</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1033,7 +1033,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCHajduks</name>
+      <name>ANWHCHajduks</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1041,7 +1041,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCCrabats</name>
+      <name>ANWHCCrabats</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1050,7 +1050,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCPandours</name>
+      <name>ANWHCPandours</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1166,13 +1166,13 @@
         <card>HCExoticHardwoods</card>
         <card>HCAdvancedDock</card>
         <card>HCShipHussars1</card>
-        <card>RvltModHCHajduks</card>
-        <card>RvltModHCMagyarGrenadiers</card>
-        <card>RvltModHCMilitaryFrontier</card>
+        <card>ANWHCHajduks</card>
+        <card>ANWHCMagyarGrenadiers</card>
+        <card>ANWHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCInfantryHitpointsItalian</card>
         <card>DEHCTheaters</card>
-        <card>RvltModHCMagyarHussarsAlt</card>
+        <card>ANWHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
@@ -1183,7 +1183,7 @@
         <card>HCShipDragoons3</card>
         <card>DEHCREVShipFalconets</card>
         <card>HCShipHussars3</card>
-        <card>RvltModHCPandours</card>
+        <card>ANWHCPandours</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies2</card>
         <card>HCShipWoodCrates5</card>
@@ -1210,13 +1210,13 @@
         <card>HCExoticHardwoods</card>
         <card>HCAdvancedDock</card>
         <card>HCShipHussars1</card>
-        <card>RvltModHCHajduks</card>
-        <card>RvltModHCMagyarGrenadiers</card>
-        <card>RvltModHCMilitaryFrontier</card>
+        <card>ANWHCHajduks</card>
+        <card>ANWHCMagyarGrenadiers</card>
+        <card>ANWHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCInfantryHitpointsItalian</card>
         <card>DEHCTheaters</card>
-        <card>RvltModHCMagyarHussarsAlt</card>
+        <card>ANWHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
@@ -1227,7 +1227,7 @@
         <card>HCShipDragoons3</card>
         <card>DEHCREVShipFalconets</card>
         <card>HCShipHussars3</card>
-        <card>RvltModHCPandours</card>
+        <card>ANWHCPandours</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies2</card>
         <card>HCShipWoodCrates5</card>
@@ -1254,13 +1254,13 @@
         <card>HCExoticHardwoods</card>
         <card>HCAdvancedDock</card>
         <card>HCShipHussars1</card>
-        <card>RvltModHCHajduks</card>
-        <card>RvltModHCMagyarGrenadiers</card>
-        <card>RvltModHCMilitaryFrontier</card>
+        <card>ANWHCHajduks</card>
+        <card>ANWHCMagyarGrenadiers</card>
+        <card>ANWHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCInfantryHitpointsItalian</card>
         <card>DEHCTheaters</card>
-        <card>RvltModHCMagyarHussarsAlt</card>
+        <card>ANWHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
@@ -1271,7 +1271,7 @@
         <card>HCShipDragoons3</card>
         <card>DEHCREVShipFalconets</card>
         <card>HCShipHussars3</card>
-        <card>RvltModHCPandours</card>
+        <card>ANWHCPandours</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies2</card>
         <card>HCShipWoodCrates5</card>
@@ -1298,13 +1298,13 @@
         <card>HCExoticHardwoods</card>
         <card>HCAdvancedDock</card>
         <card>HCShipHussars1</card>
-        <card>RvltModHCHajduks</card>
-        <card>RvltModHCMagyarGrenadiers</card>
-        <card>RvltModHCMilitaryFrontier</card>
+        <card>ANWHCHajduks</card>
+        <card>ANWHCMagyarGrenadiers</card>
+        <card>ANWHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCInfantryHitpointsItalian</card>
         <card>DEHCTheaters</card>
-        <card>RvltModHCMagyarHussarsAlt</card>
+        <card>ANWHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
@@ -1315,7 +1315,7 @@
         <card>HCShipDragoons3</card>
         <card>DEHCREVShipFalconets</card>
         <card>HCShipHussars3</card>
-        <card>RvltModHCPandours</card>
+        <card>ANWHCPandours</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies2</card>
         <card>HCShipWoodCrates5</card>
@@ -1342,13 +1342,13 @@
         <card>HCExoticHardwoods</card>
         <card>HCAdvancedDock</card>
         <card>HCShipHussars1</card>
-        <card>RvltModHCHajduks</card>
-        <card>RvltModHCMagyarGrenadiers</card>
-        <card>RvltModHCMilitaryFrontier</card>
+        <card>ANWHCHajduks</card>
+        <card>ANWHCMagyarGrenadiers</card>
+        <card>ANWHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCInfantryHitpointsItalian</card>
         <card>DEHCTheaters</card>
-        <card>RvltModHCMagyarHussarsAlt</card>
+        <card>ANWHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
@@ -1359,7 +1359,7 @@
         <card>HCShipDragoons3</card>
         <card>DEHCREVShipFalconets</card>
         <card>HCShipHussars3</card>
-        <card>RvltModHCPandours</card>
+        <card>ANWHCPandours</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies2</card>
         <card>HCShipWoodCrates5</card>
@@ -1386,13 +1386,13 @@
         <card>HCExoticHardwoods</card>
         <card>HCAdvancedDock</card>
         <card>HCShipHussars1</card>
-        <card>RvltModHCHajduks</card>
-        <card>RvltModHCMagyarGrenadiers</card>
-        <card>RvltModHCMilitaryFrontier</card>
+        <card>ANWHCHajduks</card>
+        <card>ANWHCMagyarGrenadiers</card>
+        <card>ANWHCMilitaryFrontier</card>
         <card>DEHCExtensiveFortificationsEuropean</card>
         <card>DEHCInfantryHitpointsItalian</card>
         <card>DEHCTheaters</card>
-        <card>RvltModHCMagyarHussarsAlt</card>
+        <card>ANWHCMagyarHussarsAlt</card>
         <card>DEHCREVOutlawCombat</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>HCMercsBlackRiders</card>
@@ -1403,7 +1403,7 @@
         <card>HCShipDragoons3</card>
         <card>DEHCREVShipFalconets</card>
         <card>HCShipHussars3</card>
-        <card>RvltModHCPandours</card>
+        <card>ANWHCPandours</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>DEHCHabsburgAllies2</card>
         <card>HCShipWoodCrates5</card>
@@ -1552,10 +1552,10 @@
       <tech>HCShipMortars1</tech>
       <tech>HCXPShipMortarsTeam</tech>
       <tech>HCShipCannons1</tech>
-      <tech>RvltModHCMilitaryFrontier</tech>
-      <tech>RvltModHCMagyarHussarsAlt</tech>
+      <tech>ANWHCMilitaryFrontier</tech>
+      <tech>ANWHCMagyarHussarsAlt</tech>
       <tech>DEHCLegionHungarian</tech>
-      <tech>RvltModHCMagyarGrenadiers</tech>
+      <tech>ANWHCMagyarGrenadiers</tech>
       <tech>HCXPShipGrenadiersRepeat</tech>
       <tech>DEHCREVShipFalconets</tech>
     </obtainabletechs>
@@ -1585,10 +1585,10 @@
       <tech>HCShipMortars1</tech>
       <tech>HCXPShipMortarsTeam</tech>
       <tech>HCShipCannons1</tech>
-      <tech>RvltModHCMilitaryFrontier</tech>
-      <tech>RvltModHCMagyarHussarsAlt</tech>
+      <tech>ANWHCMilitaryFrontier</tech>
+      <tech>ANWHCMagyarHussarsAlt</tech>
       <tech>DEHCLegionHungarian</tech>
-      <tech>RvltModHCMagyarGrenadiers</tech>
+      <tech>ANWHCMagyarGrenadiers</tech>
       <tech>HCXPShipGrenadiersRepeat</tech>
       <tech>DEHCREVShipFalconets</tech>
     </activetechs>
@@ -1637,7 +1637,7 @@
       <tech>HCXPShipSpies1</tech>
       <tech>HCXPShipSpies2</tech>
       <tech>HCXPAgents</tech>
-      <tech>RvltModHCShipFortWagonOutpost</tech>
+      <tech>ANWHCShipFortWagonOutpost</tech>
     </obtainabletechs>
     <activetechs>
       <tech>HCNativeLore</tech>
@@ -1664,7 +1664,7 @@
       <tech>HCXPShipSpies1</tech>
       <tech>HCXPShipSpies2</tech>
       <tech>HCXPAgents</tech>
-      <tech>RvltModHCShipFortWagonOutpost</tech>
+      <tech>ANWHCShipFortWagonOutpost</tech>
     </activetechs>
     <validunits>
     </validunits>
@@ -1774,10 +1774,10 @@
       <tech>HCPrivateers</tech>
       <tech>HCPrivateers2</tech>
       <tech>DEHCShipBattleshipRepeat</tech>
-      <tech>RvltModHCHajduks</tech>
-      <tech>RvltModHCShipEuropeanFleet</tech>
-      <tech>RvltModHCCrabats</tech>
-      <tech>RvltModHCPandours</tech>
+      <tech>ANWHCHajduks</tech>
+      <tech>ANWHCShipEuropeanFleet</tech>
+      <tech>ANWHCCrabats</tech>
+      <tech>ANWHCPandours</tech>
       <tech>DEHCREVOutlawCombat</tech>
     </obtainabletechs>
     <activetechs>
@@ -1804,10 +1804,10 @@
       <tech>HCPrivateers</tech>
       <tech>HCPrivateers2</tech>
       <tech>DEHCShipBattleshipRepeat</tech>
-      <tech>RvltModHCHajduks</tech>
-      <tech>RvltModHCShipEuropeanFleet</tech>
-      <tech>RvltModHCCrabats</tech>
-      <tech>RvltModHCPandours</tech>
+      <tech>ANWHCHajduks</tech>
+      <tech>ANWHCShipEuropeanFleet</tech>
+      <tech>ANWHCCrabats</tech>
+      <tech>ANWHCPandours</tech>
       <tech>DEHCREVOutlawCombat</tech>
     </activetechs>
     <validunits>

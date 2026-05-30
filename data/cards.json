@@ -6734,162 +6734,162 @@
     "icon": "advancedwhaling.png",
     "name": "Whale Oil"
   },
-  "RvltModHCBuenosAires": {
+  "ANWHCBuenosAires": {
     "desc": "",
     "icon": "buenos_aires.png",
     "name": "Buenos Aires"
   },
-  "RvltModHCConscription": {
+  "ANWHCConscription": {
     "desc": "Arrives Fast! Militiamen become Lexington Minutemen who retain their hitpoints 80% longer and can now be called from Outposts and Forts. Sends 16 Militiamen.",
     "icon": "lexington_minutemen.png",
     "name": "Lexington Minutemen"
   },
-  "RvltModHCCrabats": {
+  "ANWHCCrabats": {
     "desc": "Ships 12 Crabats. Enables Crabats at Taverns, Stables, Forts, Galleons, Outposts, and Blockhouses.",
     "icon": "crabat_icon.png",
     "name": "12 Crabats"
   },
-  "RvltModHCFlightArcheryRomanians": {
+  "ANWHCFlightArcheryRomanians": {
     "desc": "The Ottoman Flight Archery technique improves the damage and arrow release of your Azaps and Cavalry Archers.",
     "icon": "flight_archery.png",
     "name": "Flight Archery"
   },
-  "RvltModHCGranaderos": {
+  "ANWHCGranaderos": {
     "desc": "Ships 10 Mounted Granaderos and 10 cows. Allows recruitment of Mounted Granaderos at Taverns, Lombards, Stables, Forts, and Galleons.",
     "icon": "granaderos.png",
     "name": "Granaderos"
   },
-  "RvltModHCHajduks": {
+  "ANWHCHajduks": {
     "desc": "All existing Outposts and Blockhouses spawn a Hajduk. Enables Hajduks at Taverns, Barracks, Forts, Galleons, Outposts, and Blockhouses.",
     "icon": "hajduks.png",
     "name": "Hajduks"
   },
-  "RvltModHCJaguncos": {
+  "ANWHCJaguncos": {
     "desc": "10 Jagunços and 10 Cows. Allows recruitment of Jagunços at Taverns, Stables, Forts and Galleons.",
     "icon": "outlaw_rider_icon_64x64.png",
     "name": "Jagunços"
   },
-  "RvltModHCLegionHungarian": {
+  "ANWHCLegionHungarian": {
     "desc": "Ships a number of powerful Magyar Hussars and enables them to be trained at Forts (instead of ordinary Hussars).",
     "icon": "legion_kovat.png",
     "name": "Kovats' Legion"
   },
-  "RvltModHCLegionMilitia": {
+  "ANWHCLegionMilitia": {
     "desc": "Sends some Militiamen and State Militia that now improve Warship damage when they garrisoned in them. Fully replaces archaic units in your Barracks with State Militia.",
     "icon": "rhode_island_militia.png",
     "name": "Rhode Island Militia"
   },
-  "RvltModHCLlaneros": {
+  "ANWHCLlaneros": {
     "desc": "Ships 10 Llaneros and 10 Cows. Allows recruitment of Llaneros at Taverns, Stables, Forts, and Galleons.",
     "icon": "outlaw_rider_icon_64x64.png",
     "name": "Llaneros"
   },
-  "RvltModHCMagyarGrenadiers": {
+  "ANWHCMagyarGrenadiers": {
     "desc": "All existing Outposts and Blockhouses spawn a Hungarian Grenadier.",
     "icon": "garde_imperial_2_icon_64x64.png",
     "name": "Hungarian Grenadiers"
   },
-  "RvltModHCMagyarHussarsAlt": {
+  "ANWHCMagyarHussarsAlt": {
     "desc": "All existing Outposts and Blockhouses spawn a Magyar Hussar.",
     "icon": "hungarian_hussars.png",
     "name": "Magyar Hussars"
   },
-  "RvltModHCMercsMamelukes": {
+  "ANWHCMercsMamelukes": {
     "desc": "",
     "icon": "hc_mameluke_icon.png",
     "name": "Hire Mamelukes"
   },
-  "RvltModHCMetis": {
+  "ANWHCMetis": {
     "desc": "Ships 12 Métis Pathfinders.",
     "icon": "infinite_metis_pathfinder.png",
     "name": "Métis Pathfinders"
   },
-  "RvltModHCMetisFrench": {
+  "ANWHCMetisFrench": {
     "desc": "Ships 10 Métis Voyageurs.",
     "icon": "infinite_coureur.png",
     "name": "Métis Voyageurs"
   },
-  "RvltModHCMilitaryFrontier": {
+  "ANWHCMilitaryFrontier": {
     "desc": "All existing Outposts spawn a Grenzer. Allows Grenzers to build Outposts and Outposts to train Grenzers.",
     "icon": "military_frontier.png",
     "name": "Military Frontier"
   },
-  "RvltModHCPandours": {
+  "ANWHCPandours": {
     "desc": "Ships 10 Pandours. Enables Pandours at Taverns, Barracks, Forts, Galleons, Outposts, and Blockhouses.",
     "icon": "hc_pandour_icon.png",
     "name": "10 Pandours"
   },
-  "RvltModHCPhanariotes": {
+  "ANWHCPhanariotes": {
     "desc": "The influential Houses of Phanar grant access to their units, upgrades, and technologies. Unless trained from a settlement, Phanariote units now cost population, but can be trained from a variety of buildings without limit.",
     "icon": "danubian_principalities.png",
     "name": "Danubian Principalities"
   },
-  "RvltModHCREVCuzco": {
+  "ANWHCREVCuzco": {
     "desc": "Can transform into most buildings available in your current age.",
     "icon": "cuzco.png",
     "name": "Cuzco"
   },
-  "RvltModHCREVMXCaliforniaStatehood": {
+  "ANWHCREVMXCaliforniaStatehood": {
     "desc": "Ships 1 State Capitol Wagon. The State Capitol can train Construction Wagons and research unique improvements.",
     "icon": "california_statehood.png",
     "name": "California Statehood"
   },
-  "RvltModHCREVMXTexasMarines": {
+  "ANWHCREVMXTexasMarines": {
     "desc": "Minutemen are upgraded to Texian Marines. Marines no longer lose hitpoints and inflict more damage against Buildings, Ships and Artillery.",
     "icon": "texas_marines.png",
     "name": "Texas Marines"
   },
-  "RvltModHCREVMXTexasStatehood": {
+  "ANWHCREVMXTexasStatehood": {
     "desc": "Ships 1 State Capitol Wagon. The State Capitol can train Construction Wagons and research unique improvements.",
     "icon": "texas_statehood.png",
     "name": "Texas Statehood"
   },
-  "RvltModHCREVWagonWarfare": {
+  "ANWHCREVWagonWarfare": {
     "desc": "Fully replaces your Light cavalry units in the Stable with Imperial War Wagons.",
     "icon": "war_wagon_improved_icon.png",
     "name": "Wagon Warfare"
   },
-  "RvltModHCRoshiorDragoons": {
+  "ANWHCRoshiorDragoons": {
     "desc": "All existing Outposts and Blockhouses spawn a Roșior Dragoon and Forts can now train Roșior Dragoons.",
     "icon": "rosior_dragoons.png",
     "name": "Roșior Dragoons"
   },
-  "RvltModHCRussianExpArmy": {
+  "ANWHCRussianExpArmy": {
     "desc": "An army of Russian Counter Dragoons (Dragoons) and Culverins.\\n9 Counter Dragoons: ranged cavalry, good against cavalry.\\n3 Culverins: light artillery that is good against artillery.",
     "icon": "rus_army_icon_64.png",
     "name": "Russian Expeditionary Army"
   },
-  "RvltModHCShipCavArchers": {
+  "ANWHCShipCavArchers": {
     "desc": "",
     "icon": "infinite_cav_archer.png",
     "name": "8 Cavalry Archers"
   },
-  "RvltModHCShipEuropeanFleet": {
+  "ANWHCShipEuropeanFleet": {
     "desc": "Ships 3 Galleys from the blue Danube.",
     "icon": "danubian_flotilla.png",
     "name": "Danubian Flotilla"
   },
-  "RvltModHCShipFortWagonOutpost": {
+  "ANWHCShipFortWagonOutpost": {
     "desc": "Ships a Fort Wagon to defend the borderland.",
     "icon": "border_fortress.png",
     "name": "Border Fortress"
   },
-  "RvltModHCShipWarElephant": {
+  "ANWHCShipWarElephant": {
     "desc": "You will receive a bonus Elephant with all future shipments, starting with this one. Enables the training of War Elephants.",
     "icon": "hc_infinite_war_elephants.png",
     "name": "Sumatran Elephants"
   },
-  "RvltModHCSovnyaRomanian": {
+  "ANWHCSovnyaRomanian": {
     "desc": "",
     "icon": "sovnya.png",
     "name": "Sovnya"
   },
-  "RvltModHCUffizi": {
+  "ANWHCUffizi": {
     "desc": "Ships 1 Basilica Wagon and causes Lombards to trickle XP whilst converting Investments.",
     "icon": "uffizi.png",
     "name": "Uffizi"
   },
-  "RvltModHCWallachianArchers": {
+  "ANWHCWallachianArchers": {
     "desc": "All existing Blockhouses spawn a Wallachian Horse Archer.",
     "icon": "wallachian_horse_archers.png",
     "name": "Wallachian Horse Archers"

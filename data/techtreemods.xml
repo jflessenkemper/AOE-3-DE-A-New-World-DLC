@@ -6132,23 +6132,6 @@
 			<Effect type ='AddHomeCityCard' tech ='DEHCREVFedMXCatrachos' maxCount ='1' agePrereq='1' unitCount='0' infiniteInLastAge='0'></Effect>
 		</Effects>
 	</Tech>
-	<Tech name ='ANWFortressizeCentralAmericans' type ='Normal'>
-		<DBID>30135</DBID>
-		<Status>UNOBTAINABLE</Status>
-		<Icon>resources\images\icons\post_game\time_line_age_3.png</Icon>
-		<Flag>Shadow</Flag>
-		<Effects> 
-			<Effect type ='TechStatus' status ='active'>Fortressize</Effect>
-			<Effect type ='TechStatus' status ='active'>DEFortressizeMexicans</Effect>
-			<Effect type ='Data' amount ='0.00' subtype ='UpdateVisual' unittype ='xpColonialMilitia' relativity ='Absolute'>
-				<Target type ='Player'></Target></Effect>
-			<Effect type ='Data' amount ='1.25' subtype ='Damage' allactions ='1' relativity ='BasePercent'>
-				<Target type ='ProtoUnit'>xpPetard</Target></Effect>
-			<Effect type ='Data' amount ='1.25' subtype ='Hitpoints' relativity ='BasePercent'>
-				<Target type ='ProtoUnit'>xpPetard</Target></Effect>
-		</Effects>
-	</Tech>	
-	 
 	<Tech name ='ANWAddBajaCardsToDeck' type ='Normal'>
 		<DBID>30137</DBID>
 		<Status>OBTAINABLE</Status>
@@ -8921,9 +8904,6 @@
 	<Tech name='DERevolutionMXTexas' type='Normal'>
 		<Status>UNOBTAINABLE</Status>
 	</Tech>
-	<Tech name='DERevolutionMXYucatan' type='Normal'>
-		<Status>UNOBTAINABLE</Status>
-	</Tech>
 	<Tech name='DERevolutionMexico' type='Normal'>
 		<Status>UNOBTAINABLE</Status>
 	</Tech>
@@ -9558,13 +9538,13 @@
 	</Tech>
 
 	<!-- ============================================================
-	     RvltMod and vanilla-alias stubs added for v1.0 release.
+	     ANW and vanilla-alias stubs added for v1.0 release.
 	     Each mirrors the corresponding ANW* or base-game tech.
 	     DBIDs 40038-40073.
 	     ============================================================ -->
 
-	<!-- RvltModHCMilitaryFrontier - mirrors ANWHCMilitaryFrontier -->
-	<Tech name='RvltModHCMilitaryFrontier' type='Normal'>
+	<!-- ANWHCMilitaryFrontier - mirrors ANWHCMilitaryFrontier -->
+	<Tech name='ANWHCMilitaryFrontier' type='Normal'>
 		<DBID>40038</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9583,8 +9563,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCMagyarGrenadiers - mirrors ANWHCMagyarGrenadiers -->
-	<Tech name='RvltModHCMagyarGrenadiers' type='Normal'>
+	<!-- ANWHCMagyarGrenadiers - mirrors ANWHCMagyarGrenadiers -->
+	<Tech name='ANWHCMagyarGrenadiers' type='Normal'>
 		<DBID>40039</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9600,8 +9580,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCHajduks - mirrors ANWHCHajduks -->
-	<Tech name='RvltModHCHajduks' type='Normal'>
+	<!-- ANWHCHajduks - mirrors ANWHCHajduks -->
+	<Tech name='ANWHCHajduks' type='Normal'>
 		<DBID>40040</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9618,8 +9598,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCMagyarHussarsAlt - mirrors ANWHCMagyarHussarsAlt -->
-	<Tech name='RvltModHCMagyarHussarsAlt' type='Normal'>
+	<!-- ANWHCMagyarHussarsAlt - mirrors ANWHCMagyarHussarsAlt -->
+	<Tech name='ANWHCMagyarHussarsAlt' type='Normal'>
 		<DBID>40041</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9635,8 +9615,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCPandours - mirrors ANWHCPandours -->
-	<Tech name='RvltModHCPandours' type='Normal'>
+	<!-- ANWHCPandours - mirrors ANWHCPandours -->
+	<Tech name='ANWHCPandours' type='Normal'>
 		<DBID>40042</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9651,8 +9631,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCCrabats - mirrors ANWHCCrabats -->
-	<Tech name='RvltModHCCrabats' type='Normal'>
+	<!-- ANWHCCrabats - mirrors ANWHCCrabats -->
+	<Tech name='ANWHCCrabats' type='Normal'>
 		<DBID>40043</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9667,8 +9647,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCLegionHungarian - mirrors ANWHCLegionHungarian -->
-	<Tech name='RvltModHCLegionHungarian' type='Normal'>
+	<!-- ANWHCLegionHungarian - mirrors ANWHCLegionHungarian -->
+	<Tech name='ANWHCLegionHungarian' type='Normal'>
 		<DBID>40044</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<Cost resourcetype='Food'>1500.0000</Cost>
@@ -9687,8 +9667,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCShipEuropeanFleet - mirrors ANWHCShipEuropeanFleet -->
-	<Tech name='RvltModHCShipEuropeanFleet' type='Normal'>
+	<!-- ANWHCShipEuropeanFleet - mirrors ANWHCShipEuropeanFleet -->
+	<Tech name='ANWHCShipEuropeanFleet' type='Normal'>
 		<DBID>40045</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9702,8 +9682,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCShipFortWagonOutpost - mirrors ANWHCShipFortWagonOutpost -->
-	<Tech name='RvltModHCShipFortWagonOutpost' type='Normal'>
+	<!-- ANWHCShipFortWagonOutpost - mirrors ANWHCShipFortWagonOutpost -->
+	<Tech name='ANWHCShipFortWagonOutpost' type='Normal'>
 		<DBID>40046</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9721,8 +9701,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCWallachianArchers - mirrors ANWHCWallachianArchers -->
-	<Tech name='RvltModHCWallachianArchers' type='Normal'>
+	<!-- ANWHCWallachianArchers - mirrors ANWHCWallachianArchers -->
+	<Tech name='ANWHCWallachianArchers' type='Normal'>
 		<DBID>40047</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9743,8 +9723,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCShipCavArchers - mirrors ANWHCShipCavArchers -->
-	<Tech name='RvltModHCShipCavArchers' type='Normal'>
+	<!-- ANWHCShipCavArchers - mirrors ANWHCShipCavArchers -->
+	<Tech name='ANWHCShipCavArchers' type='Normal'>
 		<DBID>40048</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9758,8 +9738,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCRoshiorDragoons - mirrors ANWHCRoshiorDragoons -->
-	<Tech name='RvltModHCRoshiorDragoons' type='Normal'>
+	<!-- ANWHCRoshiorDragoons - mirrors ANWHCRoshiorDragoons -->
+	<Tech name='ANWHCRoshiorDragoons' type='Normal'>
 		<DBID>40049</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9777,8 +9757,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCRussianExpArmy - mirrors ANWHCRussianExpArmy -->
-	<Tech name='RvltModHCRussianExpArmy' type='Normal'>
+	<!-- ANWHCRussianExpArmy - mirrors ANWHCRussianExpArmy -->
+	<Tech name='ANWHCRussianExpArmy' type='Normal'>
 		<DBID>40050</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<Cost resourcetype='Gold'>500.0000</Cost>
@@ -9795,8 +9775,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCPhanariotes - mirrors ANWHCPhanariotes -->
-	<Tech name='RvltModHCPhanariotes' type='Normal'>
+	<!-- ANWHCPhanariotes - mirrors ANWHCPhanariotes -->
+	<Tech name='ANWHCPhanariotes' type='Normal'>
 		<DBID>40051</DBID>
 		<ResearchPoints>5.0000</ResearchPoints>
 		<Status>UNOBTAINABLE</Status>
@@ -9818,8 +9798,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCFlightArcheryRomanians - mirrors ANWHCFlightArcheryRomanians -->
-	<Tech name='RvltModHCFlightArcheryRomanians' type='Normal'>
+	<!-- ANWHCFlightArcheryRomanians - mirrors ANWHCFlightArcheryRomanians -->
+	<Tech name='ANWHCFlightArcheryRomanians' type='Normal'>
 		<DBID>40052</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9836,8 +9816,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCSovnyaRomanian - mirrors ANWHCSovnyaRomanian -->
-	<Tech name='RvltModHCSovnyaRomanian' type='Normal'>
+	<!-- ANWHCSovnyaRomanian - mirrors ANWHCSovnyaRomanian -->
+	<Tech name='ANWHCSovnyaRomanian' type='Normal'>
 		<DBID>40053</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9858,8 +9838,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCMetis - ships 12 Metis Pathfinders (mirrors ANWHCMetis) -->
-	<Tech name='RvltModHCMetis' type='Normal'>
+	<!-- ANWHCMetis - ships 12 Metis Pathfinders (mirrors ANWHCMetis) -->
+	<Tech name='ANWHCMetis' type='Normal'>
 		<DBID>40054</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9872,8 +9852,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCLlaneros - mirrors ANWHCLlaneros -->
-	<Tech name='RvltModHCLlaneros' type='Normal'>
+	<!-- ANWHCLlaneros - mirrors ANWHCLlaneros -->
+	<Tech name='ANWHCLlaneros' type='Normal'>
 		<DBID>40055</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9894,8 +9874,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCJaguncos - mirrors ANWHCJaguncos -->
-	<Tech name='RvltModHCJaguncos' type='Normal'>
+	<!-- ANWHCJaguncos - mirrors ANWHCJaguncos -->
+	<Tech name='ANWHCJaguncos' type='Normal'>
 		<DBID>40056</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9916,8 +9896,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCGranaderos - mirrors ANWHCGranaderos -->
-	<Tech name='RvltModHCGranaderos' type='Normal'>
+	<!-- ANWHCGranaderos - mirrors ANWHCGranaderos -->
+	<Tech name='ANWHCGranaderos' type='Normal'>
 		<DBID>40057</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9938,8 +9918,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCMercsMamelukes - ships 4 Mamelukes -->
-	<Tech name='RvltModHCMercsMamelukes' type='Normal'>
+	<!-- ANWHCMercsMamelukes - ships 4 Mamelukes -->
+	<Tech name='ANWHCMercsMamelukes' type='Normal'>
 		<DBID>40058</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<Cost resourcetype='Gold'>1000.0000</Cost>
@@ -9954,8 +9934,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCBuenosAires - mirrors ANWHCBuenosAires -->
-	<Tech name='RvltModHCBuenosAires' type='Normal'>
+	<!-- ANWHCBuenosAires - mirrors ANWHCBuenosAires -->
+	<Tech name='ANWHCBuenosAires' type='Normal'>
 		<DBID>40059</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -9970,8 +9950,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCUffizi - mirrors ANWHCUffizi -->
-	<Tech name='RvltModHCUffizi' type='Normal'>
+	<!-- ANWHCUffizi - mirrors ANWHCUffizi -->
+	<Tech name='ANWHCUffizi' type='Normal'>
 		<DBID>40060</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>30.0000</ResearchPoints>
@@ -9988,8 +9968,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCREVCuzco - mirrors ANWHCREVCuzco -->
-	<Tech name='RvltModHCREVCuzco' type='Normal'>
+	<!-- ANWHCREVCuzco - mirrors ANWHCREVCuzco -->
+	<Tech name='ANWHCREVCuzco' type='Normal'>
 		<DBID>40061</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<Cost resourcetype='Wood'>1000.0000</Cost>
@@ -10006,8 +9986,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCREVMXCaliforniaStatehood - mirrors ANWHCREVMXCaliforniaStatehood -->
-	<Tech name='RvltModHCREVMXCaliforniaStatehood' type='Normal'>
+	<!-- ANWHCREVMXCaliforniaStatehood - mirrors ANWHCREVMXCaliforniaStatehood -->
+	<Tech name='ANWHCREVMXCaliforniaStatehood' type='Normal'>
 		<DBID>40062</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -10031,8 +10011,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCREVMXTexasStatehood - mirrors ANWHCREVMXTexasStatehood -->
-	<Tech name='RvltModHCREVMXTexasStatehood' type='Normal'>
+	<!-- ANWHCREVMXTexasStatehood - mirrors ANWHCREVMXTexasStatehood -->
+	<Tech name='ANWHCREVMXTexasStatehood' type='Normal'>
 		<DBID>40063</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -10056,8 +10036,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCREVMXTexasMarines - mirrors ANWHCREVMXTexasMarines -->
-	<Tech name='RvltModHCREVMXTexasMarines' type='Normal'>
+	<!-- ANWHCREVMXTexasMarines - mirrors ANWHCREVMXTexasMarines -->
+	<Tech name='ANWHCREVMXTexasMarines' type='Normal'>
 		<DBID>40064</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>
@@ -10072,8 +10052,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCREVWagonWarfare - mirrors ANWHCREVWagonWarfare -->
-	<Tech name='RvltModHCREVWagonWarfare' type='Normal'>
+	<!-- ANWHCREVWagonWarfare - mirrors ANWHCREVWagonWarfare -->
+	<Tech name='ANWHCREVWagonWarfare' type='Normal'>
 		<DBID>40065</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<Cost resourcetype='Wood'>400.0000</Cost>
@@ -10097,8 +10077,8 @@
 		</Effects>
 	</Tech>
 
-	<!-- RvltModHCShipWarElephant - mirrors ANWHCShipWarElephant -->
-	<Tech name='RvltModHCShipWarElephant' type='Normal'>
+	<!-- ANWHCShipWarElephant - mirrors ANWHCShipWarElephant -->
+	<Tech name='ANWHCShipWarElephant' type='Normal'>
 		<DBID>40066</DBID>
 		<Cost resourcetype='Ships'>1.0000</Cost>
 		<ResearchPoints>40.0000</ResearchPoints>

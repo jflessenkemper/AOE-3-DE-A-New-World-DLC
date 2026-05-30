@@ -188,26 +188,12 @@
     "bonus": "Plantations and slavery economy; strong unit multiplier",
     "ageup": "Agricultural and military shipments"
   },
-  "Californians": {
-    "history": "Mariano Guadalupe Vallejo led California through Mexican independence and American conquest. Californios became legendary horsemen and frontier leaders.",
-    "playstyle": "Cavalry-dominated with vaqueros and rancheros. Use open terrain for mounted advantage; saloons and ranching economy.",
-    "units": "Vaquero, Ranchero, Soldado, Californio",
-    "bonus": "Vaqueros extremely fast; ranching economy strong",
-    "ageup": "Cavalry and ranching shipments"
-  },
   "Canadians": {
     "history": "Isaac Brock defended Canada against American invasion, earning military renown. Canada developed as a frontier power balancing British loyalty and continental independence.",
     "playstyle": "Frontier defense with strong villagers and local alliances. Trappers and voyageurs provide economic advantage; ranged units effective.",
     "units": "Ranger, Trapper, Voyageur, Musketeer",
     "bonus": "Trappers generate furs; frontier defense strong",
     "ageup": "Frontier and ranger shipments"
-  },
-  "Central Americans": {
-    "history": "Francisco Moraz\u00e1n championed Central American federation and independence from Spanish colonial rule. The region struggled with fragmentation while maintaining distinct identity.",
-    "playstyle": "Flexible and adaptive with strong artillery and defense. Use terrain and fortifications effectively.",
-    "units": "Soldado, Chinaco, Padre, Field Cannon",
-    "bonus": "Defensive structures strong; artillery effective",
-    "ageup": "Military and artillery shipments"
   },
   "Chileans": {
     "history": "Bernardo O'Higgins led Chilean independence and established a stable republic. Chile developed as a disciplined military power with strong institutions.",
@@ -327,12 +313,5 @@
     "units": "Minuteman, Regular, Mercenary, Militia",
     "bonus": "Militia rapidly rebuilt; frontier defense strong",
     "ageup": "Militia and frontier shipments"
-  },
-  "Yucatan": {
-    "history": "Felipe Carrillo Puerto championed Yucatan independence and indigenous rights. The Yucatan pursued autonomy while maintaining cultural traditions and Maya heritage.",
-    "playstyle": "Maya-focused with indigenous units and defensive strength. Use cenotes and local uprisings for advantage.",
-    "units": "Yucateco Insurgente, Cruzob Avenger, Padre, Chaac Canoe",
-    "bonus": "Indigenous uprising powerful; religious influence strong",
-    "ageup": "Indigenous warrior and uprising shipments"
   }
 }

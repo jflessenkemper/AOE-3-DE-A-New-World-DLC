@@ -1512,7 +1512,7 @@
       <String _locID="490102">Open west-vs-east Texas-style test field with three land lanes and two naval lanes for fast AI validation.</String>
          <String _locID="490103">A New World Maps</String>
          <String _locID="490104">Custom validation maps for A New World AI skirmish testing.</String>
-            <String _locID="490001">Revolutionary France</String>
+            <String _locID="490001">French Republic</String>
       <String _locID="490003">Napoleonic France</String>
 
       <String _locID="490250">Napoleon Bonaparte</String>  
@@ -1560,12 +1560,10 @@
       <String _locID="490316">Romanians</String>  
       <String _locID="490317">Barbary</String>  
       <String _locID="490318">Egyptians</String>  
-      <String _locID="490319">Central Americans</String>  
-      <String _locID="490321">Yucatecans</String>  
+      <String _locID="490321">Yucatecans</String>
       <String _locID="490322">Rio Grandeans</String>  
       <String _locID="490323">Mayans</String>  
-      <String _locID="490324">Californians</String>  
-      <String _locID="490325">Texians</String>  
+      <String _locID="490325">Texians</String>
 
       <String _locID="490202">Muhammadu Kanta of Kebbi</String>
       <String _locID="490203">Usman dan Fodio (1754-1817) led the 1804 Fulani jihad that overthrew the Hausa city-state kings and founded the Sokoto Caliphate centred on his son Muhammad Bello.\nThe Sokoto Caliphate (1804-1903) bound the Hausaland city-states under Sharia governance, slave-cavalry warfare, and trans-Saharan caravan trade until the British conquest.</String>
@@ -1962,10 +1960,6 @@ Use trek wagons and fast-moving mounted units.\n\nKey units: Trek Wagon, Cavalry
       <String _locID="490246">Sam Houston led Texas independence from Mexico and negotiated annexation into the United States.
 Texas became a frontier power balancing independence and integration.\n\nFrontier militia with strong minutemen and mercenaries.
 Rapid defense and irregular warfare effective.\n\nKey units: Minuteman, Regular, Mercenary, Militia\nKey bonus: Militia rapidly rebuilt; frontier defense strong\nAge up: Militia and frontier shipments</String>
-      <String _locID="490247">Felipe Carrillo Puerto championed Yucatan independence and indigenous rights.
-The Yucatan pursued autonomy while maintaining cultural traditions and Maya heritage.\n\nMaya-focused with indigenous units and defensive strength.
-Use cenotes and local uprisings for advantage.\n\nKey units: Yucateco Insurgente, Cruzob Avenger, Padre, Chaac Canoe\nKey bonus: Indigenous uprising powerful; religious influence strong\nAge up: Indigenous warrior and uprising shipments</String>
-
 	<String _locID="490326">Bourbon France</String>
 	<String _locID="490330">Montezuma II</String>
 	<String _locID="490331">Queen Elizabeth I</String>

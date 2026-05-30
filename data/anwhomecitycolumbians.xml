@@ -212,7 +212,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCLlaneros</name>
+      <name>ANWHCLlaneros</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1366,7 +1366,7 @@
         <card>DEHCLiberationMarch</card>
         <card>DEHCREVCattleDeliveryColombia</card>
         <card>DEHCREVShipSteamers</card>
-        <card>RvltModHCLlaneros</card>
+        <card>ANWHCLlaneros</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>HCUnlockFort</card>
         <card>DEHCHabsburgAllies1</card>
@@ -1410,7 +1410,7 @@
         <card>DEHCLiberationMarch</card>
         <card>DEHCREVCattleDeliveryColombia</card>
         <card>DEHCREVShipSteamers</card>
-        <card>RvltModHCLlaneros</card>
+        <card>ANWHCLlaneros</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>HCUnlockFort</card>
         <card>DEHCHabsburgAllies1</card>
@@ -1454,7 +1454,7 @@
         <card>DEHCLiberationMarch</card>
         <card>DEHCREVCattleDeliveryColombia</card>
         <card>DEHCREVShipSteamers</card>
-        <card>RvltModHCLlaneros</card>
+        <card>ANWHCLlaneros</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>HCUnlockFort</card>
         <card>DEHCHabsburgAllies1</card>
@@ -1498,7 +1498,7 @@
         <card>DEHCLiberationMarch</card>
         <card>DEHCREVCattleDeliveryColombia</card>
         <card>DEHCREVShipSteamers</card>
-        <card>RvltModHCLlaneros</card>
+        <card>ANWHCLlaneros</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>HCUnlockFort</card>
         <card>DEHCHabsburgAllies1</card>
@@ -1542,7 +1542,7 @@
         <card>DEHCLiberationMarch</card>
         <card>DEHCREVCattleDeliveryColombia</card>
         <card>DEHCREVShipSteamers</card>
-        <card>RvltModHCLlaneros</card>
+        <card>ANWHCLlaneros</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>HCUnlockFort</card>
         <card>DEHCHabsburgAllies1</card>
@@ -1586,7 +1586,7 @@
         <card>DEHCLiberationMarch</card>
         <card>DEHCREVCattleDeliveryColombia</card>
         <card>DEHCREVShipSteamers</card>
-        <card>RvltModHCLlaneros</card>
+        <card>ANWHCLlaneros</card>
         <card>DEHCMercsArmoredPistoleers</card>
         <card>HCUnlockFort</card>
         <card>DEHCHabsburgAllies1</card>
@@ -1676,7 +1676,7 @@
       <tech x="7.2" y="7.0">DEHCMarvelousYear</tech>
       <tech x="7.2" y="7.0">DEHCNewSpainViceroyalty</tech>
       <tech>DEHCREVCattleDeliveryColombia</tech>
-      <tech>RvltModHCLlaneros</tech>
+      <tech>ANWHCLlaneros</tech>
       <tech>DEHCREVNationalHero</tech>
       <tech>HCShipCoveredWagons2</tech>
     </obtainabletechs>
@@ -1711,7 +1711,7 @@
       <tech x="7.2" y="7.0">DEHCMarvelousYear</tech>
       <tech x="7.2" y="7.0">DEHCNewSpainViceroyalty</tech>
       <tech>DEHCREVCattleDeliveryColombia</tech>
-      <tech>RvltModHCLlaneros</tech>
+      <tech>ANWHCLlaneros</tech>
       <tech>DEHCREVNationalHero</tech>
       <tech>HCShipCoveredWagons2</tech>
     </activetechs>

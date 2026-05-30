@@ -471,7 +471,7 @@
       <age>2</age>
     </card>
     <card>
-      <name>RvltModHCREVWagonWarfare</name>
+      <name>ANWHCREVWagonWarfare</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1849,7 +1849,7 @@
       <tech x="7.3" y="2.0">HCShipMortars1</tech>
       <tech x="7.3" y="7.0">HCXPShipMortarsTeam</tech>
       <tech x="7.2" y="7.0">DEHCHandMortar</tech>
-      <tech x="7.2" y="7.0">RvltModHCREVWagonWarfare</tech>
+      <tech x="7.2" y="7.0">ANWHCREVWagonWarfare</tech>
       <tech x="7.2" y="7.0">DEHCREVWanderlust</tech>
     </obtainabletechs>
     <activetechs>
@@ -1893,7 +1893,7 @@
       <tech x="7.3" y="2.0">HCShipMortars1</tech>
       <tech x="7.3" y="7.0">HCXPShipMortarsTeam</tech>
       <tech x="7.2" y="7.0">DEHCHandMortar</tech>
-      <tech x="7.2" y="7.0">RvltModHCREVWagonWarfare</tech>
+      <tech x="7.2" y="7.0">ANWHCREVWagonWarfare</tech>
       <tech x="7.2" y="7.0">DEHCREVWanderlust</tech>
     </activetechs>
     <validunits>

@@ -220,7 +220,7 @@
       <displayunitcount>10</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCGranaderos</name>
+      <name>ANWHCGranaderos</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -297,7 +297,7 @@
       <age>0</age>
     </card>
     <card>
-      <name>RvltModHCUffizi</name>
+      <name>ANWHCUffizi</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>-1</prereqtech>
@@ -855,7 +855,7 @@
       <displayunitcount>3</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCBuenosAires</name>
+      <name>ANWHCBuenosAires</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1500,7 +1500,7 @@
         <card>DEHCREVArgentineMortars</card>
         <card>DEHCREVShipMortars</card>
         <card>HCXPShipMortarsTeam</card>
-        <card>RvltModHCGranaderos</card>
+        <card>ANWHCGranaderos</card>
         <card>HCHeavyFortifications</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCShipFoodCrates5</card>
@@ -1544,7 +1544,7 @@
         <card>DEHCREVArgentineMortars</card>
         <card>DEHCREVShipMortars</card>
         <card>HCXPShipMortarsTeam</card>
-        <card>RvltModHCGranaderos</card>
+        <card>ANWHCGranaderos</card>
         <card>HCHeavyFortifications</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCShipFoodCrates5</card>
@@ -1588,7 +1588,7 @@
         <card>DEHCREVArgentineMortars</card>
         <card>DEHCREVShipMortars</card>
         <card>HCXPShipMortarsTeam</card>
-        <card>RvltModHCGranaderos</card>
+        <card>ANWHCGranaderos</card>
         <card>HCHeavyFortifications</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCShipFoodCrates5</card>
@@ -1632,7 +1632,7 @@
         <card>DEHCREVArgentineMortars</card>
         <card>DEHCREVShipMortars</card>
         <card>HCXPShipMortarsTeam</card>
-        <card>RvltModHCGranaderos</card>
+        <card>ANWHCGranaderos</card>
         <card>HCHeavyFortifications</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCShipFoodCrates5</card>
@@ -1676,7 +1676,7 @@
         <card>DEHCREVArgentineMortars</card>
         <card>DEHCREVShipMortars</card>
         <card>HCXPShipMortarsTeam</card>
-        <card>RvltModHCGranaderos</card>
+        <card>ANWHCGranaderos</card>
         <card>HCHeavyFortifications</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCShipFoodCrates5</card>
@@ -1720,7 +1720,7 @@
         <card>DEHCREVArgentineMortars</card>
         <card>DEHCREVShipMortars</card>
         <card>HCXPShipMortarsTeam</card>
-        <card>RvltModHCGranaderos</card>
+        <card>ANWHCGranaderos</card>
         <card>HCHeavyFortifications</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCShipFoodCrates5</card>
@@ -1798,9 +1798,9 @@
       <tech x="7.0" y="5.0">HCShipBalloons</tech>
       <tech x="7.2" y="7.0">DEHCMarvelousYear</tech>
       <tech x="3.0" y="1.0">DEHCREVCattleDeliveryArgentina</tech>
-      <tech x="3.0" y="1.0">RvltModHCGranaderos</tech>
+      <tech x="3.0" y="1.0">ANWHCGranaderos</tech>
       <tech x="3.0" y="1.0">DEHCLombardy</tech>
-      <tech x="3.0" y="1.0">RvltModHCUffizi</tech>
+      <tech x="3.0" y="1.0">ANWHCUffizi</tech>
     </obtainabletechs>
     <activetechs>
       <tech x="0.7" y="1.0">HCShipSettlers1</tech>
@@ -1832,9 +1832,9 @@
       <tech x="7.0" y="5.0">HCShipBalloons</tech>
       <tech x="7.2" y="7.0">DEHCMarvelousYear</tech>
       <tech x="3.0" y="1.0">DEHCREVCattleDeliveryArgentina</tech>
-      <tech x="3.0" y="1.0">RvltModHCGranaderos</tech>
+      <tech x="3.0" y="1.0">ANWHCGranaderos</tech>
       <tech x="3.0" y="1.0">DEHCLombardy</tech>
-      <tech x="3.0" y="1.0">RvltModHCUffizi</tech>
+      <tech x="3.0" y="1.0">ANWHCUffizi</tech>
     </activetechs>
     <validunits>
     </validunits>
@@ -2010,7 +2010,7 @@
       <tech x="7.4" y="5.0">HCColonialEstancias</tech>
       <tech x="7.4" y="5.0">DEHCHouseOfTrastamara</tech>
       <tech x="5.0" y="1.0">HCREVShipFortWagon</tech>
-      <tech x="5.0" y="1.0">RvltModHCBuenosAires</tech>
+      <tech x="5.0" y="1.0">ANWHCBuenosAires</tech>
       <tech x="5.0" y="1.0">DEHCREVTrattoria</tech>
     </obtainabletechs>
     <activetechs>
@@ -2045,7 +2045,7 @@
       <tech x="7.4" y="5.0">HCColonialEstancias</tech>
       <tech x="7.4" y="5.0">DEHCHouseOfTrastamara</tech>
       <tech x="5.0" y="1.0">HCREVShipFortWagon</tech>
-      <tech x="5.0" y="1.0">RvltModHCBuenosAires</tech>
+      <tech x="5.0" y="1.0">ANWHCBuenosAires</tech>
       <tech x="5.0" y="1.0">DEHCREVTrattoria</tech>
     </activetechs>
     <validunits>

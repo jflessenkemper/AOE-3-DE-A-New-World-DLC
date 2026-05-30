@@ -534,7 +534,7 @@
       <age>3</age>
     </card>
     <card>
-      <name>RvltModHCREVMXTexasMarines</name>
+      <name>ANWHCREVMXTexasMarines</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -916,7 +916,7 @@
       <displayunitcount>2</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCREVMXTexasStatehood</name>
+      <name>ANWHCREVMXTexasStatehood</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1413,7 +1413,7 @@
         <card>DEHCCopperCanyon</card>
         <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>RvltModHCREVMXTexasStatehood</card>
+        <card>ANWHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCPresidios</card>
@@ -1428,7 +1428,7 @@
         <card>DEHCREVMXRobberBarons2</card>
         <card>DEHCREVMXShipHaciendaWagonRepeat1</card>
         <card>DEHCShipIroncladsRepeat1</card>
-        <card>RvltModHCREVMXTexasMarines</card>
+        <card>ANWHCREVMXTexasMarines</card>
       </cards>
 
 
@@ -1457,7 +1457,7 @@
         <card>DEHCCopperCanyon</card>
         <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>RvltModHCREVMXTexasStatehood</card>
+        <card>ANWHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCPresidios</card>
@@ -1472,7 +1472,7 @@
         <card>DEHCREVMXRobberBarons2</card>
         <card>DEHCREVMXShipHaciendaWagonRepeat1</card>
         <card>DEHCShipIroncladsRepeat1</card>
-        <card>RvltModHCREVMXTexasMarines</card>
+        <card>ANWHCREVMXTexasMarines</card>
       </cards>
 
 
@@ -1501,7 +1501,7 @@
         <card>DEHCCopperCanyon</card>
         <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>RvltModHCREVMXTexasStatehood</card>
+        <card>ANWHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCPresidios</card>
@@ -1516,7 +1516,7 @@
         <card>DEHCREVMXRobberBarons2</card>
         <card>DEHCREVMXShipHaciendaWagonRepeat1</card>
         <card>DEHCShipIroncladsRepeat1</card>
-        <card>RvltModHCREVMXTexasMarines</card>
+        <card>ANWHCREVMXTexasMarines</card>
       </cards>
 
 
@@ -1545,7 +1545,7 @@
         <card>DEHCCopperCanyon</card>
         <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>RvltModHCREVMXTexasStatehood</card>
+        <card>ANWHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCPresidios</card>
@@ -1560,7 +1560,7 @@
         <card>DEHCREVMXRobberBarons2</card>
         <card>DEHCREVMXShipHaciendaWagonRepeat1</card>
         <card>DEHCShipIroncladsRepeat1</card>
-        <card>RvltModHCREVMXTexasMarines</card>
+        <card>ANWHCREVMXTexasMarines</card>
       </cards>
 
 
@@ -1589,7 +1589,7 @@
         <card>DEHCCopperCanyon</card>
         <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>RvltModHCREVMXTexasStatehood</card>
+        <card>ANWHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCPresidios</card>
@@ -1604,7 +1604,7 @@
         <card>DEHCREVMXRobberBarons2</card>
         <card>DEHCREVMXShipHaciendaWagonRepeat1</card>
         <card>DEHCShipIroncladsRepeat1</card>
-        <card>RvltModHCREVMXTexasMarines</card>
+        <card>ANWHCREVMXTexasMarines</card>
       </cards>
 
 
@@ -1633,7 +1633,7 @@
         <card>DEHCCopperCanyon</card>
         <card>DEHCREVMXGonzalesGuns</card>
         <card>DEHCREVMXFrontierDefensesRepeat</card>
-        <card>RvltModHCREVMXTexasStatehood</card>
+        <card>ANWHCREVMXTexasStatehood</card>
         <card>HCUnlockFort</card>
         <card>DEHCShipCapturedGalleons2</card>
         <card>DEHCPresidios</card>
@@ -1648,7 +1648,7 @@
         <card>DEHCREVMXRobberBarons2</card>
         <card>DEHCREVMXShipHaciendaWagonRepeat1</card>
         <card>DEHCShipIroncladsRepeat1</card>
-        <card>RvltModHCREVMXTexasMarines</card>
+        <card>ANWHCREVMXTexasMarines</card>
       </cards>
 
 
@@ -1829,7 +1829,7 @@
       <tech>DEHCShipRegulars4</tech>
       <tech>DEHCREVMXGonzalesGuns</tech>
       <tech>DEHCREVMXTexasArmy</tech>
-      <tech>RvltModHCREVMXTexasMarines</tech>
+      <tech>ANWHCREVMXTexasMarines</tech>
       <tech>DEHCREVMXTexasLancers</tech>
       <tech>DEHCShipStateMilitia1</tech>
       <tech>DEHCShipStateMilitia2</tech>
@@ -1891,7 +1891,7 @@
       <tech>DEHCShipRegulars4</tech>
       <tech>DEHCREVMXGonzalesGuns</tech>
       <tech>DEHCREVMXTexasArmy</tech>
-      <tech>RvltModHCREVMXTexasMarines</tech>
+      <tech>ANWHCREVMXTexasMarines</tech>
       <tech>DEHCREVMXTexasLancers</tech>
       <tech>DEHCShipStateMilitia1</tech>
       <tech>DEHCShipStateMilitia2</tech>
@@ -1959,7 +1959,7 @@
       <tech x="4.6" y="3.0">DEHCLiberationMarch</tech>
       <tech x="4.6" y="3.0">DEHCSevenLaws</tech>
       <tech x="4.6" y="3.0">DEHCNinosHeroes</tech>
-      <tech>RvltModHCREVMXTexasStatehood</tech>
+      <tech>ANWHCREVMXTexasStatehood</tech>
       <tech>DEHCREVMXBurnetLand</tech>
       <tech>DEHCREVMXShipFortWagon2</tech>
     </obtainabletechs>
@@ -1998,7 +1998,7 @@
       <tech x="4.6" y="3.0">DEHCLiberationMarch</tech>
       <tech x="4.6" y="3.0">DEHCSevenLaws</tech>
       <tech x="4.6" y="3.0">DEHCNinosHeroes</tech>
-      <tech>RvltModHCREVMXTexasStatehood</tech>
+      <tech>ANWHCREVMXTexasStatehood</tech>
       <tech>DEHCREVMXBurnetLand</tech>
       <tech>DEHCREVMXShipFortWagon2</tech>
     </activetechs>

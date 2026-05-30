@@ -104,9 +104,9 @@
 			<bannertexturecoords>0 0.125 0.78125 0.25</bannertexturecoords>
 			<portraittexture>ui\eso\eso_quick_search_politicians_02</portraittexture>
 			<portraittexturecoords>0.005859375 0.00390625 0.396484375 0.392578125</portraittexturecoords>
-			<smallportraittexture>ui\singleplayer\cpai_avatar_anwnapoleonicfrance</smallportraittexture>
+			<smallportraittexture>ui\singleplayer\cpai_avatar_napoleonic_france_napoleon</smallportraittexture>
 			<smallportraittexturecoords>0 0 1 1</smallportraittexturecoords>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_napoleonic_france.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -7852,14 +7852,14 @@
 		<homecityfilename>anwhomecityfrench.xml</homecityfilename>
 		<homecityflagtexture>objects\flags\french</homecityflagtexture>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_French.png</homecityflagiconwpf>
-		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_french_napoleon.png</homecitypreviewwpf>
+		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_french.png</homecityflagbuttonwpf>
 		<homecityflagbuttonset>frenchFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>frenchFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_french</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_french.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_french_napoleon.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>
@@ -11906,14 +11906,14 @@
 		<homecityfilename>anwhomecityrussians.xml</homecityfilename>
 		<homecityflagtexture>objects\flags\russians</homecityflagtexture>
 		<homecityflagiconwpf>resources/images/icons/flags/Flag_Russian.png</homecityflagiconwpf>
-		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png</homecitypreviewwpf>
+		<homecitypreviewwpf>resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png</homecitypreviewwpf>
 		<homecityflagbuttonwpf>resources\images\icons\flags\flag_hc_russian.png</homecityflagbuttonwpf>
 		<homecityflagbuttonset>russianFlagBtn</homecityflagbuttonset>
 		<homecityflagbuttonsetlarge>russianFlagBtnLarge</homecityflagbuttonsetlarge>
 		<postgameflagtexture>ui\ingame\ingame_ui_postgame_flag_russian</postgameflagtexture>
 		<postgameflagiconwpf>resources/images/icons/flags/postgame_flag_russian.png</postgameflagiconwpf>
 		<matchmakingtextures>
-			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_russians_catherine.png</smallportraittexturewpf>
+			<smallportraittexturewpf>resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png</smallportraittexturewpf>
 		</matchmakingtextures>
 		<unitregen>
 			<unittype>Hero</unittype>

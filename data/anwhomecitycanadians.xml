@@ -80,7 +80,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCMetis</name>
+      <name>ANWHCMetis</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1413,7 +1413,7 @@
         <card>DEHCREVShipGrizzlies</card>
         <card>DEHCREVShipMusketeers</card>
         <card>DEHCREVShipRangers</card>
-        <card>RvltModHCMetis</card>
+        <card>ANWHCMetis</card>
       </cards>
 
 
@@ -1457,7 +1457,7 @@
         <card>DEHCREVShipGrizzlies</card>
         <card>DEHCREVShipMusketeers</card>
         <card>DEHCREVShipRangers</card>
-        <card>RvltModHCMetis</card>
+        <card>ANWHCMetis</card>
       </cards>
 
 
@@ -1501,7 +1501,7 @@
         <card>DEHCREVShipGrizzlies</card>
         <card>DEHCREVShipMusketeers</card>
         <card>DEHCREVShipRangers</card>
-        <card>RvltModHCMetis</card>
+        <card>ANWHCMetis</card>
       </cards>
 
 
@@ -1545,7 +1545,7 @@
         <card>DEHCREVShipGrizzlies</card>
         <card>DEHCREVShipMusketeers</card>
         <card>DEHCREVShipRangers</card>
-        <card>RvltModHCMetis</card>
+        <card>ANWHCMetis</card>
       </cards>
 
 
@@ -1589,7 +1589,7 @@
         <card>DEHCREVShipGrizzlies</card>
         <card>DEHCREVShipMusketeers</card>
         <card>DEHCREVShipRangers</card>
-        <card>RvltModHCMetis</card>
+        <card>ANWHCMetis</card>
       </cards>
 
 
@@ -1633,7 +1633,7 @@
         <card>DEHCREVShipGrizzlies</card>
         <card>DEHCREVShipMusketeers</card>
         <card>DEHCREVShipRangers</card>
-        <card>RvltModHCMetis</card>
+        <card>ANWHCMetis</card>
       </cards>
 
 
@@ -1707,7 +1707,7 @@
       <tech x="7.0" y="1.0">HCExplorerBritish</tech>
       <tech x="7.0" y="5.0">HCXPAdvancedBalloon</tech>
       <tech x="7.0" y="5.0">HCShipBalloons</tech>
-      <tech>RvltModHCMetis</tech>
+      <tech>ANWHCMetis</tech>
       <tech>DEHCREVBuffaloHunt</tech>
       <tech>DEHCREVShipElk</tech>
       <tech>DEHCREVShipGrizzlies</tech>
@@ -1743,7 +1743,7 @@
       <tech x="7.0" y="1.0">HCExplorerBritish</tech>
       <tech x="7.0" y="5.0">HCXPAdvancedBalloon</tech>
       <tech x="7.0" y="5.0">HCShipBalloons</tech>
-      <tech>RvltModHCMetis</tech>
+      <tech>ANWHCMetis</tech>
       <tech>DEHCREVBuffaloHunt</tech>
       <tech>DEHCREVShipElk</tech>
       <tech>DEHCREVShipGrizzlies</tech>

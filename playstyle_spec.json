@@ -19,7 +19,8 @@
         "military_distance_band": [
           0.85,
           1.3
-        ]
+        ],
+        "expects_cavalry": true
       },
       "prose_overrides": []
     },
@@ -39,7 +40,8 @@
         "military_distance_band": [
           1.0,
           1.3
-        ]
+        ],
+        "expects_infantry": true
       },
       "prose_overrides": []
     },
@@ -79,7 +81,8 @@
           1.1,
           1.3
         ],
-        "wall_strategy": 3
+        "wall_strategy": 3,
+        "first_wall_before_ms": 900000
       },
       "prose_overrides": []
     },
@@ -104,25 +107,6 @@
       },
       "prose_overrides": []
     },
-    "Californians Vallejo Revolution": {
-      "civ_label": "Californians",
-      "leader_label": "Mariano Guadalupe Vallejo",
-      "data_name": "Californians Vallejo Revolution",
-      "doctrine_label": "Distributed Economic Network",
-      "doctrine_summary": "Hacienda-cattle ranch economy",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_californians_vallejo.png",
-      "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
-      "claims": {
-        "wall_strategy": 3,
-        "first_military_building": "trading_post_or_market",
-        "expects_treaty": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ]
-      },
-      "prose_overrides": []
-    },
     "Canadians Brock Revolution": {
       "civ_label": "Canadians",
       "leader_label": "Isaac Brock",
@@ -138,26 +122,8 @@
         "military_distance_band": [
           0.7,
           0.9
-        ]
-      },
-      "prose_overrides": []
-    },
-    "Central Americans Morazan Revolution": {
-      "civ_label": "Central Americans",
-      "leader_label": "Francisco Morazán",
-      "data_name": "Central Americans Morazan Revolution",
-      "doctrine_label": "Distributed Economic Network",
-      "doctrine_summary": "Federal Republic frontier militia",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_central_americans_morazan.png",
-      "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
-      "claims": {
-        "wall_strategy": 3,
-        "first_military_building": "trading_post_or_market",
-        "expects_treaty": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -176,7 +142,8 @@
         "military_distance_band": [
           0.7,
           1.0
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -195,7 +162,8 @@
         "military_distance_band": [
           0.7,
           0.9
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -216,7 +184,8 @@
         "military_distance_band": [
           0.85,
           1.3
-        ]
+        ],
+        "expects_cavalry": true
       },
       "prose_overrides": []
     },
@@ -257,7 +226,8 @@
         "military_distance_band": [
           0.7,
           1.0
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -277,7 +247,8 @@
         "military_distance_band": [
           0.7,
           1.0
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -296,26 +267,8 @@
         "military_distance_band": [
           0.7,
           0.9
-        ]
-      },
-      "prose_overrides": []
-    },
-    "French Canadians Papineau Revolution": {
-      "civ_label": "Lower Canada",
-      "leader_label": "Louis-Joseph Papineau",
-      "data_name": "French Canadians Papineau Revolution",
-      "doctrine_label": "Civic Militia Center",
-      "doctrine_summary": "Patriote militia and outpost line",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_canadians_papineau.png",
-      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
-      "claims": {
-        "wall_strategy": 3,
-        "first_military_building": "outpost",
-        "expects_forward": false,
-        "military_distance_band": [
-          0.85,
-          1.1
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -334,7 +287,8 @@
         "military_distance_band": [
           0.7,
           0.9
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -355,7 +309,8 @@
         "military_distance_band": [
           0.8,
           1.1
-        ]
+        ],
+        "expects_cavalry": true
       },
       "prose_overrides": []
     },
@@ -375,7 +330,8 @@
         "military_distance_band": [
           1.0,
           1.3
-        ]
+        ],
+        "expects_infantry": true
       },
       "prose_overrides": []
     },
@@ -413,7 +369,8 @@
           1.1,
           1.3
         ],
-        "wall_strategy": 3
+        "wall_strategy": 3,
+        "first_wall_before_ms": 900000
       },
       "prose_overrides": []
     },
@@ -433,7 +390,9 @@
         "military_distance_band": [
           1.1,
           1.3
-        ]
+        ],
+        "first_barracks_before_ms": 360000,
+        "first_wall_before_ms": 720000
       },
       "prose_overrides": []
     },
@@ -452,14 +411,15 @@
         "military_distance_band": [
           0.7,
           1.0
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
     "Indians Akbar": {
       "civ_label": "Indians",
       "leader_label": "Shivaji Maharaj",
-      "data_name": "Indians Akbar",
+      "data_name": "Indians Shivaji Maharaj Maratha",
       "doctrine_label": "Ganimi Kava Raid",
       "doctrine_summary": "Maratha Ganimi Kava raid",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png",
@@ -473,7 +433,8 @@
         "military_distance_band": [
           1.0,
           1.3
-        ]
+        ],
+        "first_barracks_before_ms": 420000
       },
       "prose_overrides": []
     },
@@ -493,7 +454,8 @@
         "military_distance_band": [
           1.0,
           1.3
-        ]
+        ],
+        "expects_infantry": true
       },
       "prose_overrides": []
     },
@@ -540,10 +502,10 @@
     "Lakota Crazy Horse": {
       "civ_label": "Lakota",
       "leader_label": "Chief Gall",
-      "data_name": "Lakota Crazy Horse",
+      "data_name": "Lakota Gall",
       "doctrine_label": "Steppe Cavalry Wedge",
       "doctrine_summary": "Little Bighorn envelopment",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png",
+      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_gall.png",
       "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
       "claims": {
         "wall_strategy": 5,
@@ -553,9 +515,10 @@
         "military_distance_band": [
           1.1,
           1.3
-        ]
+        ],
+        "first_barracks_before_ms": 360000
       },
-      "prose_overrides": []
+      "prose_overrides": ["-first_wall_before_ms_removed_as_inconsistent_with_wall_strategy_5_and_wallLevel_0_SteppeCavalryWedge_doctrine"]
     },
     "Maltese Valette": {
       "civ_label": "Maltese",
@@ -573,7 +536,8 @@
         "military_distance_band": [
           0.7,
           1.0
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -593,7 +557,8 @@
         "military_distance_band": [
           1.0,
           1.3
-        ]
+        ],
+        "expects_infantry": true
       },
       "prose_overrides": []
     },
@@ -625,7 +590,7 @@
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Grande Armée combined-arms empire",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned. Gribeauval-system field artillery and horse artillery form the spine of every engagement.",
       "claims": {
         "wall_strategy": 5,
         "first_military_building": "barracks_or_stable",
@@ -635,7 +600,9 @@
         "military_distance_band": [
           0.85,
           1.3
-        ]
+        ],
+        "expects_cavalry": true,
+        "expects_artillery": true
       },
       "prose_overrides": []
     },
@@ -654,7 +621,9 @@
         "military_distance_band": [
           0.8,
           1.1
-        ]
+        ],
+        "first_barracks_before_ms": 480000,
+        "first_wall_before_ms": 720000
       },
       "prose_overrides": []
     },
@@ -673,7 +642,8 @@
         "military_distance_band": [
           0.7,
           1.0
-        ]
+        ],
+        "first_barracks_before_ms": 480000
       },
       "prose_overrides": []
     },
@@ -699,12 +669,12 @@
       "prose_overrides": []
     },
     "Revolutionary France Robespierre Revolution": {
-      "civ_label": "Revolutionary France",
+      "civ_label": "French Republic",
       "leader_label": "Maximilien Robespierre",
       "data_name": "Revolutionary France Robespierre Revolution",
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Levée-en-masse Republic",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png",
+      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_robespierre.png",
       "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,
@@ -715,26 +685,6 @@
         "military_distance_band": [
           0.8,
           1.1
-        ]
-      },
-      "prose_overrides": []
-    },
-    "Rio Grande Canales Rosillo Revolution": {
-      "civ_label": "Rio Grande",
-      "leader_label": "Antonio Canales Rosillo",
-      "data_name": "Rio Grande Canales Rosillo Revolution",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Norteno raid-republic on the frontier",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_rio_grande_canales_rosillo.png",
-      "doctrine_prose": "Spreads buildings far and wide, plants extra Town Centers and Trading Posts on the map perimeter, and skips walls almost entirely. Built for raid-economy and map control rather than turtling.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "military_distance_band": [
-          0.85,
-          1.3
         ]
       },
       "prose_overrides": []
@@ -758,10 +708,10 @@
       },
       "prose_overrides": []
     },
-    "Russians Catherine": {
+    "Russians Ivan the Terrible": {
       "civ_label": "Russians",
       "leader_label": "Ivan the Terrible",
-      "data_name": "Russians Catherine",
+      "data_name": "Russians Ivan Terrible",
       "doctrine_label": "Cossack Voisko",
       "doctrine_summary": "Oprichnik terror",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png",
@@ -775,7 +725,9 @@
           0.8,
           1.1
         ],
-        "expects_forward": true
+        "expects_forward": true,
+        "first_barracks_before_ms": 420000,
+        "first_wall_before_ms": 720000
       },
       "prose_overrides": [
         "+expects_forward"
@@ -798,7 +750,8 @@
         "military_distance_band": [
           0.9,
           1.2
-        ]
+        ],
+        "expects_cavalry": true
       },
       "prose_overrides": []
     },
@@ -819,7 +772,8 @@
         "military_distance_band": [
           0.85,
           1.3
-        ]
+        ],
+        "expects_cavalry": true
       },
       "prose_overrides": []
     },
@@ -830,7 +784,7 @@
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Lion of the North combined arms",
       "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned. Regimental gun teams and the Lützen-era leather guns make light artillery a permanent line-element rather than a siege-only commitment.",
       "claims": {
         "wall_strategy": 5,
         "first_military_building": "barracks_or_stable",
@@ -840,7 +794,9 @@
         "military_distance_band": [
           0.85,
           1.3
-        ]
+        ],
+        "expects_cavalry": true,
+        "expects_artillery": true
       },
       "prose_overrides": []
     },
@@ -861,7 +817,8 @@
         "military_distance_band": [
           0.85,
           1.3
-        ]
+        ],
+        "expects_cavalry": true
       },
       "prose_overrides": []
     },
@@ -882,26 +839,6 @@
         "military_distance_band": [
           0.8,
           1.1
-        ]
-      },
-      "prose_overrides": []
-    },
-    "Yucatan Pat Revolution": {
-      "civ_label": "Yucatan",
-      "leader_label": "Jacinto Pat",
-      "data_name": "Yucatan Pat Revolution",
-      "doctrine_label": "Jungle Guerrilla Network",
-      "doctrine_summary": "Maya Caste War jungle insurgency",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_yucatan_carrillo_puerto.png",
-      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
-      "claims": {
-        "wall_strategy": 1,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 420000,
-        "military_distance_band": [
-          1.0,
-          1.3
         ]
       },
       "prose_overrides": []

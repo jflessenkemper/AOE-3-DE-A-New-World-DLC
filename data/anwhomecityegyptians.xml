@@ -1218,7 +1218,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCMercsMamelukes</name>
+      <name>ANWHCMercsMamelukes</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>-1</prereqtech>
@@ -1375,7 +1375,7 @@
         <card>DEHCREVNizamsEgypt</card>
         <card>DEHCREVRangedCombatEgypt</card>
         <card>DEHCREVSudaneseAllies</card>
-        <card>RvltModHCMercsMamelukes</card>
+        <card>ANWHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
         <card>DEHCHandMortarOttoman</card>
@@ -1419,7 +1419,7 @@
         <card>DEHCREVNizamsEgypt</card>
         <card>DEHCREVRangedCombatEgypt</card>
         <card>DEHCREVSudaneseAllies</card>
-        <card>RvltModHCMercsMamelukes</card>
+        <card>ANWHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
         <card>DEHCHandMortarOttoman</card>
@@ -1463,7 +1463,7 @@
         <card>DEHCREVNizamsEgypt</card>
         <card>DEHCREVRangedCombatEgypt</card>
         <card>DEHCREVSudaneseAllies</card>
-        <card>RvltModHCMercsMamelukes</card>
+        <card>ANWHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
         <card>DEHCHandMortarOttoman</card>
@@ -1507,7 +1507,7 @@
         <card>DEHCREVNizamsEgypt</card>
         <card>DEHCREVRangedCombatEgypt</card>
         <card>DEHCREVSudaneseAllies</card>
-        <card>RvltModHCMercsMamelukes</card>
+        <card>ANWHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
         <card>DEHCHandMortarOttoman</card>
@@ -1551,7 +1551,7 @@
         <card>DEHCREVNizamsEgypt</card>
         <card>DEHCREVRangedCombatEgypt</card>
         <card>DEHCREVSudaneseAllies</card>
-        <card>RvltModHCMercsMamelukes</card>
+        <card>ANWHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
         <card>DEHCHandMortarOttoman</card>
@@ -1595,7 +1595,7 @@
         <card>DEHCREVNizamsEgypt</card>
         <card>DEHCREVRangedCombatEgypt</card>
         <card>DEHCREVSudaneseAllies</card>
-        <card>RvltModHCMercsMamelukes</card>
+        <card>ANWHCMercsMamelukes</card>
         <card>DEHCMercsBosniaks</card>
         <card>HCUnlockFort</card>
         <card>DEHCHandMortarOttoman</card>
@@ -2041,7 +2041,7 @@
       <tech x="3.1" y="4.0">DEHCPhanarAllies1</tech>
       <tech x="3.1" y="4.0">DEHCSufiAllies</tech>
       <tech x="4.6" y="4.0">DEHCMercsBosniaks</tech>
-      <tech x="3.9" y="3.0">RvltModHCMercsMamelukes</tech>
+      <tech x="3.9" y="3.0">ANWHCMercsMamelukes</tech>
       <tech x="3.9" y="4.0">DEHCShipBerberAllies2Ottoman</tech>
       <tech x="3.1" y="7.0">HCXPMercsCorsairsRepeat</tech>
       <tech x="4.2" y="5.0">HCMercsMediterranean</tech>
@@ -2082,7 +2082,7 @@
       <tech x="3.1" y="4.0">DEHCPhanarAllies1</tech>
       <tech x="3.1" y="4.0">DEHCSufiAllies</tech>
       <tech x="4.6" y="4.0">DEHCMercsBosniaks</tech>
-      <tech x="3.9" y="3.0">RvltModHCMercsMamelukes</tech>
+      <tech x="3.9" y="3.0">ANWHCMercsMamelukes</tech>
       <tech x="3.9" y="4.0">DEHCShipBerberAllies2Ottoman</tech>
       <tech x="3.1" y="7.0">HCXPMercsCorsairsRepeat</tech>
       <tech x="4.2" y="5.0">HCMercsMediterranean</tech>

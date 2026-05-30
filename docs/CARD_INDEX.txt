@@ -6316,107 +6316,107 @@ DEHCShipSoldado2
   Mod (Legendary Leaders revolution civs)  (32 cards)
 ================================================================================
 
-RvltModHCBuenosAires
+ANWHCBuenosAires
   Name: Buenos Aires
   Icon: buenos_aires.png
   Desc: —
 
-RvltModHCConscription
+ANWHCConscription
   Name: Lexington Minutemen
   Icon: lexington_minutemen.png
   Desc: Arrives Fast! Militiamen become Lexington Minutemen who retain their
         hitpoints 80% longer and can now be called from Outposts and Forts.
         Sends 16 Militiamen.
 
-RvltModHCCrabats
+ANWHCCrabats
   Name: 12 Crabats
   Icon: crabat_icon.png
   Desc: Ships 12 Crabats. Enables Crabats at Taverns, Stables, Forts,
         Galleons, Outposts, and Blockhouses.
 
-RvltModHCFlightArcheryRomanians
+ANWHCFlightArcheryRomanians
   Name: Flight Archery
   Icon: flight_archery.png
   Desc: The Ottoman Flight Archery technique improves the damage and arrow
         release of your Azaps and Cavalry Archers.
 
-RvltModHCGranaderos
+ANWHCGranaderos
   Name: Granaderos
   Icon: granaderos.png
   Desc: Ships 10 Mounted Granaderos and 10 cows. Allows recruitment of
         Mounted Granaderos at Taverns, Lombards, Stables, Forts, and
         Galleons.
 
-RvltModHCHajduks
+ANWHCHajduks
   Name: Hajduks
   Icon: hajduks.png
   Desc: All existing Outposts and Blockhouses spawn a Hajduk. Enables
         Hajduks at Taverns, Barracks, Forts, Galleons, Outposts, and
         Blockhouses.
 
-RvltModHCJaguncos
+ANWHCJaguncos
   Name: Jagunços
   Icon: outlaw_rider_icon_64x64.png
   Desc: 10 Jagunços and 10 Cows. Allows recruitment of Jagunços at Taverns,
         Stables, Forts and Galleons.
 
-RvltModHCLegionHungarian
+ANWHCLegionHungarian
   Name: Kovats' Legion
   Icon: legion_kovat.png
   Desc: Ships a number of powerful Magyar Hussars and enables them to be
         trained at Forts (instead of ordinary Hussars).
 
-RvltModHCLegionMilitia
+ANWHCLegionMilitia
   Name: Rhode Island Militia
   Icon: rhode_island_militia.png
   Desc: Sends some Militiamen and State Militia that now improve Warship
         damage when they garrisoned in them. Fully replaces archaic units in
         your Barracks with State Militia.
 
-RvltModHCLlaneros
+ANWHCLlaneros
   Name: Llaneros
   Icon: outlaw_rider_icon_64x64.png
   Desc: Ships 10 Llaneros and 10 Cows. Allows recruitment of Llaneros at
         Taverns, Stables, Forts, and Galleons.
 
-RvltModHCMagyarGrenadiers
+ANWHCMagyarGrenadiers
   Name: Hungarian Grenadiers
   Icon: garde_imperial_2_icon_64x64.png
   Desc: All existing Outposts and Blockhouses spawn a Hungarian Grenadier.
 
-RvltModHCMagyarHussarsAlt
+ANWHCMagyarHussarsAlt
   Name: Magyar Hussars
   Icon: hungarian_hussars.png
   Desc: All existing Outposts and Blockhouses spawn a Magyar Hussar.
 
-RvltModHCMercsMamelukes
+ANWHCMercsMamelukes
   Name: Hire Mamelukes
   Icon: —
   Desc: —
 
-RvltModHCMetis
+ANWHCMetis
   Name: Métis Pathfinders
   Icon: infinite_metis_pathfinder.png
   Desc: Ships 12 Métis Pathfinders.
 
-RvltModHCMetisFrench
+ANWHCMetisFrench
   Name: Métis Voyageurs
   Icon: infinite_coureur.png
   Desc: Ships 10 Métis Voyageurs.
 
-RvltModHCMilitaryFrontier
+ANWHCMilitaryFrontier
   Name: Military Frontier
   Icon: military_frontier.png
   Desc: All existing Outposts spawn a Grenzer. Allows Grenzers to build
         Outposts and Outposts to train Grenzers.
 
-RvltModHCPandours
+ANWHCPandours
   Name: 10 Pandours
   Icon: hc_pandour_icon.png
   Desc: Ships 10 Pandours. Enables Pandours at Taverns, Barracks, Forts,
         Galleons, Outposts, and Blockhouses.
 
-RvltModHCPhanariotes
+ANWHCPhanariotes
   Name: Danubian Principalities
   Icon: danubian_principalities.png
   Desc: The influential Houses of Phanar grant access to their units,
@@ -6424,82 +6424,82 @@ RvltModHCPhanariotes
         Phanariote units now cost population, but can be trained from a
         variety of buildings without limit.
 
-RvltModHCREVCuzco
+ANWHCREVCuzco
   Name: Cuzco
   Icon: cuzco.png
   Desc: Can transform into most buildings available in your current age.
 
-RvltModHCREVMXCaliforniaStatehood
+ANWHCREVMXCaliforniaStatehood
   Name: California Statehood
   Icon: california_statehood.png
   Desc: Ships 1 State Capitol Wagon. The State Capitol can train
         Construction Wagons and research unique improvements.
 
-RvltModHCREVMXTexasMarines
+ANWHCREVMXTexasMarines
   Name: Texas Marines
   Icon: texas_marines.png
   Desc: Minutemen are upgraded to Texian Marines. Marines no longer lose
         hitpoints and inflict more damage against Buildings, Ships and
         Artillery.
 
-RvltModHCREVMXTexasStatehood
+ANWHCREVMXTexasStatehood
   Name: Texas Statehood
   Icon: texas_statehood.png
   Desc: Ships 1 State Capitol Wagon. The State Capitol can train
         Construction Wagons and research unique improvements.
 
-RvltModHCREVWagonWarfare
+ANWHCREVWagonWarfare
   Name: Wagon Warfare
   Icon: war_wagon_improved_icon.png
   Desc: Fully replaces your Light cavalry units in the Stable with Imperial
         War Wagons.
 
-RvltModHCRoshiorDragoons
+ANWHCRoshiorDragoons
   Name: Roșior Dragoons
   Icon: rosior_dragoons.png
   Desc: All existing Outposts and Blockhouses spawn a Roșior Dragoon and
         Forts can now train Roșior Dragoons.
 
-RvltModHCRussianExpArmy
+ANWHCRussianExpArmy
   Name: Russian Expeditionary Army
   Icon: rus_army_icon_64.png
   Desc: An army of Russian Counter Dragoons (Dragoons) and Culverins.\n9
         Counter Dragoons: ranged cavalry, good against cavalry.\n3
         Culverins: light artillery that is good against artillery.
 
-RvltModHCShipCavArchers
+ANWHCShipCavArchers
   Name: 8 Cavalry Archers
   Icon: infinite_cav_archer.png
   Desc: —
 
-RvltModHCShipEuropeanFleet
+ANWHCShipEuropeanFleet
   Name: Danubian Flotilla
   Icon: danubian_flotilla.png
   Desc: Ships 3 Galleys from the blue Danube.
 
-RvltModHCShipFortWagonOutpost
+ANWHCShipFortWagonOutpost
   Name: Border Fortress
   Icon: border_fortress.png
   Desc: Ships a Fort Wagon to defend the borderland.
 
-RvltModHCShipWarElephant
+ANWHCShipWarElephant
   Name: Sumatran Elephants
   Icon: hc_infinite_war_elephants.png
   Desc: You will receive a bonus Elephant with all future shipments,
         starting with this one. Enables the training of War Elephants.
 
-RvltModHCSovnyaRomanian
+ANWHCSovnyaRomanian
   Name: Sovnya
   Icon: sovnya.png
   Desc: —
 
-RvltModHCUffizi
+ANWHCUffizi
   Name: Uffizi
   Icon: uffizi.png
   Desc: Ships 1 Basilica Wagon and causes Lombards to trickle XP whilst
         converting Investments.
 
-RvltModHCWallachianArchers
+ANWHCWallachianArchers
   Name: Wallachian Horse Archers
   Icon: wallachian_horse_archers.png
   Desc: All existing Blockhouses spawn a Wallachian Horse Archer.

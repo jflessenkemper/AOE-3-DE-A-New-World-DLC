@@ -1,0 +1,488 @@
+{
+  "version": "1.0.0",
+  "generated_from": "a_new_world.html",
+  "total_civs": 41,
+  "doctrines_per_civ": 15,
+  "civs": {
+    "ANWArgentines": {
+      "anw_token": "ANWArgentines",
+      "display_name": "Argentina",
+      "data_name": "Argentines San Martin Revolution",
+      "data_search_blob": "Argentines Jose de San Martin · Pikeman · Rodelero · Lancer · Musketeers · Dragoons · Grenadiers · Militia · Field Guns · San Martin · Blandengues — Hand cavalry is cheaper. · Criollos — Ships a numbe",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Granadero shock-cavalry liberation",
+        "civ_label": "Argentines",
+        "leader_label": "San Martin Revolution"
+      }
+    },
+    "ANWAztecs": {
+      "anw_token": "ANWAztecs",
+      "display_name": "Aztec Empire",
+      "data_name": "Aztecs Montezuma",
+      "data_search_blob": "Aztecs Montezuma II · Jaguar Knight · Arrow Knight · Macehualtin · Coyote Runner · Puma Spearman · Eagle Runner · Skull Knight · Calendar Ceremony — Ships 1 Warrior Priest. Enables the new Calendar Ce",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Flower War tribute aggression",
+        "civ_label": "Aztecs",
+        "leader_label": "Montezuma"
+      }
+    },
+    "ANWBarbary": {
+      "anw_token": "ANWBarbary",
+      "display_name": "Barbary States",
+      "data_name": "Barbary Barbarossa Corsair Revolution",
+      "data_search_blob": "Barbary Hayreddin Barbarossa · Barbary Warrior · Tribal Horseman · Bedouin Horse Archer · Corsair Infantry · Camel Riders · Gunpowder Troops · Field Guns · Corsair Captain — Ships a powerful Corsair C",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Corsair raider economy",
+        "civ_label": "Barbary",
+        "leader_label": "Barbarossa Corsair Revolution"
+      }
+    },
+    "ANWBrazil": {
+      "anw_token": "ANWBrazil",
+      "display_name": "Brazil",
+      "data_name": "Brazil Pedro Revolution",
+      "data_search_blob": "Brazil Pedro I of Brazil · Musketeer · Dragoon · Crossbowman · Pikeman · Cassadors · Hussars · Organ Guns · Militia · Heavy Cannons · Bonifacio — TEAM 1 Prospector Wagon. Mines last longer. · Exotic H",
+      "playstyle_spec": {
+        "doctrine_label": "Distributed Economic Network",
+        "doctrine_summary": "Imperial line and Hessian reserve",
+        "civ_label": "Brazil",
+        "leader_label": "Pedro Revolution"
+      }
+    },
+    "ANWBritish": {
+      "anw_token": "ANWBritish",
+      "display_name": "Britain",
+      "data_name": "British Elizabeth",
+      "data_search_blob": "British Queen Elizabeth I · Musketeer · Longbowman · Hussar · Dragoon · Grenadier · Ranger · Artillery · TEAM Whale Oil — New methods of rendering Whale oil at sea allow your Fishing Boats to gather f",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Tudor naval and mercantile",
+        "civ_label": "British",
+        "leader_label": "Elizabeth"
+      }
+    },
+    "ANWCanadians": {
+      "anw_token": "ANWCanadians",
+      "display_name": "Canada",
+      "data_name": "Canadians Brock Revolution",
+      "data_search_blob": "Canadians Isaac Brock · Musketeer · Hussar · Longbowmen · Rangers · Dragoons · Grenadiers · Field Guns · 16 Musketeers · Fencibles — Musketeers are upgraded to Fencibles that are stronger, cheaper and",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Blockhouse infantry frontier",
+        "civ_label": "Canadians",
+        "leader_label": "Brock Revolution"
+      }
+    },
+    "ANWChileans": {
+      "anw_token": "ANWChileans",
+      "display_name": "Chile",
+      "data_name": "Chileans OHiggins Revolution",
+      "data_search_blob": "Chileans Bernardo O'Higgins · Pikeman · Rodelero · Lancer · Hussar · Musketeers · Dragoons · Grenadiers · Militia · Field Guns · Extensive Fortifications — Enables you to construct twice as many Outpo",
+      "playstyle_spec": {
+        "doctrine_label": "Andean Terrace Fortress",
+        "doctrine_summary": "Balanced Republican infantry",
+        "civ_label": "Chileans",
+        "leader_label": "OHiggins Revolution"
+      }
+    },
+    "ANWChinese": {
+      "anw_token": "ANWChinese",
+      "display_name": "China",
+      "data_name": "Chinese Kangxi",
+      "data_search_blob": "Chinese Kangxi Emperor · Arquebusier · Meteor Hammer · Chu Ko Nu · Changdao · Keshik · Steppe Rider · Iron Flail · Flying Crow · Advanced Wonders — Wonders have more hitpoints and are built faster. · ",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Eight-Banner pacification macro",
+        "civ_label": "Chinese",
+        "leader_label": "Kangxi"
+      }
+    },
+    "ANWColumbians": {
+      "anw_token": "ANWColumbians",
+      "display_name": "Gran Colombia",
+      "data_name": "Columbians Bolivar Colombia Revolution",
+      "data_search_blob": "Columbians Simon Bolivar · Pikeman · Rodelero · Lancer · Musketeers · Dragoons · Grenadiers · Militia · Field Guns · Liberation March — All infantry and cavalry train and move faster. · National Hero ",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Llanero liberation sweeps",
+        "civ_label": "Columbians",
+        "leader_label": "Bolivar Colombia Revolution"
+      }
+    },
+    "ANWDutch": {
+      "anw_token": "ANWDutch",
+      "display_name": "Netherlands",
+      "data_name": "Dutch Maurice Nassau",
+      "data_search_blob": "Dutch Maurice of Nassau · Halberdier · Ruyter · Pikeman · Skirmisher · Musketeer · Hussar · Grenadier · Artillery · Dutch Paintings — Every time you order a Dutch painting from your home city all your",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Stadtholder drill-and-bank",
+        "civ_label": "Dutch",
+        "leader_label": "Maurice Nassau"
+      }
+    },
+    "ANWEgyptians": {
+      "anw_token": "ANWEgyptians",
+      "display_name": "Egypt",
+      "data_name": "Egyptians Muhammad Ali Revolution",
+      "data_search_blob": "Egyptians Muhammad Ali Pasha · Deli · Humbaraci · Janissaries · Abus Guns · Nizam Fusiliers · Spahi · Artillery · City Defense — Town Center attack increased, and you can call out Bashibozuks a second",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Nizam-i Cedid modernization",
+        "civ_label": "Egyptians",
+        "leader_label": "Muhammad Ali Revolution"
+      }
+    },
+    "ANWEthiopians": {
+      "anw_token": "ANWEthiopians",
+      "display_name": "Ethiopia",
+      "data_name": "Ethiopians Menelik",
+      "data_search_blob": "Ethiopians Menelik II · Oromo Warrior · Shotel Warrior · Gascenya · Neftenya · Javelin Rider · Mortar Crews · Support Infantry · Indian Spice Trade — Trade Routes supply more resources and Native Sett",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Solomonic highland modernization",
+        "civ_label": "Ethiopians",
+        "leader_label": "Menelik"
+      }
+    },
+    "ANWFinnish": {
+      "anw_token": "ANWFinnish",
+      "display_name": "Finland",
+      "data_name": "Finnish Mannerheim Revolution",
+      "data_search_blob": "Finnish Carl Gustaf Emil Mannerheim · Pikeman · Finnish Rider · Grenadier · Caroleans · Hakkapelit · Leather Cannons · Hussars · Militia · Finnish Taiga — All present Houses, Blockhouses and Torps spa",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Mannerheim-line ski infantry",
+        "civ_label": "Finnish",
+        "leader_label": "Mannerheim Revolution"
+      }
+    },
+    "ANWFrench": {
+      "anw_token": "ANWFrench",
+      "display_name": "France",
+      "data_name": "French Louis XVIII Bourbon",
+      "data_search_blob": "French Louis XVIII · Skirmisher · Cuirassier · Musketeer · Hussar · Dragoon · Grenadier · Artillery · TEAM House of Bonaparte — TEAM Skirmishers can be trained in the Commerce Age. Also benefits Cassa",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Bourbon Restoration court army",
+        "civ_label": "French Louis",
+        "leader_label": "XVIII Bourbon"
+      }
+    },
+    "ANWGermans": {
+      "anw_token": "ANWGermans",
+      "display_name": "Germany",
+      "data_name": "Germans Frederick Great",
+      "data_search_blob": "Germans Frederick the Great · Skirmisher · Uhlan · Doppelsoldner · War Wagon · Hussar · Crossbowman · Artillery · Buergermeister — Improves your German Explorer in combat, lets him build Trading Posts",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Hohenzollern oblique-order shock",
+        "civ_label": "Germans",
+        "leader_label": "Frederick Great"
+      }
+    },
+    "ANWHaitians": {
+      "anw_token": "ANWHaitians",
+      "display_name": "Haiti",
+      "data_name": "Haitians Louverture Revolution",
+      "data_search_blob": "Haitians Toussaint Louverture · Maroon · Revolutionaries · Colonial Militia · Dragoons · Field Guns · Vodou Ceremonies — Ships 1 Settler. Ships 1 additional Settler for each one you have lost so far t",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Mass infantry insurrection",
+        "civ_label": "Haitians",
+        "leader_label": "Louverture Revolution"
+      }
+    },
+    "ANWHaudenosaunee": {
+      "anw_token": "ANWHaudenosaunee",
+      "display_name": "Iroquois Confederacy",
+      "data_name": "Haudenosaunee Hiawatha Iroquois",
+      "data_search_blob": "Haudenosaunee Hiawatha · Tomahawk · War Rifle · Aenna · Mantlet · Forest Prowler · Musket Rider · Light Cannon · High Chief — Your War Chief is better in combat and at organizing defences. His aura no",
+      "playstyle_spec": {
+        "doctrine_label": "Shrine or Trade Node Spread",
+        "doctrine_summary": "Confederacy forest warfare",
+        "civ_label": "Haudenosaunee",
+        "leader_label": "Hiawatha Iroquois"
+      }
+    },
+    "ANWHausa": {
+      "anw_token": "ANWHausa",
+      "display_name": "Sokoto",
+      "data_name": "Hausa Usman dan Fodio",
+      "data_search_blob": "Hausa Usman dan Fodio of Kebbi · Fula Warrior · Raider · Maigadi · Lifidi Knight · Desert Archer · Cannon Crews · Mortar Crews · Hausa Kingdom — Ships all of the following Builders up until the reache",
+      "playstyle_spec": {
+        "doctrine_label": "Distributed Economic Network",
+        "doctrine_summary": "Surame fortress and trans-Saharan caravan lattice",
+        "civ_label": "Hausa",
+        "leader_label": "Usman dan Fodio"
+      }
+    },
+    "ANWHungarians": {
+      "anw_token": "ANWHungarians",
+      "display_name": "Hungary",
+      "data_name": "Hungarians Kossuth Revolution",
+      "data_search_blob": "Hungarians Lajos Kossuth · Hussar · Grensers · Line Infantry · Uhlans · Militia · Field Guns · Exotic Hardwoods — Villagers gather Wood faster. · Advanced Dock — Docks have a greater attack, heal ship",
+      "playstyle_spec": {
+        "doctrine_label": "Steppe Cavalry Wedge",
+        "doctrine_summary": "Honved hussar uprising",
+        "civ_label": "Hungarians",
+        "leader_label": "Kossuth Revolution"
+      }
+    },
+    "ANWInca": {
+      "anw_token": "ANWInca",
+      "display_name": "Inca Empire",
+      "data_name": "Inca Pachacuti",
+      "data_search_blob": "Inca Pachacuti · Bolas Warrior · Jungle Bowman · Huaraca · Chimu Runner · Maceman · Spearmen · Support Infantry · Advanced Tambos — Tambos are cheaper and stronger. +1 Chasqui · TEAM Inca Walls — Wall",
+      "playstyle_spec": {
+        "doctrine_label": "Andean Terrace Fortress",
+        "doctrine_summary": "Tawantinsuyu mass infantry",
+        "civ_label": "Inca",
+        "leader_label": "Pachacuti"
+      }
+    },
+    "ANWIndians": {
+      "anw_token": "ANWIndians",
+      "display_name": "Maratha Empire",
+      "data_name": "Indians Akbar",
+      "data_search_blob": "Indians Akbar · Sepoy · Sowar · Gurkha · Rajput · Zamburak · Howdah · Mahout · Urumi · Good Faith Agreements — Consulate armies and improvements arrive 50% faster. Improvements cost less, an",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Maratha Ganimi Kava raid",
+        "civ_label": "Indians",
+        "leader_label": "Akbar"
+      }
+    },
+    "ANWIndonesians": {
+      "anw_token": "ANWIndonesians",
+      "display_name": "Indonesia",
+      "data_name": "Indonesians Diponegoro Revolution",
+      "data_search_blob": "Indonesians Prince Diponegoro · Halberdier · Ruyter · Skirmishers · Musketeers · Hussars · Militia · Field Guns · Kraton Guards — Improves Revolutionaries and Pikemen units in combat. · Aceh Pepper Ex",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Java War guerrilla and kraton fort",
+        "civ_label": "Indonesians",
+        "leader_label": "Diponegoro Revolution"
+      }
+    },
+    "ANWItalians": {
+      "anw_token": "ANWItalians",
+      "display_name": "Italy",
+      "data_name": "Italians Garibaldi",
+      "data_search_blob": "Italians Giuseppe Garibaldi · Bersagliere · Pavisier · Schiavone · Papal Zouave · Mounted Infantry · Militia · Artillery · Machiavellianism — Arrives fast! Improves your Italian Explorer in combat, en",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Risorgimento volunteer columns",
+        "civ_label": "Italians",
+        "leader_label": "Garibaldi"
+      }
+    },
+    "ANWJapanese": {
+      "anw_token": "ANWJapanese",
+      "display_name": "Japan",
+      "data_name": "Japanese Tokugawa Ieyasu",
+      "data_search_blob": "Japanese Tokugawa Ieyasu · Kensei · Ashigaru · Yumi · Samurai · Yabusame · Naginata Rider · Flaming Arrow · Good Faith Agreements — Consulate armies and improvements arrive 50% faster. Improvements co",
+      "playstyle_spec": {
+        "doctrine_label": "Shrine or Trade Node Spread",
+        "doctrine_summary": "Bakufu shrine-and-musket order",
+        "civ_label": "Japanese",
+        "leader_label": "Tokugawa Ieyasu"
+      }
+    },
+    "ANWLakota": {
+      "anw_token": "ANWLakota",
+      "display_name": "Lakota",
+      "data_name": "Lakota Crazy Horse",
+      "data_search_blob": "Lakota Crazy Horse · Axe Rider · Rifle Rider · Bow Rider · Wakina Rifle · Tashunke Prowler · Club Warrior · Ogle Tanka Un — Makes your War Chief deadlier in combat. His aura now also improves your unit",
+      "playstyle_spec": {
+        "doctrine_label": "Plains Cavalry Wedge",
+        "doctrine_summary": "Little Bighorn envelopment",
+        "civ_label": "Lakota",
+        "leader_label": "Crazy Horse"
+      }
+    },
+    "ANWMaltese": {
+      "anw_token": "ANWMaltese",
+      "display_name": "Malta",
+      "data_name": "Maltese Valette",
+      "data_search_blob": "Maltese Jean Parisot de Valette · Hospitaller · Hoop Thrower · Crossbowman · Pikeman · Fire Thrower · Sentinel · Artillery · German Tongue — Ships a Commandery Wagon and a number of Settler Wagons. En",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Great Siege bastion defense",
+        "civ_label": "Maltese",
+        "leader_label": "Valette"
+      }
+    },
+    "ANWMayans": {
+      "anw_token": "ANWMayans",
+      "display_name": "Maya",
+      "data_name": "Mayans Canek Maya Revolution",
+      "data_search_blob": "Mayans Jacinto Canek · Salteador · Insurgentes · Soldados · Cuatreros · Militia · Field Guns · Jungle Villages — Every house spawns several jungle trees. · Old Kowoj Traditions — Ships a Tapir for eve",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Indigenous insurrection mass",
+        "civ_label": "Mayans",
+        "leader_label": "Canek Maya Revolution"
+      }
+    },
+    "ANWMexicans": {
+      "anw_token": "ANWMexicans",
+      "display_name": "Mexico (Mexico City)",
+      "data_name": "Mexicans Hidalgo Standard",
+      "data_search_blob": "Mexicans Miguel Hidalgo y Costilla · Soldado · Chinaco · Insurgente · Salteador · Cuatrero · Lancero · Artillery · Alhóndiga de Granaditas — Ships 1 Hacienda Wagon and 2 Settlers. · Barbacoa — Haciend",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Grito de Dolores levée",
+        "civ_label": "Mexicans",
+        "leader_label": "Hidalgo Standard"
+      }
+    },
+    "ANWNapoleonicFrance": {
+      "anw_token": "ANWNapoleonicFrance",
+      "display_name": "French Empire",
+      "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
+      "data_search_blob": "Napoleonic France Napoleon Bonaparte · Skirmisher · Cuirassier · Musketeers · Hussars · Dragoons · Grenadiers · Artillery · Imperial Old Guard — Significantly improves Grenadier resistances and melee ",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Grande Armée Grand Battery empire",
+        "civ_label": "Napoleonic France",
+        "leader_label": "Napoleon Bonaparte Revolution"
+      }
+    },
+    "ANWOttomans": {
+      "anw_token": "ANWOttomans",
+      "display_name": "Ottoman Empire",
+      "data_name": "Ottomans Suleiman",
+      "data_search_blob": "Ottomans Suleiman the Magnificent · Grenadier · Hussar · Janissary · Abus Gun · Nizam Fusilier · Spahi · Artillery · Agha — Improves your Ottoman Explorer in combat, increases his movement rate, and g",
+      "playstyle_spec": {
+        "doctrine_label": "Siege Train Concentration",
+        "doctrine_summary": "Sublime Porte gunpowder empire",
+        "civ_label": "Ottomans",
+        "leader_label": "Suleiman"
+      }
+    },
+    "ANWPeruvians": {
+      "anw_token": "ANWPeruvians",
+      "display_name": "Peru",
+      "data_name": "Peruvians Santa Cruz Peru Revolution",
+      "data_search_blob": "Peruvians Andres de Santa Cruz · Pikeman · Rodelero · Lancer · Musketeers · Dragoons · Grenadiers · Militia · Field Guns · Extensive Fortifications — Enables you to construct twice as many Outposts an",
+      "playstyle_spec": {
+        "doctrine_label": "Andean Terrace Fortress",
+        "doctrine_summary": "Andean fort line and native levy",
+        "civ_label": "Peruvians",
+        "leader_label": "Santa Cruz Peru Revolution"
+      }
+    },
+    "ANWPortuguese": {
+      "anw_token": "ANWPortuguese",
+      "display_name": "Portugal",
+      "data_name": "Portuguese Henry Navigator",
+      "data_search_blob": "Portuguese Prince Henry the Navigator · Musketeer · Dragoon · Cassador · Hussar · Organ Gun · Pikeman · Crossbowman · Artillery · Feitorias — Your Town Centers now slowly trickle all resources. · Navi",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Sagres carrack-and-padrao empire",
+        "civ_label": "Portuguese",
+        "leader_label": "Henry Navigator"
+      }
+    },
+    "ANWRevFrance": {
+      "anw_token": "ANWRevFrance",
+      "display_name": "French Republic",
+      "data_name": "Revolutionary France Robespierre Revolution",
+      "data_search_blob": "Revolutionary France Maximilien Robespierre · Skirmisher · Cuirassier · Musketeers · Hussars · Dragoons · Grenadiers · Artillery · Storming of the Bastille — Sansculotte siege damage and armor increas",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Levée-en-masse Republic",
+        "civ_label": "Revolutionary France",
+        "leader_label": "Robespierre Revolution"
+      }
+    },
+    "ANWRomanians": {
+      "anw_token": "ANWRomanians",
+      "display_name": "Romania",
+      "data_name": "Romanians Cuza Revolution",
+      "data_search_blob": "Romanians Alexandru Ioan Cuza · Dorabant · Rosior Dragoon · Line Infantry · Hussars · Skirmishers · Militia · Field Guns · Landed Gentry — Enables Cavalry Archers to be trained in the Commerce Age and",
+      "playstyle_spec": {
+        "doctrine_label": "Civic Militia Center",
+        "doctrine_summary": "Danubian Principalities consolidation",
+        "civ_label": "Romanians",
+        "leader_label": "Cuza Revolution"
+      }
+    },
+    "ANWRussians": {
+      "anw_token": "ANWRussians",
+      "display_name": "Russia",
+      "data_name": "Russians Catherine",
+      "data_search_blob": "Russians Catherine · Grenadier · Cavalry Archer · Streltsy · Cossack · Oprichnik · Musketeer · Artillery · Polar Explorer — Improves your Russian Explorer in combat, improves his damage agains",
+      "playstyle_spec": {
+        "doctrine_label": "Streltsy siege",
+        "doctrine_summary": "Oprichnik terror",
+        "civ_label": "Russians",
+        "leader_label": "Catherine"
+      }
+    },
+    "ANWSouthAfricans": {
+      "anw_token": "ANWSouthAfricans",
+      "display_name": "South Africa",
+      "data_name": "South Africans Kruger Boer Revolution",
+      "data_search_blob": "South Africans Paul Kruger · Halberdier · Ruyter · Skirmishers · Musketeers · Hussars · Militia · Field Guns · Diamond Rush — Ships 1 Prospector Wagon looking for a Diamond Mine. · South Sea Bubble — ",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Boer commando trader-cavalry",
+        "civ_label": "South Africans",
+        "leader_label": "Kruger Boer Revolution"
+      }
+    },
+    "ANWSpanish": {
+      "anw_token": "ANWSpanish",
+      "display_name": "Spain",
+      "data_name": "Spanish Isabella Castile",
+      "data_search_blob": "Spanish Isabella I of Castile · Rodelero · Lancer · Pikeman · Crossbowman · Musketeer · Dragoon · Hussar · Artillery · Conquistador — Improves your Spanish Explorer and his war dogs in combat. · Alpac",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Reconquista Tercio precursor",
+        "civ_label": "Spanish",
+        "leader_label": "Isabella Castile"
+      }
+    },
+    "ANWSwedes": {
+      "anw_token": "ANWSwedes",
+      "display_name": "Sweden",
+      "data_name": "Swedes Gustavus Adolphus Swedish",
+      "data_search_blob": "Swedes Gustavus Adolphus · Pikeman · Finnish Rider · Carolean · Hakkapelit · Leather Cannon · Hussar · Artillery · Duelist — Improves your Swedish Explorer in combat, gives him a powerful Heavy Strike",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Lion of the North combined arms",
+        "civ_label": "Swedes",
+        "leader_label": "Gustavus Adolphus Swedish"
+      }
+    },
+    "ANWTexians": {
+      "anw_token": "ANWTexians",
+      "display_name": "Texas",
+      "data_name": "Texians Sam Houston Texas Revolution",
+      "data_search_blob": "Texians Sam Houston · Chinaco · State Militia · Riflemen · Volunteers · Dragoons · Militia · Field Guns · Texas Army — Enables the Imperial upgrades for your Barracks units to be slowly researched, fo",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Republic of Texas militia",
+        "civ_label": "Texians",
+        "leader_label": "Sam Houston Texas Revolution"
+      }
+    },
+    "ANWUSA": {
+      "anw_token": "ANWUSA",
+      "display_name": "United States",
+      "data_name": "United States Washington",
+      "data_search_blob": "United States George Washington · Rifleman · US Cavalry · Regular · State Militia · Sharpshooter · Carbine Cavalry · Artillery · Pioneers — Villager hitpoints greatly increased. · Advanced Saloon — Sa",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Continental Army Fabian-to-Yorktown",
+        "civ_label": "United States",
+        "leader_label": "Washington"
+      }
+    }
+  }
+}

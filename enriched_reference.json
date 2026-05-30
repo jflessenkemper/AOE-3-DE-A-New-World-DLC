@@ -1,0 +1,2914 @@
+{
+  "schema_version": 3,
+  "generated_from": [
+    "/var/home/jflessenkemper/AOE-3-DE-A-New-World/reference_matrix.json",
+    "/var/home/jflessenkemper/AOE-3-DE-A-New-World/playstyle_spec.json",
+    "/var/home/jflessenkemper/AOE-3-DE-A-New-World/data/decks_anw.json",
+    "/var/home/jflessenkemper/AOE-3-DE-A-New-World/data/anw_civ_blurbs.json"
+  ],
+  "total_civs": 41,
+  "doctrines_per_civ": 15,
+  "civs": {
+    "ANWArgentines": {
+      "anw_token": "ANWArgentines",
+      "display_name": "Argentina",
+      "data_name": "Argentines San Martin Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Granadero shock-cavalry liberation",
+        "civ_label": "Argentines",
+        "leader_label": "San Martin Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        0.85,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 3,
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Granadero shock-cavalry liberation",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "expected_deck": {
+        "0": [
+          "DEHCLombardy",
+          "HCCheapBarracksTeam"
+        ],
+        "1": [
+          "DEHCREVTrattoria",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCMercsIrishBrigadiers",
+          "HCFrontierDefenses",
+          "DEHCTheaters"
+        ],
+        "2": [
+          "DEHCREVCattleDeliveryArgentina",
+          "DEHCLiberationMarch",
+          "DEHCMarvelousYear",
+          "DEHCREVFlyingBattery",
+          "DEHCHandMortar",
+          "DEHCMercsArmoredPistoleers",
+          "HCUnlockFort",
+          "DEHCHabsburgAllies1"
+        ],
+        "3": [
+          "DEHCREVSanMartin",
+          "DEHCREVBlandengues",
+          "DEHCREVCriollos",
+          "DEHCREVArgentineMortars",
+          "DEHCREVShipMortars",
+          "HCXPShipMortarsTeam",
+          "ANWHCGranaderos",
+          "HCHeavyFortifications",
+          "DEHCShipBattleshipRepeat",
+          "HCShipFoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Home City Shipments arrive slightly faster; elite infantry never rout.",
+        "unique_units": [
+          "Granadero a Caballo",
+          "Lancer",
+          "Rodelero",
+          "War Dog",
+          "Gatling Gun"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Rush forward base, mass Granaderos and Lancers with Musketeer screen; push and re-wall rather than defend home base.",
+        "age_up": "Wagon politicians (Citizens)"
+      }
+    },
+    "ANWAztecs": {
+      "anw_token": "ANWAztecs",
+      "display_name": "Aztec Empire",
+      "data_name": "Aztecs Montezuma",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Flower War tribute aggression",
+        "civ_label": "Aztecs",
+        "leader_label": "Montezuma"
+      },
+      "expected_milestones": {
+        "forward_base": true
+      },
+      "wall_strategy": 1,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "build_style": 10,
+      "doctrine_label": "Jungle Guerrilla Network",
+      "doctrine_summary": "Flower War tribute aggression",
+      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "expected_deck": {
+        "0": [
+          "DEHCCalendarCeremony",
+          "DEHCCalmecac",
+          "DEHCSkullWall",
+          "DEHCRitualGladiators"
+        ],
+        "1": [
+          "DEHCShipJaguarKnights6",
+          "DEHCMacehualtinCombat",
+          "DEHCAztecFort",
+          "HCXPShipEagleKnights3",
+          "DEHCChichimecaRebellion"
+        ],
+        "2": [
+          "DEHCZapotecAlliesTeam",
+          "HCXPExtensiveFortificationsAztec",
+          "HCXPShipJaguars2",
+          "HCXPShipJaguarsTeam",
+          "HCXPShipMacehualtins1",
+          "HCXPShipMacehualtins3",
+          "HCXPWarChiefAztec2",
+          "DEHCShipMedicineMen3Aztec",
+          "HCXPChinampa2",
+          "HCXPWarChiefAztec1"
+        ],
+        "3": [
+          "HCXPGreatTempleHuitzilopochtli",
+          "HCXPAztecMining",
+          "HCXPTempleCenteotl",
+          "HCXPShipEagleKnights1",
+          "HCXPShipJaguarKnights1",
+          "HCXPShipJaguarKnights3"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Builds Warchief units and earns XP through Tribute; no Colonial age-up cost.",
+        "unique_units": [
+          "Jaguar Knight",
+          "Eagle Runner Knight",
+          "Skull Knight",
+          "Coyote Runner",
+          "Macehualtin"
+        ],
+        "unique_buildings": [
+          "War Hut",
+          "Skull Wall",
+          "Tribal Marketplace"
+        ],
+        "playstyle": "Tribute boom to 18+ villagers, harass with Macehualtin + Coyote Runners in Colonial, FF to Jaguar/Eagle Knight mass; hug chokes, avoid open fights.",
+        "age_up": "Temples (Teocalli wonders)"
+      }
+    },
+    "ANWBarbary": {
+      "anw_token": "ANWBarbary",
+      "display_name": "Barbary States",
+      "data_name": "Barbary Barbarossa Corsair Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Corsair raider economy",
+        "civ_label": "Barbary",
+        "leader_label": "Barbarossa Corsair Revolution"
+      },
+      "expected_milestones": {
+        "dock": true,
+        "wall_segment": true,
+        "trading_post": true
+      },
+      "wall_strategy": 2,
+      "military_distance_band": [
+        0.9,
+        1.2
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 8,
+      "doctrine_label": "Naval Mercantile Compound",
+      "doctrine_summary": "Corsair raider economy",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "expected_deck": {
+        "0": [
+          "DEHCColonialMilitiaOttoman",
+          "DEHCSPCSaharanTrade"
+        ],
+        "1": [
+          "DEHCREVCorsairCaptain",
+          "DEHCREVDhimma",
+          "DEHCSPCBarbaryMadrasa",
+          "HCNavalCombat",
+          "HCShipGalleons"
+        ],
+        "2": [
+          "DEHCREVSaleRovers",
+          "DEHCREVBerberNomads",
+          "DEHCREVLoyalWarriors",
+          "DEHCREVOutlawCombat",
+          "DEHCREVShipZenataTeam",
+          "DEHCShipBerberAllies2Ottoman",
+          "DEHCMercsBosniaks"
+        ],
+        "3": [
+          "DEHCREVShipBarbaryWarrior",
+          "DEHCREVShipBerberAllies",
+          "DEHCREVBarbaryCombat",
+          "DEHCREVShipBarbaryMarksman",
+          "DEHCREVOttomanExpArmy",
+          "DEHCREVShipFalconets",
+          "DEHCREVShipXebec",
+          "DEHCREVShipXebec2",
+          "HCXPMercsCorsairsRepeat",
+          "DEHCMercsAskaris",
+          "DEHCMercsOttoman"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Can train Privateers with increased build limit, which can train additional units.",
+        "unique_units": [
+          "Barbary Warrior",
+          "Corsair Marksman",
+          "Tribal Horseman",
+          "Bedouin Horse Archer",
+          "Great Bombard"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Dock-first naval economy; Corsair raids deny enemy trade; Barbary Warriors and mercs close land fights; Xebecs dominate water maps.",
+        "age_up": "Ottoman-style Wagon shipments"
+      }
+    },
+    "ANWBrazil": {
+      "anw_token": "ANWBrazil",
+      "display_name": "Brazil",
+      "data_name": "Brazil Pedro Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Distributed Economic Network",
+        "doctrine_summary": "Imperial line and Hessian reserve",
+        "civ_label": "Brazil",
+        "leader_label": "Pedro Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 3,
+      "military_distance_band": [
+        1.1,
+        1.3
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 2,
+      "doctrine_label": "Distributed Economic Network",
+      "doctrine_summary": "Imperial line and Hessian reserve",
+      "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVBonifacio",
+          "HCExoticHardwoods"
+        ],
+        "1": [
+          "DEHCREVWildlife",
+          "HCShipBandeirantes",
+          "DEHCMercsCannoneersEuropean",
+          "DEHCTheaters",
+          "DEHCWettinAllies1"
+        ],
+        "2": [
+          "DEHCREVAmazonia",
+          "DEHCREVCattleDeliveryBrazil",
+          "DEHCREVBahia",
+          "DEHCREVMinasGerais",
+          "DEHCMercsArmoredPistoleers",
+          "HCRefrigeration",
+          "DEHCCarracks",
+          "DEHCEstremozGuns",
+          "DEHCHandMortar",
+          "DEHCShipGatlings1"
+        ],
+        "3": [
+          "DEHCREVBrazilImporters",
+          "DEHCREVShipCacadores",
+          "DEHCREVShipSoldados",
+          "HCREVShipIronclads",
+          "HCUnlockFactory",
+          "DEHCPortugueseBattleshipCard",
+          "DEHCShipBattleshipRepeat",
+          "DEHCAkanAllies"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Receives a free Covered Wagon with every Age; starts with 7 Citizens.",
+        "unique_units": [
+          "Voluntario Da Patria",
+          "Gatling Gun",
+          "Lancer"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Spread Mills and Plantations across multiple resource patches for a bottleneck-free economy; Covered Wagon trickle expands the economic footprint; Voluntarios from Town Centers back up a Market-heavy late game.",
+        "age_up": "Covered Wagon with each Age-up"
+      }
+    },
+    "ANWBritish": {
+      "anw_token": "ANWBritish",
+      "display_name": "Britain",
+      "data_name": "British Elizabeth",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Tudor naval and mercantile",
+        "civ_label": "British",
+        "leader_label": "Elizabeth"
+      },
+      "expected_milestones": {
+        "dock": true,
+        "wall_segment": true,
+        "trading_post": true
+      },
+      "wall_strategy": 2,
+      "military_distance_band": [
+        0.9,
+        1.2
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 8,
+      "doctrine_label": "Naval Mercantile Compound",
+      "doctrine_summary": "Tudor naval and mercantile",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "expected_deck": {
+        "3": [
+          "DEHCRuleBritannia",
+          "DEHCRangers",
+          "DEHCShipRangers2",
+          "DEHCShipPikemenBritish",
+          "HCMonitorCombatTeam",
+          "HCCheapDocksTeam"
+        ],
+        "1": [
+          "HCExplorerBritish",
+          "HCMusketeerGrenadierHitpointsBritishTeam",
+          "HCMusketeerGrenadierDamageBritish",
+          "HCCavalryDamageBritish",
+          "HCShipGalleons"
+        ],
+        "2": [
+          "HCMusketeerGrenadierCombatBritish",
+          "DEHCSiegeArchery",
+          "DEHCCanadianLoyalists",
+          "DEHCShipRangers1",
+          "HCShipFrigates",
+          "HCMercsHighlanders",
+          "HCCavalryCombatBritish",
+          "HCImprovedLongbows",
+          "HCShipLongbowmen4",
+          "HCShipLongbowmenRepeat",
+          "HCNavalGunners"
+        ],
+        "0": [
+          "DEHCWhaleOilTeam",
+          "DEHCGreenwichTime",
+          "DEHCFedMarionsDiversions"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Manors automatically spawn a Settler when built.",
+        "unique_units": [
+          "Longbowman",
+          "Congreve Rocket",
+          "Ranger"
+        ],
+        "unique_buildings": [
+          "Manor"
+        ],
+        "playstyle": "Boom via Manor-spawned Settlers; wall harbor early; Musketeer + Longbow lines; strong navy; land army funded by naval shipments and mercenary contracts.",
+        "age_up": "Wagon politicians (Trading Post, Bank, etc.)"
+      }
+    },
+    "ANWCanadians": {
+      "anw_token": "ANWCanadians",
+      "display_name": "Canada",
+      "data_name": "Canadians Brock Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Blockhouse infantry frontier",
+        "civ_label": "Canadians",
+        "leader_label": "Brock Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        0.9
+      ],
+      "wall_deadline_ms": 600000,
+      "build_style": 1,
+      "doctrine_label": "Compact Fortified Core",
+      "doctrine_summary": "Blockhouse infantry frontier",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "expected_deck": {
+        "0": [
+          "HCXPFurTrade",
+          "DEHCGreenwichTime"
+        ],
+        "1": [
+          "DEHCREVCanadianOfficer",
+          "DEHCREVBuffaloHunt",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCMercsIrishBrigadiers",
+          "DEHCHanoverAllies1"
+        ],
+        "2": [
+          "DEHCREVShipWarCanoes",
+          "DEHCMercsGiantGrenadiers",
+          "HCUnlockFort",
+          "DEHCHanoverAllies2",
+          "DEHCShipRangers1",
+          "DEHCSiegeArchery",
+          "DEHCREVShipRangers"
+        ],
+        "3": [
+          "DEHCREVFencibles",
+          "DEHCREVConscriptionCanada",
+          "DEHCREVNativeAlliesCanada",
+          "DEHCCanadianLoyalists",
+          "DEHCREVHighlanders",
+          "DEHCREVNorthAmericaTrade",
+          "DEHCREVQuebec",
+          "DEHCREVShipElk",
+          "DEHCREVShipGrizzlies",
+          "DEHCREVShipMusketeers",
+          "ANWHCMetis"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Manor spawns a Metis Pathfinder when built; Villagers gain ranged attack each Age; starts with a Native Scout and trains Metis Voyageurs alongside Settlers.",
+        "unique_units": [
+          "Ranger",
+          "Congreve Rocket",
+          "Metis Pathfinder",
+          "Metis Voyageur",
+          "Cuirassier"
+        ],
+        "unique_buildings": [
+          "Manor"
+        ],
+        "playstyle": "Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress.",
+        "age_up": "Wagon politicians with Blockhouse (Brock) or tight-core civic politicians (Papineau / Lower Canada)"
+      }
+    },
+    "ANWChileans": {
+      "anw_token": "ANWChileans",
+      "display_name": "Chile",
+      "data_name": "Chileans OHiggins Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Andean Terrace Fortress",
+        "doctrine_summary": "Balanced Republican infantry",
+        "civ_label": "Chileans",
+        "leader_label": "OHiggins Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        1.0
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 14,
+      "doctrine_label": "Andean Terrace Fortress",
+      "doctrine_summary": "Balanced Republican infantry",
+      "doctrine_prose": "Tier-walls the high ground in two or three concentric stone rings, anchors outposts in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
+      "expected_deck": {
+        "0": [
+          "HCStonemasons",
+          "HCExoticHardwoods"
+        ],
+        "1": [
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCREVCitizenshipChile",
+          "DEHCREVFishingFleet",
+          "DEHCMercsIrishBrigadiers",
+          "DEHCTheaters"
+        ],
+        "2": [
+          "DEHCREVSalitrera",
+          "DEHCMercsArmoredPistoleers",
+          "HCUnlockFort",
+          "HCMercsHighlanders",
+          "DEHCHabsburgAllies1",
+          "DEHCHandMortar",
+          "DEHCLiberationMarch",
+          "DEHCMarvelousYear",
+          "DEHCShipGatlings1"
+        ],
+        "3": [
+          "DEHCREVMilitaryParadeChile",
+          "HCHeavyFortifications",
+          "HCMercsHighland",
+          "DEHCShipBattleshipRepeat",
+          "DEHCBourbonAllies1",
+          "DEHCMapucheAlliesRepeat1",
+          "DEHCShipCannons1Team",
+          "DEHCShipNuestrasSenoras",
+          "HCShipFoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Home City Shipments arrive slightly faster; elite infantry never rout.",
+        "unique_units": [
+          "Rodelero",
+          "Lancer",
+          "War Dog",
+          "Gatling Gun"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Wall high ground in rings; steady Republican infantry + Lancer push; slow snowball to defended Industrial timing rather than early rush.",
+        "age_up": "Wagon politicians (Citizens)"
+      }
+    },
+    "ANWChinese": {
+      "anw_token": "ANWChinese",
+      "display_name": "China",
+      "data_name": "Chinese Kangxi",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Eight-Banner pacification macro",
+        "civ_label": "Chinese",
+        "leader_label": "Kangxi"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        0.9
+      ],
+      "wall_deadline_ms": 600000,
+      "build_style": 1,
+      "doctrine_label": "Compact Fortified Core",
+      "doctrine_summary": "Eight-Banner pacification macro",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "expected_deck": {
+        "0": [
+          "YPHCAdvancedWonders",
+          "YPHCShipVillageWagon1",
+          "YPHCChineseMonkMakeDisciple",
+          "DEHCChineseBridgesTeam"
+        ],
+        "1": [
+          "YPHCMercsRattanShield1",
+          "YPHCArtilleryDamageChinese",
+          "YPHCArtilleryHitpointsChinese",
+          "HCMercsManchu",
+          "YPHCArtilleryCombatChinese"
+        ],
+        "2": [
+          "YPHCShipArquebusier1",
+          "YPHCShipManchuTeam",
+          "DEHCDragonYear",
+          "YPHCGreatWall",
+          "YPHCMercsMandarinArmy1",
+          "YPHCMercsRattanShield2",
+          "YPHCMercsRattanShield3",
+          "YPHCChineseImperialNavy",
+          "YPHCManchuCombat",
+          "YPHCShipArquebusier2"
+        ],
+        "3": [
+          "YPHCShipShaolinMaster",
+          "YPHCWokouChinese2",
+          "YPHCWokouChinese3",
+          "YPHCAtonementChinese",
+          "YPHCBannerReforms",
+          "YPHCBannerSchool"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Starts with a Flail Elephant; Banner Armies train multiple unit types at once.",
+        "unique_units": [
+          "Chu Ko Nu",
+          "Iron Flail",
+          "Meteor Hammer",
+          "Flamethrower"
+        ],
+        "unique_buildings": [
+          "Summer Palace",
+          "Porcelain Tower",
+          "Temple of Heaven"
+        ],
+        "playstyle": "Eight-Banner macro \u2014 cluster buildings near TC, wall early with stone, macro Banner Armies, counter-attack from hardened core.",
+        "age_up": "Wonders (Summer Palace, etc.)"
+      }
+    },
+    "ANWColumbians": {
+      "anw_token": "ANWColumbians",
+      "display_name": "Gran Colombia",
+      "data_name": "Columbians Bolivar Colombia Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Llanero liberation sweeps",
+        "civ_label": "Columbians",
+        "leader_label": "Bolivar Colombia Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        0.85,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 3,
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Llanero liberation sweeps",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVNationalHero",
+          "HCCheapBarracksTeam"
+        ],
+        "1": [
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCMercsIrishBrigadiers",
+          "HCFrontierDefenses",
+          "DEHCTheaters",
+          "HCAdvancedArsenal"
+        ],
+        "2": [
+          "DEHCLiberationMarch",
+          "DEHCREVCattleDeliveryColombia",
+          "DEHCREVShipSteamers",
+          "ANWHCLlaneros",
+          "DEHCMercsArmoredPistoleers",
+          "HCUnlockFort",
+          "DEHCHabsburgAllies1",
+          "DEHCHandMortar",
+          "DEHCMarvelousYear",
+          "DEHCShipGatlings1"
+        ],
+        "3": [
+          "DEHCREVColombianNavy",
+          "DEHCREVShipColombianRevolutionaries",
+          "DEHCREVShipIronclads",
+          "DEHCREVAlbionLegion",
+          "HCHeavyFortifications",
+          "DEHCShipBattleshipRepeat",
+          "DEHCBourbonAllies1",
+          "HCShipFoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Shipments arrive faster; gains Sim\u00f3n Bol\u00edvar hero at Fortress Age.",
+        "unique_units": [
+          "Lancer",
+          "Rodelero",
+          "War Dog",
+          "Llanero"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Forward base pressure from Colonial; Llanero and Lancer shock cavalry sweep flanks; sustained column push with Pikeman anchor.",
+        "age_up": "Wagon politicians (Citizens)"
+      }
+    },
+    "ANWDutch": {
+      "anw_token": "ANWDutch",
+      "display_name": "Netherlands",
+      "data_name": "Dutch Maurice Nassau",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Stadtholder drill-and-bank",
+        "civ_label": "Dutch",
+        "leader_label": "Maurice Nassau"
+      },
+      "expected_milestones": {
+        "dock": true,
+        "wall_segment": true,
+        "trading_post": true
+      },
+      "wall_strategy": 2,
+      "military_distance_band": [
+        0.9,
+        1.2
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 8,
+      "doctrine_label": "Naval Mercantile Compound",
+      "doctrine_summary": "Stadtholder drill-and-bank",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "expected_deck": {
+        "1": [
+          "HCXPBankWagon",
+          "DEHCShipSettlersDutch2",
+          "HCInfantryDamageDutch",
+          "HCInfantryHitpointsDutchTeam",
+          "DEHCBuckriders"
+        ],
+        "3": [
+          "HCBetterBanks",
+          "DEHCDutchBattleshipCard",
+          "DEHCShipBattleshipRepeat",
+          "HCShipDutchRaidingFleet",
+          "HCShipDutchCounterCavForce",
+          "HCShipHalberdiers5",
+          "HCDutchEastIndiaCompany"
+        ],
+        "2": [
+          "HCInfantryCombatDutch",
+          "HCShipRuyters3",
+          "HCShipHalberdiers3",
+          "HCShipFluyts2",
+          "DEHCMercenaryArmyDutch",
+          "HCShipHalberdiers1",
+          "HCShipRuyters1",
+          "DEHCBlueGuards",
+          "DEHCFlemishRevolution"
+        ],
+        "0": [
+          "DEHCDutchPaintings",
+          "DEHCShipSettlersDutch3",
+          "DEHCShipSettlersDutchRepeat",
+          "DEHCAdvancedEnvoy"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Banks automatically generate coin without villagers.",
+        "unique_units": [
+          "Ruyter",
+          "Halberdier"
+        ],
+        "unique_buildings": [
+          "Bank"
+        ],
+        "playstyle": "Boom Banks for passive coin, dock-first fishing fleet; tech into Ruyter + Halberdier army; Fluyt shipments supplement; strong navy.",
+        "age_up": "Wagon politicians (Bank wagon)"
+      }
+    },
+    "ANWEgyptians": {
+      "anw_token": "ANWEgyptians",
+      "display_name": "Egypt",
+      "data_name": "Egyptians Muhammad Ali Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Nizam-i Cedid modernization",
+        "civ_label": "Egyptians",
+        "leader_label": "Muhammad Ali Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        1.0
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 11,
+      "doctrine_label": "Highland Citadel",
+      "doctrine_summary": "Nizam-i Cedid modernization",
+      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+      "expected_deck": {
+        "0": [
+          "DEHCColonialMilitiaOttoman",
+          "HCStonemasons"
+        ],
+        "1": [
+          "DEHCREVNileFlood",
+          "DEHCREVSuezCanal",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCFencingSchoolOttoman",
+          "DEHCShipAzaps1"
+        ],
+        "2": [
+          "DEHCREVNizamsEgypt",
+          "DEHCREVRangedCombatEgypt",
+          "DEHCREVSudaneseAllies",
+          "ANWHCMercsMamelukes",
+          "DEHCMercsBosniaks",
+          "HCUnlockFort",
+          "DEHCHandMortarOttoman",
+          "DEHCShiAzaps2"
+        ],
+        "3": [
+          "DEHCREVShipEgyptianFleet",
+          "DEHCREVGatlingCamels",
+          "DEHCREVSennarHorsemen",
+          "DEHCREVShipHorseArtillery2",
+          "DEHCREVShipStradiots",
+          "DEHCMercsAskaris",
+          "DEHCMercsOttoman",
+          "DEHCShipMercXebecOttoman",
+          "DEHCOttomanBattleshipCard",
+          "DEHCShipBattleshipRepeat"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Trains Citizens (70 coin); free Mameluke per shipment from Fortress Age; Khevite Fusiliers replace Revolutionaries.",
+        "unique_units": [
+          "Mameluke",
+          "Deli",
+          "Humbaraci",
+          "Azap",
+          "Khevite Fusilier"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Fortify high ground behind Nizam-i Cedid infantry lines and a growing cannon park; Mameluke cavalry screens the flanks while the citadel becomes unbreakable; hard to dislodge once entrenched.",
+        "age_up": "Ottoman-style Wagon shipments"
+      }
+    },
+    "ANWEthiopians": {
+      "anw_token": "ANWEthiopians",
+      "display_name": "Ethiopia",
+      "data_name": "Ethiopians Menelik",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Solomonic highland modernization",
+        "civ_label": "Ethiopians",
+        "leader_label": "Menelik"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        1.0
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 11,
+      "doctrine_label": "Highland Citadel",
+      "doctrine_summary": "Solomonic highland modernization",
+      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+      "expected_deck": {
+        "0": [
+          "DEHCIndianTradeEthiopia",
+          "DEHCIronmongerEthiopians",
+          "DEHCGascenyaDamage",
+          "DEHCGascenyaHitpoints"
+        ],
+        "1": [
+          "DEHCLalibelaRockChurch",
+          "DEHCShipGascenya1",
+          "DEHCMercsCannoneers",
+          "DEHCHandInfantryCombatEthiopian",
+          "DEHCShipGascenya2"
+        ],
+        "2": [
+          "DEHCShipGascenya3",
+          "DEHCShipNeftenya1",
+          "DEHCShipNeftenyaRepeat",
+          "DEHCMercsCannoneers2",
+          "DEHCExtensiveFortificationsEthiopian",
+          "DEHCGascenyaRepeat",
+          "DEHCShipGascenya4",
+          "DEHCShipNeftenya2",
+          "DEHCHeavyFortificationsAfrican",
+          "DEHCMercsSennarHorsemen"
+        ],
+        "3": [
+          "DEHCShipMercWarDhow",
+          "DEHCMercsAskari",
+          "DEHCMercsGatlingCamels",
+          "DEHCShipMercWarDhows2",
+          "DEHCBalambaras",
+          "DEHCCanoeCrafting"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Neftenya units gain attack with each Age; unique Royal units from Ras.",
+        "unique_units": [
+          "Neftenya",
+          "Shotel Warrior",
+          "Oromo Warrior",
+          "Sebastopol Mortar"
+        ],
+        "unique_buildings": [
+          "Ras"
+        ],
+        "playstyle": "Fortify high ground with stone walls; Neftenya marksman line grows stronger with each Age; Shotel Warriors raid; hold citadel then push.",
+        "age_up": "Council members at Community Plaza"
+      }
+    },
+    "ANWFinnish": {
+      "anw_token": "ANWFinnish",
+      "display_name": "Finland",
+      "data_name": "Finnish Mannerheim Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Mannerheim-line ski infantry",
+        "civ_label": "Finnish",
+        "leader_label": "Mannerheim Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        0.9
+      ],
+      "wall_deadline_ms": 600000,
+      "build_style": 1,
+      "doctrine_label": "Compact Fortified Core",
+      "doctrine_summary": "Mannerheim-line ski infantry",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVTreeSpawn",
+          "DEHCTorpTeam"
+        ],
+        "1": [
+          "DEHCREVNothernWilderness",
+          "DEHCREVSpawnStrelet",
+          "DEHCREVTurkuAcademy",
+          "DEHCContractMercsIrishBrigadiers",
+          "DEHCContractMercsLandsknechts"
+        ],
+        "2": [
+          "DEHCREVFinnishCounterArmy",
+          "DEHCREVJaegerCombat",
+          "DEHCREVSavolaxJaegers",
+          "DEHCREVBlockhouseCannon",
+          "DEHCREVCudgelWar",
+          "DEHCREVFinnhorses",
+          "DEHCContractMercsBlackRiders"
+        ],
+        "3": [
+          "DEHCREVGunboats",
+          "DEHCREVShipBalticFleet",
+          "DEHCREVShipBlockhouses",
+          "DEHCREVShipCoinCrates",
+          "DEHCREVShipCopperMines",
+          "DEHCREVShipElk",
+          "DEHCREVShipFoodCrates",
+          "DEHCREVShipHakkapelits",
+          "DEHCSoldierTorps",
+          "DEHCNorthernForests",
+          "HCShipWoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Torps gather nearby resources; advanced Arsenal upgrades; Karelian Jaegers as alternative Settlers.",
+        "unique_units": [
+          "Karelian Jaeger",
+          "Hakkapelit",
+          "Grenadier"
+        ],
+        "unique_buildings": [
+          "Torp",
+          "Tavern"
+        ],
+        "playstyle": "Torp-boom for passive food/wood; turtle with stone walls; Jaegers gather and fight; tech into Hakkapelit cavalry + Grenadier wall.",
+        "age_up": "Wagon politicians (Swedish-style)"
+      }
+    },
+    "ANWFrench": {
+      "anw_token": "ANWFrench",
+      "display_name": "France",
+      "data_name": "French Louis XVIII Bourbon",
+      "playstyle_spec": {
+        "doctrine_label": "Compact Fortified Core",
+        "doctrine_summary": "Bourbon Restoration court army",
+        "civ_label": "French Louis",
+        "leader_label": "XVIII Bourbon"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        0.9
+      ],
+      "wall_deadline_ms": 600000,
+      "build_style": 1,
+      "doctrine_label": "Compact Fortified Core",
+      "doctrine_summary": "Bourbon Restoration court army",
+      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished \u2014 the AI hunkers in and counter-attacks from a hardened core.",
+      "expected_deck": {
+        "3": [
+          "DEHCBourbonAllies1",
+          "DEHCMercsRoyalHorseman",
+          "DEHCFrenchBattleshipCard",
+          "DEHCShipBalloonsFrench",
+          "HCShipCoureurs4",
+          "HCShipCuirassiers4",
+          "HCShipCuirassiers5",
+          "HCShipHussars3"
+        ],
+        "2": [
+          "DEHCFrenchRoyalArmy",
+          "HCCavalryCombatFrench",
+          "HCRangedInfantryDamageFrenchTeam",
+          "HCShipCuirassiers1",
+          "HCShipCuirassiers3",
+          "HCShipHussars2",
+          "HCShipSkirmishers1",
+          "HCShipSkirmishers3",
+          "HCXPTirailleurs",
+          "DEHCMercsGiantGrenadiers"
+        ],
+        "1": [
+          "DEHCFencingSchoolFrench",
+          "HCExplorerFrench",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCCentSuisses",
+          "DEHCColbertismTeam"
+        ],
+        "0": [
+          "HCShipCoureurs1",
+          "DEHCAncienRegime"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Home City Shipments arrive slightly faster; Coureur des Bois gather faster than Settlers.",
+        "unique_units": [
+          "Coureur des Bois",
+          "Cuirassier",
+          "Skirmisher"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Coureur des Bois eco boom into a tight fortified core; wall TC early with stone; Cuirassier and Skirmisher hold the perimeter and counter-punch when the enemy advances.",
+        "age_up": "Wagon politicians"
+      }
+    },
+    "ANWGermans": {
+      "anw_token": "ANWGermans",
+      "display_name": "Germany",
+      "data_name": "Germans Frederick Great",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Hohenzollern oblique-order shock",
+        "civ_label": "Germans",
+        "leader_label": "Frederick Great"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 4,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 13,
+      "doctrine_label": "Republican Levee",
+      "doctrine_summary": "Hohenzollern oblique-order shock",
+      "doctrine_prose": "Drills a Musketeer-and-Skirmisher line backed by Uhlan cavalry on the flanks. Production hugs the Town Center in early Colonial, then projects a forward base from Fortress onward. Cavalry weight escalates significantly in the mid-game \u2014 the oblique hammer wing grows until it rivals the infantry core.",
+      "expected_deck": {
+        "0": [
+          "DEHCGermanTongue",
+          "HCXPMasterSurgeons"
+        ],
+        "3": [
+          "HCShipUhlans3",
+          "HCUhlanCombatGerman",
+          "DEHCMercsGiantGrenadiersGerman",
+          "DEHCHabsburgAllies2",
+          "DEHCWettinAlliesGerman2",
+          "HCShipCannons1German",
+          "DEHCMercsBosniaksGerman",
+          "HCAdvancedArtilleryGerman"
+        ],
+        "2": [
+          "HCShipWarWagons1",
+          "DEHCHabsburgAlliesGerman",
+          "HCMercsHessiansGerman",
+          "HCMercsLandsknecht2German",
+          "DEHCHandMortarGerman",
+          "DEHCMercenaryCampsGerman",
+          "DEHCMercsPandoursGerman",
+          "DEHCGermanBattleshipCard",
+          "DEHCGermanChevaulegers",
+          "HCShipFalconets1German"
+        ],
+        "1": [
+          "HCRoyalDecreeGerman",
+          "HCMercsLandsknecht1German",
+          "DEHCMercsIrishBrigadiersGerman",
+          "DEHCWettinAlliesGerman1",
+          "HCShipCaravels1German"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Starts with 2 free Uhlans per card shipped; Settler Wagons replace standard Settlers.",
+        "unique_units": [
+          "Uhlan",
+          "Doppelsoldner",
+          "War Wagon"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Mass Uhlans from home city cards; Settler Wagon eco; multi-barracks infantry boom; Doppelsoldner + Uhlan combo overwhelms.",
+        "age_up": "Wagon politicians (Settler Wagon)"
+      }
+    },
+    "ANWHaitians": {
+      "anw_token": "ANWHaitians",
+      "display_name": "Haiti",
+      "data_name": "Haitians Louverture Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Mass infantry insurrection",
+        "civ_label": "Haitians",
+        "leader_label": "Louverture Revolution"
+      },
+      "expected_milestones": {
+        "forward_base": true
+      },
+      "wall_strategy": 1,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "build_style": 10,
+      "doctrine_label": "Jungle Guerrilla Network",
+      "doctrine_summary": "Mass infantry insurrection",
+      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVVodouCeremonies",
+          "DEHCREVSevites",
+          "HCShipSettlers1"
+        ],
+        "1": [
+          "DEHCREVLetterOfMarque",
+          "DEHCMercsIrishBrigadiers",
+          "DEHCCentSuisses",
+          "DEHCColbertismTeam",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCTheaters"
+        ],
+        "2": [
+          "DEHCREVDahomeyAmazonsHaiti",
+          "DEHCREVAfricanAllies",
+          "DEHCREVCitizenshipHaiti",
+          "DEHCMercsArmoredPistoleers",
+          "DEHCMercsGiantGrenadiers",
+          "HCRefrigeration",
+          "HCRoyalMint",
+          "HCXPAssassins"
+        ],
+        "3": [
+          "DEHCAkanAllies",
+          "DEHCREVPickets",
+          "DEHCREVHaitianBattleshipCard",
+          "DEHCREVShipPrivateers",
+          "DEHCREVShipFalconets",
+          "DEHCMercsRoyalHorseman",
+          "DEHCMercsZouaves",
+          "DEHCShipBattleshipRepeat"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Town Centers and Taverns slowly spawn Pirates for free; Maroons replace Revolutionaries.",
+        "unique_units": [
+          "Maroon",
+          "Pirate"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Free Pirate stream from TC + Taverns; choke-hug with Maroon infantry mass; quick harass from forward warbands; minimal walls.",
+        "age_up": "Wagon politicians"
+      }
+    },
+    "ANWHaudenosaunee": {
+      "anw_token": "ANWHaudenosaunee",
+      "display_name": "Iroquois Confederacy",
+      "data_name": "Haudenosaunee Hiawatha Iroquois",
+      "playstyle_spec": {
+        "doctrine_label": "Shrine or Trade Node Spread",
+        "doctrine_summary": "Confederacy forest warfare",
+        "civ_label": "Haudenosaunee",
+        "leader_label": "Hiawatha Iroquois"
+      },
+      "expected_milestones": {
+        "trading_post": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "build_style": 5,
+      "doctrine_label": "Shrine or Trade Node Spread",
+      "doctrine_summary": "Confederacy forest warfare",
+      "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
+      "expected_deck": {
+        "0": [
+          "HCXPShipTomahawk3",
+          "HCXPWarChiefIroquois1",
+          "HCXPForestMother",
+          "HCXPWarChiefIroquois2"
+        ],
+        "1": [
+          "DEHCExtensiveFortificationsWarchief",
+          "HCXPBattlefieldConstructionIroquois",
+          "HCXPInfantryDamageIroquois",
+          "HCXPInfantryHitpointsIroquois",
+          "DEHCTeamShipMantlets"
+        ],
+        "2": [
+          "DEHCWampum",
+          "HCXPCavalryDamageIroquois",
+          "HCXPCavalryHitpointsIroquois",
+          "HCXPInfantryCombatIroquois",
+          "HCXPIroquoisCayugaSupport",
+          "HCXPCavalryCombatIroquois",
+          "HCXPOldWaysIroquois",
+          "HCXPShipMantlets2",
+          "HCXPShipMantlets4",
+          "HCXPIroquoisMohawkSupport"
+        ],
+        "3": [
+          "HCXPIroquoisOneidaSupport",
+          "HCXPIroquoisOnondagaSupport",
+          "HCXPIroquoisSenecaSupport",
+          "HCXPIroquoisTuscaroraSupport",
+          "HCXPIroquoisWoodworking",
+          "HCXPShipMantlets1"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Builds Longhouses that train infantry and can garrison; unique War Chief unit.",
+        "unique_units": [
+          "Mohawk Warrior",
+          "Aenna",
+          "Mantlet"
+        ],
+        "unique_buildings": [
+          "Longhouse",
+          "War Hut"
+        ],
+        "playstyle": "Plant Trading Posts and shrines across the map for a steady XP and resource trickle; defend nodes with isolated towers and fast cavalry response; Longhouse multi-unit production scales from the income base into a Mohawk or Aenna mid-game.",
+        "age_up": "Tribal Council (Community Plaza)"
+      }
+    },
+    "ANWHausa": {
+      "anw_token": "ANWHausa",
+      "display_name": "Sokoto",
+      "data_name": "Hausa Usman dan Fodio",
+      "playstyle_spec": {
+        "doctrine_label": "Distributed Economic Network",
+        "doctrine_summary": "Surame fortress and trans-Saharan caravan lattice",
+        "civ_label": "Hausa",
+        "leader_label": "Usman dan Fodio"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 3,
+      "military_distance_band": [
+        1.1,
+        1.3
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 2,
+      "doctrine_label": "Distributed Economic Network",
+      "doctrine_summary": "Surame fortress and trans-Saharan caravan lattice",
+      "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
+      "expected_deck": {
+        "0": [
+          "DEHCHausaKingdom",
+          "DEHCEmirKatsina",
+          "DEHCEarlyLifidi",
+          "DEHCFulaniCattleFertilizer"
+        ],
+        "1": [
+          "DEHCFulaniCrossingFestival",
+          "DEHCHandCavalryDamageHausa",
+          "DEHCHandCavalryHitpointsHausa",
+          "DEHCMercsSennarHorsemen",
+          "DEHCEmirKano"
+        ],
+        "2": [
+          "DEHCFulaniArcherCombat",
+          "DEHCOutlawsHausa",
+          "DEHCSahelianKingdoms",
+          "DEHCShipLifidiKnights1",
+          "DEHCAncientKanoWalls",
+          "DEHCExtensiveFortificationsHausa",
+          "DEHCFulaniInvasion",
+          "DEHCRedFulaniCattle",
+          "DEHCShipLifidiKnights3",
+          "DEHCShipLifidiKnights2"
+        ],
+        "3": [
+          "DEHCShipLifidiKnightsRepeat",
+          "DEHCShipRaidersRepeat",
+          "DEHCSokotoChronicle",
+          "DEHCKatsinaFortifications",
+          "DEHCMaraboutNetwork",
+          "DEHCPalaceAmina"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Griot aura boosts nearby units; unique Lifidi Knight heavy cavalry.",
+        "unique_units": [
+          "Lifidi Knight",
+          "Musketeer (Jarma)",
+          "Fulani Archer"
+        ],
+        "unique_buildings": [
+          "Granary"
+        ],
+        "playstyle": "Scatter Markets and Granaries across resource nodes; Griot support + Lifidi Knight cavalry; boom then FI trade-route economy.",
+        "age_up": "Council members at Community Plaza"
+      }
+    },
+    "ANWHungarians": {
+      "anw_token": "ANWHungarians",
+      "display_name": "Hungary",
+      "data_name": "Hungarians Kossuth Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Steppe Cavalry Wedge",
+        "doctrine_summary": "Honved hussar uprising",
+        "civ_label": "Hungarians",
+        "leader_label": "Kossuth Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        1.1,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 7,
+      "doctrine_label": "Steppe Cavalry Wedge",
+      "doctrine_summary": "Honved hussar uprising",
+      "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
+      "expected_deck": {
+        "0": [
+          "HCXPMasterSurgeons",
+          "HCXPWhaleOil",
+          "HCXPLandGrab"
+        ],
+        "1": [
+          "HCShipHussars1",
+          "ANWHCHajduks",
+          "ANWHCMagyarGrenadiers",
+          "ANWHCMilitaryFrontier",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCInfantryHitpointsItalian",
+          "DEHCTheaters"
+        ],
+        "2": [
+          "ANWHCMagyarHussarsAlt",
+          "DEHCREVOutlawCombat",
+          "DEHCMercsGiantGrenadiers",
+          "HCMercsBlackRiders",
+          "DEHCHabsburgAllies1",
+          "DEHCHandMortar",
+          "HCCavalryCombatFrench",
+          "HCShipDragoons1",
+          "HCShipDragoons3"
+        ],
+        "3": [
+          "DEHCREVShipFalconets",
+          "HCShipHussars3",
+          "ANWHCPandours",
+          "DEHCHabsburgAllies2",
+          "DEHCLegionHungarian",
+          "HCShipWoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.",
+        "unique_units": [
+          "Hussar",
+          "Grenzer",
+          "Hajduk",
+          "Pandour"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Over-build Stables; Hussar cavalry pressure continuously; Outpost militia supplementss army; loose base for fast cavalry egress.",
+        "age_up": "Covered Wagon with each Outpost shipment"
+      }
+    },
+    "ANWInca": {
+      "anw_token": "ANWInca",
+      "display_name": "Inca Empire",
+      "data_name": "Inca Pachacuti",
+      "playstyle_spec": {
+        "doctrine_label": "Andean Terrace Fortress",
+        "doctrine_summary": "Tawantinsuyu mass infantry",
+        "civ_label": "Inca",
+        "leader_label": "Pachacuti"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        1.0
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 14,
+      "doctrine_label": "Andean Terrace Fortress",
+      "doctrine_summary": "Tawantinsuyu mass infantry",
+      "doctrine_prose": "Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
+      "expected_deck": {
+        "0": [
+          "DEHCAdvancedTambos",
+          "DEHCIncaWallsTeam",
+          "DEHCEarlyKallanka",
+          "DEHCExtensiveFortificationsInca"
+        ],
+        "1": [
+          "DEHCShipTamboTravois",
+          "DEHCArmedFishermenInca",
+          "DEHCIncaBridgesTeam",
+          "DEHCChimuSupport",
+          "DEHCMeleeInfCombatInca"
+        ],
+        "2": [
+          "DEHCShipBolasWarriors1",
+          "DEHCShipBolasWarriorsRepeat",
+          "DEHCShipCoveredWagons2Inca",
+          "DEHCShipIncaRunners2",
+          "DEHCHeavyFortificationsInca",
+          "DEHCIncaFortifications",
+          "DEHCOldWaysInca",
+          "DEHCShipBolasWarriors2",
+          "DEHCShipIncaRunners3",
+          "DEHCShipIncaSpearmen1"
+        ],
+        "3": [
+          "DEHCShipIncaRunnersRepeat",
+          "DEHCShipIncaSpearmen3",
+          "DEHCShipVillagersInca",
+          "DEHCWarChiefInca2",
+          "DEHCRangedInfDamageInca",
+          "DEHCRangedInfHitpointsInca"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Inca buildings require no wood; Kallanka trains several unit types simultaneously.",
+        "unique_units": [
+          "Bolas Warrior",
+          "Huaraca",
+          "Chimu Runner",
+          "Plumed Spearman"
+        ],
+        "unique_buildings": [
+          "Kallanka",
+          "Tambo",
+          "Sun Temple"
+        ],
+        "playstyle": "Wall high ground in concentric rings with Tambos and Kallankas; slow Industrial snowball; Huaraca ranged mass + Chimu speed harass.",
+        "age_up": "Wonders (Andean monuments)"
+      }
+    },
+    "ANWIndians": {
+      "anw_token": "ANWIndians",
+      "display_name": "Maratha Empire",
+      "data_name": "Indians Akbar",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Maratha Ganimi Kava raid",
+        "civ_label": "Indians",
+        "leader_label": "Akbar"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "doctrine_label": "Ganimi Kava Raid",
+      "doctrine_summary": "Maratha Ganimi Kava raid",
+      "doctrine_prose": "Opens with Sowar cavalry raids and Sepoy screens from Colonial on (forward-base style enables at age 2). The hill-fort line anchors ground already taken rather than a home base. Howdah Elephants and Mansabdar units commit once the raid has bled the opponent's economy; the Maratha Confederacy expands outward, not inward.",
+      "expected_deck": {
+        "0": [
+          "YPHCAdvancedConsulateIndians",
+          "YPHCAdvancedWondersIndians",
+          "YPHCExtensiveFortificationsIndians",
+          "YPHCAdmiralityIndians"
+        ],
+        "1": [
+          "YPHCArmedFishermenIndians",
+          "YPHCAtonementIndians",
+          "YPHCCamelDamageIndians",
+          "YPHCConsulateRelationsIndians",
+          "YPHCIndianMonkFrighten"
+        ],
+        "2": [
+          "DEHCExportTradeIndians",
+          "YPHCMercenaryLoyaltyIndians",
+          "YPHCShipFrigateIndians",
+          "YPHCEastIndiaCompany",
+          "DEHCShipMercWarDhowsIndians",
+          "DEHCCheapSepoys",
+          "YPHCMercsIndianArmy",
+          "YPHCShipFrigateDoubleIndians",
+          "YPHCShipMonitorIndians",
+          "YPHCIndianMonkCombat"
+        ],
+        "3": [
+          "YPHCAdvancedMonasteryIndians",
+          "YPHCExpandedTradingPostIndians",
+          "YPHCElephantCombatIndians",
+          "YPHCGurkhaAid",
+          "YPHCNativeHitpointsIndians",
+          "YPHCNativeTradeTaxIndians"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Elephant units get bonus from nearby Consulate upgrades; Urumi Swordsman unique melee unit.",
+        "unique_units": [
+          "Urumi Swordsman",
+          "Sepoy",
+          "Zamburak",
+          "Howdah"
+        ],
+        "unique_buildings": [
+          "Consulate"
+        ],
+        "playstyle": "Ganimi Kava raid doctrine: swift Urumi and Sepoy strikes from high-ground cover deny open engagements; bleed the enemy economy with hit-and-run pressure; Howdah elephants commit only after the foe is softened, with Consulate allies sustaining the column.",
+        "age_up": "Wonders (Taj Mahal, etc.)"
+      }
+    },
+    "ANWIndonesians": {
+      "anw_token": "ANWIndonesians",
+      "display_name": "Indonesia",
+      "data_name": "Indonesians Diponegoro Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Java War guerrilla and kraton fort",
+        "civ_label": "Indonesians",
+        "leader_label": "Diponegoro Revolution"
+      },
+      "expected_milestones": {
+        "forward_base": true
+      },
+      "wall_strategy": 1,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "build_style": 10,
+      "doctrine_label": "Jungle Guerrilla Network",
+      "doctrine_summary": "Java War guerrilla and kraton fort",
+      "doctrine_prose": "Hugs natural chokes &mdash; cliffs, jungle, river bends &mdash; and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "expected_deck": {
+        "0": [
+          "HCSpiceTradeTeam",
+          "DEHCFeitorias"
+        ],
+        "1": [
+          "DEHCMercsIrishBrigadiers",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCTheaters",
+          "HCAdvancedArsenal",
+          "HCFrontierDefenses"
+        ],
+        "2": [
+          "DEHCREVAcehExports",
+          "DEHCREVLantakas",
+          "DEHCMercenaryArmyDutch",
+          "DEHCMercsBosniaks",
+          "DEHCBlueGuards",
+          "DEHCHabsburgAllies1",
+          "DEHCHandMortar",
+          "DEHCShipHussars2"
+        ],
+        "3": [
+          "DEHCREVKratonGuards",
+          "DEHCREVShipJavaSpearman",
+          "DEHCREVShipCetbang",
+          "DEHCREVShipWokouJunk",
+          "DEHCREVOttomanExpArmy",
+          "DEHCMercsMountedRiflemen",
+          "DEHCDutchBattleshipCard",
+          "DEHCShipBattleshipRepeat",
+          "DEHCBelandaHitam",
+          "DEHCWettinAllies2"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Can train Wokou Junks; Ruyter and Halberdier get unique skins.",
+        "unique_units": [
+          "Javanese Spearman",
+          "Cetbang Cannon",
+          "Ruyter"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Wokou Junk naval pressure; choke-hug with Javanese Spearman + Cetbang Cannon on land; guerrilla infantry strikes avoid open fights.",
+        "age_up": "Wagon politicians (Dutch-style)"
+      }
+    },
+    "ANWItalians": {
+      "anw_token": "ANWItalians",
+      "display_name": "Italy",
+      "data_name": "Italians Garibaldi",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Risorgimento volunteer columns",
+        "civ_label": "Italians",
+        "leader_label": "Garibaldi"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 4,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 13,
+      "doctrine_label": "Republican Levee",
+      "doctrine_summary": "Risorgimento volunteer columns",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "expected_deck": {
+        "0": [
+          "DEHCExplorerItalian",
+          "DEHCLombardy",
+          "DEHCInfantryHitpointsItalian",
+          "DEHCCavalryDamageItalianTeam"
+        ],
+        "1": [
+          "DEHCRoyalDecreeItalians",
+          "DEHCSchiavoniSwords",
+          "DEHCShipPavisiers1",
+          "DEHCAdvancedLombard",
+          "DEHCCavalryCombatItalian"
+        ],
+        "2": [
+          "DEHCImprovedCrossbowsItalians",
+          "DEHCShipPavisiers2",
+          "DEHCShipPavisiersRepeat",
+          "DEBasilicaShipPapalElmeti1",
+          "DEHCItalianBattleshipCard",
+          "DEHCPapalArsenal",
+          "DEHCPapalCompany",
+          "DEHCRedshirts",
+          "DEHCShipBersaglieri1",
+          "DEHCShipBersaglieriRepeat"
+        ],
+        "3": [
+          "DEHCShipPapalBombards",
+          "DEHCShipPapalBombardsRepeat",
+          "DEHCShipPavisiers4",
+          "DEHCVenetianArsenal",
+          "DEHCPioneersItalian",
+          "HCFrontierDefensesItalian"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Lombardy Banks auto-generate coin; Papal Guard unique heavy infantry.",
+        "unique_units": [
+          "Papal Guard",
+          "Papal Lancer",
+          "Bersagliere"
+        ],
+        "unique_buildings": [
+          "Lombard"
+        ],
+        "playstyle": "Lombard coin boom; mass Papal Guard + Bersagliere infantry columns; General units inspire levy; multi-barracks civic layout.",
+        "age_up": "Wagon politicians (Lombard wagon)"
+      }
+    },
+    "ANWJapanese": {
+      "anw_token": "ANWJapanese",
+      "display_name": "Japan",
+      "data_name": "Japanese Tokugawa Ieyasu",
+      "playstyle_spec": {
+        "doctrine_label": "Shrine or Trade Node Spread",
+        "doctrine_summary": "Bakufu shrine-and-musket order",
+        "civ_label": "Japanese",
+        "leader_label": "Tokugawa Ieyasu"
+      },
+      "expected_milestones": {
+        "trading_post": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "build_style": 5,
+      "doctrine_label": "Shrine or Trade Node Spread",
+      "doctrine_summary": "Bakufu shrine-and-musket order",
+      "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
+      "expected_deck": {
+        "0": [
+          "YPHCAdvancedConsulate",
+          "YPHCShipShrineWagon",
+          "DEHCShrineHitpoints",
+          "YPHCShipShrineWagon2"
+        ],
+        "1": [
+          "YPHCArmedFishermenJapanese",
+          "YPHCAshigaruDamage",
+          "YPHCAtonementJapanese",
+          "DEHCArtilleryDamageJapaneseTeam",
+          "YPHCConsulateRelations"
+        ],
+        "2": [
+          "YPHCArtilleryHitpointsJapanese",
+          "YPHCAshigaruAntiCavalryDamage",
+          "YPHCBakufu",
+          "YPHCJapaneseMonkRangeAura",
+          "YPHCMercsJapaneseArmy",
+          "YPHCArtilleryCostJapanese",
+          "YPHCMorutaruRangeJapanese",
+          "YPHCShipAshigaru3",
+          "YPHCShipNaginataRider1",
+          "YPHCShrineLearning"
+        ],
+        "3": [
+          "YPHCNaginataAntiInfantryDamage",
+          "YPHCSamuraiSpeed",
+          "YPHCShipAshigaru1",
+          "YPHCShipAshigaru4",
+          "YPHCShipCoveredWagonsJapan",
+          "YPHCShipDaimyoAizu"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Shrines auto-generate resources; can train Daimyo and Shogun hero units.",
+        "unique_units": [
+          "Yumi Archer",
+          "Naginata Rider",
+          "Samurai",
+          "Flaming Arrow"
+        ],
+        "unique_buildings": [
+          "Shrine",
+          "Cherry Orchard",
+          "Dojo"
+        ],
+        "playstyle": "Plant Shrines everywhere for passive resource trickle; defend the network with isolated towers and fast cavalry response; Yumi Archer and Samurai army scales from the income base.",
+        "age_up": "Wonders (Torii, Dojo, etc.)"
+      }
+    },
+    "ANWLakota": {
+      "anw_token": "ANWLakota",
+      "display_name": "Lakota",
+      "data_name": "Lakota Crazy Horse",
+      "playstyle_spec": {
+        "doctrine_label": "Plains Cavalry Wedge",
+        "doctrine_summary": "Little Bighorn envelopment",
+        "civ_label": "Lakota",
+        "leader_label": "Crazy Horse"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        1.1,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 7,
+      "doctrine_label": "Steppe Cavalry Wedge",
+      "doctrine_summary": "Little Bighorn envelopment",
+      "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
+      "expected_deck": {
+        "0": [
+          "HCXPShipDogSoldiers3",
+          "HCXPShipRifleRiders3",
+          "HCXPShipAxeRiders3",
+          "HCXPWarChiefSioux1"
+        ],
+        "1": [
+          "HCXPBuffalo3",
+          "DEHCExtensiveFortificationsWarchief",
+          "HCXPCavalryDamageSioux",
+          "HCXPShipAxeRiders1",
+          "HCXPBuffalo4"
+        ],
+        "2": [
+          "HCXPSiouxLakotaSupport",
+          "HCXPWarChiefSioux2",
+          "DEHCLakotaImprovedSiege",
+          "HCXPCavalryCombatSioux",
+          "HCXPWarChiefSioux3",
+          "HCXPShipAxeRiders5",
+          "HCXPShipAxeRidersRepeat",
+          "HCXPShipRifleRiders2",
+          "HCXPShipRifleRiders4",
+          "HCXPShipAxeRiders2"
+        ],
+        "3": [
+          "HCXPShipAxeRiders4",
+          "HCXPShipRifleRiders1",
+          "HCXPShipDogSoldiers1",
+          "HCXPShipDogSoldiersTeam1",
+          "HCXPShipWarRifles1",
+          "HCXPSiouxBurntThighSupport"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Cannot build standard walls or Forts; Teepee auras boost nearby units.",
+        "unique_units": [
+          "Wakina Rifle",
+          "Axe Rider",
+          "Dog Soldier",
+          "Tokala Soldier"
+        ],
+        "unique_buildings": [
+          "Teepee",
+          "Tribal Marketplace"
+        ],
+        "playstyle": "Over-build Stables; Axe Rider and Tokala flanking columns envelop the enemy army from multiple angles in a coordinated Little Bighorn maneuver; raids harass the eco, but the kill is a disciplined wrap, not a pure speed rush.",
+        "age_up": "Tribal Council (Community Plaza)"
+      }
+    },
+    "ANWMaltese": {
+      "anw_token": "ANWMaltese",
+      "display_name": "Malta",
+      "data_name": "Maltese Valette",
+      "playstyle_spec": {
+        "doctrine_label": "Highland Citadel",
+        "doctrine_summary": "Great Siege bastion defense",
+        "civ_label": "Maltese",
+        "leader_label": "Valette"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        1.0
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 11,
+      "doctrine_label": "Highland Citadel",
+      "doctrine_summary": "Great Siege bastion defense",
+      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+      "expected_deck": {
+        "0": [
+          "DEHCKnightsMalta",
+          "DEHCKnightsRhodes",
+          "DEHCKnightsBodrum",
+          "DEHCAuberges"
+        ],
+        "1": [
+          "DEHCBritishTongue",
+          "DEHCFrenchTongue",
+          "DEHCSpanishTongue",
+          "DEHCGermanTongue",
+          "DEHCWallGuns"
+        ],
+        "2": [
+          "DEHCExplorerMaltese",
+          "HCHeavyFortifications",
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCShipHospitaller1",
+          "DEHCShipHospitaller2",
+          "DEHCMalteseCombat",
+          "DEHCPortugueseTongue",
+          "DEHCShipHospitaller4",
+          "DEHCUnlockFort3",
+          "DEHCShipHospitallerTeam"
+        ],
+        "3": [
+          "DEHCEarlyFort",
+          "DEHCMalteseBattleshipCard",
+          "DEHCRussianTongue",
+          "DEHCShipRollingWoodMalta",
+          "DEHCHospitality",
+          "HCUnlockFort"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Towers and Outposts cost no wood; Hospital heals nearby units.",
+        "unique_units": [
+          "Hospitaller Knight",
+          "Fire Thrower",
+          "Sentinel"
+        ],
+        "unique_buildings": [
+          "Hospital"
+        ],
+        "playstyle": "FF into single fortified bastion position; Hospitaller Knights sortie from walls; very hard to dislodge; expand only after citadel is secure.",
+        "age_up": "Wagon politicians (Banco)"
+      }
+    },
+    "ANWMayans": {
+      "anw_token": "ANWMayans",
+      "display_name": "Maya",
+      "data_name": "Mayans Canek Maya Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Jungle Guerrilla Network",
+        "doctrine_summary": "Indigenous insurrection mass",
+        "civ_label": "Mayans",
+        "leader_label": "Canek Maya Revolution"
+      },
+      "expected_milestones": {
+        "forward_base": true
+      },
+      "wall_strategy": 1,
+      "military_distance_band": [
+        1.0,
+        1.3
+      ],
+      "build_style": 10,
+      "doctrine_label": "Jungle Guerrilla Network",
+      "doctrine_summary": "Indigenous insurrection mass",
+      "doctrine_prose": "Hugs natural chokes \u2014 cliffs, jungle, river bends \u2014 and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVMXMayaJungleVillages",
+          "DEHCREVMXMayaKowojTraditions",
+          "DEHCREVMXMayaMariaUicab",
+          "DEHCREVFedMXSolisShredders",
+          "DEHCREVMXFoodSilos"
+        ],
+        "1": [
+          "DEHCREVMXMayaNojPeten",
+          "DEHCREVMXJungleWarfare",
+          "DEHCREVMXBallcourts",
+          "DEHCREVMXCenotes",
+          "HCXPMayanAllies1"
+        ],
+        "2": [
+          "DEHCREVMXMayaPootsPlan",
+          "DEHCREVMXMayaYalainTraditions",
+          "DEHCREVMXMayanSupporters",
+          "DEHCREVFedMXAmparo",
+          "DEHCREVMXFrontierDefensesRepeat",
+          "DEHCREVMXHuipils",
+          "DEHCShipCapturedGalleons2"
+        ],
+        "3": [
+          "DEHCREVMXMayaArchitecture",
+          "DEHCREVMXMayaCeramics",
+          "DEHCREVFedMXHenequenIndustry",
+          "DEHCREVFedMXYucatecan",
+          "DEHCREVMXKinshipTies",
+          "DEHCREVMXKuchkabal",
+          "DEHCREVMXShipCruzobInfantry",
+          "HCXPMayanAllies2"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Holcan Javelineer build limit grows each shipment; 2 bonus cards on Imperial Age.",
+        "unique_units": [
+          "Holcan Javelineer",
+          "Cruzob Avenger",
+          "Cruzob Infantry",
+          "Yucateco Insurgente"
+        ],
+        "unique_buildings": [
+          "Native Embassy",
+          "Cathedral"
+        ],
+        "playstyle": "Choke-hug with Holcan Javelineer + Cruzob Infantry mass; harass from forward warbands; scaling Holcan swarm from shipments.",
+        "age_up": "Wagon politicians (Mexican-style)"
+      }
+    },
+    "ANWMexicans": {
+      "anw_token": "ANWMexicans",
+      "display_name": "Mexico (Mexico City)",
+      "data_name": "Mexicans Hidalgo Standard",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Grito de Dolores lev\u00e9e",
+        "civ_label": "Mexicans",
+        "leader_label": "Hidalgo Standard"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 4,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 13,
+      "doctrine_label": "Republican Levee",
+      "doctrine_summary": "Grito de Dolores lev\u00e9e",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "expected_deck": {
+        "0": [
+          "DEHCAlhondigaDeGranaditas",
+          "DEHCBarbacoa",
+          "DEHCGeneralMexicans",
+          "DEHCCathedralConstruction"
+        ],
+        "1": [
+          "DEHCFedMXFortifiedHaciendas",
+          "DEHCChipotles",
+          "DEHCCriollos",
+          "DEHCRoyalDecreeMexican",
+          "DEHCShipInsurgente1",
+          "DEHCShipCapturedGalleons1"
+        ],
+        "3": [
+          "DEHCCharreada",
+          "DEHCHidalgoLand",
+          "DEHCIndianFriendshipMexican",
+          "DEHCShipInsurgente2",
+          "DEHCShipFrigateRepeat"
+        ],
+        "2": [
+          "DEHCCavalryCombatMexican",
+          "DEHCMexicanMint",
+          "DEHCMexicanStandoff",
+          "DEHCSPCInsurgenteCombat",
+          "DEHCShipSoldado1",
+          "DEHCShipSoldado2",
+          "DEHCShipRegulars4",
+          "DEHCShipCapturedGalleons2",
+          "DEHCShipIroncladsRepeat1",
+          "DEHCGuerillaTactics"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Can build Haciendas and a Cathedral with unique upgrades.",
+        "unique_units": [
+          "Padre",
+          "Insurgente",
+          "Salteador",
+          "Soldado",
+          "Chinaco"
+        ],
+        "unique_buildings": [
+          "Hacienda",
+          "Cathedral"
+        ],
+        "playstyle": "Multi-barracks Insurgente + Chinaco levy spam; General heroes inspire lines; Hacienda eco sustains continuous production.",
+        "age_up": "Hacienda wagon politicians"
+      }
+    },
+    "ANWNapoleonicFrance": {
+      "anw_token": "ANWNapoleonicFrance",
+      "display_name": "French Empire",
+      "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Grande Arm\u00e9e Grand Battery empire",
+        "civ_label": "Napoleonic France",
+        "leader_label": "Napoleon Bonaparte Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        0.85,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 3,
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Grande Arm\u00e9e combined-arms empire",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "expected_deck": {
+        "0": [
+          "DEHCShipBalloonsFrench",
+          "HCShipFoodCrates1",
+          "HCXPLandGrab",
+          "HCShipWoodCrates1"
+        ],
+        "1": [
+          "DEHCREVNapoleonicWarfare",
+          "DEHCCentSuisses",
+          "DEHCTheaters",
+          "DEHCWittelsbachAllies1",
+          "DEHCColbertismTeam"
+        ],
+        "2": [
+          "DEHCREVHundredDays",
+          "DEHCREVFlyingBattery",
+          "DEHCREVSisterRepublics",
+          "DEHCREVGenieTroops",
+          "DEHCREVShipmentRevolutionaries",
+          "DEHCWittelsbachAllies2",
+          "DEHCFrenchRoyalArmy"
+        ],
+        "3": [
+          "DEHCREVImperialOldGuard",
+          "DEHCREVGrandBattery",
+          "DEHCREVHorseHunters",
+          "DEHCREVRustamsRegiment",
+          "DEHCREVClientStates",
+          "DEHCREVMercsBosniaksRepeat",
+          "DEHCREVMercsMountedRiflemenRepeat",
+          "DEHCREVShipHorseArtillery3",
+          "DEHCWittelsbachAlliesRepeat"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Starts with Cuirassier hero; Grande Arm\u00e9e cards ship large infantry formations.",
+        "unique_units": [
+          "Cuirassier",
+          "Voltigeur",
+          "Old Guard"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Push forward barracks and stables; Cuirassier + Voltigeur column advances; sustained forward pressure with rally-to-front-base shipments.",
+        "age_up": "Wagon politicians (French-style)"
+      }
+    },
+    "ANWOttomans": {
+      "anw_token": "ANWOttomans",
+      "display_name": "Ottoman Empire",
+      "data_name": "Ottomans Suleiman",
+      "playstyle_spec": {
+        "doctrine_label": "Siege Train Concentration",
+        "doctrine_summary": "Sublime Porte gunpowder empire",
+        "civ_label": "Ottomans",
+        "leader_label": "Suleiman"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 9,
+      "doctrine_label": "Siege Train Concentration",
+      "doctrine_summary": "Sublime Porte gunpowder empire",
+      "doctrine_prose": "Over-builds Artillery Foundries and stockpiles cannons. Every push is a slow siege column with infantry escort, and walls are stone-and-forward to give the guns a safe staging line.",
+      "expected_deck": {
+        "3": [
+          "HCShipJanissaries3",
+          "HCShipGreatBombards2",
+          "HCShipGreatBombards1",
+          "DEHCMercsOttoman",
+          "DEHCShipMercXebecOttoman",
+          "DEHCOttomanBattleshipCard",
+          "DEHCHeavyInfHitpointsOttoman",
+          "HCShipAbusGuns3",
+          "DEHCFlightArchery"
+        ],
+        "2": [
+          "HCShipSpahis3",
+          "DEHCHandMortarOttoman",
+          "HCJanissaryCombatOttoman",
+          "DEHCShipBerberAllies2Ottoman",
+          "DEHCShipSpies2Ottoman",
+          "HCArtilleryCombatOttoman",
+          "HCShipAbusGuns1"
+        ],
+        "0": [
+          "HCExplorerOttoman",
+          "DEHCColonialMilitiaOttoman",
+          "DEHCShipSettlersOttoman1",
+          "DEHCShipSettlersOttomanRepeat"
+        ],
+        "1": [
+          "DEHCFencingSchoolOttoman",
+          "DEHCShipSettlersOttoman2",
+          "DEHCShipSpies1Ottoman",
+          "HCLightArtilleryHitpointsOttoman",
+          "HCJanissaryCost"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Town Center automatically trains Settlers for free over time.",
+        "unique_units": [
+          "Janissary",
+          "Spahi",
+          "Abus Gun",
+          "Great Bombard"
+        ],
+        "unique_buildings": [
+          "Artillery Foundry"
+        ],
+        "playstyle": "Free Settler trickle removes the eco bottleneck; over-build Artillery Foundries and stockpile cannons; every push is a slow siege column with Janissary escort behind forward staging walls.",
+        "age_up": "Wagon politicians (Ottoman-style)"
+      }
+    },
+    "ANWPeruvians": {
+      "anw_token": "ANWPeruvians",
+      "display_name": "Peru",
+      "data_name": "Peruvians Santa Cruz Peru Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Andean Terrace Fortress",
+        "doctrine_summary": "Andean fort line and native levy",
+        "civ_label": "Peruvians",
+        "leader_label": "Santa Cruz Peru Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 0,
+      "military_distance_band": [
+        0.7,
+        1.0
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 14,
+      "doctrine_label": "Andean Terrace Fortress",
+      "doctrine_summary": "Andean fort line and native levy",
+      "doctrine_prose": "Tier-walls the high ground in two or three concentric stone rings, anchors outposts in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVAmericanAlliesPeru",
+          "DEHCAlpacaWool",
+          "HCXPRanchingLlama"
+        ],
+        "1": [
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCREVJuninHussars",
+          "DEHCREVLima",
+          "DEHCMercsIrishBrigadiers",
+          "DEHCTheaters",
+          "HCXPTercioTactics"
+        ],
+        "2": [
+          "DEHCREVPeruvianGuard",
+          "DEHCREVCattleDelivery",
+          "DEHCREVCowboys",
+          "DEHCREVGuano",
+          "DEHCREVShipBolasWarrior",
+          "DEHCMercsArmoredPistoleers",
+          "HCUnlockFort",
+          "DEHCHabsburgAllies1",
+          "DEHCLiberationMarch",
+          "DEHCMachuPicchu"
+        ],
+        "3": [
+          "DEHCREVMancoInca",
+          "DEHCREVShipFatLlamas",
+          "HCHeavyFortifications",
+          "HCMercsHighland",
+          "DEHCShipBattleshipRepeat",
+          "HCShipFoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Shipments arrive slightly faster; gains bonus from Sim\u00f3n Bol\u00edvar ally at Fortress.",
+        "unique_units": [
+          "Lancer",
+          "Rodelero",
+          "War Dog",
+          "Chasqui"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Wall high ground in rings; Lancer + Rodelero push; slow Industrial snowball; never overextend from fortified line.",
+        "age_up": "Wagon politicians (Citizens)"
+      }
+    },
+    "ANWPortuguese": {
+      "anw_token": "ANWPortuguese",
+      "display_name": "Portugal",
+      "data_name": "Portuguese Henry Navigator",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Sagres carrack-and-padrao empire",
+        "civ_label": "Portuguese",
+        "leader_label": "Henry Navigator"
+      },
+      "expected_milestones": {
+        "dock": true,
+        "wall_segment": true,
+        "trading_post": true
+      },
+      "wall_strategy": 2,
+      "military_distance_band": [
+        0.9,
+        1.2
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 8,
+      "doctrine_label": "Naval Mercantile Compound",
+      "doctrine_summary": "Sagres carrack-and-padrao empire",
+      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts \u2014 the home city pays for the war.",
+      "expected_deck": {
+        "0": [
+          "DEHCFeitorias",
+          "HCExplorerPortuguese",
+          "DEHCNavalInfantry"
+        ],
+        "2": [
+          "HCShipCacadores3",
+          "HCShipDragoons3",
+          "HCDragoonCombatPortuguese",
+          "DEHCCarracks",
+          "DEHCHandCombatPortuguese",
+          "HCShipDragoons1",
+          "HCShipOrganGuns1",
+          "DEHCEstremozGuns",
+          "DEHCHandMortar"
+        ],
+        "1": [
+          "HCRoyalDecreePortuguese",
+          "HCRangedInfantryDamagePortuguese",
+          "DEHCMercsCannoneersEuropean",
+          "HCXPHouseofBraganca",
+          "DEHCWettinAllies1"
+        ],
+        "3": [
+          "DEHCPortugueseBattleshipCard",
+          "HCRangedInfantryCombatPortuguese",
+          "HCShipDragoons2",
+          "HCShipDragoons4",
+          "HCShipOrganGuns2",
+          "HCShipOrganGuns3",
+          "DEHCGrapeshot",
+          "DEHCMachuPicchu"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Gets 1 free Covered Wagon with each Age-up.",
+        "unique_units": [
+          "Cassador",
+          "Organ Gun"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Dock-first fishing fleet; Covered Wagons fund forward expansion; Cassador + Organ Gun mid-game; strong naval support throughout.",
+        "age_up": "Covered Wagon with each Age-up"
+      }
+    },
+    "ANWRevFrance": {
+      "anw_token": "ANWRevFrance",
+      "display_name": "French Republic",
+      "data_name": "Revolutionary France Robespierre Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Lev\u00e9e-en-masse Republic",
+        "civ_label": "Revolutionary France",
+        "leader_label": "Robespierre Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 4,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 13,
+      "doctrine_label": "Republican Levee",
+      "doctrine_summary": "Lev\u00e9e-en-masse Republic",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVGuillotine",
+          "DEHCREVRobespierre",
+          "DEHCREVCantinieres",
+          "DEHCShipBalloonsFrench",
+          "HCXPColbertism"
+        ],
+        "1": [
+          "DEHCREVBastilleStorming",
+          "DEHCREVCultSupremeBeing",
+          "DEHCMercsIrishBrigadiers",
+          "DEHCCentSuisses",
+          "DEHCColbertismTeam"
+        ],
+        "2": [
+          "DEHCREVShipmentRevolutionaries",
+          "HCShipSkirmishers1",
+          "HCShipSkirmishers3",
+          "HCXPTirailleurs",
+          "DEHCMercsArmoredPistoleers",
+          "DEHCMercsGiantGrenadiers"
+        ],
+        "3": [
+          "DEHCREVHorseHunters",
+          "DEHCREVClientStates",
+          "DEHCREVShipHorseArtillery3",
+          "HCShipSkirmishers2",
+          "HCShipSkirmishers4",
+          "HCShipSkirmishers5",
+          "DEHCMercsRoyalHorseman",
+          "DEHCMercsZouaves",
+          "DEHCFrenchBattleshipCard"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Trains Sans Culottes instead of Settlers (stronger fighters, slower gatherers); gains Eclaireur scout at Commerce Age.",
+        "unique_units": [
+          "Sans Culottes",
+          "Eclaireur",
+          "Cuirassier"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Multi-barracks Sans Culottes levy spam; Eclaireur scout flanks; Cuirassier cavalry arrives at Fortress; civic core with Outpost militia.",
+        "age_up": "Wagon politicians (French-style)"
+      }
+    },
+    "ANWRomanians": {
+      "anw_token": "ANWRomanians",
+      "display_name": "Romania",
+      "data_name": "Romanians Cuza Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Civic Militia Center",
+        "doctrine_summary": "Danubian Principalities consolidation",
+        "civ_label": "Romanians",
+        "leader_label": "Cuza Revolution"
+      },
+      "expected_milestones": {},
+      "wall_strategy": 3,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "build_style": 6,
+      "doctrine_label": "Civic Militia Center",
+      "doctrine_summary": "Danubian Principalities consolidation",
+      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses \u2014 Town Centers and Outposts that summon militia \u2014 rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
+      "expected_deck": {
+        "0": [
+          "DEHCLandedGentry",
+          "HCColonialMilitia"
+        ],
+        "1": [
+          "DEHCExtensiveFortificationsEuropean",
+          "DEHCInfantryHitpointsItalian",
+          "DEHCPhanarAllies2",
+          "DEHCTheaters",
+          "HCAdvancedArsenal"
+        ],
+        "2": [
+          "ANWHCSovnyaRomanian",
+          "ANWHCWallachianArchers",
+          "DEHCMercsGiantGrenadiers",
+          "DEHCHandMortar",
+          "DEHCPhanarAllies1",
+          "HCRefrigeration",
+          "HCRoyalMint",
+          "HCUnlockFort",
+          "HCMercenaryLoyalty",
+          "HCMercsBlackRiders"
+        ],
+        "3": [
+          "DEHCREVShipHorseArtillery3",
+          "ANWHCFlightArcheryRomanians",
+          "DEHCShipBattleshipRepeat",
+          "HCHeavyFortifications",
+          "HCUnlockFactory",
+          "ANWHCShipFortWagonOutpost",
+          "HCMercsHessians",
+          "HCShipWoodCrates5"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.",
+        "unique_units": [
+          "Rosior Dragoon",
+          "Dorobant"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Tight civic core with Outpost militia; Rosior Dragoon cavalry from every Outpost; reactive defense that counter-punches hard.",
+        "age_up": "Covered Wagon per Outpost shipment"
+      }
+    },
+    "ANWRussians": {
+      "anw_token": "ANWRussians",
+      "display_name": "Russia",
+      "data_name": "Russians Catherine",
+      "playstyle_spec": {
+        "doctrine_label": "Streltsy siege",
+        "doctrine_summary": "Oprichnik terror",
+        "civ_label": "Russians",
+        "leader_label": "Catherine"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 3,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 12,
+      "doctrine_label": "Cossack Voisko",
+      "doctrine_summary": "Oprichnik terror",
+      "doctrine_prose": "Plays an offensive, fortified game suited to the Tsar: massed Streltsy musketeer blocks form the backbone, Oprichnik cavalry hits as a shock arm, and a siege train accompanies the army for fortress reduction. Frontier palisades and Blockhouses anchor the eastern marches; the Tsar pushes a forward base early to project terror onto rival capitals.",
+      "expected_deck": {
+        "3": [
+          "HCShipStrelets3",
+          "HCShipCossacks3",
+          "DEHCRussianBattleshipCard",
+          "HCShipHalberdiersRussian2",
+          "HCShipHalberdiersRussian3",
+          "HCShipMusketeersRussian3",
+          "HCShipOprichniks3",
+          "DEHCMercsGiantGrenadiers"
+        ],
+        "0": [
+          "DEHCLandedGentry",
+          "DEHCSoldierTorps"
+        ],
+        "1": [
+          "DEHCInfantryCombatRussian",
+          "DEHCShipHalberdiersRussian1",
+          "HCShipCossacks1",
+          "HCShipCossacks4",
+          "HCFrontierDefensesRussian"
+        ],
+        "2": [
+          "DEHCBashkirRebellion",
+          "HCShipCossacks2",
+          "HCShipMusketeersRussian2",
+          "HCShipOprichniks1",
+          "HCShipOprichniks2",
+          "HCShipStrelets2",
+          "DEHCPhanarAllies1",
+          "DEHCMercsPandours",
+          "DEHCHandMortar",
+          "HCStreletsCombatRussian"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Trains cheap Strelet infantry in batches; Cossacks available from Stables.",
+        "unique_units": [
+          "Strelet",
+          "Cossack",
+          "Oprichnik"
+        ],
+        "unique_buildings": [
+          "Blockhouse"
+        ],
+        "playstyle": "Mass Streltsy musketeer blocks form the backbone; Oprichnik shock cavalry hits the flanks; a forward Blockhouse projects terror onto rival capitals while a siege train reduces forts. Cossacks raid as a secondary arm, not the headline.",
+        "age_up": "Wagon politicians"
+      }
+    },
+    "ANWSouthAfricans": {
+      "anw_token": "ANWSouthAfricans",
+      "display_name": "South Africa",
+      "data_name": "South Africans Kruger Boer Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Naval Mercantile Compound",
+        "doctrine_summary": "Boer commando trader-cavalry",
+        "civ_label": "South Africans",
+        "leader_label": "Kruger Boer Revolution"
+      },
+      "expected_milestones": {
+        "dock": true,
+        "wall_segment": true,
+        "trading_post": true
+      },
+      "wall_strategy": 2,
+      "military_distance_band": [
+        0.9,
+        1.2
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 8,
+      "doctrine_label": "Naval Mercantile Compound",
+      "doctrine_summary": "Boer commando trader-cavalry",
+      "doctrine_prose": "Plays a hybrid trader-cavalry game keyed to map type. On coastal spawns the AI builds Docks first to set up a mercantile compound \u2014 the Cape trade hub funds the war \u2014 and a wall ring screens the harbor. Inland, the Boer commando carries the fight: mounted infantry on swift horses, a single fort serves as a laager command post, and forward outposts press out into the veldt. Home-city shipments and mercenary contracts keep the cavalry stream fed.",
+      "expected_deck": {
+        "0": [
+          "HCXPSouthSeaBubble",
+          "DEHCFeitorias"
+        ],
+        "1": [
+          "DEHCREVWanderlust",
+          "DEHCMercsIrishBrigadiers",
+          "HCShipCaravels1",
+          "HCShipCaravels2",
+          "DEHCBuckriders"
+        ],
+        "2": [
+          "DEHCREVBankWagons",
+          "DEHCREVShipHomesteadWagons",
+          "DEHCREVShipMilitaryWagons",
+          "DEHCREVShipOutpostWagons",
+          "DEHCMercsBosniaks",
+          "DEHCMercsPandours",
+          "HCShipFrigates",
+          "DEHCBlueGuards",
+          "DEHCHabsburgAllies1"
+        ],
+        "3": [
+          "DEHCREVDiamondRush",
+          "DEHCREVHuguenots",
+          "DEHCREVShipXhosaFoods",
+          "DEHCDutchBattleshipCard",
+          "DEHCShipBattleshipRepeat",
+          "DEHCMercsAskaris",
+          "DEHCMercsMountedRiflemen",
+          "HCShipMonitors",
+          "HCXPShipMonitorsTeam"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Villagers and Banks gather faster; receives a free Trek Wagon each Age.",
+        "unique_units": [
+          "Ruyter",
+          "Trek Wagon",
+          "Fluyt"
+        ],
+        "unique_buildings": [
+          "Bank"
+        ],
+        "playstyle": "Bank coin boom and Trek Wagon expansion. On coastal maps the AI builds Docks first for a mercantile harbor with Ruyter and Fluyt support. On inland maps Boer commandos on swift horses operate from a forward laager while home-city shipments sustain the cavalry stream.",
+        "age_up": "Trek Wagon with each Age-up"
+      }
+    },
+    "ANWSpanish": {
+      "anw_token": "ANWSpanish",
+      "display_name": "Spain",
+      "data_name": "Spanish Isabella Castile",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Reconquista Tercio precursor",
+        "civ_label": "Spanish",
+        "leader_label": "Isabella Castile"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        0.85,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 3,
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Reconquista Tercio precursor",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "expected_deck": {
+        "2": [
+          "DEHCHabsburgAllies1",
+          "HCShipLancers3",
+          "HCShipLancers1",
+          "HCShipRodeleros2",
+          "HCShipRodeleros4",
+          "HCXPSpanishGold",
+          "DEHCMercsArmoredPistoleers",
+          "DEHCNewSpainViceroyalty",
+          "DEHCHandMortar"
+        ],
+        "1": [
+          "HCInquisition",
+          "HCRoyalDecreeSpanish",
+          "DEHCReconquista",
+          "DEHCExtensiveFortificationsEuropean",
+          "HCHandCavalryHitpointsSpanish",
+          "HCExplorerSpanish",
+          "HCXPTercioTactics",
+          "DEHCBarbacoa"
+        ],
+        "3": [
+          "HCShipRodeleros3",
+          "DEHCPeninsularGuerrillas",
+          "HCShipLancers4",
+          "HCShipLancers5",
+          "DEHCBourbonAllies1",
+          "DEHCMachuPicchu"
+        ],
+        "0": [
+          "DEHCAlpacaWool",
+          "DEHCCharreada"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Starts with Missionaries that can convert Treasures; Unction upgrade buffs all units.",
+        "unique_units": [
+          "Rodelero",
+          "Lancer",
+          "War Dog",
+          "Missionary"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Forward barracks + stables pressure from Colonial; Rodelero + Lancer push with Missionary heal support; sustained forward-base doctrine.",
+        "age_up": "Wagon politicians"
+      }
+    },
+    "ANWSwedes": {
+      "anw_token": "ANWSwedes",
+      "display_name": "Sweden",
+      "data_name": "Swedes Gustavus Adolphus Swedish",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Lion of the North combined arms",
+        "civ_label": "Swedes",
+        "leader_label": "Gustavus Adolphus Swedish"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        0.85,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 3,
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Lion of the North combined arms",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "expected_deck": {
+        "0": [
+          "DEHCExplorerSwedish",
+          "DEHCTorpTeam",
+          "DEHCShipLeatherCannonsFoundry",
+          "DEHCShipLeatherCannons1"
+        ],
+        "1": [
+          "DEHCRoyalDecreeSwedish",
+          "DEHCContractMercsIrishBrigadiers",
+          "DEHCContractMercsLandsknechts",
+          "DEHCShipLeatherCannons3",
+          "DEHCShipLeatherCannonsRepeat"
+        ],
+        "2": [
+          "DEHCShipCaroleans1",
+          "DEHCShipCaroleans2",
+          "DEHCHandMortar",
+          "DEHCContractMercsBlackRiders",
+          "DEHCShipLeatherCannons2",
+          "DEHCShipCaroleans3",
+          "DEHCShipCaroleansRepeat",
+          "DEHCSoldierTorps",
+          "DEHCShipFalconetsCulverins1",
+          "DEHCShipFalconetsCulverins2"
+        ],
+        "3": [
+          "DEHCContractMercsGiantGrenadiers",
+          "DEHCContractMercsHessians",
+          "DEHCContractMercsSwissPikemen",
+          "DEHCGermanMercenaryContracts",
+          "DEHCMercsRoyalHorseman",
+          "DEHCShipBattleshipRepeat"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Torp buildings passively gather nearby resources.",
+        "unique_units": [
+          "Carolean",
+          "Hakkapelit",
+          "Leather Cannon"
+        ],
+        "unique_buildings": [
+          "Torp"
+        ],
+        "playstyle": "Torp passive eco; push forward barracks and stables early; Carolean + Hakkapelit combined arms backed by Leather Cannon artillery; relentless forward pressure.",
+        "age_up": "Wagon politicians (Torp wagon)"
+      }
+    },
+    "ANWTexians": {
+      "anw_token": "ANWTexians",
+      "display_name": "Texas",
+      "data_name": "Texians Sam Houston Texas Revolution",
+      "playstyle_spec": {
+        "doctrine_label": "Forward Operational Line",
+        "doctrine_summary": "Republic of Texas militia",
+        "civ_label": "Texians",
+        "leader_label": "Sam Houston Texas Revolution"
+      },
+      "expected_milestones": {
+        "wall_segment": true,
+        "forward_base": true
+      },
+      "wall_strategy": 5,
+      "military_distance_band": [
+        0.85,
+        1.3
+      ],
+      "wall_deadline_ms": 720000,
+      "build_style": 3,
+      "doctrine_label": "Forward Operational Line",
+      "doctrine_summary": "Republic of Texas militia",
+      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+      "expected_deck": {
+        "0": [
+          "DEHCREVMXBurnetLand",
+          "DEHCShipHaciendaWagon1"
+        ],
+        "1": [
+          "HCFrontierDefenses",
+          "DEHCFedMXFortifiedHaciendas",
+          "DEHCShipCapturedGalleons1",
+          "DEHCChipotles",
+          "DEHCCopperCanyon"
+        ],
+        "2": [
+          "DEHCREVMXGonzalesGuns",
+          "DEHCREVMXFrontierDefensesRepeat",
+          "ANWHCREVMXTexasStatehood",
+          "HCUnlockFort",
+          "DEHCShipCapturedGalleons2",
+          "DEHCPresidios"
+        ],
+        "3": [
+          "DEHCREVMXTexasArmy",
+          "DEHCREVMXTexasLancers",
+          "DEHCREVMXTexasNavy",
+          "DEHCREVMXEmpresarioContracts",
+          "DEHCREVMXShipSharpshooters",
+          "DEHCREVMXHeavyFortifications",
+          "DEHCREVMXShipFortWagon2",
+          "DEHCREVMXIroncladsSteamers1",
+          "DEHCREVMXRobberBarons2",
+          "DEHCREVMXShipHaciendaWagonRepeat1",
+          "DEHCShipIroncladsRepeat1",
+          "ANWHCREVMXTexasMarines"
+        ],
+        "4": []
+      },
+      "blurb": {
+        "civ_bonus": "Minutemen levies can be called repeatedly from Town Centers and Outposts; 2 bonus cards on Industrial Age.",
+        "unique_units": [
+          "Minuteman",
+          "State Militia",
+          "Regular",
+          "Sharpshooter",
+          "Chinaco"
+        ],
+        "unique_buildings": [
+          "Hacienda",
+          "Cathedral"
+        ],
+        "playstyle": "Push Stables and barracks forward; Chinaco cavalry and Minuteman infantry form a combined-arms advance; Sharpshooters screen the flanks as the Republic line reaches the enemy base.",
+        "age_up": "Federal States politicians"
+      }
+    },
+    "ANWUSA": {
+      "anw_token": "ANWUSA",
+      "display_name": "United States",
+      "data_name": "United States Washington",
+      "playstyle_spec": {
+        "doctrine_label": "Republican Levee",
+        "doctrine_summary": "Continental Army Fabian-to-Yorktown",
+        "civ_label": "United States",
+        "leader_label": "Washington"
+      },
+      "expected_milestones": {
+        "wall_segment": true
+      },
+      "wall_strategy": 4,
+      "military_distance_band": [
+        0.8,
+        1.1
+      ],
+      "wall_deadline_ms": 900000,
+      "build_style": 13,
+      "doctrine_label": "Republican Levee",
+      "doctrine_summary": "Continental Army Fabian-to-Yorktown",
+      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout \u2014 production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+      "expected_deck": {
+        "3": [
+          "DEHCMinutemenCompanies",
+          "DEHCKosciuszkoFortifications",
+          "DEHCShipRegulars4",
+          "DEHCLegionWashington",
+          "DEHCShipCarbineCav1",
+          "DEHCShipGatlingsTeam1",
+          "DEHCShipIroncladsRepeat1",
+          "DEHCShipIroncladsSteamers1"
+        ],
+        "2": [
+          "DEHCContinentalRangers",
+          "DEHCShipRegulars3",
+          "DEHCShipCarbineCav3",
+          "DEHCRegularCombat",
+          "DEHCShipRegulars2",
+          "DEHCShipCarbineCav2",
+          "DEHCApacheScouts",
+          "DEHCBlackMesa",
+          "DEHCBuffaloSoldiers",
+          "DEHCLouisianaPurchase"
+        ],
+        "1": [
+          "DEHCGeneralAmericans",
+          "DEHCArkansasPost",
+          "DEHCShipRegulars1",
+          "DEHCFedGeneralAssembly",
+          "DEHCFedFertileLowlands"
+        ],
+        "0": [
+          "HCPioneers",
+          "DEHCAdvancedSaloon"
+        ]
+      },
+      "blurb": {
+        "civ_bonus": "Starts with a free Covered Wagon; Federal Politicians ship powerful unique wagons.",
+        "unique_units": [
+          "Minuteman",
+          "State Militia",
+          "Regular",
+          "Sharpshooter"
+        ],
+        "unique_buildings": [],
+        "playstyle": "Multi-barracks line infantry boom with Outpost militia; Federal State cards provide powerful wagons; Minutemen defend early; Regular + Sharpshooter mid-game.",
+        "age_up": "Federal States politicians"
+      }
+    }
+  }
+}

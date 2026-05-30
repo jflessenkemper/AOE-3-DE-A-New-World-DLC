@@ -359,7 +359,7 @@
       <age>1</age>
     </card>
     <card>
-      <name>RvltModHCMilitaryFrontier</name>
+      <name>ANWHCMilitaryFrontier</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -414,14 +414,14 @@
       <age>0</age>
     </card>
     <card>
-      <name>RvltModHCWallachianArchers</name>
+      <name>ANWHCWallachianArchers</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
       <age>2</age>
     </card>
     <card>
-      <name>RvltModHCShipCavArchers</name>
+      <name>ANWHCShipCavArchers</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -438,20 +438,20 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCSovnyaRomanian</name>
+      <name>ANWHCSovnyaRomanian</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>HCShipHalberdiersRussian3</prereqtech>
       <age>2</age>
     </card>
     <card>
-      <name>RvltModHCFlightArcheryRomanians</name>
+      <name>ANWHCFlightArcheryRomanians</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <age>3</age>
     </card>
     <card>
-      <name>RvltModHCRoshiorDragoons</name>
+      <name>ANWHCRoshiorDragoons</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -590,7 +590,7 @@
       <displayunitcount>1</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCShipFortWagonOutpost</name>
+      <name>ANWHCShipFortWagonOutpost</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -870,7 +870,7 @@
       <infiniteinlastage>1</infiniteinlastage>
     </card>
     <card>
-      <name>RvltModHCShipEuropeanFleet</name>
+      <name>ANWHCShipEuropeanFleet</name>
       <maxcount>-1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -925,7 +925,7 @@
       <age>0</age>
     </card>
     <card>
-      <name>RvltModHCRussianExpArmy</name>
+      <name>ANWHCRussianExpArmy</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1048,21 +1048,21 @@
       <displayunitcount>7</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCPhanariotes</name>
+      <name>ANWHCPhanariotes</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
       <age>2</age>
     </card>
     <card>
-      <name>RvltModHCHajduks</name>
+      <name>ANWHCHajduks</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
       <age>1</age>
     </card>
     <card>
-      <name>RvltModHCCrabats</name>
+      <name>ANWHCCrabats</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1070,7 +1070,7 @@
       <displayunitcount>12</displayunitcount>
     </card>
     <card>
-      <name>RvltModHCPandours</name>
+      <name>ANWHCPandours</name>
       <maxcount>1</maxcount>
       <level>0</level>
       <prereqtech>XPRevolution</prereqtech>
@@ -1187,8 +1187,8 @@
         <card>DEHCPhanarAllies2</card>
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
-        <card>RvltModHCSovnyaRomanian</card>
-        <card>RvltModHCWallachianArchers</card>
+        <card>ANWHCSovnyaRomanian</card>
+        <card>ANWHCWallachianArchers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
@@ -1198,11 +1198,11 @@
         <card>HCMercenaryLoyalty</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>RvltModHCFlightArcheryRomanians</card>
+        <card>ANWHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>RvltModHCShipFortWagonOutpost</card>
+        <card>ANWHCShipFortWagonOutpost</card>
         <card>HCMercsHessians</card>
         <card>HCShipWoodCrates5</card>
       </cards>
@@ -1231,8 +1231,8 @@
         <card>DEHCPhanarAllies2</card>
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
-        <card>RvltModHCSovnyaRomanian</card>
-        <card>RvltModHCWallachianArchers</card>
+        <card>ANWHCSovnyaRomanian</card>
+        <card>ANWHCWallachianArchers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
@@ -1242,11 +1242,11 @@
         <card>HCMercenaryLoyalty</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>RvltModHCFlightArcheryRomanians</card>
+        <card>ANWHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>RvltModHCShipFortWagonOutpost</card>
+        <card>ANWHCShipFortWagonOutpost</card>
         <card>HCMercsHessians</card>
         <card>HCShipWoodCrates5</card>
       </cards>
@@ -1275,8 +1275,8 @@
         <card>DEHCPhanarAllies2</card>
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
-        <card>RvltModHCSovnyaRomanian</card>
-        <card>RvltModHCWallachianArchers</card>
+        <card>ANWHCSovnyaRomanian</card>
+        <card>ANWHCWallachianArchers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
@@ -1286,11 +1286,11 @@
         <card>HCMercenaryLoyalty</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>RvltModHCFlightArcheryRomanians</card>
+        <card>ANWHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>RvltModHCShipFortWagonOutpost</card>
+        <card>ANWHCShipFortWagonOutpost</card>
         <card>HCMercsHessians</card>
         <card>HCShipWoodCrates5</card>
       </cards>
@@ -1319,8 +1319,8 @@
         <card>DEHCPhanarAllies2</card>
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
-        <card>RvltModHCSovnyaRomanian</card>
-        <card>RvltModHCWallachianArchers</card>
+        <card>ANWHCSovnyaRomanian</card>
+        <card>ANWHCWallachianArchers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
@@ -1330,11 +1330,11 @@
         <card>HCMercenaryLoyalty</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>RvltModHCFlightArcheryRomanians</card>
+        <card>ANWHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>RvltModHCShipFortWagonOutpost</card>
+        <card>ANWHCShipFortWagonOutpost</card>
         <card>HCMercsHessians</card>
         <card>HCShipWoodCrates5</card>
       </cards>
@@ -1363,8 +1363,8 @@
         <card>DEHCPhanarAllies2</card>
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
-        <card>RvltModHCSovnyaRomanian</card>
-        <card>RvltModHCWallachianArchers</card>
+        <card>ANWHCSovnyaRomanian</card>
+        <card>ANWHCWallachianArchers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
@@ -1374,11 +1374,11 @@
         <card>HCMercenaryLoyalty</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>RvltModHCFlightArcheryRomanians</card>
+        <card>ANWHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>RvltModHCShipFortWagonOutpost</card>
+        <card>ANWHCShipFortWagonOutpost</card>
         <card>HCMercsHessians</card>
         <card>HCShipWoodCrates5</card>
       </cards>
@@ -1407,8 +1407,8 @@
         <card>DEHCPhanarAllies2</card>
         <card>DEHCTheaters</card>
         <card>HCAdvancedArsenal</card>
-        <card>RvltModHCSovnyaRomanian</card>
-        <card>RvltModHCWallachianArchers</card>
+        <card>ANWHCSovnyaRomanian</card>
+        <card>ANWHCWallachianArchers</card>
         <card>DEHCMercsGiantGrenadiers</card>
         <card>DEHCHandMortar</card>
         <card>DEHCPhanarAllies1</card>
@@ -1418,11 +1418,11 @@
         <card>HCMercenaryLoyalty</card>
         <card>HCMercsBlackRiders</card>
         <card>DEHCREVShipHorseArtillery3</card>
-        <card>RvltModHCFlightArcheryRomanians</card>
+        <card>ANWHCFlightArcheryRomanians</card>
         <card>DEHCShipBattleshipRepeat</card>
         <card>HCHeavyFortifications</card>
         <card>HCUnlockFactory</card>
-        <card>RvltModHCShipFortWagonOutpost</card>
+        <card>ANWHCShipFortWagonOutpost</card>
         <card>HCMercsHessians</card>
         <card>HCShipWoodCrates5</card>
       </cards>
@@ -1567,15 +1567,15 @@
       <tech>HCShipMortars1</tech>
       <tech>HCXPShipMortarsTeam</tech>
       <tech>HCShipCannons1</tech>
-      <tech>RvltModHCMilitaryFrontier</tech>
-      <tech>RvltModHCWallachianArchers</tech>
-      <tech>RvltModHCShipCavArchers</tech>
-      <tech>RvltModHCRoshiorDragoons</tech>
+      <tech>ANWHCMilitaryFrontier</tech>
+      <tech>ANWHCWallachianArchers</tech>
+      <tech>ANWHCShipCavArchers</tech>
+      <tech>ANWHCRoshiorDragoons</tech>
       <tech>DEHCREVShipHorseArtillery3</tech>
       <tech>HCCavalryCombatRussian</tech>
       <tech>DEHCLandedGentry</tech>
-      <tech>RvltModHCSovnyaRomanian</tech>
-      <tech>RvltModHCFlightArcheryRomanians</tech>
+      <tech>ANWHCSovnyaRomanian</tech>
+      <tech>ANWHCFlightArcheryRomanians</tech>
     </obtainabletechs>
     <activetechs>
       <tech>HCShipCrossbowmen1</tech>
@@ -1601,15 +1601,15 @@
       <tech>HCShipMortars1</tech>
       <tech>HCXPShipMortarsTeam</tech>
       <tech>HCShipCannons1</tech>
-      <tech>RvltModHCMilitaryFrontier</tech>
-      <tech>RvltModHCWallachianArchers</tech>
-      <tech>RvltModHCShipCavArchers</tech>
-      <tech>RvltModHCRoshiorDragoons</tech>
+      <tech>ANWHCMilitaryFrontier</tech>
+      <tech>ANWHCWallachianArchers</tech>
+      <tech>ANWHCShipCavArchers</tech>
+      <tech>ANWHCRoshiorDragoons</tech>
       <tech>DEHCREVShipHorseArtillery3</tech>
       <tech>HCCavalryCombatRussian</tech>
       <tech>DEHCLandedGentry</tech>
-      <tech>RvltModHCSovnyaRomanian</tech>
-      <tech>RvltModHCFlightArcheryRomanians</tech>
+      <tech>ANWHCSovnyaRomanian</tech>
+      <tech>ANWHCFlightArcheryRomanians</tech>
     </activetechs>
     <validunits>
     </validunits>
@@ -1656,7 +1656,7 @@
       <tech>HCXPShipSpies1</tech>
       <tech>HCXPShipSpies2</tech>
       <tech>HCXPAgents</tech>
-      <tech>RvltModHCShipFortWagonOutpost</tech>
+      <tech>ANWHCShipFortWagonOutpost</tech>
     </obtainabletechs>
     <activetechs>
       <tech>HCNativeLore</tech>
@@ -1683,7 +1683,7 @@
       <tech>HCXPShipSpies1</tech>
       <tech>HCXPShipSpies2</tech>
       <tech>HCXPAgents</tech>
-      <tech>RvltModHCShipFortWagonOutpost</tech>
+      <tech>ANWHCShipFortWagonOutpost</tech>
     </activetechs>
     <validunits>
     </validunits>
@@ -1793,12 +1793,12 @@
       <tech>HCPrivateers</tech>
       <tech>HCPrivateers2</tech>
       <tech>DEHCShipBattleshipRepeat</tech>
-      <tech>RvltModHCShipEuropeanFleet</tech>
-      <tech>RvltModHCPandours</tech>
-      <tech>RvltModHCCrabats</tech>
-      <tech>RvltModHCHajduks</tech>
-      <tech>RvltModHCPhanariotes</tech>
-      <tech>RvltModHCRussianExpArmy</tech>
+      <tech>ANWHCShipEuropeanFleet</tech>
+      <tech>ANWHCPandours</tech>
+      <tech>ANWHCCrabats</tech>
+      <tech>ANWHCHajduks</tech>
+      <tech>ANWHCPhanariotes</tech>
+      <tech>ANWHCRussianExpArmy</tech>
     </obtainabletechs>
     <activetechs>
       <tech>HCShipGalleys1</tech>
@@ -1824,12 +1824,12 @@
       <tech>HCPrivateers</tech>
       <tech>HCPrivateers2</tech>
       <tech>DEHCShipBattleshipRepeat</tech>
-      <tech>RvltModHCShipEuropeanFleet</tech>
-      <tech>RvltModHCPandours</tech>
-      <tech>RvltModHCCrabats</tech>
-      <tech>RvltModHCHajduks</tech>
-      <tech>RvltModHCPhanariotes</tech>
-      <tech>RvltModHCRussianExpArmy</tech>
+      <tech>ANWHCShipEuropeanFleet</tech>
+      <tech>ANWHCPandours</tech>
+      <tech>ANWHCCrabats</tech>
+      <tech>ANWHCHajduks</tech>
+      <tech>ANWHCPhanariotes</tech>
+      <tech>ANWHCRussianExpArmy</tech>
     </activetechs>
     <validunits>
     </validunits>
