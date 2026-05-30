@@ -1,0 +1,7 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<mapinfo displayName = "ANW Hub Test" detailsText = "ANW Hub Test - 8-player AI doctrine test arena (Treaty 20)." loadDetailsText = "A New World 8-player AI test arena. Player 1 is the observer on a central island; players 2-8 are AIs in 7 walled compartments connected to a central sea by river spokes. Treaty 20 recommended." largeMapName = "Andes UpperLarge"
+    imagepath = "ui\random_map\andes_upper\andes_upper_mini" cannotReplace = "" loadBackground = "ui\random_map\andes_upper\andes_upper_map">
+   <loadss>ui\random_map\andes_upper\andes_upper_ss_01</loadss>
+   <loadss>ui\random_map\andes_upper\andes_upper_ss_02</loadss>
+   <loadss>ui\random_map\andes_upper\andes_upper_ss_03</loadss>
+</mapinfo>
