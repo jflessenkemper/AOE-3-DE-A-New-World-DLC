@@ -22,7 +22,7 @@ def _civ_token(exp) -> str:
     """Engine-faithful civ token derived from civ_id, not from the
     decorative CIV_LABELS string. ``kbGetCivName()`` emits the prefix-
     stripped civ_id (cCivBritish → British, cCivXPSioux → Sioux); rvlt
-    civs arrive as their full RvltMod* string. Mirroring that here keeps
+    civs arrive as their full ANW* string. Mirroring that here keeps
     test probes parseable as space-separated kv (labels like ``British
     (Elizabeth I)`` would otherwise blow up the kv split)."""
     cid = exp.civ_id
@@ -146,7 +146,7 @@ class TestValidator(unittest.TestCase):
         # leader_init key must satisfy the cross-check.
         text = self._good_pair(1, self.british).replace(
             "tag=meta.leader_init] leader=wellington",
-            "tag=meta.leader_init] leader=rvlt_RvltModBrazil",
+            "tag=meta.leader_init] leader=rvlt_ANWBrazil",
         )
         issues, _ = validate(parse_probes(text.encode()))
         self.assertFalse(

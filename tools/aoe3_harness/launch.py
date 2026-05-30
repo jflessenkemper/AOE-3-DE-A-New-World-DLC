@@ -44,9 +44,6 @@ from tools.aoe3_harness.paths import (
     WINEPREFIX,
 )
 
-# Path to the LD_PRELOAD injection .so (Linux host-side input server)
-PRELOAD_SO: Path = REPO_ROOT / "tools" / "aoe3_harness" / "preload" / "anw_preload.so"
-
 
 def kill_stale(force_kill: bool = False) -> bool:
     """Kill any stale AoE3 DE or gamescope processes from previous runs.
@@ -179,17 +176,18 @@ def _check_display_mode() -> bool:
     return True
 
 
-def build_env(extra: Optional[dict] = None, with_preload: bool = True) -> dict:
+def build_env(extra: Optional[dict] = None) -> dict:
     """Build the subprocess environment for umu-run.
 
     Sets WINEPREFIX, PROTONPATH, GAMEID, STEAM_COMPAT_CLIENT_INSTALL_PATH.
-    If ``with_preload`` is True (default) and ``anw_preload.so`` exists, injects
-    it via LD_PRELOAD to enable the host-side input injection socket server.
     Merges with os.environ and any caller-supplied overrides.
+
+    Note: LD_PRELOAD injection (anw_preload.so) has been removed. Input
+    injection is now handled by the AOE3DEHarness compositor control socket
+    (see harness_launch.py / HarnessClient).
 
     Args:
         extra: Optional dict of additional environment variables to set.
-        with_preload: If True, inject anw_preload.so via LD_PRELOAD.
 
     Returns:
         A dict suitable for passing as the ``env`` kwarg to subprocess.run /
@@ -204,17 +202,6 @@ def build_env(extra: Optional[dict] = None, with_preload: bool = True) -> dict:
             "STEAM_COMPAT_CLIENT_INSTALL_PATH": str(STEAM_ROOT),
         }
     )
-    if with_preload and PRELOAD_SO.exists():
-        existing = env.get("LD_PRELOAD", "")
-        new_preload = str(PRELOAD_SO)
-        if existing:
-            env["LD_PRELOAD"] = f"{new_preload}:{existing}"
-        else:
-            env["LD_PRELOAD"] = new_preload
-        # Remove stale lock so the new server can start
-        import os as _os
-        _os.unlink("/tmp/anw_preload.lock") if _os.path.exists("/tmp/anw_preload.lock") else None
-        print(f"[harness/launch] LD_PRELOAD={env['LD_PRELOAD']}")
     if extra:
         env.update(extra)
     return env
@@ -241,8 +228,7 @@ def launch_game(
         extra_args: Additional args appended after the exe path.
         dry_run: If True, print the command but do not execute.
         force_kill: If True, escalate stale-process kill to SIGKILL after 5s.
-        extra_env: Optional dict of additional environment variables to set
-                   (e.g. ``{"WINEDLLOVERRIDES": "anw_hook=n,b"}``).
+        extra_env: Optional dict of additional environment variables to set.
 
     Returns:
         subprocess.Popen handle for the launched process, or None if dry_run.

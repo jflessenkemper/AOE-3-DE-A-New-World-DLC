@@ -20,7 +20,7 @@ from tools.validation.validate_homecity_visuals import (
 
 def _homecity_xml(
     *,
-    civ: str = "RvltModExample",
+    civ: str = "ANWExample",
     visual: str = "british\\british_homecity.xml",
     watervisual: str = "british\\british_homecity_water.xml",
     backgroundvisual: str = "british\\british_background.xml",
@@ -70,14 +70,14 @@ class ValidateHomecityVisualsTests(unittest.TestCase):
         return repo_root
 
     def test_accepts_consistent_namespace(self) -> None:
-        repo_root = self.make_repo({"rvltmodhomecityexample.xml": _homecity_xml()})
+        repo_root = self.make_repo({"anwhomecityexample.xml": _homecity_xml()})
         self.assertEqual(validate_homecity_visuals(repo_root), [])
 
     def test_accepts_revolution_consistent_namespace(self) -> None:
         repo_root = self.make_repo(
             {
-                "rvltmodhomecitymexicans.xml": _homecity_xml(
-                    civ="RvltModMexicans",
+                "anwhomecitymexicans.xml": _homecity_xml(
+                    civ="ANWMexicans",
                     visual="revolution\\revolution_homecity.xml",
                     watervisual="revolution\\revolution_homecity_water.xml",
                     backgroundvisual="revolution\\revolution_background.xml",
@@ -93,7 +93,7 @@ class ValidateHomecityVisualsTests(unittest.TestCase):
         # Classic floating-citizens scenario: British visual + revolution pathdata.
         repo_root = self.make_repo(
             {
-                "rvltmodhomecityexample.xml": _homecity_xml(
+                "anwhomecityexample.xml": _homecity_xml(
                     pathdata="revolution\\pathable_area.gr2",
                 )
             }
@@ -107,7 +107,7 @@ class ValidateHomecityVisualsTests(unittest.TestCase):
     def test_detects_camera_namespace_mismatch(self) -> None:
         repo_root = self.make_repo(
             {
-                "rvltmodhomecityexample.xml": _homecity_xml(
+                "anwhomecityexample.xml": _homecity_xml(
                     camera="spanish\\spanish_homecity_camera.cam",
                 )
             }
@@ -120,29 +120,29 @@ class ValidateHomecityVisualsTests(unittest.TestCase):
     def test_reports_missing_pathdata(self) -> None:
         repo_root = self.make_repo(
             {
-                "rvltmodhomecitybroken.xml": (
+                "anwhomecitybroken.xml": (
                     "<?xml version='1.0' encoding='utf-8'?>\n"
                     "<homecity><civ>X</civ><visual>british\\british_homecity.xml</visual></homecity>\n"
                 )
             }
         )
         issues = validate_homecity_visuals(repo_root)
-        self.assertEqual(issues, ["data/rvltmodhomecitybroken.xml: missing <pathdata>"])
+        self.assertEqual(issues, ["data/anwhomecitybroken.xml: missing <pathdata>"])
 
     def test_reports_missing_visual(self) -> None:
         repo_root = self.make_repo(
             {
-                "rvltmodhomecitybroken.xml": (
+                "anwhomecitybroken.xml": (
                     "<?xml version='1.0' encoding='utf-8'?>\n"
                     "<homecity><civ>X</civ><pathdata>british\\pathable_area_object.gr2</pathdata></homecity>\n"
                 )
             }
         )
         issues = validate_homecity_visuals(repo_root)
-        self.assertEqual(issues, ["data/rvltmodhomecitybroken.xml: missing <visual>"])
+        self.assertEqual(issues, ["data/anwhomecitybroken.xml: missing <visual>"])
 
     def test_reports_xml_parse_error(self) -> None:
-        repo_root = self.make_repo({"rvltmodhomecitybroken.xml": "<not valid"})
+        repo_root = self.make_repo({"anwhomecitybroken.xml": "<not valid"})
         issues = validate_homecity_visuals(repo_root)
         self.assertEqual(len(issues), 1)
         self.assertIn("XML parse error", issues[0])

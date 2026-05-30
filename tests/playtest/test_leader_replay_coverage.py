@@ -37,7 +37,7 @@ def _civ_token(exp) -> str:
     probe) returns the civ_id with any ``cCiv``/``cCivDE``/``cCivXP``
     prefix stripped (e.g. ``cCivBritish`` → ``British``,
     ``cCivXPSioux`` → ``Sioux``). Revolutions arrive as their full
-    rvltName (``RvltModBrazil``). Mirroring that here keeps the test
+    rvltName (``ANWBrazil``). Mirroring that here keeps the test
     independent of any decorative additions to ``CIV_LABELS``
     (``"British (Elizabeth I)"`` etc.) — labels are for human display,
     the probe payload is the engine name."""
@@ -124,7 +124,7 @@ class LeaderReplayCoverageTests(unittest.TestCase):
         for exp in expectations:
             if exp.leader_key in permissive_keys:
                 continue
-            if exp.leader_key.startswith("rvltmod"):
+            if exp.leader_key.startswith("anw"):
                 continue
             text = _good_pair(1, exp).replace(
                 f"leader={exp.leader_key}", "leader=imposter_leader_xyz"

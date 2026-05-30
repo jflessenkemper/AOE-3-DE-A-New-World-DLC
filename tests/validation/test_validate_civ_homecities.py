@@ -9,14 +9,14 @@ from tools.validation.validate_civ_homecities import validate_civ_homecities
 
 GOOD_CIVMODS = """<civmods>
   <Civ>
-    <Name>RvltModExample</Name>
-    <HomeCityFilename>rvltmodhomecityexample.xml</HomeCityFilename>
+    <Name>ANWExample</Name>
+    <HomeCityFilename>anwhomecityexample.xml</HomeCityFilename>
   </Civ>
 </civmods>
 """
 
 GOOD_HOMECITY = """<homecity>
-  <civ>RvltModExample</civ>
+  <civ>ANWExample</civ>
 </homecity>
 """
 
@@ -34,7 +34,7 @@ LOWERCASE_HOMECITY = """<homecity>
 """
 
 MISMATCHED_HOMECITY = """<homecity>
-  <civ>RvltModOther</civ>
+  <civ>ANWOther</civ>
 </homecity>
 """
 
@@ -53,7 +53,7 @@ class ValidateCivHomecitiesTests(unittest.TestCase):
         return repo_root
 
     def test_accepts_matching_homecity_binding(self) -> None:
-        repo_root = self.make_repo(GOOD_CIVMODS, {"rvltmodhomecityexample.xml": GOOD_HOMECITY})
+        repo_root = self.make_repo(GOOD_CIVMODS, {"anwhomecityexample.xml": GOOD_HOMECITY})
         self.assertEqual(validate_civ_homecities(repo_root), [])
 
     def test_reports_missing_homecity_file(self) -> None:
@@ -61,29 +61,29 @@ class ValidateCivHomecitiesTests(unittest.TestCase):
         issues = validate_civ_homecities(repo_root)
         self.assertEqual(
             issues,
-            ["RvltModExample: HomeCityFilename references missing file data/rvltmodhomecityexample.xml"],
+            ["ANWExample: HomeCityFilename references missing file data/anwhomecityexample.xml"],
         )
 
     def test_reports_mismatched_homecity_binding(self) -> None:
-        repo_root = self.make_repo(GOOD_CIVMODS, {"rvltmodhomecityexample.xml": MISMATCHED_HOMECITY})
+        repo_root = self.make_repo(GOOD_CIVMODS, {"anwhomecityexample.xml": MISMATCHED_HOMECITY})
         issues = validate_civ_homecities(repo_root)
         self.assertEqual(
             issues,
-            ["RvltModExample: data/rvltmodhomecityexample.xml binds to 'RvltModOther' instead"],
+            ["ANWExample: data/anwhomecityexample.xml binds to 'ANWOther' instead"],
         )
 
     def test_reports_orphan_homecity_files(self) -> None:
         repo_root = self.make_repo(
             GOOD_CIVMODS,
             {
-                "rvltmodhomecityexample.xml": GOOD_HOMECITY,
-                "rvltmodhomecityorphan.xml": GOOD_HOMECITY,
+                "anwhomecityexample.xml": GOOD_HOMECITY,
+                "anwhomecityorphan.xml": GOOD_HOMECITY,
             },
         )
         issues = validate_civ_homecities(repo_root)
         self.assertEqual(
             issues,
-            ["Orphan custom home city file not referenced by civmods: data/rvltmodhomecityorphan.xml"],
+            ["Orphan custom home city file not referenced by civmods: data/anwhomecityorphan.xml"],
         )
 
     def test_supports_lowercase_civ_tags_for_external_repos(self) -> None:

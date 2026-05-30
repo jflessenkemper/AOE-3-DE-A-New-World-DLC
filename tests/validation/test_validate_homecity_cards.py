@@ -8,8 +8,8 @@ from tools.validation.validate_homecity_cards import validate_homecity_cards
 
 
 GOOD_TECHTREE = """<techtreemods>
-  <tech name='RvltModCardTech'><dbid>1</dbid></tech>
-  <tech name='RvltModPrereqTech'><dbid>2</dbid></tech>
+  <tech name='ANWCardTech'><dbid>1</dbid></tech>
+  <tech name='ANWPrereqTech'><dbid>2</dbid></tech>
 </techtreemods>
 """
 
@@ -20,7 +20,7 @@ GOOD_HOMECITY = """<homecity>
       <prereqtech>-1</prereqtech>
     </card>
     <card>
-      <name>RvltModCardTech</name>
+      <name>ANWCardTech</name>
       <prereqtech>CardOne</prereqtech>
     </card>
   </cards>
@@ -37,7 +37,7 @@ class ValidateHomecityCardsTests(unittest.TestCase):
         data_root = repo_root / "data"
         data_root.mkdir(parents=True, exist_ok=True)
         (data_root / "techtreemods.xml").write_text(techtree_xml, encoding="utf-8")
-        (data_root / "rvltmodhomecityexample.xml").write_text(homecity_xml, encoding="utf-8")
+        (data_root / "anwhomecityexample.xml").write_text(homecity_xml, encoding="utf-8")
         return repo_root
 
     def test_accepts_valid_homecity_cards(self) -> None:
@@ -51,19 +51,19 @@ class ValidateHomecityCardsTests(unittest.TestCase):
         self.assertEqual(
             validate_homecity_cards(repo_root),
             [
-                "data/rvltmodhomecityexample.xml: card 'CardTwo' has case-mismatched prereqtech 'HCShipwoodCrates2' (did you mean 'HCShipWoodCrates2')"
+                "data/anwhomecityexample.xml: card 'CardTwo' has case-mismatched prereqtech 'HCShipwoodCrates2' (did you mean 'HCShipWoodCrates2')"
             ],
         )
 
     def test_reports_missing_custom_prereqtech(self) -> None:
         repo_root = self.make_repo(
-            """<homecity><cards><card><name>CardOne</name><prereqtech>RvltModPrereqTech</prereqtech></card></cards></homecity>""",
+            """<homecity><cards><card><name>CardOne</name><prereqtech>ANWPrereqTech</prereqtech></card></cards></homecity>""",
             techtree_xml="<techtreemods></techtreemods>",
         )
         self.assertEqual(
             validate_homecity_cards(repo_root),
             [
-                "data/rvltmodhomecityexample.xml: card 'CardOne' references missing custom prereqtech 'RvltModPrereqTech'"
+                "data/anwhomecityexample.xml: card 'CardOne' references missing custom prereqtech 'ANWPrereqTech'"
             ],
         )
 
@@ -74,7 +74,7 @@ class ValidateHomecityCardsTests(unittest.TestCase):
           self.assertEqual(
             validate_homecity_cards(repo_root),
             [
-              "data/rvltmodhomecityexample.xml: unreachable same-file prereq chain involving cards: CardOne, CardTwo"
+              "data/anwhomecityexample.xml: unreachable same-file prereq chain involving cards: CardOne, CardTwo"
             ],
           )
 

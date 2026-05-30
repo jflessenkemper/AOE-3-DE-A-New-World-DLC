@@ -1,0 +1,177 @@
+{
+  "scenarios": [
+    {
+      "id": "aggressive_rush_test",
+      "name": "Aggressive Rush Test",
+      "description": "1v1 on small map, test early game aggression and rushing strategies",
+      "map": "Black Forest",
+      "map_size": "tiny",
+      "players": 2,
+      "difficulty": "Hard",
+      "game_speed": "Fast",
+      "observe_seconds": 300,
+      "expected_behaviors": [
+        "early_rush",
+        "unit_production",
+        "aggressive_expansion",
+        "early_exploration"
+      ],
+      "key_metrics": [
+        "units_trained_by_2min",
+        "first_military_unit_time",
+        "scout_activity",
+        "building_placement_speed"
+      ]
+    },
+    {
+      "id": "economy_boom_test",
+      "name": "Economy Boom Test",
+      "description": "1v3 on medium map, test economic expansion and resource management",
+      "map": "Midwest",
+      "map_size": "medium",
+      "players": 4,
+      "difficulty": "Hard",
+      "game_speed": "Fast",
+      "observe_seconds": 600,
+      "expected_behaviors": [
+        "settler_production",
+        "resource_gathering",
+        "age_progression",
+        "worker_optimization",
+        "trade_route_usage"
+      ],
+      "key_metrics": [
+        "settler_count_by_time",
+        "resource_per_minute",
+        "age_progression_time",
+        "economic_focus",
+        "building_diversity"
+      ]
+    },
+    {
+      "id": "military_composition_test",
+      "name": "Military Composition Test",
+      "description": "1v1 on medium map, test unit composition and military tactics",
+      "map": "Carolina",
+      "map_size": "medium",
+      "players": 2,
+      "difficulty": "Hard",
+      "game_speed": "Fast",
+      "observe_seconds": 900,
+      "expected_behaviors": [
+        "unit_mix",
+        "military_production",
+        "combat_tactics",
+        "unit_diversity",
+        "counter_unit_training"
+      ],
+      "key_metrics": [
+        "infantry_vs_ranged_ratio",
+        "cavalry_adoption_time",
+        "siege_unit_production",
+        "unit_type_diversity",
+        "military_building_count"
+      ]
+    },
+    {
+      "id": "naval_test",
+      "name": "Naval Playstyle Test",
+      "description": "1v1 on water map, test naval production and maritime strategies",
+      "map": "Great Lakes",
+      "map_size": "medium",
+      "players": 2,
+      "difficulty": "Hard",
+      "game_speed": "Fast",
+      "observe_seconds": 600,
+      "expected_behaviors": [
+        "dock_construction",
+        "ship_production",
+        "naval_trading",
+        "explorer_usage",
+        "water_control"
+      ],
+      "key_metrics": [
+        "dock_build_time",
+        "ship_count_by_time",
+        "trading_posts_established",
+        "naval_army_size",
+        "explorer_activity"
+      ]
+    },
+    {
+      "id": "late_game_test",
+      "name": "Late Game Supremacy Test",
+      "description": "1v1 on large map extended match, test late-game strategies and army composition",
+      "map": "San Gabriel Valley",
+      "map_size": "large",
+      "players": 2,
+      "difficulty": "Hard",
+      "game_speed": "Normal",
+      "observe_seconds": 1800,
+      "expected_behaviors": [
+        "late_game_units",
+        "fortification_building",
+        "army_scale_up",
+        "wonder_construction",
+        "advanced_tactics"
+      ],
+      "key_metrics": [
+        "total_unit_count",
+        "industrial_upgrade_adoption",
+        "wonder_progress",
+        "total_military_buildings",
+        "tech_tree_progression"
+      ]
+    },
+    {
+      "id": "trading_post_test",
+      "name": "Trading Post Control Test",
+      "description": "1v1 on map with neutral trading posts, test trading post capture and use",
+      "map": "Pampas",
+      "map_size": "medium",
+      "players": 2,
+      "difficulty": "Hard",
+      "game_speed": "Fast",
+      "observe_seconds": 480,
+      "expected_behaviors": [
+        "trading_post_capture",
+        "trading_post_defense",
+        "settler_trading",
+        "resource_trading",
+        "treaty_respect"
+      ],
+      "key_metrics": [
+        "trading_posts_captured",
+        "trading_post_hold_time",
+        "trade_revenue_per_minute",
+        "trader_unit_count",
+        "treaty_violations"
+      ]
+    }
+  ],
+  "screenshot_times": [0, 60, 180, 300, 600, 900, 1800],
+  "log_parse_keywords": [
+    "[AGEUP]",
+    "[UNITS_TRAINED]",
+    "[RESOURCE_GATHERING]",
+    "[MILITARY_DECISION]",
+    "[SHIPMENT]",
+    "[BUILDING_PLACEMENT]",
+    "[STRATEGY_SHIFT]",
+    "[NAVAL_DECISION]",
+    "[TECH_PROGRESSION]"
+  ],
+  "validation_rules": {
+    "min_game_duration": 30,
+    "max_game_duration": 1800,
+    "required_log_entries": 5,
+    "required_screenshots": 3,
+    "screenshot_min_size": 1024,
+    "required_metrics": [
+      "unit_production_rate",
+      "resource_gathering_rate",
+      "age_progression_time",
+      "military_composition"
+    ]
+  }
+}

@@ -10,7 +10,7 @@ on:
       - "game/ai/aiHeader.xs"
       - "data/civmods.xml"
       - "data/homecity*.xml"
-      - "data/rvltmodhomecity*.xml"
+      - "data/anwhomecity*.xml"
       - ".github/workflows/playtest-tests.yml"
   pull_request:
     paths:
@@ -21,7 +21,7 @@ on:
       - "game/ai/aiHeader.xs"
       - "data/civmods.xml"
       - "data/homecity*.xml"
-      - "data/rvltmodhomecity*.xml"
+      - "data/anwhomecity*.xml"
       - ".github/workflows/playtest-tests.yml"
 
 jobs:

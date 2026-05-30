@@ -5,12 +5,9 @@ Public API:
     from tools.aoe3_harness.supervisor import run_pass
     from tools.aoe3_harness.validator import validate_pass
 
-AOE3DEHarness socket client (new path):
+AOE3DEHarness socket client:
     from tools.aoe3_harness import HarnessClient, HarnessState, ScreenshotResult
     from tools.aoe3_harness import harness_launch
-
-Legacy DLL client (kept for backwards compatibility until Phase 6 verification):
-    from tools.aoe3_harness.dll_client import DllClient
 """
 
 __version__ = "0.2.0"

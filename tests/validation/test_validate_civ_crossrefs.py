@@ -9,21 +9,21 @@ from tools.validation.validate_civ_crossrefs import validate_civ_crossrefs
 
 GOOD_CIVMODS = """<civmods>
   <Civ>
-    <Name>RvltModExample</Name>
+    <Name>ANWExample</Name>
     <DisplayNameID>490001</DisplayNameID>
     <RolloverNameID>490002</RolloverNameID>
     <AgeTech>
       <Age>Age0</Age>
-      <Tech>RvltModAge0Example</Tech>
+      <Tech>ANWAge0Example</Tech>
     </AgeTech>
-    <PostIndustrialTech>RvltModPostIndustrialExample</PostIndustrialTech>
+    <PostIndustrialTech>ANWPostIndustrialExample</PostIndustrialTech>
   </Civ>
 </civmods>
 """
 
 GOOD_TECHTREE = """<techtreemods>
-  <tech name='RvltModAge0Example'><dbid>1</dbid></tech>
-  <tech name='RvltModPostIndustrialExample'><dbid>2</dbid></tech>
+  <tech name='ANWAge0Example'><dbid>1</dbid></tech>
+  <tech name='ANWPostIndustrialExample'><dbid>2</dbid></tech>
 </techtreemods>
 """
 
@@ -57,8 +57,8 @@ class ValidateCivCrossrefsTests(unittest.TestCase):
         self.assertEqual(
             issues,
             [
-                "RvltModExample: AgeTech references missing tech 'RvltModAge0Example'",
-                "RvltModExample: PostIndustrialTech references missing tech 'RvltModPostIndustrialExample'",
+                "ANWExample: AgeTech references missing tech 'ANWAge0Example'",
+                "ANWExample: PostIndustrialTech references missing tech 'ANWPostIndustrialExample'",
             ],
         )
 
@@ -68,7 +68,7 @@ class ValidateCivCrossrefsTests(unittest.TestCase):
         self.assertEqual(
             issues,
             [
-                "RvltModExample: RolloverNameID references missing string ID 490002",
+                "ANWExample: RolloverNameID references missing string ID 490002",
             ],
         )
 
@@ -77,7 +77,7 @@ class ValidateCivCrossrefsTests(unittest.TestCase):
       issues = validate_civ_crossrefs(repo_root, validate_display_name_ids=True)
       self.assertEqual(
         issues,
-        ["RvltModExample: DisplayNameID references missing string ID 490001"],
+        ["ANWExample: DisplayNameID references missing string ID 490001"],
       )
 
     def test_allows_profile_specific_missing_string_ids(self) -> None:

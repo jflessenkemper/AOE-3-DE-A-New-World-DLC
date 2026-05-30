@@ -14,7 +14,7 @@ GOOD_CIVMODS = textwrap.dedent(
     """\
     <civmods>
       <Civ>
-        <Name>RvltModExample</Name>
+        <Name>ANWExample</Name>
       </Civ>
     </civmods>
     """
@@ -25,7 +25,7 @@ GOOD_COLORS = textwrap.dedent(
     <?xml version="1.0" encoding="utf-8"?>
     <PlayerColors>
       <Color civ="French" leader="Louis XVIII" r="0" g="51" b="102" />
-      <Color civ="RvltModExample" leader="Example Leader" r="100" g="100" b="100" />
+      <Color civ="ANWExample" leader="Example Leader" r="100" g="100" b="100" />
     </PlayerColors>
     """
 )
@@ -60,7 +60,7 @@ class ValidatePlayercolorsTests(unittest.TestCase):
             <PlayerColors>
               <Color civ="French" leader="A" r="0" g="0" b="0" />
               <Color civ="French" leader="B" r="0" g="0" b="0" />
-              <Color civ="RvltModExample" leader="C" r="0" g="0" b="0" />
+              <Color civ="ANWExample" leader="C" r="0" g="0" b="0" />
             </PlayerColors>
             """
         )
@@ -74,7 +74,7 @@ class ValidatePlayercolorsTests(unittest.TestCase):
             <PlayerColors>
               <Color civ="French" leader="Alice" r="0" g="0" b="0" />
               <Color civ="British" leader="Alice" r="0" g="0" b="0" />
-              <Color civ="RvltModExample" leader="Bob" r="0" g="0" b="0" />
+              <Color civ="ANWExample" leader="Bob" r="0" g="0" b="0" />
             </PlayerColors>
             """
         )
@@ -93,7 +93,7 @@ class ValidatePlayercolorsTests(unittest.TestCase):
         repo_root = self.make_repo(GOOD_CIVMODS, colors)
         issues = validate_playercolors(repo_root)
         self.assertIn(
-            "playercolors: missing color entry for civmods civ 'RvltModExample'",
+            "playercolors: missing color entry for civmods civ 'ANWExample'",
             issues,
         )
 
@@ -102,7 +102,7 @@ class ValidatePlayercolorsTests(unittest.TestCase):
             """\
             <PlayerColors>
               <Color civ="French" leader="Louis" r="999" g="0" b="0" />
-              <Color civ="RvltModExample" leader="X" r="0" g="0" b="0" />
+              <Color civ="ANWExample" leader="X" r="0" g="0" b="0" />
             </PlayerColors>
             """
         )
@@ -115,7 +115,7 @@ class ValidatePlayercolorsTests(unittest.TestCase):
             """\
             <PlayerColors>
               <Color civ="French" r="0" g="0" b="0" />
-              <Color civ="RvltModExample" leader="X" r="0" g="0" b="0" />
+              <Color civ="ANWExample" leader="X" r="0" g="0" b="0" />
             </PlayerColors>
             """
         )
