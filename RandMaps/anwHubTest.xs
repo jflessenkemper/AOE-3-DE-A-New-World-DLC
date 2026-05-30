@@ -53,7 +53,7 @@ void main(void)
     // armed when gHubTestEndSeconds >= 1200, so flipping this one constant
     // toggles the whole cycle length atomically.
     // -----------------------------------------------------------------------
-    int gHubTestEndSeconds = 120;
+    int gHubTestEndSeconds = 1200;
 
     // Map size
     int playerTiles = 14000;
@@ -1246,7 +1246,7 @@ void main(void)
     }
     rmAddTriggerEffect("Send Chat");
     rmSetTriggerEffectParamInt("PlayerID", 0, false);
-    rmSetTriggerEffectParam("Message", "[HUBTEST] t=60s army_boost: 3000f/2000w/2000g granted to P2-P8 — elite_composition_window_open", false);
+    rmSetTriggerEffectParam("Message", "[HUBTEST] t=60s army_boost: 3000f/2000w/2000g granted to P2-P8 — watch event.elite.doctrine and comp.snapshot probes", false);
     // TODO: "Create Unit" effect not available — unit spawning for visual army
     // markers requires Scenario Editor triggers, not RMS trigger effects.
     // The resource grant ensures AI units are actively training by T+90s screenshot.
@@ -1279,7 +1279,7 @@ void main(void)
     }
     rmAddTriggerEffect("Send Chat");
     rmSetTriggerEffectParamInt("PlayerID", 0, false);
-    rmSetTriggerEffectParam("Message", "[HUBTEST] t=90s hero_march_window: hero+escort_boost active — screenshot_window_open", false);
+    rmSetTriggerEffectParam("Message", "[HUBTEST] t=90s hero_escort_window: hero+escort active — watch elite.escort and elite.guard probes in AI log. Non-elite units below 25% HP should emit ai-rout-start / ai-rout-move / ai-rout-arrival; elite-support-within-18m blocks rout (ai-rout-blocked reason=elite-support).", false);
     // TODO: "Create Unit" not available from RMS trigger surface.
     // Hero units (civ-specific hero protos) and escort musketeers cannot be
     // spawned via rmAddTriggerEffect. The resource injection above funds the AI's
@@ -1336,7 +1336,7 @@ void main(void)
         rmSetTriggerConditionParamInt("Param1", 600, false);
         rmAddTriggerEffect("Send Chat");
         rmSetTriggerEffectParamInt("PlayerID", 0, false);
-        rmSetTriggerEffectParam("Message", "[HUBTEST] t=600s forward_artillery_window: first_forward_base + first_artillery should fire for civs whose doctrine demands them", false);
+        rmSetTriggerEffectParam("Message", "[HUBTEST] t=600s forward_artillery_window: milestone.first_forward_base and milestone.first_artillery should fire for civs whose doctrine demands them", false);
 
         rmCreateTrigger("hubtestWallDeadline960");
         rmSwitchToTrigger(rmTriggerID("hubtestWallDeadline960"));
@@ -1348,7 +1348,7 @@ void main(void)
         rmSetTriggerConditionParamInt("Param1", 960, false);
         rmAddTriggerEffect("Send Chat");
         rmSetTriggerEffectParamInt("PlayerID", 0, false);
-        rmSetTriggerEffectParam("Message", "[HUBTEST] t=960s wall_deadline: first_wall_segment claim should be satisfied — see wall.closure probe stream for half-wall detection", false);
+        rmSetTriggerEffectParam("Message", "[HUBTEST] t=960s wall_deadline: milestone.first_wall_segment claim should be satisfied — see wall.closure probe stream", false);
     }
 
     // -------------------------------------------------------------------------
