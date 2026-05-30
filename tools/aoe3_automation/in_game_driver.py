@@ -166,6 +166,29 @@ _GS_ENV = {**os.environ,
            "GAMESCOPE_WAYLAND_DISPLAY": _FALLBACK_GS_WL,
            "WAYLAND_DISPLAY": _FALLBACK_GS_WL}
 
+# ---------------------------------------------------------------------------
+# Optional harness backend (socket-level input injection via AOE3DEHarness).
+# Set via set_harness_backend() before using _click() / _screenshot_raw().
+# When None, all functions fall back to the legacy xdotool path unchanged.
+# ---------------------------------------------------------------------------
+
+_HARNESS_BACKEND = None  # type: Optional["HarnessClient"]  # noqa: F821
+
+
+def set_harness_backend(client: "HarnessClient") -> None:  # noqa: F821
+    """Register a HarnessClient instance as the active input backend.
+
+    When set, _click() routes through the AOE3DEHarness control socket and
+    _screenshot_raw() uses the compositor framebuffer via the socket instead
+    of the xdotool PrintScreen trick.
+
+    Args:
+        client: A connected HarnessClient.  Pass None to revert to xdotool.
+    """
+    global _HARNESS_BACKEND
+    _HARNESS_BACKEND = client
+
+
 # AoE3's own screenshot output directory (written by the game on PrintScreen).
 AOE3_SCREENSHOT_DIR = (
     Path.home()
@@ -320,7 +343,16 @@ def _click(x: int, y: int, *, delay: float = 0.25) -> None:
     YES) — the click event fires before gamescope finishes the cursor warp,
     so the click lands on the previous cursor position. Splitting the calls
     forces gamescope to settle the cursor before the button event arrives.
+
+    Harness backend: when a HarnessClient is registered, routes the click
+    directly through the control socket (compositor-space coords, 0–1919 x
+    0–1079, matching the 1920x1080 coordinate system used by all in_game_driver
+    constants).  Falls back to the xdotool path when no backend is set.
     """
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.click(x, y)
+        time.sleep(delay)
+        return
     _xdo("mousemove", str(x), str(y))
     time.sleep(0.15)
     _xdo("click", "1")
@@ -379,7 +411,12 @@ def _screenshot_raw(path: str | Path, retries: int = 1) -> bool:
     way to obtain real game pixels is to ask AoE3 itself, which writes a PNG
     to its profile Screenshots/ folder when the user presses PrintScreen.
 
-    Strategy:
+    Harness backend fast-path: when a HarnessClient is registered, requests
+    the compositor framebuffer directly via SCREENSHOT socket command — no
+    PrintScreen key injection, no polling, no AOE3_SCREENSHOT_DIR dependency.
+    Returns True on success, raises on socket error.
+
+    Strategy (xdotool fallback):
       1. Snapshot the existing files in AOE3_SCREENSHOT_DIR.
       2. Focus the AoE3 window and send PrintScreen via xdotool.
       3. Poll the directory for a new file (up to 5 s).
@@ -392,6 +429,10 @@ def _screenshot_raw(path: str | Path, retries: int = 1) -> bool:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.unlink(missing_ok=True)
+
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.screenshot(path)
+        return True
 
     AOE3_SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
     before = {p.name for p in AOE3_SCREENSHOT_DIR.glob("*.png")}

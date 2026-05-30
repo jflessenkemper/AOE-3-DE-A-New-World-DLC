@@ -55,8 +55,10 @@ from tools.aoe3_harness.paths import AOE3_EXE, UMU_RUN
 # ---------------------------------------------------------------------------
 
 #: Default AOE3DEHarness binary location.  Override via CLI or env var.
+#: Points at the build-f44 output (the current release build, with the
+#: WHEEL socket command); the legacy build/ tree is stale and lacks it.
 DEFAULT_GS_BINARY: Path = Path(
-    "/var/home/jflessenkemper/AOE-3-DE-Harness/build/src/AOE3DEHarness"
+    "/var/home/jflessenkemper/AOE-3-DE-Harness/build-f44/src/AOE3DEHarness"
 )
 
 
@@ -220,7 +222,7 @@ def harness_launch(
     resolution: Optional[tuple[int, int]] = None,
     window: Optional[tuple[int, int]] = None,
     exe: Path = AOE3_EXE,
-    socket_timeout: float = 30.0,
+    socket_timeout: float = 150.0,
     connect_timeout: float = 30.0,
 ) -> tuple[subprocess.Popen[bytes], HarnessClient]:
     """Validate, spawn, and connect to AOE3DEHarness.

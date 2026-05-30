@@ -29,6 +29,29 @@ from typing import Optional
 
 ROOT = Path(__file__).resolve().parents[2]
 COORDS_PATH = Path(__file__).parent / "lobby_coords.json"
+
+# ---------------------------------------------------------------------------
+# Optional harness backend (socket-level input injection via AOE3DEHarness).
+# Set via set_harness_backend() before calling click/screenshot/key helpers.
+# When None, all functions fall back to the legacy xdotool / gamescopectl path
+# unchanged — no behaviour change for existing callers.
+# ---------------------------------------------------------------------------
+
+_HARNESS_BACKEND = None  # type: Optional["HarnessClient"]  # noqa: F821
+
+
+def set_harness_backend(client: "HarnessClient") -> None:  # noqa: F821
+    """Register a HarnessClient instance as the active input backend.
+
+    When set, click(), click_fast(), screenshot(), and key() route through
+    the AOE3DEHarness control socket instead of xdotool / gamescopectl.
+
+    Args:
+        client: A connected HarnessClient (from tools.aoe3_harness.harness_client).
+                Pass None to clear the backend and revert to xdotool fallback.
+    """
+    global _HARNESS_BACKEND
+    _HARNESS_BACKEND = client
 SCROLL_TABLE_PATH = Path(__file__).parent / "picker_scroll_table.json"
 CIV_ORDER_CACHE_PATH = Path(__file__).parent / "picker_civ_order.json"
 RAW_DIR = Path(__file__).parent / "templates" / "matrix" / "_raw"
@@ -243,6 +266,30 @@ def xdo(cmd: str) -> None:
     sh(f"DISPLAY={_aoe3_display()} xdotool {cmd}")
 
 
+def press_key(vk_or_name: "int | str") -> None:
+    """Inject a key tap via the harness socket or xdotool fallback.
+
+    Args:
+        vk_or_name: When the harness backend is active, pass a Win32 VK
+                    integer (e.g. 0x1B for Escape, 0x0D for Enter).
+                    When falling back to xdotool, pass an xdotool key-name
+                    string (e.g. "Escape", "Return").  Callers that need
+                    both paths must pass an int (the harness path) and keep
+                    the xdotool-name form for the fallback; alternatively,
+                    call xdo() directly for the pure-xdotool case.
+    """
+    if _HARNESS_BACKEND is not None:
+        if not isinstance(vk_or_name, int):
+            raise TypeError(
+                "press_key: harness backend requires an integer Win32 VK code; "
+                f"got {vk_or_name!r}. Use the VK_* constants from tools.aoe3_harness.vk."
+            )
+        _HARNESS_BACKEND.key(vk_or_name)
+        return
+    # xdotool fallback — expects a key-name string.
+    xdo(f"key {vk_or_name}")
+
+
 def _x11_screenshot_fallback(out_path: Path, x_disp: str) -> bool:
     """Capture AoE3 directly via ``import -window <wid>`` (ImageMagick).
 
@@ -292,7 +339,10 @@ def _x11_screenshot_fallback(out_path: Path, x_disp: str) -> bool:
 def screenshot(out_path: Path, *, retries: int = 5) -> Path:
     """Capture AoE3 frame at 1920x1080.
 
-    Primary path: ``gamescopectl screenshot`` (when AoE3 is inside gamescope).
+    Primary path (when harness backend set): ``HarnessClient.screenshot()``
+    via the control socket (compositor framebuffer, always 1920x1080).
+
+    Secondary path: ``gamescopectl screenshot`` (when AoE3 is inside gamescope).
     Fallback path: ``import -window <wid>`` against the AoE3 X11 window
     (when AoE3 is running directly on Xwayland, or another game owns the
     only responsive gamescope socket — empirically observed 2026-05-09 with
@@ -314,6 +364,10 @@ def screenshot(out_path: Path, *, retries: int = 5) -> Path:
     out_path = Path(out_path).resolve()
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.unlink(missing_ok=True)
+    # Harness fast-path: compositor framebuffer via socket — always 1920x1080.
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.screenshot(out_path)
+        return out_path
     # Pair the AoE3 X display with the matching gamescope socket.
     try:
         from tools.aoe3_automation.gamescope_detect import detect_aoe3_display
@@ -468,6 +522,14 @@ def click(x: int, y: int, *, settle: float = 0.05) -> None:
     # 2026-05-28: Removed raw-xdotool fallback path. If the gamescope
     # window isn't found, raise NoGamescopeWindowError rather than
     # moving the user's real desktop cursor. See _require_gamescope_wid().
+    #
+    # Harness backend: if a HarnessClient backend is registered, route
+    # directly through the socket (compositor-space 0–1919, 0–1079).
+    # Coords from lobby_coords.json are already in that space (1920x1080).
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.click(x, y)
+        time.sleep(settle)
+        return
     wid = _require_gamescope_wid()
     # 2026-05-07: Both mousemove AND click must target the gamescope window
     # via ``--window``. Using absolute ``mousemove x y`` (without --window)
@@ -494,6 +556,10 @@ def click_fast(x: int, y: int, *, pre: float = FAST_CLICK_PRE,
     NoGamescopeWindowError instead of falling back to raw xdotool
     (which would grab the user's real desktop cursor).
     """
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.click(x, y)
+        time.sleep(post)
+        return
     if not _GAMESCOPE_WID:
         raise NoGamescopeWindowError(
             "click_fast: no gamescope window. Call _ensure_window_focus() "
@@ -512,7 +578,20 @@ def wheel_at_fast(x: int, y: int, button: int, n: int = 1, *,
 
     2026-05-28: Raises NoGamescopeWindowError if no gamescope window
     found (no raw-xdotool fallback — protects user's desktop cursor).
+
+    When a harness backend is active, injects scroll via the WHEEL socket
+    command (move then n individual wheel calls with post-sleep between them)
+    instead of xdotool.  Falls back to xdotool only when no backend is set.
     """
+    # dy convention: button 4 = up => dy > 0; button 5 = down => dy < 0.
+    if _HARNESS_BACKEND is not None:
+        dy = 1.0 if button == 4 else -1.0
+        _HARNESS_BACKEND.move(x, y)
+        time.sleep(pre)
+        for _ in range(n):
+            _HARNESS_BACKEND.wheel(0.0, dy)
+            time.sleep(post)
+        return
     if not _GAMESCOPE_WID:
         raise NoGamescopeWindowError(
             "wheel_at_fast: no gamescope window. Call "
@@ -535,8 +614,19 @@ def wheel_at_batched(x: int, y: int, button: int, n: int = 1) -> None:
     No inter-event sleeps; the engine appears to handle a flood of wheel
     events at xdotool's native rate cleanly. If we ever hit dropped events,
     add a tiny delay via xdotool's `sleep` verb between clicks.
+
+    When a harness backend is active, uses the WHEEL socket command instead
+    of xdotool (move once, then n rapid wheel calls with no sleep between).
+    Falls back to xdotool only when no backend is set.
     """
     if n <= 0:
+        return
+    # dy convention: button 4 = up => dy > 0; button 5 = down => dy < 0.
+    if _HARNESS_BACKEND is not None:
+        dy = 1.0 if button == 4 else -1.0
+        _HARNESS_BACKEND.move(x, y)
+        for _ in range(n):
+            _HARNESS_BACKEND.wheel(0.0, dy)
         return
     wid = _require_gamescope_wid()
     parts: list[str] = [f"mousemove --window {wid} {x} {y}"]

@@ -531,6 +531,26 @@ class HarnessClient:
             ) from exc
         return ScreenshotResult(path=written_path, bytes_written=bytes_written)
 
+    def wheel(self, dx: float, dy: float) -> None:
+        """Inject a smooth-scroll delta at the current pointer position.
+
+        Sign convention (matches xdotool): dy > 0 = scroll UP (button 4);
+        dy < 0 = scroll DOWN (button 5).  Move the pointer first with
+        :meth:`move` before calling this.
+
+        Args:
+            dx: Horizontal scroll delta (typically 0.0).
+            dy: Vertical scroll delta.  Positive = up, negative = down.
+                Use integer ticks (e.g. ``-1.0`` per notch) for reliable
+                discrete scrolling inside Wine/AoE3.
+
+        Raises:
+            HarnessCommandError:    on server error.
+            HarnessConnectionError: on socket failure.
+        """
+        resp = self.send_raw(f"WHEEL {dx} {dy}")
+        self._require_ok("WHEEL", resp)
+
     def quit(self) -> None:
         """Tell the server to close this connection cleanly.
 
