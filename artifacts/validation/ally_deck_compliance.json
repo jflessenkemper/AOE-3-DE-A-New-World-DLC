@@ -1,7 +1,7 @@
 {
   "_meta": {
     "total": 40,
-    "static_pass": 27,
+    "static_pass": 40,
     "visual_pass": 0,
     "visual_skipped": 1
   },
@@ -139,19 +139,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWDutch']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCCavalryCombatDutch",
-        "HCMercenaryLoyalty",
-        "HCMortarsDamageDutchTeam",
-        "HCNativeChampionsDutchTeam"
-      ],
-      "missing_in_xml": [
-        "DEHCBlueGuards",
-        "DEHCBuckriders",
-        "DEHCFlemishRevolution",
-        "HCDutchEastIndiaCompany"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -205,19 +195,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWFrench']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCEarlySkirmishersTeam",
-        "HCHandCavalryDamageFrenchTeam",
-        "HCRoyalDecreeFrench",
-        "HCRoyalMint"
-      ],
-      "missing_in_xml": [
-        "DEHCAncienRegime",
-        "DEHCCentSuisses",
-        "DEHCColbertismTeam",
-        "DEHCMercsGiantGrenadiers"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -229,15 +209,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWGermans']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCExplorerGerman",
-        "HCShipSettlerWagons1"
-      ],
-      "missing_in_xml": [
-        "DEHCGermanTongue",
-        "HCXPMasterSurgeons"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -249,13 +223,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWHaitians']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCPrivateers2"
-      ],
-      "missing_in_xml": [
-        "HCXPAssassins"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -295,19 +265,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWHungarians']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "DEHCShipBattleshipRepeat",
-        "HCAdvancedDock",
-        "HCExoticHardwoods",
-        "HCShipSettlers1"
-      ],
-      "missing_in_xml": [
-        "DEHCLegionHungarian",
-        "HCXPLandGrab",
-        "HCXPMasterSurgeons",
-        "HCXPWhaleOil"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -445,17 +405,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWNapoleonicFrance']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCExoticHardwoods",
-        "HCFencingSchool",
-        "HCNavalGunners"
-      ],
-      "missing_in_xml": [
-        "DEHCColbertismTeam",
-        "DEHCFrenchRoyalArmy",
-        "HCXPLandGrab"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -467,15 +419,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWOttomans']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCRoyalDecreeOttoman",
-        "HCShipAbusGuns2"
-      ],
-      "missing_in_xml": [
-        "DEHCFlightArchery",
-        "HCJanissaryCost"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -487,15 +433,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWPeruvians']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCShipSettlers1",
-        "HCShipSettlers2"
-      ],
-      "missing_in_xml": [
-        "HCXPRanchingLlama",
-        "HCXPTercioTactics"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -507,23 +447,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWPortuguese']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "DEHCShipBattleshipRepeat",
-        "HCArtilleryHitpointsPortugueseTeam",
-        "HCNavalCombat",
-        "HCNavalGunners",
-        "HCRangedInfantryHitpointsPortugueseTeam",
-        "HCShipPortugueseExpForce"
-      ],
-      "missing_in_xml": [
-        "DEHCEstremozGuns",
-        "DEHCGrapeshot",
-        "DEHCHandMortar",
-        "DEHCMachuPicchu",
-        "DEHCWettinAllies1",
-        "HCXPHouseofBraganca"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -535,15 +461,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWRevFrance']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCEarlySkirmishersTeam",
-        "HCShipFoodCrates1"
-      ],
-      "missing_in_xml": [
-        "DEHCShipBalloonsFrench",
-        "HCXPColbertism"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -569,21 +489,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWRussians']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCBlockhouseCannon",
-        "HCCavalryCombatRussian",
-        "HCExplorerRussian",
-        "HCRoyalDecreeRussian",
-        "HCShipHalberdiersRussian1"
-      ],
-      "missing_in_xml": [
-        "DEHCHandMortar",
-        "DEHCMercsGiantGrenadiers",
-        "DEHCMercsPandours",
-        "DEHCPhanarAllies1",
-        "DEHCSoldierTorps"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -609,25 +517,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWSpanish']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCHandCavalryCombatSpanish",
-        "HCHandCavalryDamageSpanish",
-        "HCHandInfantryCombatSpanish",
-        "HCShipGalleons",
-        "HCShipSpanishSquare",
-        "HCSpanishGalleons",
-        "HCSpanishTreasureFleet"
-      ],
-      "missing_in_xml": [
-        "DEHCBarbacoa",
-        "DEHCBourbonAllies1",
-        "DEHCCharreada",
-        "DEHCHandMortar",
-        "DEHCMachuPicchu",
-        "DEHCNewSpainViceroyalty",
-        "HCXPTercioTactics"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []
@@ -667,15 +559,9 @@
       "homecity_card_count": 25,
       "json_deck_source": "decks_anw.json['ANWUSA']",
       "json_card_count": 25,
-      "extra_in_xml": [
-        "HCFrontierDefenses",
-        "HCFrontierDefenses2"
-      ],
-      "missing_in_xml": [
-        "DEHCFedFertileLowlands",
-        "DEHCLouisianaPurchase"
-      ],
-      "static_check": "FAIL",
+      "extra_in_xml": [],
+      "missing_in_xml": [],
+      "static_check": "PASS",
       "visual_check": "FAIL",
       "visual_reason": false,
       "notes": []

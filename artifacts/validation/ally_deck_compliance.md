@@ -1,7 +1,7 @@
 # ANW Ally-Deck Compliance Report
 
 - Total civs checked: **40**
-- Static XML-vs-JSON deck cross-check PASS: **27/40**
+- Static XML-vs-JSON deck cross-check PASS: **40/40**
 - Visual (OCR of 04_ally_homecity.png) PASS: **0**, SKIPPED: **1**
 
 | civ | static | visual | XML deck | JSON src | XML cards | JSON cards | extra | missing |
@@ -15,16 +15,16 @@
 | ANWChileans | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWChileans'] | 25 | 25 | 0 | 0 |
 | ANWChinese | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWChinese'] | 25 | 25 | 0 | 0 |
 | ANWColumbians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWColumbians'] | 25 | 25 | 0 | 0 |
-| ANWDutch | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWDutch'] | 25 | 25 | 4 | 4 |
+| ANWDutch | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWDutch'] | 25 | 25 | 0 | 0 |
 | ANWEgyptians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWEgyptians'] | 25 | 25 | 0 | 0 |
 | ANWEthiopians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWEthiopians'] | 25 | 25 | 0 | 0 |
 | ANWFinnish | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWFinnish'] | 25 | 25 | 0 | 0 |
-| ANWFrench | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWFrench'] | 25 | 25 | 4 | 4 |
-| ANWGermans | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWGermans'] | 25 | 25 | 2 | 2 |
-| ANWHaitians | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWHaitians'] | 25 | 25 | 1 | 1 |
+| ANWFrench | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWFrench'] | 25 | 25 | 0 | 0 |
+| ANWGermans | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWGermans'] | 25 | 25 | 0 | 0 |
+| ANWHaitians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWHaitians'] | 25 | 25 | 0 | 0 |
 | ANWHaudenosaunee | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWHaudenosaunee'] | 25 | 25 | 0 | 0 |
 | ANWHausa | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWHausa'] | 25 | 25 | 0 | 0 |
-| ANWHungarians | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWHungarians'] | 25 | 25 | 4 | 4 |
+| ANWHungarians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWHungarians'] | 25 | 25 | 0 | 0 |
 | ANWInca | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWInca'] | 25 | 25 | 0 | 0 |
 | ANWIndians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWIndians'] | 25 | 25 | 0 | 0 |
 | ANWIndonesians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWIndonesians'] | 25 | 25 | 0 | 0 |
@@ -34,15 +34,15 @@
 | ANWMaltese | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWMaltese'] | 25 | 25 | 0 | 0 |
 | ANWMayans | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWMayans'] | 25 | 25 | 0 | 0 |
 | ANWMexicans | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWMexicans'] | 25 | 25 | 0 | 0 |
-| ANWNapoleonicFrance | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWNapoleonicFrance'] | 25 | 25 | 3 | 3 |
-| ANWOttomans | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWOttomans'] | 25 | 25 | 2 | 2 |
-| ANWPeruvians | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWPeruvians'] | 25 | 25 | 2 | 2 |
-| ANWPortuguese | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWPortuguese'] | 25 | 25 | 6 | 6 |
-| ANWRevFrance | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWRevFrance'] | 25 | 25 | 2 | 2 |
+| ANWNapoleonicFrance | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWNapoleonicFrance'] | 25 | 25 | 0 | 0 |
+| ANWOttomans | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWOttomans'] | 25 | 25 | 0 | 0 |
+| ANWPeruvians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWPeruvians'] | 25 | 25 | 0 | 0 |
+| ANWPortuguese | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWPortuguese'] | 25 | 25 | 0 | 0 |
+| ANWRevFrance | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWRevFrance'] | 25 | 25 | 0 | 0 |
 | ANWRomanians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWRomanians'] | 25 | 25 | 0 | 0 |
-| ANWRussians | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWRussians'] | 25 | 25 | 5 | 5 |
+| ANWRussians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWRussians'] | 25 | 25 | 0 | 0 |
 | ANWSouthAfricans | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWSouthAfricans'] | 25 | 25 | 0 | 0 |
-| ANWSpanish | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWSpanish'] | 25 | 25 | 7 | 7 |
+| ANWSpanish | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWSpanish'] | 25 | 25 | 0 | 0 |
 | ANWSwedes | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWSwedes'] | 25 | 25 | 0 | 0 |
 | ANWTexians | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWTexians'] | 25 | 25 | 0 | 0 |
-| ANWUSA | FAIL | FAIL | $$71332$$Beginner | decks_anw.json['ANWUSA'] | 25 | 25 | 2 | 2 |
+| ANWUSA | PASS | FAIL | $$71332$$Beginner | decks_anw.json['ANWUSA'] | 25 | 25 | 0 | 0 |

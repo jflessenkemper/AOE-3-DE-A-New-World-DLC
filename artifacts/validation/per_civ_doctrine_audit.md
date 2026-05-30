@@ -12,7 +12,7 @@
 - Wall strategy is derived from the `llUse*Style()` call plus any subsequent `gLLWallStrategy = …` override in the leader file or `llApplyBuildStyleForActiveCiv()`.
 - `expects_forward` is inferred from whether `llEnableEarlyForwardBase()` is called by the style (all Forward/Mobile/Steppe/Shrine/Jungle/Republican/CivicMilitia/Distributed styles do so), unless explicitly reset to `gLLForwardBaseEarliestMs = 1200000`.
 - `first_military_building` is inferred from build-style class: NavalMercantileCompound → dock; ShrineTradeNodeSpread / DistributedEconomicNetwork → trading_post_or_market; CivicMilitiaCenter → outpost; all others → barracks_or_stable.
-- Revolution civs (ANW* and RvltMod*) use `leaderCommon.xs:llApplyBuildStyleForActiveCiv()` for build-style and `leader_revolution_commanders.xs:initLegendaryRevolutionCommander()` for personality + potential overrides.
+- Revolution civs (ANW* and ANW*) use `leaderCommon.xs:llApplyBuildStyleForActiveCiv()` for build-style and `leader_revolution_commanders.xs:initLegendaryRevolutionCommander()` for personality + potential overrides.
 - The 5 stub civs (Californians, Central Americans, Lower Canada, Rio Grande, Yucatan) have no civmods.xml entry; they are revolution-only and marked **[STUB]**.
 
 ---
@@ -58,7 +58,7 @@
 | 22 | Hungarians Kossuth Revolution | **PASS** | — |
 | 23 | Inca Pachacuti | **FAIL** | wall_strategy mismatch (ANWInca path) |
 | 24 | Indians Akbar (Shivaji) | **FAIL** | expects_forward mismatch (HighlandCitadel never calls llEnableEarlyForwardBase) |
-| 25 | Indonesians Diponegoro Revolution | **FAIL** | wall_strategy mismatch (ANWIndonesians) + first_military_building (RvltMod path) |
+| 25 | Indonesians Diponegoro Revolution | **FAIL** | wall_strategy mismatch (ANWIndonesians) + first_military_building (ANW path) |
 | 26 | Italians Garibaldi | **PASS** | — |
 | 27 | Japanese Tokugawa Ieyasu | **PASS** | — |
 | 28 | Lakota Crazy Horse | **PASS** | — |
@@ -78,7 +78,7 @@
 | 42 | Swedes Gustavus Adolphus Swedish | **PASS** | — |
 | 43 | Texians Sam Houston Texas Revolution | **PASS** | — |
 | 44 | United States Washington | **PASS** | — |
-| 45 | Yucatan Pat Revolution [STUB] | **WARN** | wall_strategy possibly clobbered (leaderCommon RvltModYucatan path) |
+| 45 | Yucatan Pat Revolution [STUB] | **WARN** | wall_strategy possibly clobbered (leaderCommon ANWYucatan path) |
 
 **Total: 45 civs — 36 PASS / 1 WARN / 8 FAIL**
 
@@ -93,9 +93,9 @@
 - `first_military_building: barracks_or_stable`
 - `expects_forward: true`
 
-**XS configuration (two paths: `RvltModArgentines` and `ANWArgentines`):**
+**XS configuration (two paths: `ANWArgentines` and `ANWArgentines`):**
 
-*RvltModArgentines* (`leader_revolution_commanders.xs:149–167`, `leaderCommon.xs:808–816`):
+*ANWArgentines* (`leader_revolution_commanders.xs:149–167`, `leaderCommon.xs:808–816`):
 - `llUseForwardOperationalLineStyle(0)` → wall_strategy=5 (MobileNoWalls), calls `llEnableEarlyForwardBase(300000)` ✓
 - first_military_building → barracks_or_stable (ForwardOperationalLine style) ✓
 - expects_forward → true (earlyForwardBase set at 300s) ✓
@@ -166,7 +166,7 @@ The spec claims `wall_strategy: 1` for Aztecs Montezuma. The ANWAztecs dispatch 
 - `expects_naval: true`
 
 **XS configuration:**
-- `RvltModBarbary`: `llUseNavalMercantileCompoundStyle(2)` (`leader_revolution_commanders.xs:380`) → wall_strategy=2 ✓, dock-first ✓
+- `ANWBarbary`: `llUseNavalMercantileCompoundStyle(2)` (`leader_revolution_commanders.xs:380`) → wall_strategy=2 ✓, dock-first ✓
 - `ANWBarbary`: `llUseNavalMercantileCompoundStyle(2)` (`leaderCommon.xs:1052`) ✓
 
 **Verdict: PASS**
@@ -181,7 +181,7 @@ The spec claims `wall_strategy: 1` for Aztecs Montezuma. The ANWAztecs dispatch 
 - `expects_treaty: true`
 
 **XS configuration:**
-- `RvltModBrazil`: `llUseDistributedEconomicNetworkStyle(2)` (`leader_revolution_commanders.xs:137`) → wall_strategy=3 ✓, trading_post/market first ✓
+- `ANWBrazil`: `llUseDistributedEconomicNetworkStyle(2)` (`leader_revolution_commanders.xs:137`) → wall_strategy=3 ✓, trading_post/market first ✓
 - `ANWBrazil`: `llUseDistributedEconomicNetworkStyle(2)` (`leaderCommon.xs:1061`) ✓
 
 **Verdict: PASS**
@@ -213,7 +213,7 @@ The spec claims `wall_strategy: 1` for Aztecs Montezuma. The ANWAztecs dispatch 
 - `expects_treaty: true`
 
 **XS configuration:**
-- `RvltModCalifornians`: `llUseDistributedEconomicNetworkStyle(1)` (`leader_revolution_commanders.xs:534`) → wall_strategy=3 ✓, trading_post_or_market ✓
+- `ANWCalifornians`: `llUseDistributedEconomicNetworkStyle(1)` (`leader_revolution_commanders.xs:534`) → wall_strategy=3 ✓, trading_post_or_market ✓
 
 **Verdict: PASS**
 
@@ -226,7 +226,7 @@ The spec claims `wall_strategy: 1` for Aztecs Montezuma. The ANWAztecs dispatch 
 - `first_military_building: barracks_or_stable`
 
 **XS configuration:**
-- `RvltModCanadians`: `llUseCompactFortifiedCoreStyle(2, false)` (`leader_revolution_commanders.xs:72`) → wall_strategy=**0** ✓
+- `ANWCanadians`: `llUseCompactFortifiedCoreStyle(2, false)` (`leader_revolution_commanders.xs:72`) → wall_strategy=**0** ✓
 - `ANWCanadians`: `llUseCompactFortifiedCoreStyle(2, false)` (`leaderCommon.xs:1069`) → wall_strategy=0 ✓
 
 Actually both paths produce wall_strategy=0 matching the spec claim of 0. Let me re-examine.
@@ -253,7 +253,7 @@ Actually the earlier summary table was wrong. Let me recorrect:
 - `expects_treaty: true`
 
 **XS configuration:**
-- `RvltModCentralAmericans`: `llUseDistributedEconomicNetworkStyle(1)` (`leader_revolution_commanders.xs:420`) → wall_strategy=3 ✓, trading_post_or_market ✓
+- `ANWCentralAmericans`: `llUseDistributedEconomicNetworkStyle(1)` (`leader_revolution_commanders.xs:420`) → wall_strategy=3 ✓, trading_post_or_market ✓
 
 **Verdict: PASS**
 
@@ -267,7 +267,7 @@ Actually the earlier summary table was wrong. Let me recorrect:
 
 **XS configuration:**
 
-*RvltModChileans* (`leader_revolution_commanders.xs:169–189`):
+*ANWChileans* (`leader_revolution_commanders.xs:169–189`):
 - `llUseAndeanTerraceFortressStyle(2)` → wall_strategy=**1** (ChokepointSegments)
 - Then `gLLWallStrategy = cLLWallStrategyFortressRing;` at line 183 → overrides to **0** ✓
 
@@ -279,7 +279,7 @@ Actually the earlier summary table was wrong. Let me recorrect:
 |-------|-----------------|---------------------------|-----------|
 | `wall_strategy` | 0 (FortressRing) | 1 (ChokepointSegments) | `leaderCommon.xs:1078` — `llUseAndeanTerraceFortressStyle(2)` sets wall_strategy=1; no override follows |
 
-**Note:** The `RvltModChileans` path correctly overrides to FortressRing at `leader_revolution_commanders.xs:183`, but the `ANWChileans` canonical-nation path in `leaderCommon.xs:1075` lacks this override.
+**Note:** The `ANWChileans` path correctly overrides to FortressRing at `leader_revolution_commanders.xs:183`, but the `ANWChileans` canonical-nation path in `leaderCommon.xs:1075` lacks this override.
 
 **Verdict: FAIL** — ANWChileans path missing `gLLWallStrategy = cLLWallStrategyFortressRing` override.
 
@@ -307,7 +307,7 @@ Actually the earlier summary table was wrong. Let me recorrect:
 - `expects_forward: true`
 
 **XS configuration:**
-- `RvltModColumbians`: `llUseForwardOperationalLineStyle(0)` (`leader_revolution_commanders.xs:223`) → wall_strategy=5 ✓, forward ✓
+- `ANWColumbians`: `llUseForwardOperationalLineStyle(0)` (`leader_revolution_commanders.xs:223`) → wall_strategy=5 ✓, forward ✓
 - `ANWColumbians`: `llUseForwardOperationalLineStyle(0)` (`leaderCommon.xs:1087`) ✓
 
 **Verdict: PASS**
@@ -338,7 +338,7 @@ Actually the earlier summary table was wrong. Let me recorrect:
 
 **XS configuration:**
 
-*RvltModEgyptians* (`leader_revolution_commanders.xs:390–408`):
+*ANWEgyptians* (`leader_revolution_commanders.xs:390–408`):
 - `llUseHighlandCitadelStyle(4)` → wall_strategy=**0** (FortressRing) ✓
 
 *ANWEgyptians* (`leaderCommon.xs:1093–1102`):
@@ -389,7 +389,7 @@ Since I don't have definitive evidence of a mismatch for Ethiopians, let me veri
 
 **XS configuration:**
 
-*RvltModFinnish* (`leader_revolution_commanders.xs:306–325`):
+*ANWFinnish* (`leader_revolution_commanders.xs:306–325`):
 - `llUseCompactFortifiedCoreStyle(3, true)` → wall_strategy=**0** ✓
 
 *ANWFinnish* (`leaderCommon.xs:1103–1112`):
@@ -412,12 +412,12 @@ Both PASS on wall_strategy. Spec says wall_strategy=0, XS CompactFortifiedCore=0
 
 **XS configuration:**
 
-*RvltModFrenchCanadians* (`leader_revolution_commanders.xs:103–126`):
+*ANWFrenchCanadians* (`leader_revolution_commanders.xs:103–126`):
 - `llUseCivicMilitiaCenterStyle(1)` → wall_strategy=**3** (FrontierPalisades) ✓
 - `gLLForwardBaseEarliestMs = 1200000;` at line 119 — explicitly resets forward base to disabled ✓ (`expects_forward=false`)
 - first_military_building: CivicMilitiaCenter → outpost ✓
 
-*Note:* ANWFrenchCanadians has no dispatch path — this civ's spec_key does not have an ANW canonical-nation variant. The `llApplyBuildStyleForActiveCiv` in `leaderCommon.xs` dispatches `RvltModFrenchCanadians` only.
+*Note:* ANWFrenchCanadians has no dispatch path — this civ's spec_key does not have an ANW canonical-nation variant. The `llApplyBuildStyleForActiveCiv` in `leaderCommon.xs` dispatches `ANWFrenchCanadians` only.
 
 **Verdict: PASS**
 
@@ -468,7 +468,7 @@ This is a discrepancy: the spec entry "French Louis XVIII Bourbon" uses `civ_lab
 
 **XS configuration:**
 
-*RvltModHaitians* (`leader_revolution_commanders.xs:233–256`):
+*ANWHaitians* (`leader_revolution_commanders.xs:233–256`):
 - `llUseJungleGuerrillaNetworkStyle(0)` → wall_strategy=5 initially
 - `gLLWallStrategy = cLLWallStrategyChokepointSegments;` at line 247 → overrides to **1** ✓
 - JungleGuerrillaNetwork calls `llEnableEarlyForwardBase(360000)` → expects_forward=true ✓
@@ -525,7 +525,7 @@ Actually looking more carefully at this: The `llUseJungleGuerrillaNetworkStyle` 
 
 **XS configuration:**
 
-*RvltModHungarians* (`leader_revolution_commanders.xs:327–345`):
+*ANWHungarians* (`leader_revolution_commanders.xs:327–345`):
 - `llUseSteppeCavalryWedgeStyle(1)` → wall_strategy=**5** ✓, `llEnableEarlyForwardBase(300000)` ✓
 - `llSetMilitaryFocus(0.55, 0.7, 0.25)` — cavalry 0.7 ✓
 
@@ -610,25 +610,25 @@ But the spec comment for Shivaji says "forward-base style enables at age 2" and 
 
 **XS configuration:**
 
-*RvltModIndonesians* (`leader_revolution_commanders.xs:258–284`):
+*ANWIndonesians* (`leader_revolution_commanders.xs:258–284`):
 - `llUseShrineTradeNodeSpreadStyle(1)` → wall_strategy=**5** (MobileNoWalls) initially
 - `gLLWallStrategy = cLLWallStrategyChokepointSegments;` at line 271 → overrides to **1** ✓
 - `first_military_building`: `ShrineTradeNodeSpreadStyle` → **trading_post_or_market** — but spec claims **barracks_or_stable** ✗
 - `expects_forward`: ShrineTradeNodeSpread calls `llEnableEarlyForwardBase(480000)` → expects_forward=true ✓
 
 *ANWIndonesians* (`leaderCommon.xs:1134–1141`):
-- `llUseJungleGuerrillaNetworkStyle(0)` → wall_strategy=**5** initially — different style than RvltMod path
+- `llUseJungleGuerrillaNetworkStyle(0)` → wall_strategy=**5** initially — different style than ANW path
 - No ChokepointSegments override in this path → wall_strategy stays **5** ✗
 
-| Field | Expected (spec) | Actual (RvltModIndonesians) | Actual (ANWIndonesians) | File:Line |
+| Field | Expected (spec) | Actual (ANWIndonesians) | Actual (ANWIndonesians) | File:Line |
 |-------|-----------------|------------------------------|--------------------------|-----------|
 | `wall_strategy` | 1 (ChokepointSegments) | 1 ✓ (override at `leader_revolution_commanders.xs:271`) | **5** (MobileNoWalls) ✗ | `leaderCommon.xs:1137` — `llUseJungleGuerrillaNetworkStyle(0)`; no override |
 | `first_military_building` | barracks_or_stable | **trading_post_or_market** ✗ | barracks_or_stable ✓ | `leader_revolution_commanders.xs:268` — `llUseShrineTradeNodeSpreadStyle` implies shrine/TP first |
 
-The `RvltModIndonesians` path uses `ShrineTradeNodeSpreadStyle` (TP/shrine-first) while spec claims `barracks_or_stable`. The `ANWIndonesians` path uses `JungleGuerrillaNetworkStyle` (no wall override, wall=5 vs spec=1).
+The `ANWIndonesians` path uses `ShrineTradeNodeSpreadStyle` (TP/shrine-first) while spec claims `barracks_or_stable`. The `ANWIndonesians` path uses `JungleGuerrillaNetworkStyle` (no wall override, wall=5 vs spec=1).
 
 **Verdict: FAIL** — Two mismatches:
-1. `RvltModIndonesians`: `first_military_building` = trading_post_or_market (via ShrineTradeNodeSpread) vs spec claim barracks_or_stable. (`leader_revolution_commanders.xs:268`)
+1. `ANWIndonesians`: `first_military_building` = trading_post_or_market (via ShrineTradeNodeSpread) vs spec claim barracks_or_stable. (`leader_revolution_commanders.xs:268`)
 2. `ANWIndonesians`: `wall_strategy` = 5 (MobileNoWalls) vs spec claim 1 (ChokepointSegments). (`leaderCommon.xs:1137` — no `gLLWallStrategy = cLLWallStrategyChokepointSegments` override)
 
 ---
@@ -705,7 +705,7 @@ Both correct. PASS.
 
 **XS configuration:**
 
-*RvltModMayans* (`leader_revolution_commanders.xs:502–522`):
+*ANWMayans* (`leader_revolution_commanders.xs:502–522`):
 - `llUseJungleGuerrillaNetworkStyle(1)` → wall_strategy=5 initially
 - `gLLWallStrategy = cLLWallStrategyChokepointSegments;` at line 516 → **1** ✓
 
@@ -768,7 +768,7 @@ No `gLLWallStrategy` override. So ANWMayans wall_strategy=5.
 - `expects_forward: true`
 
 **XS configuration:**
-- `RvltModNapoleonicFrance`: `llUseForwardOperationalLineStyle(1)` (`leaderCommon.xs:976`) → wall_strategy=5 ✓
+- `ANWNapoleonicFrance`: `llUseForwardOperationalLineStyle(1)` (`leaderCommon.xs:976`) → wall_strategy=5 ✓
 - `ANWNapoleonicFrance`: `llUseForwardOperationalLineStyle(1)` (`leaderCommon.xs:1163`) ✓
 
 **Verdict: PASS**
@@ -802,7 +802,7 @@ SiegeTrainConcentration → FortressRing (0) ✓. Spec wall_strategy=0. Match.
 
 **XS configuration:**
 
-*RvltModPeruvians* (`leader_revolution_commanders.xs:191–211`):
+*ANWPeruvians* (`leader_revolution_commanders.xs:191–211`):
 - `llUseAndeanTerraceFortressStyle(3)` → wall_strategy=**1** (ChokepointSegments)
 - `gLLWallStrategy = cLLWallStrategyFortressRing;` at line 205 → **0** ✓
 
@@ -841,7 +841,7 @@ SiegeTrainConcentration → FortressRing (0) ✓. Spec wall_strategy=0. Match.
 - `expects_infantry: true`
 
 **XS configuration:**
-- `RvltModRevolutionaryFrance`: `llUseRepublicanLeveeStyle(0)` (`leader_revolution_commanders.xs:93`, `leaderCommon.xs:967`) → wall_strategy=4 ✓
+- `ANWRevFrance`: `llUseRepublicanLeveeStyle(0)` (`leader_revolution_commanders.xs:93`, `leaderCommon.xs:967`) → wall_strategy=4 ✓
 - `ANWRevFrance`: `llUseRepublicanLeveeStyle(0)` (`leaderCommon.xs:1182`) ✓
 
 **Verdict: PASS**
@@ -859,10 +859,10 @@ SiegeTrainConcentration → FortressRing (0) ✓. Spec wall_strategy=0. Match.
 
 **XS configuration:**
 
-*RvltModRioGrande* (`leader_revolution_commanders.xs:481–500`):
+*ANWRioGrande* (`leader_revolution_commanders.xs:481–500`):
 - `llUseMobileFrontierScatterStyle(0)` → wall_strategy=**5** ✓, `llEnableEarlyForwardBase(360000)` ✓
 
-*`leaderCommon.xs:992–1001`* (RvltModRioGrande in `llApplyBuildStyleForActiveCiv`):
+*`leaderCommon.xs:992–1001`* (ANWRioGrande in `llApplyBuildStyleForActiveCiv`):
 - `llUseMobileFrontierScatterStyle(0)` → wall_strategy=5 ✓
 
 Spec claims `first_military_building: barracks_or_stable`. MobileFrontierScatterStyle → no dock/shrine/trading post → barracks_or_stable ✓.
@@ -884,7 +884,7 @@ All claims match.
 
 **XS configuration:**
 
-*RvltModRomanians* (`leader_revolution_commanders.xs:347–368`):
+*ANWRomanians* (`leader_revolution_commanders.xs:347–368`):
 - `llUseCivicMilitiaCenterStyle(2)` → wall_strategy=**3** ✓
 - `gLLForwardBaseEarliestMs = 1200000;` at line 362 → expects_forward=false ✓
 - CivicMiliatiaCenter → outpost ✓
@@ -944,7 +944,7 @@ The spec claims `wall_strategy: 3` (FrontierPalisades). The XS override to Front
 
 **XS configuration:**
 
-*RvltModSouthAfricans* (`leader_revolution_commanders.xs:286–304`):
+*ANWSouthAfricans* (`leader_revolution_commanders.xs:286–304`):
 - `llUseNavalMercantileCompoundStyle(1)` → wall_strategy=**2** ✓, dock ✓
 
 *ANWSouthAfricans* (`leaderCommon.xs:1197–1209`):
@@ -993,7 +993,7 @@ The spec claims `wall_strategy: 3` (FrontierPalisades). The XS override to Front
 - `expects_forward: true`
 
 **XS configuration:**
-- `RvltModTexians`: `llUseForwardOperationalLineStyle(0)` (`leader_revolution_commanders.xs:556`) → wall_strategy=5 ✓
+- `ANWTexians`: `llUseForwardOperationalLineStyle(0)` (`leader_revolution_commanders.xs:556`) → wall_strategy=5 ✓
 - `ANWTexians`: `llUseForwardOperationalLineStyle(0)` (`leaderCommon.xs:1213`) ✓
 
 **Verdict: PASS**
@@ -1026,18 +1026,18 @@ The spec claims `wall_strategy: 3` (FrontierPalisades). The XS override to Front
 
 **XS configuration:**
 
-*RvltModYucatan* (`leader_revolution_commanders.xs:456–479`):
+*ANWYucatan* (`leader_revolution_commanders.xs:456–479`):
 - `llUseJungleGuerrillaNetworkStyle(1)` → wall_strategy=5 initially
 - `gLLWallStrategy = cLLWallStrategyChokepointSegments;` at line 473 → **1** ✓
 - JungleGuerrillaNetwork calls `llEnableEarlyForwardBase(360000)` → expects_forward=true ✓
 
-*`leaderCommon.xs:1029–1037`* (RvltModYucatan in `llApplyBuildStyleForActiveCiv`):
+*`leaderCommon.xs:1029–1037`* (ANWYucatan in `llApplyBuildStyleForActiveCiv`):
 - `llUseJungleGuerrillaNetworkStyle(1)` → wall_strategy=5
 - `gLLWallStrategy = cLLWallStrategyChokepointSegments;` override: **NOT PRESENT** in this path
 
 Wait — checking `leaderCommon.xs:1029–1037`:
 ```
-else if (rvltName == "RvltModYucatan")
+else if (rvltName == "ANWYucatan")
 {
    // Yucatán — Caste War jungle guerrilla on the limestone peninsula.
    llUseJungleGuerrillaNetworkStyle(1);
@@ -1055,7 +1055,7 @@ Looking at the execution order in the AI main entry point: typically `initLeader
 
 This is the same structural issue as Aztecs/Chileans/Peruvians/Mayans/ANWIndonesians: the ChokepointSegments override in `initLegendary*()` can be clobbered by the subsequent `llApplyBuildStyleForActiveCiv()` call if the `leaderCommon.xs` path lacks the matching override.
 
-**Revised Verdict: WARN** — `leaderCommon.xs:1029` (RvltModYucatan path in `llApplyBuildStyleForActiveCiv`) lacks the `gLLWallStrategy = cLLWallStrategyChokepointSegments` override that is present in `leader_revolution_commanders.xs:473`. Depending on call order, the override may be clobbered. The spec claims wall_strategy=1.
+**Revised Verdict: WARN** — `leaderCommon.xs:1029` (ANWYucatan path in `llApplyBuildStyleForActiveCiv`) lacks the `gLLWallStrategy = cLLWallStrategyChokepointSegments` override that is present in `leader_revolution_commanders.xs:473`. Depending on call order, the override may be clobbered. The spec claims wall_strategy=1.
 
 ---
 
@@ -1068,13 +1068,13 @@ This is the same structural issue as Aztecs/Chileans/Peruvians/Mayans/ANWIndones
 | French Louis XVIII Bourbon | `wall_strategy` mismatch (ANWFrench path) | 0 (FortressRing) | 5 (MobileNoWalls) | `leaderCommon.xs:1272` |
 | Inca Pachacuti | `wall_strategy` mismatch (ANWInca path) | 0 (FortressRing) | 1 (ChokepointSegments) | `leaderCommon.xs:1306` |
 | Indians Akbar/Shivaji | `expects_forward` mismatch | true | false (no `llEnableEarlyForwardBase()`) | `leaderCommon.xs:691` |
-| Indonesians Diponegoro (RvltMod path) | `first_military_building` mismatch | barracks_or_stable | trading_post_or_market | `leader_revolution_commanders.xs:268` |
+| Indonesians Diponegoro (ANW path) | `first_military_building` mismatch | barracks_or_stable | trading_post_or_market | `leader_revolution_commanders.xs:268` |
 | Indonesians Diponegoro (ANWIndonesians path) | `wall_strategy` mismatch | 1 (ChokepointSegments) | 5 (MobileNoWalls) | `leaderCommon.xs:1137` |
 | Mayans Canek (ANWMayans path) | `wall_strategy` mismatch | 1 (ChokepointSegments) | 5 (MobileNoWalls) | `leaderCommon.xs:1145` |
 | Peruvians Santa Cruz (ANWPeruvians path) | `wall_strategy` mismatch | 0 (FortressRing) | 1 (ChokepointSegments) | `leaderCommon.xs:1172` |
 | Romanians Cuza (ANWRomanians path) | `expects_forward` mismatch | false | true (CivicMilitiaCenter enables early fwd base) | `leaderCommon.xs:1191` |
 | Russians Catherine (leaderCommon paths) | `wall_strategy` mismatch | 3 (FrontierPalisades) | 0 (FortressRing) | `leaderCommon.xs:762`, `leaderCommon.xs:1378` |
-| Yucatan Pat (RvltModYucatan leaderCommon path) | `wall_strategy` possible clobber | 1 (ChokepointSegments) | 5 (MobileNoWalls) if clobbered | `leaderCommon.xs:1032` |
+| Yucatan Pat (ANWYucatan leaderCommon path) | `wall_strategy` possible clobber | 1 (ChokepointSegments) | 5 (MobileNoWalls) if clobbered | `leaderCommon.xs:1032` |
 
 ---
 
@@ -1102,9 +1102,9 @@ When execution order is `initLeader*()` → `llApplyBuildStyleForActiveCiv()`, t
 | ANWPeruvians (line 1172) | `llUseAndeanTerraceFortressStyle(3)` | `gLLWallStrategy = cLLWallStrategyFortressRing;` |
 | ANWRomanians (line 1191) | `llUseCivicMilitiaCenterStyle(2)` | `gLLForwardBaseEarliestMs = 1200000;` |
 | ANWRussians (line 1378) | `llUseCossackVoiskoStyle(1)` | `gLLWallStrategy = cLLWallStrategyFrontierPalisades;` |
-| RvltModRussians base-civ (line 762) | `llUseCossackVoiskoStyle(1)` | `gLLWallStrategy = cLLWallStrategyFrontierPalisades;` |
-| RvltModYucatan (line 1032) | `llUseJungleGuerrillaNetworkStyle(1)` | `gLLWallStrategy = cLLWallStrategyChokepointSegments;` |
-| RvltModIndonesians (revolution_commanders.xs:268) | `llUseShrineTradeNodeSpreadStyle(1)` | Wrong style — should be `llUseJungleGuerrillaNetworkStyle` for barracks_or_stable |
+| ANWRussians base-civ (line 762) | `llUseCossackVoiskoStyle(1)` | `gLLWallStrategy = cLLWallStrategyFrontierPalisades;` |
+| ANWYucatan (line 1032) | `llUseJungleGuerrillaNetworkStyle(1)` | `gLLWallStrategy = cLLWallStrategyChokepointSegments;` |
+| ANWIndonesians (revolution_commanders.xs:268) | `llUseShrineTradeNodeSpreadStyle(1)` | Wrong style — should be `llUseJungleGuerrillaNetworkStyle` for barracks_or_stable |
 
 ---
 
@@ -1117,4 +1117,4 @@ When execution order is `initLeader*()` → `llApplyBuildStyleForActiveCiv()`, t
 | **FAIL** | **8** |
 | **Total** | **45** |
 
-The 8 FAILs and 1 WARN are all concentrated around a single systemic root cause: **`gLLWallStrategy` and `gLLForwardBaseEarliestMs` overrides applied in `initLeader*()` functions are not replicated in the corresponding `leaderCommon.xs:llApplyBuildStyleForActiveCiv()` dispatch paths**. Fixing this class of issue requires adding the missing override lines to the `leaderCommon.xs` ANW* and RvltMod* blocks as documented in the "Pattern Summary" table above.
+The 8 FAILs and 1 WARN are all concentrated around a single systemic root cause: **`gLLWallStrategy` and `gLLForwardBaseEarliestMs` overrides applied in `initLeader*()` functions are not replicated in the corresponding `leaderCommon.xs:llApplyBuildStyleForActiveCiv()` dispatch paths**. Fixing this class of issue requires adding the missing override lines to the `leaderCommon.xs` ANW* and ANW* blocks as documented in the "Pattern Summary" table above.

@@ -1,27 +1,25 @@
 {
   "schema_version": 1,
-  "status": "complete",
   "civ_token": "ANWBritish",
   "civ_label": "British",
-  "captured_at": "2026-05-20T00:35:37Z",
+  "captured_at": "2026-05-28T05:44:32Z",
   "host_perspective": true,
   "host_civ_token": null,
-  "synthesised": false,
-  "match_id": "anwbritish_real_1779237337",
+  "match_id": "anwbritish_2026-05-28_054432",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779237337710,
+      "captured_ms": 1779947153766,
       "ocr_text": null,
       "crops": [
         {
           "name": "lobby_portrait",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            620,
+            320,
+            1300,
+            920
           ],
           "crop_path": "crops/lobby_portrait.png",
           "thumb_path": "thumbs/lobby_portrait.webp"
@@ -31,452 +29,34 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779237337710,
+      "captured_ms": 1779947173800,
       "ocr_text": null,
       "crops": [
         {
           "name": "loading_flag",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            760,
+            380,
+            1160,
+            780
           ],
           "crop_path": "crops/loading_flag.png",
           "thumb_path": "thumbs/loading_flag.webp"
         }
       ]
-    },
-    {
-      "label": "03_hud",
-      "full_path": "full/03_hud.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "home_city_button",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/home_city_button.png",
-          "thumb_path": "thumbs/home_city_button.webp"
-        },
-        {
-          "name": "hud_flag_corner",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/hud_flag_corner.png",
-          "thumb_path": "thumbs/hud_flag_corner.webp"
-        }
-      ]
-    },
-    {
-      "label": "04_homecity_panel",
-      "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "home_city_scene",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/home_city_scene.png",
-          "thumb_path": "thumbs/home_city_scene.webp"
-        }
-      ]
-    },
-    {
-      "label": "05_tech_tree",
-      "full_path": "full/05_tech_tree.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "tech_tree_overview",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/tech_tree_overview.png",
-          "thumb_path": "thumbs/tech_tree_overview.webp"
-        }
-      ]
-    },
-    {
-      "label": "06_diplomacy",
-      "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "diplomacy_panel",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/diplomacy_panel.png",
-          "thumb_path": "thumbs/diplomacy_panel.webp"
-        },
-        {
-          "name": "diplomacy_ally_portrait",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/diplomacy_ally_portrait.png",
-          "thumb_path": "thumbs/diplomacy_ally_portrait.webp"
-        }
-      ]
-    },
-    {
-      "label": "06b_ai_homecity",
-      "full_path": "full/06b_ai_homecity_via_diplo.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "ai_home_city_scene",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/ai_home_city_scene.png",
-          "thumb_path": "thumbs/ai_home_city_scene.webp"
-        },
-        {
-          "name": "ai_deck_view",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/ai_deck_view.png",
-          "thumb_path": "thumbs/ai_deck_view.webp"
-        }
-      ]
-    },
-    {
-      "label": "07_scoreboard",
-      "full_path": "full/07_scoreboard_with_banter.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "scoreboard_player_row",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/scoreboard_player_row.png",
-          "thumb_path": "thumbs/scoreboard_player_row.webp"
-        }
-      ]
-    },
-    {
-      "label": "08_esc_menu",
-      "full_path": "full/08_esc_menu.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": []
-    },
-    {
-      "label": "09_endgame",
-      "full_path": "full/09_postgame_results.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "endgame_flag",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/endgame_flag.png",
-          "thumb_path": "thumbs/endgame_flag.webp"
-        }
-      ]
-    },
-    {
-      "label": "10_ai_base",
-      "full_path": "full/10_british_ai_base.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "wall_playstyle_visual",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/wall_playstyle_visual.png",
-          "thumb_path": "thumbs/wall_playstyle_visual.webp"
-        },
-        {
-          "name": "wall_segment_close",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/wall_segment_close.png",
-          "thumb_path": "thumbs/wall_segment_close.webp"
-        }
-      ]
-    },
-    {
-      "label": "15_age_up_colonial",
-      "full_path": "full/15_age_up_colonial.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "age_up_colonial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/age_up_colonial.png",
-          "thumb_path": "thumbs/age_up_colonial.webp"
-        }
-      ]
-    },
-    {
-      "label": "16_age_up_fortress",
-      "full_path": "full/16_age_up_fortress.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "age_up_fortress",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/age_up_fortress.png",
-          "thumb_path": "thumbs/age_up_fortress.webp"
-        }
-      ]
-    },
-    {
-      "label": "17_age_up_industrial",
-      "full_path": "full/17_age_up_industrial.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "age_up_industrial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/age_up_industrial.png",
-          "thumb_path": "thumbs/age_up_industrial.webp"
-        }
-      ]
-    },
-    {
-      "label": "18_age_up_imperial",
-      "full_path": "full/18_age_up_imperial.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "age_up_imperial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/age_up_imperial.png",
-          "thumb_path": "thumbs/age_up_imperial.webp"
-        }
-      ]
-    },
-    {
-      "label": "20_postgame_awards",
-      "full_path": "full/20_postgame_awards.png",
-      "captured_ms": 1779237337710,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "postgame_awards",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/postgame_awards.png",
-          "thumb_path": "thumbs/postgame_awards.webp"
-        }
-      ]
-    },
-    {
-      "label": "base_overview_colonial",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "base_overview_colonial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/base_overview_colonial.png",
-          "thumb_path": "thumbs/base_overview_colonial.webp"
-        }
-      ]
-    },
-    {
-      "label": "army_composition_colonial",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "army_composition_colonial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/army_composition_colonial.png",
-          "thumb_path": "thumbs/army_composition_colonial.webp"
-        }
-      ]
-    },
-    {
-      "label": "base_overview_fortress",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "base_overview_fortress",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/base_overview_fortress.png",
-          "thumb_path": "thumbs/base_overview_fortress.webp"
-        }
-      ]
-    },
-    {
-      "label": "army_composition_fortress",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "army_composition_fortress",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/army_composition_fortress.png",
-          "thumb_path": "thumbs/army_composition_fortress.webp"
-        }
-      ]
-    },
-    {
-      "label": "base_overview_industrial",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "base_overview_industrial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/base_overview_industrial.png",
-          "thumb_path": "thumbs/base_overview_industrial.webp"
-        }
-      ]
-    },
-    {
-      "label": "army_composition_imperial",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "army_composition_imperial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/army_composition_imperial.png",
-          "thumb_path": "thumbs/army_composition_imperial.webp"
-        }
-      ]
-    },
-    {
-      "label": "base_overview_imperial",
-      "full_path": null,
-      "captured_ms": null,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "base_overview_imperial",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/base_overview_imperial.png",
-          "thumb_path": "thumbs/base_overview_imperial.webp"
-        }
-      ]
     }
+  ],
+  "status": "partial",
+  "warnings": [
+    "screenshot:03_hud:game_died_pre_capture",
+    "screenshot:04_homecity_panel:game_died_pre_capture",
+    "screenshot:05_tech_tree:game_died_pre_capture",
+    "screenshot:06_diplomacy:game_died_pre_capture",
+    "screenshot:06b_diplomacy_after_ally:game_died_pre_capture",
+    "screenshot:10_ai_homecity:game_died_pre_capture",
+    "screenshot:07_scoreboard:game_died_pre_capture",
+    "screenshot:08_esc_menu:game_died_pre_capture",
+    "screenshot:09_endgame:game_died_pre_capture",
+    "missing_required_labels:['03_hud', '04_homecity_panel', '06_diplomacy', '07_scoreboard', '08_esc_menu', '09_endgame']"
   ]
 }

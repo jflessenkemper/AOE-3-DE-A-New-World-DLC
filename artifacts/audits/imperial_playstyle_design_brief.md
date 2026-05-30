@@ -74,35 +74,35 @@ Each entry is unique. Listed here `psTitle | nation | leader | bsTitle | HTML li
 | Reconquista Tercio precursor | Spanish | Isabella | Forward Operational Line | 3468 |
 | Lion of the North combined arms | Swedes | Gustavus Adolphus | Siege Train Concentration | 3498 |
 | Continental Army Fabian-to-Yorktown | United States | Washington | Republican Levee | 3529 |
-| Granadero shock-cavalry liberation | RvltMod Argentines | San Martin | Forward Operational Line | 3559 |
-| Californio frontier horse raid | RvltMod BajaCalifornians | Alvarado | Mobile Frontier Scatter | 3589 |
-| Corsair raider economy | RvltMod Barbary | Barbarossa | Naval Mercantile Compound | 3622 |
-| Imperial line and Hessian reserve | RvltMod Brazil | Pedro I | Distributed Economic Network | 3654 |
-| Ranchero defense and trade | RvltMod Californians | Vallejo | Distributed Economic Network | 3689 |
-| Blockhouse infantry frontier | RvltMod Canadians | Brock | Compact Fortified Core | 3720 |
-| Federal Republic native muster | RvltMod Central Americans | Morazán | Distributed Economic Network | 3751 |
-| Balanced Republican infantry | RvltMod Chileans | O'Higgins | Andean Terrace Fortress | 3784 |
-| Llanero liberation sweeps | RvltMod Columbians | Bolívar | Forward Operational Line | 3817 |
-| Nizam-i Cedid modernization | RvltMod Egyptians | Muhammad Ali | Highland Citadel | 3847 |
-| Mannerheim-line ski infantry | RvltMod Finnish | Mannerheim | Compact Fortified Core | 3881 |
-| Honved hussar uprising | RvltMod Hungarians | Kossuth | Steppe Cavalry Wedge | 3915 |
-| Patriote militia and Iroquois levy | RvltMod French Canadians | Papineau | Civic Militia Center | 3947 |
-| Mass infantry insurrection | RvltMod Haitians | Louverture | Jungle Guerrilla Network | 3977 |
-| Java War guerrilla and kraton fort | RvltMod Indonesians | Diponegoro | Shrine or Trade Node Spread | 4010 |
-| Indigenous insurrection mass | RvltMod Mayans | Canek | Jungle Guerrilla Network | 4043 |
-| Grande Armée Grand Battery empire | RvltMod Napoleonic France | Napoleon | Forward Operational Line | 4076 |
-| Andean fort line and native levy | RvltMod Peruvians | Santa Cruz | Andean Terrace Fortress | 4107 |
-| Levée-en-masse Republic | RvltMod Revolutionary France | Robespierre | Republican Levee | 4140 |
-| Rio Grande Republic horse | RvltMod RioGrande | Canales | Mobile Frontier Scatter | 4170 |
-| Danubian Principalities consolidation | RvltMod Romanians | Cuza | Civic Militia Center | 4202 |
-| Boer commando trader-cavalry | RvltMod SouthAfricans | Kruger | Naval Mercantile Compound | 4233 |
-| Republic of Texas militia | RvltMod Texians | Houston | Forward Operational Line | 4265 |
-| Maya levy uprising | RvltMod Yucatan | Carrillo Puerto | Jungle Guerrilla Network | 4295 |
+| Granadero shock-cavalry liberation | ANW Argentines | San Martin | Forward Operational Line | 3559 |
+| Californio frontier horse raid | ANW BajaCalifornians | Alvarado | Mobile Frontier Scatter | 3589 |
+| Corsair raider economy | ANW Barbary | Barbarossa | Naval Mercantile Compound | 3622 |
+| Imperial line and Hessian reserve | ANW Brazil | Pedro I | Distributed Economic Network | 3654 |
+| Ranchero defense and trade | ANW Californians | Vallejo | Distributed Economic Network | 3689 |
+| Blockhouse infantry frontier | ANW Canadians | Brock | Compact Fortified Core | 3720 |
+| Federal Republic native muster | ANW Central Americans | Morazán | Distributed Economic Network | 3751 |
+| Balanced Republican infantry | ANW Chileans | O'Higgins | Andean Terrace Fortress | 3784 |
+| Llanero liberation sweeps | ANW Columbians | Bolívar | Forward Operational Line | 3817 |
+| Nizam-i Cedid modernization | ANW Egyptians | Muhammad Ali | Highland Citadel | 3847 |
+| Mannerheim-line ski infantry | ANW Finnish | Mannerheim | Compact Fortified Core | 3881 |
+| Honved hussar uprising | ANW Hungarians | Kossuth | Steppe Cavalry Wedge | 3915 |
+| Patriote militia and Iroquois levy | ANW French Canadians | Papineau | Civic Militia Center | 3947 |
+| Mass infantry insurrection | ANW Haitians | Louverture | Jungle Guerrilla Network | 3977 |
+| Java War guerrilla and kraton fort | ANW Indonesians | Diponegoro | Shrine or Trade Node Spread | 4010 |
+| Indigenous insurrection mass | ANW Mayans | Canek | Jungle Guerrilla Network | 4043 |
+| Grande Armée Grand Battery empire | ANW Napoleonic France | Napoleon | Forward Operational Line | 4076 |
+| Andean fort line and native levy | ANW Peruvians | Santa Cruz | Andean Terrace Fortress | 4107 |
+| Levée-en-masse Republic | ANW Revolutionary France | Robespierre | Republican Levee | 4140 |
+| Rio Grande Republic horse | ANW RioGrande | Canales | Mobile Frontier Scatter | 4170 |
+| Danubian Principalities consolidation | ANW Romanians | Cuza | Civic Militia Center | 4202 |
+| Boer commando trader-cavalry | ANW SouthAfricans | Kruger | Naval Mercantile Compound | 4233 |
+| Republic of Texas militia | ANW Texians | Houston | Forward Operational Line | 4265 |
+| Maya levy uprising | ANW Yucatan | Carrillo Puerto | Jungle Guerrilla Network | 4295 |
 
-Note: HTML has 46 entries. RvltModMexicans (Hidalgo Revolution) shares
+Note: HTML has 46 entries. ANWMexicans (Hidalgo Revolution) shares
 the standard "Mexicans Hidalgo" node by design — `playercolors.xml`
 lists 47 civ rows. United States Washington also serves
-RvltModAmericans through Jefferson under a separate node. The 48
+ANWAmericans through Jefferson under a separate node. The 48
 "civ × leader" total quoted in the brief is the playercolors-derived
 roster including base French/Louis XVIII; some collapse for HTML
 display.
@@ -190,40 +190,40 @@ authoritative `playercolors.xml` leaders (Elizabeth, Ivan).
 
 ### Revolution nations (24+, dispatched from `leader_revolution_commanders.xs` unless noted)
 
-All revolution civs (except RvltModNapoleonicFrance, RvltModAmericans,
-RvltModMexicans which use dedicated leader files) share rule scaffolds
+All revolution civs (except ANWNapoleonicFrance, ANWAmericans,
+ANWMexicans which use dedicated leader files) share rule scaffolds
 `rvltAge1Discovery / rvltAge2Colonial / rvltAge3Fortress /
 rvltAge4Industrial / rvltAge5Imperial` keyed by `gRvltCivId 1..23`.
 Imperial rule body: `leader_revolution_commanders.xs:737-776`.
 
 | gRvltCivId | civ | leader | current psTitle | dispatch source |
 |---|---|---|---|---|
-| 1 | RvltModCanadians | Isaac Brock | Blockhouse infantry frontier | `leader_revolution_commanders.xs:62-81` |
-| 2 | RvltModRevolutionaryFrance | Robespierre | Levée-en-masse Republic | `:82-101` |
-| 3 | RvltModFrenchCanadians | Papineau | Patriote militia and Iroquois levy | `:102-121` |
-| 4 | RvltModBrazil | Pedro I | Imperial line and Hessian reserve | `:602-…` |
-| 5 | RvltModArgentines | San Martín | Granadero shock-cavalry liberation | (in body) |
-| 6 | RvltModChileans | O'Higgins | Balanced Republican infantry | (in body) |
-| 7 | RvltModPeruvians | Santa Cruz | Andean fort line and native levy | (in body) |
-| 8 | RvltModColumbians | Bolívar | Llanero liberation sweeps | (in body) |
-| 9 | RvltModHaitians | Louverture | Mass infantry insurrection | (in body) |
-| 10 | RvltModIndonesians | Diponegoro | Java War guerrilla and kraton fort | (in body) |
-| 11 | RvltModSouthAfricans | Kruger | Boer commando trader-cavalry | (in body) |
-| 12 | RvltModFinnish | Mannerheim | Mannerheim-line ski infantry | (in body) |
-| 13 | RvltModHungarians | Kossuth | Honved hussar uprising | (in body) |
-| 14 | RvltModRomanians | Cuza | Danubian Principalities consolidation | (in body) |
-| 15 | RvltModBarbary | Barbarossa | Corsair raider economy | (in body) |
-| 16 | RvltModEgyptians | Muhammad Ali | Nizam-i Cedid modernization | (in body) |
-| 17 | RvltModCentralAmericans | Morazán | Federal Republic native muster | (in body) |
-| 18 | RvltModBajaCalifornians | Alvarado | Californio frontier horse raid | (in body) |
-| 19 | RvltModYucatan | Carrillo Puerto | Maya levy uprising | (in body) |
-| 20 | RvltModRioGrande | Canales | Rio Grande Republic horse | (in body) |
-| 21 | RvltModMayans | Canek | Indigenous insurrection mass | (in body) |
-| 22 | RvltModCalifornians | Vallejo | Ranchero defense and trade | (in body) |
-| 23 | RvltModTexians | Houston | Republic of Texas militia | (in body) |
-| — | RvltModNapoleonicFrance | Napoleon | Grande Armée Grand Battery empire | `leader_napoleon.xs` (dedicated) |
-| — | RvltModAmericans | Jefferson | (uses Continental Army Fabian-to-Yorktown via Washington) | dispatched out (`:52-56`) |
-| — | RvltModMexicans | Hidalgo | Grito de Dolores levée | dispatched out → standard `leader_hidalgo.xs` |
+| 1 | ANWCanadians | Isaac Brock | Blockhouse infantry frontier | `leader_revolution_commanders.xs:62-81` |
+| 2 | ANWRevFrance | Robespierre | Levée-en-masse Republic | `:82-101` |
+| 3 | ANWFrenchCanadians | Papineau | Patriote militia and Iroquois levy | `:102-121` |
+| 4 | ANWBrazil | Pedro I | Imperial line and Hessian reserve | `:602-…` |
+| 5 | ANWArgentines | San Martín | Granadero shock-cavalry liberation | (in body) |
+| 6 | ANWChileans | O'Higgins | Balanced Republican infantry | (in body) |
+| 7 | ANWPeruvians | Santa Cruz | Andean fort line and native levy | (in body) |
+| 8 | ANWColumbians | Bolívar | Llanero liberation sweeps | (in body) |
+| 9 | ANWHaitians | Louverture | Mass infantry insurrection | (in body) |
+| 10 | ANWIndonesians | Diponegoro | Java War guerrilla and kraton fort | (in body) |
+| 11 | ANWSouthAfricans | Kruger | Boer commando trader-cavalry | (in body) |
+| 12 | ANWFinnish | Mannerheim | Mannerheim-line ski infantry | (in body) |
+| 13 | ANWHungarians | Kossuth | Honved hussar uprising | (in body) |
+| 14 | ANWRomanians | Cuza | Danubian Principalities consolidation | (in body) |
+| 15 | ANWBarbary | Barbarossa | Corsair raider economy | (in body) |
+| 16 | ANWEgyptians | Muhammad Ali | Nizam-i Cedid modernization | (in body) |
+| 17 | ANWCentralAmericans | Morazán | Federal Republic native muster | (in body) |
+| 18 | ANWBajaCalifornians | Alvarado | Californio frontier horse raid | (in body) |
+| 19 | ANWYucatan | Carrillo Puerto | Maya levy uprising | (in body) |
+| 20 | ANWRioGrande | Canales | Rio Grande Republic horse | (in body) |
+| 21 | ANWMayans | Canek | Indigenous insurrection mass | (in body) |
+| 22 | ANWCalifornians | Vallejo | Ranchero defense and trade | (in body) |
+| 23 | ANWTexians | Houston | Republic of Texas militia | (in body) |
+| — | ANWNapoleonicFrance | Napoleon | Grande Armée Grand Battery empire | `leader_napoleon.xs` (dedicated) |
+| — | ANWAmericans | Jefferson | (uses Continental Army Fabian-to-Yorktown via Washington) | dispatched out (`:52-56`) |
+| — | ANWMexicans | Hidalgo | Grito de Dolores levée | dispatched out → standard `leader_hidalgo.xs` |
 
 ---
 
@@ -531,7 +531,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 
 ### Revolution nations (24 entries)
 
-**RvltMod Argentines / San Martín — *Liberation-Marshal Imperium***
+**ANW Argentines / San Martín — *Liberation-Marshal Imperium***
 - San Martín's project: independent Río de la Plata, then liberate
   Chile and Peru (1817 Andes crossing, 1821 Lima).
 - Granadero a Caballo regiment — elite mounted shock corps;
@@ -540,7 +540,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Protectoral-monarchy ambivalence — imperial playstyle reflects
   Sanmartiniano centralism rather than federal Argentina.
 
-**RvltMod BajaCalifornians / Alvarado — *Californio Departmental Frontier***
+**ANW BajaCalifornians / Alvarado — *Californio Departmental Frontier***
 - Alvarado's "free state of Alta California" 1836–42 — semi-autonomous
   imperial reach over the peninsula and missions.
 - Mission-secularization estate redistribution — econ bonus from
@@ -548,7 +548,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Vaquero ranchero cavalry — mobile horse-raiding mass.
 - US-annexation backdrop — naval interception event during Imperial.
 
-**RvltMod Barbary / Barbarossa — *Algiers-Ottoman Tributary Pirate State***
+**ANW Barbary / Barbarossa — *Algiers-Ottoman Tributary Pirate State***
 - Barbarossa's imperium: Algiers + Tunis as Ottoman vassal regencies;
   Mediterranean fleet under Kapudan Pasha command.
 - Corsair raid economy — captured-ship resource trickle.
@@ -556,7 +556,7 @@ playercolors-mapped leader. Keep ~4 bullets.
   ship.
 - Slave market and ransom diplomacy — coin trickle from raid camps.
 
-**RvltMod Brazil / Pedro I — *Empire of Brazil 1822–31***
+**ANW Brazil / Pedro I — *Empire of Brazil 1822–31***
 - Pedro's actual empire — Septembrist proclamation, Cisplatine War
   (1825–28), absolutist crown over slave-coffee-sugar economy.
 - Plantation economy — coin-from-coffee trickle; villager-as-laborer
@@ -565,7 +565,7 @@ playercolors-mapped leader. Keep ~4 bullets.
   Saloon shipments featuring Hessian Jäger and Doppelsoldner.
 - Cisplatine campaign — naval-amphibious projection along the Plate.
 
-**RvltMod Californians / Vallejo — *Sonoma Frontier Empire***
+**ANW Californians / Vallejo — *Sonoma Frontier Empire***
 - Vallejo's military-administrative jurisdiction in Northern California
   — mission-presidio frontier dominion.
 - Defensive imperial — hold the territory rather than expand;
@@ -575,7 +575,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Bear Flag Revolt 1846 collapse event — late-imperial debuff
   representing US annexation pressure.
 
-**RvltMod Canadians / Brock — *British North American Imperium (defensive)***
+**ANW Canadians / Brock — *British North American Imperium (defensive)***
 - Brock's imperial playstyle = empire-defended-from-within: 1812
   defense of Upper Canada with Tecumseh's confederacy.
 - Native-British alliance — Iroquois loyalist + Tecumseh-style
@@ -584,7 +584,7 @@ playercolors-mapped leader. Keep ~4 bullets.
   to map edges.
 - Royal Navy lake control — Great Lakes warship priority.
 
-**RvltMod Central Americans / Morazán — *Federal Republic of Central America***
+**ANW Central Americans / Morazán — *Federal Republic of Central America***
 - Morazán's federal imperium 1830–39 — Guatemala, El Salvador,
   Honduras, Nicaragua, Costa Rica under one flag.
 - Liberal-reform civic anchor — town center radius bonus.
@@ -592,7 +592,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Coffee economy plus mahogany — trade-post and lumber-yield
   scaling.
 
-**RvltMod Chileans / O'Higgins — *Patria Nueva Republican Imperium***
+**ANW Chileans / O'Higgins — *Patria Nueva Republican Imperium***
 - O'Higgins' supreme-directorship 1817–23 — Andean defensive empire
   facing Spanish reaction from Peru.
 - Chacabuco / Maipú style fort-line warfare — Compact Andean
@@ -601,7 +601,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Nitrate + copper economy (proto-) — late imperial mineral
   trickle.
 
-**RvltMod Columbians / Bolívar — *Gran Colombia Bolivarian Imperium***
+**ANW Columbians / Bolívar — *Gran Colombia Bolivarian Imperium***
 - Bolívar's actual imperial project: Gran Colombia 1819–31
   (Venezuela + New Granada + Quito + Panamá), aspirational Andean
   Federation.
@@ -611,7 +611,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Caudillo-fragmentation event — late-imperial dissent risk reflected
   as army-cohesion debuff if pop ceiling untapped.
 
-**RvltMod Egyptians / Muhammad Ali — *Pasha of Egypt and the Sudan***
+**ANW Egyptians / Muhammad Ali — *Pasha of Egypt and the Sudan***
 - Muhammad Ali's actual imperium: Sudan 1820, Hejaz, Levant 1831–40,
   Crete; Egyptian-Ottoman war.
 - Nizam-i Cedid French-trained line infantry — heavy musketeer-mass
@@ -620,7 +620,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Mehmet Ali's industrialization — early-imperial factory analog
   buff.
 
-**RvltMod Finnish / Mannerheim — *Greater Finland (Suur-Suomi) defensive imperium***
+**ANW Finnish / Mannerheim — *Greater Finland (Suur-Suomi) defensive imperium***
 - Mannerheim's Karelia / East Karelia ambition 1918–44 — defensive
   imperial reach into ethnically Finnish Russian territory.
 - Mannerheim Line entrenched defense — strong fortress placement,
@@ -629,7 +629,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Civil War legacy split — early-imperial choice to lean
   conservative vs liberal recruitment.
 
-**RvltMod French Canadians / Papineau — *Patriote Republican Imperium***
+**ANW French Canadians / Papineau — *Patriote Republican Imperium***
 - Papineau's vision: independent Lower Canada republic with Iroquois
   and habitant militia (1837–38 rebellion).
 - Civic militia center — slow imperial-tier upgrades from Manor
@@ -638,7 +638,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Anti-British counter-empire — defensive imperial flavor; not
   expansionist.
 
-**RvltMod Haitians / Louverture — *Black Imperium of Saint-Domingue***
+**ANW Haitians / Louverture — *Black Imperium of Saint-Domingue***
 - Toussaint's 1801 constitution — governor for life with imperial
   prerogative; Dessalines later crowns himself emperor.
 - Maroon and ex-slave mass infantry — large pop ceiling, cheap
@@ -648,7 +648,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Anti-French / anti-Spanish posture — buff vs European civs in
   defensive battles.
 
-**RvltMod Hungarians / Kossuth — *Honvéd Republican Imperium 1848–49***
+**ANW Hungarians / Kossuth — *Honvéd Republican Imperium 1848–49***
 - Kossuth's revolutionary government — independent Hungary projecting
   Magyar suzerainty over Croatia / Transylvania / Slovakia.
 - Honvéd hussar and uhlan mass — strongest cavalry weight among
@@ -657,7 +657,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Russian-intervention collapse event — late imperial pressure, AI
   must spike before turn 5.
 
-**RvltMod Indonesians / Diponegoro — *Mataram-Yogyakarta Defensive Imperium***
+**ANW Indonesians / Diponegoro — *Mataram-Yogyakarta Defensive Imperium***
 - Diponegoro's Java War 1825–30 — sultanate-led religious imperium
   resisting Dutch.
 - Kraton-fort defense + jungle guerrilla — combined buildstyle
@@ -665,7 +665,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Native Javanese levée plus Bugis mercenary — auxiliary mass.
 - Spice and rice economy — heavy food trickle, low coin.
 
-**RvltMod Mayans / Canek — *Caste-War Indigenous Imperium***
+**ANW Mayans / Canek — *Caste-War Indigenous Imperium***
 - Canek's 1761 Cisteil rebellion (anachronized — but the playstyle
   represents the long Caste War aspiration).
 - Indigenous mass infantry levy — cheap pop ceiling.
@@ -673,7 +673,7 @@ playercolors-mapped leader. Keep ~4 bullets.
   Maya fort.
 - Anti-Spanish creole resistance — buff vs Spanish/Mexicans.
 
-**RvltMod Napoleonic France / Napoleon — *Premier Empire Français***
+**ANW Napoleonic France / Napoleon — *Premier Empire Français***
 - Already partly modeled. Imperial playstyle = canonical Grande
   Armée at full corps strength: Imperial Guard, Grand Battery,
   Cuirassier wing, Continental System trade-refusal.
@@ -681,14 +681,14 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Conscription via Class Levy — pop ceiling 180.
 - Continental Blockade hard trade penalty + native penalty.
 
-**RvltMod Peruvians / Santa Cruz — *Peru-Bolivian Confederation 1836–39***
+**ANW Peruvians / Santa Cruz — *Peru-Bolivian Confederation 1836–39***
 - Santa Cruz's actual imperium: federation of North/South Peru +
   Bolivia under his Protectorate.
 - Andean fort-line + native Aymara levy — terrace-fortress placement.
 - Silver from Potosí — coin trickle.
 - Chilean War of Confederation collapse — late-imperial threat.
 
-**RvltMod Revolutionary France / Robespierre — *Republican Anti-Imperium***
+**ANW Revolutionary France / Robespierre — *Republican Anti-Imperium***
 - Robespierre opposed imperial titles — the "imperial" playstyle for
   this civ is the Terror-state at its export-revolution apex (1794
   Sister Republics: Batavian, Helvetic, Cisalpine).
@@ -697,7 +697,7 @@ playercolors-mapped leader. Keep ~4 bullets.
   collapse risk modelled as a brief late-imperial debuff.
 - Sans-culotte free-corps native-style auxiliaries.
 
-**RvltMod RioGrande / Canales — *Republic of the Rio Grande 1840***
+**ANW RioGrande / Canales — *Republic of the Rio Grande 1840***
 - Canales' separatist republic on the Texas-Tamaulipas-Coahuila
   borderlands — short-lived imperial reach over Northern Mexico.
 - Vaquero / Chinaco horse mass — fastest cavalry at Imperial.
@@ -705,7 +705,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Centralist-Mexican collapse event — political defeat rather than
   battlefield.
 
-**RvltMod Romanians / Cuza — *United Principalities Imperium***
+**ANW Romanians / Cuza — *United Principalities Imperium***
 - Cuza's 1859–66 union of Wallachia and Moldavia — proto-Romanian
   imperial reach toward Transylvania and Dobruja.
 - Land-reform peasant levy — cheap militia mass.
@@ -714,7 +714,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Ottoman-suzerain to full-independent transition — late imperial
   political pivot event.
 
-**RvltMod SouthAfricans / Kruger — *Boer Republican Imperium***
+**ANW SouthAfricans / Kruger — *Boer Republican Imperium***
 - Kruger's Transvaal — gold-mine state, defensive empire against
   British encroachment (Jameson Raid, Second Boer War).
 - Commando-cavalry mounted infantry — fast horse-rifle hybrid.
@@ -722,7 +722,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - Volksraad civic anchor + laager defensive doctrine — strongpoint
   laagers as semi-mobile fort.
 
-**RvltMod Texians / Houston — *Republic of Texas 1836–46***
+**ANW Texians / Houston — *Republic of Texas 1836–46***
 - Houston's actual republic — independent Texas claiming up the Rio
   Grande and into Santa Fe.
 - Volunteer militia + Texas Rangers — frontier counter-punch
@@ -732,7 +732,7 @@ playercolors-mapped leader. Keep ~4 bullets.
 - US-annexation 1845 — late-imperial federation event (resource
   influx).
 
-**RvltMod Yucatan / Carrillo Puerto — *Yucatecan Socialist Imperium***
+**ANW Yucatan / Carrillo Puerto — *Yucatecan Socialist Imperium***
 - Carrillo Puerto's 1922–24 governorship — "Apostle of the Maya
   Race", agrarian-socialist regional autonomy.
 - Henequén plantation economy — coin trickle with villager

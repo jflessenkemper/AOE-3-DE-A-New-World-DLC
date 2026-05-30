@@ -81,7 +81,7 @@ No tests are `@skip`-marked or `xfail` — `grep -r "skip" tests/` returns zero.
   `russians_ivan` PNGs landed without a coverage net).
 
 ### Home-city scenes — **THE `pathdata` BUG IS UNGUARDED**
-- 25 `data/rvltmodhomecity*.xml` files contain `<visual>` /
+- 25 `data/anwhomecity*.xml` files contain `<visual>` /
   `<watervisual>` / `<backgroundvisual>` / `<pathdata>` / `<camera>` paths.
 - `validate_civ_homecities.py` only checks **filename binding from
   `civmods.xml`**, not the *contents* of the home-city XML. `grep -c
@@ -94,7 +94,7 @@ No tests are `@skip`-marked or `xfail` — `grep -r "skip" tests/` returns zero.
   (`ottoman\`, `dutch\`, `british\`, `revolution\`, …) of `<visual>`,
   `<watervisual>`, `<backgroundvisual>`, `<pathdata>`, `<camera>`,
   `<widescreencamera>` all agree, plus a parametrised test running it across
-  all `rvltmodhomecity*.xml`.
+  all `anwhomecity*.xml`.
 
 ### Doctrine HTML reference (`a_new_world.html`)
 - Helper module exists: `tools/playtest/html_reference.py` and
@@ -181,7 +181,7 @@ catch the vast majority of recent and likely-future regressions.
 
 1. **`tests/validation/test_validate_homecity_visuals.py`** (would have
    caught the 25-file pathdata bug). Add `validate_homecity_visuals.py` that:
-   - parses every `data/rvltmodhomecity*.xml`,
+   - parses every `data/anwhomecity*.xml`,
    - extracts the directory prefix of `<visual>`, `<watervisual>`,
      `<backgroundvisual>`, `<pathdata>`, `<camera>`,
      `<widescreencamera>`,
@@ -230,7 +230,7 @@ catch the vast majority of recent and likely-future regressions.
 
 ```python
 # tests/validation/test_validate_homecity_visuals.py
-@pytest.mark.parametrize("xml_path", sorted(DATA.glob("rvltmodhomecity*.xml")))
+@pytest.mark.parametrize("xml_path", sorted(DATA.glob("anwhomecity*.xml")))
 def test_visual_and_pathdata_share_prefix(xml_path):
     tree = ET.parse(xml_path)
     prefixes = {

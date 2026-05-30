@@ -12,7 +12,7 @@ Scope: read-only audit. No edits performed.
 
 | File | Role |
 |---|---|
-| `data/civmods.xml` (8164 lines) | Civ definitions for the 26 revolution-promoted top-level civs (`RvltMod*`). Source of `<DisplayNameID>`, `<HomeCityFlagTexture>`, `<HomeCityFlagIconWPF>`, `<PostgameFlagTexture>`, `<PostgameFlagIconWPF>`, `<HomeCityPreviewWPF>`, `<HomeCityFlagButtonSet>`, `<BannerTexture>`. Base civs (Aztecs..Hausa, 22 nations) are NOT modified — they keep stock definitions. |
+| `data/civmods.xml` (8164 lines) | Civ definitions for the 26 revolution-promoted top-level civs (`ANW*`). Source of `<DisplayNameID>`, `<HomeCityFlagTexture>`, `<HomeCityFlagIconWPF>`, `<PostgameFlagTexture>`, `<PostgameFlagIconWPF>`, `<HomeCityPreviewWPF>`, `<HomeCityFlagButtonSet>`, `<BannerTexture>`. Base civs (Aztecs..Hausa, 22 nations) are NOT modified — they keep stock definitions. |
 | `data/strings/english/stringmods.xml` (2186 lines) | Localised strings. Civ display names are at locIDs `494001`–`494026`. Civ rollovers are at `400001`–`400026` and `490002`. Leader chat/taunt quotes at `493000`+. |
 | `data/playercolors.xml` (54 lines) | Mod-owned civ → colour + leader-name table. |
 | `LEGENDARY_LEADERS_NATION_REFERENCE.txt` (979 lines) | Generated reference doc. Treated as the canonical leader/flag/portrait spec for cross-checking. |
@@ -21,7 +21,7 @@ Scope: read-only audit. No edits performed.
 | `resources/images/icons/singleplayer/cpai_avatar_*.png` | Lobby/score/loading-screen leader portraits. |
 | `art/ui/leaders/*.{png,jpg}` | Secondary leader portrait set (used by leader pop-up / thumbnail in some surfaces). |
 | `art/ui/singleplayer/cpai_avatar_*.ddt` | Stock base-civ AI avatars (binary `.ddt`). |
-| `RandMaps/*.{xml,xs,set}` | Searched for civ-name labels — none found (no `RvltMod*`, `setCiv`, or per-civ branches). |
+| `RandMaps/*.{xml,xs,set}` | Searched for civ-name labels — none found (no `ANW*`, `setCiv`, or per-civ branches). |
 
 ### Search techniques
 
@@ -34,7 +34,7 @@ Scope: read-only audit. No edits performed.
 
 **22 base civs (no civmods.xml entry; stock definitions preserved):** Aztecs, British, Chinese, Dutch, Ethiopians, French, Germans, Haudenosaunee, Hausa, Inca, Indians, Italians, Japanese, Lakota, Maltese, Mexicans, Ottomans, Portuguese, Russians, Spanish, Swedes, UnitedStates.
 
-**26 revolution civs promoted to top-level (in `data/civmods.xml`):** RvltModNapoleonicFrance, RvltModRevolutionaryFrance, RvltModAmericans, RvltModMexicans, RvltModCanadians, RvltModFrenchCanadians, RvltModBrazil, RvltModArgentines, RvltModChileans, RvltModPeruvians, RvltModColumbians, RvltModHaitians, RvltModIndonesians, RvltModSouthAfricans, RvltModFinnish, RvltModHungarians, RvltModRomanians, RvltModBarbary, RvltModEgyptians, RvltModCentralAmericans, RvltModBajaCalifornians, RvltModYucatan, RvltModRioGrande, RvltModMayans, RvltModCalifornians, RvltModTexians.
+**26 revolution civs promoted to top-level (in `data/civmods.xml`):** ANWNapoleonicFrance, ANWRevFrance, ANWAmericans, ANWMexicans, ANWCanadians, ANWFrenchCanadians, ANWBrazil, ANWArgentines, ANWChileans, ANWPeruvians, ANWColumbians, ANWHaitians, ANWIndonesians, ANWSouthAfricans, ANWFinnish, ANWHungarians, ANWRomanians, ANWBarbary, ANWEgyptians, ANWCentralAmericans, ANWBajaCalifornians, ANWYucatan, ANWRioGrande, ANWMayans, ANWCalifornians, ANWTexians.
 
 ---
 
@@ -61,7 +61,7 @@ Notation: `civmods display` = string fetched via `<DisplayNameID>` → stringmod
 | Japanese / Tokugawa Ieyasu | stock | stock | stock (Tokugawa crest) | stock | yes |
 | Lakota / Chief Gall | stock | stock | stock | stock | yes (portrait `cpai_avatar_lakota_gall.png` exists, not wired) |
 | Maltese / Jean Parisot de Valette | stock | stock | stock | stock | yes |
-| Mexicans / Miguel Hidalgo y Costilla | stock | stock | stock (Mexican flag) | stock | yes — but DUPLICATE leader vs RvltModMexicans (see §3) |
+| Mexicans / Miguel Hidalgo y Costilla | stock | stock | stock (Mexican flag) | stock | yes — but DUPLICATE leader vs ANWMexicans (see §3) |
 | Ottomans / Suleiman the Magnificent | stock | stock | stock | stock | yes |
 | Portuguese / Prince Henry the Navigator | stock | stock | stock | stock | yes |
 | Russians / Ivan the Terrible | stock | stock | stock | stock | yes (portrait `cpai_avatar_russians_ivan.png` exists, not wired) |
@@ -112,25 +112,25 @@ All 26 revolution flag PNGs referenced from `<HomeCityFlagIconWPF>` and `<Postga
 
 ### A — Display-name collisions / mismatches
 
-- **A-1. "United States" duplicate display name.** stock `UnitedStates` civ shows "United States" (US flag); `RvltModAmericans` also resolves to "United States" via `data/strings/english/stringmods.xml` L2131 `_locID='494003'` → "United States". In any lobby/civ-pick/scoreboard the player sees two civs with identical labels but different flags (the `RvltModAmericans` HC flag is `Flag_USA.png`, base-civ stock is also USA flag). Recommended: rename `RvltModAmericans` → e.g. "Republic of the United States", "American Republic", or "Jefferson's America" so the lobby distinguishes them. Reference file at `LEGENDARY_LEADERS_NATION_REFERENCE.txt` L466 does call it "Americans" and flag description "United States flag" — same flag, same name = unresolvable for the player.
+- **A-1. "United States" duplicate display name.** stock `UnitedStates` civ shows "United States" (US flag); `ANWAmericans` also resolves to "United States" via `data/strings/english/stringmods.xml` L2131 `_locID='494003'` → "United States". In any lobby/civ-pick/scoreboard the player sees two civs with identical labels but different flags (the `ANWAmericans` HC flag is `Flag_USA.png`, base-civ stock is also USA flag). Recommended: rename `ANWAmericans` → e.g. "Republic of the United States", "American Republic", or "Jefferson's America" so the lobby distinguishes them. Reference file at `LEGENDARY_LEADERS_NATION_REFERENCE.txt` L466 does call it "Americans" and flag description "United States flag" — same flag, same name = unresolvable for the player.
 
-- **A-2. Mexico duplication.** Stock `Mexicans` (display "Mexicans", leader Hidalgo per reference L320) vs `RvltModMexicans` (display "Mexico" via `stringmods.xml` L2132 `494004`, leader Hidalgo per reference L803). Same leader on both rows, same flag family. The labels "Mexicans" vs "Mexico" do disambiguate, but `data/playercolors.xml` L25 says base-civ Mexicans leader = "Miguel Hidalgo" while L31 says `RvltModMexicans` leader = **"Jose Maria Morelos"** — three sources disagree.
+- **A-2. Mexico duplication.** Stock `Mexicans` (display "Mexicans", leader Hidalgo per reference L320) vs `ANWMexicans` (display "Mexico" via `stringmods.xml` L2132 `494004`, leader Hidalgo per reference L803). Same leader on both rows, same flag family. The labels "Mexicans" vs "Mexico" do disambiguate, but `data/playercolors.xml` L25 says base-civ Mexicans leader = "Miguel Hidalgo" while L31 says `ANWMexicans` leader = **"Jose Maria Morelos"** — three sources disagree.
 
-- **A-3. Civ id `Columbians` typo.** `civmods.xml` L2646 `<Name>RvltModColumbians</Name>` (with U), but the displayed string `494011` is "Gran Colombia" (with O), README says "Columbians", reference doc says "Columbians" but flag PNG `Flag_Colombian.png` and texture `objects\flags\colombian` use the correct O spelling. The Mod-internal civ id is a stale typo carried over from an earlier rename. UI surfaces are mostly OK because the user only sees 494011 = "Gran Colombia"; only modders interacting with the id see the misspelling.
+- **A-3. Civ id `Columbians` typo.** `civmods.xml` L2646 `<Name>ANWColumbians</Name>` (with U), but the displayed string `494011` is "Gran Colombia" (with O), README says "Columbians", reference doc says "Columbians" but flag PNG `Flag_Colombian.png` and texture `objects\flags\colombian` use the correct O spelling. The Mod-internal civ id is a stale typo carried over from an earlier rename. UI surfaces are mostly OK because the user only sees 494011 = "Gran Colombia"; only modders interacting with the id see the misspelling.
 
 ### B — Base-civ leader portraits/labels are documented but not wired
 
 - **B-1. New leader portraits orphaned.** Files `cpai_avatar_british_elizabeth.png`, `cpai_avatar_lakota_gall.png`, `cpai_avatar_russians_ivan.png`, `cpai_avatar_french_bourbon.png` are present in `resources/images/icons/singleplayer/` (and referenced by `LEGENDARY_LEADERS_NATION_REFERENCE.txt` L41,281,381,121 plus by `resources/audio/standard_leader_manifest.json`), but no civ XML loads them. The README L15 claim "Queen Elizabeth I for British, Ivan the Terrible for Russians, Chief Gall for Lakota" therefore does not show up in the in-game civ picker for the 22 base civs (those still use the stock `art/ui/singleplayer/cpai_avatar_<civ>.ddt`). Reference file even acknowledges this for flags ("base-game asset (not overridden in this repo)") but for portraits it lists fresh PNG paths as if active.
 
 - **B-2. Stale `playercolors.xml` leader names.** This file is the only mod-owned table that names base-civ + revolution-civ leaders, and several entries directly contradict `LEGENDARY_LEADERS_NATION_REFERENCE.txt`:
-  - `data/playercolors.xml:31` `RvltModMexicans` leader **"Jose Maria Morelos"** vs reference L803 "Miguel Hidalgo y Costilla".
-  - `data/playercolors.xml:33` `RvltModFrenchCanadians` leader **"Louis-Joseph de Montcalm"** vs reference L703 "Louis-Joseph Papineau".
-  - `data/playercolors.xml:37` `RvltModPeruvians` leader **"Tupac Amaru II"** vs reference L864 "Andres de Santa Cruz".
-  - `data/playercolors.xml:41` `RvltModSouthAfricans` leader **"Shaka Zulu"** vs reference L924 "Paul Kruger".
-  - `data/playercolors.xml:44` `RvltModRomanians` leader **"Michael the Brave"** vs reference L904 "Alexandru Ioan Cuza".
-  - `data/playercolors.xml:48` `RvltModBajaCalifornians` leader **"Manuel Micheltorena"** vs reference L503 "Juan Bautista Alvarado".
-  - `data/playercolors.xml:51` `RvltModMayans` leader **"Tecun Uman"** vs reference L783 "Jacinto Canek".
-  - `data/playercolors.xml:32` `RvltModCanadians` leader **"Sir Isaac Brock"** vs reference L583 "Isaac Brock" (cosmetic).
+  - `data/playercolors.xml:31` `ANWMexicans` leader **"Jose Maria Morelos"** vs reference L803 "Miguel Hidalgo y Costilla".
+  - `data/playercolors.xml:33` `ANWFrenchCanadians` leader **"Louis-Joseph de Montcalm"** vs reference L703 "Louis-Joseph Papineau".
+  - `data/playercolors.xml:37` `ANWPeruvians` leader **"Tupac Amaru II"** vs reference L864 "Andres de Santa Cruz".
+  - `data/playercolors.xml:41` `ANWSouthAfricans` leader **"Shaka Zulu"** vs reference L924 "Paul Kruger".
+  - `data/playercolors.xml:44` `ANWRomanians` leader **"Michael the Brave"** vs reference L904 "Alexandru Ioan Cuza".
+  - `data/playercolors.xml:48` `ANWBajaCalifornians` leader **"Manuel Micheltorena"** vs reference L503 "Juan Bautista Alvarado".
+  - `data/playercolors.xml:51` `ANWMayans` leader **"Tecun Uman"** vs reference L783 "Jacinto Canek".
+  - `data/playercolors.xml:32` `ANWCanadians` leader **"Sir Isaac Brock"** vs reference L583 "Isaac Brock" (cosmetic).
   - `data/playercolors.xml:14` Spanish leader **"Isabella I"** vs reference L400 "Isabella I of Castile" (cosmetic).
   This is the most user-visible textual discrepancy in the mod, since `playercolors.xml` is loaded at engine startup and is the closest thing to a single-source-of-truth mapping. Seven leaders are *categorically wrong*.
 
@@ -144,11 +144,11 @@ All 26 revolution flag PNGs referenced from `<HomeCityFlagIconWPF>` and `<Postga
 
 - **C-4. Postgame flag texture for Mexicans (Revolution).** `civmods.xml:905` `<PostgameFlagTexture>ui\ingame\ingame_ui_postgame_flag_mexican</PostgameFlagTexture>` (no `_rev`), while WPF and HC textures use `mexican_rev`. The score/postgame screen will display the base-Mexican postgame flag rather than the revolutionary variant. Whether the `_rev` ddt actually exists in the stock game is unverifiable from this worktree (no `_rev` ddt is shipped here), so this may be intentional — but it does mean the loading-screen flag (revolutionary) and the postgame flag (Iturbide-era) differ.
 
-- **C-5. Path-separator inconsistency in `RvltModRevolutionaryFrance`.** `civmods.xml:273` `<Portrait>objects\flags/french</Portrait>` and `:361` `<HomeCityFlagTexture>objects\flags/revolutionary_france</HomeCityFlagTexture>` mix `\` and `/` mid-path. The engine tolerates this on Windows; it's a code-smell, not a runtime bug.
+- **C-5. Path-separator inconsistency in `ANWRevFrance`.** `civmods.xml:273` `<Portrait>objects\flags/french</Portrait>` and `:361` `<HomeCityFlagTexture>objects\flags/revolutionary_france</HomeCityFlagTexture>` mix `\` and `/` mid-path. The engine tolerates this on Windows; it's a code-smell, not a runtime bug.
 
 ### D — Stale references
 
-- **D-1. `<HomeCityFlagButtonSet>` reuses base-civ button atlas.** Most revolution civs reuse stock atlases (`britishFlagBtn`, `swedishFlagBtn`, `ottomanFlagBtn`, `washingtonFlagBtn`, `frenchFlagBtn`, `hidalgoFlagBtn`). Six different revolution civs (`RvltModSouthAfricans` L3548, `RvltModIndonesians` L3279, `RvltModFrenchCanadians` L1428, `RvltModCanadians` L1158, `RvltModHaitians` not — has its own; `RvltModFinnish` L3817 etc.) bind to **other civs' button atlases**. Visual result: the lobby's small flag-button thumbnail can show the wrong national colour for those civs (e.g. Indonesian button shows British atlas slot), distinct from the loading-screen flag.
+- **D-1. `<HomeCityFlagButtonSet>` reuses base-civ button atlas.** Most revolution civs reuse stock atlases (`britishFlagBtn`, `swedishFlagBtn`, `ottomanFlagBtn`, `washingtonFlagBtn`, `frenchFlagBtn`, `hidalgoFlagBtn`). Six different revolution civs (`ANWSouthAfricans` L3548, `ANWIndonesians` L3279, `ANWFrenchCanadians` L1428, `ANWCanadians` L1158, `ANWHaitians` not — has its own; `ANWFinnish` L3817 etc.) bind to **other civs' button atlases**. Visual result: the lobby's small flag-button thumbnail can show the wrong national colour for those civs (e.g. Indonesian button shows British atlas slot), distinct from the loading-screen flag.
 
 - **D-2. `<RolloverNameID>` for Napoleonic France points at 490002.** `civmods.xml:10` references `_locID='490002'` (defined `stringmods.xml:24`). Revolutionary France L277 uses `400020`. The 400020/490002 split is intentional but surfaces as **two leader-pop blurbs** (Napoleon's, Robespierre's). No bug, but the only base-civ rollover that lives at a 49xxxx id; all other 26 revolution civs live in the 400xxx block. Easy to introduce bugs when editing.
 
@@ -183,7 +183,7 @@ A file-existence sweep over every flag and portrait path written into `data/civm
    ```xml
    <String _locID='494003'>American Republic</String>
    ```
-   so the lobby distinguishes stock `UnitedStates` (Washington) from `RvltModAmericans` (Jefferson). Without this change the civ-pick screen shows two rows labelled identically.
+   so the lobby distinguishes stock `UnitedStates` (Washington) from `ANWAmericans` (Jefferson). Without this change the civ-pick screen shows two rows labelled identically.
 
 3. **Wire the Napoleon portrait (C-1).** `data/civmods.xml:100`:
    ```xml
@@ -197,13 +197,13 @@ A file-existence sweep over every flag and portrait path written into `data/civm
 
 ### Priority 2 — in-game label consistency
 
-4. **Postgame flag for `RvltModMexicans` (C-4).** `data/civmods.xml:905` `<PostgameFlagTexture>ui\ingame\ingame_ui_postgame_flag_mexican</PostgameFlagTexture>` → `..._mexican_rev` if the stock game ships that variant; otherwise leave a comment and continue using `_mexican` so the file is documented.
+4. **Postgame flag for `ANWMexicans` (C-4).** `data/civmods.xml:905` `<PostgameFlagTexture>ui\ingame\ingame_ui_postgame_flag_mexican</PostgameFlagTexture>` → `..._mexican_rev` if the stock game ships that variant; otherwise leave a comment and continue using `_mexican` so the file is documented.
 
-5. **Disambiguate stock Mexicans vs RvltModMexicans leaders (A-2 / B-2).** Either:
+5. **Disambiguate stock Mexicans vs ANWMexicans leaders (A-2 / B-2).** Either:
    - Re-skin stock Mexicans to a non-Hidalgo leader (e.g. Benito Juárez or Iturbide) so the two civs do not double-bill the same historical figure, and update `data/playercolors.xml:25` and `LEGENDARY_LEADERS_NATION_REFERENCE.txt:320` accordingly; OR
    - Keep Hidalgo for revolution-Mexicans and pick a different leader for stock Mexicans.
 
-6. **Resolve `RvltModColumbians` typo (A-3).** Mass-rename `RvltModColumbians` → `RvltModColombians` across `civmods.xml`, `playercolors.xml:38`, all `RvltMod*homecity*.xml` filenames, AI script files in `game/ai/leaders/`, and anywhere referencing the id. Risky; only worth doing in a dedicated branch.
+6. **Resolve `ANWColumbians` typo (A-3).** Mass-rename `ANWColumbians` → `ANWColombians` across `civmods.xml`, `playercolors.xml:38`, all `ANW*homecity*.xml` filenames, AI script files in `game/ai/leaders/`, and anywhere referencing the id. Risky; only worth doing in a dedicated branch.
 
 ### Priority 3 — cosmetic / orphaned assets
 
@@ -223,8 +223,8 @@ A file-existence sweep over every flag and portrait path written into `data/civm
 - 1 hard display-name collision ("United States" used by two civs).
 - 7 wrong leader names in `data/playercolors.xml` that contradict the canonical reference.
 - 1 mismatched portrait wiring for Napoleonic France (generic banner instead of Napoleon).
-- 1 mismatched postgame flag texture for `RvltModMexicans`.
-- 1 civ-id typo (`RvltModColumbians`) that surfaces only to modders.
+- 1 mismatched postgame flag texture for `ANWMexicans`.
+- 1 civ-id typo (`ANWColumbians`) that surfaces only to modders.
 - 4+ orphaned base-civ leader portraits documented but not loaded by any XML.
 - 0 stale references to deleted/duplicated doctrines were found in `data/civmods.xml` or `data/strings/english/stringmods.xml`.
 

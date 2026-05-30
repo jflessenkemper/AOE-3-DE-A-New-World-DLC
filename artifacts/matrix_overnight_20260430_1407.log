@@ -33,11 +33,11 @@ Matrix run: 48 civ(s) in 6 match(es) (batch_size=8)
   [civ 01 American Republic] personality probes: 7 written to personality_probes.log
   [civ 01 American Republic] personality probe issue: Montezuma: ll_match_ms=3000 very small — spurious early write?
   [civ 01 American Republic] personality probe issue: Wellington: ll_match_ms=3000 very small — spurious early write?
-  [civ 01 American Republic] personality probe issue: rvltmodargentines: ll_match_ms=3000 very small — spurious early write?
-  [civ 01 American Republic] personality probe issue: rvltmodbajacalifornians: ll_match_ms=3000 very small — spurious early write?
-  [civ 01 American Republic] personality probe issue: rvltmodbarbary: ll_match_ms=3000 very small — spurious early write?
-  [civ 01 American Republic] personality probe issue: rvltmodbrazil: ll_match_ms=3000 very small — spurious early write?
-  [civ 01 American Republic] personality probe issue: rvltmodcalifornians: ll_match_ms=3000 very small — spurious early write?
+  [civ 01 American Republic] personality probe issue: anwargentines: ll_match_ms=3000 very small — spurious early write?
+  [civ 01 American Republic] personality probe issue: anwbajacalifornians: ll_match_ms=3000 very small — spurious early write?
+  [civ 01 American Republic] personality probe issue: anwbarbary: ll_match_ms=3000 very small — spurious early write?
+  [civ 01 American Republic] personality probe issue: anwbrazil: ll_match_ms=3000 very small — spurious early write?
+  [civ 01 American Republic] personality probe issue: anwcalifornians: ll_match_ms=3000 very small — spurious early write?
   [civ 01 American Republic] deep-mode behavioural axes: 0 AIs parsed from match.log (no [LLP v=2] probes captured — was dev mode active?)
   [civ 01 American Republic] engine_error_free OK: clean match.log
   [civ 01 American Republic] leaders_initialised: 0 key(s) — []
@@ -70,10 +70,10 @@ Matrix run: 48 civ(s) in 6 match(es) (batch_size=8)
   [civ 09 Canada] personality probe issue: Kangxi: ll_match_ms=3000 very small — spurious early write?
   [civ 09 Canada] personality probe issue: Menelik: ll_match_ms=3000 very small — spurious early write?
   [civ 09 Canada] personality probe issue: Napoleon: ll_match_ms=3000 very small — spurious early write?
-  [civ 09 Canada] personality probe issue: rvltmodcentralamericans: ll_match_ms=3000 very small — spurious early write?
-  [civ 09 Canada] personality probe issue: rvltmodchileans: ll_match_ms=3000 very small — spurious early write?
-  [civ 09 Canada] personality probe issue: rvltmodegyptians: ll_match_ms=3000 very small — spurious early write?
-  [civ 09 Canada] personality probe issue: rvltmodfinnish: ll_match_ms=3000 very small — spurious early write?
+  [civ 09 Canada] personality probe issue: anwcentralamericans: ll_match_ms=3000 very small — spurious early write?
+  [civ 09 Canada] personality probe issue: anwchileans: ll_match_ms=3000 very small — spurious early write?
+  [civ 09 Canada] personality probe issue: anwegyptians: ll_match_ms=3000 very small — spurious early write?
+  [civ 09 Canada] personality probe issue: anwfinnish: ll_match_ms=3000 very small — spurious early write?
   [civ 09 Canada] deep-mode behavioural axes: 0 AIs parsed from match.log (no [LLP v=2] probes captured — was dev mode active?)
   [civ 09 Canada] engine_error_free OK: clean match.log
   [civ 09 Canada] leaders_initialised: 0 key(s) — []
@@ -105,11 +105,11 @@ Matrix run: 48 civ(s) in 6 match(es) (batch_size=8)
   [civ 17 French Empire] personality probes: 7 written to personality_probes.log
   [civ 17 French Empire] personality probe issue: Frederick: ll_match_ms=3000 very small — spurious early write?
   [civ 17 French Empire] personality probe issue: Pachacuti: ll_match_ms=3000 very small — spurious early write?
-  [civ 17 French Empire] personality probe issue: rvltmodcolumbians: ll_match_ms=3000 very small — spurious early write?
-  [civ 17 French Empire] personality probe issue: rvltmodhaitians: ll_match_ms=3000 very small — spurious early write?
-  [civ 17 French Empire] personality probe issue: rvltmodhungarians: ll_match_ms=3000 very small — spurious early write?
-  [civ 17 French Empire] personality probe issue: rvltmodindonesians: ll_match_ms=3000 very small — spurious early write?
-  [civ 17 French Empire] personality probe issue: rvltmodrevolutionaryfrance: ll_match_ms=3000 very small — spurious early write?
+  [civ 17 French Empire] personality probe issue: anwcolumbians: ll_match_ms=3000 very small — spurious early write?
+  [civ 17 French Empire] personality probe issue: anwhaitians: ll_match_ms=3000 very small — spurious early write?
+  [civ 17 French Empire] personality probe issue: anwhungarians: ll_match_ms=3000 very small — spurious early write?
+  [civ 17 French Empire] personality probe issue: anwindonesians: ll_match_ms=3000 very small — spurious early write?
+  [civ 17 French Empire] personality probe issue: anwrevfrance: ll_match_ms=3000 very small — spurious early write?
   [civ 17 French Empire] deep-mode behavioural axes: 0 AIs parsed from match.log (no [LLP v=2] probes captured — was dev mode active?)
   [civ 17 French Empire] engine_error_free OK: clean match.log
   [civ 17 French Empire] leaders_initialised: 0 key(s) — []
@@ -144,8 +144,8 @@ Matrix run: 48 civ(s) in 6 match(es) (batch_size=8)
   [civ 25 Iroquois Confederacy] personality probe issue: Hidalgo: ll_match_ms=3000 very small — spurious early write?
   [civ 25 Iroquois Confederacy] personality probe issue: Jean: ll_match_ms=3000 very small — spurious early write?
   [civ 25 Iroquois Confederacy] personality probe issue: Tokugawa: ll_match_ms=3000 very small — spurious early write?
-  [civ 25 Iroquois Confederacy] personality probe issue: rvltmodfrenchcanadians: ll_match_ms=3000 very small — spurious early write?
-  [civ 25 Iroquois Confederacy] personality probe issue: rvltmodmayans: ll_match_ms=3000 very small — spurious early write?
+  [civ 25 Iroquois Confederacy] personality probe issue: anwfrenchcanadians: ll_match_ms=3000 very small — spurious early write?
+  [civ 25 Iroquois Confederacy] personality probe issue: anwmayans: ll_match_ms=3000 very small — spurious early write?
   [civ 25 Iroquois Confederacy] deep-mode behavioural axes: 0 AIs parsed from match.log (no [LLP v=2] probes captured — was dev mode active?)
   [civ 25 Iroquois Confederacy] engine_error_free OK: clean match.log
   [civ 25 Iroquois Confederacy] leaders_initialised: 0 key(s) — []
@@ -179,9 +179,9 @@ Matrix run: 48 civ(s) in 6 match(es) (batch_size=8)
   [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: Maurice: ll_match_ms=3000 very small — spurious early write?
   [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: Shivaji: ll_match_ms=3000 very small — spurious early write?
   [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: Suleiman: ll_match_ms=3000 very small — spurious early write?
-  [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: rvltmodperuvians: ll_match_ms=3000 very small — spurious early write?
-  [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: rvltmodriogrande: ll_match_ms=3000 very small — spurious early write?
-  [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: rvltmodromanians: ll_match_ms=3000 very small — spurious early write?
+  [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: anwperuvians: ll_match_ms=3000 very small — spurious early write?
+  [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: anwriogrande: ll_match_ms=3000 very small — spurious early write?
+  [civ 33 Mexico (Ciudad de Mexico)] personality probe issue: anwromanians: ll_match_ms=3000 very small — spurious early write?
   [civ 33 Mexico (Ciudad de Mexico)] deep-mode behavioural axes: 0 AIs parsed from match.log (no [LLP v=2] probes captured — was dev mode active?)
   [civ 33 Mexico (Ciudad de Mexico)] engine_error_free OK: clean match.log
   [civ 33 Mexico (Ciudad de Mexico)] leaders_initialised: 0 key(s) — []
@@ -215,9 +215,9 @@ Matrix run: 48 civ(s) in 6 match(es) (batch_size=8)
   [civ 41 Russia] personality probe issue: Isabella: ll_match_ms=3000 very small — spurious early write?
   [civ 41 Russia] personality probe issue: Usman: ll_match_ms=3000 very small — spurious early write?
   [civ 41 Russia] personality probe issue: Washington: ll_match_ms=3000 very small — spurious early write?
-  [civ 41 Russia] personality probe issue: rvltmodsouthafricans: ll_match_ms=3000 very small — spurious early write?
-  [civ 41 Russia] personality probe issue: rvltmodtexians: ll_match_ms=3000 very small — spurious early write?
-  [civ 41 Russia] personality probe issue: rvltmodyucatan: ll_match_ms=3000 very small — spurious early write?
+  [civ 41 Russia] personality probe issue: anwsouthafricans: ll_match_ms=3000 very small — spurious early write?
+  [civ 41 Russia] personality probe issue: anwtexians: ll_match_ms=3000 very small — spurious early write?
+  [civ 41 Russia] personality probe issue: anwyucatan: ll_match_ms=3000 very small — spurious early write?
   [civ 41 Russia] deep-mode behavioural axes: 0 AIs parsed from match.log (no [LLP v=2] probes captured — was dev mode active?)
   [civ 41 Russia] engine_error_free OK: clean match.log
   [civ 41 Russia] leaders_initialised: 0 key(s) — []

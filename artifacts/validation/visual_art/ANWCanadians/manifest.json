@@ -1,90 +1,84 @@
 {
   "schema_version": 1,
-  "status": "complete",
   "civ_token": "ANWCanadians",
   "civ_label": "Canadians",
-  "captured_at": "2026-05-22T03:55:52Z",
+  "captured_at": "2026-05-28T04:18:46Z",
   "host_perspective": true,
   "host_civ_token": null,
-  "synthesised": true,
-  "match_id": "anwcanadians_synth_1779422152",
+  "match_id": "anwcanadians_2026-05-28_041846",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779422152248,
+      "captured_ms": 1779941990865,
       "ocr_text": null,
       "crops": [
         {
           "name": "lobby_portrait",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            620,
+            320,
+            1300,
+            920
           ],
           "crop_path": "crops/lobby_portrait.png",
-          "thumb_path": "thumbs/lobby_portrait.webp",
-          "_synthesised_from": "art/ui/leaders/brock.png"
+          "thumb_path": "thumbs/lobby_portrait.webp"
         }
       ]
     },
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779422152261,
+      "captured_ms": 1779942010884,
       "ocr_text": null,
       "crops": [
         {
           "name": "loading_flag",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            760,
+            380,
+            1160,
+            780
           ],
           "crop_path": "crops/loading_flag.png",
-          "thumb_path": "thumbs/loading_flag.webp",
-          "_synthesised_from": "resources/images/icons/flags/Flag_Canadians.png"
+          "thumb_path": "thumbs/loading_flag.webp"
         }
       ]
     },
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1779422152278,
+      "captured_ms": 1779942088823,
       "ocr_text": null,
       "crops": [
         {
           "name": "home_city_button",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            1790,
+            50,
+            1910,
+            130
           ],
           "crop_path": "crops/home_city_button.png",
-          "thumb_path": "thumbs/home_city_button.webp",
-          "_synthesised_from": "resources/images/icons/flags/flag_hc_canadian.png"
+          "thumb_path": "thumbs/home_city_button.webp"
         },
         {
           "name": "hud_flag_corner",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            1660,
+            8,
+            1910,
+            60
           ],
           "crop_path": "crops/hud_flag_corner.png",
-          "thumb_path": "thumbs/hud_flag_corner.webp",
-          "_synthesised_from": "resources/images/icons/flags/Flag_Canadians.png"
+          "thumb_path": "thumbs/hud_flag_corner.webp"
         }
       ]
     },
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1779422152286,
+      "captured_ms": 1779942093011,
       "ocr_text": null,
       "crops": [
         {
@@ -92,114 +86,24 @@
           "crop_region": [
             0,
             0,
-            0,
-            0
+            1920,
+            1000
           ],
           "crop_path": "crops/home_city_scene.png",
-          "thumb_path": "thumbs/home_city_scene.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png"
-        }
-      ]
-    },
-    {
-      "label": "05_tech_tree",
-      "full_path": "full/05_tech_tree.png",
-      "captured_ms": 1779422152298,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "tech_tree_overview",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/tech_tree_overview.png",
-          "thumb_path": "thumbs/tech_tree_overview.webp",
-          "_synthesised_from": "resources/images/icons/flags/Flag_Canadians.png"
-        }
-      ]
-    },
-    {
-      "label": "06_diplomacy",
-      "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1779422152306,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "diplomacy_panel",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/diplomacy_panel.png",
-          "thumb_path": "thumbs/diplomacy_panel.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png"
-        }
-      ]
-    },
-    {
-      "label": "07_scoreboard",
-      "full_path": "full/07_scoreboard.png",
-      "captured_ms": 1779422152313,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "scoreboard_player_row",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/scoreboard_player_row.png",
-          "thumb_path": "thumbs/scoreboard_player_row.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png"
-        }
-      ]
-    },
-    {
-      "label": "08_esc_menu",
-      "full_path": "full/08_esc_menu.png",
-      "captured_ms": 1779422152321,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "esc_menu_player_summary",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/esc_menu_player_summary.png",
-          "thumb_path": "thumbs/esc_menu_player_summary.webp",
-          "_synthesised_from": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png"
-        }
-      ]
-    },
-    {
-      "label": "09_endgame",
-      "full_path": "full/09_endgame.png",
-      "captured_ms": 1779422152333,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "endgame_flag",
-          "crop_region": [
-            0,
-            0,
-            0,
-            0
-          ],
-          "crop_path": "crops/endgame_flag.png",
-          "thumb_path": "thumbs/endgame_flag.webp",
-          "_synthesised_from": "resources/images/icons/flags/Flag_Canadians.png"
+          "thumb_path": "thumbs/home_city_scene.webp"
         }
       ]
     }
+  ],
+  "status": "partial",
+  "warnings": [
+    "screenshot:05_tech_tree:game_died_pre_capture",
+    "screenshot:06_diplomacy:game_died_pre_capture",
+    "screenshot:06b_diplomacy_after_ally:game_died_pre_capture",
+    "screenshot:10_ai_homecity:game_died_pre_capture",
+    "screenshot:07_scoreboard:game_died_pre_capture",
+    "screenshot:08_esc_menu:game_died_pre_capture",
+    "screenshot:09_endgame:game_died_pre_capture",
+    "missing_required_labels:['06_diplomacy', '07_scoreboard', '08_esc_menu', '09_endgame']"
   ]
 }

@@ -13,10 +13,10 @@ Source-of-truth docs cross-checked:
 
 ## TL;DR
 
-- **Batch A (pathdata):** clean. All 26 revolution home cities now pair `<visual>` with the matching parent-civ `<pathdata>`. The only file still using `revolution\pathable_area.gr2` is `rvltmodhomecitymexicans.xml`, which is correct (its visual is `revolution\revolution_homecity.xml`). All 22 stock home cities untouched and consistent.
-- **Batch B (labels/flags):** clean. The 7 leader-name corrections in `playercolors.xml` are all in place, plus Spanish/Isabella I of Castile and the Yucatan/Carrillo Puerto entries. `stringmods.xml:2131` resolves `RvltModAmericans` to "American Republic" (collision with stock UnitedStates resolved). `civmods.xml:100` wires Napoleon-specific portrait. `civmods.xml:905` uses `_mexican_rev` for Mexicans-revolution postgame flag.
+- **Batch A (pathdata):** clean. All 26 revolution home cities now pair `<visual>` with the matching parent-civ `<pathdata>`. The only file still using `revolution\pathable_area.gr2` is `anwhomecitymexicans.xml`, which is correct (its visual is `revolution\revolution_homecity.xml`). All 22 stock home cities untouched and consistent.
+- **Batch B (labels/flags):** clean. The 7 leader-name corrections in `playercolors.xml` are all in place, plus Spanish/Isabella I of Castile and the Yucatan/Carrillo Puerto entries. `stringmods.xml:2131` resolves `ANWAmericans` to "American Republic" (collision with stock UnitedStates resolved). `civmods.xml:100` wires Napoleon-specific portrait. `civmods.xml:905` uses `_mexican_rev` for Mexicans-revolution postgame flag.
 - **Cosmetic / thematic carryover (P3):** all 25 reskinned revolution civs still use `<lightset>hc_revolution</lightset>`, `<watertype>London</watertype>`, and `<ambientsounds>homecity\Revolutionambientsounds.xml</ambientsounds>` regardless of which parent civ scene they reuse. Documented in audit doc as deferred Priority 3, not blocking.
-- **One residual P3 issue:** civ-id `RvltModColumbians` (with U) typo persists across 75 files; surfaces only to modders. Documented.
+- **One residual P3 issue:** civ-id `ANWColumbians` (with U) typo persists across 75 files; surfaces only to modders. Documented.
 
 No P1 or P2 regressions found.
 
@@ -55,7 +55,7 @@ All visual + pathdata pairs are within the same parent-civ namespace.
 
 22/22 match.
 
-### 1b. Revolution 26 civs (`data/rvltmodhomecity*.xml`)
+### 1b. Revolution 26 civs (`data/anwhomecity*.xml`)
 
 | civ | visual | pathdata | match |
 |---|---|---|---|
@@ -96,16 +96,16 @@ All 25 reskinned revolution civs continue to use `<lightset>hc_revolution</light
 
 | file | lightset | watertype | ambient | parent visual | severity |
 |---|---|---|---|---|---|
-| rvltmodhomecityamericans.xml | hc_revolution | London | Revolutionambientsounds.xml | british | P3 (London water+lightset OK on British scene; ambient is generic but tolerable) |
-| rvltmodhomecityargentina.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | spanish | P3 (London watertype on Seville scene — wrong-mood) |
-| rvltmodhomecitybrazil.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | portuguese | P3 (London on Lisbon scene) |
-| rvltmodhomecityegypt.xml:17,18,20 | hc_revolution | London | Revolutionambientsounds.xml | ottoman | P3 (London on Constantinople scene) |
-| rvltmodhomecityfinland.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | russian | P3 (London on St Petersburg scene) |
-| rvltmodhomecityhungary.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | german | P3 (London on Berlin scene) |
-| rvltmodhomecityindonesians.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | dutch | P3 (London on Amsterdam scene) |
-| rvltmodhomecitytexas.xml:18,19,21 | hc_revolution | London | Revolutionambientsounds.xml | mexico | P3 (London water on Mexico scene) |
+| anwhomecityamericans.xml | hc_revolution | London | Revolutionambientsounds.xml | british | P3 (London water+lightset OK on British scene; ambient is generic but tolerable) |
+| anwhomecityargentina.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | spanish | P3 (London watertype on Seville scene — wrong-mood) |
+| anwhomecitybrazil.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | portuguese | P3 (London on Lisbon scene) |
+| anwhomecityegypt.xml:17,18,20 | hc_revolution | London | Revolutionambientsounds.xml | ottoman | P3 (London on Constantinople scene) |
+| anwhomecityfinland.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | russian | P3 (London on St Petersburg scene) |
+| anwhomecityhungary.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | german | P3 (London on Berlin scene) |
+| anwhomecityindonesians.xml:16,17,19 | hc_revolution | London | Revolutionambientsounds.xml | dutch | P3 (London on Amsterdam scene) |
+| anwhomecitytexas.xml:18,19,21 | hc_revolution | London | Revolutionambientsounds.xml | mexico | P3 (London water on Mexico scene) |
 
-`rvltmodhomecitymexicans.xml` keeps the revolution scene + revolution lightset/ambient — internally consistent.
+`anwhomecitymexicans.xml` keeps the revolution scene + revolution lightset/ambient — internally consistent.
 
 These are not blocking; they are P3 polish items deferred per the original audit plan.
 
@@ -150,32 +150,32 @@ Combined `civmods.xml` (display, postgame, HC flags, portrait, line refs) + `pla
 
 | civ | leader (playercolors:line) | display (locID=stringmods) | hc_flag (HomeCityFlagIconWPF) | postgame_flag | portrait | mismatches |
 |---|---|---|---|---|---|---|
-| RvltModNapoleonicFrance | Napoleon Bonaparte (L28) | French Empire (494001) | Flag_French_Revolution_NE.png | Flag_French_Revolution_NE.png + tex …french_revolution_ne | **cpai_avatar_napoleonic_france_napoleon.png** (civmods.xml:100) | **none — Napoleon portrait wired** |
-| RvltModRevolutionaryFrance | Maximilien Robespierre (L29) | French Republic (494002) | Flag_French_Revolution.png | matching | cpai_avatar_revolutionary_france.png | none |
-| **RvltModAmericans** | Thomas Jefferson (L30) | **American Republic (494003)** | Flag_USA.png | Flag_USA.png | cpai_avatar_americans.png | **none — collision with stock UnitedStates resolved** |
-| **RvltModMexicans** | Miguel Hidalgo y Costilla (L31) | Mexico (494004) | Flag_Mexican_Rev.png | **objects\flags\mexican_rev → ingame_ui_postgame_flag_mexican_rev (civmods.xml:902,905)** | cpai_avatar_mexicans_hidalgo.png | **none — postgame flag matches HC flag** |
-| RvltModCanadians | Sir Isaac Brock (L32) | Canada (494005) | Flag_Canadians.png | matching | cpai_avatar_canadians.png | cosmetic: "Sir Isaac Brock" vs reference "Isaac Brock" (P3) |
-| **RvltModFrenchCanadians** | Louis-Joseph Papineau (L33) | Lower Canada (494006) | Flag_SPC_Canadian.png | matching | cpai_avatar_french_canadians.png | none — leader corrected |
-| RvltModBrazil | Pedro I (L34) | Brazil (494007) | Flag_Brazilian.png | matching | cpai_avatar_brazil.png | none |
-| RvltModArgentines | Jose de San Martin (L35) | Argentina (494008) | Flag_Argentinian.png | matching | cpai_avatar_argentines.png | none |
-| RvltModChileans | Bernardo O'Higgins (L36) | Chile (494009) | Flag_Chilean.png | matching | cpai_avatar_chileans.png | none |
-| **RvltModPeruvians** | Andres de Santa Cruz (L37) | Peru (494010) | Flag_Peruvian.png | matching | cpai_avatar_peruvians.png | none — leader corrected |
-| RvltModColumbians | Simon Bolivar (L38) | Gran Colombia (494011) | Flag_Colombian.png | matching | cpai_avatar_columbians.png | civ-id typo `Columbians` (U) vs flag spelling `Colombian` (O) (P3, see §3) |
-| RvltModHaitians | Toussaint Louverture (L39) | Haiti (494012) | Flag_Haitian.png | matching | cpai_avatar_haitians.png | none |
-| RvltModIndonesians | Diponegoro (L40) | Indonesia (494013) | Flag_Indonesian.png | matching | cpai_avatar_indonesians.png | none |
-| **RvltModSouthAfricans** | Paul Kruger (L41) | South Africa (494014) | Flag_South_African.png | matching | cpai_avatar_south_africans.png | none — leader corrected |
-| RvltModFinnish | C. G. E. Mannerheim (L42) | Finland (494015) | Flag_Finnish.png | matching | cpai_avatar_finnish.png | none |
-| RvltModHungarians | Lajos Kossuth (L43) | Hungary (494016) | Flag_Hungarian.png | matching | cpai_avatar_hungarians.png | none |
-| **RvltModRomanians** | Alexandru Ioan Cuza (L44) | Romania (494017) | Flag_Romanians.png | matching | cpai_avatar_romanians.png | none — leader corrected |
-| RvltModBarbary | Hayreddin Barbarossa (L45) | Barbary States (494018) | Flag_barbary.png | matching | cpai_avatar_barbary.png | none |
-| RvltModEgyptians | Muhammad Ali (L46) | Egypt (494019) | Flag_Egyptians.png | matching | cpai_avatar_egyptians.png | none |
-| RvltModCentralAmericans | Francisco Morazan (L47) | Central America (494020) | Flag_Central_American.png | matching | cpai_avatar_central_americans.png | none |
-| **RvltModBajaCalifornians** | Juan Bautista Alvarado (L48) | Baja California (494021) | Flag_baja_californian.png | matching | cpai_avatar_baja_californians.png | none — leader corrected |
-| RvltModYucatan | Felipe Carrillo Puerto (L49) | Yucatán (494022) | Flag_yucatan.png | matching | cpai_avatar_yucatan.png | none — collision pre-empted |
-| RvltModRioGrande | Antonio Canales Rosillo (L50) | Rio Grande (494023) | Flag_rio_grande.png | matching | cpai_avatar_rio_grande.png | none |
-| **RvltModMayans** | Jacinto Canek (L51) | Maya (494024) | Flag_mayan.png | matching | cpai_avatar_mayans.png | none — leader corrected |
-| RvltModCalifornians | Mariano Guadalupe Vallejo (L52) | California (494025) | Flag_californian.png | matching | cpai_avatar_californians.png | none |
-| RvltModTexians | Sam Houston (L53) | Texas (494026) | Flag_texan.png | matching | cpai_avatar_texians.png | none |
+| ANWNapoleonicFrance | Napoleon Bonaparte (L28) | French Empire (494001) | Flag_French_Revolution_NE.png | Flag_French_Revolution_NE.png + tex …french_revolution_ne | **cpai_avatar_napoleonic_france_napoleon.png** (civmods.xml:100) | **none — Napoleon portrait wired** |
+| ANWRevFrance | Maximilien Robespierre (L29) | French Republic (494002) | Flag_French_Revolution.png | matching | cpai_avatar_revolutionary_france.png | none |
+| **ANWAmericans** | Thomas Jefferson (L30) | **American Republic (494003)** | Flag_USA.png | Flag_USA.png | cpai_avatar_americans.png | **none — collision with stock UnitedStates resolved** |
+| **ANWMexicans** | Miguel Hidalgo y Costilla (L31) | Mexico (494004) | Flag_Mexican_Rev.png | **objects\flags\mexican_rev → ingame_ui_postgame_flag_mexican_rev (civmods.xml:902,905)** | cpai_avatar_mexicans_hidalgo.png | **none — postgame flag matches HC flag** |
+| ANWCanadians | Sir Isaac Brock (L32) | Canada (494005) | Flag_Canadians.png | matching | cpai_avatar_canadians.png | cosmetic: "Sir Isaac Brock" vs reference "Isaac Brock" (P3) |
+| **ANWFrenchCanadians** | Louis-Joseph Papineau (L33) | Lower Canada (494006) | Flag_SPC_Canadian.png | matching | cpai_avatar_french_canadians.png | none — leader corrected |
+| ANWBrazil | Pedro I (L34) | Brazil (494007) | Flag_Brazilian.png | matching | cpai_avatar_brazil.png | none |
+| ANWArgentines | Jose de San Martin (L35) | Argentina (494008) | Flag_Argentinian.png | matching | cpai_avatar_argentines.png | none |
+| ANWChileans | Bernardo O'Higgins (L36) | Chile (494009) | Flag_Chilean.png | matching | cpai_avatar_chileans.png | none |
+| **ANWPeruvians** | Andres de Santa Cruz (L37) | Peru (494010) | Flag_Peruvian.png | matching | cpai_avatar_peruvians.png | none — leader corrected |
+| ANWColumbians | Simon Bolivar (L38) | Gran Colombia (494011) | Flag_Colombian.png | matching | cpai_avatar_columbians.png | civ-id typo `Columbians` (U) vs flag spelling `Colombian` (O) (P3, see §3) |
+| ANWHaitians | Toussaint Louverture (L39) | Haiti (494012) | Flag_Haitian.png | matching | cpai_avatar_haitians.png | none |
+| ANWIndonesians | Diponegoro (L40) | Indonesia (494013) | Flag_Indonesian.png | matching | cpai_avatar_indonesians.png | none |
+| **ANWSouthAfricans** | Paul Kruger (L41) | South Africa (494014) | Flag_South_African.png | matching | cpai_avatar_south_africans.png | none — leader corrected |
+| ANWFinnish | C. G. E. Mannerheim (L42) | Finland (494015) | Flag_Finnish.png | matching | cpai_avatar_finnish.png | none |
+| ANWHungarians | Lajos Kossuth (L43) | Hungary (494016) | Flag_Hungarian.png | matching | cpai_avatar_hungarians.png | none |
+| **ANWRomanians** | Alexandru Ioan Cuza (L44) | Romania (494017) | Flag_Romanians.png | matching | cpai_avatar_romanians.png | none — leader corrected |
+| ANWBarbary | Hayreddin Barbarossa (L45) | Barbary States (494018) | Flag_barbary.png | matching | cpai_avatar_barbary.png | none |
+| ANWEgyptians | Muhammad Ali (L46) | Egypt (494019) | Flag_Egyptians.png | matching | cpai_avatar_egyptians.png | none |
+| ANWCentralAmericans | Francisco Morazan (L47) | Central America (494020) | Flag_Central_American.png | matching | cpai_avatar_central_americans.png | none |
+| **ANWBajaCalifornians** | Juan Bautista Alvarado (L48) | Baja California (494021) | Flag_baja_californian.png | matching | cpai_avatar_baja_californians.png | none — leader corrected |
+| ANWYucatan | Felipe Carrillo Puerto (L49) | Yucatán (494022) | Flag_yucatan.png | matching | cpai_avatar_yucatan.png | none — collision pre-empted |
+| ANWRioGrande | Antonio Canales Rosillo (L50) | Rio Grande (494023) | Flag_rio_grande.png | matching | cpai_avatar_rio_grande.png | none |
+| **ANWMayans** | Jacinto Canek (L51) | Maya (494024) | Flag_mayan.png | matching | cpai_avatar_mayans.png | none — leader corrected |
+| ANWCalifornians | Mariano Guadalupe Vallejo (L52) | California (494025) | Flag_californian.png | matching | cpai_avatar_californians.png | none |
+| ANWTexians | Sam Houston (L53) | Texas (494026) | Flag_texan.png | matching | cpai_avatar_texians.png | none |
 
 **26/26 corrected. All 7 leader fixes confirmed in `playercolors.xml`. The 8th (Yucatan/Carrillo Puerto) and 9th (Spanish/Isabella I of Castile) cosmetic fixes also confirmed.**
 
@@ -183,9 +183,9 @@ Combined `civmods.xml` (display, postgame, HC flags, portrait, line refs) + `pla
 
 | ask | result |
 |---|---|
-| `RvltModAmericans` display ≠ "United States" | confirmed — `stringmods.xml:2131` is **"American Republic"** |
-| `RvltModNapoleonicFrance` `HomeCityPreviewWPF` = `cpai_avatar_napoleonic_france_napoleon.png` | confirmed — `civmods.xml:100` |
-| `RvltModMexicans` `PostgameFlagTexture` = `..._mexican_rev` | confirmed — `civmods.xml:905` `ui\ingame\ingame_ui_postgame_flag_mexican_rev` |
+| `ANWAmericans` display ≠ "United States" | confirmed — `stringmods.xml:2131` is **"American Republic"** |
+| `ANWNapoleonicFrance` `HomeCityPreviewWPF` = `cpai_avatar_napoleonic_france_napoleon.png` | confirmed — `civmods.xml:100` |
+| `ANWMexicans` `PostgameFlagTexture` = `..._mexican_rev` | confirmed — `civmods.xml:905` `ui\ingame\ingame_ui_postgame_flag_mexican_rev` |
 | 7 leader corrections in playercolors.xml | confirmed L31, L33, L37, L41, L44, L48, L51 |
 | Yucatan/Carrillo Puerto | confirmed — `playercolors.xml:49` |
 | Spanish/Isabella I of Castile | confirmed — `playercolors.xml:10` |
@@ -197,7 +197,7 @@ Combined `civmods.xml` (display, postgame, HC flags, portrait, line refs) + `pla
 ### 3a. Civ-name string token resolution
 
 - `<DisplayNameID>` (494001..494026): all 26 resolve to strings in `stringmods.xml:2129..2154`. None missing.
-- `<RolloverNameID>`: 25 of 26 use `400xxx` (400001..400026), defined in `stringmods.xml:5..32`. The exception is `RvltModNapoleonicFrance` (`civmods.xml:10` → `490002`), defined at `stringmods.xml:24`. This is intentional per `nation_label_flag_audit.md` D-2; the loc id resolves.
+- `<RolloverNameID>`: 25 of 26 use `400xxx` (400001..400026), defined in `stringmods.xml:5..32`. The exception is `ANWNapoleonicFrance` (`civmods.xml:10` → `490002`), defined at `stringmods.xml:24`. This is intentional per `nation_label_flag_audit.md` D-2; the loc id resolves.
 - `<HistoryNameID>`: not used by `data/civmods.xml`. (Stock civs use it in their own data; the mod does not override.)
 
 No locID dangling.
@@ -216,14 +216,14 @@ Spot-checks of leader-name table vs `playercolors.xml`:
 
 | civ | playercolors leader | stringmods 49025x leader | match |
 |---|---|---|---|
-| RvltModMexicans | Miguel Hidalgo y Costilla | Miguel Hidalgo (490253) | yes (short form) |
-| RvltModFrenchCanadians | Louis-Joseph Papineau | Louis-Joseph Papineau (490255) | yes |
-| RvltModPeruvians | Andres de Santa Cruz | Andrés de Santa Cruz (490259) | yes (accent diff, P3 cosmetic) |
-| RvltModSouthAfricans | Paul Kruger | Paul Kruger (490263) | yes |
-| RvltModRomanians | Alexandru Ioan Cuza | Alexandru Ioan Cuza (490266) | yes |
-| RvltModBajaCalifornians | Juan Bautista Alvarado | Juan Bautista Alvarado (490270) | yes |
-| RvltModYucatan | Felipe Carrillo Puerto | Felipe Carrillo Puerto (490271) | yes |
-| RvltModMayans | Jacinto Canek | Jacinto Canek (490273) | yes |
+| ANWMexicans | Miguel Hidalgo y Costilla | Miguel Hidalgo (490253) | yes (short form) |
+| ANWFrenchCanadians | Louis-Joseph Papineau | Louis-Joseph Papineau (490255) | yes |
+| ANWPeruvians | Andres de Santa Cruz | Andrés de Santa Cruz (490259) | yes (accent diff, P3 cosmetic) |
+| ANWSouthAfricans | Paul Kruger | Paul Kruger (490263) | yes |
+| ANWRomanians | Alexandru Ioan Cuza | Alexandru Ioan Cuza (490266) | yes |
+| ANWBajaCalifornians | Juan Bautista Alvarado | Juan Bautista Alvarado (490270) | yes |
+| ANWYucatan | Felipe Carrillo Puerto | Felipe Carrillo Puerto (490271) | yes |
+| ANWMayans | Jacinto Canek | Jacinto Canek (490273) | yes |
 
 All 7 corrected leaders agree across `playercolors.xml`, `stringmods.xml` 490xxx leader-name table, and `LEGENDARY_LEADERS_NATION_REFERENCE.txt`.
 
@@ -231,32 +231,32 @@ All 7 corrected leaders agree across `playercolors.xml`, `stringmods.xml` 490xxx
 
 | civ id (`civmods.xml <Name>`) | corresponding home-city file |
 |---|---|
-| RvltModNapoleonicFrance | rvltmodhomecitynapoleon.xml |
-| RvltModRevolutionaryFrance | rvltmodhomecityrevolutionaryfrance.xml |
-| RvltModAmericans | rvltmodhomecityamericans.xml |
-| RvltModMexicans | rvltmodhomecitymexicans.xml |
-| RvltModCanadians | rvltmodhomecitycanada.xml |
-| RvltModFrenchCanadians | rvltmodhomecityfrenchcanada.xml |
-| RvltModBrazil | rvltmodhomecitybrazil.xml |
-| RvltModArgentines | rvltmodhomecityargentina.xml |
-| RvltModChileans | rvltmodhomecitychile.xml |
-| RvltModPeruvians | rvltmodhomecityperu.xml |
-| **RvltModColumbians** | **rvltmodhomecitycolumbia.xml** (filename uses "columbia" with O; civ id uses "Columbians" with U — typo, P3) |
-| RvltModHaitians | rvltmodhomecityhaiti.xml |
-| RvltModIndonesians | rvltmodhomecityindonesians.xml |
-| RvltModSouthAfricans | rvltmodhomecitysouthafricans.xml |
-| RvltModFinnish | rvltmodhomecityfinland.xml |
-| RvltModHungarians | rvltmodhomecityhungary.xml |
-| RvltModRomanians | rvltmodhomecityromania.xml |
-| RvltModBarbary | rvltmodhomecitybarbary.xml |
-| RvltModEgyptians | rvltmodhomecityegypt.xml |
-| RvltModCentralAmericans | rvltmodhomecitycentralamericans.xml |
-| RvltModBajaCalifornians | rvltmodhomecitybajacalifornians.xml |
-| RvltModYucatan | rvltmodhomecityyucatan.xml |
-| RvltModRioGrande | rvltmodhomecityriogrande.xml |
-| RvltModMayans | rvltmodhomecitymaya.xml |
-| RvltModCalifornians | rvltmodhomecitycalifornia.xml |
-| RvltModTexians | rvltmodhomecitytexas.xml |
+| ANWNapoleonicFrance | anwhomecitynapoleon.xml |
+| ANWRevFrance | anwhomecityrevolutionaryfrance.xml |
+| ANWAmericans | anwhomecityamericans.xml |
+| ANWMexicans | anwhomecitymexicans.xml |
+| ANWCanadians | anwhomecitycanada.xml |
+| ANWFrenchCanadians | anwhomecityfrenchcanada.xml |
+| ANWBrazil | anwhomecitybrazil.xml |
+| ANWArgentines | anwhomecityargentina.xml |
+| ANWChileans | anwhomecitychile.xml |
+| ANWPeruvians | anwhomecityperu.xml |
+| **ANWColumbians** | **anwhomecitycolumbia.xml** (filename uses "columbia" with O; civ id uses "Columbians" with U — typo, P3) |
+| ANWHaitians | anwhomecityhaiti.xml |
+| ANWIndonesians | anwhomecityindonesians.xml |
+| ANWSouthAfricans | anwhomecitysouthafricans.xml |
+| ANWFinnish | anwhomecityfinland.xml |
+| ANWHungarians | anwhomecityhungary.xml |
+| ANWRomanians | anwhomecityromania.xml |
+| ANWBarbary | anwhomecitybarbary.xml |
+| ANWEgyptians | anwhomecityegypt.xml |
+| ANWCentralAmericans | anwhomecitycentralamericans.xml |
+| ANWBajaCalifornians | anwhomecitybajacalifornians.xml |
+| ANWYucatan | anwhomecityyucatan.xml |
+| ANWRioGrande | anwhomecityriogrande.xml |
+| ANWMayans | anwhomecitymaya.xml |
+| ANWCalifornians | anwhomecitycalifornia.xml |
+| ANWTexians | anwhomecitytexas.xml |
 
 All 26 home-city filenames link via the `<HomeCityFilename>` tag in `civmods.xml`; they do not need to match the civ id verbatim, so the country/state-style naming (e.g. `canada` vs `Canadians`) is fine.
 
@@ -266,8 +266,8 @@ The single id-level oddity is the `Columbians` (U) typo, which now exists in 75+
 
 Searched for any reference to the *previous wrong* leader names (Tupac Amaru, Shaka Zulu, Michael the Brave, Manuel Micheltorena, Tecun Uman, Jose Maria Morelos, Louis-Joseph de Montcalm). Findings:
 
-- `stringmods.xml:1251` `<string _locid="151133" comment="proto-Explorer civ-RvltModMexicans type-title">José María Morelos</string>` — this is the **Explorer unit name** for the Mexican-revolution civ, not the leader. José María Morelos is a separate historical figure used for the in-game hero/explorer unit. Coexisting with leader Hidalgo is by design (leader != explorer). **No conflict.** P3 cosmetic note only.
-- `stringmods.xml:478` `Juan Bautista Alvarado` — appears as the deGeneral unit name for `RvltModCalifornians`. The leader for California is Vallejo (`playercolors.xml:52`), and the leader for Baja California is now Alvarado. Two civs reference Alvarado in different roles; fine.
+- `stringmods.xml:1251` `<string _locid="151133" comment="proto-Explorer civ-ANWMexicans type-title">José María Morelos</string>` — this is the **Explorer unit name** for the Mexican-revolution civ, not the leader. José María Morelos is a separate historical figure used for the in-game hero/explorer unit. Coexisting with leader Hidalgo is by design (leader != explorer). **No conflict.** P3 cosmetic note only.
+- `stringmods.xml:478` `Juan Bautista Alvarado` — appears as the deGeneral unit name for `ANWCalifornians`. The leader for California is Vallejo (`playercolors.xml:52`), and the leader for Baja California is now Alvarado. Two civs reference Alvarado in different roles; fine.
 - `stringmods.xml:602` `Pedro de Alvarado` — Conquistador-era explorer name for Central Americans (Morazan is leader). Different historical Alvarado, fine.
 - `stringmods.xml:694` `Alonso de Alvarado` — Chilean explorer. O'Higgins is leader. Fine.
 - `stringmods.xml:1568` `Alexandru Ioan Cuza` — Romanian explorer = leader (same person). Fine.
@@ -283,7 +283,7 @@ No taunt or history string references the *old wrong* leader names anywhere. The
 - L503 Baja Californians: Juan Bautista Alvarado
 - L703 French Canadians: Louis-Joseph Papineau
 - L783 Mayans: Jacinto Canek
-- L803 RvltModMexicans: Miguel Hidalgo y Costilla
+- L803 ANWMexicans: Miguel Hidalgo y Costilla
 - L864 Peruvians: Andres de Santa Cruz
 - L904 Romanians: Alexandru Ioan Cuza
 - L924 South Africans: Paul Kruger
@@ -309,11 +309,11 @@ None found.
 |---|---|---|---|---|---|---|
 | 1 | data/playercolors.xml | 25 | "Miguel Hidalgo" | "Miguel Hidalgo y Costilla" | P3 | Stock Mexicans civ; reference doc uses full form. Cosmetic, unambiguous. |
 | 2 | data/playercolors.xml | 32 | "Sir Isaac Brock" | "Isaac Brock" | P3 | Cosmetic prefix. Reference doc omits "Sir". |
-| 3 | data/civmods.xml | 2646 | `<Name>RvltModColumbians</Name>` (and 75 more files) | `RvltModColombians` | P3 | Modder-facing typo. UI shows "Gran Colombia" / "Colombian" correctly. Mass rename deferred. |
+| 3 | data/civmods.xml | 2646 | `<Name>ANWColumbians</Name>` (and 75 more files) | `ANWColombians` | P3 | Modder-facing typo. UI shows "Gran Colombia" / "Colombian" correctly. Mass rename deferred. |
 | 4 | data/strings/english/stringmods.xml | 1769 | "Andrés de Santa Cruz" | "Andres de Santa Cruz" (or vice-versa in playercolors) | P3 | Accent diacritic difference between mod-owned tables. No engine impact. |
-| 5 | data/rvltmodhomecity*.xml × 25 | 16-19 | `<lightset>hc_revolution</lightset>` + `<watertype>London</watertype>` + `<ambientsounds>Revolutionambientsounds.xml</ambientsounds>` | parent-civ values per stock `homecity*.xml` | P3 | Wrong-mood lighting/audio for reskinned scenes (e.g. London watertype on Constantinople scene). Documented as deferred Priority 3 in home_city_floating_audit.md §4. |
+| 5 | data/anwhomecity*.xml × 25 | 16-19 | `<lightset>hc_revolution</lightset>` + `<watertype>London</watertype>` + `<ambientsounds>Revolutionambientsounds.xml</ambientsounds>` | parent-civ values per stock `homecity*.xml` | P3 | Wrong-mood lighting/audio for reskinned scenes (e.g. London watertype on Constantinople scene). Documented as deferred Priority 3 in home_city_floating_audit.md §4. |
 | 6 | data/civmods.xml | 273, 361 | mixed `\` and `/` separators in path | normalize to `\` | P3 | Code-smell, engine-tolerant. |
-| 7 | data/civmods.xml various | several | `<HomeCityFlagButtonSet>` reuses other civs' atlases (e.g. RvltModSouthAfricans uses `swedishFlagBtn`, RvltModIndonesians uses `britishFlagBtn`) | per-civ atlas | P3 | Mini button widget shows wrong colour. Authoring work deferred. |
+| 7 | data/civmods.xml various | several | `<HomeCityFlagButtonSet>` reuses other civs' atlases (e.g. ANWSouthAfricans uses `swedishFlagBtn`, ANWIndonesians uses `britishFlagBtn`) | per-civ atlas | P3 | Mini button widget shows wrong colour. Authoring work deferred. |
 | 8 | resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png + 3 others | n/a | base-civ portraits exist on disk but no XML loads them (the mod doesn't override base-civ portrait). README claim re: Queen Elizabeth I etc. is therefore not reflected in the in-game civ-pick screen for the 22 base civs. | wire base-civ portraits via civmods Civ entries OR ship `.ddt` versions at `art/ui/singleplayer/cpai_avatar_<civ>.ddt` | P3 | Documented in nation_label_flag_audit.md B-1. |
 
 ---
@@ -322,6 +322,6 @@ None found.
 
 - **§1 home-city consistency:** clean. 48/48 visual+pathdata pairs internally consistent; the 1 remaining `revolution\pathable_area.gr2` reference (Mexicans-revolution) is correct.
 - **§2 label/flag consistency:** clean. All 26 revolution civs display the correct country label, hero, flag, and portrait. All 7 named leader corrections + Yucatan + Spanish/Isabella confirmed in `playercolors.xml`. The 3 specifically-named asks (American Republic / Napoleon portrait / mexican_rev postgame) verified in source.
-- **§3 broader cross-check:** clean on locID resolution and on string-surface agreement. The pre-existing `RvltModColumbians` typo and the 25× wrong-mood lightset/watertype/ambient remain as documented P3 deferrals; neither is a regression introduced by the fix batches.
+- **§3 broader cross-check:** clean on locID resolution and on string-surface agreement. The pre-existing `ANWColumbians` typo and the 25× wrong-mood lightset/watertype/ambient remain as documented P3 deferrals; neither is a regression introduced by the fix batches.
 
 No edits were made by this audit. Read-only verification only.
