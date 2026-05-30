@@ -1,3 +1,0 @@
-[submodule "tools/aoe3_harness/dll/minhook"]
-	path = tools/aoe3_harness/dll/minhook
-	url = https://github.com/m417z/minhook
