@@ -2707,6 +2707,7 @@ minInterval 5
       xsEnableRule("settlerUpgradeMonitor");
       xsEnableRule("healerMonitor");
       xsEnableRule("legendaryEliteGuardMonitor");
+      xsEnableRule("legendaryAiRoutMonitor");
 
       if (cRandomMapName == "euitalianwars")
       {

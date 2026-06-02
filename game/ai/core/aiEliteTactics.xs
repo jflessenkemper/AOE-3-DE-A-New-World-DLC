@@ -21,30 +21,436 @@ float gLLDecapitationOverride = -1.0;
 int gLLExplorerEscortBonus = 0;
 float gLLExplorerRearOffsetBonus = 0.0;
 
+// Elite-unit proto registry — populated once at init by llInitEliteProtoIDs().
+// Holds cUnitType* constants and kbGetProtoUnitID()-resolved IDs for the
+// current civ's unique units. Max 12 slots covers the widest ANW civ (ANWAztecs:5,
+// ANWArgentines:5+). -1 entries are skipped. Declared here (top of file) so they
+// precede first use in llInitEliteProtoIDs/llIsEliteUnit (XS needs decl-before-use).
+extern int gLLEliteProtoIDsArrayID = -1;
+extern int gLLEliteProtoCount = 0;
+const int cLLEliteProtoMax = 12;
+
+//==============================================================================
+/* llInitEliteProtoIDs — called once at rout-system boot (inside the
+   gLLAiRoutBootMarkerEmitted==0 guard in legendaryAiRoutMonitor) after kb is
+   ready. Reads kbGetCivName(cMyCiv) and pushes all confirmed unique-unit type
+   IDs for the current ANW civ into gLLEliteProtoIDsArrayID.
+
+   cUnitType* constants are pushed directly (engine integers).
+   Proto strings are resolved via kbGetProtoUnitID() and pushed only if >= 0
+   (guard against missing protos — never push -1).
+
+   Civs where doc-04 marks units as UNRESOLVED get no entry for that unit;
+   those civs may still get other resolved entries and degrade gracefully.
+
+   Base-game fallback block at the bottom handles the 8 original civs so this
+   file stays backward-compatible with non-ANW games. */
+//==============================================================================
+void llInitEliteProtoIDs(void)
+{
+   // Create the array once.
+   if (gLLEliteProtoIDsArrayID < 0)
+   {
+      gLLEliteProtoIDsArrayID = xsArrayCreateInt(cLLEliteProtoMax, -1, "LL elite proto ids");
+   }
+   gLLEliteProtoCount = 0;
+
+   string civName = kbGetCivName(cMyCiv);
+
+   // ── Helper macro-pattern: push a type id if valid ──────────────────────
+   // (XS has no macros; the push logic is inlined at each site below.)
+
+   if (civName == "ANWArgentines")
+   {
+      // deREVGranadero, Lancer, Rodelero, WarDog (Gatling Gun = xpGatlingGun proto)
+      int pid0 = kbGetProtoUnitID("deREVGranadero");
+      if (pid0 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid0); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);     gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);       gLLEliteProtoCount++;
+      int pid1 = kbGetProtoUnitID("xpGatlingGun");
+      if (pid1 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid1); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWAztecs")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpJaguarKnight);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpArrowKnight);   gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpSkullKnight);   gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpPumaMan);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpMacehualtin);   gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWBarbary")
+   {
+      int pid2 = kbGetProtoUnitID("deREVBarbaryWarrior");
+      if (pid2 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid2); gLLEliteProtoCount++; }
+      int pid3 = kbGetProtoUnitID("deBarbaryCavalry");
+      if (pid3 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid3); gLLEliteProtoCount++; }
+      int pid4 = kbGetProtoUnitID("deBedouinHorseArcher");
+      if (pid4 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid4); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGreatBombard);    gLLEliteProtoCount++;
+      // Corsair Marksman (deAllegianceBarbaryMarksman) — confirmed in techtreemods unittypes
+      int pid5 = kbGetProtoUnitID("deAllegianceBarbaryMarksman");
+      if (pid5 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid5); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWBrazil")
+   {
+      // Voluntario actual spawned proto UNRESOLVED — TODO: fill when proto string confirmed
+      int pid6 = kbGetProtoUnitID("xpGatlingGun");
+      if (pid6 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid6); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWBritish")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLongbowman);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRocket);          gLLEliteProtoCount++;
+      int pid7 = kbGetProtoUnitID("deRanger");
+      if (pid7 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid7); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWCanadians")
+   {
+      int pid8 = kbGetProtoUnitID("deRanger");
+      if (pid8 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid8); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRocket);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      // Métis Pathfinder/Voyageur are Coureur reskins — not independently testable via kbUnitIsType
+      // TODO: no distinct combat proto available per doc-04
+   }
+   else if (civName == "ANWChileans")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
+      int pid9 = kbGetProtoUnitID("xpGatlingGun");
+      if (pid9 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid9); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWChinese")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypChuKoNu);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypMeteorHammer);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypChangdao);      gLLEliteProtoCount++;
+      // ypFlamethrower — no cUnitTypeypFlamethrower constant in AI source; proto string likely correct
+      // but unverified in XS. TODO: replace with cUnitType constant when confirmed.
+      int pid10 = kbGetProtoUnitID("ypFlamethrower");
+      if (pid10 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid10); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWColumbians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
+      int pid11 = kbGetProtoUnitID("deREVLlanero");
+      if (pid11 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid11); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWDutch")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeHalberdier);      gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWEgyptians")
+   {
+      int pid12 = kbGetProtoUnitID("MercMameluke");
+      if (pid12 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid12); gLLEliteProtoCount++; }
+      int pid13 = kbGetProtoUnitID("deDeli");
+      if (pid13 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid13); gLLEliteProtoCount++; }
+      int pid14 = kbGetProtoUnitID("deHumbaraci");
+      if (pid14 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid14); gLLEliteProtoCount++; }
+      int pid15 = kbGetProtoUnitID("deAzap");
+      if (pid15 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid15); gLLEliteProtoCount++; }
+      // Khevite Fusilier UNRESOLVED — no proto token found in repo data. TODO.
+   }
+   else if (civName == "ANWEthiopians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeOromoWarrior);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeShotelWarrior); gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeSebastopolMortar); gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWFinnish")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeFinnishRider);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGrenadier);       gLLEliteProtoCount++;
+      // Karelian Jaeger = Skirmisher reskin, not uniquely distinguishable — not added per doc-04
+   }
+   else if (civName == "ANWFrench")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeSkirmisher);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCoureur);         gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWGermans")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeUhlan);           gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarWagon);        gLLEliteProtoCount++;
+      // Doppelsoldner: no confirmed cUnitTypedeDoppelsoldner in AI files. TODO.
+   }
+   else if (civName == "ANWHaitians")
+   {
+      // Maroon cUnitType UNRESOLVED — deMaroon plausible but unconfirmed. TODO.
+      int pid16 = kbGetProtoUnitID("SaloonPirate");
+      if (pid16 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid16); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWHaudenosaunee")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpWarRifle);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpAenna);         gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpMantlet);       gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWHausa")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeFulaWarrior);   gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
+      // Lifidi Knight: proto deLifidiKnight plausible but UNRESOLVED in repo data. TODO.
+   }
+   else if (civName == "ANWHungarians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeHussar);          gLLEliteProtoCount++;
+      int pid17 = kbGetProtoUnitID("deNMPandour");
+      if (pid17 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid17); gLLEliteProtoCount++; }
+      int pid18 = kbGetProtoUnitID("deMercPandour");
+      if (pid18 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid18); gLLEliteProtoCount++; }
+      // Grenzer and Hajduk are spawned outpost units, not trainable protos. UNRESOLVED.
+   }
+   else if (civName == "ANWInca")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeBolasWarrior);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeIncaRunner);    gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeSpearmanLevy);  gLLEliteProtoCount++;
+      // Huaraca: proto deHuaraca likely but no cUnitType confirmed. TODO.
+   }
+   else if (civName == "ANWIndians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypUrumi);         gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypSepoy);         gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypZamburak);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypHowdah);        gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWIndonesians")
+   {
+      int pid19 = kbGetProtoUnitID("deREVJavaSpearman");
+      if (pid19 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid19); gLLEliteProtoCount++; }
+      int pid20 = kbGetProtoUnitID("deREVCetbang");
+      if (pid20 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid20); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter);          gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWItalians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeBersagliere);   gLLEliteProtoCount++;
+      int pid21 = kbGetProtoUnitID("dePapalGuard");
+      if (pid21 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid21); gLLEliteProtoCount++; }
+      // Papal Lancer: no proto token found in any data file. UNRESOLVED. TODO.
+   }
+   else if (civName == "ANWJapanese")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypYumi);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypNaginataRider); gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypKensei);        gLLEliteProtoCount++;
+      // Flaming Arrow: artillery unit, proto UNRESOLVED. TODO.
+   }
+   else if (civName == "ANWLakota")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpWarRifle);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpAxeRider);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpDogSoldier);    gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpRifleRider);    gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWMaltese")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeHospitaller);   gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeMalteseGun);    gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedePavisier);      gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWMayans")
+   {
+      int pid22 = kbGetProtoUnitID("deNatHolcanJavelineer");
+      if (pid22 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid22); gLLEliteProtoCount++; }
+      int pid23 = kbGetProtoUnitID("deREVCruzobInfantry");
+      if (pid23 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid23); gLLEliteProtoCount++; }
+      int pid24 = kbGetProtoUnitID("deInsurgente");
+      if (pid24 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid24); gLLEliteProtoCount++; }
+      // Cruzob Avenger distinct proto UNRESOLVED — icon token only. TODO.
+   }
+   else if (civName == "ANWMexicans")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedePadre);         gLLEliteProtoCount++;
+      int pid25 = kbGetProtoUnitID("deInsurgente");
+      if (pid25 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid25); gLLEliteProtoCount++; }
+      int pid26 = kbGetProtoUnitID("deEmboscador");
+      if (pid26 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid26); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeSoldado);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeChinaco);       gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWNapoleonicFrance")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      int pid27 = kbGetProtoUnitID("deInsurgente");
+      if (pid27 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid27); gLLEliteProtoCount++; }
+      // Old Guard is a Grenadier reskin (no unique proto); use cUnitTypeGrenadier
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGrenadier);       gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWOttomans")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeJanissary);       gLLEliteProtoCount++;
+      int pid28 = kbGetProtoUnitID("Spahi");
+      if (pid28 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid28); gLLEliteProtoCount++; }
+      int pid29 = kbGetProtoUnitID("AbusGun");
+      if (pid29 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid29); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGreatBombard);    gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWPeruvians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeChasqui);       gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWPortuguese")
+   {
+      int pid30 = kbGetProtoUnitID("Cacadore");
+      if (pid30 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid30); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeOrganGun);        gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWRevFrance")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      int pid31 = kbGetProtoUnitID("deInsurgente");
+      if (pid31 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid31); gLLEliteProtoCount++; }
+      // Sans Culottes = Coureur (renamed via SetName) — use cUnitTypeCoureur
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCoureur);         gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWRomanians")
+   {
+      // Rosior Dragoon = Dragoon (reskin); Dorobant = xpColonialMilitia (reskin)
+      // No unique protos — use base types as approximate per doc-04.
+      int pid32 = kbGetProtoUnitID("Dragoon");
+      if (pid32 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid32); gLLEliteProtoCount++; }
+      int pid33 = kbGetProtoUnitID("xpColonialMilitia");
+      if (pid33 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid33); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWRussians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeStrelet);         gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      int pid34 = kbGetProtoUnitID("Oprichnik");
+      if (pid34 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid34); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWSouthAfricans")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter);          gLLEliteProtoCount++;
+      int pid35 = kbGetProtoUnitID("deREVStarTrekWagon");
+      if (pid35 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid35); gLLEliteProtoCount++; }
+   }
+   else if (civName == "ANWSpanish")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeMissionary);      gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWSwedes")
+   {
+      // deCarolean confirmed in techtreemods; no cUnitTypedeCarolean in AI source — use kbGetProtoUnitID
+      int pid36 = kbGetProtoUnitID("deCarolean");
+      if (pid36 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid36); gLLEliteProtoCount++; }
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeFinnishRider);  gLLEliteProtoCount++;
+      // Leather Cannon (deLeatherCannons) UNRESOLVED as cUnitType. TODO.
+   }
+   else if (civName == "ANWTexians")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeMinuteman);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeStateMilitia);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRegular);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeChinaco);       gLLEliteProtoCount++;
+   }
+   else if (civName == "ANWUSA")
+   {
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeMinuteman);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeStateMilitia);  gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRegular);       gLLEliteProtoCount++;
+      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
+   }
+   else
+   {
+      // Base-game fallback — handles the 8 original civs (non-ANW games).
+      // switch(cMyCiv) is valid here because these are true cCiv* integer constants.
+      switch (cMyCiv)
+      {
+         case cCivBritish:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLongbowman); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivFrench:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivGermans:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeUhlan); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivRussians:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeStrelet); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivOttomans:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeJanissary); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivDutch:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivSpanish:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero); gLLEliteProtoCount++;
+            break;
+         }
+         case cCivXPAztec:
+         {
+            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpJaguarKnight); gLLEliteProtoCount++;
+            break;
+         }
+      }
+   }
+
+   llProbe("rout.elite_protos_init", "civ=" + civName + " count=" + gLLEliteProtoCount);
+}
+
 //==============================================================================
 /* llIsEliteUnit — predicate for "elite" land-military units used by the
-   screening logic in this file. The formation groups standard troops around
-   elite units (line 265+), so every callsite here asks whether a given unit
-   should be treated as a screening anchor (elite) or a screen body (non-elite).
-
-   Heroes are counted separately by the callers via cUnitTypeHero queries, so
-   this predicate must NOT return true for heroes — doing so would double-count
-   them in the elite-line tally.
-
-   The mod does not yet maintain a curated list of "elite" proto units. Until
-   one is provided, this conservatively returns false, which degrades the
-   formation to "all land-military act as screen body, heroes are the only
-   elite anchors". That's behaviourally safe and keeps the AI running instead
-   of crashing with XS parse errors (ERROR 0172).
-
-   TODO: wire this to a proto-allowlist (e.g. elite Dragoons, elite Musketeers,
-   upgraded proto variants, or a bespoke gLLEliteProtoIDs array). */
+   screening logic in this file. Loops gLLEliteProtoIDsArrayID (populated by
+   llInitEliteProtoIDs at boot) and returns true if the unit matches any entry.
+   Returns false for unitID < 0, empty array, or no match — degrades safely to
+   the 25% rout path. Heroes are counted separately by callers. */
 //==============================================================================
 bool llIsEliteUnit(int unitID = -1)
 {
    if (unitID < 0)
    {
       return (false);
+   }
+
+   if ((gLLEliteProtoIDsArrayID < 0) || (gLLEliteProtoCount <= 0))
+   {
+      return (false);
+   }
+
+   int i = 0;
+   for (i = 0; < gLLEliteProtoCount)
+   {
+      int typeID = xsArrayGetInt(gLLEliteProtoIDsArrayID, i);
+      if (typeID >= 0)
+      {
+         if (kbUnitIsType(unitID, typeID) == true)
+         {
+            return (true);
+         }
+      }
    }
 
    return (false);
@@ -1293,7 +1699,11 @@ extern int gLLAiRoutSlotCount = 32;
 extern int gLLAiRoutBootMarkerEmitted = 0;
 extern int gLLAiRoutLastDestinationStaleCheck = -1;
 
-const float cLLAiRoutHpThreshold       = 0.25;   // 25% health
+// (gLLEliteProtoIDsArrayID / gLLEliteProtoCount / cLLEliteProtoMax are declared
+//  at the top of this file so they precede their first use — see line ~24.)
+
+const float cLLAiRoutHpThreshold       = 0.25;   // 25% health — non-unique units
+const float cLLAiRoutEliteHpThreshold  = 0.10;   // 10% health — unique/nation-specific units
 const float cLLAiRoutEliteSupportRange = 18.0;   // metres
 const float cLLAiRoutArrivalTolerance  = 6.0;    // metres — "arrived" radius
 const int   cLLAiRoutMaxLifetimeSecs   = 60;     // give up tracking after this
@@ -1406,7 +1816,7 @@ bool llIsAiRoutEligibleUnit(int unitID = -1)
    }
    // The explorer (subset of hero) gets its own escort/ransom logic
    // elsewhere in this file. Skip.
-   if (kbUnitIsType(unitID, cUnitTypeAbstractExplorer) == true)
+   if (kbUnitIsType(unitID, cUnitTypeExplorer) == true)
    {
       return (false);
    }
@@ -1414,11 +1824,12 @@ bool llIsAiRoutEligibleUnit(int unitID = -1)
    // engine only ticks rules for the *current* AI player, so any unit
    // owned by a human player is naturally filtered by the cMyID check
    // above. The contract is documented in the boot marker for clarity.
-   if (kbUnitGetHealth(unitID) >= cLLAiRoutHpThreshold)
+   // Unique (nation-specific) units retreat at 10%; all others at 25%.
+   if (llIsEliteUnit(unitID) == true)
    {
-      return (false);
+      return (kbUnitGetHealth(unitID) < cLLAiRoutEliteHpThreshold);
    }
-   return (true);
+   return (kbUnitGetHealth(unitID) < cLLAiRoutHpThreshold);
 }
 
 void llProcessAiRoutTick(void)
@@ -1441,7 +1852,13 @@ void llProcessAiRoutTick(void)
          continue;
       }
       // Healed back above threshold → release (the unit is fine again).
-      if (kbUnitGetHealth(trackedID) >= (cLLAiRoutHpThreshold + 0.10))
+      // NEW — release unique units when healed above 20%; non-unique above 35%
+      float releaseThreshold = cLLAiRoutHpThreshold + 0.10;
+      if (llIsEliteUnit(trackedID) == true)
+      {
+         releaseThreshold = cLLAiRoutEliteHpThreshold + 0.10;
+      }
+      if (kbUnitGetHealth(trackedID) >= releaseThreshold)
       {
          llReleaseAiRoutSlot(slot);
          continue;
@@ -1518,6 +1935,7 @@ void llProcessAiRoutTick(void)
             debugLegendaryLeaders("[UNIT] ai-rout-start unit=" + unitID);
             llProbe("rout.start", "unit=" + unitID +
                " hp=" + kbUnitGetHealth(unitID) +
+               " isElite=" + llIsEliteUnit(unitID) +
                " dest=" + llFmtVec(routDest));
          }
       }
@@ -1553,11 +1971,15 @@ minInterval 4
       // Single literal (no concatenation) so the offline static-emitter
       // checker in tools/validation/validate_runtime_logs.py can see this
       // marker as a contiguous substring in the XS source.
-      debugLegendaryLeaders("[RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control");
+      debugLegendaryLeaders("[RULE] AI rout enabled: non-unique units at 25% HP, unique/nation-specific units at 10% HP; hero within 18m suppresses rout");
+      // Resolve civ-unique elite unit type IDs once, now that kb is ready.
+      llInitEliteProtoIDs();
       llProbe("rout.boot",
          "hp_threshold=" + cLLAiRoutHpThreshold +
+         " elite_hp_threshold=" + cLLAiRoutEliteHpThreshold +
          " elite_support_range=" + cLLAiRoutEliteSupportRange +
-         " arrival_tolerance=" + cLLAiRoutArrivalTolerance);
+         " arrival_tolerance=" + cLLAiRoutArrivalTolerance +
+         " elite_protos=" + gLLEliteProtoCount);
       gLLAiRoutBootMarkerEmitted = 1;
    }
    llLogRuleTick("legendaryAiRoutMonitor");

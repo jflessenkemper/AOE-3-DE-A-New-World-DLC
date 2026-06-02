@@ -30,6 +30,28 @@ from collections import defaultdict
 from html import unescape as _html_unescape
 from pathlib import Path
 
+try:
+    from PIL import Image as _PILImage
+    _PIL_AVAILABLE = True
+except ImportError:
+    _PILImage = None
+    _PIL_AVAILABLE = False
+
+# Shared perceptual-hash helpers — imported from image_utils if available;
+# fall back to the local inline definitions below for environments where the
+# aoe3_automation package is not on sys.path (e.g. standalone site-builder runs).
+try:
+    import sys as _sys
+    import os as _os
+    _this_dir = _os.path.dirname(_os.path.abspath(__file__))
+    _repo_root = _os.path.dirname(_this_dir)
+    if _repo_root not in _sys.path:
+        _sys.path.insert(0, _repo_root)
+    from tools.aoe3_automation.image_utils import avg_hash as _iu_avg_hash, hamming as _iu_hamming
+    _IMAGE_UTILS_AVAILABLE = True
+except Exception:
+    _IMAGE_UTILS_AVAILABLE = False
+
 # Quote-extractor module — surfaces every AI insult / compliment / chatset
 # line per civ so they can be rendered under each civ card. See
 # ``tools/validation/extract_civ_quotes.py`` for the parser.
@@ -198,16 +220,63 @@ SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
     ("lobby",      ["01_lobby.png"]),
     ("loading",    ["02_loading.png"]),
     ("HUD",        ["02_hud_default.png", "03_hud.png"]),
-    ("scoreboard", ["03_scoreboard.png", "07_scoreboard_with_banter.png"]),
-    ("diplomacy",  ["04_diplomacy.png", "06_diplomacy.png"]),
-    ("home city",  ["05_homecity_panel.png", "04_homecity_panel.png"]),
+    ("scoreboard", ["03_scoreboard.png", "07_scoreboard_with_banter.png", "02_scoreboard.png"]),
+    ("diplomacy",  ["04_diplomacy.png", "06_diplomacy.png", "01_diplomacy.png"]),
+    ("home city",  ["05_homecity_panel.png", "04_homecity_panel.png", "03_homecity.png"]),
     ("tech tree",  ["05_tech_tree.png"]),
-    ("ally HC",    ["06b_ai_homecity_via_diplo.png"]),
+    ("ally HC",    ["06b_ai_homecity_via_diplo.png", "04_ally_homecity.png"]),
     ("esc menu",   ["06_esc_menu.png", "08_esc_menu.png"]),
-    ("endgame",    ["07_endgame_screen.png", "09_postgame_results.png"]),
+    ("endgame",    ["07_endgame_screen.png", "09_postgame_results.png", "05_postgame.png"]),
     ("abandon",    ["07a_abandon_screen.png"]),
     ("awards",     ["20_postgame_awards.png"]),
+    ("Age-Up II",  ["08_ageup_age2.png"]),
+    ("Age-Up III", ["08_ageup_age3.png"]),
+    ("Age-Up IV",  ["08_ageup_age4.png"]),
+    ("Age-Up V",   ["08_ageup_age5.png"]),
 ]
+
+# AI-round canonical columns (the round where the AI plays the nation).
+# Filenames are fixed — no multi-candidate aliases needed.
+AI_SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
+    ("AI: Chat Portrait", ["ai_01_chat_portrait.png"]),
+    ("AI: Home City",     ["ai_02_homecity.png"]),
+    ("AI: Deck",          ["ai_03_deck.png"]),
+]
+
+# Map each column label -> the surface key understood by
+# ``tools/aoe3_automation/recapture.py`` so each screenshot cell can show
+# the one-liner that re-grabs exactly that surface. Lets the user copy a
+# ready-to-run command straight off the site when a shot looks wrong.
+RECAPTURE_SURFACE_KEY: dict[str, str] = {
+    "lobby": "lobby",
+    "loading": "loading",
+    "HUD": "hud",
+    "scoreboard": "scoreboard",
+    "diplomacy": "diplomacy",
+    "home city": "homecity",
+    "tech tree": "techtree",
+    "ally HC": "allyhc",
+    "esc menu": "escmenu",
+    "endgame": "endgame",
+    "abandon": "abandon",
+    "awards": "awards",
+    "Age-Up II": "ageup2",
+    "Age-Up III": "ageup3",
+    "Age-Up IV": "ageup4",
+    "Age-Up V": "ageup5",
+    "AI: Chat Portrait": "ai_chat",
+    "AI: Home City": "ai_homecity",
+    "AI: Deck": "ai_deck",
+}
+
+
+def _recapture_cmd(anw_token: str, label: str) -> str:
+    """Return the recapture.py one-liner for a civ/column, or '' if unmapped."""
+    key = RECAPTURE_SURFACE_KEY.get(label)
+    if not key:
+        return ""
+    return f"python3 tools/aoe3_automation/recapture.py {anw_token} {key}"
+
 
 # All canonical filenames (any column candidate). Files NOT in this set
 # but present in a civ's capture folder are rendered as "extras" so age-up
@@ -215,6 +284,10 @@ SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
 _CANONICAL_SCREENSHOT_NAMES: set[str] = {
     fname
     for _label, candidates in SCREENSHOT_COLUMNS
+    for fname in candidates
+} | {
+    fname
+    for _label, candidates in AI_SCREENSHOT_COLUMNS
     for fname in candidates
 }
 
@@ -275,6 +348,117 @@ _SITE_AVATAR_DIR = REPO_ROOT / "artifacts" / "validation" / "leader_avatars"
 # site-relative path.
 _CARDS_SOURCE_DIR = REPO_ROOT / "resources" / "images" / "icons" / "cards"
 _SITE_CARD_ICONS_DIR = REPO_ROOT / "artifacts" / "validation" / "card_icons"
+_UNITS_SOURCE_DIR = REPO_ROOT / "resources" / "images" / "icons" / "units"
+_SITE_UNIT_ICONS_DIR = REPO_ROOT / "artifacts" / "validation" / "unit_icons"
+
+# Manual mapping from unique-unit display name (as in anw_civ_blurbs.json)
+# to the icon filename under resources/images/icons/units/.  Only entries
+# where the simple slug + "_icon.png" doesn't resolve directly are listed;
+# the _resolve_unit_icon() helper falls back to the slug for the rest.
+_UNIT_NAME_TO_ICON: dict[str, str] = {
+    "Aenna": "iro_aenna_icon.png",
+    "Axe Rider": "sx_axe_rider_icon.png",
+    "Coyote Runner": "az_coyote_man_icon.png",
+    "Chu Ko Nu": "hc_chu_ko_nu_icon.png",
+    "Cuirassier": "hc_saxon_cuirassier_icon.png",
+    "Dog Soldier": "sx_warclub_icon.png",
+    "Doppelsoldner": "dopplesoldner_icon.png",
+    "Eagle Runner Knight": "az_eagle_knight_icon.png",
+    "Grenadier": "hc_grenadier_icon.png",
+    "Hussar": "hungarian_hussar_icon.png",
+    "Iron Flail": "hc_iron_flail_icon.png",
+    "Jaguar Knight": "az_jaguar_warrior_icon.png",
+    "Janissary": "hc_janissary_icon.png",
+    "Longbowman": "longbow_icon.png",
+    "Macehualtin": "az_macehuatlin_icon.png",
+    "Meteor Hammer": "hc_meteor_hammer_icon.png",
+    "Mohawk Warrior": "iro_tomahawk_icon.png",
+    "Regular": "us_regular_icon.png",
+    "Rocket": "rocket_icon.png",
+    "Ruyter": "hc_reiter_icon.png",
+    "Sepoy": "hc_sepoy_icon.png",
+    "Skull Knight": "az_skull_knight_icon.png",
+    "Strelet": "hc_strelet_icon.png",
+    "Tokala Soldier": "sx_tokala_icon.png",
+    "Urumi Swordsman": "hc_urumi_icon.png",
+    "Wakina Rifle": "sx_rifle_rider_icon.png",
+    "War Wagon": "hc_war_wagon_icon.png",
+    "Zamburak": "hc_zamburak_icon.png",
+    "Congreve Rocket": "rocket_icon.png",
+    "Fula Warrior": "fula_warrior_icon.png",
+    # --- Aliases recovered from a_new_world.html cross-reference ---
+    # From HTML unit-icon src mappings (verified against resources/images/icons/units/)
+    "Cassador": "hc_cacadore_icon.png",
+    "Chimu Runner": "runner_icon.png",
+    "Fire Thrower": "hc_arquebusier_icon.png",
+    "Flaming Arrow": "hc_arquebusier_icon.png",
+    "Howdah": "hc_musketeer_icon.png",
+    "Huaraca": "slinger_icon.png",
+    "Lifidi Knight": "knight_icon.png",
+    "Maroon": "hc_emboscador_icon.png",
+    "Naginata Rider": "hc_cav_archer_icon.png",
+    "Organ Gun": "hc_arquebusier_icon.png",
+    "Ranger": "hc_rifleman_icon.png",
+    "Rodelero": "hc_redolero_icon.png",
+    "Salteador": "emboscador_icon.png",
+    "Sharpshooter": "hc_rifleman_icon.png",
+    # --- Additional aliases mapped to closest existing icon by unit type ---
+    "Azap": "deli_icon.png",              # Ottoman light inf
+    "Cetbang Cannon": "cannon_icon.png",   # Indonesian bronze cannon
+    "Chasqui": "runner_icon.png",          # Inca messenger/runner
+    "Corsair Marksman": "hc_barbary_corsair_icon.png",
+    "Coureur des Bois": "iro_forrest_runner_icon.png",
+    "Cruzob Avenger": "insurgente_icon.png",
+    "Cruzob Infantry": "insurgente_icon.png",
+    "Eclaireur": "hc_dragoon_icon.png",    # French scout cavalry
+    "Flamethrower": "hc_arquebusier_icon.png",
+    "Fulani Archer": "desert_archer_icon.png",
+    "Granadero a Caballo": "lancer_icon.png",
+    "Great Bombard": "cannon_icon.png",
+    "Grenzer": "hc_counter_jaeger_icon.png",
+    "Hajduk": "skirmisher_icon.png",
+    "Holcan Javelineer": "hoop_thrower_icon.png",
+    "Hospitaller Knight": "hospitaller_icon.png",
+    "Javanese Spearman": "spearman_icon.png",
+    "Karelian Jaeger": "hc_counter_jaeger_icon.png",
+    "Khevite Fusilier": "hc_musketeer_icon.png",
+    "Llanero": "chinaco_icon.png",         # South American light cavalry
+    "Mameluke": "hc_keshik_icon.png",
+    "Metis Pathfinder": "iro_forrest_runner_icon.png",
+    "Metis Voyageur": "iro_forrest_runner_icon.png",
+    "Musketeer (Jarma)": "hc_musketeer_icon.png",
+    "Old Guard": "line_infantry_icon.png",
+    "Pandour": "skirmisher_icon.png",
+    "Papal Guard": "papal_zouave_icon.png",
+    "Papal Lancer": "papal_zouave_icon.png",
+    "Pirate": "hc_barbary_corsair_icon.png",
+    "Plumed Spearman": "az_puma_man_icon.png",
+    "Sans Culottes": "line_infantry_icon.png",
+    "Trek Wagon": "mantlet_icon.png",
+    "Voltigeur": "skirmisher_icon.png",
+    "Voluntario Da Patria": "line_infantry_icon.png",
+    "War Dog": "raider_icon.png",
+    "Yucateco Insurgente": "insurgente_icon.png",
+    "Yumi Archer": "hc_bowman_icon.png",
+}
+
+
+def _resolve_unit_icon(display_name: str) -> str | None:
+    """Return the icon filename for a unit display name, or None if unknown.
+
+    Resolution order:
+      1. Manual override table (_UNIT_NAME_TO_ICON)
+      2. Slug: lower-case, non-alnum collapsed to '_', + '_icon.png'
+    The returned filename is the basename only — callers prepend the source
+    or staging path.
+    """
+    if display_name in _UNIT_NAME_TO_ICON:
+        candidate = _UNIT_NAME_TO_ICON[display_name]
+    else:
+        slug = re.sub(r"[^a-z0-9]+", "_",
+                      display_name.lower()).strip("_")
+        candidate = f"{slug}_icon.png"
+    return candidate if (_UNITS_SOURCE_DIR / candidate).is_file() else None
 
 
 def _ascii_slug(s: str) -> str:
@@ -396,6 +580,104 @@ def _stage_card_icons(decks: dict, cards_db: dict) -> set[str]:
               f"{', '.join(missing[:6])}"
               f"{'...' if len(missing) > 6 else ''}")
     return staged
+
+
+def _load_civ_blurbs() -> dict:
+    """Load data/anw_civ_blurbs.json. Returns {} on error.
+
+    Structure: {ANWCivToken: {"unique_units": [...display names...], ...}}
+    """
+    path = REPO_ROOT / "data" / "anw_civ_blurbs.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  [warn] could not load anw_civ_blurbs.json: {exc}",
+              file=sys.stderr)
+        return {}
+
+
+def _stage_unit_icons(blurbs: dict) -> set[str]:
+    """Copy every unique-unit icon referenced by any civ into the served tree.
+
+    Mirrors the pattern of _stage_card_icons(): source files come from
+    resources/images/icons/units/, destination is
+    artifacts/validation/unit_icons/.
+
+    Returns the set of icon filenames successfully staged.
+    """
+    _SITE_UNIT_ICONS_DIR.mkdir(parents=True, exist_ok=True)
+    wanted: set[str] = set()
+    for civ_info in blurbs.values():
+        for unit_name in (civ_info.get("unique_units") or []):
+            icon = _resolve_unit_icon(unit_name)
+            if icon:
+                wanted.add(icon)
+    staged: set[str] = set()
+    missing: list[str] = []
+    for icon in sorted(wanted):
+        src = _UNITS_SOURCE_DIR / icon
+        if not src.is_file():
+            missing.append(icon)
+            continue
+        dst = _SITE_UNIT_ICONS_DIR / icon
+        try:
+            shutil.copy2(src, dst)
+            staged.add(icon)
+        except OSError as exc:
+            print(f"  [warn] failed to stage unit icon {icon}: {exc}",
+                  file=sys.stderr)
+    if missing:
+        print(f"  [warn] {len(missing)} unit icons missing from source: "
+              f"{', '.join(missing[:6])}"
+              f"{'...' if len(missing) > 6 else ''}")
+    return staged
+
+
+def _render_unique_units_row(anw_token: str, blurbs: dict) -> str:
+    """Render a horizontal strip of unique-unit icon thumbnails for one civ.
+
+    Each icon gets a title= tooltip with the unit display name and a small
+    caption underneath. Units whose icons can't be resolved render as a dashed
+    placeholder chip. Returns "" if the civ has no unique_units entry.
+
+    Placed directly after the home-city deck block on each civ card.
+    """
+    civ_info = blurbs.get(anw_token)
+    if not civ_info:
+        return ""
+    unit_names = civ_info.get("unique_units") or []
+    if not unit_names:
+        return ""
+
+    cells: list[str] = []
+    for unit_name in unit_names:
+        icon = _resolve_unit_icon(unit_name)
+        safe_name = html.escape(unit_name)
+        if icon:
+            icon_url = f"unit_icons/{html.escape(icon)}"
+            cells.append(
+                f'<div class="unit-cell">'
+                f'<img src="{icon_url}" '
+                f'alt="{safe_name}" '
+                f'title="{safe_name}" '
+                f'loading="lazy">'
+                f'<div class="unit-caption">{safe_name}</div>'
+                f'</div>'
+            )
+        else:
+            cells.append(
+                f'<div class="unit-cell unit-cell-missing" title="{safe_name}">'
+                f'<div class="unit-placeholder">?</div>'
+                f'<div class="unit-caption">{safe_name}</div>'
+                f'</div>'
+            )
+
+    return (
+        f'<div class="unique-units-block">'
+        f'<div class="unique-units-label">UNIQUE UNITS</div>'
+        f'<div class="unique-units-row">{"".join(cells)}</div>'
+        f'</div>'
+    )
 
 
 def _stage_leader_avatars(spec: dict) -> dict[str, str]:
@@ -1070,7 +1352,77 @@ def _build_screenshot_index() -> dict[str, list[Path]]:
             full = civ_dir / "full"
             if full.is_dir():
                 out.setdefault(civ_dir.name, []).append(full)
+            # Also search the civ root dir itself — the ANW capture
+            # runner drops in-game screenshots directly under ANWFoo/
+            # with names like 01_diplomacy.png, 02_scoreboard.png, etc.
+            out.setdefault(civ_dir.name, []).append(civ_dir)
     return out
+
+
+# ---------------------------------------------------------------------------
+# Perceptual-duplicate guard for in-game screenshot columns
+#
+# Problem: the ANW capture pipeline can fire every shot during the AoE3
+# "Asset Preloading" splash screen.  For the British civ, ~7 canonical
+# column slots resolved to visually identical splash copies, so the site
+# reported "10/12 captured" with wrong images in most HUD/diplomacy/etc.
+# slots.
+#
+# Guard: after resolving per-column hits, group columns whose avg-hash
+# values are within INGAME_DUP_HAMMING bits of each other.  Any group
+# spanning >= INGAME_DUP_GROUP_MIN distinct column slots is treated as a
+# stuck/splash capture and those slots are demoted to "missing".
+#
+# Calibration: good civs have 7-8 source PNGs that collapse into 3-5
+# distinct perceptual groups, with the LARGEST group spanning at most 2-3
+# column slots.  The British splash group spans 7+ slots.  A threshold of
+# 4 slots cleanly separates the two populations.
+# ---------------------------------------------------------------------------
+INGAME_DUP_HAMMING: int = 10   # max Hamming distance to consider two shots identical
+INGAME_DUP_GROUP_MIN: int = 4  # a group spanning this many slots → stuck/splash capture
+
+# Module-level cache so we never re-hash the same file twice per run.
+_avg_hash_cache: dict[Path, int | None] = {}
+
+
+def _avg_hash(path: Path) -> int | None:
+    """16×16 average-hash of *path* as a 256-bit integer, or None on failure.
+
+    Delegates to tools.aoe3_automation.image_utils.avg_hash when available;
+    falls back to an identical inline implementation otherwise so the site
+    builder works in environments where the aoe3_automation package is absent.
+    """
+    if path in _avg_hash_cache:
+        return _avg_hash_cache[path]
+    result: int | None = None
+    if _IMAGE_UTILS_AVAILABLE:
+        result = _iu_avg_hash(path)
+    elif _PIL_AVAILABLE:
+        try:
+            with _PILImage.open(path) as img:
+                img = img.convert("L").resize((16, 16), _PILImage.LANCZOS)
+                pixels = list(img.getdata())
+                mean = sum(pixels) / len(pixels)
+                bits = 0
+                for p in pixels:
+                    bits = (bits << 1) | (1 if p > mean else 0)
+                result = bits
+        except Exception:
+            result = None
+    _avg_hash_cache[path] = result
+    return result
+
+
+def _hamming(a: int | None, b: int | None) -> int:
+    """Hamming distance between two 256-bit avg-hashes.  Returns 999 if either is None.
+
+    Delegates to tools.aoe3_automation.image_utils.hamming when available.
+    """
+    if _IMAGE_UTILS_AVAILABLE:
+        return _iu_hamming(a, b)
+    if a is None or b is None:
+        return 999
+    return bin(a ^ b).count("1")
 
 
 def _find_screenshot(search_dirs: list[Path],
@@ -1101,9 +1453,49 @@ def _render_civ_screenshots_block(
     n_present = 0
     cell_rows: list[str] = []
     seen_paths: set[Path] = set()
+
+    # --- Pass 1: resolve per-column file hits ---
+    column_hits: list[tuple[str, Path | None]] = []
     for label, candidates in SCREENSHOT_COLUMNS:
         hit = _find_screenshot(search_dirs, candidates)
-        if hit is not None:
+        column_hits.append((label, hit))
+
+    # --- Pass 2: perceptual-duplicate guard ---
+    # If a single perceptual group (avg-hash, Hamming <= INGAME_DUP_HAMMING)
+    # spans >= INGAME_DUP_GROUP_MIN distinct column slots, all slots in that
+    # group are demoted to "missing" (stuck/splash capture, e.g. British
+    # "Asset Preloading" splash filling 7 canonical slots).
+    resolved_hits: list[Path | None] = [h for _, h in column_hits]
+    hashes = [_avg_hash(h) if h is not None else None for h in resolved_hits]
+
+    # Build groups: each hit slot gets assigned to the earliest slot whose
+    # hash is within INGAME_DUP_HAMMING of it.
+    group_id: list[int | None] = [None] * len(resolved_hits)
+    for i, hi in enumerate(hashes):
+        if resolved_hits[i] is None:
+            continue
+        if group_id[i] is None:
+            group_id[i] = i  # start a new group anchored at i
+        for j in range(i + 1, len(resolved_hits)):
+            if resolved_hits[j] is None:
+                continue
+            if group_id[j] is not None:
+                continue
+            if _hamming(hi, hashes[j]) <= INGAME_DUP_HAMMING:
+                group_id[j] = group_id[i]
+
+    # Count how many distinct column slots each group spans.
+    from collections import Counter as _Counter
+    group_sizes = _Counter(g for g in group_id if g is not None)
+    # Slots belonging to groups that are too large → treat as missing.
+    bogus_indices: set[int] = {
+        idx for idx, g in enumerate(group_id)
+        if g is not None and group_sizes[g] >= INGAME_DUP_GROUP_MIN
+    }
+
+    # --- Pass 3: render ---
+    for col_idx, (label, hit) in enumerate(column_hits):
+        if hit is not None and col_idx not in bogus_indices:
             seen_paths.add(hit)
             n_present += 1
             try:
@@ -1111,26 +1503,34 @@ def _render_civ_screenshots_block(
             except ValueError:
                 rel = hit
             rel_from_site = _site_relative(str(rel))
+            _cmd = _recapture_cmd(anw_token, label)
+            _tip = (f"{anw_token} — {label} ({hit.name})"
+                    + (f"\nRe-grab: {_cmd}" if _cmd else ""))
             cell_rows.append(
                 '<div class="civ-shot-cell">'
                 f'<img src="{html.escape(rel_from_site)}" '
                 f'alt="{html.escape(label)}" '
-                f'title="{html.escape(anw_token)} — {html.escape(label)} '
-                f'({html.escape(hit.name)})" '
+                f'title="{html.escape(_tip)}" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
             )
         else:
+            _cmd = _recapture_cmd(anw_token, label)
+            _tip = (f"{anw_token} — {label} not yet captured"
+                    + (f"\nCapture: {_cmd}" if _cmd else ""))
             cell_rows.append(
                 '<div class="civ-shot-cell">'
                 '<div class="civ-shot-missing" '
-                f'title="{html.escape(anw_token)} — {html.escape(label)} '
-                'not yet captured">missing</div>'
+                f'title="{html.escape(_tip)}">missing</div>'
                 f'<div class="civ-shot-label civ-shot-label-missing">'
                 f'{html.escape(label)}</div>'
                 '</div>'
             )
+        # Track seen_paths for extras dedup (even bogus hits should be excluded
+        # from extras so they don't re-appear there).
+        if hit is not None and col_idx in bogus_indices:
+            seen_paths.add(hit)
 
     # Extras: any PNG in the civ's search dirs that isn't a canonical
     # candidate AND wasn't already shown above. Deduplicate by basename
@@ -1158,6 +1558,44 @@ def _render_civ_screenshots_block(
             seen_names.add(entry.name)
             extras.append(entry)
 
+    # --- AI round row ---
+    ai_cell_rows: list[str] = []
+    n_ai_present = 0
+    for label, candidates in AI_SCREENSHOT_COLUMNS:
+        hit = _find_screenshot(search_dirs, candidates)
+        if hit is not None:
+            seen_paths.add(hit)
+            n_ai_present += 1
+            try:
+                rel = hit.relative_to(REPO_ROOT)
+            except ValueError:
+                rel = hit
+            rel_from_site = _site_relative(str(rel))
+            _cmd = _recapture_cmd(anw_token, label)
+            _tip = (f"{anw_token} — {label} ({hit.name})"
+                    + (f"\nRe-grab: {_cmd}" if _cmd else ""))
+            ai_cell_rows.append(
+                '<div class="civ-shot-cell">'
+                f'<img src="{html.escape(rel_from_site)}" '
+                f'alt="{html.escape(label)}" '
+                f'title="{html.escape(_tip)}" '
+                f'onclick="showImg(this)">'
+                f'<div class="civ-shot-label">{html.escape(label)}</div>'
+                '</div>'
+            )
+        else:
+            _cmd = _recapture_cmd(anw_token, label)
+            _tip = (f"{anw_token} — {label} not yet captured"
+                    + (f"\nCapture: {_cmd}" if _cmd else ""))
+            ai_cell_rows.append(
+                '<div class="civ-shot-cell">'
+                '<div class="civ-shot-missing" '
+                f'title="{html.escape(_tip)}">missing</div>'
+                f'<div class="civ-shot-label civ-shot-label-missing">'
+                f'{html.escape(label)}</div>'
+                '</div>'
+            )
+
     parts: list[str] = []
     parts.append('<div class="civ-shot-block">')
     parts.append('<div class="civ-shot-title">In-game screenshots '
@@ -1165,8 +1603,15 @@ def _render_civ_screenshots_block(
                  f'({n_present}/{len(SCREENSHOT_COLUMNS)} captured'
                  f'{f", +{len(extras)} extras" if extras else ""})'
                  '</span></div>')
+    parts.append('<div class="civ-shot-row-label">HUMAN ROUND</div>')
     parts.append('<div class="civ-shot-row">')
     parts.extend(cell_rows)
+    parts.append('</div>')
+    parts.append('<div class="civ-shot-row-label civ-shot-row-label-ai">AI ROUND '
+                 f'<span class="civ-shot-meta">({n_ai_present}/{len(AI_SCREENSHOT_COLUMNS)} captured)</span>'
+                 '</div>')
+    parts.append('<div class="civ-shot-row">')
+    parts.extend(ai_cell_rows)
     parts.append('</div>')
 
     if extras:
@@ -1551,6 +1996,10 @@ section .content{padding:24px}
   color:#8b949e;text-transform:uppercase;letter-spacing:0.05em;
   margin:8px 0 4px;opacity:0.75}
 .civ-card .civ-shot-row-extras{opacity:0.92}
+.civ-card .civ-shot-row-label{font-size:9px;font-weight:700;color:#8b949e;
+  text-transform:uppercase;letter-spacing:0.08em;margin:6px 0 2px;
+  padding:2px 4px;background:#161b22;border-left:2px solid #30363d;display:inline-block}
+.civ-card .civ-shot-row-label-ai{color:#58a6ff;border-left-color:#1f6feb}
 
 /* Deck (per-civ home-city cards, grouped by age) — always-open since
    2026-05-27 (was a <details> collapsible; user feedback wanted decks
@@ -1580,6 +2029,31 @@ section .content{padding:24px}
                                      box-shadow:0 6px 18px rgba(0,0,0,0.7)}
 .civ-card .deck .age-empty{color:#484f58;font-size:11px;font-style:italic;
                            padding-top:10px}
+
+/* Unique units strip */
+.unique-units-block{margin:0;padding:8px 12px 10px;
+                    background:#0d1117;border-top:1px solid #21262d}
+.unique-units-label{font-size:10px;font-weight:700;color:#8b949e;
+                    text-transform:uppercase;letter-spacing:0.8px;
+                    margin-bottom:6px}
+.unique-units-row{display:flex;flex-wrap:wrap;gap:6px}
+.unit-cell{display:flex;flex-direction:column;align-items:center;
+           width:54px;text-align:center}
+.unit-cell img{height:40px;width:40px;object-fit:cover;
+               border:1px solid #30363d;border-radius:3px;
+               background:#21262d;cursor:help;
+               transition:transform 0.12s ease}
+.unit-cell img:hover{border-color:#58a6ff;transform:scale(2);
+                     position:relative;z-index:10;
+                     box-shadow:0 6px 18px rgba(0,0,0,0.7)}
+.unit-caption{font-size:9px;color:#8b949e;margin-top:3px;
+              line-height:1.2;word-break:break-word;max-width:54px}
+.unit-cell-missing .unit-placeholder{height:40px;width:40px;
+                                     display:flex;align-items:center;
+                                     justify-content:center;
+                                     border:1px dashed #30363d;border-radius:3px;
+                                     background:#0d1117;color:#484f58;
+                                     font-size:18px}
 
 /* Counters */
 .counters{display:flex;gap:16px;flex-wrap:wrap}
@@ -1648,6 +2122,10 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # The source dir is outside artifacts/validation/ and therefore not
     # reachable via the http.server, so we must copy them in.
     _stage_card_icons(decks, cards_db)
+    # Unique-unit data + icon staging for the per-civ unique-units row.
+    # Source: data/anw_civ_blurbs.json unique_units lists.
+    civ_blurbs = _load_civ_blurbs()
+    _stage_unit_icons(civ_blurbs)
     # Per-age strategy text, keyed by spec token. Replaces the old
     # ``first build / expects / distance / deadlines`` claim block in
     # the per-civ card with five short DLC-aware strategy paragraphs
@@ -1886,12 +2364,24 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         deck_html = _render_civ_deck_html(anw_token, decks, cards_db,
                                           spec_token=token)
 
+        # Unique units strip — placed directly after the home-city deck
+        # block. Data from data/anw_civ_blurbs.json unique_units lists;
+        # icons staged into artifacts/validation/unit_icons/ by
+        # _stage_unit_icons(). Units without a resolved icon get a dashed
+        # placeholder so we never crash or emit a broken src= path.
+        unique_units_html = _render_unique_units_row(anw_token, civ_blurbs)
+
         # Per-civ art-surfaces strip + in-game screenshot strip — inlined
         # under the deck per user feedback (2026-05-27). Standalone
         # "Art surfaces" / "In-game screenshots" sections were removed
         # in the same pass. Every civ shows all surfaces/screenshots
         # even if not yet captured, with dashed placeholders for gaps.
-        art_block = _render_civ_art_surfaces_block(anw_token, art_info)
+        # British: art-surfaces strip suppressed per user request
+        # (2026-06-01) — its in-game thumbs were incomplete/mislabeled.
+        if anw_token == "ANWBritish":
+            art_block = ""
+        else:
+            art_block = _render_civ_art_surfaces_block(anw_token, art_info)
         shots_block = _render_civ_screenshots_block(anw_token,
                                                     screenshot_index)
 
@@ -1948,6 +2438,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     {rev_block}
   </div>
   {deck_html}
+  {unique_units_html}
   {art_block}
   {shots_block}
 </div>''')
