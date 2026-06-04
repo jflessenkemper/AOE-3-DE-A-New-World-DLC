@@ -23,3 +23,11 @@ tools/aoe3_automation/templates/matrix/_raw/
 tools/aoe3_automation/ei_inject
 
 logs/
+
+# Python coverage output
+.coverage
+
+# Stray root-level scratch capture scripts (throwaway iterations; the
+# maintained versions live under tools/aoe3_harness/ and tools/aoe3_automation/)
+/british_ageup_*.py
+/british_recapture_2026.py
