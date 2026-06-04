@@ -1858,6 +1858,7 @@ def _render_civ_art_surfaces_block(anw_token: str,
                 f'<img src="{html.escape(avatar_rel)}" '
                 f'alt="lobby_portrait" '
                 f'title="{html.escape(anw_token)} — Leader portrait" '
+                f'data-civ="{html.escape(anw_token)}" data-title="Leader portrait" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-art-label">Leader portrait</div>'
                 '</div>'
@@ -1870,6 +1871,7 @@ def _render_civ_art_surfaces_block(anw_token: str,
                 f'<img src="{html.escape(rel_from_site)}" '
                 f'alt="{html.escape(surf)}" '
                 f'title="{html.escape(anw_token)} — {html.escape(label)}" '
+                f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-art-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2079,6 +2081,7 @@ def _render_civ_screenshots_block(
                 f'<img src="{html.escape(rel_from_site)}" '
                 f'alt="{html.escape(label)}" '
                 f'title="{html.escape(_tip)}" '
+                f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2147,6 +2150,7 @@ def _render_civ_screenshots_block(
                 f'<img src="{html.escape(rel_from_site)}" '
                 f'alt="{html.escape(label)}" '
                 f'title="{html.escape(_tip)}" '
+                f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2637,10 +2641,30 @@ table a{color:#58a6ff;text-decoration:none}
               /* image_orientation:from-image lets browser honour EXIF
                  orientation for JPEGs that the synthesiser copied verbatim */
               image-orientation:from-image}
-#imgModalCaption{position:fixed;top:8px;left:8px;color:#c9d1d9;font-size:11px;
-                 background:rgba(13,17,23,0.85);padding:4px 8px;border-radius:3px;
-                 font-family:'SF Mono','Monaco',monospace;pointer-events:none;
-                 z-index:1001}
+#imgModalCaption{position:fixed;top:10px;left:50%;transform:translateX(-50%);
+                 color:#f0f6fc;font-size:15px;font-weight:600;text-align:center;
+                 background:rgba(13,17,23,0.9);padding:8px 18px;border-radius:6px;
+                 border:1px solid #30363d;pointer-events:none;z-index:1001;max-width:82%}
+.img-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:1001;
+         background:rgba(22,27,34,0.85);color:#f0f6fc;border:1px solid #30363d;
+         border-radius:50%;width:56px;height:56px;font-size:34px;line-height:1;
+         cursor:pointer;align-items:center;justify-content:center;user-select:none;
+         padding:0}
+.img-nav:hover{background:#1f6f43;border-color:#3fb950}
+#imgPrev{left:18px}
+#imgNext{right:18px}
+.complete-check{flex:none;margin-left:8px;cursor:pointer;display:flex;
+                align-items:center}
+.complete-check input{display:none}
+.complete-check .cc-box{width:30px;height:30px;border:2px solid #484f58;
+                border-radius:6px;display:flex;align-items:center;
+                justify-content:center;color:transparent;font-size:19px;
+                font-weight:900;line-height:1;transition:all .12s}
+.complete-check:hover .cc-box{border-color:#58a6ff}
+.complete-check input:checked + .cc-box{background:#1f6f43;border-color:#3fb950;
+                color:#fff}
+.civ-card.complete{border-color:#3fb950;box-shadow:0 0 0 2px rgba(63,185,80,0.45)}
+.civ-card.complete .civ-card-header{background:#0e2a1d}
 
 code{background:#21262d;color:#7fd1ff;padding:1px 6px;border-radius:3px;
      font-family:'SF Mono','Monaco',monospace;font-size:12px}
@@ -2966,6 +2990,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
                 f'src="{html.escape(avatar_rel)}" '
                 f'alt="{_safe_text(civ_label_display)} portrait" '
                 f'title="{_safe_text(display_name)}" '
+                f'data-civ="{html.escape(anw_token)}" data-title="Leader portrait" '
                 f'onclick="showImg(this)">'
             )
         else:
@@ -2984,11 +3009,15 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         art_block = _render_civ_art_surfaces_block(anw_token, art_info,
                                                    avatar_rel=avatar_rel)
         parts.append(f'''
-<div class="civ-card">
+<div class="civ-card" id="card-{html.escape(anw_token)}" data-civ="{html.escape(anw_token)}">
   <div class="civ-card-header">
     {avatar_img}
     <div class="title-block"><h3>{_safe_text(display_name)}</h3></div>
     <span class="strategy" style="background:{ws_color}">{ws_name}</span>
+    <label class="complete-check" title="Mark {_safe_text(display_name)} complete">
+      <input type="checkbox" onchange="toggleComplete(this,'{html.escape(anw_token)}')">
+      <span class="cc-box">&#10003;</span>
+    </label>
   </div>
   <div class="body">
     <p class="doctrine-label">{_safe_text(label)}</p>
@@ -3051,43 +3080,97 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     parts.append("""
 </main>
 
-<div id="imgModal" onclick="if(event.target.id==='imgModal')this.style.display='none'">
+<div id="imgModal" onclick="if(event.target.id==='imgModal')closeModal()">
   <div id="imgModalCaption"></div>
+  <button id="imgPrev" class="img-nav" title="Previous (←)"
+          onclick="event.stopPropagation();modalNav(-1)">&#8249;</button>
   <img id="modalImg" onclick="event.stopPropagation()">
+  <button id="imgNext" class="img-nav" title="Next (→)"
+          onclick="event.stopPropagation();modalNav(1)">&#8250;</button>
 </div>
 <script>
+// Lightbox is scoped to ONE nation: the group is every image sharing the
+// clicked image's data-civ, so prev/next can never cross into another
+// nation's screenshots. Caption shows the surface title ("what it should
+// show") plus position and native resolution.
+var modalGroup = [], modalIdx = 0;
 function showImg(el){
-  var modal = document.getElementById('imgModal');
+  var civ = el.getAttribute('data-civ');
+  if (civ){
+    modalGroup = Array.prototype.slice.call(
+      document.querySelectorAll('img[data-civ="' + civ + '"]'));
+  } else {
+    modalGroup = [el];
+  }
+  modalIdx = modalGroup.indexOf(el);
+  if (modalIdx < 0){ modalGroup = [el]; modalIdx = 0; }
+  document.getElementById('imgModal').style.display = 'block';
+  renderModal();
+}
+function renderModal(){
+  var el = modalGroup[modalIdx];
   var img = document.getElementById('modalImg');
-  var caption = document.getElementById('imgModalCaption');
+  var cap = document.getElementById('imgModalCaption');
   var src = el.src;
-  // Try the higher-resolution crops/X.png first; the visual-capture
-  // pipeline writes both thumbs/X.webp (256px) and crops/X.png
-  // (the verbatim source art at its native resolution — leader
-  // portraits run 1800×2000+, flags run 512×341, avatars 256×256).
-  // The modal renders the image at native pixel size with scroll —
-  // the user explicitly asked for full resolution.
+  // Prefer the higher-resolution crops/X.png over thumbs/X.webp; full
+  // screenshots have no /thumbs/ segment so the replace is a no-op for them.
   var hiRes = src.replace('/thumbs/', '/crops/').replace(/\\.webp$/, '.png');
-  caption.textContent = (el.title || el.alt || '') + ' — loading…';
-  img.onerror = function(){
-    // First failure: try the original thumb. Null the handler so a
-    // second failure doesn't loop forever.
-    img.onerror = null;
-    img.src = src;
-  };
+  var title = el.getAttribute('data-title') || el.title || el.alt || '';
+  var pos = modalGroup.length > 1
+    ? '  (' + (modalIdx + 1) + ' / ' + modalGroup.length + ')' : '';
+  cap.textContent = title + pos + ' — loading…';
+  img.onerror = function(){ img.onerror = null; img.src = src; };
   img.onload = function(){
-    caption.textContent = (el.title || el.alt || '') +
-      ' — ' + img.naturalWidth + '×' + img.naturalHeight + ' native';
+    cap.textContent = title + pos + '  —  ' +
+      img.naturalWidth + '×' + img.naturalHeight;
   };
   img.src = hiRes;
-  modal.style.display = 'block';
-  modal.scrollTop = 0;
+  document.getElementById('imgModal').scrollTop = 0;
+  var disp = modalGroup.length > 1 ? 'flex' : 'none';
+  document.getElementById('imgPrev').style.display = disp;
+  document.getElementById('imgNext').style.display = disp;
 }
-// Esc closes the modal — small QoL.
+function modalNav(d){
+  if (modalGroup.length < 2) return;
+  modalIdx = (modalIdx + d + modalGroup.length) % modalGroup.length;
+  renderModal();
+}
+function closeModal(){
+  document.getElementById('imgModal').style.display = 'none';
+}
 document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape'){
-    var modal = document.getElementById('imgModal');
-    if (modal) modal.style.display = 'none';
+  var modal = document.getElementById('imgModal');
+  if (!modal || modal.style.display !== 'block') return;
+  if (e.key === 'Escape') closeModal();
+  else if (e.key === 'ArrowLeft'){ e.preventDefault(); modalNav(-1); }
+  else if (e.key === 'ArrowRight'){ e.preventDefault(); modalNav(1); }
+});
+
+// Per-nation completion checkbox — turns the card green; persisted in
+// localStorage (survives reloads and site regenerations).
+function toggleComplete(cb, civ){
+  var card = document.getElementById('card-' + civ);
+  if (!card) return;
+  if (cb.checked){
+    card.classList.add('complete');
+    try { localStorage.setItem('anwcomplete:' + civ, '1'); } catch(e){}
+  } else {
+    card.classList.remove('complete');
+    try { localStorage.removeItem('anwcomplete:' + civ); } catch(e){}
+  }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var cards = document.querySelectorAll('.civ-card[data-civ]');
+  for (var i = 0; i < cards.length; i++){
+    var civ = cards[i].getAttribute('data-civ');
+    if (!civ) continue;
+    var done = false;
+    try { done = localStorage.getItem('anwcomplete:' + civ) === '1'; } catch(e){}
+    if (done){
+      cards[i].classList.add('complete');
+      var cb = cards[i].querySelector('.complete-check input');
+      if (cb) cb.checked = true;
+    }
   }
 });
 </script>
