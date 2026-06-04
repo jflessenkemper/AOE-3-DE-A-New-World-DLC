@@ -158,9 +158,9 @@ def main() -> int:
     # ── Step 8: Count state.snapshot lines ────────────────────────────────
     all_lines = content.splitlines()
     snap_lines = [ln for ln in all_lines if "tag=state.snapshot" in ln]
-    llp_lines  = [ln for ln in all_lines if "[LLP" in ln]
+    llp_lines  = [ln for ln in all_lines if "[ANWP" in ln]
 
-    print(f"\n[phase4] [LLP lines in log slice: {len(llp_lines)}")
+    print(f"\n[phase4] [ANWP lines in log slice: {len(llp_lines)}")
     print(f"[phase4] state.snapshot lines: {len(snap_lines)}")
 
     if snap_lines:
@@ -170,9 +170,9 @@ def main() -> int:
     else:
         print("[phase4] WARNING: no state.snapshot lines found.")
         if llp_lines:
-            print(f"[phase4] first [LLP line: {llp_lines[0][:200]}")
+            print(f"[phase4] first [ANWP line: {llp_lines[0][:200]}")
         else:
-            print("[phase4] no [LLP lines at all — check developer mode + aiEcho wiring")
+            print("[phase4] no [ANWP lines at all — check developer mode + aiEcho wiring")
 
     # ── Step 9: Run validator ──────────────────────────────────────────────
     print("\n[phase4] step 9: running state_snapshot_validator.py…")

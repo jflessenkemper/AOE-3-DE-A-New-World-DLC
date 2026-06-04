@@ -17,6 +17,7 @@
     "unique_units": [
       "Jaguar Knight",
       "Eagle Runner Knight",
+      "Eagle Runner",
       "Skull Knight",
       "Coyote Runner",
       "Macehualtin"
@@ -36,7 +37,8 @@
       "Corsair Marksman",
       "Tribal Horseman",
       "Bedouin Horse Archer",
-      "Great Bombard"
+      "Great Bombard",
+      "Deli"
     ],
     "unique_buildings": [],
     "playstyle": "Dock-first naval economy; Corsair raids deny enemy trade; Barbary Warriors and mercs close land fights; Xebecs dominate water maps.",
@@ -79,7 +81,7 @@
       "Manor"
     ],
     "playstyle": "Boom Manors for Metis Pathfinders; turtle home base with stone walls and Outpost militia; counter-attack from a hardened core with Ranger skirmish line and Cuirassier shock at Fortress.",
-    "age_up": "Wagon politicians with Blockhouse (Brock) or tight-core civic politicians (Papineau / Lower Canada)"
+    "age_up": "Wagon politicians with Blockhouse (Brock) or tight-core civic politicians"
   },
   "ANWChileans": {
     "civ_bonus": "Home City Shipments arrive slightly faster; elite infantry never rout.",
@@ -99,7 +101,8 @@
       "Chu Ko Nu",
       "Iron Flail",
       "Meteor Hammer",
-      "Flamethrower"
+      "Flamethrower",
+      "Monk Disciple"
     ],
     "unique_buildings": [
       "Summer Palace",
@@ -134,13 +137,12 @@
     "age_up": "Wagon politicians (Bank wagon)"
   },
   "ANWEgyptians": {
-    "civ_bonus": "Trains Citizens (70 coin); free Mameluke per shipment from Fortress Age; Khevite Fusiliers replace Revolutionaries.",
+    "civ_bonus": "Trains Citizens (70 coin); free Mameluke per shipment from Fortress Age.",
     "unique_units": [
       "Mameluke",
       "Deli",
       "Humbaraci",
-      "Azap",
-      "Khevite Fusilier"
+      "Azap"
     ],
     "unique_buildings": [],
     "playstyle": "Fortify high ground behind Nizam-i Cedid infantry lines and a growing cannon park; Mameluke cavalry screens the flanks while the citadel becomes unbreakable; hard to dislodge once entrenched.",
@@ -152,7 +154,8 @@
       "Neftenya",
       "Shotel Warrior",
       "Oromo Warrior",
-      "Sebastopol Mortar"
+      "Sebastopol Mortar",
+      "Gunner Levy"
     ],
     "unique_buildings": [
       "Ras"
@@ -225,7 +228,8 @@
     "unique_units": [
       "Lifidi Knight",
       "Musketeer (Jarma)",
-      "Fulani Archer"
+      "Fulani Archer",
+      "Gunner Levy"
     ],
     "unique_buildings": [
       "Granary"
@@ -234,10 +238,9 @@
     "age_up": "Council members at Community Plaza"
   },
   "ANWHungarians": {
-    "civ_bonus": "Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up; Grenzers replace Revolutionaries.",
+    "civ_bonus": "Outposts spawn Hajduks, Grenadiers, Pandours, and Hussars as you age up.",
     "unique_units": [
       "Hussar",
-      "Grenzer",
       "Hajduk",
       "Pandour"
     ],
@@ -251,7 +254,8 @@
       "Bolas Warrior",
       "Huaraca",
       "Chimu Runner",
-      "Plumed Spearman"
+      "Plumed Spearman",
+      "Chasqui"
     ],
     "unique_buildings": [
       "Kallanka",
@@ -265,9 +269,12 @@
     "civ_bonus": "Elephant units get bonus from nearby Consulate upgrades; Urumi Swordsman unique melee unit.",
     "unique_units": [
       "Urumi Swordsman",
+      "Urumi",
       "Sepoy",
       "Zamburak",
-      "Howdah"
+      "Howdah",
+      "Siege Elephant",
+      "Siege Elephant Mansabdar"
     ],
     "unique_buildings": [
       "Consulate"
@@ -303,9 +310,11 @@
     "civ_bonus": "Shrines auto-generate resources; can train Daimyo and Shogun hero units.",
     "unique_units": [
       "Yumi Archer",
+      "Yumi",
       "Naginata Rider",
       "Samurai",
-      "Flaming Arrow"
+      "Flaming Arrow",
+      "Morutaru"
     ],
     "unique_buildings": [
       "Shrine",
@@ -334,6 +343,7 @@
     "civ_bonus": "Towers and Outposts cost no wood; Hospital heals nearby units.",
     "unique_units": [
       "Hospitaller Knight",
+      "Hospitaller",
       "Fire Thrower",
       "Sentinel"
     ],
@@ -363,7 +373,6 @@
     "unique_units": [
       "Padre",
       "Insurgente",
-      "Salteador",
       "Soldado",
       "Chinaco"
     ],
@@ -391,7 +400,10 @@
       "Janissary",
       "Spahi",
       "Abus Gun",
-      "Great Bombard"
+      "Great Bombard",
+      "Azap",
+      "Deli",
+      "Humbaraci"
     ],
     "unique_buildings": [
       "Artillery Foundry"
@@ -436,7 +448,8 @@
     "civ_bonus": "Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.",
     "unique_units": [
       "Rosior Dragoon",
-      "Dorobant"
+      "Dorobant",
+      "Dorabant"
     ],
     "unique_buildings": [],
     "playstyle": "Tight civic core with Outpost militia; Rosior Dragoon cavalry from every Outpost; reactive defense that counter-punches hard.",
@@ -446,6 +459,7 @@
     "civ_bonus": "Trains cheap Strelet infantry in batches; Cossacks available from Stables.",
     "unique_units": [
       "Strelet",
+      "Streltsy",
       "Cossack",
       "Oprichnik"
     ],

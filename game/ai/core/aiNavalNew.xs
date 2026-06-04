@@ -55,9 +55,9 @@ minInterval 60
             aiPlanSetInitialPosition(gWaterPatrolPlan, gNavyVec);
 
             aiPlanSetDesiredPriority(gWaterPatrolPlan, 65);
-            llLogCombatPlanConfig("create", gWaterPatrolPlan, "water-patrol");
+            anwLogCombatPlanConfig("create", gWaterPatrolPlan, "water-patrol");
             aiPlanSetActive(gWaterPatrolPlan);
-            llVerboseEcho("Sailing the seas, looking for adventure!");
+            anwVerboseEcho("Sailing the seas, looking for adventure!");
          }
       }
    }
@@ -100,9 +100,9 @@ minInterval 15
       aiPlanSetVariableInt(gNavyDefendPlan, cDefendPlanAttackTypeID, 0, cUnitTypeUnit);
       aiPlanSetDesiredPriority(gNavyDefendPlan, 20); // Very low priority.
       aiPlanSetActive(gNavyDefendPlan); 
-      llVerboseEcho("Creating Naval Defense Plan at: " + gNavyVec);
-      llLogPlanEvent("create", gNavyDefendPlan, "naval-defend defendPoint=" + gNavyVec + " engageRange=100 gatherDistance=40 refresh=20");
-      llProbe("navy.defend", "plan=" + gNavyDefendPlan + " pos=" + llFmtVec(gNavyVec) +
+      anwVerboseEcho("Creating Naval Defense Plan at: " + gNavyVec);
+      anwLogPlanEvent("create", gNavyDefendPlan, "naval-defend defendPoint=" + gNavyVec + " engageRange=100 gatherDistance=40 refresh=20");
+      anwProbe("navy.defend", "plan=" + gNavyDefendPlan + " pos=" + anwFmtVec(gNavyVec) +
          " warships=" + numberFound + " age=" + kbGetAge());
    }
 
@@ -123,12 +123,12 @@ minInterval 15
          aiPlanSetDesiredPriority(gNavyEnhancedAttackPlan, 65); // Above defend and fishing, but below explore.
          aiPlanAddUnitType(gNavyEnhancedAttackPlan, cUnitTypeAbstractWarShip, 1, 10, 200); 
          aiPlanSetInitialPosition(gNavyEnhancedAttackPlan, gNavyVec);
-         llLogPlanEvent("create", gNavyEnhancedAttackPlan, "naval-attack targetPlayer=" + getNavalTargetPlayerId() +
+         anwLogPlanEvent("create", gNavyEnhancedAttackPlan, "naval-attack targetPlayer=" + getNavalTargetPlayerId() +
             " gatherPoint=" + gNavyVec + " gatherDistance=50 refresh=5 priority=65");
-         llVerboseEcho("***** LAUNCHING NAVAL ATTACK, plan ID is " + gNavyEnhancedAttackPlan);
-         llProbe("navy.attack", "plan=" + gNavyEnhancedAttackPlan + " target=p" + getNavalTargetPlayerId() +
+         anwVerboseEcho("***** LAUNCHING NAVAL ATTACK, plan ID is " + gNavyEnhancedAttackPlan);
+         anwProbe("navy.attack", "plan=" + gNavyEnhancedAttackPlan + " target=p" + getNavalTargetPlayerId() +
             " warships=" + numberFound + " age=" + kbGetAge());
-         llSendLegendaryLeaderInsultLine(getNavalTargetPlayerId(), 150000);
+         anwSendLeaderInsultLine(getNavalTargetPlayerId(), 150000);
          aiPlanSetActive(gNavyEnhancedAttackPlan, true);
       }
    }   
@@ -204,7 +204,7 @@ maxInterval 20
       aiPlanSetActive(gFrigateMaintain, true);
       aiPlanSetActive(gMonitorMaintain, true);
       aiPlanSetActive(gBattleshipMaintain, true);
-      llVerboseEcho("**** ACTIVATING NAVAL TRAIN PLANS ****");
+      anwVerboseEcho("**** ACTIVATING NAVAL TRAIN PLANS ****");
    } else {
       // Check and update the build limits if the plans already exist.
       aiPlanSetVariableInt(gCaravelMaintain, cTrainPlanNumberToMaintain, 0, caravelLimit);
@@ -277,12 +277,12 @@ maxInterval 20
 ************************************************************************************************************************/
    if (kbUnitCount(cMyID, gDockUnit, cUnitStateABQ) < 4 && kbGetAge() > cAge3)
    {  
-      //llVerboseEcho("Dock Build Check");
+      //anwVerboseEcho("Dock Build Check");
       vector baseVec = kbBaseGetLocation(cMyID, kbBaseGetMainID(cMyID));
       vector dockPos = gNavyVec; // Start at the base location
       int dockPlan = createLocationBuildPlan(gDockUnit, 1, 100, true, cEconomyEscrowID, dockPos, 1);
-      //llVerboseEcho("Dock Plan Id: " +dockPlan+ " Is Active: " +aiPlanGetActive(dockPlan)+ "");
-      llVerboseEcho("NAVY DOCK BUILD PLAN, plan ID "+dockPlan);
+      //anwVerboseEcho("Dock Plan Id: " +dockPlan+ " Is Active: " +aiPlanGetActive(dockPlan)+ "");
+      anwVerboseEcho("NAVY DOCK BUILD PLAN, plan ID "+dockPlan);
    }
 /***********************************************************************************************************************
                                                       REPAIR SECTION
@@ -313,8 +313,8 @@ maxInterval 20
          
          debugMilitary("Creating primary navy repair plan at: " + ownDockPosition);
          aiPlanSetActive(gNavyRepairPlan);
-         llProbe("navy.repair", "plan=" + gNavyRepairPlan + " dock=" + ownDockID +
-            " pos=" + llFmtVec(ownDockPosition));
+         anwProbe("navy.repair", "plan=" + gNavyRepairPlan + " dock=" + ownDockID +
+            " pos=" + anwFmtVec(ownDockPosition));
       }
       aiPlanSetVariableVector(gNavyRepairPlan, cCombatPlanTargetPoint, 0, ownDockPosition);
       aiPlanSetInitialPosition(gNavyRepairPlan, ownDockPosition);
@@ -375,7 +375,7 @@ maxInterval 20
    //       aiPlanSetDesiredPriority(gMaxWarShipsMaintain, 85);
    //    }
    //    aiPlanSetVariableInt(gMaxWarShipsMaintain, cTrainPlanBuildFromType, 0, gDockUnit);
-   //    llVerboseEcho("Maxed out military training!");
+   //    anwVerboseEcho("Maxed out military training!");
    // }
    // else
    // {
@@ -442,7 +442,7 @@ minInterval 10
       int plan1Units = aiPlanGetNumberUnits(gIslandAssaultTransportPlanID, cUnitTypeLogicalTypeLandMilitary);
       
       if (plan1Age > transportStallTimeout && plan1Units < 1) {
-         llVerboseEcho("Transport plan 1 has no units after 2 minutes, destroying...");
+         anwVerboseEcho("Transport plan 1 has no units after 2 minutes, destroying...");
          aiPlanDestroy(gIslandAssaultTransportPlanID);
          gIslandAssaultTransportPlanID = -1;
          gTransportPlan1CreationTime = -1;
@@ -454,7 +454,7 @@ minInterval 10
       int plan2Units = aiPlanGetNumberUnits(gIslandAssaultTransportPlan2ID, cUnitTypeLogicalTypeLandMilitary);
       
       if (plan2Age > transportStallTimeout && plan2Units < 1) {
-         llVerboseEcho("Transport plan 2 has no units after 2 minutes, destroying...");
+         anwVerboseEcho("Transport plan 2 has no units after 2 minutes, destroying...");
          aiPlanDestroy(gIslandAssaultTransportPlan2ID);
          gIslandAssaultTransportPlan2ID = -1;
          gTransportPlan2CreationTime = -1;
@@ -466,7 +466,7 @@ minInterval 10
       int returnPlanUnits = aiPlanGetNumberUnits(gIslandReturnTransportPlanID, cUnitTypeLogicalTypeLandMilitary);
       
       if (returnPlanAge > transportStallTimeout && returnPlanUnits < 1) {
-         llVerboseEcho("Return transport plan has no units after 2 minutes, destroying...");
+         anwVerboseEcho("Return transport plan has no units after 2 minutes, destroying...");
          aiPlanDestroy(gIslandReturnTransportPlanID);
          gIslandReturnTransportPlanID = -1;
          gReturnTransportCreationTime = -1;
@@ -499,7 +499,7 @@ minInterval 10
 
    // Validate coastal point
    if (gNavalInvasionCoastalPoint == cInvalidVector) {
-      llVerboseEcho("Invalid coastal point, resetting...");
+      anwVerboseEcho("Invalid coastal point, resetting...");
       resetInvasionSequence();
       return;
    }
@@ -578,7 +578,7 @@ minInterval 10
          numberOnIsland++;
       }
    }
-   llVerboseEcho("Number on Island: " + numberOnIsland);
+   anwVerboseEcho("Number on Island: " + numberOnIsland);
 
    // Transition to assault if enough units landed
    if (transportMilitaryMode == transportMilitaryTravel && 
@@ -587,7 +587,7 @@ minInterval 10
       transportMilitaryMode = transportMilitaryAssault;
    }
 
-   llVerboseEcho("Naval logic running! Current Mode: " + transportMilitaryMode);
+   anwVerboseEcho("Naval logic running! Current Mode: " + transportMilitaryMode);
 
    switch (transportMilitaryMode) {
       case transportMilitaryTravel: {
@@ -615,7 +615,7 @@ minInterval 10
             
             // Timeout after 3 minutes with no progress
             if (elapsedTime > 180000 && numberOnIsland < 3) {
-               llVerboseEcho("Transport timed out after 3 minutes, resetting...");
+               anwVerboseEcho("Transport timed out after 3 minutes, resetting...");
                resetInvasionSequence();
                gTransportPlan1CreationTime = -1;
                gTransportPlan2CreationTime = -1;
@@ -625,7 +625,7 @@ minInterval 10
             
             // Plan became invalid
             if (transportPlanState == -1) {
-               llVerboseEcho("Transport plan state invalid, resetting...");
+               anwVerboseEcho("Transport plan state invalid, resetting...");
                resetInvasionSequence();
                gTransportPlan1CreationTime = -1;
                gTransportPlan2CreationTime = -1;
@@ -635,7 +635,7 @@ minInterval 10
             
             // Plan has no units and it's been a while
             if (unitsInPlan < 1 && elapsedTime > 30000) {
-               llVerboseEcho("Transport plan has no units, resetting...");
+               anwVerboseEcho("Transport plan has no units, resetting...");
                resetInvasionSequence();
                gTransportPlan1CreationTime = -1;
                gTransportPlan2CreationTime = -1;
@@ -670,14 +670,14 @@ minInterval 10
                gProbableEnemyIsland = gIslandCenterPoint;
             }
             
-            llVerboseEcho("Creating transport plan");
+            anwVerboseEcho("Creating transport plan");
             // Calculate coastal point on HOME island (facing the enemy island)
             vector homeCoastalPickup = coastalEdgeVector(gProbableEnemyIsland, myBaseLocation);
             //sendStatement(1, cAICommPromptToAllyConfirm, homeCoastalPickup);
             gIslandAssaultTransportPlanID = createInvasionTransportPlan(homeCoastalPickup, gNavalInvasionCoastalPoint, 100, false);
 
             if (gIslandAssaultTransportPlanID == -1) {
-               llVerboseEcho("Failed to create transport plan, resetting...");
+               anwVerboseEcho("Failed to create transport plan, resetting...");
                resetInvasionSequence();
                return;
             }
@@ -715,9 +715,9 @@ minInterval 10
 
             aiPlanSetActive(gIslandAssaultTransportPlanID);
 
-            llVerboseEcho("Transporting military!");
+            anwVerboseEcho("Transporting military!");
             gNumberTransported = aiPlanGetNumberUnits(gIslandAssaultTransportPlanID, cUnitTypeLogicalTypeLandMilitary);
-            llVerboseEcho("Units in transport plan: " + gNumberTransported);
+            anwVerboseEcho("Units in transport plan: " + gNumberTransported);
             gActiveIslandInvasion = true;
             gMilitaryTransportMode = 1;
          }
@@ -730,7 +730,7 @@ minInterval 10
 
          if (aiPlanGetActive(gIslandAssaultTransportPlanID) == false && 
              aiPlanGetActive(gIslandAssaultTransportPlan2ID) == false && numberOnIsland < 5) {
-            llVerboseEcho("Assault failed - not enough units landed, resetting...");
+            anwVerboseEcho("Assault failed - not enough units landed, resetting...");
             resetInvasionSequence();
             gTransportPlan1CreationTime = -1;
             gTransportPlan2CreationTime = -1;
@@ -744,11 +744,11 @@ minInterval 10
             minLanded = 3;
          }
          if (numberOnIsland < minLanded) {
-            llVerboseEcho("Waiting for more units to land: " + numberOnIsland + "/" + minLanded);
+            anwVerboseEcho("Waiting for more units to land: " + numberOnIsland + "/" + minLanded);
             return;
          }
 
-         llVerboseEcho("Assault mode - OnIsland: " + numberOnIsland + " BaseID: " + closestBaseID + " Building: " + enemyBuildingId);
+         anwVerboseEcho("Assault mode - OnIsland: " + numberOnIsland + " BaseID: " + closestBaseID + " Building: " + enemyBuildingId);
          
          // === REINFORCEMENT LOGIC ===
          if (aiPlanGetActive(gIslandAssaultTransportPlanID) == false && gIslandAssaultTransportPlan2ID == -1) {
@@ -776,7 +776,7 @@ minInterval 10
                availableReinforcements++;
             }
             
-            llVerboseEcho("Available reinforcements: " + availableReinforcements);
+            anwVerboseEcho("Available reinforcements: " + availableReinforcements);
             
             if (availableReinforcements >= 10) {
                
@@ -792,7 +792,7 @@ minInterval 10
                   homeUnitQuery = createSimpleUnitQuery(cUnitTypeLogicalTypeLandMilitary, cMyID, cUnitStateAlive, myBaseLoc, 1450.0);
                   homeUnitsFound = kbUnitQueryExecute(homeUnitQuery);
                   
-                  llVerboseEcho("Re-queried units: " + homeUnitsFound);
+                  anwVerboseEcho("Re-queried units: " + homeUnitsFound);
                   
                   int minReinforcements = availableReinforcements / 2;
                   if (minReinforcements < 5) {
@@ -827,10 +827,10 @@ minInterval 10
                      }
                   }
                   
-                  llVerboseEcho("Reinforcements added: " + reinforcementsAdded);
+                  anwVerboseEcho("Reinforcements added: " + reinforcementsAdded);
                   
                   if (reinforcementsAdded < 5) {
-                     llVerboseEcho("Insufficient reinforcements available: " + reinforcementsAdded);
+                     anwVerboseEcho("Insufficient reinforcements available: " + reinforcementsAdded);
                      aiPlanDestroy(gIslandAssaultTransportPlan2ID);
                      gIslandAssaultTransportPlan2ID = -1;
                      gTransportPlan2CreationTime = -1;
@@ -847,7 +847,7 @@ minInterval 10
             aiPlanDestroy(gIslandAssaultTransportPlan2ID);
             gIslandAssaultTransportPlan2ID = -1;
             gTransportPlan2CreationTime = -1;
-            llVerboseEcho("Reinforcement transport completed");
+            anwVerboseEcho("Reinforcement transport completed");
          }
          // === END REINFORCEMENT LOGIC ===
          
@@ -872,7 +872,7 @@ minInterval 10
             
             // Create assault plan if we don't have one
             if (gIslandAssaultPlanID < 0 || aiPlanGetActive(gIslandAssaultPlanID) == false) {
-               llVerboseEcho("Creating Assault Plan - enemy found at " + enemyBuildingLocation);
+               anwVerboseEcho("Creating Assault Plan - enemy found at " + enemyBuildingLocation);
                warshipTraining();
                createIslandAssaultPlan(gNavalInvasionCoastalPoint, enemyBuildingLocation);
             } else {
@@ -883,7 +883,7 @@ minInterval 10
          } else {
             // No target found - use search mode
             if (gIslandSearchPlanID < 0 || aiPlanGetActive(gIslandSearchPlanID) == false) {
-               llVerboseEcho("Creating Search Plan - no enemy found yet");
+               anwVerboseEcho("Creating Search Plan - no enemy found yet");
                createIslandSearchPlan(gNavalInvasionCoastalPoint, gIslandCenterPoint);
             } else {
                addUnitsToInvasionPlan(gIslandSearchPlanID);
@@ -902,7 +902,7 @@ minInterval 10
          
          // Check for failure conditions
          if (hasActivePlan == false && numberOnIsland < 3) {
-            llVerboseEcho("No active plan and too few units, resetting...");
+            anwVerboseEcho("No active plan and too few units, resetting...");
             resetInvasionSequence();
             gTransportPlan1CreationTime = -1;
             gTransportPlan2CreationTime = -1;
@@ -912,10 +912,10 @@ minInterval 10
          break;
       }
       case transportMilitarySearch: {
-         llVerboseEcho("Search mode active... Transport Active: "+aiPlanGetActive(gIslandAssaultTransportPlanID)+"");
+         anwVerboseEcho("Search mode active... Transport Active: "+aiPlanGetActive(gIslandAssaultTransportPlanID)+"");
 
          if (aiPlanGetActive(gIslandAssaultTransportPlanID) == false && numberOnIsland < 3) {
-            llVerboseEcho("Search failed, resetting...");
+            anwVerboseEcho("Search failed, resetting...");
             resetInvasionSequence();
             gTransportPlan1CreationTime = -1;
             gTransportPlan2CreationTime = -1;
@@ -925,7 +925,7 @@ minInterval 10
 
          // Check for enemy buildings and transition back to assault if found
          if (enemyBuildingId > 0) {
-            llVerboseEcho("Enemy found during search, switching to assault!");
+            anwVerboseEcho("Enemy found during search, switching to assault!");
             aiPlanDestroy(gIslandSearchPlanID);
             gIslandSearchPlanID = -1;
             gMilitaryTransportMode = 1;
@@ -962,7 +962,7 @@ minInterval 10
          break;
       }
       case transportMilitaryReturn: {
-         llVerboseEcho("Return mode active...");
+         anwVerboseEcho("Return mode active...");
          
          if (aiPlanGetIDByIndex(cPlanTransport, -1, true, 0) >= 0 && gIslandReturnTransportPlanID == -1) {
             int planToDeleteFinal = aiPlanGetIDByIndex(cPlanTransport, -1, true, 0);
@@ -977,7 +977,7 @@ minInterval 10
             gIslandReturnTransportPlanID = createInvasionTransportPlan(gProbableEnemyIsland, coastalEdgeVector(gProbableEnemyIsland, myBaseLocation), 100, false);
             
             if (gIslandReturnTransportPlanID == -1) {
-               llVerboseEcho("Failed to create return transport, resetting...");
+               anwVerboseEcho("Failed to create return transport, resetting...");
                resetInvasionSequence();
                gTransportPlan1CreationTime = -1;
                gTransportPlan2CreationTime = -1;
@@ -1018,7 +1018,7 @@ minInterval 10
          if (gIslandReturnTransportPlanID >= 0) {
             int returnElapsed = xsGetTime() - gInvasionResetWaitTime;
             if (returnElapsed > 120000) {
-               llVerboseEcho("Return transport timed out, resetting...");
+               anwVerboseEcho("Return transport timed out, resetting...");
                resetInvasionSequence();
                gTransportPlan1CreationTime = -1;
                gTransportPlan2CreationTime = -1;
@@ -1029,7 +1029,7 @@ minInterval 10
 
          if (gIslandReturnTransportPlanID == -1 || 
             (aiPlanGetActive(gIslandReturnTransportPlanID) == false && (xsGetTime() - gInvasionResetWaitTime) > 30000)) {
-            llVerboseEcho("Return complete, resetting for next invasion...");
+            anwVerboseEcho("Return complete, resetting for next invasion...");
             resetInvasionSequence();
             gTransportPlan1CreationTime = -1;
             gTransportPlan2CreationTime = -1;
@@ -1095,9 +1095,9 @@ maxInterval 20
                gIslandBaseLocation = coastalEdgeVector(homeBase, gProbableEnemyIsland, true, false, false);
                
                if (gIslandBaseLocation != cInvalidVector) {
-                  llVerboseEcho("Island base location set: " + gIslandBaseLocation);
+                  anwVerboseEcho("Island base location set: " + gIslandBaseLocation);
                } else {
-                  llVerboseEcho("Failed to find coastal location on enemy island.");
+                  anwVerboseEcho("Failed to find coastal location on enemy island.");
                   return;
                }
             } else {
@@ -1111,13 +1111,13 @@ maxInterval 20
             gIslandBaseID = createSettlementBase(gIslandBaseLocation, false);
             kbBaseSetActive(cMyID, gIslandBaseID, true);
             gIslandBaseState = cIslandBaseStateBuilding;
-            llVerboseEcho("Island base created at: " + gIslandBaseLocation);
+            anwVerboseEcho("Island base created at: " + gIslandBaseLocation);
          }
 
          break;
       }
       case cIslandBaseStateBuilding: {
-         llVerboseEcho("Building island base! " + kbBaseGetActive(cMyID, gIslandBaseID));
+         anwVerboseEcho("Building island base! " + kbBaseGetActive(cMyID, gIslandBaseID));
          
          if (kbBaseGetActive(cMyID, gIslandBaseID) == false && gIslandBaseID >= 0) {
             kbBaseDestroy(cMyID, gIslandBaseID);
@@ -1141,13 +1141,13 @@ maxInterval 20
             createSpacedLocationBuildPlan(cUnitTypeStable, 1, 100, true, cMilitaryEscrowID, gIslandBaseLocation, 1);
             createSpacedLocationBuildPlan(gTowerUnit, 1, 100, true, cEconomyEscrowID, gIslandBaseLocation, 1);
             createSpacedLocationBuildPlan(cUnitTypeArtilleryDepot, 1, 100, true, cEconomyEscrowID, gIslandBaseLocation, 1);
-            llVerboseEcho("Island base build plans created.");
+            anwVerboseEcho("Island base build plans created.");
          }
          
          // Only transition to Active once we have at least one finished building
          if (buildingsAtLocation >= 1) {
             gIslandBaseState = cIslandBaseStateActive;
-            llVerboseEcho("Island base has buildings, transitioning to Active.");
+            anwVerboseEcho("Island base has buildings, transitioning to Active.");
          }
          
          break;
@@ -1162,7 +1162,7 @@ maxInterval 20
          int islandBaseBuildingsFound = kbUnitQueryExecute(islandBaseUnitQueryID);
          int islandBaseBuilding = -1;
          
-         llVerboseEcho("Active island Base! " + kbBaseGetActive(cMyID, gIslandBaseID) + "");
+         anwVerboseEcho("Active island Base! " + kbBaseGetActive(cMyID, gIslandBaseID) + "");
          
          if (kbBaseGetActive(cMyID, gIslandBaseID) == true) {
             // Assign any buildings at this location to the base.
@@ -1230,7 +1230,7 @@ minInterval 20
    if (gColonialBasePosition == cInvalidVector) {
       gColonialBasePosition = getRandomIslandToColonize();
       if (gColonialBasePosition != cInvalidVector) {
-         llVerboseEcho("Found island to colonize!");
+         anwVerboseEcho("Found island to colonize!");
          createSpacedLocationBuildPlan(cUnitTypeTownCenter, 1, 100, true, cEconomyEscrowID, gColonialBasePosition, 1);
       } else {
          return;
@@ -1261,7 +1261,7 @@ minInterval 20
       gColonialWoodGatherPlan = createGatherPlan(gColonialBasePosition, gColonialBaseId, cResourceWood, 95);
       gColonialGoldGatherPlan = createGatherPlan(gColonialBasePosition, gColonialBaseId, cResourceGold, 95);
 
-      llVerboseEcho("Colonial base created! ID: " + gColonialBaseId);
+      anwVerboseEcho("Colonial base created! ID: " + gColonialBaseId);
       return;
    }
    
@@ -1344,7 +1344,7 @@ minInterval 20
       }
    }
    
-   llVerboseEcho("Colonial base - Villagers on island: " + villagersOnIsland + ", Builders: " + buildersAssigned);
+   anwVerboseEcho("Colonial base - Villagers on island: " + villagersOnIsland + ", Builders: " + buildersAssigned);
    
    // Queue buildings if needed
    if (buildingExistsOrQueued(gColonialBaseId, gFarmUnit) == false) {
@@ -1406,8 +1406,8 @@ minInterval 10
       aiPlanSetInitialPosition(gWaterDockAttackPlan, gNavyVec);
 
       aiPlanSetDesiredPriority(gWaterDockAttackPlan, 86);
-      llLogCombatPlanConfig("create", gWaterDockAttackPlan, "dock-destroyer");
+      anwLogCombatPlanConfig("create", gWaterDockAttackPlan, "dock-destroyer");
       aiPlanSetActive(gWaterDockAttackPlan);
-      llVerboseEcho("Let's go destroy some docks!");
+      anwVerboseEcho("Let's go destroy some docks!");
    }
 }

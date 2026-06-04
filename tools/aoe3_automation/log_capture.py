@@ -8,7 +8,7 @@ to a single Age3Log.txt file.  To attribute probes to a specific match we:
   3. Save the delta as ``match.log`` next to the other match artefacts.
 
 The validator (tools/playtest/replay_probes.py) then parses match.log directly
-for ``[LLP v=2 ...]`` lines — no decompression or replay parsing needed.
+for ``[ANWP v=2 ...]`` lines — no decompression or replay parsing needed.
 
 Dev-mode requirement
 --------------------
@@ -69,7 +69,7 @@ USER_CFG_PATH: Path = (
 _REQUIRED_TOKENS: tuple[str, ...] = ("developer", "+ixsLog", "+cxsLog", "generateAIEchoesOutput")
 
 _DEV_CFG_CONTENT = """\
-// user.cfg -- personal developer overrides for Legendary Leaders AI probe capture
+// user.cfg -- personal developer overrides for A New World AI probe capture
 //
 // These four tokens together enable aiEcho() probe output to Age3Log.txt
 // and per-AI demuxed output to Age3DEAIOutputPlayer<N>.txt:
@@ -179,8 +179,8 @@ def read_since(offset: int) -> str:
 
 
 def probe_count_in_slice(content: str) -> int:
-    """Quick count of [LLP v=2 ...] lines in a log slice."""
-    return content.count("[LLP v=2 ")
+    """Quick count of [ANWP v=2 ...] lines in a log slice."""
+    return content.count("[ANWP v=2 ")
 
 
 # ---------------------------------------------------------------------------
@@ -287,7 +287,7 @@ class LogMirror:
             return ""
 
     def current_probe_count(self) -> int:
-        """Count of [LLP v=2 ...] lines mirrored so far."""
+        """Count of [ANWP v=2 ...] lines mirrored so far."""
         return probe_count_in_slice(self.current_content())
 
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Parse [LLP v=2 ...] probe markers from Age3Log.txt and aiChat output.
+"""Parse [ANWP v=2 ...] probe markers from Age3Log.txt and aiChat output.
 
 The mod's `llProbe()` XS helper (game/ai/core/aiUtilities.xs:261) emits lines
 in the format:
 
-    [LLP v=2 t=<game_ms> p=<player_id> civ=<civ_name> ldr=<leader_key> tag=<dotted.tag>] [detail kv pairs...]
+    [ANWP v=2 t=<game_ms> p=<player_id> civ=<civ_name> ldr=<leader_key> tag=<dotted.tag>] [detail kv pairs...]
 
 This parser extracts all probe lines from a log, groups by civ + tag, and
 returns a structured dict suitable for downstream validation.
@@ -27,9 +27,9 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-# [LLP v=2 t=234567 p=1 civ=ANWBritish ldr=wellington tag=milestone.first_barracks] atMs=234567 count=1 age=1
+# [ANWP v=2 t=234567 p=1 civ=ANWBritish ldr=wellington tag=milestone.first_barracks] atMs=234567 count=1 age=1
 _PROBE_RE = re.compile(
-    r"\[LLP v=2 "
+    r"\[ANWP v=2 "
     r"t=(?P<t>-?\d+) "
     r"p=(?P<p>-?\d+) "
     r"civ=(?P<civ>\S+) "

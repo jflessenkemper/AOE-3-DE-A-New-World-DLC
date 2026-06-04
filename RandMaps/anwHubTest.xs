@@ -18,8 +18,11 @@
 //     all kept out of the central sea via stayOutOfCentralSea pie
 //     constraint (r<0.18).
 //   - TC always placed (nomad lobby flag ignored).
-//   - doctrine-capture triggers fire at T+15s / +30s / +60s / +90s,
-//     with auto-end at T+120s via "Set Player Defeated" on the observer.
+//   - doctrine-capture triggers fire at T+15s / +30s / +60s / +90s; the
+//     extended cycle adds T+240/360/600/960 milestone markers. Auto-end
+//     fires at gHubTestEndSeconds (default 1200s, extended) via
+//     "Set Player Defeated" on the observer. Flip the knob to 120 for the
+//     fast probe-only cycle.
 //
 // Known engine limitations (NOT bugs in this script):
 //   - rmSetAllMapReveal is not a valid RM XS API — disabled at line ~48.
@@ -40,10 +43,10 @@ void main(void)
     // gHubTestEndSeconds controls when the auto-end trigger fires "Set Player
     // Defeated" on the observer (player 1), which returns the game to lobby.
     //
-    //   120  (default)  = fast doctrine probe cycle. Captures 2 posture
+    //   120  (fast)     = fast doctrine probe cycle. Captures 2 posture
     //                      snapshots + the early build-style + wallStrategy
     //                      enum. Sufficient for static doctrine validation.
-    //   1200 (extended) = full milestone window. Captures first_dock (≤360s
+    //   1200 (default)  = full milestone window. Captures first_dock (≤360s
     //                      claim), first_wall_segment (≤900s claim), and
     //                      forward-base / artillery milestones. Use this
     //                      when reviewing a Naval/Coastal civ like British
@@ -87,6 +90,19 @@ void main(void)
     // rmSetAllMapReveal(true);
 
     chooseMercs();
+
+    // Register native civs so the engine shows correct trading UI labels.
+    if (rmAllocateSubCivs(7) == true)
+    {
+        rmSetSubCiv(0, "Inca");
+        rmSetSubCiv(1, "Mapuche");
+        rmSetSubCiv(2, "Zapotec");
+        rmSetSubCiv(3, "Carib");
+        rmSetSubCiv(4, "Tupi");
+        rmSetSubCiv(5, "Klamath");
+        rmSetSubCiv(6, "Inca");
+    }
+
 
     // Classes
     int classPlayer       = rmDefineClass("player");
@@ -649,6 +665,7 @@ void main(void)
     // Start at i=2 so only the 7 AI compartments get resource
     // placement. cNumberNonGaiaPlayers is still the upper bound.
     int loopMax = cNumberNonGaiaPlayers + 1;
+    rmClearClosestPointConstraints();
     for (i = 2; < loopMax)
     {
         rmPlaceObjectDefAtLoc(TCID, i, rmPlayerLocXFraction(i), rmPlayerLocZFraction(i));
@@ -751,7 +768,8 @@ void main(void)
     rmSetObjectDefMinDistance(seaFishID, 0.0);
     rmSetObjectDefMaxDistance(seaFishID, rmXFractionToMeters(0.20));
     rmAddObjectDefConstraint(seaFishID, avoidFish);
-    rmPlaceObjectDefAtLoc(seaFishID, 0, 0.5, 0.5, 18);
+    rmAddObjectDefConstraint(seaFishID, stayCentralSea);
+    rmPlaceObjectDefAtLoc(seaFishID, 0, 0.5, 0.5, 10);
 
     int seaWhaleID = rmCreateObjectDef("sea whale");
     rmAddObjectDefItem(seaWhaleID, "MinkeWhale", 1, 0.0);
@@ -783,6 +801,7 @@ void main(void)
     rmAddObjectDefItem(bayFishID, "FishSalmon", 5, 8.0);
     rmSetObjectDefMinDistance(bayFishID, 0.0);
     rmSetObjectDefMaxDistance(bayFishID, 12.0);
+    rmAddObjectDefConstraint(bayFishID, avoidImpassableLand);
     rmPlaceObjectDefAtLoc(bayFishID, 0, 0.820, 0.500);
     rmPlaceObjectDefAtLoc(bayFishID, 0, 0.700, 0.750);
     rmPlaceObjectDefAtLoc(bayFishID, 0, 0.430, 0.812);
@@ -796,6 +815,7 @@ void main(void)
     rmSetObjectDefMinDistance(bayWhaleID, 0.0);
     rmSetObjectDefMaxDistance(bayWhaleID, 10.0);
     rmAddObjectDefConstraint(bayWhaleID, avoidWhale);
+    rmAddObjectDefConstraint(bayWhaleID, avoidImpassableLand);
     rmPlaceObjectDefAtLoc(bayWhaleID, 0, 0.820, 0.500);
     rmPlaceObjectDefAtLoc(bayWhaleID, 0, 0.700, 0.750);
     rmPlaceObjectDefAtLoc(bayWhaleID, 0, 0.430, 0.812);
@@ -1017,8 +1037,6 @@ void main(void)
     rmAddObjectDefConstraint(outpostID, avoidImpassableLand);
     rmAddObjectDefConstraint(outpostID, avoidAllShort);
     rmPlaceObjectDefAtLoc(outpostID, 0, 0.500, 0.500);
-    rmPlaceObjectDefAtLoc(outpostID, 0, 0.500, 0.500);
-    rmPlaceObjectDefAtLoc(outpostID, 0, 0.500, 0.500);
 
     rmSetStatusText("", 0.82);
     ===== end PHASE 3 INACTIVE A ===== */
@@ -1085,7 +1103,7 @@ void main(void)
         if (rmBuildArea(forestID) == false)
         {
             failCount++;
-            if (failCount == 8)
+            if (failCount == 5)
                 break;
         }
         else
@@ -1129,8 +1147,6 @@ void main(void)
     rmSetObjectDefMaxDistance(outpostID, 14.0);
     rmAddObjectDefConstraint(outpostID, avoidImpassableLand);
     rmAddObjectDefConstraint(outpostID, avoidAllShort);
-    rmPlaceObjectDefAtLoc(outpostID, 0, 0.500, 0.500);
-    rmPlaceObjectDefAtLoc(outpostID, 0, 0.500, 0.500);
     rmPlaceObjectDefAtLoc(outpostID, 0, 0.500, 0.500);
 
     rmSetStatusText("", 0.96);

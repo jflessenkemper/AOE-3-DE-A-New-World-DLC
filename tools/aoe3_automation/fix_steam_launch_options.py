@@ -19,8 +19,9 @@ The 2026-05-11 0x5 incident had two contributing causes:
    active, doubling the I/O storm.
 
 This script rewrites the AoE3 entry in Steam's `localconfig.vdf` so the
-launch options keep the gamescope wrapper (we need that for windowed
-1920x1080 fixed-resolution capture) but strip the debug environment.
+launch options wrap the game in the AOE3DEHarness compositor running in its
+default `--backend headless` mode (fixed 1920x1080, no host window, no
+cursor grab) and strip the debug environment.
 
 Usage:
     1. Quit Steam completely (right-click tray icon → Exit, or
@@ -41,8 +42,36 @@ import sys
 from pathlib import Path
 
 APP_ID = "933110"
+
+# The AOE3DEHarness binary is a gamescope fork that self-configures harness
+# mode ON and opens its control socket at /tmp/AOE3DEHarness.sock. It must be
+# the %command% wrapper because the Steam DRM launcher only hands out a valid
+# app ticket when launched via Steam's %command% substitution (direct
+# umu-run AoE3DE_s.exe dies with "Primary child shut down!").
+#
+# `--backend headless` is the DEFAULT: no host window, no DRM output. The
+# compositor still composites to an internal buffer, so the SCREENSHOT socket
+# verb returns real fully-rendered frames (verified 2026-05-30: 1920x1080,
+# mean luminance ~100, 99% non-black at the main menu). Headless avoids the
+# two-window nested-Xwayland surface and never grabs the user's cursor.
+#
+# `--keep-alive` (REQUIRED, 2026-05-31): sets cv_shutdown_on_primary_child_death
+# = false (harness main.cpp:852). Without it, the harness's waitThread calls
+# ShutdownGamescope() the instant the *registered* inner command exits. Under
+# Steam's %command%, the registered child is `steam-launch-wrapper`, which forks
+# the real game (reaper -> proton -> AoE3DE_s.exe) and then returns — so the
+# harness tore down its control socket ~10-30s after launch while the detached
+# game kept running. That produced the "game runs but no /tmp/AOE3DEHarness.sock"
+# failure. --keep-alive makes the compositor + socket persist for the whole
+# match so SCREENSHOT/CLICK/KEY stay usable. Verified empirically: a `sleep 60`
+# inner kept the socket alive 60s; bare umu-run (inner exits at once) tore it
+# down immediately.
+HARNESS_BINARY = (
+    "/var/home/jflessenkemper/AOE-3-DE-Harness/build-f44/src/AOE3DEHarness"
+)
 DESIRED_LAUNCH_OPTIONS = (
-    "gamescope -W 1920 -H 1080 -w 1920 -h 1080 --xwayland-count 1 -- %command%"
+    f"{HARNESS_BINARY} --keep-alive -W 1920 -H 1080 -w 1920 -h 1080 "
+    "--backend headless --xwayland-count 1 -- %command%"
 )
 
 

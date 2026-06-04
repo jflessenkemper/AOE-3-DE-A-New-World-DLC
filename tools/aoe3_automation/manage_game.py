@@ -23,8 +23,8 @@ bare token ``developer`` in the game's user Startup directory:
 
 This activates the AoE3 DE engine's developer mode, which routes ``aiEcho()``
 output from XS AI scripts to ``Age3Log.txt``.  Without this flag ``aiEcho()``
-calls are silently dropped, so the ``[LLP v=2 ...]`` probe lines emitted by
-the Legendary Leaders AI hooks never appear in the log — rendering the entire
+calls are silently dropped, so the ``[ANWP v=2 ...]`` probe lines emitted by
+the A New World AI hooks never appear in the log — rendering the entire
 probe-validation pipeline inoperative.
 
 Mechanism (approach 3 — config file flag):
@@ -168,10 +168,29 @@ def cmd_status(_args: argparse.Namespace) -> int:
     return 0 if pids else 1
 
 
+def _cleanup_harness() -> None:
+    """Kill stale AOE3DEHarness compositor + AppId=933110 reapers, remove socket.
+
+    Called at the end of every close path so relaunch always gets a clean slate
+    (fact #8).  Never touches the CoH2 reaper (AppId=231430) or other games.
+    """
+    run(["pkill", "-f", "AOE3DEHarness"], check=False)
+    run(["pkill", "-f", "AppId=933110"], check=False)
+    time.sleep(1)
+    try:
+        import os as _os
+        _os.unlink("/tmp/AOE3DEHarness.sock")
+        print("Removed stale /tmp/AOE3DEHarness.sock")
+    except FileNotFoundError:
+        pass
+
+
 def cmd_close(args: argparse.Namespace) -> int:
     pids = game_pids()
     if not pids:
         print("Game not running.")
+        # Still clean up stale compositor / socket so relaunch gets a clean slate.
+        _cleanup_harness()
         return 0
 
     # 1) Graceful WM close via window ID. wmctrl needs EWMH, which gamescope's
@@ -204,6 +223,7 @@ def cmd_close(args: argparse.Namespace) -> int:
     while time.time() < deadline:
         if not game_pids():
             print("Game closed cleanly.")
+            _cleanup_harness()
             return 0
         time.sleep(1)
 
@@ -214,6 +234,7 @@ def cmd_close(args: argparse.Namespace) -> int:
     while time.time() < deadline:
         if not game_pids():
             print("Game exited after SIGTERM.")
+            _cleanup_harness()
             return 0
         time.sleep(1)
 
@@ -228,6 +249,10 @@ def cmd_close(args: argparse.Namespace) -> int:
     # Give Steam a beat to register "not running" before any relaunch.
     time.sleep(3)
     print("Game closed (SIGKILL).")
+    # Kill stale compositor + remove socket so relaunch gets a clean slate.
+    _cleanup_harness()
+    time.sleep(2)
+    print("Compositor cleanup complete.")
     return 0
 
 
@@ -310,6 +335,8 @@ def cmd_open(args: argparse.Namespace) -> int:
     )
 
     deadline = time.time() + args.timeout
+    harness_sock = Path("/tmp/AOE3DEHarness.sock")
+    harness_ready_logged = False
     while time.time() < deadline:
         win = game_window()
         if win is not None and (win[3], win[4]) == (1920, 1080):
@@ -318,6 +345,26 @@ def cmd_open(args: argparse.Namespace) -> int:
             time.sleep(args.post_menu_wait)
             print(f"Game window ready at geometry {win[3]}x{win[4]} offset ({win[1]}, {win[2]})")
             return 0
+        # Secondary readiness check: poll the AOE3DEHarness control socket
+        # (fact #7 — state().ready == 1 means the game has composited its
+        # first frame and is past the splash screen). This fires before the
+        # X11 window appears on some launches where gamescope's Xwayland is
+        # still initialising.
+        if harness_sock.exists():
+            try:
+                import socket as _socket
+                _here = str(Path(__file__).resolve().parent.parent)
+                if _here not in sys.path:
+                    sys.path.insert(0, _here)
+                from tools.aoe3_harness.harness_client import HarnessClient
+                with HarnessClient(harness_sock, timeout=5.0) as _hc:
+                    _hc.connect(timeout=3.0)
+                    st = _hc.state()
+                    if st.ready == 1 and not harness_ready_logged:
+                        print(f"AOE3DEHarness compositor ready (pid={st.pid})")
+                        harness_ready_logged = True
+            except Exception:
+                pass
         time.sleep(2)
 
     print(f"ERROR: game window did not appear at 1920x1080 within {args.timeout}s", file=sys.stderr)

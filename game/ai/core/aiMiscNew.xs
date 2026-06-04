@@ -37,12 +37,12 @@ void enhancedInit(void)
       if (rushRoll < 75)
       {
          gEarlyRushAttempt = true;
-         llVerboseEcho("Early rush attempt ENABLED (top tier rush civ, rolled " + rushRoll + " < 75)");
+         anwVerboseEcho("Early rush attempt ENABLED (top tier rush civ, rolled " + rushRoll + " < 75)");
       }
       else
       {
          gEarlyRushAttempt = false;
-         llVerboseEcho("Early rush attempt DISABLED (top tier rush civ, rolled " + rushRoll + " >= 75)");
+         anwVerboseEcho("Early rush attempt DISABLED (top tier rush civ, rolled " + rushRoll + " >= 75)");
       }
    }
    else
@@ -51,12 +51,12 @@ void enhancedInit(void)
       if (rushRoll < 40)
       {
          gEarlyRushAttempt = true;
-         llVerboseEcho("Early rush attempt ENABLED (standard civ, rolled " + rushRoll + " < 40)");
+         anwVerboseEcho("Early rush attempt ENABLED (standard civ, rolled " + rushRoll + " < 40)");
       }
       else
       {
          gEarlyRushAttempt = false;
-         llVerboseEcho("Early rush attempt DISABLED (standard civ, rolled " + rushRoll + " >= 40)");
+         anwVerboseEcho("Early rush attempt DISABLED (standard civ, rolled " + rushRoll + " >= 40)");
       }
    }
 
@@ -76,7 +76,7 @@ void enhancedInit(void)
    //xsEnableRule("giveAdviceAndComments");
    xsEnableRule("boringChatter");
    xsEnableRule("manyPlayersComment");
-   enableLegendaryLeaderQuoteRules();
+   anwEnableLeaderQuoteRules();
    // Set the healing unit type.
    setHealingUnitType();
    xsEnableRule("healInjuredUnits");
@@ -179,7 +179,7 @@ minInterval 60
    if ( (kbUnitCount(cMyID, cUnitTypeypMonastery, cUnitStateABQ) < 1) && (aiPlanGetIDByTypeAndVariableType(cPlanBuild, cBuildPlanBuildingTypeID, cUnitTypeypMonastery) < 0) ) 
    {
       createSimpleBuildPlan(cUnitTypeypMonastery, 1, 80, true, cEconomyEscrowID, kbBaseGetMainID(cMyID), 1);
-      llVerboseEcho("Starting a new monastery build plan.");
+      anwVerboseEcho("Starting a new monastery build plan.");
    }
    
    // All
@@ -286,7 +286,7 @@ minInterval 10
 {
    int numberOfForts = kbUnitCount(cMyID, gFortUnit, cUnitStateABQ);
    int buildLimit = kbGetBuildLimit(cMyID, gFortUnit);
-   int fortsWanted = llGetWantedFortCount();
+   int fortsWanted = anwGetWantedFortCount();
 
    if (buildLimit < 1 || fortsWanted < 1)
    {
@@ -298,7 +298,7 @@ minInterval 10
    {
       return;
    }
-   llVerboseEcho("Waiting to build a fort! Desired: "+fortsWanted+" Fort Limit: "+buildLimit+" Forts Constructed: "+numberOfForts+"");
+   anwVerboseEcho("Waiting to build a fort! Desired: "+fortsWanted+" Fort Limit: "+buildLimit+" Forts Constructed: "+numberOfForts+"");
    if ((aiPlanGetIDByTypeAndVariableType(cPlanBuild, cBuildPlanBuildingTypeID, gFortUnit) < 0) 
       && (numberOfForts < fortsWanted))
    {
@@ -306,7 +306,7 @@ minInterval 10
       //addBuilderToPlan(fortBuildPlan, cBuildPlanBuildingTypeID, 1);
       aiPlanAddUnitType(fortBuildPlan, cUnitTypeHero, 1, 1, 1);
       //aiTaskUnitWork(cUnitTypeExplorer, gFortUnit);
-      llVerboseEcho("Time to build a fort!");
+      anwVerboseEcho("Time to build a fort!");
    }
 }
 //==============================================================================
@@ -325,7 +325,7 @@ minInterval 10
    {
       return;
    }
-   llVerboseEcho("Waiting to build a dock! Dock Limit: "+buildLimit+"Docks Constructed: "+numberOfDocks+"");
+   anwVerboseEcho("Waiting to build a dock! Dock Limit: "+buildLimit+"Docks Constructed: "+numberOfDocks+"");
    if ((aiPlanGetIDByTypeAndVariableType(cPlanBuild, cBuildPlanBuildingTypeID, gDockUnit) < 0) 
       && (numberOfDocks < buildLimit) && (kbGetAge() > cAge3) &&
       (gExcessResources == true))
@@ -336,7 +336,7 @@ minInterval 10
       // , 1, -1, true, -1, 15.0);
       //addBuilderToPlan(dockBuildPlan, cBuildPlanBuildingTypeID, 1);
       //aiTaskUnitWork(cUnitTypeExplorer, gDockUnit);
-      llVerboseEcho("Time to build a dock!");
+      anwVerboseEcho("Time to build a dock!");
    }
 }
 //==============================================================================
@@ -407,7 +407,7 @@ minInterval 40
       disciplePlan = createSimpleMaintainPlan(cUnitTypeypMonkDisciple, limit, true, -1, 1);
       aiPlanSetDesiredPriority(disciplePlan, 85);
       aiPlanSetVariableInt(disciplePlan, cTrainPlanBuildFromType, 0, cUnitTypeHero);
-      llVerboseEcho("Disciples training!");
+      anwVerboseEcho("Disciples training!");
    }
    else
    {
@@ -435,7 +435,7 @@ minInterval 40
       shinobiPlan = createSimpleMaintainPlan(cUnitTypeypShinobiHorse, 10, true, -1, 1);
       aiPlanSetDesiredPriority(shinobiPlan, 85);
       aiPlanSetVariableInt(shinobiPlan, cTrainPlanBuildFromType, 0, cUnitTypeypShogunTokugawa);
-      llVerboseEcho("Shinobi training!");
+      anwVerboseEcho("Shinobi training!");
    }
    else
    {
@@ -463,7 +463,7 @@ minInterval 40
       eagleScoutPlan = createSimpleMaintainPlan(cUnitTypedeEagleScout, limit, true, -1, 1);
       aiPlanSetDesiredPriority(eagleScoutPlan, 85);
       aiPlanSetVariableInt(eagleScoutPlan, cTrainPlanBuildFromType, 0, cUnitTypeHero);
-      llVerboseEcho("Eagle Scout training!");
+      anwVerboseEcho("Eagle Scout training!");
    }
    else
    {
@@ -490,7 +490,7 @@ minInterval 40
       missionaryPlan = createSimpleMaintainPlan(cUnitTypeMissionary, limit, true, -1, 1);
       aiPlanSetDesiredPriority(missionaryPlan, 85);
       aiPlanSetVariableInt(missionaryPlan, cTrainPlanBuildFromType, 0, cUnitTypeChurch);
-      llVerboseEcho("Missionary training!");
+      anwVerboseEcho("Missionary training!");
    }
    else
    {
@@ -519,7 +519,7 @@ minInterval 40
       priestMonkPlan = createSimpleMaintainPlan(cUnitTypePriest, limit, true, -1, 1);
       aiPlanSetDesiredPriority(priestMonkPlan, priestMonkPriority);
       aiPlanSetVariableInt(priestMonkPlan, cTrainPlanBuildFromType, 0, cUnitTypeChurch);
-      llVerboseEcho("Priest and Monk training!");
+      anwVerboseEcho("Priest and Monk training!");
    }
    else
    {
@@ -587,11 +587,11 @@ maxInterval 60
    int numberFound = kbUnitQueryExecute(unitQuery);
    int age = kbGetAge();
 
-   //llVerboseEcho("Feitorias Activity: "+kbTechGetStatus(cTechDEHCFeitorias)+" Limit, numberFound:"+limit+""+numberFound+"");
+   //anwVerboseEcho("Feitorias Activity: "+kbTechGetStatus(cTechDEHCFeitorias)+" Limit, numberFound:"+limit+""+numberFound+"");
 
    if ((numberFound < limit) && (age >= cAge4))
    {
-      //llVerboseEcho("Feitorias Creation: "+kbTechGetStatus(cTechDEHCFeitorias)+"");
+      //anwVerboseEcho("Feitorias Creation: "+kbTechGetStatus(cTechDEHCFeitorias)+"");
       createSimpleBuildPlan(cUnitTypeTownCenter, 1, 100, false, cEconomyEscrowID, kbBaseGetMainID(cMyID), 1);
    }
 }
@@ -615,7 +615,7 @@ minInterval 40
       warDogPlan = createSimpleMaintainPlan(cUnitTypeWarDog, limit, true, -1, 1);
       aiPlanSetDesiredPriority(warDogPlan, 85);
       aiPlanSetVariableInt(warDogPlan, cTrainPlanBuildFromType, 0, cUnitTypeHero);
-      llVerboseEcho("War Dog training!");
+      anwVerboseEcho("War Dog training!");
    }
    else
    {
@@ -642,7 +642,7 @@ minInterval 40
       architectPlan = createSimpleMaintainPlan(cUnitTypedeArchitect, limit, true, -1, 1);
       aiPlanSetDesiredPriority(architectPlan, 85);
       aiPlanSetVariableInt(architectPlan, cTrainPlanBuildFromType, 0, cUnitTypeTownCenter);
-      llVerboseEcho("Architect training!");
+      anwVerboseEcho("Architect training!");
    }
    else
    {
@@ -977,7 +977,7 @@ minInterval 30
       ((kbTechGetStatus(cTechHCXPFlorenceNightingale) == cTechStatusActive) && 
       kbUnitGetCurrentHitpoints(gFlorenceNightingaleHouseId) < 1))
    {
-      llVerboseEcho("Florence Nightingale conditional hit!");
+      anwVerboseEcho("Florence Nightingale conditional hit!");
       kbBaseSetMilitaryGatherPoint(cMyID, kbBaseGetMainID(cMyID), militaryGatherPoint);
       unitQueryID = createSimpleUnitQuery(cUnitTypeAbstractHouse, cMyID, cUnitStateABQ, mainBaseLoc,
       100);
@@ -1319,7 +1319,7 @@ minInterval 20
 
             aiPlanSetDesiredPriority(gLandPatrolPlan, 45);
             aiPlanSetActive(gLandPatrolPlan);
-            llVerboseEcho("Patrolling the lands, looking for enemies and settlements to destroy!");
+            anwVerboseEcho("Patrolling the lands, looking for enemies and settlements to destroy!");
          }
       }
    }
@@ -1363,7 +1363,7 @@ maxInterval 30
          resource = cResourceGold;
       }
    }
-   //llVerboseEcho("Chosen Resource: "+resource+"");
+   //anwVerboseEcho("Chosen Resource: "+resource+"");
    for (int i = 0; i < numberFound; i++)
    {
       int unitID = kbUnitQueryGetResult(villagerQuery, i);
@@ -1457,7 +1457,7 @@ maxInterval 20
       gMaxInfantryMaintain = createSimpleMaintainPlan(cUnitTypeAbstractInfantry, infantryLimit, true, -1, 1);
       aiPlanSetDesiredPriority(gMaxInfantryMaintain, militaryPriority);
       aiPlanSetVariableInt(gMaxInfantryMaintain, cTrainPlanBuildFromType, 0, gMilitaryBuildings);
-      llVerboseEcho("Infantry maintain plan created, limit: " + infantryLimit);
+      anwVerboseEcho("Infantry maintain plan created, limit: " + infantryLimit);
    }
    else
    {
@@ -1473,7 +1473,7 @@ maxInterval 20
       gMaxCavalryMaintain = createSimpleMaintainPlan(cUnitTypeAbstractCavalry, cavalryLimit, true, -1, 1);
       aiPlanSetDesiredPriority(gMaxCavalryMaintain, militaryPriority);
       aiPlanSetVariableInt(gMaxCavalryMaintain, cTrainPlanBuildFromType, 0, gMilitaryBuildings);
-      llVerboseEcho("Cavalry maintain plan created, limit: " + cavalryLimit);
+      anwVerboseEcho("Cavalry maintain plan created, limit: " + cavalryLimit);
    }
    else
    {
@@ -1489,7 +1489,7 @@ maxInterval 20
       gArtilleryMaintain = createSimpleMaintainPlan(cUnitTypeAbstractArtillery, artilleryLimit, true, -1, 1);
       aiPlanSetDesiredPriority(gArtilleryMaintain, militaryPriority);
       aiPlanSetVariableInt(gArtilleryMaintain, cTrainPlanBuildFromType, 0, gMilitaryBuildings);
-      llVerboseEcho("Artillery maintain plan created, limit: " + artilleryLimit);
+      anwVerboseEcho("Artillery maintain plan created, limit: " + artilleryLimit);
    }
    else
    {
@@ -1509,11 +1509,11 @@ maxInterval 20
    int popCap = kbGetPopCap();
    int popUsed = kbGetPop();
 
-   llVerboseEcho("Military limits - Inf: " + infantryLimit + " (" + infantryPercent + "%) Cav: " + cavalryLimit + " (" + cavalryPercent + "%) Art: " + artilleryLimit + " (" + artilleryPercent + "%)");
-   llVerboseEcho("Current military - Inf: " + currentInfantry + " Cav: " + currentCavalry + " Art: " + currentArtillery + " Total: " + totalMilitary);
-   llVerboseEcho("Population - Used: " + popUsed + " / Cap: " + popCap + " | Current Military Units: " + militaryCount + "Military Priority: " + militaryPriority + " | Current Economy Units: " + ecoCount);
+   anwVerboseEcho("Military limits - Inf: " + infantryLimit + " (" + infantryPercent + "%) Cav: " + cavalryLimit + " (" + cavalryPercent + "%) Art: " + artilleryLimit + " (" + artilleryPercent + "%)");
+   anwVerboseEcho("Current military - Inf: " + currentInfantry + " Cav: " + currentCavalry + " Art: " + currentArtillery + " Total: " + totalMilitary);
+   anwVerboseEcho("Population - Used: " + popUsed + " / Cap: " + popCap + " | Current Military Units: " + militaryCount + "Military Priority: " + militaryPriority + " | Current Economy Units: " + ecoCount);
    if (gEarlyRushAttempt == true)
-      llVerboseEcho("EARLY RUSH ACTIVE - Military priority maxed to 100");
+      anwVerboseEcho("EARLY RUSH ACTIVE - Military priority maxed to 100");
 }
 //==============================================================================
 // maxOutVillagers
@@ -1558,7 +1558,7 @@ minInterval 20
       gMaxVillagersMaintain = createSimpleMaintainPlan(cUnitTypeAbstractVillager, limit, true, -1, 1);
       aiPlanSetDesiredPriority(gMaxVillagersMaintain, basePriority);
       aiPlanSetVariableInt(gMaxVillagersMaintain, cTrainPlanBuildFromType, 0, cUnitTypeAgeUpBuilding);
-      llVerboseEcho("Maxed out villagers!");
+      anwVerboseEcho("Maxed out villagers!");
    }
    else
    {
@@ -1606,7 +1606,7 @@ minInterval 20
          aiPlanSetDesiredPriority(gFishingBoatMaintainPlan, 64);
       }
       aiPlanSetVariableInt(gFishingBoatMaintainPlan, cTrainPlanBuildFromType, 0, gDockUnit);
-      llVerboseEcho("Fishing boats!");
+      anwVerboseEcho("Fishing boats!");
    }
    else
    {

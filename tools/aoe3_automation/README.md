@@ -106,7 +106,7 @@ Collect failure artifacts:
 python3 tools/aoe3_automation/aoe3_ui_automation.py collect-artifacts tools/aoe3_automation/artifacts/latest --screenshot
 ```
 
-Validate the resulting AoE3 runtime log against a named Legendary Leaders suite:
+Validate the resulting AoE3 runtime log against a named A New World suite:
 
 ```bash
 python tools/validation/validate_runtime_logs.py \

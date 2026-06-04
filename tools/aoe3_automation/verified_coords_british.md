@@ -34,7 +34,10 @@ Panel ranges roughly x=350-1500, y=140-830.
 | P8     | 665 |
 
 ### Player flag click area (clicking opens that player's home city + deck)
-- Flag x ≈ 380, click `(380, row_y)` to open AI Home City view from diplomacy.
+- **VERIFIED 2026-06-01**: The clickable area that opens the AI Home City is the
+  **player name text**, NOT the small flag icon. Use x ≈ 500 (not 380).
+- Click `(500, row_y)` to open AI Home City view from diplomacy.
+- Flag x=380 is documented as the flag icon location but does NOT trigger HC navigation.
 - This is the **only** way found to see an AI's home city + deck for visual confirmation.
 
 ### Stance radio columns (per row)
@@ -127,9 +130,40 @@ Click pattern to ally with P7: `click(970, 625)` then `click(510, 815)` (APPLY).
 11. `wall_playstyle_visual` — `X marks the spot` + minimap nav to AI base (use player color to find on minimap)
 12. `endgame_flag` — Resign → VIEW POSTGAME → all 8 player flags + final scores
 
+## HC Panel Close Button (verified 2026-06-01)
+The Home City (HC) panel opened via the HC button (bottom-left HUD) has a close button **X**
+at **(1870, 865)**. Clicking it closes the HC panel and returns to the in-game map/scoreboard view.
+This is distinct from ESC (which opens the ESC menu) or clicking elsewhere.
+
+## Civ Picker Index Correction (verified 2026-06-01)
+The `ANW_TO_PICKER_INDEX['ANWBritish'] = 7` mapping is INCORRECT for the current picker list.
+Actual picker list (from visual inspection 2026-06-01):
+  - Down×0 = Random Personality
+  - Down×1 = Argentine Confederation (Buenos Aires)
+  - Down×2 = Bourbon France (Paris)
+  - Down×3 = British Empire (London)  ← CORRECT index for British
+  - Down×4 = Cruzor Maya (Chan Santa Cruz)
+  - Down×5 = Dutch Republic (Amsterdam)
+  - Down×6 = Empire of Brazil (Rio de Janeiro)
+  - Down×7 = Ethiopian Empire (Gondar)  ← WRONG index (previously mapped for British)
+Use Down×3 (not Down×7) to select British Empire in the civ picker.
+
+## AGE-UP BLOCKERS (confirmed 2026-06-01)
+- `H` hotkey: opens Home City panel, does NOT select the Town Center.
+- `AGE_UP_BTN = (1356, 1029)` is UNVALIDATED: zero gold pixels found at this location
+  even after navigating to player base area. The actual age-up button location has not
+  been empirically confirmed.
+- Automated age-up via `anw_autonomous_age_up_runner.py` fails because both the H-select
+  and the pixel probe are unreliable.
+- Manual TC selection requires clicking directly on the TC building in the game world.
+- On Budapest 8-player map, Team 1 ally buildings (Napoleon, Mannerheim, etc.) are
+  interleaved with the British player's buildings; visual identification of own TC required.
+
 ## CRITICAL: Diplomacy click opens AI HC — discovered behavior
 User asked: "click on the diplomacy ai flag to break up their homecity".
-ANSWER: Click the player flag at `(380, row_y)` in the open diplomacy panel.
+ANSWER: Click the player **name text** at `(500, row_y)` in the open diplomacy panel.
+NOTE: x=380 (flag icon) does NOT work — tested 2026-06-01, clicks did not trigger HC.
+x=500 (player name area) confirmed working 2026-06-01.
 This opens that AI's Home City view, showing their deck (name displays
 as "HIDDEN" because AI decks are private by design) and their leader
 portrait. Player communication portrait visible at bottom-right.

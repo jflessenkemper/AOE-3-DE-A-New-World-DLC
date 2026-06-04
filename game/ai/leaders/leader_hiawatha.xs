@@ -23,31 +23,31 @@ bool gHiawathaRulesEnabled = false;
 
 void initLeaderHiawatha(void)
 {
-   llVerboseEcho("A New World: activating Hiawatha personality.");
+   anwVerboseEcho("A New World: activating Hiawatha personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = 0.1;              // Light boom; the warpath opens early.
    btOffenseDefense = 0.5;
    btBiasTrade = -0.15;
    btBiasNative = 0.7;            // Native Treaty is the spine of the strategy.
-   llSetMilitaryFocus(0.7, 0.1, 0.1);
+   anwSetMilitaryFocus(0.7, 0.1, 0.1);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseShrineTradeNodeSpreadStyle(1);
-   gLLEconomicDistanceMultiplier = 1.20;
+   anwUseShrineTradeNodeSpreadStyle(1);
+   gANWEconomicDistanceMultiplier = 1.20;
    // Spec override: military_distance_band [1.0, 1.3]; ShrineTradeNodeSpread
    // default is 0.95 which falls below the band floor.
-   gLLMilitaryDistanceMultiplier = 1.05;
+   gANWMilitaryDistanceMultiplier = 1.05;
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+   anwSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 115;
 
    gHiawathaRulesEnabled = true;
-   llLogLeaderState("Hiawatha initialized");
-   llProbe("meta.leader_init", "leader=hiawatha");
+   anwLogLeaderState("Hiawatha initialized");
+   anwProbe("meta.leader_init", "leader=hiawatha");
 }
 
 //------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ rule hiawathaTravoisSprawl
 inactive
 minInterval 60
 {
-   llLogRuleTick("hiawathaTravoisSprawl");
+   anwLogRuleTick("hiawathaTravoisSprawl");
    if (gHiawathaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -80,7 +80,7 @@ rule hiawathaConfederacyWarbands
 inactive
 minInterval 50
 {
-   llLogRuleTick("hiawathaConfederacyWarbands");
+   anwLogRuleTick("hiawathaConfederacyWarbands");
    if (gHiawathaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -90,7 +90,7 @@ minInterval 50
    if (kbGetAge() == cAge2)
    {
       btRushBoom = 0.0;
-      btOffenseDefense = 0.4;        // Spec expects_treaty=true: keep Colonial moderate, no llEnableForwardBaseStyle (forward-base sets btOffenseDefense=1.0 which contradicts treaty posture).
+      btOffenseDefense = 0.4;        // Spec expects_treaty=true: keep Colonial moderate, no anwEnableForwardBaseStyle (forward-base sets btOffenseDefense=1.0 which contradicts treaty posture).
       btBiasInf = 0.8;
       btBiasCav = 0.1;
       btBiasArt = -0.4;
@@ -106,7 +106,7 @@ rule hiawathaForestProwler
 inactive
 minInterval 55
 {
-   llLogRuleTick("hiawathaForestProwler");
+   anwLogRuleTick("hiawathaForestProwler");
    if (gHiawathaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -131,7 +131,7 @@ rule hiawathaWarRifleLine
 inactive
 minInterval 70
 {
-   llLogRuleTick("hiawathaWarRifleLine");
+   anwLogRuleTick("hiawathaWarRifleLine");
    if (gHiawathaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -157,7 +157,7 @@ rule hiawathaConfederacyHost
 inactive
 minInterval 90
 {
-   llLogRuleTick("hiawathaConfederacyHost");
+   anwLogRuleTick("hiawathaConfederacyHost");
    if (gHiawathaRulesEnabled == false)
    {
       xsDisableSelf();

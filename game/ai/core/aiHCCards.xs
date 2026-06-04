@@ -114,7 +114,7 @@ highFrequency // Run every frame until it's disabled.
 			   // If the Enhanced deck exists, we will use it.
             if (gIslandMap == false || gWaterMap == false) {
                enhancedDeckExists = aiHCPreMadeDeckGetIndex("Enhanced-Land");
-               llVerboseEcho("Enhanced Deck: "+enhancedDeckExists+" Number of Premade Decks:"+numPremadeDecks+"");
+               anwVerboseEcho("Enhanced Deck: "+enhancedDeckExists+" Number of Premade Decks:"+numPremadeDecks+"");
                if (enhancedDeckExists > 0){
                   premadeDeckID = enhancedDeckExists;
                   numCardsPremadeDeck = aiHCPreMadeDeckGetNumberCards(premadeDeckID);
@@ -127,9 +127,9 @@ highFrequency // Run every frame until it's disabled.
                   debugHCCards("Activating deck");
                   // LL-DECK probe — records which home-city premade deck the
                   // AI activated (Enhanced-Land or Enhanced-Naval) and the
-                  // card count. Verifies Legendary Leaders curated deck
+                  // card count. Verifies A New World curated deck
                   // selection at runtime.
-                  llProbe("tech.deck", "deckID=" + premadeDeckID + " cards=" + numCardsPremadeDeck +
+                  anwProbe("tech.deck", "deckID=" + premadeDeckID + " cards=" + numCardsPremadeDeck +
                      " islandMap=" + gIslandMap + " waterMap=" + gWaterMap);
                   aiHCDeckActivate(premadeDeckID);
 
@@ -137,7 +137,7 @@ highFrequency // Run every frame until it's disabled.
                }
             } else if (gIslandMap == true && gWaterMap == true) {
                enhancedDeckExists = aiHCPreMadeDeckGetIndex("Enhanced-Naval");
-               llVerboseEcho("Enhanced Deck: "+enhancedDeckExists+" Number of Premade Decks:"+numPremadeDecks+"");
+               anwVerboseEcho("Enhanced Deck: "+enhancedDeckExists+" Number of Premade Decks:"+numPremadeDecks+"");
                if (enhancedDeckExists > 0){
                   premadeDeckID = enhancedDeckExists;
                   numCardsPremadeDeck = aiHCPreMadeDeckGetNumberCards(premadeDeckID);
@@ -150,9 +150,9 @@ highFrequency // Run every frame until it's disabled.
                   debugHCCards("Activating deck");
                   // LL-DECK probe — records which home-city premade deck the
                   // AI activated (Enhanced-Land or Enhanced-Naval) and the
-                  // card count. Verifies Legendary Leaders curated deck
+                  // card count. Verifies A New World curated deck
                   // selection at runtime.
-                  llProbe("tech.deck", "deckID=" + premadeDeckID + " cards=" + numCardsPremadeDeck +
+                  anwProbe("tech.deck", "deckID=" + premadeDeckID + " cards=" + numCardsPremadeDeck +
                      " islandMap=" + gIslandMap + " waterMap=" + gWaterMap);
                   aiHCDeckActivate(premadeDeckID);
 
@@ -858,7 +858,7 @@ highFrequency // Run every frame until it's disabled.
          if ((cDifficultyCurrent >= cDifficultyHard) && cMyCiv == cCivChinese &&
              ((tech == cTechYPHCRainbowTrickle) || (tech == cTechHCXPSiegeHitpoints) || (tech == cTechHCXPSiegeHitpoints) ||
               (tech == cTechYPHCStandardArmyHitpoints) || (tech == cTechYPHCOldHanArmyReforms) || 
-              (tech == cTechYPHCWesternReforms) || (tech == cTechYPHCAccupuncture) || (tech == cTechYPHCTerritorialArmyCombat) ||
+              (tech == cTechYPHCWesternReforms) || (tech == cTechYPHCAccupuncture) ||
               (tech == cTechYPHCGreatWall)))  
          {
             cardPriority += 100;
@@ -1049,8 +1049,7 @@ highFrequency // Run every frame until it's disabled.
                (tech == cTechHCXPInfantryCombatIroquois) || (tech == cTechDEHCSiegeConstruction) ||
                (tech == cTechYPHCStandardArmyHitpoints) || (tech == cTechYPHCForbiddenArmyArmor) ||
                (tech == cTechDEHCHandCavalryHitpointsHausa) || (tech == cTechDEHCSahelianKingdoms) ||
-               (tech == cTechDEHCFulaniArcherCombat) || (tech == cTechDEHCCounterCavalry) || 
-               (tech == cTechypHCConsulateRelations) || (tech == cTechYPHCTerritorialArmyCombat) ||
+               (tech == cTechDEHCFulaniArcherCombat) || (tech == cTechDEHCCounterCavalry) ||
                (tech == cTechYPHCSpawnSaigaHerd) || (tech == cTechHCMercsManchu) ||
                (tech == cTechHCInfantryHitpointsDutchTeam) ||  (tech == cTechHCInfantryDamageDutch) ||              
                (tech == cTechYPHCManchuCombat) || (tech == cTechHCXPCoyoteCombat) ||
@@ -1084,7 +1083,6 @@ highFrequency // Run every frame until it's disabled.
                 ((tech == cTechHCXPAztecMining) || (tech == cTechDEHCChichimecaRebellion) || 
                  (tech == cTechHCXPChinampa2) || (tech == cTechHCXPShipWarHutTravois1) ||
                  (tech == cTechHCAdvancedArsenal) || (tech == cTechHCAdvancedArsenalGerman) ||
-                 (tech == cTechYPHCGurkhaAid) || (tech == cTechypHCConsulateRelationsIndians) ||
                  (tech == cTechYPHCElephantTrampling) || (tech == cTechYPHCElephantLimit) ||
                  (tech == cTechDEShipRocketeersIndians) || (tech == cTechYPHCInfantrySpeedHitpointsTeam) ||
                  (tech == cTechHCXPNewWaysIroquois) || (tech == cTechDEHCSpringfieldArmory) ||
@@ -1114,7 +1112,7 @@ highFrequency // Run every frame until it's disabled.
                  (tech == cTechHCXPEarthBounty) || (tech == cTechDEHCLakotaImprovedSiege) ||
                  (tech == cTechHCXPMustangs) || (tech == cTechHCShipAdvancedCapturedMortars) ||
                  (tech == cTechHCXPSiouxYanktonSupport) || (tech == cTechYPHCSamuraiDamage) || 
-                 (tech == cTechYPHCSmoothRelations) || (tech == cTechypHCConsulateRelations) || 
+                 (tech == cTechYPHCSmoothRelations) ||
                  (tech == cTechYPHCArtilleryHitpointsJapanese) || (tech == cTechYPHCYabusameAntiArtilleryDamage) ||                  
                  (tech == cTechYPHCNobleCombat) || (tech == cTechYPHCArtilleryCostJapanese) ||
                  (tech == cTechDEHCHandCombatPortuguese) || (tech == cTechDEHCShrineHitpoints) ||
@@ -2436,7 +2434,7 @@ highFrequency // Run every frame until it's disabled.
                      
                      if (unit == cUnitTypeFactoryWagon && civIsEuropean() == true)
                      {
-                        //llVerboseEcho("Factory found!" +card+ "");
+                        //anwVerboseEcho("Factory found!" +card+ "");
                         bestCard = card; // Put as many factories as you can in the deck.
                         toPickNaval++;
                         break;
@@ -2710,7 +2708,7 @@ highFrequency // Run every frame until it's disabled.
                //    cardsRemaining = emptyCardSlots;
                //    toPick = cardsRemaining;
                //    toPickNaval = 2;
-               //    llVerboseEcho("Cards Remaining!" +toPick+ "");
+               //    anwVerboseEcho("Cards Remaining!" +toPick+ "");
                //    pass = 11;
                //    break;
                // }
@@ -3779,7 +3777,7 @@ void shipGrantedHandler(int parm = -1) // parm is unused.
          aiSetHCGatherUnit(gatherUnitID);
       }
       debugHCCards("Choosing card: " + kbGetTechName(aiHCDeckGetCardTechID(deck, bestCard)));
-      llProbe("tech.ship", "card=" + bestCard + " extended=" + bestCardIsExtended +
+      anwProbe("tech.ship", "card=" + bestCard + " extended=" + bestCardIsExtended +
          " tech=" + aiHCDeckGetCardTechID(deck, bestCard) +
          " value=" + bestCardValue + " age=" + kbGetAge() +
          " name=\"" + kbGetTechName(aiHCDeckGetCardTechID(deck, bestCard)) + "\"");

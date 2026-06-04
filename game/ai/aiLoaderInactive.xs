@@ -26,7 +26,7 @@ include "aiMain.xs";       // The bulk of the AI
 //==============================================================================
 void preInit(void)
 {
-   llVerboseEcho("preInit() starting.");
+   anwVerboseEcho("preInit() starting.");
    
    // Turn off almost everything.  No TC, no units, to training, nothing.
    cvInactiveAI = true;
@@ -44,7 +44,7 @@ void preInit(void)
 //==============================================================================
 void postInit(void)
 {
-   llVerboseEcho("postInit() starting.");
+   anwVerboseEcho("postInit() starting.");
 }
 
 

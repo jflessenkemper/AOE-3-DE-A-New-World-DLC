@@ -16,7 +16,7 @@ escort_v2       : Assert the leader stays within 30 m of the nearest
 Parse format (schema v2)
 ------------------------
 Each probe line:
-    [LLP v=2 t=<ms> p=<player> civ=<civ> ldr=<ldr> tag=<domain.name>] k=v …
+    [ANWP v=2 t=<ms> p=<player> civ=<civ> ldr=<ldr> tag=<domain.name>] k=v …
 
 Usage
 -----
@@ -43,7 +43,7 @@ from typing import Sequence
 # ---------------------------------------------------------------------------
 
 PROBE_RE = re.compile(
-    r"\[LLP v=(\d+) t=(\d+) p=(\d+) civ=(\S+) ldr=(\S+) tag=(\S+)\]\s*(.*)"
+    r"\[ANWP v=(\d+) t=(\d+) p=(\d+) civ=(\S+) ldr=(\S+) tag=(\S+)\]\s*(.*)"
 )
 KV_RE = re.compile(r"(\w+)=(-?[\d.]+)")
 

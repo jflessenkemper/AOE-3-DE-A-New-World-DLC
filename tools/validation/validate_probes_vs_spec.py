@@ -2,7 +2,7 @@
 """
 validate_probes_vs_spec.py
 Post-hoc validator: reads per-civ match.log slices (from matrix_runner artifacts),
-parses [LLP v=2 ...] probe stream, and validates against the NATION_PLAYSTYLE spec
+parses [ANWP v=2 ...] probe stream, and validates against the NATION_PLAYSTYLE spec
 embedded in a_new_world.html.
 
 CLI:
@@ -166,11 +166,11 @@ def parse_nation_playstyle(html_path: str) -> dict:
 # Parse probe lines from match.log
 # ---------------------------------------------------------------------------
 # Line format:
-#   <timestamp_ms>   <hh:mm:ss>:  [LLP v=2 t=<ms> p=<pid> civ=<name> ldr=<key> tag=<domain.name>] k=v k=v ...
+#   <timestamp_ms>   <hh:mm:ss>:  [ANWP v=2 t=<ms> p=<pid> civ=<name> ldr=<key> tag=<domain.name>] k=v k=v ...
 # or (pre-game lines have no timestamp prefix).
 
 PROBE_RE = re.compile(
-    r"\[LLP v=2\s+t=(\d+)\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)$"
+    r"\[ANWP v=2\s+t=(\d+)\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)$"
 )
 
 def _parse_kv(kv_str: str) -> dict:
@@ -188,7 +188,7 @@ def _parse_kv(kv_str: str) -> dict:
 
 def parse_probes(log_path: str) -> list:
     """
-    Parse all [LLP v=2 ...] lines from match.log.
+    Parse all [ANWP v=2 ...] lines from match.log.
     Returns list of dicts: {t, civ, ldr, tag, **kv}.
     """
     probes = []
@@ -550,7 +550,7 @@ def _log_slug_from_probes(probes: list, slug: str) -> tuple:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Validate [LLP v=2] probe stream against NATION_PLAYSTYLE spec"
+        description="Validate [ANWP v=2] probe stream against NATION_PLAYSTYLE spec"
     )
     parser.add_argument(
         "--matrix-dir",

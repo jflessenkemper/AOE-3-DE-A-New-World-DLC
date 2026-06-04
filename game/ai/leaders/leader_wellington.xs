@@ -33,24 +33,24 @@ bool gWellingtonRulesEnabled = false;
 
 void initLeaderWellington(void)
 {
-   llVerboseEcho("A New World DLC: activating Queen Elizabeth I personality.");
+   anwVerboseEcho("A New World DLC: activating Queen Elizabeth I personality.");
 
-   llSetDefensivePersonality();
+   anwSetDefensivePersonality();
    btRushBoom = -0.4;             // Tudor boom; island kingdom grows behind the fleet.
    btOffenseDefense = 0.2;        // Defensive baseline; Elizabeth avoided continental war.
    btBiasTrade = 0.7;             // Muscovy / Levant / East India Co. mercantile chartering.
    btBiasNative = -0.1;           // Regulars and trained bands; sparing use of auxiliaries.
-   llSetMilitaryFocus(0.75, 0.10, 0.15); // Longbow + Musketeer primacy; minimal field artillery.
+   anwSetMilitaryFocus(0.75, 0.10, 0.15); // Longbow + Musketeer primacy; minimal field artillery.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseNavalMercantileCompoundStyle(2);
-   gLLEconomicDistanceMultiplier = 1.40;         // Coastal-sprawl eco network.
-   gLLTownCenterDistanceMultiplier = 1.25;       // Spread TCs along shoreline.
-   gLLEarlyWallingEnabled = false;               // Island identity - navy guards early,
+   anwUseNavalMercantileCompoundStyle(2);
+   gANWEconomicDistanceMultiplier = 1.40;         // Coastal-sprawl eco network.
+   gANWTownCenterDistanceMultiplier = 1.25;       // Spread TCs along shoreline.
+   gANWEarlyWallingEnabled = false;               // Island identity - navy guards early,
                                                  // no inland continental wall rings.
                                                  // Late walls still fire via CoastalBatteries.
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.0);   // Leader well behind the firing line.
+   anwSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.0);   // Leader well behind the firing line.
 
    cvOkToBuildForts = true;
    cvOkToFish = true;                            // Explicit maritime identity - North Sea fishing fleet.
@@ -64,8 +64,8 @@ void initLeaderWellington(void)
    cvDefenseReflexSearchRadius = 70.0;           // Detect at perimeter edge.
 
    gWellingtonRulesEnabled = true;
-   llLogLeaderState("Elizabeth I initialized");
-   llProbe("meta.leader_init", "leader=wellington");
+   anwLogLeaderState("Elizabeth I initialized");
+   anwProbe("meta.leader_init", "leader=wellington");
 }
 
 //------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ rule wellingtonManorBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("wellingtonManorBoom");
+   anwLogRuleTick("wellingtonManorBoom");
    if (gWellingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -100,7 +100,7 @@ rule wellingtonLongbowScreen
 inactive
 minInterval 50
 {
-   llLogRuleTick("wellingtonLongbowScreen");
+   anwLogRuleTick("wellingtonLongbowScreen");
    if (gWellingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -128,7 +128,7 @@ rule wellingtonRedcoatLine
 inactive
 minInterval 55
 {
-   llLogRuleTick("wellingtonRedcoatLine");
+   anwLogRuleTick("wellingtonRedcoatLine");
    if (gWellingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -142,7 +142,7 @@ minInterval 55
       btBiasCav = 0.35;           // KGL Hussar / Dragoon counter-strike.
       btBiasArt = 0.5;            // Falconet support arrives.
       cvMaxArmyPop = 125;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -155,7 +155,7 @@ rule wellingtonIberianGrind
 inactive
 minInterval 70
 {
-   llLogRuleTick("wellingtonIberianGrind");
+   anwLogRuleTick("wellingtonIberianGrind");
    if (gWellingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -182,7 +182,7 @@ rule wellingtonIronDuke
 inactive
 minInterval 90
 {
-   llLogRuleTick("wellingtonIronDuke");
+   anwLogRuleTick("wellingtonIronDuke");
    if (gWellingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -197,7 +197,7 @@ minInterval 90
       btBiasCav = 0.3;
       btBiasArt = 0.4;            // Modest artillery - Tudor doctrine, not Napoleonic gun line.
       cvMaxArmyPop = 150;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 

@@ -74,7 +74,7 @@ minInterval 40
         createSettlementBase(newBase);
         newBaseId = kbBaseGetMainID(cMyID);
         kbBaseSetActive(cMyID, newBaseId, true);
-        llVerboseEcho("New Base Active Status: " + kbBaseGetActive(cMyID, newBaseId) + "!");
+        anwVerboseEcho("New Base Active Status: " + kbBaseGetActive(cMyID, newBaseId) + "!");
         gGatherPlansUpdated = false;
     }
 }

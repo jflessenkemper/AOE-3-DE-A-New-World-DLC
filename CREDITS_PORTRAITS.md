@@ -1,6 +1,6 @@
 # Portrait Credits
 
-Image attributions for leader portraits introduced in the Legendary Leaders AI mod.
+Image attributions for leader portraits introduced in the A New World AI mod.
 All source images obtained from Wikimedia Commons.
 
 ## Manuel Pineda Muñoz (Baja Californians)

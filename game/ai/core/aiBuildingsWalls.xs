@@ -1,26 +1,26 @@
 //==============================================================================
 // aiBuildingsWalls.xs — SMART WALLS implementation
 //
-// Track 1.1a  llDetectChokepointVector      — real chokepoint detection via
+// Track 1.1a  anwDetectChokepointVector      — real chokepoint detection via
 //             kbAreaGetNumberBorderAreas / kbAreaGetBorderAreaID, cached once
 //             per match. Falls back to forward-biased center on flat maps.
 //
-// Track 1.1b  llGetForwardBiasedWallCenter  — water/cliff AVOIDANCE: samples
+// Track 1.1b  anwGetForwardBiasedWallCenter  — water/cliff AVOIDANCE: samples
 //             kbAreaGetType after biasing; walks inland 8-unit steps (up to 5)
 //             if the proposed center lands in water or a 0-tile area.
 //
-// Track 1.1b+ llDetectCoastVector           — water/cliff EXPLOITATION:
+// Track 1.1b+ anwDetectCoastVector           — water/cliff EXPLOITATION:
 //             scans the AI base area's borders for water-typed neighbours,
 //             computes the seaward centroid, and returns a wall center
 //             pushed inland by ~30% of the ring radius. Used by
-//             llPlanCoastalBatteriesWall to make the doctrine actually
+//             anwPlanCoastalBatteriesWall to make the doctrine actually
 //             coastal-aware (vs cosmetic naming). Returns cInvalidVector
 //             on inland maps; caller falls back to forward-bias. Cached
 //             per-AI per-match like the chokepoint detector.
 //
-// Track 1.1c  llSelectWallType              — wall-tier wrapper. All ages
+// Track 1.1c  anwSelectWallType              — wall-tier wrapper. All ages
 //             currently return cBuildWallPlanWallTypeRing; radius + gate-count
-//             callers (llGetLegendaryWallRadius / llGetLegendaryWallGateCount)
+//             callers (anwGetWallRadius / anwGetWallGateCount)
 //             provide the actual age-based tier differentiation.
 //
 // Track 1.1d  rule verifyWallClosure        — gap-closure watchdog firing
@@ -42,7 +42,7 @@
 // RULE explorationAgeWalling
 // Start a basic ring wall around the main base in the Exploration Age.
 //==============================================================================
-bool llShouldBuildLegendaryWalls(bool earlyGame = false)
+bool anwShouldBuildWalls(bool earlyGame = false)
 {
    if (cvOkToBuildWalls == false)
    {
@@ -52,34 +52,34 @@ bool llShouldBuildLegendaryWalls(bool earlyGame = false)
    // Doctrine veto: MobileNoWalls (Napoleon / Crazy Horse / Hiawatha /
    // Montezuma / Usman) overrides everything. No early walls, no late walls,
    // no gap fills, no upgrades. Their playstyle is open-field manoeuvre.
-   if (gLLWallStrategy == cLLWallStrategyMobileNoWalls)
+   if (gANWWallStrategy == cANWWallStrategyMobileNoWalls)
    {
       return (false);
    }
 
-   // Per-civ knob: gLLWallTriggerAge (2=Colonial, 3=Fortress, 4=Industrial,
+   // Per-civ knob: gANWWallTriggerAge (2=Colonial, 3=Fortress, 4=Industrial,
    // 5=never). If current age hasn't reached the trigger, suppress walls
    // unless an explicit "always-on" doctrine like Maltese citadel overrides.
    // Default trigger=2 means walls start in Colonial, matching legacy.
-   if (kbGetAge() < gLLWallTriggerAge)
+   if (kbGetAge() < gANWWallTriggerAge)
    {
       return (false);
    }
 
    if (earlyGame == true)
    {
-      return (gLLEarlyWallingEnabled);
+      return (gANWEarlyWallingEnabled);
    }
 
-   if (gLLWallLevel <= 0)
+   if (gANWWallLevel <= 0)
    {
       return (false);
    }
 
-   return (gLLLateWallingEnabled);
+   return (gANWLateWallingEnabled);
 }
 
-float llGetLegendaryWallRadius(bool lateGame = false)
+float anwGetWallRadius(bool lateGame = false)
 {
    float wallRadius = 42.0;
 
@@ -92,24 +92,24 @@ float llGetLegendaryWallRadius(bool lateGame = false)
       wallRadius = lateGame == true ? 95.0 : 55.0;
    }
 
-   if (gLLWallLevel == 1)
+   if (gANWWallLevel == 1)
    {
       wallRadius = wallRadius - 6.0;
    }
-   else if (gLLWallLevel == 3)
+   else if (gANWWallLevel == 3)
    {
       wallRadius = wallRadius + 6.0;
    }
-   else if (gLLWallLevel >= 4)
+   else if (gANWWallLevel >= 4)
    {
       wallRadius = wallRadius + 10.0;
    }
 
-   if (gLLBuildStyle == cLLBuildStyleCompactFortifiedCore)
+   if (gANWBuildStyle == cANWBuildStyleCompactFortifiedCore)
    {
       wallRadius = wallRadius - 4.0;
    }
-   else if (gLLBuildStyle == cLLBuildStyleMobileFrontierScatter)
+   else if (gANWBuildStyle == cANWBuildStyleMobileFrontierScatter)
    {
       wallRadius = wallRadius + 8.0;
    }
@@ -117,21 +117,21 @@ float llGetLegendaryWallRadius(bool lateGame = false)
    return (wallRadius);
 }
 
-int llGetLegendaryWallGateCount(bool lateGame = false)
+int anwGetWallGateCount(bool lateGame = false)
 {
    // Raised from 4/15 to 6/18. More gates = better sally routes and the
    // engine lays down more wall pieces per plan (each gate anchors an arc).
    int gateCount = lateGame == true ? 18 : 6;
 
-   if (gLLWallLevel == 1)
+   if (gANWWallLevel == 1)
    {
       gateCount = gateCount + 2;
    }
-   else if (gLLWallLevel == 3)
+   else if (gANWWallLevel == 3)
    {
       gateCount = gateCount - 1;
    }
-   else if (gLLWallLevel >= 4)
+   else if (gANWWallLevel >= 4)
    {
       gateCount = gateCount - 2;
    }
@@ -145,24 +145,28 @@ int llGetLegendaryWallGateCount(bool lateGame = false)
 }
 
 //==============================================================================
-// ANW 2026-05-30 SMART-WALLS: llComputeThreatVector
+// ANW 2026-05-30 SMART-WALLS: anwComputeThreatVector
 // SMART WALLS — Track 1.2b: threat-vector tracking.
 //
 // Computes the centroid of all visible enemy land-military units. Returns
 // cInvalidVector when no enemy military is spotted. Result is cached for 60s
 // game time so it is cheap to call from multiple wall planners per tick.
 // Emits wall.threat_vector probe on every recompute.
-// Declared here so llGetForwardBiasedWallCenter can use the cached result.
+// Declared here so anwGetForwardBiasedWallCenter can use the cached result.
 //==============================================================================
-static vector gLLCachedThreatVector = cInvalidVector;
-static int    gLLThreatVectorTime   = -999999;
+// NOTE: file-scope globals must NOT carry the `static` qualifier — XS error
+// 0351 ("Cannot 'static' a parameter or non-function variable") aborts the
+// whole AI compile (could not compile ailoaderstandard.xs). `static` is only
+// legal on function-local variables; at file scope these are already globals.
+vector gANWCachedThreatVector = cInvalidVector;
+int    gANWThreatVectorTime   = -999999;
 
-vector llComputeThreatVector()
+vector anwComputeThreatVector()
 {
    int now = xsGetTime();
-   if ((now - gLLThreatVectorTime) <= 60000)
+   if ((now - gANWThreatVectorTime) <= 60000)
    {
-      return (gLLCachedThreatVector);
+      return (gANWCachedThreatVector);
    }
 
    // Use a single enemy-relation query for all enemy military units.
@@ -191,14 +195,14 @@ vector llComputeThreatVector()
       result = xsVectorSet(sumX / cnt, 0.0, sumZ / cnt);
    }
 
-   gLLCachedThreatVector = result;
-   gLLThreatVectorTime   = now;
-   llProbe("wall.threat_vector",
-      "vec=" + llFmtVec(result) + " enemies=" + cnt);
+   gANWCachedThreatVector = result;
+   gANWThreatVectorTime   = now;
+   anwProbe("wall.threat_vector",
+      "vec=" + anwFmtVec(result) + " enemies=" + cnt);
    return (result);
 }
 
-// ANW 2026-05-30 SMART-WALLS: llGetForwardBiasedWallCenter
+// ANW 2026-05-30 SMART-WALLS: anwGetForwardBiasedWallCenter
 // Shift the wall ring center slightly along the base's front vector (toward
 // the likely enemy arc). A full ring still surrounds the base, but the
 // extra bias thickens wall coverage on the contested side where it matters
@@ -214,7 +218,7 @@ vector llComputeThreatVector()
 // direction toward the threat centroid (0.6 weight) rather than just the
 // static front vector (1.0 weight when unknown). This tilts the ring toward
 // the actual incoming threat rather than the map-edge heuristic.
-vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
+vector anwGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
                                     int mainBaseID = -1,
                                     float biasFactor = 0.25)
 {
@@ -232,7 +236,7 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
    // Track 1.2b: blend toward threat centroid when known.
    // threatVec is cInvalidVector when no enemies are spotted (cache miss);
    // in that case fall back to pure front-vector bias (weight = 1.0).
-   vector threatVec = llComputeThreatVector();
+   vector threatVec = anwComputeThreatVector();
    vector biasDir = frontVec;   // default: static front-vector bias
    if (threatVec != cInvalidVector)
    {
@@ -254,7 +258,7 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
       }
    }
 
-   float radius = llGetLegendaryWallRadius(false);
+   float radius = anwGetWallRadius(false);
    float shift = radius * biasFactor;
    float nx = xsVectorGetX(baseCenter) + xsVectorGetX(biasDir) * shift;
    float nz = xsVectorGetZ(baseCenter) + xsVectorGetZ(biasDir) * shift;
@@ -276,11 +280,11 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
       vector corrected = biased;
       int steps = 0;
       bool fixed = false;
-      // Knob: gLLWallNoWaterBuild — when true, try harder to find inland land
+      // Knob: gANWWallNoWaterBuild — when true, try harder to find inland land
       // by doubling the step limit (10 vs 5). When false, allow placement in
       // shallow water by using the original 5-step limit.
       int maxSteps = 5;
-      if (gLLWallNoWaterBuild == true) { maxSteps = 10; }
+      if (gANWWallNoWaterBuild == true) { maxSteps = 10; }
       for (i = 1; <= maxSteps)
       {
          float bx = nx - xsVectorGetX(frontVec) * 8.0 * i;
@@ -298,8 +302,8 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
             break;
          }
       }
-      llProbe("wall.water_fix", "orig=" + llFmtVec(biased) +
-         " final=" + llFmtVec(corrected) + " steps=" + steps +
+      anwProbe("wall.water_fix", "orig=" + anwFmtVec(biased) +
+         " final=" + anwFmtVec(corrected) + " steps=" + steps +
          " fixed=" + fixed);
       if (fixed == true)
       {
@@ -312,19 +316,19 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
    // SMART WALLS — Track 1.1b (Defect 2 fix): always emit a wall.water_fix
    // probe so flat inland maps register the feature as "ran, no fix needed"
    // rather than "feature absent". orig==final and steps=0 on this path.
-   llProbe("wall.water_fix", "orig=" + llFmtVec(biased) +
-      " final=" + llFmtVec(biased) + " steps=0 fixed=false");
+   anwProbe("wall.water_fix", "orig=" + anwFmtVec(biased) +
+      " final=" + anwFmtVec(biased) + " steps=0 fixed=false");
    return (biased);
 }
 
 //==============================================================================
-// ANW 2026-05-30 SMART-WALLS: llDetectChokepointVector
+// ANW 2026-05-30 SMART-WALLS: anwDetectChokepointVector
 // SMART WALLS — Track 1.1a: chokepoint detection.
 //
 // Walks the AI's base area and its border areas once per match (cached) to
 // find the narrowest "gap" between two impassable-style neighbours. The
 // gap area's center is returned as the chokepoint vector. Fall back to
-// llGetForwardBiasedWallCenter() on flat maps (no water/impassable borders).
+// anwGetForwardBiasedWallCenter() on flat maps (no water/impassable borders).
 //
 // NOTE: the engine's area-type vocabulary in this codebase is only
 // confirmed to expose cAreaTypeWater. No cAreaTypeImpassableLand /
@@ -335,7 +339,7 @@ vector llGetForwardBiasedWallCenter(vector baseCenter = cInvalidVector,
 // (cliff face, terrain wall, small water inlet). Combined with the
 // hard cAreaTypeWater check, this gives us "narrowest gap" on real maps.
 //==============================================================================
-vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+vector anwDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
    // Per-AI cache: compute once per match, reuse thereafter — but
    // KEYED on the resolved baseAreaID so a base-relocation (TC kill +
@@ -352,13 +356,13 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
    {
       // No valid input — don't cache, don't return stale. Fall back to
       // the forward-biased centre directly.
-      return (llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35));
+      return (anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35));
    }
 
    int baseAreaID = kbAreaGetIDByPosition(baseCenter);
    if (baseAreaID < 0)
    {
-      return (llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35));
+      return (anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35));
    }
 
    // Cache hit only when the cached entry was computed for the SAME
@@ -371,7 +375,7 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
       // for tiles (`tiles=<int>`). The cached-hit path emits 0 to signal
       // "no fresh tile-count was computed this tick"; cached=1 distinguishes
       // from a true zero-tile measurement.
-      llProbe("wall.chokepoint", "vec=" + llFmtVec(chokepointVec) +
+      anwProbe("wall.chokepoint", "vec=" + anwFmtVec(chokepointVec) +
          " tiles=0 cached=1 baseArea=" + chokepointBaseAreaID);
       return (chokepointVec);
    }
@@ -381,7 +385,7 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
    // baseAreaID.
    if ((chokepointCached == 1) && (chokepointBaseAreaID != baseAreaID))
    {
-      llProbe("wall.chokepoint", "invalidated oldArea=" + chokepointBaseAreaID +
+      anwProbe("wall.chokepoint", "invalidated oldArea=" + chokepointBaseAreaID +
          " newArea=" + baseAreaID);
       chokepointCached = 0;
    }
@@ -390,11 +394,11 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
    if (numBorders <= 0)
    {
       // No border areas at all -> open map, no chokepoint to detect.
-      vector fallbackNoBorders = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
+      vector fallbackNoBorders = anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
       chokepointVec = fallbackNoBorders;
       chokepointBaseAreaID = baseAreaID;
       chokepointCached = 1;
-      llProbe("wall.chokepoint", "vec=" + llFmtVec(fallbackNoBorders) +
+      anwProbe("wall.chokepoint", "vec=" + anwFmtVec(fallbackNoBorders) +
          " tiles=0 cached=0 fallback=noBorders baseArea=" + baseAreaID);
       return (fallbackNoBorders);
    }
@@ -448,11 +452,11 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
    if (narrowestID < 0)
    {
       // Flat map: nothing pinched. Use forward-biased fallback.
-      vector fallbackFlatMap = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
+      vector fallbackFlatMap = anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.35);
       chokepointVec = fallbackFlatMap;
       chokepointBaseAreaID = baseAreaID;
       chokepointCached = 1;
-      llProbe("wall.chokepoint", "vec=" + llFmtVec(fallbackFlatMap) +
+      anwProbe("wall.chokepoint", "vec=" + anwFmtVec(fallbackFlatMap) +
          " tiles=0 cached=0 fallback=flatMap baseArea=" + baseAreaID);
       return (fallbackFlatMap);
    }
@@ -461,28 +465,28 @@ vector llDetectChokepointVector(int mainBaseID = -1, vector baseCenter = cInvali
    chokepointVec = chokeCenter;
    chokepointBaseAreaID = baseAreaID;
    chokepointCached = 1;
-   llProbe("wall.chokepoint", "vec=" + llFmtVec(chokeCenter) +
+   anwProbe("wall.chokepoint", "vec=" + anwFmtVec(chokeCenter) +
       " tiles=" + narrowestTiles + " cached=0 baseArea=" + baseAreaID);
    return (chokeCenter);
 }
 
 //==============================================================================
-// ANW 2026-05-30 SMART-WALLS: llSelectWallType
+// ANW 2026-05-30 SMART-WALLS: anwSelectWallType
 // SMART WALLS — Track 1.1c: wall-type / tier dispatch.
 //
 // Only cBuildWallPlanWallTypeRing is confirmed in the engine vocabulary
 // referenced by this codebase — no cBuildWallPlanWallTypeSegment or
 // cBuildWallPlanWallTypeFortified is documented anywhere we can see.
 // Engine wall-type vocabulary not fully documented; using Ring at all ages
-// with radius/gate variation as the tier knob (see llGetLegendaryWallRadius
-// and llGetLegendaryWallGateCount, both already age-aware).
+// with radius/gate variation as the tier knob (see anwGetWallRadius
+// and anwGetWallGateCount, both already age-aware).
 //
 // Returns the wall-type constant to feed into cBuildWallPlanWallType.
 // All ages return cBuildWallPlanWallTypeRing today; the dispatch is
 // here so once additional constants are confirmed they can be slotted
 // in without touching every strategy function.
 //==============================================================================
-int llSelectWallType(int wallStrategy = -1, int age = 1)
+int anwSelectWallType(int wallStrategy = -1, int age = 1)
 {
    // Age 1 -> light palisade-style ring (small radius handled by callers).
    // Age 2-3 -> normal stone ring.
@@ -492,14 +496,14 @@ int llSelectWallType(int wallStrategy = -1, int age = 1)
    // radius/gate-count callers apply on top of this is the actual tier
    // differentiator.
    //
-   // Knob: gLLWallTierAge2Stone — if true and age==2 (Colonial), request stone
+   // Knob: gANWWallTierAge2Stone — if true and age==2 (Colonial), request stone
    // walls.  The engine only exposes cBuildWallPlanWallTypeRing today, so we
    // emit a probe so validators can confirm the knob was read, then return the
    // same constant.  When a stone-wall type constant is confirmed in the engine
    // vocabulary, replace the return below with it.
-   if ((age == 2) && (gLLWallTierAge2Stone == true))
+   if ((age == 2) && (gANWWallTierAge2Stone == true))
    {
-      llProbe("wall.tier", "age=2 knob=age2stone=true type=stone(ring-fallback)");
+      anwProbe("wall.tier", "age=2 knob=age2stone=true type=stone(ring-fallback)");
       // KNOB-TODO: replace cBuildWallPlanWallTypeRing with a confirmed
       // stone-wall engine constant once one is documented.
       return (cBuildWallPlanWallTypeRing);
@@ -508,7 +512,7 @@ int llSelectWallType(int wallStrategy = -1, int age = 1)
 }
 
 //==============================================================================
-// ANW 2026-05-30 SMART-WALLS: llCountPerimeterGaps
+// ANW 2026-05-30 SMART-WALLS: anwCountPerimeterGaps
 // SMART WALLS — Track 1.2a: natural-wall gap detection.
 //
 // Walks the proposed wall ring at 8 sample points (every 45°) and counts how
@@ -519,7 +523,7 @@ int llSelectWallType(int wallStrategy = -1, int age = 1)
 // is entirely in/over water or unmappable), skip the wall plan entirely and
 // emit a wall.skip probe. Otherwise emit wall.perimeter_gaps for telemetry.
 //==============================================================================
-int llCountPerimeterGaps(vector baseCenter = cInvalidVector,
+int anwCountPerimeterGaps(vector baseCenter = cInvalidVector,
                          float radius = 42.0,
                          int strategy = 0)
 {
@@ -552,16 +556,16 @@ int llCountPerimeterGaps(vector baseCenter = cInvalidVector,
          landCount = landCount + 1;
       }
    }
-   llProbe("wall.perimeter_gaps",
+   anwProbe("wall.perimeter_gaps",
       "land=" + landCount + " water=" + waterCount + " radius=" + radius);
    return (landCount);
 }
 
 //==============================================================================
-// ANW 2026-05-30 SMART-WALLS: llComputeAdaptiveRadius
+// ANW 2026-05-30 SMART-WALLS: anwComputeAdaptiveRadius
 // SMART WALLS — Track 1.2c: adaptive wall radius.
 //
-// Scales the base radius from llGetLegendaryWallRadius(lateGame) by the
+// Scales the base radius from anwGetWallRadius(lateGame) by the
 // current villager-to-pop-cap ratio (eco saturation):
 //   ratio < 0.4  → 0.7× (tight ring, early eco)
 //   ratio 0.4–0.7 → 1.0× (current behaviour)
@@ -569,11 +573,11 @@ int llCountPerimeterGaps(vector baseCenter = cInvalidVector,
 //
 // Clamped to [12.0, 60.0] m. Emits wall.adaptive_radius probe.
 //==============================================================================
-float llComputeAdaptiveRadius(int age = 1, int strategy = 0,
+float anwComputeAdaptiveRadius(int age = 1, int strategy = 0,
                               vector baseCenter = cInvalidVector)
 {
    bool lateGame = (age >= 3);
-   float base = llGetLegendaryWallRadius(lateGame);
+   float base = anwGetWallRadius(lateGame);
 
    int   popCap  = kbGetPopCap();
    float vilCount = kbUnitCount(cMyID, gEconUnit, cUnitStateAlive);
@@ -597,7 +601,7 @@ float llComputeAdaptiveRadius(int age = 1, int strategy = 0,
    if (scaled < 12.0) { scaled = 12.0; }
    if (scaled > 60.0) { scaled = 60.0; }
 
-   llProbe("wall.adaptive_radius",
+   anwProbe("wall.adaptive_radius",
       "base=" + base + " ratio=" + villageRatio + " result=" + scaled +
       " age=" + age + " strategy=" + strategy);
    return (scaled);
@@ -611,66 +615,66 @@ float llComputeAdaptiveRadius(int age = 1, int strategy = 0,
 // FortressRing: full 360-degree ring wall with extra thickness/gates.
 // Valette, Pachacuti, Frederick, Suleiman, Catherine, Bourbon France.
 // Keeps symmetric center — fortress doctrine is all-around defense.
-int llPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+int anwPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   // Per-civ knob: radius — scale adaptive radius by (gLLWallRadius / 18.0),
+   // Per-civ knob: radius — scale adaptive radius by (gANWWallRadius / 18.0),
    // where 18 is the default tile-radius. If knob is 0 (Mobile civ called by
    // mistake) fall back to adaptive default.
-   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter);
-   if (gLLWallRadius > 0)
+   float radius = anwComputeAdaptiveRadius(kbGetAge(), gANWWallStrategy, baseCenter);
+   if (gANWWallRadius > 0)
    {
-      radius = radius * (1.0 * gLLWallRadius / 18.0);
+      radius = radius * (1.0 * gANWWallRadius / 18.0);
    }
    int planID = aiPlanCreate("FortressRing Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
    aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
-      llSelectWallType(gLLWallStrategy, kbGetAge()));
+      anwSelectWallType(gANWWallStrategy, kbGetAge()));
    // Per-civ knob: villager pool. Default 4, capped at >=2 floor for stalled-
    // plan release. Range tested 4..10 across calibrated civs.
-   int vilCap = gLLWallVillagerCount;
+   int vilCap = gANWWallVillagerCount;
    if (vilCap < 2) { vilCap = 2; }
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, vilCap);
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, baseCenter);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
    // Per-civ knob: gate count. Default 3, fortress civs typically 2-4.
-   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
    aiPlanSetBaseID(planID, mainBaseID);
    aiPlanSetEscrowID(planID, cEconomyEscrowID);
    aiPlanSetDesiredPriority(planID, 88);  // raised 75 -> 88 so wall wins over barracks/houses
    aiPlanSetActive(planID, true);
-   llProbe("plan.wall.create", "type=FortressRing radius=" + radius +
-      " gates=" + gLLWallGateCount + " vils=2-" + vilCap +
-      " radKnob=" + gLLWallRadius + " priority=88 plan=" + planID);
-   // Knob: gLLWallTowerInterleave — records intent; sub-plan creation
+   anwProbe("plan.wall.create", "type=FortressRing radius=" + radius +
+      " gates=" + gANWWallGateCount + " vils=2-" + vilCap +
+      " radKnob=" + gANWWallRadius + " priority=88 plan=" + planID);
+   // Knob: gANWWallTowerInterleave — records intent; sub-plan creation
    // would require a separate build-outpost plan loop which is too invasive here.
    // KNOB-TODO: when a confirmed outpost build-plan API is available, create
-   // supplementary outpost plans spaced every gLLWallTowerInterleave tiles.
-   if (gLLWallTowerInterleave > 0)
+   // supplementary outpost plans spaced every gANWWallTowerInterleave tiles.
+   if (gANWWallTowerInterleave > 0)
    {
-      llProbe("wall.tower.interleave", "knob=" + gLLWallTowerInterleave +
+      anwProbe("wall.tower.interleave", "knob=" + gANWWallTowerInterleave +
          " strategy=FortressRing plan=" + planID);
    }
-   // Knob: gLLWallOuterRingDelta — double-ring for Fortress doctrine at Age 3+.
+   // Knob: gANWWallOuterRingDelta — double-ring for Fortress doctrine at Age 3+.
    // Creates a second concentric ring at radius + delta tiles, lower priority.
-   if ((gLLWallOuterRingDelta > 0) && (kbGetAge() >= cAge3))
+   if ((gANWWallOuterRingDelta > 0) && (kbGetAge() >= cAge3))
    {
-      float outerRadius = radius + (1.0 * gLLWallOuterRingDelta);
+      float outerRadius = radius + (1.0 * gANWWallOuterRingDelta);
       int outerPlanID = aiPlanCreate("FortressRing OuterRing", cPlanBuildWall);
       if (outerPlanID >= 0)
       {
-         int outerVilCap = gLLWallVillagerCount;
+         int outerVilCap = gANWWallVillagerCount;
          if (outerVilCap < 2) { outerVilCap = 2; }
          aiPlanSetVariableInt(outerPlanID, cBuildWallPlanWallType, 0,
-            llSelectWallType(gLLWallStrategy, kbGetAge()));
+            anwSelectWallType(gANWWallStrategy, kbGetAge()));
          aiPlanAddUnitType(outerPlanID, gEconUnit, 0, 2, outerVilCap);
          aiPlanSetVariableVector(outerPlanID, cBuildWallPlanWallRingCenterPoint, 0, baseCenter);
          aiPlanSetVariableFloat(outerPlanID, cBuildWallPlanWallRingRadius, 0.0, outerRadius);
-         aiPlanSetVariableInt(outerPlanID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+         aiPlanSetVariableInt(outerPlanID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
          aiPlanSetBaseID(outerPlanID, mainBaseID);
          aiPlanSetEscrowID(outerPlanID, cEconomyEscrowID);
          aiPlanSetDesiredPriority(outerPlanID, 83);  // 88 - 5
          aiPlanSetActive(outerPlanID, true);
-         llProbe("wall.outer_ring", "type=FortressRing delta=" + gLLWallOuterRingDelta +
+         anwProbe("wall.outer_ring", "type=FortressRing delta=" + gANWWallOuterRingDelta +
             " outerRadius=" + outerRadius + " plan=" + outerPlanID);
       }
    }
@@ -681,64 +685,64 @@ int llPlanFortressRingWall(int mainBaseID = -1, vector baseCenter = cInvalidVect
 // Shivaji (Maratha hill forts), Pachacuti (valley mouths), Kangxi (Great Wall).
 // Fallback to a tighter ring if chokepoint detection fails on flat maps —
 // biased forward toward enemy since chokepoints always face outward.
-int llPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+int anwPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter) - 4.0;
+   float radius = anwComputeAdaptiveRadius(kbGetAge(), gANWWallStrategy, baseCenter) - 4.0;
    // Per-civ knob: chokepoint civs use smaller rings (radius knob 10-12 typical)
-   if (gLLWallRadius > 0)
+   if (gANWWallRadius > 0)
    {
-      radius = radius * (1.0 * gLLWallRadius / 18.0);
+      radius = radius * (1.0 * gANWWallRadius / 18.0);
    }
-   // Knob: gLLWallSegmentLength — cBuildWallPlanWallSegmentLength does not
+   // Knob: gANWWallSegmentLength — cBuildWallPlanWallSegmentLength does not
    // exist in the engine constants exposed by this codebase (grepped, absent).
    // Instead, a smaller segment length implies tighter coverage: bias the ring
    // radius downward proportionally so shorter segments yield a tighter arc.
    // Default segment length is 12; civs with knob < 12 get a tighter ring,
    // civs with knob > 12 get a wider arc (more exposed but covers more ground).
    // Formula: radius *= segmentLength / 12.0  (net-neutral at the default).
-   if (gLLWallSegmentLength > 0)
+   if (gANWWallSegmentLength > 0)
    {
-      radius = radius * (1.0 * gLLWallSegmentLength / 12.0);
+      radius = radius * (1.0 * gANWWallSegmentLength / 12.0);
    }
-   llProbe("wall.segmentlength", "knob=" + gLLWallSegmentLength + " radius=" + radius);
+   anwProbe("wall.segmentlength", "knob=" + gANWWallSegmentLength + " radius=" + radius);
    // SMART WALLS — Track 1.1a: real chokepoint detection rather than
    // the misnamed forward-biased fallback. Detector itself falls back
    // to forward-biased on flat maps.
-   vector center = llDetectChokepointVector(mainBaseID, baseCenter);
+   vector center = anwDetectChokepointVector(mainBaseID, baseCenter);
    int planID = aiPlanCreate("Chokepoint Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
    aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
-      llSelectWallType(gLLWallStrategy, kbGetAge()));
-   int vilCap = gLLWallVillagerCount;
+      anwSelectWallType(gANWWallStrategy, kbGetAge()));
+   int vilCap = gANWWallVillagerCount;
    if (vilCap < 2) { vilCap = 2; }
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, vilCap);
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
-   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
    aiPlanSetBaseID(planID, mainBaseID);
    aiPlanSetEscrowID(planID, cEconomyEscrowID);
    aiPlanSetDesiredPriority(planID, 85);
    aiPlanSetActive(planID, true);
-   llProbe("plan.wall.create", "type=Chokepoint radius=" + radius +
-      " gates=" + gLLWallGateCount + " vils=2-" + vilCap +
-      " radKnob=" + gLLWallRadius + " priority=85 plan=" + planID);
-   // Knob: gLLWallTowerInterleave — records intent; sub-plan creation
+   anwProbe("plan.wall.create", "type=Chokepoint radius=" + radius +
+      " gates=" + gANWWallGateCount + " vils=2-" + vilCap +
+      " radKnob=" + gANWWallRadius + " priority=85 plan=" + planID);
+   // Knob: gANWWallTowerInterleave — records intent; sub-plan creation
    // would require a separate build-outpost plan loop which is too invasive here.
    // KNOB-TODO: when a confirmed outpost build-plan API is available, create
-   // supplementary outpost plans spaced every gLLWallTowerInterleave tiles.
-   if (gLLWallTowerInterleave > 0)
+   // supplementary outpost plans spaced every gANWWallTowerInterleave tiles.
+   if (gANWWallTowerInterleave > 0)
    {
-      llProbe("wall.tower.interleave", "knob=" + gLLWallTowerInterleave +
+      anwProbe("wall.tower.interleave", "knob=" + gANWWallTowerInterleave +
          " strategy=Chokepoint plan=" + planID);
    }
    return (planID);
 }
 
 //==============================================================================
-// ANW 2026-05-30 SMART-WALLS: llDetectCoastVector
+// ANW 2026-05-30 SMART-WALLS: anwDetectCoastVector
 // SMART WALLS — Track 1.1b EXTENSION: coastline exploitation.
 //
-// llGetForwardBiasedWallCenter handles AVOIDANCE (walks inland if biased
+// anwGetForwardBiasedWallCenter handles AVOIDANCE (walks inland if biased
 // center lands in water). This helper handles EXPLOITATION: detects the
 // direction from baseCenter toward water-bordering areas, then returns a
 // wall center pushed INLAND (opposite of the coast centroid). The seaward
@@ -748,14 +752,14 @@ int llPlanChokepointWall(int mainBaseID = -1, vector baseCenter = cInvalidVector
 // real coastal/island maps instead of cosmetic.
 //
 // Returns cInvalidVector when no water borders are detected (inland map);
-// caller must fall back to llGetForwardBiasedWallCenter() in that case.
+// caller must fall back to anwGetForwardBiasedWallCenter() in that case.
 //
 // Per-AI cached: computed once per match.
 //==============================================================================
-vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+vector anwDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
    // 2026-05-27: keyed-on-baseAreaID invalidation, same fix as
-   // llDetectChokepointVector — see that function's header comment for
+   // anwDetectChokepointVector — see that function's header comment for
    // the rationale. Without keying, a base relocation (e.g. revolution
    // re-anchor) returns the old inland-shift vector for the wrong base.
    static int coastCached = 0;
@@ -768,7 +772,7 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
       // probe. Previously this set coastCached=1 with an cInvalidVector,
       // which then short-circuited *valid* subsequent calls — turning
       // one transient bad call into a permanent dead cache.
-      llProbe("wall.coast",
+      anwProbe("wall.coast",
          "vec=cInvalidVector waterBorders=0 cached=0 fallback=invalidArgs");
       return (cInvalidVector);
    }
@@ -777,7 +781,7 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
    if (baseAreaID < 0)
    {
       // Same logic as above: don't cache a "no resolvable area" result.
-      llProbe("wall.coast",
+      anwProbe("wall.coast",
          "vec=cInvalidVector waterBorders=0 cached=0 fallback=noBaseArea");
       return (cInvalidVector);
    }
@@ -785,13 +789,13 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
    // Cache hit only when the entry was computed against the same area.
    if ((coastCached == 1) && (coastBaseAreaID == baseAreaID))
    {
-      llProbe("wall.coast", "vec=" + llFmtVec(coastVec) +
+      anwProbe("wall.coast", "vec=" + anwFmtVec(coastVec) +
          " waterBorders=0 cached=1 baseArea=" + coastBaseAreaID);
       return (coastVec);
    }
    if ((coastCached == 1) && (coastBaseAreaID != baseAreaID))
    {
-      llProbe("wall.coast", "invalidated oldArea=" + coastBaseAreaID +
+      anwProbe("wall.coast", "invalidated oldArea=" + coastBaseAreaID +
          " newArea=" + baseAreaID);
       coastCached = 0;
    }
@@ -805,7 +809,7 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
       coastVec = cInvalidVector;
       coastBaseAreaID = baseAreaID;
       coastCached = 1;
-      llProbe("wall.coast",
+      anwProbe("wall.coast",
          "vec=cInvalidVector waterBorders=0 cached=0 fallback=noBorders baseArea=" + baseAreaID);
       return (cInvalidVector);
    }
@@ -833,7 +837,7 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
       coastVec = cInvalidVector;
       coastBaseAreaID = baseAreaID;
       coastCached = 1;
-      llProbe("wall.coast",
+      anwProbe("wall.coast",
          "vec=cInvalidVector waterBorders=0 cached=0 fallback=inlandMap baseArea=" + baseAreaID);
       return (cInvalidVector);
    }
@@ -848,12 +852,15 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
       coastVec = baseCenter;
       coastBaseAreaID = baseAreaID;
       coastCached = 1;
-      llProbe("wall.coast", "vec=" + llFmtVec(baseCenter) +
+      anwProbe("wall.coast", "vec=" + anwFmtVec(baseCenter) +
          " waterBorders=" + waterCount + " cached=0 fallback=zeroMagnitude baseArea=" + baseAreaID);
       return (baseCenter);
    }
-   vector inlandUnit = xsVectorNormalize(0.0 - seaward);
-   float radius = llGetLegendaryWallRadius(false);
+   // NOTE: XS has no `float - vector` operator (Error 0308 "illegal or invalid
+   // expression"). Negate the vector via scalar multiply (`vector * float` is
+   // legal, as used below for `inlandUnit * shift`).
+   vector inlandUnit = xsVectorNormalize(seaward * -1.0);
+   float radius = anwGetWallRadius(false);
    // Inland push of ~30% of wall radius — same scale as forward bias but
    // anchored to the coast geometry rather than the front vector. Matches
    // historical peninsular doctrine: wall the landward face thick, leave
@@ -863,7 +870,7 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
    coastVec = coastBiased;
    coastBaseAreaID = baseAreaID;
    coastCached = 1;
-   llProbe("wall.coast", "vec=" + llFmtVec(coastBiased) +
+   anwProbe("wall.coast", "vec=" + anwFmtVec(coastBiased) +
       " waterBorders=" + waterCount + " cached=0 shift=" + shift +
       " baseArea=" + baseAreaID);
    return (coastBiased);
@@ -874,27 +881,27 @@ vector llDetectCoastVector(int mainBaseID = -1, vector baseCenter = cInvalidVect
 // the landward approach more thickly — matches real peninsular doctrine.
 //
 // 2026-05-13 (Track 1.1b extension): on coastal/island maps we now use
-// llDetectCoastVector() to push the ring center AWAY from the water-border
-// centroid. Falls back to llGetForwardBiasedWallCenter (the old behaviour)
+// anwDetectCoastVector() to push the ring center AWAY from the water-border
+// centroid. Falls back to anwGetForwardBiasedWallCenter (the old behaviour)
 // on inland maps where no water border is detected — keeps the doctrine
 // graceful on flat terrain instead of NaN-ing the plan.
-int llPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+int anwPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter);
-   if (gLLWallRadius > 0)
+   float radius = anwComputeAdaptiveRadius(kbGetAge(), gANWWallStrategy, baseCenter);
+   if (gANWWallRadius > 0)
    {
-      radius = radius * (1.0 * gLLWallRadius / 18.0);
+      radius = radius * (1.0 * gANWWallRadius / 18.0);
    }
    // Per-civ knob: forward bias fraction (0.10..0.45 typical for coastal civs).
    float biasFrac = 0.20;
-   if (gLLWallForwardBiasFraction > 0.0) { biasFrac = gLLWallForwardBiasFraction; }
-   vector coastCenter = llDetectCoastVector(mainBaseID, baseCenter);
+   if (gANWWallForwardBiasFraction > 0.0) { biasFrac = gANWWallForwardBiasFraction; }
+   vector coastCenter = anwDetectCoastVector(mainBaseID, baseCenter);
    vector center = cInvalidVector;
    string centerSrc = "";
    if (coastCenter == cInvalidVector)
    {
       // Inland map — fall back to forward-biased (front-vector) center.
-      center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, biasFrac);
+      center = anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, biasFrac);
       centerSrc = "frontBias";
    }
    else
@@ -905,123 +912,123 @@ int llPlanCoastalBatteriesWall(int mainBaseID = -1, vector baseCenter = cInvalid
    int planID = aiPlanCreate("CoastalBatteries Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
    aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
-      llSelectWallType(gLLWallStrategy, kbGetAge()));
-   int vilCap = gLLWallVillagerCount;
+      anwSelectWallType(gANWWallStrategy, kbGetAge()));
+   int vilCap = gANWWallVillagerCount;
    if (vilCap < 2) { vilCap = 2; }
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, vilCap);
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
-   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
    aiPlanSetBaseID(planID, mainBaseID);
    aiPlanSetEscrowID(planID, cEconomyEscrowID);
    aiPlanSetDesiredPriority(planID, 86);
    aiPlanSetActive(planID, true);
-   llProbe("plan.wall.create", "type=CoastalBatteries radius=" + radius +
-      " gates=" + gLLWallGateCount + " vils=2-" + vilCap +
+   anwProbe("plan.wall.create", "type=CoastalBatteries radius=" + radius +
+      " gates=" + gANWWallGateCount + " vils=2-" + vilCap +
       " bias=" + biasFrac + " priority=86 plan=" + planID +
       " centerSrc=" + centerSrc);
-   // Knob: gLLWallTowerInterleave — intent probe; KNOB-TODO: wire actual outpost plans.
-   if (gLLWallTowerInterleave > 0)
+   // Knob: gANWWallTowerInterleave — intent probe; KNOB-TODO: wire actual outpost plans.
+   if (gANWWallTowerInterleave > 0)
    {
-      llProbe("wall.tower.interleave", "knob=" + gLLWallTowerInterleave +
+      anwProbe("wall.tower.interleave", "knob=" + gANWWallTowerInterleave +
          " strategy=CoastalBatteries plan=" + planID);
    }
    return (planID);
 }
 
 // FrontierPalisades: quick lighter ring, many gates, less stone.
-// Washington, Jefferson, Brock, Papineau, Houston, Kruger, Mannerheim, Morazán.
-int llPlanFrontierPalisadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+// Washington, Jefferson, Brock, Houston, Kruger, Mannerheim, Morazán.
+int anwPlanFrontierPalisadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter) + 2.0;
-   if (gLLWallRadius > 0)
+   float radius = anwComputeAdaptiveRadius(kbGetAge(), gANWWallStrategy, baseCenter) + 2.0;
+   if (gANWWallRadius > 0)
    {
-      radius = radius * (1.0 * gLLWallRadius / 18.0);
+      radius = radius * (1.0 * gANWWallRadius / 18.0);
    }
    float biasFrac = 0.15;
-   if (gLLWallForwardBiasFraction > 0.0) { biasFrac = gLLWallForwardBiasFraction; }
-   vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, biasFrac);
+   if (gANWWallForwardBiasFraction > 0.0) { biasFrac = gANWWallForwardBiasFraction; }
+   vector center = anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, biasFrac);
    int planID = aiPlanCreate("FrontierPalisade Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
    aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
-      llSelectWallType(gLLWallStrategy, kbGetAge()));
-   int vilCap = gLLWallVillagerCount;
+      anwSelectWallType(gANWWallStrategy, kbGetAge()));
+   int vilCap = gANWWallVillagerCount;
    if (vilCap < 2) { vilCap = 2; }
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, vilCap);
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
-   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
    aiPlanSetBaseID(planID, mainBaseID);
    aiPlanSetEscrowID(planID, cEconomyEscrowID);
    aiPlanSetDesiredPriority(planID, 82);  // wood-cheap palisades, complete first
    aiPlanSetActive(planID, true);
-   llProbe("plan.wall.create", "type=FrontierPalisade radius=" + radius +
-      " gates=" + gLLWallGateCount + " vils=2-" + vilCap +
+   anwProbe("plan.wall.create", "type=FrontierPalisade radius=" + radius +
+      " gates=" + gANWWallGateCount + " vils=2-" + vilCap +
       " bias=" + biasFrac + " priority=82 plan=" + planID);
-   // Knob: gLLWallTowerInterleave — intent probe; KNOB-TODO: wire actual outpost plans.
-   if (gLLWallTowerInterleave > 0)
+   // Knob: gANWWallTowerInterleave — intent probe; KNOB-TODO: wire actual outpost plans.
+   if (gANWWallTowerInterleave > 0)
    {
-      llProbe("wall.tower.interleave", "knob=" + gLLWallTowerInterleave +
+      anwProbe("wall.tower.interleave", "knob=" + gANWWallTowerInterleave +
          " strategy=FrontierPalisade plan=" + planID);
    }
    return (planID);
 }
 
 // UrbanBarricade: tight compact inner ring (Robespierre Paris, Garibaldi cities).
-int llPlanUrbanBarricadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+int anwPlanUrbanBarricadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
-   float radius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter) - 8.0;
-   if (gLLWallRadius > 0)
+   float radius = anwComputeAdaptiveRadius(kbGetAge(), gANWWallStrategy, baseCenter) - 8.0;
+   if (gANWWallRadius > 0)
    {
-      radius = radius * (1.0 * gLLWallRadius / 18.0);
+      radius = radius * (1.0 * gANWWallRadius / 18.0);
    }
    float biasFrac = 0.15;
-   if (gLLWallForwardBiasFraction > 0.0) { biasFrac = gLLWallForwardBiasFraction; }
-   vector center = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, biasFrac);
+   if (gANWWallForwardBiasFraction > 0.0) { biasFrac = gANWWallForwardBiasFraction; }
+   vector center = anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, biasFrac);
    int planID = aiPlanCreate("UrbanBarricade Wall", cPlanBuildWall);
    if (planID < 0) return (-1);
    aiPlanSetVariableInt(planID, cBuildWallPlanWallType, 0,
-      llSelectWallType(gLLWallStrategy, kbGetAge()));
-   int vilCap = gLLWallVillagerCount;
+      anwSelectWallType(gANWWallStrategy, kbGetAge()));
+   int vilCap = gANWWallVillagerCount;
    if (vilCap < 2) { vilCap = 2; }
    aiPlanAddUnitType(planID, gEconUnit, 0, 2, vilCap);
    aiPlanSetVariableVector(planID, cBuildWallPlanWallRingCenterPoint, 0, center);
    aiPlanSetVariableFloat(planID, cBuildWallPlanWallRingRadius, 0.0, radius);
-   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+   aiPlanSetVariableInt(planID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
    aiPlanSetBaseID(planID, mainBaseID);
    aiPlanSetEscrowID(planID, cEconomyEscrowID);
    aiPlanSetDesiredPriority(planID, 84);
    aiPlanSetActive(planID, true);
-   llProbe("plan.wall.create", "type=UrbanBarricade radius=" + radius +
-      " gates=" + gLLWallGateCount + " vils=2-" + vilCap +
+   anwProbe("plan.wall.create", "type=UrbanBarricade radius=" + radius +
+      " gates=" + gANWWallGateCount + " vils=2-" + vilCap +
       " bias=" + biasFrac + " priority=84 plan=" + planID);
-   // Knob: gLLWallTowerInterleave — intent probe; KNOB-TODO: wire actual outpost plans.
-   if (gLLWallTowerInterleave > 0)
+   // Knob: gANWWallTowerInterleave — intent probe; KNOB-TODO: wire actual outpost plans.
+   if (gANWWallTowerInterleave > 0)
    {
-      llProbe("wall.tower.interleave", "knob=" + gLLWallTowerInterleave +
+      anwProbe("wall.tower.interleave", "knob=" + gANWWallTowerInterleave +
          " strategy=UrbanBarricade plan=" + planID);
    }
-   // Knob: gLLWallOuterRingDelta — double-ring for Urban doctrine at Age 3+.
+   // Knob: gANWWallOuterRingDelta — double-ring for Urban doctrine at Age 3+.
    // Creates a second concentric ring at radius + delta tiles, lower priority.
-   if ((gLLWallOuterRingDelta > 0) && (kbGetAge() >= cAge3))
+   if ((gANWWallOuterRingDelta > 0) && (kbGetAge() >= cAge3))
    {
-      float outerRadius = radius + (1.0 * gLLWallOuterRingDelta);
+      float outerRadius = radius + (1.0 * gANWWallOuterRingDelta);
       int outerPlanID = aiPlanCreate("UrbanBarricade OuterRing", cPlanBuildWall);
       if (outerPlanID >= 0)
       {
-         int outerVilCap = gLLWallVillagerCount;
+         int outerVilCap = gANWWallVillagerCount;
          if (outerVilCap < 2) { outerVilCap = 2; }
          aiPlanSetVariableInt(outerPlanID, cBuildWallPlanWallType, 0,
-            llSelectWallType(gLLWallStrategy, kbGetAge()));
+            anwSelectWallType(gANWWallStrategy, kbGetAge()));
          aiPlanAddUnitType(outerPlanID, gEconUnit, 0, 2, outerVilCap);
          aiPlanSetVariableVector(outerPlanID, cBuildWallPlanWallRingCenterPoint, 0, center);
          aiPlanSetVariableFloat(outerPlanID, cBuildWallPlanWallRingRadius, 0.0, outerRadius);
-         aiPlanSetVariableInt(outerPlanID, cBuildWallPlanNumberOfGates, 0, gLLWallGateCount);
+         aiPlanSetVariableInt(outerPlanID, cBuildWallPlanNumberOfGates, 0, gANWWallGateCount);
          aiPlanSetBaseID(outerPlanID, mainBaseID);
          aiPlanSetEscrowID(outerPlanID, cEconomyEscrowID);
          aiPlanSetDesiredPriority(outerPlanID, 79);  // 84 - 5
          aiPlanSetActive(outerPlanID, true);
-         llProbe("wall.outer_ring", "type=UrbanBarricade delta=" + gLLWallOuterRingDelta +
+         anwProbe("wall.outer_ring", "type=UrbanBarricade delta=" + gANWWallOuterRingDelta +
             " outerRadius=" + outerRadius + " plan=" + outerPlanID);
       }
    }
@@ -1030,36 +1037,36 @@ int llPlanUrbanBarricadeWall(int mainBaseID = -1, vector baseCenter = cInvalidVe
 
 // MobileNoWalls: no walls at all, leaner strategy built elsewhere.
 // Returns -1 to signal "skip entirely".
-int llPlanMobileNoWalls(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+int anwPlanMobileNoWalls(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
    return (-1);  // intentionally no wall plan
 }
 
 // Strategy dispatch — called from the rule.
-int llPlanExplorationAgeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
+int anwPlanExplorationAgeWall(int mainBaseID = -1, vector baseCenter = cInvalidVector)
 {
    // LL-WALL probe — records which doctrine branch ran and the base center.
    // One emission per AI per match (rule self-disables after first dispatch),
    // so the replay parser can map leader → actual wall strategy exercised.
-   llProbe("plan.wall", "strategy=" + gLLWallStrategy + " base=" + mainBaseID +
-      " center=" + llFmtVec(baseCenter) + " wallLevel=" + gLLWallLevel +
-      " earlyWalls=" + gLLEarlyWallingEnabled);
+   anwProbe("plan.wall", "strategy=" + gANWWallStrategy + " base=" + mainBaseID +
+      " center=" + anwFmtVec(baseCenter) + " wallLevel=" + gANWWallLevel +
+      " earlyWalls=" + gANWEarlyWallingEnabled);
 
    int primaryPlanID = -1;
-   if (gLLWallStrategy == cLLWallStrategyFortressRing)       primaryPlanID = llPlanFortressRingWall(mainBaseID, baseCenter);
-   else if (gLLWallStrategy == cLLWallStrategyChokepointSegments) primaryPlanID = llPlanChokepointWall(mainBaseID, baseCenter);
-   else if (gLLWallStrategy == cLLWallStrategyCoastalBatteries)   primaryPlanID = llPlanCoastalBatteriesWall(mainBaseID, baseCenter);
-   else if (gLLWallStrategy == cLLWallStrategyFrontierPalisades)  primaryPlanID = llPlanFrontierPalisadeWall(mainBaseID, baseCenter);
-   else if (gLLWallStrategy == cLLWallStrategyUrbanBarricade)     primaryPlanID = llPlanUrbanBarricadeWall(mainBaseID, baseCenter);
-   else if (gLLWallStrategy == cLLWallStrategyMobileNoWalls)      primaryPlanID = llPlanMobileNoWalls(mainBaseID, baseCenter);
+   if (gANWWallStrategy == cANWWallStrategyFortressRing)       primaryPlanID = anwPlanFortressRingWall(mainBaseID, baseCenter);
+   else if (gANWWallStrategy == cANWWallStrategyChokepointSegments) primaryPlanID = anwPlanChokepointWall(mainBaseID, baseCenter);
+   else if (gANWWallStrategy == cANWWallStrategyCoastalBatteries)   primaryPlanID = anwPlanCoastalBatteriesWall(mainBaseID, baseCenter);
+   else if (gANWWallStrategy == cANWWallStrategyFrontierPalisades)  primaryPlanID = anwPlanFrontierPalisadeWall(mainBaseID, baseCenter);
+   else if (gANWWallStrategy == cANWWallStrategyUrbanBarricade)     primaryPlanID = anwPlanUrbanBarricadeWall(mainBaseID, baseCenter);
+   else if (gANWWallStrategy == cANWWallStrategyMobileNoWalls)      primaryPlanID = anwPlanMobileNoWalls(mainBaseID, baseCenter);
    else
    {
       // Fallback — FortressRing if unknown.
-      llProbe("plan.wall", "fallback=FortressRing unknownStrategy=" + gLLWallStrategy);
-      primaryPlanID = llPlanFortressRingWall(mainBaseID, baseCenter);
+      anwProbe("plan.wall", "fallback=FortressRing unknownStrategy=" + gANWWallStrategy);
+      primaryPlanID = anwPlanFortressRingWall(mainBaseID, baseCenter);
    }
 
-   // Knob: gLLWallSecondaryStrategy — secondary fallback plan at lower priority.
+   // Knob: gANWWallSecondaryStrategy — secondary fallback plan at lower priority.
    //
    // Two firing modes depending on the PRIMARY strategy:
    //
@@ -1079,10 +1086,10 @@ int llPlanExplorationAgeWall(int mainBaseID = -1, vector baseCenter = cInvalidVe
    //
    // In both modes the secondary must differ from the primary (no-op
    // double-plans skipped). Knob == -1 disables the fallback entirely.
-   if ((gLLWallSecondaryStrategy >= 0) &&
-       (gLLWallSecondaryStrategy != gLLWallStrategy))
+   if ((gANWWallSecondaryStrategy >= 0) &&
+       (gANWWallSecondaryStrategy != gANWWallStrategy))
    {
-      bool mobilePrimary = (gLLWallStrategy == cLLWallStrategyMobileNoWalls);
+      bool mobilePrimary = (gANWWallStrategy == cANWWallStrategyMobileNoWalls);
       int secPrio = 70;
       bool fireSecondary = true;
       if (mobilePrimary)
@@ -1094,33 +1101,33 @@ int llPlanExplorationAgeWall(int mainBaseID = -1, vector baseCenter = cInvalidVe
       }
       if (fireSecondary)
       {
-         llProbe("wall.secondary", "primary=" + gLLWallStrategy +
-            " secondary=" + gLLWallSecondaryStrategy + " primaryPlan=" + primaryPlanID +
+         anwProbe("wall.secondary", "primary=" + gANWWallStrategy +
+            " secondary=" + gANWWallSecondaryStrategy + " primaryPlan=" + primaryPlanID +
             " mode=" + (mobilePrimary ? "mobileFallback" : "hybridLayer") +
             " age=" + kbGetAge());
          // Call secondary plan function; reduce its priority via plan set.
          int secPlanID = -1;
-         if (gLLWallSecondaryStrategy == cLLWallStrategyFortressRing)
-            secPlanID = llPlanFortressRingWall(mainBaseID, baseCenter);
-         else if (gLLWallSecondaryStrategy == cLLWallStrategyChokepointSegments)
-            secPlanID = llPlanChokepointWall(mainBaseID, baseCenter);
-         else if (gLLWallSecondaryStrategy == cLLWallStrategyCoastalBatteries)
-            secPlanID = llPlanCoastalBatteriesWall(mainBaseID, baseCenter);
-         else if (gLLWallSecondaryStrategy == cLLWallStrategyFrontierPalisades)
-            secPlanID = llPlanFrontierPalisadeWall(mainBaseID, baseCenter);
-         else if (gLLWallSecondaryStrategy == cLLWallStrategyUrbanBarricade)
-            secPlanID = llPlanUrbanBarricadeWall(mainBaseID, baseCenter);
+         if (gANWWallSecondaryStrategy == cANWWallStrategyFortressRing)
+            secPlanID = anwPlanFortressRingWall(mainBaseID, baseCenter);
+         else if (gANWWallSecondaryStrategy == cANWWallStrategyChokepointSegments)
+            secPlanID = anwPlanChokepointWall(mainBaseID, baseCenter);
+         else if (gANWWallSecondaryStrategy == cANWWallStrategyCoastalBatteries)
+            secPlanID = anwPlanCoastalBatteriesWall(mainBaseID, baseCenter);
+         else if (gANWWallSecondaryStrategy == cANWWallStrategyFrontierPalisades)
+            secPlanID = anwPlanFrontierPalisadeWall(mainBaseID, baseCenter);
+         else if (gANWWallSecondaryStrategy == cANWWallStrategyUrbanBarricade)
+            secPlanID = anwPlanUrbanBarricadeWall(mainBaseID, baseCenter);
          if (secPlanID >= 0)
          {
             aiPlanSetDesiredPriority(secPlanID, secPrio);
-            llProbe("wall.secondary", "secPlan=" + secPlanID +
+            anwProbe("wall.secondary", "secPlan=" + secPlanID +
                " priority=" + secPrio);
          }
       }
       else
       {
-         llProbe("wall.secondary", "deferred primary=" + gLLWallStrategy +
-            " secondary=" + gLLWallSecondaryStrategy + " age=" + kbGetAge() +
+         anwProbe("wall.secondary", "deferred primary=" + gANWWallStrategy +
+            " secondary=" + gANWWallSecondaryStrategy + " age=" + kbGetAge() +
             " need=cAge3");
       }
    }
@@ -1153,18 +1160,18 @@ minInterval 20
 
    if (cvOkToBuild == false)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe + " bail=cvOkToBuild");
-      llLogDecision("WALL", "exploration walling disabled by config (cvOkToBuild)");
+      anwProbe("wall.gate", "tick=" + gateTickProbe + " bail=cvOkToBuild");
+      anwLogDecision("WALL", "exploration walling disabled by config (cvOkToBuild)");
       xsDisableSelf();
       return;
    }
-   if (llShouldBuildLegendaryWalls(true) == false)
+   if (anwShouldBuildWalls(true) == false)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe +
-         " bail=llShould early=" + gLLEarlyWallingEnabled +
-         " level=" + gLLWallLevel +
+      anwProbe("wall.gate", "tick=" + gateTickProbe +
+         " bail=anwShould early=" + gANWEarlyWallingEnabled +
+         " level=" + gANWWallLevel +
          " okWalls=" + cvOkToBuildWalls);
-      llLogDecision("WALL", "exploration walling disabled by config (llShould)");
+      anwLogDecision("WALL", "exploration walling disabled by config (anwShould)");
       xsDisableSelf();
       return;
    }
@@ -1173,7 +1180,7 @@ minInterval 20
    // we're past Exploration — keeps responsibilities clean.
    if (kbGetAge() > cAge1)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe + " bail=ageOver age=" + kbGetAge());
+      anwProbe("wall.gate", "tick=" + gateTickProbe + " bail=ageOver age=" + kbGetAge());
       xsDisableSelf();
       return;
    }
@@ -1181,7 +1188,7 @@ minInterval 20
    int mainBaseID = kbBaseGetMainID(cMyID);
    if (mainBaseID < 0)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe + " bail=noMainBase");
+      anwProbe("wall.gate", "tick=" + gateTickProbe + " bail=noMainBase");
       return;
    }
 
@@ -1190,7 +1197,7 @@ minInterval 20
    int existingRingPlan = aiPlanGetIDByTypeAndVariableType(cPlanBuildWall, cBuildWallPlanWallType, cBuildWallPlanWallTypeRing, true);
    if (existingRingPlan >= 0)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe + " skip=ringActive plan=" + existingRingPlan);
+      anwProbe("wall.gate", "tick=" + gateTickProbe + " skip=ringActive plan=" + existingRingPlan);
       xsEnableRule("fillInWallGapsNew");
       return;
    }
@@ -1198,7 +1205,7 @@ minInterval 20
    int existingWalls = kbUnitCount(cMyID, cUnitTypeAbstractWall, cUnitStateABQ);
    if (existingWalls > 0)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe + " skip=wallsExist count=" + existingWalls);
+      anwProbe("wall.gate", "tick=" + gateTickProbe + " skip=wallsExist count=" + existingWalls);
       xsEnableRule("fillInWallGapsNew");
       // Don't disable — if the plan disappears later and all walls die,
       // we want this rule to recreate the ring instead of going silent.
@@ -1208,7 +1215,7 @@ minInterval 20
    float wood = kbResourceGet(cResourceWood);
    if (wood < 75.0)
    {
-      llProbe("wall.gate", "tick=" + gateTickProbe + " wait=lowWood wood=" + wood);
+      anwProbe("wall.gate", "tick=" + gateTickProbe + " wait=lowWood wood=" + wood);
       return;
    }
 
@@ -1218,39 +1225,39 @@ minInterval 20
       return;
    }
 
-   int wallPlanID = llPlanExplorationAgeWall(mainBaseID, baseCenter);
+   int wallPlanID = anwPlanExplorationAgeWall(mainBaseID, baseCenter);
    if (wallPlanID < 0)
    {
       // MobileNoWalls doctrine decision is permanent.
-      llLogDecision("WALL", "strategy=" + gLLWallStrategy + " declined to build walls (MobileNoWalls)");
+      anwLogDecision("WALL", "strategy=" + gANWWallStrategy + " declined to build walls (MobileNoWalls)");
       xsDisableSelf();
       return;
    }
 
-   llLogPlanEvent("create", wallPlanID, "exploration-wall strategy=" + gLLWallStrategy + " center=" + baseCenter);
+   anwLogPlanEvent("create", wallPlanID, "exploration-wall strategy=" + gANWWallStrategy + " center=" + baseCenter);
    xsEnableRule("fillInWallGapsNew");
    // SMART WALLS — Track 1.1d: arm the closure watchdog so it can
    // escalate / re-emit if the plan stalls at <60% closure.
    xsEnableRule("verifyWallClosure");
-   // Knob: gLLWallEarlyOutpostCount — record early outpost intent so validators
+   // Knob: gANWWallEarlyOutpostCount — record early outpost intent so validators
    // can confirm the knob was read. Actual outpost plan creation would need
    // the build-outpost API which is too invasive to add here.
    // KNOB-TODO: when a confirmed outpost build-plan API is available in the
-   // codebase, create gLLWallEarlyOutpostCount outpost plans at the wall radius.
-   if (gLLWallEarlyOutpostCount > 0)
+   // codebase, create gANWWallEarlyOutpostCount outpost plans at the wall radius.
+   if (gANWWallEarlyOutpostCount > 0)
    {
-      llProbe("wall.early_outposts", "knob=" + gLLWallEarlyOutpostCount +
+      anwProbe("wall.early_outposts", "knob=" + gANWWallEarlyOutpostCount +
          " wallPlan=" + wallPlanID);
    }
-   // Knob: gLLWallRepairAggressiveness — repair priority intent.
+   // Knob: gANWWallRepairAggressiveness — repair priority intent.
    // cBuildWallPlanRepair constants do not exist in this engine surface (grepped, absent).
    // Record probe so validators can confirm knob is consumed.
    // KNOB-TODO: if a repair plan constant is added to the engine, wire
-   // priority = 70 + gLLWallRepairAggressiveness * 5 here.
-   if (gLLWallRepairAggressiveness > 0)
+   // priority = 70 + gANWWallRepairAggressiveness * 5 here.
+   if (gANWWallRepairAggressiveness > 0)
    {
-      int repairPriority = 70 + gLLWallRepairAggressiveness * 5;
-      llProbe("wall.repair.aggression", "knob=" + gLLWallRepairAggressiveness +
+      int repairPriority = 70 + gANWWallRepairAggressiveness * 5;
+      anwProbe("wall.repair.aggression", "knob=" + gANWWallRepairAggressiveness +
          " intent_priority=" + repairPriority);
    }
    // Stay active: anti-spam dedup above prevents duplicate plans, but if
@@ -1286,7 +1293,7 @@ rule delayWallsNew
 inactive
 minInterval 30
 {
-   if (llShouldBuildLegendaryWalls(false) == false)
+   if (anwShouldBuildWalls(false) == false)
    {
       xsDisableSelf();
       return;
@@ -1297,9 +1304,9 @@ minInterval 30
       return;
    }
 
-   if (gLLWallStrategy == cLLWallStrategyMobileNoWalls)
+   if (gANWWallStrategy == cANWWallStrategyMobileNoWalls)
    {
-      llLogDecision("WALL", "late walling declined - MobileNoWalls doctrine");
+      anwLogDecision("WALL", "late walling declined - MobileNoWalls doctrine");
       xsDisableSelf();
       return;
    }
@@ -1324,30 +1331,30 @@ minInterval 30
    // Wider outer ring for late-game walls; more gates for sally options.
    // SMART WALLS — Track 1.1 (Defect 1 fix): late-game walls must respect
    // the per-doctrine strategy the same way the Age-1 dispatch in
-   // llPlanExplorationAgeWall does. Previously this path forward-biased
+   // anwPlanExplorationAgeWall does. Previously this path forward-biased
    // for everyone except FortressRing and never called
-   // llDetectChokepointVector(), so Pachacuti / Shivaji / Kangxi late-game
+   // anwDetectChokepointVector(), so Pachacuti / Shivaji / Kangxi late-game
    // walls would ring a forward-biased point rather than the actual valley
    // mouth that defines the doctrine.
    // SMART WALLS — Track 1.2c: adaptive radius (eco-saturation scaling).
-   float wallRadius = llComputeAdaptiveRadius(kbGetAge(), gLLWallStrategy, baseCenter);
+   float wallRadius = anwComputeAdaptiveRadius(kbGetAge(), gANWWallStrategy, baseCenter);
    vector wallCenter = baseCenter;
-   if (gLLWallStrategy == cLLWallStrategyFortressRing)
+   if (gANWWallStrategy == cANWWallStrategyFortressRing)
    {
       // Symmetric all-around ring; baseCenter is correct.
    }
-   else if (gLLWallStrategy == cLLWallStrategyChokepointSegments)
+   else if (gANWWallStrategy == cANWWallStrategyChokepointSegments)
    {
       // Real chokepoint detection (cached). Falls back to forward-bias
       // on flat maps with no impassable borders.
-      wallCenter = llDetectChokepointVector(mainBaseID, baseCenter);
+      wallCenter = anwDetectChokepointVector(mainBaseID, baseCenter);
    }
    else
    {
       // CoastalBatteries, FrontierPalisades, MobileNoWalls (skipped earlier
-      // via llShouldBuildLegendaryWalls), HiddenForts, etc. — bias toward
+      // via anwShouldBuildWalls), HiddenForts, etc. — bias toward
       // the enemy arc.
-      wallCenter = llGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.18);
+      wallCenter = anwGetForwardBiasedWallCenter(baseCenter, mainBaseID, 0.18);
    }
 
    // Static flag so the outer supplement only ever fires once.
@@ -1375,12 +1382,12 @@ minInterval 30
    // Count how many of the 8 sample points around the proposed ring are
    // land (not water/unmappable). Emit wall.perimeter_gaps for telemetry.
    // If landCount == 0, the entire ring is over water — skip this tick.
-   int perimLandCount = llCountPerimeterGaps(wallCenter, wallRadius, gLLWallStrategy);
+   int perimLandCount = anwCountPerimeterGaps(wallCenter, wallRadius, gANWWallStrategy);
    if (perimLandCount == 0)
    {
-      llProbe("wall.skip",
-         "reason=noLandPerimeter center=" + llFmtVec(wallCenter) +
-         " radius=" + wallRadius + " strategy=" + gLLWallStrategy);
+      anwProbe("wall.skip",
+         "reason=noLandPerimeter center=" + anwFmtVec(wallCenter) +
+         " radius=" + wallRadius + " strategy=" + gANWWallStrategy);
       return;
    }
 
@@ -1395,12 +1402,12 @@ minInterval 30
    // through this path automatically. Today this resolves to Ring at every
    // age, but the call site is now correct.
    aiPlanSetVariableInt(wallPlanID, cBuildWallPlanWallType, 0,
-      llSelectWallType(gLLWallStrategy, kbGetAge()));
+      anwSelectWallType(gANWWallStrategy, kbGetAge()));
    // 3–5 dedicated villagers — walls are top-priority protection.
    aiPlanAddUnitType(wallPlanID, gEconUnit, 0, 3, 5);
    aiPlanSetVariableVector(wallPlanID, cBuildWallPlanWallRingCenterPoint, 0, wallCenter);
    aiPlanSetVariableFloat(wallPlanID, cBuildWallPlanWallRingRadius, 0.0, wallRadius);
-   aiPlanSetVariableInt(wallPlanID, cBuildWallPlanNumberOfGates, 0, llGetLegendaryWallGateCount(true));
+   aiPlanSetVariableInt(wallPlanID, cBuildWallPlanNumberOfGates, 0, anwGetWallGateCount(true));
    aiPlanSetBaseID(wallPlanID, mainBaseID);
    aiPlanSetEscrowID(wallPlanID, cEconomyEscrowID);
    // Priority 75 for primary ring, 70 for outer supplement (don't starve
@@ -1409,7 +1416,7 @@ minInterval 30
    aiPlanSetActive(wallPlanID, true);
    xsEnableRule("fillInWallGapsNew");
    // SMART WALLS — Track 1.1d: arm the closure watchdog for late-game
-   // walls too. It self-disables when llShouldBuildLegendaryWalls flips
+   // walls too. It self-disables when anwShouldBuildWalls flips
    // false.
    xsEnableRule("verifyWallClosure");
 
@@ -1418,19 +1425,19 @@ minInterval 30
       outerRingPlaced = 1;
    }
 
-   llLogPlanEvent("create", wallPlanID,
+   anwLogPlanEvent("create", wallPlanID,
       (placingOuter ? "outer-wall" : "late-wall") +
-      " strategy=" + gLLWallStrategy +
-      " center=" + llFmtVec(wallCenter) +
+      " strategy=" + gANWWallStrategy +
+      " center=" + anwFmtVec(wallCenter) +
       " radius=" + wallRadius +
-      " gates=" + llGetLegendaryWallGateCount(true));
-   llProbe("plan.wall",
+      " gates=" + anwGetWallGateCount(true));
+   anwProbe("plan.wall",
       "phase=" + (placingOuter ? "outer" : "late") +
-      " strategy=" + gLLWallStrategy +
+      " strategy=" + gANWWallStrategy +
       " base=" + mainBaseID +
-      " center=" + llFmtVec(wallCenter) +
+      " center=" + anwFmtVec(wallCenter) +
       " radius=" + wallRadius +
-      " wallLevel=" + gLLWallLevel);
+      " wallLevel=" + gANWWallLevel);
    // Stay active: if this plan ever dies, re-create it next tick.
 }
 //==============================================================================
@@ -1449,7 +1456,7 @@ rule verifyWallClosure
 inactive
 minInterval 60
 {
-   if (llShouldBuildLegendaryWalls(false) == false)
+   if (anwShouldBuildWalls(false) == false)
    {
       xsDisableSelf();
       return;
@@ -1463,12 +1470,12 @@ minInterval 60
    // wall segment in AoE3 DE)
    //
    // 2026-05-27: Removed the +1 defensive padding that was added in the
-   // original draft. At gLLWallClosurePctTarget=100 the +1 made closure
+   // original draft. At gANWWallClosurePctTarget=100 the +1 made closure
    // cap at ~95-97% even when the ring was geometrically complete (the
    // engine never places an extra piece beyond the perimeter), so the
    // escalation branch fired forever. Pure circumference/4 produces a
    // truthful ratio that can actually reach 1.0.
-   float radius = llGetLegendaryWallRadius(kbGetAge() >= cAge3);
+   float radius = anwGetWallRadius(kbGetAge() >= cAge3);
    int expectedPieces = 2.0 * 3.14159 * radius / 4.0;
    if (expectedPieces < 1) { expectedPieces = 1; }  // tiny-radius guard
    int actualPieces = kbUnitCount(cMyID, cUnitTypeAbstractWall, cUnitStateABQ);
@@ -1491,21 +1498,21 @@ minInterval 60
    // reads as >100% (matches the closure-float clamp above).
    int closurePct = (1.0 * actualPieces * 100) / (expectedPieces > 0 ? expectedPieces : 1);
    if (closurePct > 100) { closurePct = 100; }
-   llProbe("wall.closure", "pct=" + closurePct +
+   anwProbe("wall.closure", "pct=" + closurePct +
       " radius=" + radius +
       " expected=" + expectedPieces +
       " placed=" + actualPieces +
       " closure=" + closure +
-      " strategy=" + gLLWallStrategy +
+      " strategy=" + gANWWallStrategy +
       " elapsed=" + elapsedSec +
       " age=" + kbGetAge());
 
-   // Knob: gLLWallClosurePctTarget — per-civ closure threshold (0–100).
+   // Knob: gANWWallClosurePctTarget — per-civ closure threshold (0–100).
    // Default 60 (matches the hardcoded 0.6 below). Convert to float fraction.
    float closureTarget = 0.6;
-   if (gLLWallClosurePctTarget > 0)
+   if (gANWWallClosurePctTarget > 0)
    {
-      closureTarget = 1.0 * gLLWallClosurePctTarget / 100.0;
+      closureTarget = 1.0 * gANWWallClosurePctTarget / 100.0;
    }
 
    // <closureTarget closure after 4 minutes of game time -> escalate.
@@ -1519,13 +1526,13 @@ minInterval 60
          // more villagers.
          aiPlanSetDesiredPriority(planID, 95);
          aiPlanAddUnitType(planID, gEconUnit, 0, 4, 16);
-         llProbe("wall.escalate", "plan=" + planID + " closure=" + closure);
+         anwProbe("wall.escalate", "plan=" + planID + " closure=" + closure);
       }
       else
       {
          // Plan died — re-emit through the normal dispatch.
-         llPlanExplorationAgeWall(mainBaseID, baseCenter);
-         llProbe("wall.reemit", "closure=" + closure);
+         anwPlanExplorationAgeWall(mainBaseID, baseCenter);
+         anwProbe("wall.reemit", "closure=" + closure);
       }
    }
 }
@@ -1536,9 +1543,9 @@ rule fillInWallGapsNew
   minInterval 51
   inactive
 {
-   float wallRadius = llGetLegendaryWallRadius(true); //kbGetMapXSize() / 7.0;
+   float wallRadius = anwGetWallRadius(true); //kbGetMapXSize() / 7.0;
 
-   if (llShouldBuildLegendaryWalls(false) == false)
+   if (anwShouldBuildWalls(false) == false)
    {
       xsDisableSelf();
       return;
@@ -1548,9 +1555,9 @@ rule fillInWallGapsNew
    // Montezuma, Usman) must NEVER build walls. delayWallsNew already honours
    // this; fillInWallGapsNew used to leak through and that's what produced
    // Napoleon's walls in the 16:27 replay.
-   if (gLLWallStrategy == cLLWallStrategyMobileNoWalls)
+   if (gANWWallStrategy == cANWWallStrategyMobileNoWalls)
    {
-      llLogDecision("WALL", "gap-fill declined - MobileNoWalls doctrine");
+      anwLogDecision("WALL", "gap-fill declined - MobileNoWalls doctrine");
       xsDisableSelf();
       return;
    }
@@ -1565,7 +1572,7 @@ rule fillInWallGapsNew
          aiPlanAddUnitType(wallPlanID, gEconUnit, 0, 1, 2);
          aiPlanSetVariableVector(wallPlanID, cBuildWallPlanWallRingCenterPoint, 0, kbBaseGetLocation(cMyID, kbBaseGetMainID(cMyID)));
          aiPlanSetVariableFloat(wallPlanID, cBuildWallPlanWallRingRadius, 0.0, wallRadius);
-         aiPlanSetVariableInt(wallPlanID, cBuildWallPlanNumberOfGates, 0, llGetLegendaryWallGateCount(true));
+         aiPlanSetVariableInt(wallPlanID, cBuildWallPlanNumberOfGates, 0, anwGetWallGateCount(true));
          aiPlanSetBaseID(wallPlanID, kbBaseGetMainID(cMyID));
          aiPlanSetEscrowID(wallPlanID, cEconomyEscrowID);
          aiPlanSetDesiredPriority(wallPlanID, 65);
@@ -1608,10 +1615,10 @@ minInterval 30
 
    // Stalled. Destroy so the held villagers free up and the perpetual
    // rule recreates a fresh plan with a recomputed layout.
-   llProbe("plan.wall.stall", "plan=" + planID + " ageMs=" + ageMs +
-      " strategy=" + gLLWallStrategy);
-   llLogPlanEvent("destroy-stalled", planID,
-      "ageSec=" + (ageMs / 1000) + " strategy=" + gLLWallStrategy);
+   anwProbe("plan.wall.stall", "plan=" + planID + " ageMs=" + ageMs +
+      " strategy=" + gANWWallStrategy);
+   anwLogPlanEvent("destroy-stalled", planID,
+      "ageSec=" + (ageMs / 1000) + " strategy=" + gANWWallStrategy);
    aiPlanDestroy(planID);
 }
 
@@ -1681,7 +1688,7 @@ rule rebuildLostForts
 minInterval 10
 inactive
 {
-   int fortsWanted = llGetWantedFortCount();
+   int fortsWanted = anwGetWantedFortCount();
 
    if (fortsWanted < 1)
    {
@@ -1693,10 +1700,10 @@ inactive
       return;
    }
 
-   llVerboseEcho("Fort Limit: "+kbGetBuildLimit(cMyID, gFortUnit)+"Forts We Have: "
+   anwVerboseEcho("Fort Limit: "+kbGetBuildLimit(cMyID, gFortUnit)+"Forts We Have: "
    +kbUnitCount(cMyID, gFortUnit, cUnitStateABQ)+"");
 if (fortsWanted > kbUnitCount(cMyID, gFortUnit, cUnitStateABQ)) {
-		llVerboseEcho("I need to rebuild forts now!");
+		anwVerboseEcho("I need to rebuild forts now!");
       // Nobody is making a fort, let's start a plan.
       if (gFortRebuildPlan == -1) {
          gFortRebuildPlan = aiPlanCreate("Fortress Build Plan", cPlanBuild);
@@ -1720,9 +1727,12 @@ if (fortsWanted > kbUnitCount(cMyID, gFortUnit, cUnitStateABQ)) {
          // Escrow.
          aiPlanSetEscrowID(gFortRebuildPlan, cMilitaryEscrowID);
          // Builders.
-         for (int n = 0; n < numberHeroesFound; n++)
+         // NOTE: XS for-loop form is `for (i = 0; < N)` — no type keyword,
+         // no explicit increment clause. C-style `for (int n = 0; n < N; n++)`
+         // is rejected by the XS compiler.
+         for (i = 0; < numberHeroesFound)
          {
-            unitID = kbUnitQueryGetResult(heroQuery, n);
+            unitID = kbUnitQueryGetResult(heroQuery, i);
             if (unitID < 0)
             {
                continue;
@@ -1748,7 +1758,7 @@ if (fortsWanted > kbUnitCount(cMyID, gFortUnit, cUnitStateABQ)) {
             int forwardBaseFortQuery = createSimpleUnitQuery(gFortUnit, cMyID, cUnitStateABQ);
             kbUnitQuerySetMaximumDistance(forwardBaseFortQuery, 50.0);
             kbUnitQuerySetPosition(forwardBaseFortQuery, gForwardBaseLocation);
-            if ((gLLPreferForwardFortifiedBase == true) && (gForwardBaseLocation != cInvalidVector) &&
+            if ((gANWPreferForwardFortifiedBase == true) && (gForwardBaseLocation != cInvalidVector) &&
                (kbUnitQueryExecute(forwardBaseFortQuery) < 1)) {
                aiPlanSetVariableVector(gFortRebuildPlan, cBuildPlanCenterPosition, 0, gForwardBaseLocation);
                aiPlanSetVariableFloat(gFortRebuildPlan, cBuildPlanCenterPositionDistance, 0, 30.0);
@@ -1759,8 +1769,8 @@ if (fortsWanted > kbUnitCount(cMyID, gFortUnit, cUnitStateABQ)) {
          }
       
          aiPlanSetActive(gFortRebuildPlan);
-         llVerboseEcho("Fort building activated!");
-         llVerboseEcho("**** STARTING FORT PLAN, plan ID "+gFortRebuildPlan);
+         anwVerboseEcho("Fort building activated!");
+         anwVerboseEcho("**** STARTING FORT PLAN, plan ID "+gFortRebuildPlan);
       }
 	} else {
       aiPlanDestroy(gFortRebuildPlan);
@@ -1856,7 +1866,7 @@ minInterval 10
    cUnitStateABQ, gForwardBaseLocation, 40.0));
    int forwardBaseBarracksVal = kbUnitQueryExecute(createSimpleUnitQuery(cUnitTypeBarracks, cMyID, 
    cUnitStateABQ, gForwardBaseLocation, 40.0));
-   llVerboseEcho("Stables: "+forwardBaseStablesVal+" Base State: "+gForwardBaseState+"");
+   anwVerboseEcho("Stables: "+forwardBaseStablesVal+" Base State: "+gForwardBaseState+"");
    if (gForwardBaseState == cForwardBaseStateNone)
    {
       return;
@@ -1866,7 +1876,7 @@ minInterval 10
       && aiPlanGetActive(gForwardBaseStablesPlan) == false) {
       aiPlanDestroy(gForwardBaseStablesPlan);
       gForwardBaseStablesPlan = createSpacedLocationBuildPlan(cUnitTypeStable, 1, 45, true, cMilitaryEscrowID, gForwardBaseLocation, 1);
-      llVerboseEcho("Stables Plan created!");
+      anwVerboseEcho("Stables Plan created!");
    } else if (gForwardBaseState == cForwardBaseStateActive && forwardBaseStablesVal > 0) {
       // Start training at the forward base...
       if (kbBaseGetActive(cMyID, gIslandBaseID) == true) {
@@ -1879,7 +1889,7 @@ minInterval 10
       && aiPlanGetActive(gForwardBaseBarracksPlan) == false) {
       aiPlanDestroy(gForwardBaseBarracksPlan);
       gForwardBaseBarracksPlan = createSpacedLocationBuildPlan(cUnitTypeBarracks, 1, 45, true, cMilitaryEscrowID, gForwardBaseLocation, 1);
-      llVerboseEcho("Barracks Plan created!");
+      anwVerboseEcho("Barracks Plan created!");
    } else if (gForwardBaseState == cForwardBaseStateActive && forwardBaseBarracksVal > 0) {
       // Start training at the forward base...
       if (kbBaseGetActive(cMyID, gIslandBaseID) == true) {
@@ -1900,7 +1910,7 @@ minInterval 10
    int forwardBaseTowersVal = kbUnitQueryExecute(createSimpleUnitQuery(gTowerUnit, cMyID, cUnitStateABQ, 
    gForwardBaseLocation, 40.0));
    int additionalTowersAvailable = kbGetBuildLimit(cMyID, gTowerUnit) - kbUnitQueryExecute(createSimpleUnitQuery(gTowerUnit, cMyID, cUnitStateABQ));
-   int desiredForwardBaseTowers = gLLForwardBaseTowerCount;
+   int desiredForwardBaseTowers = gANWForwardBaseTowerCount;
    if (gForwardBaseState == cForwardBaseStateNone)
    {
       return;
@@ -1941,7 +1951,7 @@ minInterval 10
 //       fortPlan = createSimpleMaintainPlan(gFortUnit, limit, true, -1, 1);
 //       aiPlanSetDesiredPriority(fortPlan, 85);
 //       //aiPlanSetVariableInt(missionaryPlan, cTrainPlanBuildFromType, 0, cUnitTypeChurch);
-//       llVerboseEcho("Fort maintain plan!");
+//       anwVerboseEcho("Fort maintain plan!");
 //    }
 //    else
 //    {

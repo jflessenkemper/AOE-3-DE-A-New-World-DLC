@@ -43,7 +43,7 @@ minInterval 10
         createSettlementBase(newBase);
         newBaseId = kbBaseGetMainID(cMyID);
         kbBaseSetActive(cMyID, newBaseId, true);
-        llVerboseEcho("New Base Active Status: " + kbBaseGetActive(cMyID, newBaseId) + "!");
+        anwVerboseEcho("New Base Active Status: " + kbBaseGetActive(cMyID, newBaseId) + "!");
         //sendStatement(1, cAICommPromptToAllyConfirm, newBase);
         gGatherPlansUpdated = false;
     }
@@ -51,12 +51,12 @@ minInterval 10
     // It's time to Archipelago-Go!
     int availableUnits = createSimpleUnitQuery(gEconUnit, cMyID, cUnitStateAlive, 
     kbBaseGetLocation(cMyID, kbBaseGetMainID(cMyID)), 150.0);
-        llVerboseEcho("Waiting to add more gather plans... Is Overcrowded: " +isOvercrowded+ 
+        anwVerboseEcho("Waiting to add more gather plans... Is Overcrowded: " +isOvercrowded+ 
         "Available Villagers: " +availableUnits+ "Gather Plans Updated: " +gGatherPlansUpdated+ "");
     if (availableUnits > 0 && gGatherPlansUpdated == false) {
         int numberOfBases = kbBaseGetNumber(cMyID);
         float newBasePercentage = (1.0 / numberOfBases) * 100.0;
-        llVerboseEcho("Second check. Is Overcrowded: " +isOvercrowded+ "Available Villagers: " +availableUnits+ "");
+        anwVerboseEcho("Second check. Is Overcrowded: " +isOvercrowded+ "Available Villagers: " +availableUnits+ "");
         for (i = 0; < numberOfBases)
         {
             int currentBaseId = kbBaseGetIDByIndex(cMyID, i);
@@ -65,7 +65,7 @@ minInterval 10
             createGatherPlan(currentBaseLoc, currentBaseId, cResourceFood, 95);
             createGatherPlan(currentBaseLoc, currentBaseId, cResourceWood, 95);
             createGatherPlan(currentBaseLoc, currentBaseId, cResourceGold, 95);
-            llVerboseEcho("Base Gather Info: " + currentBaseId + "");
+            anwVerboseEcho("Base Gather Info: " + currentBaseId + "");
             //sendStatement(1, cAICommPromptToAllyConfirm, currentBaseLoc);
         }
         createSimpleBuildPlan(cUnitTypeTownCenter, 1, 99, true, cEconomyEscrowID, kbBaseGetMainID(cMyID), 1, -1, true);

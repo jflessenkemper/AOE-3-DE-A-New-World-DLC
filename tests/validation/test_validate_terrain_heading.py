@@ -6,6 +6,7 @@ from pathlib import Path
 from textwrap import dedent
 
 from tools.validation.validate_terrain_heading import (
+    ANW_CIVS,
     BASE_CIVS,
     REVOLUTION_CIVS,
     validate_terrain_heading,
@@ -13,18 +14,18 @@ from tools.validation.validate_terrain_heading import (
 
 
 HEADER_FIXTURE = """
-extern int     cLLTerrainAny          = 0;
-extern int     cLLTerrainCoast        = 1;
-extern int     cLLTerrainRiver        = 2;
-extern int     cLLTerrainPlain        = 4;
-extern int     cLLHeadingAny          = 0;
-extern int     cLLHeadingAlongCoast   = 1;
-extern int     cLLHeadingFrontierPush = 3;
+extern int     cANWTerrainAny          = 0;
+extern int     cANWTerrainCoast        = 1;
+extern int     cANWTerrainRiver        = 2;
+extern int     cANWTerrainPlain        = 4;
+extern int     cANWHeadingAny          = 0;
+extern int     cANWHeadingAlongCoast   = 1;
+extern int     cANWHeadingFrontierPush = 3;
 """
 
 
 def _all_civs_apply_body() -> str:
-    """Synthesize a minimal but complete llApplyBuildStyleForActiveCiv()
+    """Synthesize a minimal but complete anwApplyBuildStyleForActiveCiv()
     body that covers every civ the validator expects.
     """
     parts: list[str] = []
@@ -37,8 +38,8 @@ def _all_civs_apply_body() -> str:
                 f"""\
                 {keyword} (cMyCiv == {civ})
                 {{
-                   llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.30);
-                   llSetExpansionHeading(cLLHeadingFrontierPush, 0.25);
+                   anwSetPreferredTerrain(cANWTerrainPlain, cANWTerrainRiver, 0.30);
+                   anwSetExpansionHeading(cANWHeadingFrontierPush, 0.25);
                 }}"""
             )
         )
@@ -48,8 +49,19 @@ def _all_civs_apply_body() -> str:
                 f"""\
                 else if (rvltName == "{rvlt}")
                 {{
-                   llSetPreferredTerrain(cLLTerrainCoast, cLLTerrainPlain, 0.40);
-                   llSetExpansionHeading(cLLHeadingAlongCoast, 0.30);
+                   anwSetPreferredTerrain(cANWTerrainCoast, cANWTerrainPlain, 0.40);
+                   anwSetExpansionHeading(cANWHeadingAlongCoast, 0.30);
+                }}"""
+            )
+        )
+    for anw in ANW_CIVS:
+        parts.append(
+            dedent(
+                f"""\
+                else if (rvltName == "{anw}")
+                {{
+                   anwSetPreferredTerrain(cANWTerrainPlain, cANWTerrainRiver, 0.30);
+                   anwSetExpansionHeading(cANWHeadingFrontierPush, 0.25);
                 }}"""
             )
         )
@@ -59,10 +71,10 @@ def _all_civs_apply_body() -> str:
 def _wrap_apply_body(body: str) -> str:
     return dedent(
         f"""\
-        void llApplyBuildStyleForActiveCiv(void)
+        void anwApplyBuildStyleForActiveCiv(void)
         {{
            string rvltName = kbGetCivName(cMyCiv);
-           llResetBuildStyleProfile();
+           anwResetBuildStyleProfile();
 
         {body}
         }}
@@ -110,29 +122,29 @@ class ValidateTerrainHeadingTests(unittest.TestCase):
         repo = self.make_repo(HEADER_FIXTURE, _wrap_apply_body(body))
         issues = validate_terrain_heading(repo)
         self.assertIn(
-            "cCivBritish: no branch in llApplyBuildStyleForActiveCiv()",
+            "cCivBritish: no branch in anwApplyBuildStyleForActiveCiv()",
             issues,
         )
 
     def test_reports_unknown_terrain_constant(self) -> None:
-        # Replace the FIRST llSetPreferredTerrain — that lives inside the
+        # Replace the FIRST anwSetPreferredTerrain — that lives inside the
         # cCivBritish branch (first base-civ in BASE_CIVS).
         body = _all_civs_apply_body().replace(
-            "llSetPreferredTerrain(cLLTerrainPlain, cLLTerrainRiver, 0.30)",
-            "llSetPreferredTerrain(cLLTerrainTundra, cLLTerrainRiver, 0.30)",
+            "anwSetPreferredTerrain(cANWTerrainPlain, cANWTerrainRiver, 0.30)",
+            "anwSetPreferredTerrain(cANWTerrainTundra, cANWTerrainRiver, 0.30)",
             1,
         )
         repo = self.make_repo(HEADER_FIXTURE, _wrap_apply_body(body))
         issues = validate_terrain_heading(repo)
         self.assertTrue(
-            any("cCivBritish" in i and "cLLTerrainTundra" in i for i in issues),
+            any("cCivBritish" in i and "cANWTerrainTundra" in i for i in issues),
             f"expected unknown-terrain finding, got {issues!r}",
         )
 
     def test_reports_out_of_range_strength(self) -> None:
         body = _all_civs_apply_body().replace(
-            "llSetExpansionHeading(cLLHeadingFrontierPush, 0.25)",
-            "llSetExpansionHeading(cLLHeadingFrontierPush, 1.5)",
+            "anwSetExpansionHeading(cANWHeadingFrontierPush, 0.25)",
+            "anwSetExpansionHeading(cANWHeadingFrontierPush, 1.5)",
             1,
         )
         repo = self.make_repo(HEADER_FIXTURE, _wrap_apply_body(body))

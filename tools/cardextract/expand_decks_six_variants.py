@@ -1,12 +1,12 @@
-"""Expand each mod civ homecity XML so the Legendary Leaders deck appears
+"""Expand each mod civ homecity XML so the A New World deck appears
 under all six standard deck-name slots (Beginner / Land / Naval / Tycoon /
 Treaty / Treaty-Natives). Each slot contains the same curated 25 cards.
 
-Why: when the template had only our custom "Legendary Leaders" deck, the
+Why: when the template had only our custom "A New World" deck, the
 game auto-generated its own 6 standard decks from the card pool at savegame
 creation, erasing our curated content. By pre-populating all 6 standard
 named decks with our 25 curated cards, the game preserves them and players
-see the Legendary Leaders curation in every slot.
+see the A New World curation in every slot.
 
 Idempotent.
 """
@@ -70,7 +70,7 @@ def expand(path: Path) -> bool:
 
 def main():
     # File-name prefix was renamed `anwhomecity*` → `anwhomecity*` when
-    # the mod was rebranded from "Revolution Mod / Legendary Leaders" to
+    # the mod was rebranded from "Revolution Mod / A New World" to
     # "A New World". The old glob pattern silently matched zero files, so
     # the standard 6-deck-slot expansion never ran in production. As a
     # result every allied AI showed "Hidden — 0/25 cards" because the

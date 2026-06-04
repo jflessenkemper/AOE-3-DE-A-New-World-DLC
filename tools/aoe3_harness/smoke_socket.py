@@ -130,16 +130,16 @@ def setup_phase(use_harness_headless: bool = False, watchdog_mode: bool = False)
     lines = [
         "INFO  app starting up",
         "DEBUG loading config",
-        "[LLP v=2] field=score timestamp=1000",
+        "[ANWP v=2] field=score timestamp=1000",
         "INFO  map loaded",
         "DEBUG pathfinding init",
-        "[LLP v=2] field=units timestamp=1100",
+        "[ANWP v=2] field=units timestamp=1100",
         "INFO  AI tick 1",
-        "[LLP v=2] field=resources timestamp=1200",
+        "[ANWP v=2] field=resources timestamp=1200",
         "DEBUG resource harvest triggered",
-        "[LLP v=2] field=economy timestamp=1300",
+        "[ANWP v=2] field=economy timestamp=1300",
         "INFO  AI tick 2",
-        "[LLP v=2] field=military timestamp=1400",
+        "[ANWP v=2] field=military timestamp=1400",
         "INFO  scenario running",
     ]
     PROBE_LOG.write_text("\n".join(lines) + "\n")
@@ -366,13 +366,13 @@ def test_phase(proc: subprocess.Popen) -> dict:
         with PROBE_LOG.open("a") as f:
             f.write("INFO  extra event A\n")
             f.write("DEBUG extra event B\n")
-            f.write("[LLP v=2] field=smoke_test timestamp=9999\n")
+            f.write("[ANWP v=2] field=smoke_test timestamp=9999\n")
         log(f"  Appended 3 lines to {PROBE_LOG}")
 
         # Wait for LLP line to be observed (up to 2s), then stop collector early
         wait_deadline = time.monotonic() + 2.0
         while time.monotonic() < wait_deadline:
-            if any("[LLP v=2]" in ln and "smoke_test" in ln for ln in collected_lines):
+            if any("[ANWP v=2]" in ln and "smoke_test" in ln for ln in collected_lines):
                 break
             time.sleep(0.1)
 
@@ -385,7 +385,7 @@ def test_phase(proc: subprocess.Popen) -> dict:
             log(f"    {ln!r}")
 
         # Look for the LLP line we appended
-        llp_received = any("[LLP v=2]" in ln and "smoke_test" in ln
+        llp_received = any("[ANWP v=2]" in ln and "smoke_test" in ln
                            for ln in collected_lines)
         log(f"  LLP line received: {llp_received}")
 

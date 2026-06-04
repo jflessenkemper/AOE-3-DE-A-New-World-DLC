@@ -1,7 +1,7 @@
 # AI Knob Inventory — Complete Reference
 
 **Status:** Source of truth for per-nation tuning + radar-chart visualization
-**Scope:** Every configurable variable in the Legendary Leaders AI mod
+**Scope:** Every configurable variable in the A New World AI mod
 **Total:** ~165 knobs across 12 categories
 **Date:** 2026-04-24
 

@@ -36,11 +36,15 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
 
-AI_HEADER = REPO_ROOT / "game" / "ai" / "aiHeader.xs"
-BACKUP = REPO_ROOT / "game" / "ai" / ".aiHeader.xs.testmode_backup"
+# Re-homed 2026-05-31: the cLLTestModeAutoResignMs declaration moved from
+# aiHeader.xs to core/aiGlobals.xs (declared `extern const int ...`) so it is
+# parsed before aiLoaderStandard.xs's postInit body references it. Keep this in
+# sync with matrix_runner.py's --auto-resign-ms rewrite (same file + pattern).
+AI_HEADER = REPO_ROOT / "game" / "ai" / "core" / "aiGlobals.xs"
+BACKUP = REPO_ROOT / "game" / "ai" / "core" / ".aiGlobals.xs.testmode_backup"
 
 PATTERN = re.compile(
-    r"^extern\s+int\s+cLLTestModeAutoResignMs\s*=\s*(\d+)\s*;",
+    r"^extern\s+const\s+int\s+cLLTestModeAutoResignMs\s*=\s*(\d+)\s*;",
     re.MULTILINE,
 )
 
@@ -82,7 +86,7 @@ def enable(threshold_ms: int = 60000) -> int:
 
     # In-place substitution preserving the original whitespace/spacing
     new_text = PATTERN.sub(
-        f"extern int cLLTestModeAutoResignMs = {threshold_ms};",
+        f"extern const int cLLTestModeAutoResignMs = {threshold_ms};",
         text,
         count=1,
     )
@@ -111,7 +115,7 @@ def disable() -> int:
 
     # No backup; just zero the value
     text = AI_HEADER.read_text()
-    new_text = PATTERN.sub("extern int cLLTestModeAutoResignMs = 0;", text, count=1)
+    new_text = PATTERN.sub("extern const int cLLTestModeAutoResignMs = 0;", text, count=1)
     if new_text == text:
         print(
             "[test_mode_xs] disable: nothing to do (value already 0 / no decl)",

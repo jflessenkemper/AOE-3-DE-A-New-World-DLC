@@ -25,7 +25,7 @@ Detection strategy:
 
   3) Parse ``tools/aoe3_automation/*.py`` for harness-emitted probes::
 
-         "[LLP v=2 …tag=foo.bar"
+         "[ANWP v=2 …tag=foo.bar"
          emit_probe("foo.bar", …)
 
   4) FAIL if any tag from (1) is not satisfied by (2) or (3) —
@@ -107,7 +107,7 @@ def collect_py_emitters() -> set[str]:
     """Tags emitted by the Python harness (test runners)."""
     out: set[str] = set()
     patterns = [
-        re.compile(r'"\[LLP v=2[^"]*tag=([a-zA-Z][a-zA-Z0-9._]*)'),
+        re.compile(r'"\[ANWP v=2[^"]*tag=([a-zA-Z][a-zA-Z0-9._]*)'),
         re.compile(r'emit_probe\s*\(\s*"([a-zA-Z][a-zA-Z0-9._]*)"'),
     ]
     if not PY_HARNESS_DIR.exists():

@@ -27,31 +27,31 @@ bool gGaribaldiRulesEnabled = false;
 
 void initLeaderGaribaldi(void)
 {
-   llVerboseEcho("A New World: activating Giuseppe Garibaldi personality.");
+   anwVerboseEcho("A New World: activating Giuseppe Garibaldi personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the campaign opens early.
    btOffenseDefense = 0.6;
    btBiasTrade = 0.2;
    btBiasNative = 0.0;
-   llSetMilitaryFocus(0.65, 0.35, 0.25);
+   anwSetMilitaryFocus(0.65, 0.35, 0.25);
 
    // LL-BUILD-STYLE-BEGIN
    // earlyWalls=true honours spec first_wall_before_ms=900000 (Levee default
    // is false for revolutionary mobile civs; Garibaldi runs static-base levee).
-   llUseRepublicanLeveeStyle(2, true);
-   gLLMilitaryDistanceMultiplier = 0.90;
-   llSetBuildStrongpointProfile(2, 2, 3, true);
+   anwUseRepublicanLeveeStyle(2, true);
+   gANWMilitaryDistanceMultiplier = 0.90;
+   anwSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+   anwSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 115;
 
    gGaribaldiRulesEnabled = true;
-   llLogLeaderState("Garibaldi initialized");
-   llProbe("meta.leader_init", "leader=garibaldi");
+   anwLogLeaderState("Garibaldi initialized");
+   anwProbe("meta.leader_init", "leader=garibaldi");
 }
 
 //------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ rule garibaldiRisorgimentoBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("garibaldiRisorgimentoBoom");
+   anwLogRuleTick("garibaldiRisorgimentoBoom");
    if (gGaribaldiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -85,7 +85,7 @@ rule garibaldiCamicieRosse
 inactive
 minInterval 50
 {
-   llLogRuleTick("garibaldiCamicieRosse");
+   anwLogRuleTick("garibaldiCamicieRosse");
    if (gGaribaldiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -99,7 +99,7 @@ minInterval 50
       btBiasInf = 0.85;            // Pavisier + Crossbow mass.
       btBiasCav = 0.25;
       btBiasArt = -0.2;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -111,7 +111,7 @@ rule garibaldiVolunteerColumns
 inactive
 minInterval 55
 {
-   llLogRuleTick("garibaldiVolunteerColumns");
+   anwLogRuleTick("garibaldiVolunteerColumns");
    if (gGaribaldiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -136,7 +136,7 @@ rule garibaldiThousandMarch
 inactive
 minInterval 70
 {
-   llLogRuleTick("garibaldiThousandMarch");
+   anwLogRuleTick("garibaldiThousandMarch");
    if (gGaribaldiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -150,7 +150,7 @@ minInterval 70
       btBiasCav = 0.5;
       btBiasArt = 0.6;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -162,7 +162,7 @@ rule garibaldiUnificationHost
 inactive
 minInterval 90
 {
-   llLogRuleTick("garibaldiUnificationHost");
+   anwLogRuleTick("garibaldiUnificationHost");
    if (gGaribaldiRulesEnabled == false)
    {
       xsDisableSelf();

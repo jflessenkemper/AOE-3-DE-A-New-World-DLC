@@ -181,7 +181,7 @@
       <name>HCShipWoodCrates4</name>
       <maxcount>1</maxcount>
       <level>10</level>
-      <prereqtech>HCShipwoodCrates3</prereqtech>
+      <prereqtech>HCShipWoodCrates3</prereqtech>
       <age>2</age>
       <displayunitcount>1000</displayunitcount>
       <infiniteinlastage>1</infiniteinlastage>

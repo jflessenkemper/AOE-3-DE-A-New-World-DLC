@@ -137,7 +137,7 @@ def probe_summary(log_content: str) -> dict:
         Dict with counts for probe types found in the log.
     """
     return {
-        "llp_v2_total": log_content.count("[LLP v=2 "),
+        "anwp_v2_total": log_content.count("[ANWP v=2 "),
         "milestone_first_wall": log_content.count("milestone.first_wall_segment"),
         "milestone_first_barracks": log_content.count("milestone.first_barracks"),
         "posture_snapshot": log_content.count("posture.snapshot"),
@@ -310,7 +310,7 @@ def run_pass(
     log_content = "" if dry_run else read_since(log_offset)
     summary = probe_summary(log_content)
     print(f"[harness/supervisor] Age3Log.txt delta: {len(log_content)} bytes, "
-          f"{summary['llp_v2_total']} [LLP v=2] probes")
+          f"{summary['anwp_v2_total']} [ANWP v=2] probes")
 
     # Step 9: archive per-AI deltas
     ai_slices: dict[str, str] = {}
@@ -322,13 +322,13 @@ def run_pass(
             content = _read_ai_since(path, offset)
             if content:
                 ai_slices[str(path)] = content
-                probe_ct = content.count("[LLP v=2 ")
+                probe_ct = content.count("[ANWP v=2 ")
                 print(f"[harness/supervisor] {path.name}: {len(content)} bytes, "
-                      f"{probe_ct} [LLP v=2] probes")
+                      f"{probe_ct} [ANWP v=2] probes")
 
     # Step 10: emit full probe summary
     print(f"\n[harness/supervisor] Probe summary:")
-    print(f"  [LLP v=2] total: {summary['llp_v2_total']}")
+    print(f"  [ANWP v=2] total: {summary['anwp_v2_total']}")
     print(f"  milestone.first_wall_segment: {summary['milestone_first_wall']}")
     print(f"  milestone.first_barracks: {summary['milestone_first_barracks']}")
     print(f"  posture.snapshot: {summary['posture_snapshot']}")
@@ -336,7 +336,7 @@ def run_pass(
     # Derive per-civ coverage from probes
     civ_probe_counts: dict[str, int] = {}
     for civ in civs:
-        pattern = re.compile(rf"\[LLP v=2[^\]]*\bciv={re.escape(civ)}\b")
+        pattern = re.compile(rf"\[ANWP v=2[^\]]*\bciv={re.escape(civ)}\b")
         count = len(pattern.findall(log_content))
         civ_probe_counts[civ] = count
 

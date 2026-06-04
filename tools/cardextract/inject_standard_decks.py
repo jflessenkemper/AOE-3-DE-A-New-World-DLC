@@ -1,4 +1,4 @@
-"""Render the Legendary Leaders deck inside each STANDARD-civ Card Deck
+"""Render the A New World deck inside each STANDARD-civ Card Deck
 <details> block in a_new_world.html.
 
 Reads:
@@ -96,7 +96,7 @@ def render_deck(civ_id: str, by_age: dict[str, list[str]], cards: dict) -> str:
     total = sum(len(v) for v in by_age.values())
     header = (
         f'<p style="margin:6px 0 4px;font-size:.85rem;color:var(--dim)">'
-        f'Legendary Leaders deck (override) &mdash; {total} cards across '
+        f'A New World deck (override) &mdash; {total} cards across '
         f'{len(rows)} ages. Hover any card for its description.</p>\n'
     )
     return (

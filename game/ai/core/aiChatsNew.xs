@@ -24,7 +24,7 @@ rule manyPlayersComment
 inactive
 minInterval 5
 {
-   llLogRuleTick("manyPlayersComment");
+   anwLogRuleTick("manyPlayersComment");
    if (cNumberPlayers >= 4) {
       sendStatement(cPlayerRelationAllyExcludingSelf, cAICommPromptToAllyBattleFourOrMorePlayers);
       sendStatement(cPlayerRelationEnemyNotGaia, cAICommPromptToEnemyBattleFourOrMorePlayers);
@@ -40,7 +40,7 @@ rule myWallChat
 inactive
 minInterval 5
 {
-   llLogRuleTick("myWallChat");
+   anwLogRuleTick("myWallChat");
    int buildingId = getUnit(cUnitTypeAbstractWall, cMyID, cUnitStateAlive);
 
    if (buildingId >= 0)
@@ -58,7 +58,7 @@ rule enemyWallTaunt
 inactive
 minInterval 5
 {
-   llLogRuleTick("enemyWallTaunt");
+   anwLogRuleTick("enemyWallTaunt");
    int buildingId = getUnit(cUnitTypeAbstractWall, cPlayerRelationEnemyNotGaia, cUnitStateAlive);
 
    if (buildingId >= 0)
@@ -79,7 +79,7 @@ rule boringChatter
 inactive
 minInterval 50
 {
-   llLogRuleTick("boringChatter");
+   anwLogRuleTick("boringChatter");
    int currentTime = xsGetTime();
    int interval = aiRandInt(15) * 60 * 1000;
 
@@ -90,8 +90,8 @@ minInterval 50
       {
          sendStatement(cPlayerRelationAllyExcludingSelf, cAICommPromptToAllyLull);
          sendStatement(cPlayerRelationEnemyNotGaia, cAICommPromptToEnemyLull);
-         llSendLegendaryLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, interval);
-         llSendLegendaryLeaderInsultLine(cPlayerRelationEnemyNotGaia, interval);
+         anwSendLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, interval);
+         anwSendLeaderInsultLine(cPlayerRelationEnemyNotGaia, interval);
          xsSetRuleMinIntervalSelf(interval);
       }
    }

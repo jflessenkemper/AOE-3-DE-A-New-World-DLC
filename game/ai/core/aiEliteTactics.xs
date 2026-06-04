@@ -8,33 +8,33 @@
 */
 //==============================================================================
 
-extern int gLLEliteGuardPlanID = -1;
-extern int gLLEliteGuardAnchorUnitID = -1;
-extern int gLLEliteSupportPlanID = -1;
-extern int gLLEliteSupportAttackPlanID = -1;
-extern int gLLEliteSupportLastRefreshTime = -1;
-extern int gLLExplorerEscortPlanID = -1;
-extern int gLLExplorerEscortAttackPlanID = -1;
-extern int gLLExplorerEscortLastRefreshTime = -1;
-float gLLExplorerProtectionOverride = -1.0;
-float gLLDecapitationOverride = -1.0;
-int gLLExplorerEscortBonus = 0;
-float gLLExplorerRearOffsetBonus = 0.0;
+extern int gANWEliteGuardPlanID = -1;
+extern int gANWEliteGuardAnchorUnitID = -1;
+extern int gANWEliteSupportPlanID = -1;
+extern int gANWEliteSupportAttackPlanID = -1;
+extern int gANWEliteSupportLastRefreshTime = -1;
+extern int gANWExplorerEscortPlanID = -1;
+extern int gANWExplorerEscortAttackPlanID = -1;
+extern int gANWExplorerEscortLastRefreshTime = -1;
+float gANWExplorerProtectionOverride = -1.0;
+float gANWDecapitationOverride = -1.0;
+int gANWExplorerEscortBonus = 0;
+float gANWExplorerRearOffsetBonus = 0.0;
 
-// Elite-unit proto registry — populated once at init by llInitEliteProtoIDs().
+// Elite-unit proto registry — populated once at init by anwInitEliteProtoIDs().
 // Holds cUnitType* constants and kbGetProtoUnitID()-resolved IDs for the
 // current civ's unique units. Max 12 slots covers the widest ANW civ (ANWAztecs:5,
 // ANWArgentines:5+). -1 entries are skipped. Declared here (top of file) so they
-// precede first use in llInitEliteProtoIDs/llIsEliteUnit (XS needs decl-before-use).
-extern int gLLEliteProtoIDsArrayID = -1;
-extern int gLLEliteProtoCount = 0;
-const int cLLEliteProtoMax = 12;
+// precede first use in anwInitEliteProtoIDs/anwIsEliteUnit (XS needs decl-before-use).
+extern int gANWEliteProtoIDsArrayID = -1;
+extern int gANWEliteProtoCount = 0;
+const int cANWEliteProtoMax = 12;
 
 //==============================================================================
-/* llInitEliteProtoIDs — called once at rout-system boot (inside the
-   gLLAiRoutBootMarkerEmitted==0 guard in legendaryAiRoutMonitor) after kb is
+/* anwInitEliteProtoIDs — called once at rout-system boot (inside the
+   gANWAiRoutBootMarkerEmitted==0 guard in anwAiRoutMonitor) after kb is
    ready. Reads kbGetCivName(cMyCiv) and pushes all confirmed unique-unit type
-   IDs for the current ANW civ into gLLEliteProtoIDsArrayID.
+   IDs for the current ANW civ into gANWEliteProtoIDsArrayID.
 
    cUnitType* constants are pushed directly (engine integers).
    Proto strings are resolved via kbGetProtoUnitID() and pushed only if >= 0
@@ -46,14 +46,14 @@ const int cLLEliteProtoMax = 12;
    Base-game fallback block at the bottom handles the 8 original civs so this
    file stays backward-compatible with non-ANW games. */
 //==============================================================================
-void llInitEliteProtoIDs(void)
+void anwInitEliteProtoIDs(void)
 {
    // Create the array once.
-   if (gLLEliteProtoIDsArrayID < 0)
+   if (gANWEliteProtoIDsArrayID < 0)
    {
-      gLLEliteProtoIDsArrayID = xsArrayCreateInt(cLLEliteProtoMax, -1, "LL elite proto ids");
+      gANWEliteProtoIDsArrayID = xsArrayCreateInt(cANWEliteProtoMax, -1, "LL elite proto ids");
    }
-   gLLEliteProtoCount = 0;
+   gANWEliteProtoCount = 0;
 
    string civName = kbGetCivName(cMyCiv);
 
@@ -64,310 +64,310 @@ void llInitEliteProtoIDs(void)
    {
       // deREVGranadero, Lancer, Rodelero, WarDog (Gatling Gun = xpGatlingGun proto)
       int pid0 = kbGetProtoUnitID("deREVGranadero");
-      if (pid0 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid0); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);     gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);       gLLEliteProtoCount++;
+      if (pid0 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid0); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRodelero);     gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeWarDog);       gANWEliteProtoCount++;
       int pid1 = kbGetProtoUnitID("xpGatlingGun");
-      if (pid1 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid1); gLLEliteProtoCount++; }
+      if (pid1 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid1); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWAztecs")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpJaguarKnight);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpArrowKnight);   gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpSkullKnight);   gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpPumaMan);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpMacehualtin);   gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpJaguarKnight);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpArrowKnight);   gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpSkullKnight);   gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpPumaMan);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpMacehualtin);   gANWEliteProtoCount++;
    }
    else if (civName == "ANWBarbary")
    {
       int pid2 = kbGetProtoUnitID("deREVBarbaryWarrior");
-      if (pid2 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid2); gLLEliteProtoCount++; }
+      if (pid2 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid2); gANWEliteProtoCount++; }
       int pid3 = kbGetProtoUnitID("deBarbaryCavalry");
-      if (pid3 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid3); gLLEliteProtoCount++; }
+      if (pid3 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid3); gANWEliteProtoCount++; }
       int pid4 = kbGetProtoUnitID("deBedouinHorseArcher");
-      if (pid4 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid4); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGreatBombard);    gLLEliteProtoCount++;
+      if (pid4 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid4); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeGreatBombard);    gANWEliteProtoCount++;
       // Corsair Marksman (deAllegianceBarbaryMarksman) — confirmed in techtreemods unittypes
       int pid5 = kbGetProtoUnitID("deAllegianceBarbaryMarksman");
-      if (pid5 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid5); gLLEliteProtoCount++; }
+      if (pid5 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid5); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWBrazil")
    {
       // Voluntario actual spawned proto UNRESOLVED — TODO: fill when proto string confirmed
       int pid6 = kbGetProtoUnitID("xpGatlingGun");
-      if (pid6 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid6); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      if (pid6 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid6); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);          gANWEliteProtoCount++;
    }
    else if (civName == "ANWBritish")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLongbowman);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRocket);          gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLongbowman);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRocket);          gANWEliteProtoCount++;
       int pid7 = kbGetProtoUnitID("deRanger");
-      if (pid7 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid7); gLLEliteProtoCount++; }
+      if (pid7 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid7); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWCanadians")
    {
       int pid8 = kbGetProtoUnitID("deRanger");
-      if (pid8 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid8); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRocket);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      if (pid8 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid8); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRocket);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCuirassier);      gANWEliteProtoCount++;
       // Métis Pathfinder/Voyageur are Coureur reskins — not independently testable via kbUnitIsType
       // TODO: no distinct combat proto available per doc-04
    }
    else if (civName == "ANWChileans")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRodelero);        gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeWarDog);          gANWEliteProtoCount++;
       int pid9 = kbGetProtoUnitID("xpGatlingGun");
-      if (pid9 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid9); gLLEliteProtoCount++; }
+      if (pid9 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid9); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWChinese")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypChuKoNu);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypMeteorHammer);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypChangdao);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypChuKoNu);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypMeteorHammer);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypChangdao);      gANWEliteProtoCount++;
       // ypFlamethrower — no cUnitTypeypFlamethrower constant in AI source; proto string likely correct
       // but unverified in XS. TODO: replace with cUnitType constant when confirmed.
       int pid10 = kbGetProtoUnitID("ypFlamethrower");
-      if (pid10 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid10); gLLEliteProtoCount++; }
+      if (pid10 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid10); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWColumbians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRodelero);        gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeWarDog);          gANWEliteProtoCount++;
       int pid11 = kbGetProtoUnitID("deREVLlanero");
-      if (pid11 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid11); gLLEliteProtoCount++; }
+      if (pid11 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid11); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWDutch")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeHalberdier);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRuyter);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeHalberdier);      gANWEliteProtoCount++;
    }
    else if (civName == "ANWEgyptians")
    {
       int pid12 = kbGetProtoUnitID("MercMameluke");
-      if (pid12 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid12); gLLEliteProtoCount++; }
+      if (pid12 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid12); gANWEliteProtoCount++; }
       int pid13 = kbGetProtoUnitID("deDeli");
-      if (pid13 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid13); gLLEliteProtoCount++; }
+      if (pid13 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid13); gANWEliteProtoCount++; }
       int pid14 = kbGetProtoUnitID("deHumbaraci");
-      if (pid14 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid14); gLLEliteProtoCount++; }
+      if (pid14 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid14); gANWEliteProtoCount++; }
       int pid15 = kbGetProtoUnitID("deAzap");
-      if (pid15 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid15); gLLEliteProtoCount++; }
+      if (pid15 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid15); gANWEliteProtoCount++; }
       // Khevite Fusilier UNRESOLVED — no proto token found in repo data. TODO.
    }
    else if (civName == "ANWEthiopians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeOromoWarrior);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeShotelWarrior); gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeSebastopolMortar); gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeOromoWarrior);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeShotelWarrior); gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeRifleman);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeSebastopolMortar); gANWEliteProtoCount++;
    }
    else if (civName == "ANWFinnish")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeFinnishRider);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGrenadier);       gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeFinnishRider);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeGrenadier);       gANWEliteProtoCount++;
       // Karelian Jaeger = Skirmisher reskin, not uniquely distinguishable — not added per doc-04
    }
    else if (civName == "ANWFrench")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeSkirmisher);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCoureur);         gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCuirassier);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeSkirmisher);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCoureur);         gANWEliteProtoCount++;
    }
    else if (civName == "ANWGermans")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeUhlan);           gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarWagon);        gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeUhlan);           gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeWarWagon);        gANWEliteProtoCount++;
       // Doppelsoldner: no confirmed cUnitTypedeDoppelsoldner in AI files. TODO.
    }
    else if (civName == "ANWHaitians")
    {
       // Maroon cUnitType UNRESOLVED — deMaroon plausible but unconfirmed. TODO.
       int pid16 = kbGetProtoUnitID("SaloonPirate");
-      if (pid16 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid16); gLLEliteProtoCount++; }
+      if (pid16 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid16); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWHaudenosaunee")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpWarRifle);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpAenna);         gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpMantlet);       gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpWarRifle);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpAenna);         gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpMantlet);       gANWEliteProtoCount++;
    }
    else if (civName == "ANWHausa")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeFulaWarrior);   gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeFulaWarrior);   gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeRifleman);      gANWEliteProtoCount++;
       // Lifidi Knight: proto deLifidiKnight plausible but UNRESOLVED in repo data. TODO.
    }
    else if (civName == "ANWHungarians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeHussar);          gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeHussar);          gANWEliteProtoCount++;
       int pid17 = kbGetProtoUnitID("deNMPandour");
-      if (pid17 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid17); gLLEliteProtoCount++; }
+      if (pid17 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid17); gANWEliteProtoCount++; }
       int pid18 = kbGetProtoUnitID("deMercPandour");
-      if (pid18 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid18); gLLEliteProtoCount++; }
+      if (pid18 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid18); gANWEliteProtoCount++; }
       // Grenzer and Hajduk are spawned outpost units, not trainable protos. UNRESOLVED.
    }
    else if (civName == "ANWInca")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeBolasWarrior);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeIncaRunner);    gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeSpearmanLevy);  gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeBolasWarrior);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeIncaRunner);    gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeSpearmanLevy);  gANWEliteProtoCount++;
       // Huaraca: proto deHuaraca likely but no cUnitType confirmed. TODO.
    }
    else if (civName == "ANWIndians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypUrumi);         gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypSepoy);         gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypZamburak);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypHowdah);        gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypUrumi);         gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypSepoy);         gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypZamburak);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypHowdah);        gANWEliteProtoCount++;
    }
    else if (civName == "ANWIndonesians")
    {
       int pid19 = kbGetProtoUnitID("deREVJavaSpearman");
-      if (pid19 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid19); gLLEliteProtoCount++; }
+      if (pid19 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid19); gANWEliteProtoCount++; }
       int pid20 = kbGetProtoUnitID("deREVCetbang");
-      if (pid20 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid20); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter);          gLLEliteProtoCount++;
+      if (pid20 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid20); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRuyter);          gANWEliteProtoCount++;
    }
    else if (civName == "ANWItalians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeBersagliere);   gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeBersagliere);   gANWEliteProtoCount++;
       int pid21 = kbGetProtoUnitID("dePapalGuard");
-      if (pid21 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid21); gLLEliteProtoCount++; }
+      if (pid21 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid21); gANWEliteProtoCount++; }
       // Papal Lancer: no proto token found in any data file. UNRESOLVED. TODO.
    }
    else if (civName == "ANWJapanese")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypYumi);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypNaginataRider); gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeypKensei);        gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypYumi);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypNaginataRider); gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeypKensei);        gANWEliteProtoCount++;
       // Flaming Arrow: artillery unit, proto UNRESOLVED. TODO.
    }
    else if (civName == "ANWLakota")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpWarRifle);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpAxeRider);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpDogSoldier);    gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpRifleRider);    gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpWarRifle);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpAxeRider);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpDogSoldier);    gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpRifleRider);    gANWEliteProtoCount++;
    }
    else if (civName == "ANWMaltese")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeHospitaller);   gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeMalteseGun);    gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedePavisier);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeHospitaller);   gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeMalteseGun);    gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedePavisier);      gANWEliteProtoCount++;
    }
    else if (civName == "ANWMayans")
    {
       int pid22 = kbGetProtoUnitID("deNatHolcanJavelineer");
-      if (pid22 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid22); gLLEliteProtoCount++; }
+      if (pid22 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid22); gANWEliteProtoCount++; }
       int pid23 = kbGetProtoUnitID("deREVCruzobInfantry");
-      if (pid23 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid23); gLLEliteProtoCount++; }
+      if (pid23 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid23); gANWEliteProtoCount++; }
       int pid24 = kbGetProtoUnitID("deInsurgente");
-      if (pid24 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid24); gLLEliteProtoCount++; }
+      if (pid24 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid24); gANWEliteProtoCount++; }
       // Cruzob Avenger distinct proto UNRESOLVED — icon token only. TODO.
    }
    else if (civName == "ANWMexicans")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedePadre);         gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedePadre);         gANWEliteProtoCount++;
       int pid25 = kbGetProtoUnitID("deInsurgente");
-      if (pid25 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid25); gLLEliteProtoCount++; }
+      if (pid25 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid25); gANWEliteProtoCount++; }
       int pid26 = kbGetProtoUnitID("deEmboscador");
-      if (pid26 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid26); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeSoldado);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeChinaco);       gLLEliteProtoCount++;
+      if (pid26 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid26); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeSoldado);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeChinaco);       gANWEliteProtoCount++;
    }
    else if (civName == "ANWNapoleonicFrance")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCuirassier);      gANWEliteProtoCount++;
       int pid27 = kbGetProtoUnitID("deInsurgente");
-      if (pid27 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid27); gLLEliteProtoCount++; }
+      if (pid27 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid27); gANWEliteProtoCount++; }
       // Old Guard is a Grenadier reskin (no unique proto); use cUnitTypeGrenadier
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGrenadier);       gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeGrenadier);       gANWEliteProtoCount++;
    }
    else if (civName == "ANWOttomans")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeJanissary);       gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeJanissary);       gANWEliteProtoCount++;
       int pid28 = kbGetProtoUnitID("Spahi");
-      if (pid28 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid28); gLLEliteProtoCount++; }
+      if (pid28 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid28); gANWEliteProtoCount++; }
       int pid29 = kbGetProtoUnitID("AbusGun");
-      if (pid29 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid29); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeGreatBombard);    gLLEliteProtoCount++;
+      if (pid29 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid29); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeGreatBombard);    gANWEliteProtoCount++;
    }
    else if (civName == "ANWPeruvians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeChasqui);       gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRodelero);        gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeWarDog);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeChasqui);       gANWEliteProtoCount++;
    }
    else if (civName == "ANWPortuguese")
    {
       int pid30 = kbGetProtoUnitID("Cacadore");
-      if (pid30 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid30); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeOrganGun);        gLLEliteProtoCount++;
+      if (pid30 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid30); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeOrganGun);        gANWEliteProtoCount++;
    }
    else if (civName == "ANWRevFrance")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCuirassier);      gANWEliteProtoCount++;
       int pid31 = kbGetProtoUnitID("deInsurgente");
-      if (pid31 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid31); gLLEliteProtoCount++; }
+      if (pid31 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid31); gANWEliteProtoCount++; }
       // Sans Culottes = Coureur (renamed via SetName) — use cUnitTypeCoureur
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCoureur);         gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCoureur);         gANWEliteProtoCount++;
    }
    else if (civName == "ANWRomanians")
    {
       // Rosior Dragoon = Dragoon (reskin); Dorobant = xpColonialMilitia (reskin)
       // No unique protos — use base types as approximate per doc-04.
       int pid32 = kbGetProtoUnitID("Dragoon");
-      if (pid32 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid32); gLLEliteProtoCount++; }
+      if (pid32 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid32); gANWEliteProtoCount++; }
       int pid33 = kbGetProtoUnitID("xpColonialMilitia");
-      if (pid33 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid33); gLLEliteProtoCount++; }
+      if (pid33 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid33); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWRussians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeStrelet);         gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeStrelet);         gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);          gANWEliteProtoCount++;
       int pid34 = kbGetProtoUnitID("Oprichnik");
-      if (pid34 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid34); gLLEliteProtoCount++; }
+      if (pid34 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid34); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWSouthAfricans")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter);          gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRuyter);          gANWEliteProtoCount++;
       int pid35 = kbGetProtoUnitID("deREVStarTrekWagon");
-      if (pid35 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid35); gLLEliteProtoCount++; }
+      if (pid35 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid35); gANWEliteProtoCount++; }
    }
    else if (civName == "ANWSpanish")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero);        gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLancer);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeWarDog);          gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeMissionary);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRodelero);        gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLancer);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeWarDog);          gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeMissionary);      gANWEliteProtoCount++;
    }
    else if (civName == "ANWSwedes")
    {
       // deCarolean confirmed in techtreemods; no cUnitTypedeCarolean in AI source — use kbGetProtoUnitID
       int pid36 = kbGetProtoUnitID("deCarolean");
-      if (pid36 >= 0) { xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, pid36); gLLEliteProtoCount++; }
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeFinnishRider);  gLLEliteProtoCount++;
+      if (pid36 >= 0) { xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, pid36); gANWEliteProtoCount++; }
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeFinnishRider);  gANWEliteProtoCount++;
       // Leather Cannon (deLeatherCannons) UNRESOLVED as cUnitType. TODO.
    }
    else if (civName == "ANWTexians")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeMinuteman);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeStateMilitia);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRegular);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeChinaco);       gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeMinuteman);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeStateMilitia);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeRegular);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeRifleman);      gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeChinaco);       gANWEliteProtoCount++;
    }
    else if (civName == "ANWUSA")
    {
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeMinuteman);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeStateMilitia);  gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRegular);       gLLEliteProtoCount++;
-      xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypedeRifleman);      gLLEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeMinuteman);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeStateMilitia);  gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeRegular);       gANWEliteProtoCount++;
+      xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypedeRifleman);      gANWEliteProtoCount++;
    }
    else
    {
@@ -377,73 +377,73 @@ void llInitEliteProtoIDs(void)
       {
          case cCivBritish:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeLongbowman); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeLongbowman); gANWEliteProtoCount++;
             break;
          }
          case cCivFrench:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeCuirassier); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeCuirassier); gANWEliteProtoCount++;
             break;
          }
          case cCivGermans:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeUhlan); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeUhlan); gANWEliteProtoCount++;
             break;
          }
          case cCivRussians:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeStrelet); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeStrelet); gANWEliteProtoCount++;
             break;
          }
          case cCivOttomans:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeJanissary); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeJanissary); gANWEliteProtoCount++;
             break;
          }
          case cCivDutch:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRuyter); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRuyter); gANWEliteProtoCount++;
             break;
          }
          case cCivSpanish:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypeRodelero); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypeRodelero); gANWEliteProtoCount++;
             break;
          }
          case cCivXPAztec:
          {
-            xsArraySetInt(gLLEliteProtoIDsArrayID, gLLEliteProtoCount, cUnitTypexpJaguarKnight); gLLEliteProtoCount++;
+            xsArraySetInt(gANWEliteProtoIDsArrayID, gANWEliteProtoCount, cUnitTypexpJaguarKnight); gANWEliteProtoCount++;
             break;
          }
       }
    }
 
-   llProbe("rout.elite_protos_init", "civ=" + civName + " count=" + gLLEliteProtoCount);
+   anwProbe("rout.elite_protos_init", "civ=" + civName + " count=" + gANWEliteProtoCount);
 }
 
 //==============================================================================
-/* llIsEliteUnit — predicate for "elite" land-military units used by the
-   screening logic in this file. Loops gLLEliteProtoIDsArrayID (populated by
-   llInitEliteProtoIDs at boot) and returns true if the unit matches any entry.
+/* anwIsEliteUnit — predicate for "elite" land-military units used by the
+   screening logic in this file. Loops gANWEliteProtoIDsArrayID (populated by
+   anwInitEliteProtoIDs at boot) and returns true if the unit matches any entry.
    Returns false for unitID < 0, empty array, or no match — degrades safely to
    the 25% rout path. Heroes are counted separately by callers. */
 //==============================================================================
-bool llIsEliteUnit(int unitID = -1)
+bool anwIsEliteUnit(int unitID = -1)
 {
    if (unitID < 0)
    {
       return (false);
    }
 
-   if ((gLLEliteProtoIDsArrayID < 0) || (gLLEliteProtoCount <= 0))
+   if ((gANWEliteProtoIDsArrayID < 0) || (gANWEliteProtoCount <= 0))
    {
       return (false);
    }
 
    int i = 0;
-   for (i = 0; < gLLEliteProtoCount)
+   for (i = 0; < gANWEliteProtoCount)
    {
-      int typeID = xsArrayGetInt(gLLEliteProtoIDsArrayID, i);
+      int typeID = xsArrayGetInt(gANWEliteProtoIDsArrayID, i);
       if (typeID >= 0)
       {
          if (kbUnitIsType(unitID, typeID) == true)
@@ -456,7 +456,7 @@ bool llIsEliteUnit(int unitID = -1)
    return (false);
 }
 
-float llClamp01(float value = 0.0)
+float anwClamp01(float value = 0.0)
 {
    if (value < 0.0)
    {
@@ -471,19 +471,19 @@ float llClamp01(float value = 0.0)
    return (value);
 }
 
-void llSetLeaderTacticalDoctrine(float protectionOverride = -1.0, float decapitationOverride = -1.0,
+void anwSetLeaderTacticalDoctrine(float protectionOverride = -1.0, float decapitationOverride = -1.0,
    int escortBonus = 0, float rearOffsetBonus = 0.0)
 {
-   gLLExplorerProtectionOverride = protectionOverride;
-   gLLDecapitationOverride = decapitationOverride;
-   gLLExplorerEscortBonus = escortBonus;
-   gLLExplorerRearOffsetBonus = rearOffsetBonus;
-   llProbe("event.elite.doctrine",
+   gANWExplorerProtectionOverride = protectionOverride;
+   gANWDecapitationOverride = decapitationOverride;
+   gANWExplorerEscortBonus = escortBonus;
+   gANWExplorerRearOffsetBonus = rearOffsetBonus;
+   anwProbe("event.elite.doctrine",
       "protect=" + protectionOverride + " decap=" + decapitationOverride +
       " escortBonus=" + escortBonus + " rearOffset=" + rearOffsetBonus);
 }
 
-int llGetPlaystyleBucket(void)
+int anwGetPlaystyleBucket(void)
 {
    if (btOffenseDefense >= 0.35)
    {
@@ -498,51 +498,51 @@ int llGetPlaystyleBucket(void)
    return (1);
 }
 
-float llGetExplorerProtectionBias(void)
+float anwGetExplorerProtectionBias(void)
 {
-   if (gLLExplorerProtectionOverride >= 0.0)
+   if (gANWExplorerProtectionOverride >= 0.0)
    {
-      return (llClamp01(gLLExplorerProtectionOverride));
+      return (anwClamp01(gANWExplorerProtectionOverride));
    }
 
    float protectionBias = 0.55 - (btOffenseDefense * 0.35) + (btBiasInf * 0.12) + (btBiasArt * 0.10) -
       (btBiasCav * 0.14) - (btBiasNative * 0.06);
 
-   if (llGetPlaystyleBucket() == 0)
+   if (anwGetPlaystyleBucket() == 0)
    {
       protectionBias = protectionBias + 0.12;
    }
-   else if (llGetPlaystyleBucket() == 2)
+   else if (anwGetPlaystyleBucket() == 2)
    {
       protectionBias = protectionBias - 0.08;
    }
 
-   return (llClamp01(protectionBias));
+   return (anwClamp01(protectionBias));
 }
 
-float llGetDecapitationBias(void)
+float anwGetDecapitationBias(void)
 {
-   if (gLLDecapitationOverride >= 0.0)
+   if (gANWDecapitationOverride >= 0.0)
    {
-      return (llClamp01(gLLDecapitationOverride));
+      return (anwClamp01(gANWDecapitationOverride));
    }
 
    float decapitationBias = 0.20 + (btOffenseDefense * 0.38) + (btBiasCav * 0.24) + (btBiasNative * 0.10) -
       (btBiasArt * 0.12) - (btBiasInf * 0.08);
 
-   if (llGetPlaystyleBucket() == 2)
+   if (anwGetPlaystyleBucket() == 2)
    {
       decapitationBias = decapitationBias + 0.10;
    }
-   else if (llGetPlaystyleBucket() == 0)
+   else if (anwGetPlaystyleBucket() == 0)
    {
       decapitationBias = decapitationBias - 0.14;
    }
 
-   return (llClamp01(decapitationBias));
+   return (anwClamp01(decapitationBias));
 }
 
-vector llGetEliteRetreatPoint(void)
+vector anwGetEliteRetreatPoint(void)
 {
    int mainBaseID = kbBaseGetMainID(cMyID);
    vector retreatPoint = kbBaseGetMilitaryGatherPoint(cMyID, mainBaseID);
@@ -554,7 +554,7 @@ vector llGetEliteRetreatPoint(void)
    return (retreatPoint);
 }
 
-vector llGetAssaultOffsetPoint(vector gatherPoint = cInvalidVector, vector targetPoint = cInvalidVector, float offset = 0.0)
+vector anwGetAssaultOffsetPoint(vector gatherPoint = cInvalidVector, vector targetPoint = cInvalidVector, float offset = 0.0)
 {
    if (targetPoint == cInvalidVector)
    {
@@ -563,7 +563,7 @@ vector llGetAssaultOffsetPoint(vector gatherPoint = cInvalidVector, vector targe
 
    if (gatherPoint == cInvalidVector)
    {
-      gatherPoint = llGetEliteRetreatPoint();
+      gatherPoint = anwGetEliteRetreatPoint();
    }
 
    if ((gatherPoint == cInvalidVector) || (distance(gatherPoint, targetPoint) < 4.0) || (offset <= 0.0))
@@ -574,7 +574,7 @@ vector llGetAssaultOffsetPoint(vector gatherPoint = cInvalidVector, vector targe
    return (targetPoint - (xsVectorNormalize(targetPoint - gatherPoint) * offset));
 }
 
-int llGetNearbyEnemyPressureCount(vector location = cInvalidVector, float radius = 28.0)
+int anwGetNearbyEnemyPressureCount(vector location = cInvalidVector, float radius = 28.0)
 {
    if ((location == cInvalidVector) || (radius <= 0.0))
    {
@@ -586,7 +586,7 @@ int llGetNearbyEnemyPressureCount(vector location = cInvalidVector, float radius
    return (kbUnitQueryExecute(enemyQueryID));
 }
 
-int llGetNearbyNonEliteSupportCount(vector location = cInvalidVector, float radius = 26.0)
+int anwGetNearbyNonEliteSupportCount(vector location = cInvalidVector, float radius = 26.0)
 {
    if ((location == cInvalidVector) || (radius <= 0.0))
    {
@@ -600,7 +600,7 @@ int llGetNearbyNonEliteSupportCount(vector location = cInvalidVector, float radi
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == true)
+      if (anwIsEliteUnit(unitID) == true)
       {
          continue;
       }
@@ -611,7 +611,7 @@ int llGetNearbyNonEliteSupportCount(vector location = cInvalidVector, float radi
    return (count);
 }
 
-int llGetTotalNonEliteTroopCount(void)
+int anwGetTotalNonEliteTroopCount(void)
 {
    int count = 0;
    int unitQueryID = createSimpleUnitQuery(cUnitTypeLogicalTypeLandMilitary, cMyID, cUnitStateAlive);
@@ -620,7 +620,7 @@ int llGetTotalNonEliteTroopCount(void)
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == true)
+      if (anwIsEliteUnit(unitID) == true)
       {
          continue;
       }
@@ -631,7 +631,7 @@ int llGetTotalNonEliteTroopCount(void)
    return (count);
 }
 
-int llGetTotalEliteTroopCount(void)
+int anwGetTotalEliteTroopCount(void)
 {
    int count = 0;
    int unitQueryID = createSimpleUnitQuery(cUnitTypeLogicalTypeLandMilitary, cMyID, cUnitStateAlive);
@@ -640,7 +640,7 @@ int llGetTotalEliteTroopCount(void)
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == false)
+      if (anwIsEliteUnit(unitID) == false)
       {
          continue;
       }
@@ -651,7 +651,7 @@ int llGetTotalEliteTroopCount(void)
    return (count);
 }
 
-int llGetNearbyEliteCoreCount(vector location = cInvalidVector, float radius = 30.0)
+int anwGetNearbyEliteCoreCount(vector location = cInvalidVector, float radius = 30.0)
 {
    if ((location == cInvalidVector) || (radius <= 0.0))
    {
@@ -669,7 +669,7 @@ int llGetNearbyEliteCoreCount(vector location = cInvalidVector, float radius = 3
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == false)
+      if (anwIsEliteUnit(unitID) == false)
       {
          continue;
       }
@@ -680,7 +680,7 @@ int llGetNearbyEliteCoreCount(vector location = cInvalidVector, float radius = 3
    return (count);
 }
 
-int llGetThreatenedEliteAnchorID(void)
+int anwGetThreatenedEliteAnchorID(void)
 {
    int heroQueryID = createSimpleUnitQuery(cUnitTypeHero, cMyID, cUnitStateAlive);
    int heroCount = kbUnitQueryExecute(heroQueryID);
@@ -688,7 +688,7 @@ int llGetThreatenedEliteAnchorID(void)
    for (i = 0; < heroCount)
    {
       int heroID = kbUnitQueryGetResult(heroQueryID, i);
-      if (llGetNearbyEnemyPressureCount(kbUnitGetPosition(heroID), 28.0) > 0)
+      if (anwGetNearbyEnemyPressureCount(kbUnitGetPosition(heroID), 28.0) > 0)
       {
          return (heroID);
       }
@@ -700,12 +700,12 @@ int llGetThreatenedEliteAnchorID(void)
    for (i = 0; < eliteCount)
    {
       int unitID = kbUnitQueryGetResult(eliteQueryID, i);
-      if (llIsEliteUnit(unitID) == false)
+      if (anwIsEliteUnit(unitID) == false)
       {
          continue;
       }
 
-      if (llGetNearbyEnemyPressureCount(kbUnitGetPosition(unitID), 28.0) > 0)
+      if (anwGetNearbyEnemyPressureCount(kbUnitGetPosition(unitID), 28.0) > 0)
       {
          return (unitID);
       }
@@ -714,7 +714,7 @@ int llGetThreatenedEliteAnchorID(void)
    return (-1);
 }
 
-int llGetPrimaryLandAttackPlanID(void)
+int anwGetPrimaryLandAttackPlanID(void)
 {
    int numPlans = aiPlanGetActiveCount();
    int i = 0;
@@ -739,7 +739,7 @@ int llGetPrimaryLandAttackPlanID(void)
       if ((planID == gNavyAttackPlan) || (planID == gLandPatrolPlan) || (planID == gWaterPatrolPlan) ||
           (planID == gWaterDockAttackPlan) || (planID == gWarshipExplorePlan) || (planID == gIslandAssaultPlanID) ||
           (planID == gKOTHCombatPlan) || (planID == gKOTHGuardPlan) || (planID == gIslandSearchPlanID) ||
-          (planID == gLLEliteSupportPlanID))
+          (planID == gANWEliteSupportPlanID))
       {
          continue;
       }
@@ -750,7 +750,7 @@ int llGetPrimaryLandAttackPlanID(void)
    return (-1);
 }
 
-vector llGetAttackPlanGatherPoint(int attackPlanID = -1)
+vector anwGetAttackPlanGatherPoint(int attackPlanID = -1)
 {
    if (attackPlanID < 0)
    {
@@ -763,10 +763,10 @@ vector llGetAttackPlanGatherPoint(int attackPlanID = -1)
       return (gatherPoint);
    }
 
-   return (llGetEliteRetreatPoint());
+   return (anwGetEliteRetreatPoint());
 }
 
-vector llGetAttackPlanTargetPoint(int attackPlanID = -1)
+vector anwGetAttackPlanTargetPoint(int attackPlanID = -1)
 {
    if (attackPlanID < 0)
    {
@@ -789,7 +789,7 @@ vector llGetAttackPlanTargetPoint(int attackPlanID = -1)
    return (targetPoint);
 }
 
-vector llGetAttackPlanStrategicPoint(int attackPlanID = -1)
+vector anwGetAttackPlanStrategicPoint(int attackPlanID = -1)
 {
    if (attackPlanID < 0)
    {
@@ -807,10 +807,10 @@ vector llGetAttackPlanStrategicPoint(int attackPlanID = -1)
       }
    }
 
-   return (llGetAttackPlanTargetPoint(attackPlanID));
+   return (anwGetAttackPlanTargetPoint(attackPlanID));
 }
 
-int llGetPrimaryExplorerID(void)
+int anwGetPrimaryExplorerID(void)
 {
    int heroQueryID = createSimpleUnitQuery(cUnitTypeHero, cMyID, cUnitStateAlive);
    if (kbUnitQueryExecute(heroQueryID) <= 0)
@@ -821,7 +821,7 @@ int llGetPrimaryExplorerID(void)
    return (kbUnitQueryGetResult(heroQueryID, 0));
 }
 
-vector llGetEnemyArmyMassPoint(int targetPlayer = -1, vector nearPoint = cInvalidVector, float radius = 42.0)
+vector anwGetEnemyArmyMassPoint(int targetPlayer = -1, vector nearPoint = cInvalidVector, float radius = 42.0)
 {
    if (nearPoint == cInvalidVector)
    {
@@ -849,7 +849,7 @@ vector llGetEnemyArmyMassPoint(int targetPlayer = -1, vector nearPoint = cInvali
    return (xsVectorSet(xTotal / enemyCount, 0.0, zTotal / enemyCount));
 }
 
-int llGetBestEnemyExplorerStrikeID(int targetPlayer = -1, vector referencePoint = cInvalidVector, float searchRadius = 70.0,
+int anwGetBestEnemyExplorerStrikeID(int targetPlayer = -1, vector referencePoint = cInvalidVector, float searchRadius = 70.0,
    int maxEscortCount = 4)
 {
    int playerRelation = targetPlayer >= 0 ? targetPlayer : cPlayerRelationEnemyNotGaia;
@@ -892,7 +892,7 @@ int llGetBestEnemyExplorerStrikeID(int targetPlayer = -1, vector referencePoint 
    return (bestHeroID);
 }
 
-bool llIsEnemyExplorerInBattle(int heroID = -1, vector enemyArmyPoint = cInvalidVector, float battleRadius = 24.0)
+bool anwIsEnemyExplorerInBattle(int heroID = -1, vector enemyArmyPoint = cInvalidVector, float battleRadius = 24.0)
 {
    if (heroID < 0)
    {
@@ -902,7 +902,7 @@ bool llIsEnemyExplorerInBattle(int heroID = -1, vector enemyArmyPoint = cInvalid
    vector heroPosition = kbUnitGetPosition(heroID);
    if (enemyArmyPoint == cInvalidVector)
    {
-      return (llGetNearbyEnemyPressureCount(heroPosition, battleRadius) > 4);
+      return (anwGetNearbyEnemyPressureCount(heroPosition, battleRadius) > 4);
    }
 
    if (distance(heroPosition, enemyArmyPoint) > battleRadius)
@@ -910,74 +910,74 @@ bool llIsEnemyExplorerInBattle(int heroID = -1, vector enemyArmyPoint = cInvalid
       return (false);
    }
 
-   return (llGetNearbyEnemyPressureCount(heroPosition, battleRadius) > 4);
+   return (anwGetNearbyEnemyPressureCount(heroPosition, battleRadius) > 4);
 }
 
-void llDestroyEliteGuardPlan(void)
+void anwDestroyEliteGuardPlan(void)
 {
-   if (gLLEliteGuardPlanID >= 0)
+   if (gANWEliteGuardPlanID >= 0)
    {
-      llLogPlanEvent("destroy", gLLEliteGuardPlanID, "name=Legendary Elite Guard");
-      aiPlanDestroy(gLLEliteGuardPlanID);
+      anwLogPlanEvent("destroy", gANWEliteGuardPlanID, "name=ANW Elite Guard");
+      aiPlanDestroy(gANWEliteGuardPlanID);
    }
 
-   gLLEliteGuardPlanID = -1;
-   gLLEliteGuardAnchorUnitID = -1;
-   llProbe("event.elite.guard_destroyed", "atMs=" + xsGetTime());
+   gANWEliteGuardPlanID = -1;
+   gANWEliteGuardAnchorUnitID = -1;
+   anwProbe("event.elite.guard_destroyed", "atMs=" + xsGetTime());
 }
 
-void llDestroyEliteSupportPlan(void)
+void anwDestroyEliteSupportPlan(void)
 {
-   if (gLLEliteSupportPlanID >= 0)
+   if (gANWEliteSupportPlanID >= 0)
    {
-      llLogPlanEvent("destroy", gLLEliteSupportPlanID, "name=Legendary Elite Support");
-      aiPlanDestroy(gLLEliteSupportPlanID);
+      anwLogPlanEvent("destroy", gANWEliteSupportPlanID, "name=ANW Elite Support");
+      aiPlanDestroy(gANWEliteSupportPlanID);
    }
 
-   gLLEliteSupportPlanID = -1;
-   gLLEliteSupportAttackPlanID = -1;
-   gLLEliteSupportLastRefreshTime = -1;
-   llProbe("event.elite.support_destroyed", "atMs=" + xsGetTime());
+   gANWEliteSupportPlanID = -1;
+   gANWEliteSupportAttackPlanID = -1;
+   gANWEliteSupportLastRefreshTime = -1;
+   anwProbe("event.elite.support_destroyed", "atMs=" + xsGetTime());
 }
 
-void llDestroyExplorerEscortPlan(void)
+void anwDestroyExplorerEscortPlan(void)
 {
-   if (gLLExplorerEscortPlanID >= 0)
+   if (gANWExplorerEscortPlanID >= 0)
    {
-      llLogPlanEvent("destroy", gLLExplorerEscortPlanID, "name=Legendary Explorer Escort");
-      aiPlanDestroy(gLLExplorerEscortPlanID);
+      anwLogPlanEvent("destroy", gANWExplorerEscortPlanID, "name=ANW Explorer Escort");
+      aiPlanDestroy(gANWExplorerEscortPlanID);
    }
 
-   gLLExplorerEscortPlanID = -1;
-   gLLExplorerEscortAttackPlanID = -1;
-   gLLExplorerEscortLastRefreshTime = -1;
-   llProbe("event.elite.escort_destroyed", "atMs=" + xsGetTime());
+   gANWExplorerEscortPlanID = -1;
+   gANWExplorerEscortAttackPlanID = -1;
+   gANWExplorerEscortLastRefreshTime = -1;
+   anwProbe("event.elite.escort_destroyed", "atMs=" + xsGetTime());
 }
 
-void llResetExplorerControlToBase(void)
+void anwResetExplorerControlToBase(void)
 {
    if (gExplorerControlPlan < 0)
    {
       return;
    }
 
-   vector retreatPoint = llGetEliteRetreatPoint();
+   vector retreatPoint = anwGetEliteRetreatPoint();
    if (retreatPoint == cInvalidVector)
    {
       return;
    }
 
    aiPlanSetVariableVector(gExplorerControlPlan, cCombatPlanTargetPoint, 0, retreatPoint);
-   llProbe("event.elite.explorer_reset", "loc=" + llFmtVec(retreatPoint));
+   anwProbe("event.elite.explorer_reset", "loc=" + anwFmtVec(retreatPoint));
 }
 
-void llPositionExplorerBehindArmy(vector rearPoint = cInvalidVector)
+void anwPositionExplorerBehindArmy(vector rearPoint = cInvalidVector)
 {
    if (rearPoint == cInvalidVector)
    {
       return;
    }
-   llProbe("event.elite.explorer_rear", "loc=" + llFmtVec(rearPoint));
+   anwProbe("event.elite.explorer_rear", "loc=" + anwFmtVec(rearPoint));
 
    if (gExplorerControlPlan >= 0)
    {
@@ -995,25 +995,25 @@ void llPositionExplorerBehindArmy(vector rearPoint = cInvalidVector)
       {
          aiPlanRemoveUnit(currentPlanID, heroID);
       }
-      llLogUnitAction("explorer-reposition", heroID, "destination=" + rearPoint);
+      anwLogUnitAction("explorer-reposition", heroID, "destination=" + rearPoint);
       aiTaskUnitMove(heroID, rearPoint);
    }
 }
 
-void llRebuildExplorerEscortPlan(int attackPlanID = -1, vector gatherPoint = cInvalidVector, vector escortPoint = cInvalidVector,
+void anwRebuildExplorerEscortPlan(int attackPlanID = -1, vector gatherPoint = cInvalidVector, vector escortPoint = cInvalidVector,
    int desiredEscortCount = 0)
 {
    if ((attackPlanID < 0) || (gatherPoint == cInvalidVector) || (escortPoint == cInvalidVector) || (desiredEscortCount <= 0))
    {
-      llDestroyExplorerEscortPlan();
+      anwDestroyExplorerEscortPlan();
       return;
    }
 
-   llDestroyExplorerEscortPlan();
+   anwDestroyExplorerEscortPlan();
 
    int mainBaseID = kbBaseGetMainID(cMyID);
-   int planID = aiPlanCreate("Legendary Explorer Escort", cPlanCombat);
-   llLogPlanEvent("create", planID, "name=Legendary Explorer Escort attackPlan=" + attackPlanID);
+   int planID = aiPlanCreate("ANW Explorer Escort", cPlanCombat);
+   anwLogPlanEvent("create", planID, "name=ANW Explorer Escort attackPlan=" + attackPlanID);
    aiPlanSetVariableInt(planID, cCombatPlanCombatType, 0, cCombatPlanCombatTypeDefend);
    aiPlanSetVariableInt(planID, cCombatPlanTargetMode, 0, cCombatPlanTargetModePoint);
    aiPlanSetVariableVector(planID, cCombatPlanTargetPoint, 0, escortPoint);
@@ -1033,13 +1033,13 @@ void llRebuildExplorerEscortPlan(int attackPlanID = -1, vector gatherPoint = cIn
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == true)
+      if (anwIsEliteUnit(unitID) == true)
       {
          continue;
       }
 
       int currentPlanID = kbUnitGetPlanID(unitID);
-      if ((currentPlanID != attackPlanID) && (currentPlanID != gLLExplorerEscortPlanID))
+      if ((currentPlanID != attackPlanID) && (currentPlanID != gANWExplorerEscortPlanID))
       {
          continue;
       }
@@ -1069,33 +1069,33 @@ void llRebuildExplorerEscortPlan(int attackPlanID = -1, vector gatherPoint = cIn
 
    if (addedUnits <= 0)
    {
-      llLogPlanEvent("destroy", planID, "reason=no escort units added");
+      anwLogPlanEvent("destroy", planID, "reason=no escort units added");
       aiPlanDestroy(planID);
       return;
    }
 
    aiPlanSetActive(planID);
-   gLLExplorerEscortPlanID = planID;
-   gLLExplorerEscortAttackPlanID = attackPlanID;
-   gLLExplorerEscortLastRefreshTime = xsGetTime();
-   debugLegendaryLeaders("created explorer escort plan " + planID + " for attack plan " + attackPlanID +
+   gANWExplorerEscortPlanID = planID;
+   gANWExplorerEscortAttackPlanID = attackPlanID;
+   gANWExplorerEscortLastRefreshTime = xsGetTime();
+   debugANW("created explorer escort plan " + planID + " for attack plan " + attackPlanID +
       " using " + addedUnits + " non-elite troops.");
-   llProbe("elite.escort", "plan=" + planID + " attackPlan=" + attackPlanID +
-      " units=" + addedUnits + " desired=" + desiredEscortCount + " escortPt=" + llFmtVec(escortPoint));
+   anwProbe("elite.escort", "plan=" + planID + " attackPlan=" + attackPlanID +
+      " units=" + addedUnits + " desired=" + desiredEscortCount + " escortPt=" + anwFmtVec(escortPoint));
 }
 
-vector llChooseAssaultObjectivePoint(int attackPlanID = -1, vector gatherPoint = cInvalidVector)
+vector anwChooseAssaultObjectivePoint(int attackPlanID = -1, vector gatherPoint = cInvalidVector)
 {
-   vector strategicPoint = llGetAttackPlanStrategicPoint(attackPlanID);
+   vector strategicPoint = anwGetAttackPlanStrategicPoint(attackPlanID);
    if (strategicPoint == cInvalidVector)
    {
       return (cInvalidVector);
    }
 
    int targetPlayer = aiPlanGetVariableInt(attackPlanID, cCombatPlanTargetPlayerID, 0);
-   float decapitationBias = llGetDecapitationBias();
-   float protectionBias = llGetExplorerProtectionBias();
-   vector bulkPoint = llGetEnemyArmyMassPoint(targetPlayer, strategicPoint, 44.0);
+   float decapitationBias = anwGetDecapitationBias();
+   float protectionBias = anwGetExplorerProtectionBias();
+   vector bulkPoint = anwGetEnemyArmyMassPoint(targetPlayer, strategicPoint, 44.0);
    if (bulkPoint == cInvalidVector)
    {
       aiPlanSetVariableInt(attackPlanID, cCombatPlanTargetMode, 0, cCombatPlanTargetModePoint);
@@ -1103,19 +1103,19 @@ vector llChooseAssaultObjectivePoint(int attackPlanID = -1, vector gatherPoint =
       return (strategicPoint);
    }
 
-   int enemyExplorerID = llGetBestEnemyExplorerStrikeID(targetPlayer, strategicPoint, 72.0,
+   int enemyExplorerID = anwGetBestEnemyExplorerStrikeID(targetPlayer, strategicPoint, 72.0,
       2 + ((1.0 - decapitationBias) * 4.0));
    if ((enemyExplorerID >= 0) && (decapitationBias >= 0.55) &&
-       (llIsEnemyExplorerInBattle(enemyExplorerID, bulkPoint, 26.0) == true))
+       (anwIsEnemyExplorerInBattle(enemyExplorerID, bulkPoint, 26.0) == true))
    {
       vector strikePoint = kbUnitGetPosition(enemyExplorerID);
       if ((distance(strikePoint, bulkPoint) <= 26.0) || (decapitationBias >= 0.80))
       {
          aiPlanSetVariableInt(attackPlanID, cCombatPlanTargetMode, 0, cCombatPlanTargetModePoint);
          aiPlanSetVariableVector(attackPlanID, cCombatPlanTargetPoint, 0, strikePoint);
-         debugLegendaryLeaders("assault objective shifted toward enemy explorer at " + strikePoint +
+         debugANW("assault objective shifted toward enemy explorer at " + strikePoint +
             " because leader doctrine favors decapitation strikes.");
-         llSendLegendaryLeaderDecapitationLine(targetPlayer, 150000);
+         anwSendLeaderDecapitationLine(targetPlayer, 150000);
          return (strikePoint);
       }
    }
@@ -1124,31 +1124,31 @@ vector llChooseAssaultObjectivePoint(int attackPlanID = -1, vector gatherPoint =
    aiPlanSetVariableVector(attackPlanID, cCombatPlanTargetPoint, 0, bulkPoint);
    if (protectionBias >= 0.45)
    {
-      debugLegendaryLeaders("assault objective shifted onto the bulk enemy force to preserve leader escort integrity.");
+      debugANW("assault objective shifted onto the bulk enemy force to preserve leader escort integrity.");
    }
-   llSendLegendaryLeaderBulkAssaultLine(targetPlayer, 150000);
+   anwSendLeaderBulkAssaultLine(targetPlayer, 150000);
    return (bulkPoint);
 }
 
-void llRebuildEliteGuardPlan(int anchorUnitID = -1)
+void anwRebuildEliteGuardPlan(int anchorUnitID = -1)
 {
    if (anchorUnitID < 0)
    {
-      llDestroyEliteGuardPlan();
+      anwDestroyEliteGuardPlan();
       return;
    }
 
    vector anchorLocation = kbUnitGetPosition(anchorUnitID);
    if (anchorLocation == cInvalidVector)
    {
-      llDestroyEliteGuardPlan();
+      anwDestroyEliteGuardPlan();
       return;
    }
 
-   llDestroyEliteGuardPlan();
+   anwDestroyEliteGuardPlan();
 
-   int planID = aiPlanCreate("Legendary Elite Guard", cPlanCombat);
-   llLogPlanEvent("create", planID, "name=Legendary Elite Guard anchorUnit=" + anchorUnitID);
+   int planID = aiPlanCreate("ANW Elite Guard", cPlanCombat);
+   anwLogPlanEvent("create", planID, "name=ANW Elite Guard anchorUnit=" + anchorUnitID);
    aiPlanSetVariableInt(planID, cCombatPlanCombatType, 0, cCombatPlanCombatTypeDefend);
    aiPlanSetVariableInt(planID, cCombatPlanTargetMode, 0, cCombatPlanTargetModePoint);
    aiPlanSetVariableVector(planID, cCombatPlanTargetPoint, 0, anchorLocation);
@@ -1165,7 +1165,7 @@ void llRebuildEliteGuardPlan(int anchorUnitID = -1)
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == true)
+      if (anwIsEliteUnit(unitID) == true)
       {
          continue;
       }
@@ -1190,21 +1190,21 @@ void llRebuildEliteGuardPlan(int anchorUnitID = -1)
 
    if (addedUnits <= 0)
    {
-      llLogPlanEvent("destroy", planID, "reason=no guard units added");
+      anwLogPlanEvent("destroy", planID, "reason=no guard units added");
       aiPlanDestroy(planID);
       return;
    }
 
    aiPlanSetActive(planID);
-   gLLEliteGuardPlanID = planID;
-   gLLEliteGuardAnchorUnitID = anchorUnitID;
-   debugLegendaryLeaders("created elite guard plan " + planID + " around anchor unit " + anchorUnitID +
+   gANWEliteGuardPlanID = planID;
+   gANWEliteGuardAnchorUnitID = anchorUnitID;
+   debugANW("created elite guard plan " + planID + " around anchor unit " + anchorUnitID +
       " using " + addedUnits + " non-elite troops.");
-   llProbe("elite.guard", "plan=" + planID + " anchor=" + anchorUnitID +
-      " units=" + addedUnits + " pos=" + llFmtVec(anchorLocation));
+   anwProbe("elite.guard", "plan=" + planID + " anchor=" + anchorUnitID +
+      " units=" + addedUnits + " pos=" + anwFmtVec(anchorLocation));
 }
 
-void llRetreatEliteCore(int anchorUnitID = -1, float radius = 36.0)
+void anwRetreatEliteCore(int anchorUnitID = -1, float radius = 36.0)
 {
    if (anchorUnitID < 0)
    {
@@ -1217,7 +1217,7 @@ void llRetreatEliteCore(int anchorUnitID = -1, float radius = 36.0)
       return;
    }
 
-   vector retreatPoint = llGetEliteRetreatPoint();
+   vector retreatPoint = anwGetEliteRetreatPoint();
    if (retreatPoint == cInvalidVector)
    {
       return;
@@ -1234,7 +1234,7 @@ void llRetreatEliteCore(int anchorUnitID = -1, float radius = 36.0)
       {
          aiPlanRemoveUnit(currentPlanID, heroID);
       }
-      llLogUnitAction("elite-retreat-hero", heroID, "destination=" + retreatPoint);
+      anwLogUnitAction("elite-retreat-hero", heroID, "destination=" + retreatPoint);
       aiTaskUnitMove(heroID, retreatPoint);
    }
 
@@ -1244,7 +1244,7 @@ void llRetreatEliteCore(int anchorUnitID = -1, float radius = 36.0)
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == false)
+      if (anwIsEliteUnit(unitID) == false)
       {
          continue;
       }
@@ -1254,20 +1254,20 @@ void llRetreatEliteCore(int anchorUnitID = -1, float radius = 36.0)
       {
          aiPlanRemoveUnit(unitPlanID, unitID);
       }
-      llLogUnitAction("elite-retreat-core", unitID, "destination=" + retreatPoint);
+      anwLogUnitAction("elite-retreat-core", unitID, "destination=" + retreatPoint);
       aiTaskUnitMove(unitID, retreatPoint);
    }
 
-   debugLegendaryLeaders("elite core around anchor unit " + anchorUnitID + " ordered to retreat to " + retreatPoint + ".");
-   llProbe("event.elite.retreat_core",
+   debugANW("elite core around anchor unit " + anchorUnitID + " ordered to retreat to " + retreatPoint + ".");
+   anwProbe("event.elite.retreat_core",
       "anchor=" + anchorUnitID + " radius=" + radius +
       " heroes=" + heroCount + " elites=" + numberFound +
-      " loc=" + llFmtVec(retreatPoint));
+      " loc=" + anwFmtVec(retreatPoint));
 }
 
-void llRetreatAllEliteUnits(void)
+void anwRetreatAllEliteUnits(void)
 {
-   vector retreatPoint = llGetEliteRetreatPoint();
+   vector retreatPoint = anwGetEliteRetreatPoint();
    if (retreatPoint == cInvalidVector)
    {
       return;
@@ -1284,7 +1284,7 @@ void llRetreatAllEliteUnits(void)
       {
          aiPlanRemoveUnit(currentPlanID, heroID);
       }
-      llLogUnitAction("elite-global-retreat-hero", heroID, "destination=" + retreatPoint);
+      anwLogUnitAction("elite-global-retreat-hero", heroID, "destination=" + retreatPoint);
       aiTaskUnitMove(heroID, retreatPoint);
    }
 
@@ -1294,7 +1294,7 @@ void llRetreatAllEliteUnits(void)
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == false)
+      if (anwIsEliteUnit(unitID) == false)
       {
          continue;
       }
@@ -1304,19 +1304,19 @@ void llRetreatAllEliteUnits(void)
       {
          aiPlanRemoveUnit(unitPlanID, unitID);
       }
-      llLogUnitAction("elite-global-retreat-core", unitID, "destination=" + retreatPoint);
+      anwLogUnitAction("elite-global-retreat-core", unitID, "destination=" + retreatPoint);
       aiTaskUnitMove(unitID, retreatPoint);
    }
 
-   llResetExplorerControlToBase();
-   debugLegendaryLeaders("all elite units were ordered to retreat after the explorer fell.");
-   llSendLegendaryLeaderRetreatLine(cPlayerRelationEnemyNotGaia, 180000);
-   llProbe("event.elite.retreat_all",
+   anwResetExplorerControlToBase();
+   debugANW("all elite units were ordered to retreat after the explorer fell.");
+   anwSendLeaderRetreatLine(cPlayerRelationEnemyNotGaia, 180000);
+   anwProbe("event.elite.retreat_all",
       "heroes=" + heroCount + " elites=" + numberFound +
-      " loc=" + llFmtVec(retreatPoint));
+      " loc=" + anwFmtVec(retreatPoint));
 }
 
-void llTryRansomExplorer(void)
+void anwTryRansomExplorer(void)
 {
    if (aiGetFallenExplorerID() < 0)
    {
@@ -1335,24 +1335,24 @@ void llTryRansomExplorer(void)
    }
 
    createProtoUnitCommandResearchPlan(cProtoUnitCommandRansomExplorer, tcID, cMilitaryEscrowID, 95, 95);
-   debugLegendaryLeaders("queued explorer ransom through the town center command after losing the leader.");
-   llProbe("elite.ransom", "tc=" + tcID + " fallen=" + aiGetFallenExplorerID());
+   debugANW("queued explorer ransom through the town center command after losing the leader.");
+   anwProbe("elite.ransom", "tc=" + tcID + " fallen=" + aiGetFallenExplorerID());
 }
 
-void llRebuildEliteSupportPlan(int attackPlanID = -1, vector gatherPoint = cInvalidVector, vector elitePoint = cInvalidVector,
+void anwRebuildEliteSupportPlan(int attackPlanID = -1, vector gatherPoint = cInvalidVector, vector elitePoint = cInvalidVector,
    int desiredEliteCount = 1)
 {
    if ((attackPlanID < 0) || (elitePoint == cInvalidVector) || (desiredEliteCount <= 0))
    {
-      llDestroyEliteSupportPlan();
+      anwDestroyEliteSupportPlan();
       return;
    }
 
-   llDestroyEliteSupportPlan();
+   anwDestroyEliteSupportPlan();
 
    int mainBaseID = kbBaseGetMainID(cMyID);
-   int planID = aiPlanCreate("Legendary Elite Support", cPlanCombat);
-   llLogPlanEvent("create", planID, "name=Legendary Elite Support attackPlan=" + attackPlanID);
+   int planID = aiPlanCreate("ANW Elite Support", cPlanCombat);
+   anwLogPlanEvent("create", planID, "name=ANW Elite Support attackPlan=" + attackPlanID);
    aiPlanSetVariableInt(planID, cCombatPlanCombatType, 0, cCombatPlanCombatTypeDefend);
    aiPlanSetVariableInt(planID, cCombatPlanTargetMode, 0, cCombatPlanTargetModePoint);
    aiPlanSetVariableVector(planID, cCombatPlanTargetPoint, 0, elitePoint);
@@ -1372,14 +1372,14 @@ void llRebuildEliteSupportPlan(int attackPlanID = -1, vector gatherPoint = cInva
    for (i = 0; < numberFound)
    {
       int unitID = kbUnitQueryGetResult(unitQueryID, i);
-      if (llIsEliteUnit(unitID) == false)
+      if (anwIsEliteUnit(unitID) == false)
       {
          continue;
       }
 
       vector unitLocation = kbUnitGetPosition(unitID);
       int currentPlanID = kbUnitGetPlanID(unitID);
-      if ((currentPlanID != attackPlanID) && (currentPlanID != gLLEliteSupportPlanID) &&
+      if ((currentPlanID != attackPlanID) && (currentPlanID != gANWEliteSupportPlanID) &&
           ((distance(unitLocation, elitePoint) > 60.0) && (distance(unitLocation, gatherPoint) > 55.0)))
       {
          continue;
@@ -1404,56 +1404,56 @@ void llRebuildEliteSupportPlan(int attackPlanID = -1, vector gatherPoint = cInva
 
    if (addedUnits <= 0)
    {
-      llLogPlanEvent("destroy", planID, "reason=no elite support units added");
+      anwLogPlanEvent("destroy", planID, "reason=no elite support units added");
       aiPlanDestroy(planID);
       return;
    }
 
    aiPlanSetActive(planID);
-   gLLEliteSupportPlanID = planID;
-   gLLEliteSupportAttackPlanID = attackPlanID;
-   gLLEliteSupportLastRefreshTime = xsGetTime();
-   debugLegendaryLeaders("created elite support plan " + planID + " for attack plan " + attackPlanID +
+   gANWEliteSupportPlanID = planID;
+   gANWEliteSupportAttackPlanID = attackPlanID;
+   gANWEliteSupportLastRefreshTime = xsGetTime();
+   debugANW("created elite support plan " + planID + " for attack plan " + attackPlanID +
       " with " + addedUnits + " elite units guarding the second line.");
-   llProbe("elite.support", "plan=" + planID + " attackPlan=" + attackPlanID +
-      " units=" + addedUnits + " desired=" + desiredEliteCount + " elitePt=" + llFmtVec(elitePoint));
+   anwProbe("elite.support", "plan=" + planID + " attackPlan=" + attackPlanID +
+      " units=" + addedUnits + " desired=" + desiredEliteCount + " elitePt=" + anwFmtVec(elitePoint));
 }
 
-bool llHandleEliteAssaultFormation(int attackPlanID = -1)
+bool anwHandleEliteAssaultFormation(int attackPlanID = -1)
 {
    static int lastProbedAssaultPlan = -1;
    if (attackPlanID < 0)
    {
-      llDestroyEliteSupportPlan();
+      anwDestroyEliteSupportPlan();
       return (false);
    }
 
-   vector gatherPoint = llGetAttackPlanGatherPoint(attackPlanID);
-   vector targetPoint = llChooseAssaultObjectivePoint(attackPlanID, gatherPoint);
+   vector gatherPoint = anwGetAttackPlanGatherPoint(attackPlanID);
+   vector targetPoint = anwChooseAssaultObjectivePoint(attackPlanID, gatherPoint);
    if (attackPlanID != lastProbedAssaultPlan)
    {
       lastProbedAssaultPlan = attackPlanID;
-      llProbe("elite.assault", "attackPlan=" + attackPlanID +
-         " gather=" + llFmtVec(gatherPoint) + " target=" + llFmtVec(targetPoint));
+      anwProbe("elite.assault", "attackPlan=" + attackPlanID +
+         " gather=" + anwFmtVec(gatherPoint) + " target=" + anwFmtVec(targetPoint));
    }
    if ((gatherPoint == cInvalidVector) || (targetPoint == cInvalidVector))
    {
-      llDestroyExplorerEscortPlan();
-      llDestroyEliteSupportPlan();
+      anwDestroyExplorerEscortPlan();
+      anwDestroyEliteSupportPlan();
       return (false);
    }
 
-   int nonEliteCount = llGetTotalNonEliteTroopCount();
-   int eliteCount = llGetTotalEliteTroopCount();
+   int nonEliteCount = anwGetTotalNonEliteTroopCount();
+   int eliteCount = anwGetTotalEliteTroopCount();
    int totalArmyCount = nonEliteCount + eliteCount;
    bool largeArmy = ((nonEliteCount >= 12) && (totalArmyCount >= 18));
-   float protectionBias = llGetExplorerProtectionBias();
-   float decapitationBias = llGetDecapitationBias();
+   float protectionBias = anwGetExplorerProtectionBias();
+   float decapitationBias = anwGetDecapitationBias();
 
    float eliteOffset = 7.0;
-   float explorerOffset = 14.0 + (protectionBias * 10.0) - (decapitationBias * 4.0) + gLLExplorerRearOffsetBonus;
+   float explorerOffset = 14.0 + (protectionBias * 10.0) - (decapitationBias * 4.0) + gANWExplorerRearOffsetBonus;
    int desiredEliteCount = 1;
-   int desiredEscortCount = 2 + (protectionBias * 5.0) + gLLExplorerEscortBonus;
+   int desiredEscortCount = 2 + (protectionBias * 5.0) + gANWExplorerEscortBonus;
    if (largeArmy == true)
    {
       eliteOffset = 13.0;
@@ -1490,44 +1490,44 @@ bool llHandleEliteAssaultFormation(int attackPlanID = -1)
       desiredEscortCount = escortCap;
    }
 
-   vector elitePoint = llGetAssaultOffsetPoint(gatherPoint, targetPoint, eliteOffset);
-   vector explorerPoint = llGetAssaultOffsetPoint(gatherPoint, targetPoint, explorerOffset);
+   vector elitePoint = anwGetAssaultOffsetPoint(gatherPoint, targetPoint, eliteOffset);
+   vector explorerPoint = anwGetAssaultOffsetPoint(gatherPoint, targetPoint, explorerOffset);
 
-   llPositionExplorerBehindArmy(explorerPoint);
+   anwPositionExplorerBehindArmy(explorerPoint);
 
    if ((nonEliteCount <= 0) || (eliteCount <= 0))
    {
-      llDestroyExplorerEscortPlan();
-      llDestroyEliteSupportPlan();
+      anwDestroyExplorerEscortPlan();
+      anwDestroyEliteSupportPlan();
       return (true);
    }
 
-    if ((gLLExplorerEscortPlanID < 0) || (gLLExplorerEscortAttackPlanID != attackPlanID) ||
-        (xsGetTime() - gLLExplorerEscortLastRefreshTime >= 12000))
+    if ((gANWExplorerEscortPlanID < 0) || (gANWExplorerEscortAttackPlanID != attackPlanID) ||
+        (xsGetTime() - gANWExplorerEscortLastRefreshTime >= 12000))
     {
-       llRebuildExplorerEscortPlan(attackPlanID, gatherPoint, explorerPoint, desiredEscortCount);
+       anwRebuildExplorerEscortPlan(attackPlanID, gatherPoint, explorerPoint, desiredEscortCount);
     }
     else
     {
-       aiPlanSetVariableVector(gLLExplorerEscortPlanID, cCombatPlanTargetPoint, 0, explorerPoint);
-       aiPlanSetVariableVector(gLLExplorerEscortPlanID, cCombatPlanGatherPoint, 0, gatherPoint);
+       aiPlanSetVariableVector(gANWExplorerEscortPlanID, cCombatPlanTargetPoint, 0, explorerPoint);
+       aiPlanSetVariableVector(gANWExplorerEscortPlanID, cCombatPlanGatherPoint, 0, gatherPoint);
     }
 
-   if ((gLLEliteSupportPlanID < 0) || (gLLEliteSupportAttackPlanID != attackPlanID) ||
-       (xsGetTime() - gLLEliteSupportLastRefreshTime >= 15000))
+   if ((gANWEliteSupportPlanID < 0) || (gANWEliteSupportAttackPlanID != attackPlanID) ||
+       (xsGetTime() - gANWEliteSupportLastRefreshTime >= 15000))
    {
-      llRebuildEliteSupportPlan(attackPlanID, gatherPoint, elitePoint, desiredEliteCount);
+      anwRebuildEliteSupportPlan(attackPlanID, gatherPoint, elitePoint, desiredEliteCount);
    }
    else
    {
-      aiPlanSetVariableVector(gLLEliteSupportPlanID, cCombatPlanTargetPoint, 0, elitePoint);
-      aiPlanSetVariableVector(gLLEliteSupportPlanID, cCombatPlanGatherPoint, 0, gatherPoint);
+      aiPlanSetVariableVector(gANWEliteSupportPlanID, cCombatPlanTargetPoint, 0, elitePoint);
+      aiPlanSetVariableVector(gANWEliteSupportPlanID, cCombatPlanGatherPoint, 0, gatherPoint);
    }
 
    return (true);
 }
 
-rule legendaryEliteGuardMonitor
+rule anwEliteGuardMonitor
 inactive
 minInterval 5
 {
@@ -1537,35 +1537,35 @@ minInterval 5
    {
       // LL-GUARD probe — fires once per AI on first monitor tick, confirms
       // the elite-guard/explorer-escort rule is actually running.
-      llProbe("elite.guardTick", "note=monitor-first-tick");
+      anwProbe("elite.guardTick", "note=monitor-first-tick");
       probedFirstTick = 1;
    }
-   llLogRuleTick("legendaryEliteGuardMonitor");
+   anwLogRuleTick("anwEliteGuardMonitor");
    if (aiGetFallenExplorerID() >= 0)
    {
       if (probedFallenOnce == 0)
       {
          // LL-EXPLOST probe — records the moment the AI's explorer died
          // (maps to ToAllyILoseExplorerEnemy quote trigger). One-shot.
-         llProbe("elite.explorerLost", "explorer=" + aiGetFallenExplorerID());
+         anwProbe("elite.explorerLost", "explorer=" + aiGetFallenExplorerID());
          probedFallenOnce = 1;
       }
-      llDestroyEliteGuardPlan();
-      llDestroyExplorerEscortPlan();
-      llDestroyEliteSupportPlan();
-      llRetreatAllEliteUnits();
-      llTryRansomExplorer();
+      anwDestroyEliteGuardPlan();
+      anwDestroyExplorerEscortPlan();
+      anwDestroyEliteSupportPlan();
+      anwRetreatAllEliteUnits();
+      anwTryRansomExplorer();
       return;
    }
 
-   int attackPlanID = llGetPrimaryLandAttackPlanID();
+   int attackPlanID = anwGetPrimaryLandAttackPlanID();
    if (attackPlanID >= 0)
    {
       // mil.escort_check — emitted every monitor tick while an attack plan
       // is active. Records how far the leader/explorer unit is from the
       // nearest friendly land-military unit so the offline validator can
       // assert the leader stays within 30 m of the army during attacks.
-      int explorerID = llGetPrimaryExplorerID();
+      int explorerID = anwGetPrimaryExplorerID();
       vector explorerPos = cInvalidVector;
       float nearestDist = -1.0;
       if (explorerID >= 0)
@@ -1587,80 +1587,80 @@ minInterval 5
             }
          }
       }
-      llProbe("mil.escort_check",
+      anwProbe("mil.escort_check",
          "attack_active=1" +
          " leader_dist=" + nearestDist +
          " explorerID=" + explorerID +
          " attackPlan=" + attackPlanID);
-      llDestroyEliteGuardPlan();
-      if (llHandleEliteAssaultFormation(attackPlanID) == true)
+      anwDestroyEliteGuardPlan();
+      if (anwHandleEliteAssaultFormation(attackPlanID) == true)
       {
          return;
       }
    }
    else
    {
-      llDestroyExplorerEscortPlan();
-      llDestroyEliteSupportPlan();
-      llResetExplorerControlToBase();
+      anwDestroyExplorerEscortPlan();
+      anwDestroyEliteSupportPlan();
+      anwResetExplorerControlToBase();
    }
 
-   int anchorUnitID = llGetThreatenedEliteAnchorID();
+   int anchorUnitID = anwGetThreatenedEliteAnchorID();
    if (anchorUnitID < 0)
    {
-      llDestroyEliteGuardPlan();
+      anwDestroyEliteGuardPlan();
       return;
    }
 
    vector anchorLocation = kbUnitGetPosition(anchorUnitID);
-   int enemyPressure = llGetNearbyEnemyPressureCount(anchorLocation, 28.0);
+   int enemyPressure = anwGetNearbyEnemyPressureCount(anchorLocation, 28.0);
    if (enemyPressure <= 0)
    {
-      llDestroyEliteGuardPlan();
+      anwDestroyEliteGuardPlan();
       return;
    }
 
-   int nearbyScreenCount = llGetNearbyNonEliteSupportCount(anchorLocation, 26.0);
+   int nearbyScreenCount = anwGetNearbyNonEliteSupportCount(anchorLocation, 26.0);
    if (nearbyScreenCount > 0)
    {
-      if ((gLLEliteGuardPlanID < 0) || (gLLEliteGuardAnchorUnitID != anchorUnitID))
+      if ((gANWEliteGuardPlanID < 0) || (gANWEliteGuardAnchorUnitID != anchorUnitID))
       {
-         llRebuildEliteGuardPlan(anchorUnitID);
+         anwRebuildEliteGuardPlan(anchorUnitID);
       }
       else
       {
-         aiPlanSetVariableVector(gLLEliteGuardPlanID, cCombatPlanTargetPoint, 0, anchorLocation);
+         aiPlanSetVariableVector(gANWEliteGuardPlanID, cCombatPlanTargetPoint, 0, anchorLocation);
       }
       return;
    }
 
-   llDestroyEliteGuardPlan();
+   anwDestroyEliteGuardPlan();
 
-   if (llGetTotalNonEliteTroopCount() > 0)
+   if (anwGetTotalNonEliteTroopCount() > 0)
    {
       return;
    }
 
-   int playstyleBucket = llGetPlaystyleBucket();
+   int playstyleBucket = anwGetPlaystyleBucket();
    if (playstyleBucket >= 2)
    {
-      debugLegendaryLeaders("elite core remains engaged because leader playstyle is aggressive.");
+      debugANW("elite core remains engaged because leader playstyle is aggressive.");
       return;
    }
 
-   if ((playstyleBucket == 1) && (enemyPressure <= llGetNearbyEliteCoreCount(anchorLocation, 30.0)))
+   if ((playstyleBucket == 1) && (enemyPressure <= anwGetNearbyEliteCoreCount(anchorLocation, 30.0)))
    {
-      debugLegendaryLeaders("elite core remains engaged because balanced leader still has a favorable local fight.");
+      debugANW("elite core remains engaged because balanced leader still has a favorable local fight.");
       return;
    }
 
-   llRetreatEliteCore(anchorUnitID);
+   anwRetreatEliteCore(anchorUnitID);
 }
 
 //==============================================================================
-/* AI non-elite rout system (Legendary Leaders).
+/* AI non-elite rout system (A New World).
  *
- * Behaviour spec (matches tools/validation/runtime_specs/legendary_runtime_suites.json):
+ * Behaviour spec (matches tools/validation/runtime_specs/anw_runtime_suites.json):
  *
  *   - Non-elite AI-controlled land military breaks when its hitpoints fall
  *     under 25% AND no elite/hero support is within 18 m. Broken units
@@ -1673,14 +1673,14 @@ minInterval 5
  *
  * Debug markers (the validator looks for these strings verbatim):
  *
- *   "Legendary Leaders: [RULE] AI non-elite rout enabled at 25% health; "
+ *   "A New World: [RULE] AI non-elite rout enabled at 25% health; "
  *   "elite units hold and human-controlled units keep manual control"
  *       — one-shot, first tick of the rule, confirms boot.
  *
- *   "Legendary Leaders: [UNIT] ai-rout-start unit=<ID>"   — first rout tick
- *   "Legendary Leaders: [UNIT] ai-rout-move unit=<ID>"    — each subsequent tick still moving
- *   "Legendary Leaders: [UNIT] ai-rout-arrival unit=<ID>" — within 6 m of destination
- *   "Legendary Leaders: [UNIT] ai-rout-blocked unit=<ID> reason=elite-support"
+ *   "A New World: [UNIT] ai-rout-start unit=<ID>"   — first rout tick
+ *   "A New World: [UNIT] ai-rout-move unit=<ID>"    — each subsequent tick still moving
+ *   "A New World: [UNIT] ai-rout-arrival unit=<ID>" — within 6 m of destination
+ *   "A New World: [UNIT] ai-rout-blocked unit=<ID> reason=elite-support"
  *       — emitted when a unit would have routed but an elite anchor was
  *         within range. Confirms the screen-body-stays-in-formation rule.
  *
@@ -1692,41 +1692,41 @@ minInterval 5
  */
 //==============================================================================
 
-extern int gLLAiRoutSlotsArrayID = -1;        // xsArrayCreateInt slots → unitID (-1 = free)
-extern int gLLAiRoutDestArrayID = -1;         // xsArrayCreateVector slots → destination
-extern int gLLAiRoutStartTimeArrayID = -1;    // xsArrayCreateInt slots → start time (s)
-extern int gLLAiRoutSlotCount = 32;
-extern int gLLAiRoutBootMarkerEmitted = 0;
-extern int gLLAiRoutLastDestinationStaleCheck = -1;
+extern int gANWAiRoutSlotsArrayID = -1;        // xsArrayCreateInt slots → unitID (-1 = free)
+extern int gANWAiRoutDestArrayID = -1;         // xsArrayCreateVector slots → destination
+extern int gANWAiRoutStartTimeArrayID = -1;    // xsArrayCreateInt slots → start time (s)
+extern int gANWAiRoutSlotCount = 32;
+extern int gANWAiRoutBootMarkerEmitted = 0;
+extern int gANWAiRoutLastDestinationStaleCheck = -1;
 
-// (gLLEliteProtoIDsArrayID / gLLEliteProtoCount / cLLEliteProtoMax are declared
+// (gANWEliteProtoIDsArrayID / gANWEliteProtoCount / cANWEliteProtoMax are declared
 //  at the top of this file so they precede their first use — see line ~24.)
 
-const float cLLAiRoutHpThreshold       = 0.25;   // 25% health — non-unique units
-const float cLLAiRoutEliteHpThreshold  = 0.10;   // 10% health — unique/nation-specific units
-const float cLLAiRoutEliteSupportRange = 18.0;   // metres
-const float cLLAiRoutArrivalTolerance  = 6.0;    // metres — "arrived" radius
-const int   cLLAiRoutMaxLifetimeSecs   = 60;     // give up tracking after this
+const float cANWAiRoutHpThreshold       = 0.25;   // 25% health — non-unique units
+const float cANWAiRoutEliteHpThreshold  = 0.10;   // 10% health — unique/nation-specific units
+const float cANWAiRoutEliteSupportRange = 18.0;   // metres
+const float cANWAiRoutArrivalTolerance  = 6.0;    // metres — "arrived" radius
+const int   cANWAiRoutMaxLifetimeSecs   = 60;     // give up tracking after this
 
-void llEnsureAiRoutArrays(void)
+void anwEnsureAiRoutArrays(void)
 {
-   if (gLLAiRoutSlotsArrayID < 0)
+   if (gANWAiRoutSlotsArrayID < 0)
    {
-      gLLAiRoutSlotsArrayID = xsArrayCreateInt(gLLAiRoutSlotCount, -1, "LL ai-rout slots");
-      gLLAiRoutStartTimeArrayID = xsArrayCreateInt(gLLAiRoutSlotCount, -1, "LL ai-rout start time");
-      gLLAiRoutDestArrayID = xsArrayCreateVector(gLLAiRoutSlotCount, cInvalidVector, "LL ai-rout dest");
+      gANWAiRoutSlotsArrayID = xsArrayCreateInt(gANWAiRoutSlotCount, -1, "LL ai-rout slots");
+      gANWAiRoutStartTimeArrayID = xsArrayCreateInt(gANWAiRoutSlotCount, -1, "LL ai-rout start time");
+      gANWAiRoutDestArrayID = xsArrayCreateVector(gANWAiRoutSlotCount, cInvalidVector, "LL ai-rout dest");
    }
 }
 
-int llFindAiRoutSlotForUnit(int unitID = -1)
+int anwFindAiRoutSlotForUnit(int unitID = -1)
 {
-   if ((unitID < 0) || (gLLAiRoutSlotsArrayID < 0))
+   if ((unitID < 0) || (gANWAiRoutSlotsArrayID < 0))
    {
       return (-1);
    }
-   for (slot = 0; < gLLAiRoutSlotCount)
+   for (slot = 0; < gANWAiRoutSlotCount)
    {
-      if (xsArrayGetInt(gLLAiRoutSlotsArrayID, slot) == unitID)
+      if (xsArrayGetInt(gANWAiRoutSlotsArrayID, slot) == unitID)
       {
          return (slot);
       }
@@ -1734,43 +1734,43 @@ int llFindAiRoutSlotForUnit(int unitID = -1)
    return (-1);
 }
 
-int llClaimAiRoutSlot(int unitID = -1, vector dest = cInvalidVector)
+int anwClaimAiRoutSlot(int unitID = -1, vector dest = cInvalidVector)
 {
    if (unitID < 0)
    {
       return (-1);
    }
-   llEnsureAiRoutArrays();
-   int existing = llFindAiRoutSlotForUnit(unitID);
+   anwEnsureAiRoutArrays();
+   int existing = anwFindAiRoutSlotForUnit(unitID);
    if (existing >= 0)
    {
       return (existing);
    }
-   for (slot = 0; < gLLAiRoutSlotCount)
+   for (slot = 0; < gANWAiRoutSlotCount)
    {
-      if (xsArrayGetInt(gLLAiRoutSlotsArrayID, slot) < 0)
+      if (xsArrayGetInt(gANWAiRoutSlotsArrayID, slot) < 0)
       {
-         xsArraySetInt(gLLAiRoutSlotsArrayID, slot, unitID);
-         xsArraySetInt(gLLAiRoutStartTimeArrayID, slot, xsGetTime());
-         xsArraySetVector(gLLAiRoutDestArrayID, slot, dest);
+         xsArraySetInt(gANWAiRoutSlotsArrayID, slot, unitID);
+         xsArraySetInt(gANWAiRoutStartTimeArrayID, slot, xsGetTime());
+         xsArraySetVector(gANWAiRoutDestArrayID, slot, dest);
          return (slot);
       }
    }
    return (-1);
 }
 
-void llReleaseAiRoutSlot(int slot = -1)
+void anwReleaseAiRoutSlot(int slot = -1)
 {
-   if ((slot < 0) || (gLLAiRoutSlotsArrayID < 0))
+   if ((slot < 0) || (gANWAiRoutSlotsArrayID < 0))
    {
       return;
    }
-   xsArraySetInt(gLLAiRoutSlotsArrayID, slot, -1);
-   xsArraySetInt(gLLAiRoutStartTimeArrayID, slot, -1);
-   xsArraySetVector(gLLAiRoutDestArrayID, slot, cInvalidVector);
+   xsArraySetInt(gANWAiRoutSlotsArrayID, slot, -1);
+   xsArraySetInt(gANWAiRoutStartTimeArrayID, slot, -1);
+   xsArraySetVector(gANWAiRoutDestArrayID, slot, cInvalidVector);
 }
 
-vector llChooseAiRoutDestination(void)
+vector anwChooseAiRoutDestination(void)
 {
    int mainBaseID = kbBaseGetMainID(cMyID);
    if (mainBaseID < 0)
@@ -1780,17 +1780,17 @@ vector llChooseAiRoutDestination(void)
    return (kbBaseGetLocation(cMyID, mainBaseID));
 }
 
-bool llAiRoutHasEliteSupportNearby(vector pos = cInvalidVector)
+bool anwAiRoutHasEliteSupportNearby(vector pos = cInvalidVector)
 {
    if (pos == cInvalidVector)
    {
       return (false);
    }
    // Heroes are explicitly counted as elite support per the elite-tactics
-   // formation contract (line 26 of this file). llIsEliteUnit() currently
+   // formation contract (line 26 of this file). anwIsEliteUnit() currently
    // returns false unconditionally — heroes carry the elite anchor role.
    int heroQuery = createSimpleUnitQuery(cUnitTypeHero, cMyID, cUnitStateAlive,
-      pos, cLLAiRoutEliteSupportRange);
+      pos, cANWAiRoutEliteSupportRange);
    int heroCount = kbUnitQueryExecute(heroQuery);
    if (heroCount > 0)
    {
@@ -1799,7 +1799,7 @@ bool llAiRoutHasEliteSupportNearby(vector pos = cInvalidVector)
    return (false);
 }
 
-bool llIsAiRoutEligibleUnit(int unitID = -1)
+bool anwIsAiRoutEligibleUnit(int unitID = -1)
 {
    if (unitID < 0)
    {
@@ -1825,22 +1825,22 @@ bool llIsAiRoutEligibleUnit(int unitID = -1)
    // owned by a human player is naturally filtered by the cMyID check
    // above. The contract is documented in the boot marker for clarity.
    // Unique (nation-specific) units retreat at 10%; all others at 25%.
-   if (llIsEliteUnit(unitID) == true)
+   if (anwIsEliteUnit(unitID) == true)
    {
-      return (kbUnitGetHealth(unitID) < cLLAiRoutEliteHpThreshold);
+      return (kbUnitGetHealth(unitID) < cANWAiRoutEliteHpThreshold);
    }
-   return (kbUnitGetHealth(unitID) < cLLAiRoutHpThreshold);
+   return (kbUnitGetHealth(unitID) < cANWAiRoutHpThreshold);
 }
 
-void llProcessAiRoutTick(void)
+void anwProcessAiRoutTick(void)
 {
-   llEnsureAiRoutArrays();
+   anwEnsureAiRoutArrays();
 
    // ── Pass 1: reap stale slots (dead units, healed units, expired) ──
    int now = xsGetTime();
-   for (slot = 0; < gLLAiRoutSlotCount)
+   for (slot = 0; < gANWAiRoutSlotCount)
    {
-      int trackedID = xsArrayGetInt(gLLAiRoutSlotsArrayID, slot);
+      int trackedID = xsArrayGetInt(gANWAiRoutSlotsArrayID, slot);
       if (trackedID < 0)
       {
          continue;
@@ -1848,49 +1848,49 @@ void llProcessAiRoutTick(void)
       // Dead or unknown → release.
       if (kbUnitGetCurrentHitpoints(trackedID) <= 0)
       {
-         llReleaseAiRoutSlot(slot);
+         anwReleaseAiRoutSlot(slot);
          continue;
       }
       // Healed back above threshold → release (the unit is fine again).
       // NEW — release unique units when healed above 20%; non-unique above 35%
-      float releaseThreshold = cLLAiRoutHpThreshold + 0.10;
-      if (llIsEliteUnit(trackedID) == true)
+      float releaseThreshold = cANWAiRoutHpThreshold + 0.10;
+      if (anwIsEliteUnit(trackedID) == true)
       {
-         releaseThreshold = cLLAiRoutEliteHpThreshold + 0.10;
+         releaseThreshold = cANWAiRoutEliteHpThreshold + 0.10;
       }
       if (kbUnitGetHealth(trackedID) >= releaseThreshold)
       {
-         llReleaseAiRoutSlot(slot);
+         anwReleaseAiRoutSlot(slot);
          continue;
       }
       // Expired → release (something else has happened, stop tracking).
-      int startTime = xsArrayGetInt(gLLAiRoutStartTimeArrayID, slot);
-      if ((startTime > 0) && ((now - startTime) > cLLAiRoutMaxLifetimeSecs))
+      int startTime = xsArrayGetInt(gANWAiRoutStartTimeArrayID, slot);
+      if ((startTime > 0) && ((now - startTime) > cANWAiRoutMaxLifetimeSecs))
       {
-         llReleaseAiRoutSlot(slot);
+         anwReleaseAiRoutSlot(slot);
          continue;
       }
       // Arrived → emit and release.
-      vector dest = xsArrayGetVector(gLLAiRoutDestArrayID, slot);
+      vector dest = xsArrayGetVector(gANWAiRoutDestArrayID, slot);
       vector pos = kbUnitGetPosition(trackedID);
       if (dest != cInvalidVector)
       {
          float distLeft = distance(pos, dest);
-         if (distLeft <= cLLAiRoutArrivalTolerance)
+         if (distLeft <= cANWAiRoutArrivalTolerance)
          {
-            debugLegendaryLeaders("[UNIT] ai-rout-arrival unit=" + trackedID);
-            llProbe("rout.arrival", "unit=" + trackedID +
+            debugANW("[UNIT] ai-rout-arrival unit=" + trackedID);
+            anwProbe("rout.arrival", "unit=" + trackedID +
                " dist=" + distLeft + " elapsed=" + (now - startTime));
-            llReleaseAiRoutSlot(slot);
+            anwReleaseAiRoutSlot(slot);
             continue;
          }
          // Still moving — emit the tick marker.
-         debugLegendaryLeaders("[UNIT] ai-rout-move unit=" + trackedID);
+         debugANW("[UNIT] ai-rout-move unit=" + trackedID);
       }
    }
 
    // ── Pass 2: scan land military for new rout candidates ──
-   vector routDest = llChooseAiRoutDestination();
+   vector routDest = anwChooseAiRoutDestination();
    if (routDest == cInvalidVector)
    {
       // No main base yet — nothing to rout toward. Bail.
@@ -1902,7 +1902,7 @@ void llProcessAiRoutTick(void)
    for (i = 0; < milCount)
    {
       int unitID = kbUnitQueryGetResult(milQuery, i);
-      if (llIsAiRoutEligibleUnit(unitID) == false)
+      if (anwIsAiRoutEligibleUnit(unitID) == false)
       {
          continue;
       }
@@ -1910,33 +1910,33 @@ void llProcessAiRoutTick(void)
       // Elite-support gating — broken unit holds line if an elite anchor
       // is in range. Per spec, emit the blocked marker once per visit so
       // the validator can observe the support-screen contract.
-      if (llAiRoutHasEliteSupportNearby(unitPos) == true)
+      if (anwAiRoutHasEliteSupportNearby(unitPos) == true)
       {
          // Only emit-blocked once per tracked unit per tick (we don't have
          // per-unit tick history, so emit once per tick at low rate).
-         debugLegendaryLeaders("[UNIT] ai-rout-blocked unit=" + unitID +
+         debugANW("[UNIT] ai-rout-blocked unit=" + unitID +
             " reason=elite-support");
-         llProbe("rout.blocked", "unit=" + unitID + " reason=elite-support");
+         anwProbe("rout.blocked", "unit=" + unitID + " reason=elite-support");
          // If this unit had been routing, cancel — elite arrived to support.
-         int oldSlot = llFindAiRoutSlotForUnit(unitID);
+         int oldSlot = anwFindAiRoutSlotForUnit(unitID);
          if (oldSlot >= 0)
          {
-            llReleaseAiRoutSlot(oldSlot);
+            anwReleaseAiRoutSlot(oldSlot);
          }
          continue;
       }
-      int existingSlot = llFindAiRoutSlotForUnit(unitID);
+      int existingSlot = anwFindAiRoutSlotForUnit(unitID);
       if (existingSlot < 0)
       {
-         int newSlot = llClaimAiRoutSlot(unitID, routDest);
+         int newSlot = anwClaimAiRoutSlot(unitID, routDest);
          if (newSlot >= 0)
          {
             aiTaskUnitMove(unitID, routDest);
-            debugLegendaryLeaders("[UNIT] ai-rout-start unit=" + unitID);
-            llProbe("rout.start", "unit=" + unitID +
+            debugANW("[UNIT] ai-rout-start unit=" + unitID);
+            anwProbe("rout.start", "unit=" + unitID +
                " hp=" + kbUnitGetHealth(unitID) +
-               " isElite=" + llIsEliteUnit(unitID) +
-               " dest=" + llFmtVec(routDest));
+               " isElite=" + anwIsEliteUnit(unitID) +
+               " dest=" + anwFmtVec(routDest));
          }
       }
       else
@@ -1951,37 +1951,37 @@ void llProcessAiRoutTick(void)
 }
 
 //==============================================================================
-// legendaryAiRoutMonitor — periodic monitor for the non-elite-rout system.
+// anwAiRoutMonitor — periodic monitor for the non-elite-rout system.
 //
-// Activated alongside legendaryEliteGuardMonitor in aiCore.xs (early-game
+// Activated alongside anwEliteGuardMonitor in aiCore.xs (early-game
 // hook in age2Monitor). Fires every 4 s — slightly more often than the
 // elite guard's 5 s tick so a broken unit gets its retreat order within a
 // single second of falling under threshold.
 //
 // The first tick emits the boot marker the runtime-logs validator looks
 // for. Subsequent ticks emit per-unit start/move/arrival/blocked markers
-// driven by llProcessAiRoutTick().
+// driven by anwProcessAiRoutTick().
 //==============================================================================
-rule legendaryAiRoutMonitor
+rule anwAiRoutMonitor
 inactive
 minInterval 4
 {
-   if (gLLAiRoutBootMarkerEmitted == 0)
+   if (gANWAiRoutBootMarkerEmitted == 0)
    {
       // Single literal (no concatenation) so the offline static-emitter
       // checker in tools/validation/validate_runtime_logs.py can see this
       // marker as a contiguous substring in the XS source.
-      debugLegendaryLeaders("[RULE] AI rout enabled: non-unique units at 25% HP, unique/nation-specific units at 10% HP; hero within 18m suppresses rout");
+      debugANW("[RULE] AI rout enabled: non-unique units at 25% HP, unique/nation-specific units at 10% HP; hero within 18m suppresses rout");
       // Resolve civ-unique elite unit type IDs once, now that kb is ready.
-      llInitEliteProtoIDs();
-      llProbe("rout.boot",
-         "hp_threshold=" + cLLAiRoutHpThreshold +
-         " elite_hp_threshold=" + cLLAiRoutEliteHpThreshold +
-         " elite_support_range=" + cLLAiRoutEliteSupportRange +
-         " arrival_tolerance=" + cLLAiRoutArrivalTolerance +
-         " elite_protos=" + gLLEliteProtoCount);
-      gLLAiRoutBootMarkerEmitted = 1;
+      anwInitEliteProtoIDs();
+      anwProbe("rout.boot",
+         "hp_threshold=" + cANWAiRoutHpThreshold +
+         " elite_hp_threshold=" + cANWAiRoutEliteHpThreshold +
+         " elite_support_range=" + cANWAiRoutEliteSupportRange +
+         " arrival_tolerance=" + cANWAiRoutArrivalTolerance +
+         " elite_protos=" + gANWEliteProtoCount);
+      gANWAiRoutBootMarkerEmitted = 1;
    }
-   llLogRuleTick("legendaryAiRoutMonitor");
-   llProcessAiRoutTick();
+   anwLogRuleTick("anwAiRoutMonitor");
+   anwProcessAiRoutTick();
 }

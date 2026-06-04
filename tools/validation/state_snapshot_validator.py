@@ -67,7 +67,7 @@ class StateSnapshotParser:
 
     Supports two emission formats:
       • Legacy:  ``[STATE t=12345 pop_used=42 ... ]``
-      • LLP v=2: ``[LLP v=2 t=12345 p=1 civ=ANWBritish ldr=elizabeth
+      • ANWP v=2: ``[ANWP v=2 t=12345 p=1 civ=ANWBritish ldr=elizabeth
                      tag=state.snapshot] ageMs=12345 pop_used=42 ...``
         (emitted by ``game/ai/core/aiStateSnapshot.xs`` via ``llProbe``).
     """
@@ -82,7 +82,7 @@ class StateSnapshotParser:
 
         Expected formats in log:
           [STATE t=30000 pop_used=42 pop_cap=75 age=Colonial ...]
-          [LLP v=2 t=30000 p=1 civ=ANWBritish ldr=elizabeth
+          [ANWP v=2 t=30000 p=1 civ=ANWBritish ldr=elizabeth
               tag=state.snapshot] ageMs=30000 pop_used=42 pop_cap=75 ...
 
         Returns: List of StateSnapshot objects, chronologically sorted.

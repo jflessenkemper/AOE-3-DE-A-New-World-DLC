@@ -128,7 +128,7 @@ def _adaptive_observe(driver, log_path: Path, *,
     import re as _re
     # One regex per pass — match every probe header and capture (player, tag).
     probe_header = _re.compile(
-        rb"\[LLP v=2 t=\d+ p=(?P<p>\d+) civ=\S+ ldr=\S+ tag=(?P<tag>\S+)\]"
+        rb"\[ANWP v=2 t=\d+ p=(?P<p>\d+) civ=\S+ ldr=\S+ tag=(?P<tag>\S+)\]"
     )
     deadline = time.monotonic() + max_seconds
     t0 = time.monotonic()
@@ -245,13 +245,90 @@ def game_is_running() -> bool:
     return rc == 0
 
 
+# ---------------------------------------------------------------------------
+# Harness input backend (AOE3DEHarness headless gamescope rig)
+# ---------------------------------------------------------------------------
+# On this rig the game runs under the AOE3DEHarness compositor, which exposes a
+# unix control socket for click/key/screenshot injection in compositor-space
+# 1920x1080 coords (exactly what lobby_coords.json uses). The legacy xdotool
+# path can drive coarse clicks (Skirmish) but fails the precise civ-picker
+# open sequence. We must route input through the harness socket instead.
+#
+# Crucially, every cycle_game() kills the game and recreates the socket, so the
+# backend connection has to be (re)established *after* each cycle, not once at
+# startup. ensure_harness_backend() is idempotent and self-healing: it reuses a
+# live connection, drops + reconnects a dead one, and registers the client with
+# both lobby_driver and in_game_driver.
+_HARNESS_CLIENT = None  # module-level live HarnessClient (or None)
+
+
+def ensure_harness_backend(*, retries: int = 8, delay: float = 4.0) -> bool:
+    """(Re)connect the HarnessClient socket backend and register it with the
+    lobby + in-game drivers. Returns True if a live backend is active.
+
+    No-op fallback to xdotool when no socket is present (real-gamescope rig)."""
+    global _HARNESS_CLIENT
+    sock = os.environ.get("AOE3DE_HARNESS_SOCK", "/tmp/AOE3DEHarness.sock")
+
+    # Reuse an existing connection if it's still alive.
+    if _HARNESS_CLIENT is not None:
+        try:
+            _HARNESS_CLIENT.state()
+            return True
+        except Exception:
+            try:
+                _HARNESS_CLIENT.close()
+            except Exception:
+                pass
+            _HARNESS_CLIENT = None
+
+    if not os.path.exists(sock):
+        print(f"  [harness] no socket at {sock}; using xdotool path")
+        return False
+
+    try:
+        from tools.aoe3_harness.harness_client import HarnessClient
+        import tools.aoe3_automation.in_game_driver as _igd
+    except Exception as exc:  # pragma: no cover
+        print(f"  [harness] import failed ({exc}); using xdotool path",
+              file=sys.stderr)
+        return False
+
+    last = None
+    for _ in range(max(1, retries)):
+        try:
+            hc = HarnessClient(sock, timeout=40.0)
+            hc.connect(timeout=8)
+            hc.state()  # liveness probe — raises if compositor not ready
+            _HARNESS_CLIENT = hc
+            lobby.set_harness_backend(hc)
+            _igd.set_harness_backend(hc)
+            print(f"  [harness] input backend registered via {sock}")
+            return True
+        except Exception as exc:  # noqa: BLE001
+            last = exc
+            time.sleep(delay)
+    print(f"  [harness] could not connect after {retries} tries "
+          f"({type(last).__name__}: {last}); falling back to xdotool",
+          file=sys.stderr)
+    return False
+
+
 def cycle_game() -> bool:
-    """Close + relaunch via manage_game cycle; returns True on success."""
+    """Close + relaunch via manage_game cycle; returns True on success.
+
+    After a successful relaunch the AOE3DEHarness socket is freshly recreated,
+    so re-establish the input backend against the new socket."""
     rc = subprocess.run(
         [sys.executable, str(MANAGE_GAME), "cycle", "--timeout", "240"],
         capture_output=False,
     ).returncode
-    return rc == 0
+    ok = rc == 0
+    if ok:
+        # Fresh game → fresh socket. Reconnect the harness backend so the
+        # post-cycle lobby navigation (Skirmish + civ picker) is reliable.
+        ensure_harness_backend()
+    return ok
 
 
 def _wait_for_lobby(coords: dict, total_wait: float = 12.0,
@@ -403,7 +480,7 @@ class CivResult:
     # Populated after resign from ll_* uservars in .personality files.
     personality_probe_count: int = 0
     # AI-script-load count from the .age3Yrec replay payload (decompress +
-    # count [LLP v=2 t= literal occurrences). Diagnoses NIGHT_JOURNAL
+    # count [ANWP v=2 t= literal occurrences). Diagnoses NIGHT_JOURNAL
     # theory #1 ("AI not loading at all"). 0 = AI never loaded; >=batch
     # opponent count = AI loaded as expected.
     ai_scripts_loaded: int = -1
@@ -802,7 +879,7 @@ def run_one_civ(
 
         # 8c. Deep-mode behavioural-axis derivation. Parses the match.log
         #     mirror (still tailing — we peek at the bytes-on-disk so far)
-        #     for [LLP v=2 ...] probes and runs derive_behavioral_axes() to
+        #     for [ANWP v=2 ...] probes and runs derive_behavioral_axes() to
         #     compute per-AI booleans for combat_engaged, explorer_active,
         #     age_up_fired, shipments_chosen, walls_built, doctrine_compliance.
         #     Only fires when --deep was passed; in smoke mode the observe
@@ -833,12 +910,12 @@ def run_one_civ(
                         # NOT aiEcho/aiChat output on retail FINAL_RELEASE
                         # builds (proven non-functional 2026-04-29 — dev tokens
                         # are inert despite user.cfg parsing them). The mid-
-                        # game [LLP v=2] stream is therefore expected-empty in
+                        # game [ANWP v=2] stream is therefore expected-empty in
                         # match.log; useful behavioural signal lives in the
                         # personality channel (see personality_probes above).
                         # This annotation is informational only, not a failure.
                         _annotate("deep-mode behavioural axes: match.log "
-                                  "[LLP v=2] stream empty (expected on retail "
+                                  "[ANWP v=2] stream empty (expected on retail "
                                   "DE — see personality_probes for captured "
                                   "behaviour data)")
                 else:
@@ -896,7 +973,7 @@ def run_one_civ(
                 # the LLP header and from the trailing "leader=X" field.
                 leaders: set[str] = set()
                 init_re = re.compile(
-                    rb"\[LLP v=2 t=\d+ p=\d+ civ=\S+ ldr=(?P<ldr>\S+) "
+                    rb"\[ANWP v=2 t=\d+ p=\d+ civ=\S+ ldr=(?P<ldr>\S+) "
                     rb"tag=meta\.leader_init\][^\n]*?(?:leader=(?P<lkey>\S+))?"
                 )
                 for m in init_re.finditer(data):
@@ -915,7 +992,7 @@ def run_one_civ(
         # 8f.2. Personality-channel fallback for leaders_initialised.
         #
         # The match.log regex above is the historical/preferred path, but
-        # the [LLP v=2] aiEcho channel is inert on retail FINAL_RELEASE DE
+        # the [ANWP v=2] aiEcho channel is inert on retail FINAL_RELEASE DE
         # (proven 2026-04-29 — see NIGHT_JOURNAL.md). The personality
         # channel's doctrine_records, however, encode leader_key per AI as
         # a side-effect of the doctrine setup that runs DURING leader_init.
@@ -1167,6 +1244,11 @@ def run_matrix(
                 if abort_on_crash:
                     break
 
+        # Guarantee a live harness backend for this iteration's clicks. Idempotent:
+        # reuses the connection cycle_game() just made, or (re)connects if the
+        # game was already up and no cycle ran this iteration.
+        ensure_harness_backend()
+
         try:
             res = run_one_civ(
                 coords, civ_idx, civ_name,
@@ -1345,6 +1427,13 @@ def main() -> int:
                          "doctrine_compliance). Trade-off: matrix wall-time "
                          "rises from ~8 min smoke → ~30 min for 6 batches.")
     args = ap.parse_args()
+
+    # ── Harness input backend ───────────────────────────────────────────────
+    # Best-effort initial connect against any already-running game. The robust
+    # (re)connect happens after every cycle_game() and before each civ via
+    # ensure_harness_backend(), because each cycle recreates the socket. Keep
+    # the startup attempt short — if it fails, the first cycle reconnects.
+    ensure_harness_backend(retries=2, delay=2.0)
 
     if args.deep and args.observe_seconds < 60:
         # Smoke default would falsely report every behavioural axis as

@@ -12,7 +12,7 @@ each milestone/snapshot probe against a structured assertion set.
 
 Inputs:
     • `playstyle_spec.json`         — structured claim bundles per civ
-    • one or more match-log files   — raw `[LLP v=2 …]` probe streams
+    • one or more match-log files   — raw `[ANWP v=2 …]` probe streams
 
 Outputs:
     • Per-civ, per-claim PASS/FAIL/UNKNOWN ledger (text + JSON)
@@ -73,37 +73,37 @@ from typing import Any, Optional
 # ─── probe parsing ─────────────────────────────────────────────────────────
 
 PROBE_RE = re.compile(
-    r"\[LLP v=2\s+t=(\d+)\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)$"
+    r"\[ANWP v=2\s+t=(\d+)\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)$"
 )
 # llVerifyWallClosure emits a flat key=value line (no bracketed header):
-#   [LLP v=2] key=wall.closure planID=<N> coverage=<percent> elapsed=<seconds>
+#   [ANWP v=2] key=wall.closure planID=<N> coverage=<percent> elapsed=<seconds>
 # The civ/ldr must be inferred from surrounding context; the parser records
 # these under the special sentinel civ "_plan_closure_" and merges them in
 # a post-process step when the civ/ldr header has been seen for that log.
 PLAN_CLOSURE_RE = re.compile(
-    r"\[LLP v=2\]\s+key=wall\.closure\s+planID=(\d+)\s+coverage=([\d.]+)\s+elapsed=([\d.]+)"
+    r"\[ANWP v=2\]\s+key=wall\.closure\s+planID=(\d+)\s+coverage=([\d.]+)\s+elapsed=([\d.]+)"
 )
 # Track 1d simplified flat format emitted by verifyWallClosure in the new probe
 # schema (coverage_pct= in 0–100 percent, not the 0–1 closure= fraction):
-#   [LLP v=2] civ=<token> wall.closure coverage_pct=<N> expected_pieces=<N> actual_pieces=<N>
+#   [ANWP v=2] civ=<token> wall.closure coverage_pct=<N> expected_pieces=<N> actual_pieces=<N>
 FLAT_CLOSURE_RE = re.compile(
-    r"\[LLP v=2\]\s+civ=([^\s]+)\s+wall\.closure\s+(.*)"
+    r"\[ANWP v=2\]\s+civ=([^\s]+)\s+wall\.closure\s+(.*)"
 )
 # Wall-strategy string probe emitted alongside wall.closure:
-#   [LLP v=2] civ=<token> wall.strategy=<cLLWallStrategy*>
+#   [ANWP v=2] civ=<token> wall.strategy=<cANWWallStrategy*>
 FLAT_STRATEGY_RE = re.compile(
-    r"\[LLP v=2\]\s+civ=([^\s]+)\s+wall\.strategy=(cLLWallStrategy\w+)"
+    r"\[ANWP v=2\]\s+civ=([^\s]+)\s+wall\.strategy=(cANWWallStrategy\w+)"
 )
 KV_RE = re.compile(r'(\w+)=("(?:[^"\\]|\\.)*"|[^\s]+)')
 
-# Map cLLWallStrategy* string token → numeric constant (aiHeader.xs)
+# Map cANWWallStrategy* string token → numeric constant (aiHeader.xs)
 _WALL_STRATEGY_STR_TO_INT: dict[str, int] = {
-    "cLLWallStrategyFortressRing":       0,
-    "cLLWallStrategyChokepointSegments": 1,
-    "cLLWallStrategyCoastalBatteries":   2,
-    "cLLWallStrategyFrontierPalisades":  3,
-    "cLLWallStrategyUrbanBarricade":     4,
-    "cLLWallStrategyMobileNoWalls":      5,
+    "cANWWallStrategyFortressRing":       0,
+    "cANWWallStrategyChokepointSegments": 1,
+    "cANWWallStrategyCoastalBatteries":   2,
+    "cANWWallStrategyFrontierPalisades":  3,
+    "cANWWallStrategyUrbanBarricade":     4,
+    "cANWWallStrategyMobileNoWalls":      5,
 }
 
 
@@ -120,7 +120,7 @@ class Probe:
 class PlanClosureRecord:
     """One emission from the llVerifyWallClosure rule.
 
-    The flat `[LLP v=2] key=wall.closure …` format carries no civ/ldr
+    The flat `[ANWP v=2] key=wall.closure …` format carries no civ/ldr
     header — those are filled in during the merge step in `parse_probes`
     by assigning them to the most recently seen (civ, ldr) actor in the
     same log file."""
@@ -136,17 +136,17 @@ class FlatClosureRecord:
     """Track 1d simplified flat probe format (civ-keyed, no t=/p=/ldr= header).
 
     Emitted as:
-        [LLP v=2] civ=<token> wall.closure coverage_pct=<N> expected_pieces=<N> actual_pieces=<N>
+        [ANWP v=2] civ=<token> wall.closure coverage_pct=<N> expected_pieces=<N> actual_pieces=<N>
 
     ``civ`` is the raw engine token (e.g. ANWCanadians). The validator maps
     it to a spec key during report generation. ``strategy_str`` is populated
-    separately from a ``wall.strategy=cLLWallStrategy*`` line in the same log.
+    separately from a ``wall.strategy=cANWWallStrategy*`` line in the same log.
     """
     civ: str
     coverage_pct: float       # 0–100
     expected_pieces: int = 0
     actual_pieces: int = 0
-    strategy_str: str = ""    # cLLWallStrategy* or ""
+    strategy_str: str = ""    # cANWWallStrategy* or ""
 
 
 def _parse_kv(s: str) -> dict[str, str]:
@@ -162,7 +162,7 @@ def _parse_kv(s: str) -> dict[str, str]:
 def parse_probes(log_paths: list[Path]) -> tuple[
     list[Probe], list[PlanClosureRecord], list[FlatClosureRecord]
 ]:
-    """Parse all `[LLP v=2]` lines from the given log files.
+    """Parse all `[ANWP v=2]` lines from the given log files.
 
     Returns:
         (probes, plan_closures, flat_closures) where:
@@ -172,9 +172,9 @@ def parse_probes(log_paths: list[Path]) -> tuple[
             Each record's civ/ldr is set to the last seen actor in the same
             log; records that appear before any actor header keep civ="" ldr="".
           - flat_closures: list of FlatClosureRecord from the Track 1d
-            simplified `[LLP v=2] civ=X wall.closure coverage_pct=N …`
+            simplified `[ANWP v=2] civ=X wall.closure coverage_pct=N …`
             format. strategy_str is populated from co-located
-            `wall.strategy=cLLWallStrategy*` lines for the same civ.
+            `wall.strategy=cANWWallStrategy*` lines for the same civ.
     """
     probes: list[Probe] = []
     plan_closures: list[PlanClosureRecord] = []
@@ -1136,7 +1136,7 @@ def _render_flat_closure_section(
     Per-civ table: civ | strategy | max_coverage | status
 
     Status ladder (matches the Task 3a spec):
-        PASS-exempt  — cLLWallStrategyMobileNoWalls (no walls expected)
+        PASS-exempt  — cANWWallStrategyMobileNoWalls (no walls expected)
         PASS         — max coverage_pct >= 60
         WARN         — 40 <= max coverage_pct < 60
         FAIL         — max coverage_pct < 40
@@ -1155,7 +1155,7 @@ def _render_flat_closure_section(
     for rec in sorted(flat_closures, key=lambda r: r.civ):
         strat = rec.strategy_str or "(unknown)"
         pct_str = f"{rec.coverage_pct:.1f}%" if rec.coverage_pct else "—"
-        if rec.strategy_str == "cLLWallStrategyMobileNoWalls":
+        if rec.strategy_str == "cANWWallStrategyMobileNoWalls":
             status = "PASS-exempt"
         elif rec.coverage_pct >= 60.0:
             status = "PASS"
@@ -1450,7 +1450,7 @@ def main() -> int:
                     default=Path("playstyle_spec.json"),
                     help="path to playstyle_spec.json")
     ap.add_argument("--logs", type=Path, nargs="+", default=None,
-                    help="one or more match-log paths to scan for [LLP v=2 …]. "
+                    help="one or more match-log paths to scan for [ANWP v=2 …]. "
                          "If omitted, auto-discovers match.log files under "
                          "artifacts/validation/ai_playstyle/")
     ap.add_argument("--ai-logs", type=Path, nargs="+", default=None,
@@ -1534,7 +1534,7 @@ def main() -> int:
         flat_closures = [r for r in flat_closures if r.civ in wanted]
 
     if not probes and not plan_closures and not flat_closures:
-        print("error: no [LLP v=2 …] probes found in any log", file=sys.stderr)
+        print("error: no [ANWP v=2 …] probes found in any log", file=sys.stderr)
         if args.allow_empty:
             print("Release Readiness: PASS (no probes found, --allow-empty)")
             return 0

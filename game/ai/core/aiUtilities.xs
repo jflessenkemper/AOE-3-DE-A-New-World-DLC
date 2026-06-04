@@ -90,28 +90,28 @@ void debugCore (string message = "")
    }
 }
 
-void debugLegendaryLeaders (string message = "")
+void debugANW (string message = "")
 {
-   if (cDebugLegendaryLeaders == true)
+   if (cANWDebug == true)
    {
-      aiEcho("Legendary Leaders: " + message);
+      aiEcho("A New World: " + message);
    }
 }
 
-void llVerboseEcho(string message = "")
+void anwVerboseEcho(string message = "")
 {
-   if (cLLVerboseDiagnostics == true)
+   if (cANWVerboseDiagnostics == true)
    {
       aiEcho(message);
    }
 }
 
-int llGetVisibleDebugPlayer(void)
+int anwGetVisibleDebugPlayer(void)
 {
-   if ((gLLDebugVisiblePlayer > 0) && (gLLDebugVisiblePlayer != cMyID) && (kbIsPlayerHuman(gLLDebugVisiblePlayer) == true) &&
-       (kbHasPlayerLost(gLLDebugVisiblePlayer) == false))
+   if ((gANWDebugVisiblePlayer > 0) && (gANWDebugVisiblePlayer != cMyID) && (kbIsPlayerHuman(gANWDebugVisiblePlayer) == true) &&
+       (kbHasPlayerLost(gANWDebugVisiblePlayer) == false))
    {
-      return (gLLDebugVisiblePlayer);
+      return (gANWDebugVisiblePlayer);
    }
 
    int player = 0;
@@ -124,8 +124,8 @@ int llGetVisibleDebugPlayer(void)
 
       if (kbIsPlayerAlly(player) == true)
       {
-         gLLDebugVisiblePlayer = player;
-         return (gLLDebugVisiblePlayer);
+         gANWDebugVisiblePlayer = player;
+         return (gANWDebugVisiblePlayer);
       }
    }
 
@@ -136,17 +136,17 @@ int llGetVisibleDebugPlayer(void)
          continue;
       }
 
-      gLLDebugVisiblePlayer = player;
-      return (gLLDebugVisiblePlayer);
+      gANWDebugVisiblePlayer = player;
+      return (gANWDebugVisiblePlayer);
    }
 
-   gLLDebugVisiblePlayer = -1;
+   gANWDebugVisiblePlayer = -1;
    return (-1);
 }
 
-bool llShouldMirrorEventToChat(string category = "EVENT")
+bool anwShouldMirrorEventToChat(string category = "EVENT")
 {
-   if (cDebugLegendaryLeadersVisible == false)
+   if (cANWDebugVisible == false)
    {
       return (false);
    }
@@ -159,30 +159,30 @@ bool llShouldMirrorEventToChat(string category = "EVENT")
    return (true);
 }
 
-void llMirrorEventToChat(string category = "EVENT", string message = "")
+void anwMirrorEventToChat(string category = "EVENT", string message = "")
 {
-   if ((message == "") || (llShouldMirrorEventToChat(category) == false))
+   if ((message == "") || (anwShouldMirrorEventToChat(category) == false))
    {
       return;
    }
 
    int currentTime = xsGetTime();
-   if (currentTime < gLLDebugVisibleTime + cDebugLegendaryLeadersVisibleCooldown)
+   if (currentTime < gANWDebugVisibleTime + cANWDebugVisibleCooldown)
    {
       return;
    }
 
-   int playerID = llGetVisibleDebugPlayer();
+   int playerID = anwGetVisibleDebugPlayer();
    if (playerID < 1)
    {
       return;
    }
 
-   gLLDebugVisibleTime = currentTime;
+   gANWDebugVisibleTime = currentTime;
    aiChat(playerID, "[LL " + category + "] " + message);
 }
 
-string llDescribePlayerOrRelation(int playerIDorRelation = -1)
+string anwDescribePlayerOrRelation(int playerIDorRelation = -1)
 {
    switch (playerIDorRelation)
    {
@@ -215,24 +215,24 @@ string llDescribePlayerOrRelation(int playerIDorRelation = -1)
    return ("player-or-relation=" + playerIDorRelation);
 }
 
-void llLogEvent(string category = "EVENT", string message = "")
+void anwLogEvent(string category = "EVENT", string message = "")
 {
-   if ((message != "") && (cLLRuntimeTelemetry == true))
+   if ((message != "") && (cANWRuntimeTelemetry == true))
    {
-      aiEcho("Legendary Leaders: [" + category + "] " + message);
+      aiEcho("A New World: [" + category + "] " + message);
    }
-   llMirrorEventToChat(category, message);
+   anwMirrorEventToChat(category, message);
 }
 
 //==============================================================================
-/* llProbe
+/* anwProbe
    Unthrottled, replay-parser-friendly diagnostic chat. Each AI broadcasts one
    line per probe tagged "[LL-PROBE]", which the .age3Yrec chat stream captures
-   verbatim. Unlike llLogEvent, llProbe is NOT gated by
-   cDebugLegendaryLeadersVisible or the 12-second cooldown — we want every
+   verbatim. Unlike anwLogEvent, anwProbe is NOT gated by
+   cANWDebugVisible or the 12-second cooldown — we want every
    event recorded once, not one random event every 12s.
 
-   Gate: cLLReplayProbes (aiGlobals.xs). Flip to false for release.
+   Gate: cANWReplayProbes (aiGlobals.xs). Flip to false for release.
 
    Format: "[LL-PROBE] p=<ID> civ=<name> ldr=<key> | <TAG> <detail>"
 
@@ -242,25 +242,25 @@ void llLogEvent(string category = "EVENT", string message = "")
 */
 //==============================================================================
 // ─── schema v2 ──────────────────────────────────────────────────────────────
-// Lines emitted by llProbe() follow a single, machine-parseable shape:
+// Lines emitted by anwProbe() follow a single, machine-parseable shape:
 //
-//    [LLP v=2 t=<time> p=<pid> civ=<civ> ldr=<ldr> tag=<domain.name>] k=v k=v …
+//    [ANWP v=2 t=<time> p=<pid> civ=<civ> ldr=<ldr> tag=<domain.name>] k=v k=v …
 //
 // Every field in the header bracket is atomic k=v (no spaces inside values);
 // the payload after the ']' is also space-separated k=v pairs. Regex:
 //
-//    \[LLP v=(\d+) t=(\d+) p=(\d+) civ=(\S+) ldr=(\S+) tag=(\S+)\]\s*(.*)
+//    \[ANWP v=(\d+) t=(\d+) p=(\d+) civ=(\S+) ldr=(\S+) tag=(\S+)\]\s*(.*)
 //
 // then tokenise the tail with `(\w+)=(\S+)`. Tags are namespaced by domain
 // (meta / econ / tech / mil / navy / elite / plan / chat / telem) so
 // post-match filtering is `grep tag=mil\.`  etc.
 //
-// Vectors MUST be formatted via llFmtVec() so they stay atomic (x,y,z with
+// Vectors MUST be formatted via anwFmtVec() so they stay atomic (x,y,z with
 // no spaces or parentheses) — default vector stringification in XS leaks
 // spaces and breaks tokenisation.
-void llProbe(string tag = "", string detail = "")
+void anwProbe(string tag = "", string detail = "")
 {
-   if (cLLReplayProbes == false)
+   if (cANWReplayProbes == false)
    {
       return;
    }
@@ -268,10 +268,10 @@ void llProbe(string tag = "", string detail = "")
    {
       return;
    }
-   string line = "[LLP v=2 t=" + xsGetTime() +
+   string line = "[ANWP v=2 t=" + xsGetTime() +
       " p=" + cMyID +
       " civ=" + kbGetCivName(cMyCiv) +
-      " ldr=" + gLLLeaderKey +
+      " ldr=" + gANWLeaderKey +
       " tag=" + tag + "]";
    if (detail != "")
    {
@@ -281,7 +281,7 @@ void llProbe(string tag = "", string detail = "")
    //   1) aiEcho — engine debug stream (visible with developer console / -dev_mode).
    //   2) aiChat to host (P1) — live chat overlay during the match.
    //   3) aiChat to self (cMyID) — sometimes preserved when broadcast isn't.
-   // The replay parser greps for "[LLP v=2" verbatim, so any successful
+   // The replay parser greps for "[ANWP v=2" verbatim, so any successful
    // channel is sufficient. We deliberately do NOT loop over every player
    // (would 8x the chat volume in 8-player matches) — host receipt is enough.
    aiEcho(line);
@@ -294,44 +294,44 @@ void llProbe(string tag = "", string detail = "")
 
 // Vectors stringify with spaces and parens by default, which breaks the
 // k=v tokenizer. Use this helper for every vector value in a probe detail.
-string llFmtVec(vector v = cInvalidVector)
+string anwFmtVec(vector v = cInvalidVector)
 {
    return ("" + xsVectorGetX(v) + "," + xsVectorGetY(v) + "," + xsVectorGetZ(v));
 }
 
-void llLogRuleTick(string ruleName = "")
+void anwLogRuleTick(string ruleName = "")
 {
-   llLogEvent("RULE", ruleName + " tick @" + xsGetTime());
-   // Phase-3: gated by cLLDebugRuleFires. When on, every rule tick also
+   anwLogEvent("RULE", ruleName + " tick @" + xsGetTime());
+   // Phase-3: gated by cANWDebugRuleFires. When on, every rule tick also
    // emits a structured probe so the replay parser can rebuild a per-rule
    // firing timeline. Default off — high volume.
-   if (cLLDebugRuleFires == true)
+   if (cANWDebugRuleFires == true)
    {
-      llProbe("rule.fired", "name=" + ruleName);
+      anwProbe("rule.fired", "name=" + ruleName);
    }
 }
 
-void llLogRuleDisable(string ruleName = "", string reason = "")
+void anwLogRuleDisable(string ruleName = "", string reason = "")
 {
    string message = ruleName + " disabling";
    if (reason != "")
    {
       message = message + " because " + reason;
    }
-   llLogEvent("RULE", message);
+   anwLogEvent("RULE", message);
 }
 
-void llLogPlanEvent(string action = "", int planID = -1, string details = "")
+void anwLogPlanEvent(string action = "", int planID = -1, string details = "")
 {
    string message = action + " plan=" + planID;
    if (details != "")
    {
       message = message + " " + details;
    }
-   llLogEvent("PLAN", message);
+   anwLogEvent("PLAN", message);
 }
 
-string llDescribeCombatType(int combatType = -1)
+string anwDescribeCombatType(int combatType = -1)
 {
    switch (combatType)
    {
@@ -348,7 +348,7 @@ string llDescribeCombatType(int combatType = -1)
    return ("combatType=" + combatType);
 }
 
-string llDescribeCombatTargetMode(int targetMode = -1)
+string anwDescribeCombatTargetMode(int targetMode = -1)
 {
    switch (targetMode)
    {
@@ -365,7 +365,7 @@ string llDescribeCombatTargetMode(int targetMode = -1)
    return ("targetMode=" + targetMode);
 }
 
-string llDescribeCombatRetreatMode(int retreatMode = -1)
+string anwDescribeCombatRetreatMode(int retreatMode = -1)
 {
    switch (retreatMode)
    {
@@ -382,7 +382,7 @@ string llDescribeCombatRetreatMode(int retreatMode = -1)
    return ("retreatMode=" + retreatMode);
 }
 
-void llLogCombatPlanConfig(string action = "", int planID = -1, string context = "")
+void anwLogCombatPlanConfig(string action = "", int planID = -1, string context = "")
 {
    string details = action;
    if (context != "")
@@ -391,50 +391,50 @@ void llLogCombatPlanConfig(string action = "", int planID = -1, string context =
    }
 
    details = details +
-      " type=" + llDescribeCombatType(aiPlanGetVariableInt(planID, cCombatPlanCombatType, 0)) +
-      " targetMode=" + llDescribeCombatTargetMode(aiPlanGetVariableInt(planID, cCombatPlanTargetMode, 0)) +
+      " type=" + anwDescribeCombatType(aiPlanGetVariableInt(planID, cCombatPlanCombatType, 0)) +
+      " targetMode=" + anwDescribeCombatTargetMode(aiPlanGetVariableInt(planID, cCombatPlanTargetMode, 0)) +
       " targetPlayer=" + aiPlanGetVariableInt(planID, cCombatPlanTargetPlayerID, 0) +
       " targetBase=" + aiPlanGetVariableInt(planID, cCombatPlanTargetBaseID, 0) +
       " targetPoint=" + aiPlanGetVariableVector(planID, cCombatPlanTargetPoint, 0) +
       " gatherPoint=" + aiPlanGetVariableVector(planID, cCombatPlanGatherPoint, 0) +
       " gatherDistance=" + aiPlanGetVariableFloat(planID, cCombatPlanGatherDistance, 0) +
       " refresh=" + aiPlanGetVariableInt(planID, cCombatPlanRefreshFrequency, 0) +
-      " retreat=" + llDescribeCombatRetreatMode(aiPlanGetVariableInt(planID, cCombatPlanRetreatMode, 0)) +
+      " retreat=" + anwDescribeCombatRetreatMode(aiPlanGetVariableInt(planID, cCombatPlanRetreatMode, 0)) +
       " doneMode=" + aiPlanGetVariableInt(planID, cCombatPlanDoneMode, 0) +
       " routePattern=" + aiPlanGetVariableInt(planID, cCombatPlanAttackRoutePattern, 0) +
       " routeID=" + aiPlanGetVariableInt(planID, cCombatPlanAttackRouteID, 0);
 
-   llLogPlanEvent("combat-config", planID, details);
+   anwLogPlanEvent("combat-config", planID, details);
 }
 
-void llLogDecision(string category = "DECISION", string message = "")
+void anwLogDecision(string category = "DECISION", string message = "")
 {
-   llLogEvent(category, message);
+   anwLogEvent(category, message);
 }
 
-void llLogUnitAction(string action = "", int unitID = -1, string details = "")
+void anwLogUnitAction(string action = "", int unitID = -1, string details = "")
 {
    string message = action + " unit=" + unitID;
    if (details != "")
    {
       message = message + " " + details;
    }
-   llLogEvent("UNIT", message);
+   anwLogEvent("UNIT", message);
 }
 
-void llLogChatDispatch(string mode = "", int playerIDorRelation = -1, string payload = "", vector vec = cInvalidVector)
+void anwLogChatDispatch(string mode = "", int playerIDorRelation = -1, string payload = "", vector vec = cInvalidVector)
 {
-   string details = mode + " target=" + llDescribePlayerOrRelation(playerIDorRelation) + " payload=" + payload;
+   string details = mode + " target=" + anwDescribePlayerOrRelation(playerIDorRelation) + " payload=" + payload;
    if (vec != cInvalidVector)
    {
       details = details + " flare=" + vec;
    }
-   llLogEvent("CHAT", details);
+   anwLogEvent("CHAT", details);
 }
 
-void llLogLeaderState(string context = "")
+void anwLogLeaderState(string context = "")
 {
-   llLogEvent("STATE", context +
+   anwLogEvent("STATE", context +
       " rush=" + btRushBoom +
       " offense=" + btOffenseDefense +
       " trade=" + btBiasTrade +
@@ -492,7 +492,7 @@ bool civIsDEciv(void)
 }
 
 //==============================================================================
-// Legendary Leaders: Revolution civilization detection.
+// A New World: Revolution civilization detection.
 // Returns true if the AI is playing one of the Fully Playable Revolutions civs.
 // These civs use European-style mechanics (Barracks, Market, standard buildings).
 //==============================================================================
@@ -528,7 +528,7 @@ bool civIsRevolution(void)
    // added as their own picker entries alongside the base game, with the
    // `ANW` prefix rather than `ANW`). Without these the engine's
    // dispatch in aiLoaderStandard.xs::preInit falls through and
-   // initLegendaryRevolutionCommander() is never called, so the per-civ
+   // anwInitRevolutionCommander() is never called, so the per-civ
    // doctrine (San Martín cavalry, Robespierre levee, Diponegoro guerrilla,
    // ...) silently does not apply. Inner aiSetup.xs branches that key on
    // `rvltName == "ANW*"` will fall through to defaults for these

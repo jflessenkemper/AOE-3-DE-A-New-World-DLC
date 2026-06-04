@@ -516,16 +516,34 @@ class HarnessClient:
         """
         resp = self.send_raw(f"SCREENSHOT {host_path}")
         payload = self._require_ok("SCREENSHOT", resp)
-        # Expected: path=<path> bytes=<N>
+        # The server may reply in either of two shapes:
+        #   key=value form:  "path=<path> bytes=<N>"
+        #   positional form: "<path> <bytes>"
         fields: dict[str, str] = {}
         for token in payload.split():
             if "=" in token:
                 k, v = token.split("=", 1)
                 fields[k] = v
         try:
-            written_path = Path(fields["path"])
-            bytes_written = int(fields["bytes"])
-        except (KeyError, ValueError) as exc:
+            if "path" in fields:
+                written_path = Path(fields["path"])
+                bytes_written = int(fields["bytes"])
+            else:
+                # Positional fallback: trailing integer is the byte count,
+                # everything before it is the (possibly space-free) path.
+                parts = payload.split()
+                if len(parts) >= 2 and parts[-1].isdigit():
+                    written_path = Path(" ".join(parts[:-1]))
+                    bytes_written = int(parts[-1])
+                else:
+                    # Only a path was returned; stat it for the byte count.
+                    written_path = Path(payload.strip())
+                    bytes_written = (
+                        written_path.stat().st_size
+                        if written_path.exists()
+                        else 0
+                    )
+        except (KeyError, ValueError, OSError) as exc:
             raise HarnessProtocolError(
                 f"Cannot parse SCREENSHOT OK response: {resp!r}"
             ) from exc

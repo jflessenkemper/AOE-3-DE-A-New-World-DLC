@@ -1,6 +1,6 @@
 # Live Template Capture — Status (2026-04-28)
 
-_Captured against `Age of Empires III: Definitive Edition v100.15.59076.0 P2`, mod `Legendary Leaders AI` enabled, gamescope `1920×1080@60`, English locale._
+_Captured against `Age of Empires III: Definitive Edition v100.15.59076.0 P2`, mod `A New World AI` enabled, gamescope `1920×1080@60`, English locale._
 
 ## What worked
 

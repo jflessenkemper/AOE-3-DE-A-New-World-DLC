@@ -29,20 +29,20 @@ bool gHenryRulesEnabled = false;
 
 void initLeaderHenry(void)
 {
-   llVerboseEcho("A New World: activating Prince Henry the Navigator personality.");
+   anwVerboseEcho("A New World: activating Prince Henry the Navigator personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = -0.4;             // Hard boom; the carracks fund the war.
    btOffenseDefense = -0.05;
    btBiasTrade = 0.6;             // Maritime empire.
    btBiasNative = 0.15;
-   llSetMilitaryFocus(0.55, 0.15, 0.4);
+   anwSetMilitaryFocus(0.55, 0.15, 0.4);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseNavalMercantileCompoundStyle(2);
-   gLLEconomicDistanceMultiplier = 1.30;
+   anwUseNavalMercantileCompoundStyle(2);
+   gANWEconomicDistanceMultiplier = 1.30;
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
+   anwSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
 
    cvOkToBuildForts = true;
    cvOkToTrainNavy = true;
@@ -50,8 +50,8 @@ void initLeaderHenry(void)
    cvMaxArmyPop = 110;
 
    gHenryRulesEnabled = true;
-   llLogLeaderState("Henry initialized");
-   llProbe("meta.leader_init", "leader=henry");
+   anwLogLeaderState("Henry initialized");
+   anwProbe("meta.leader_init", "leader=henry");
 }
 
 //------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ rule henrySagresExpansion
 inactive
 minInterval 60
 {
-   llLogRuleTick("henrySagresExpansion");
+   anwLogRuleTick("henrySagresExpansion");
    if (gHenryRulesEnabled == false)
    {
       xsDisableSelf();
@@ -85,7 +85,7 @@ rule henryCassadorScreen
 inactive
 minInterval 50
 {
-   llLogRuleTick("henryCassadorScreen");
+   anwLogRuleTick("henryCassadorScreen");
    if (gHenryRulesEnabled == false)
    {
       xsDisableSelf();
@@ -111,7 +111,7 @@ rule henryOverseasEmpire
 inactive
 minInterval 55
 {
-   llLogRuleTick("henryOverseasEmpire");
+   anwLogRuleTick("henryOverseasEmpire");
    if (gHenryRulesEnabled == false)
    {
       xsDisableSelf();
@@ -126,7 +126,7 @@ minInterval 55
       btBiasArt = 0.6;             // Organ Gun signature share.
       btBiasTrade = 0.7;
       cvMaxArmyPop = 125;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -138,7 +138,7 @@ rule henryCarrackEmpire
 inactive
 minInterval 70
 {
-   llLogRuleTick("henryCarrackEmpire");
+   anwLogRuleTick("henryCarrackEmpire");
    if (gHenryRulesEnabled == false)
    {
       xsDisableSelf();
@@ -153,7 +153,7 @@ minInterval 70
       btBiasArt = 0.75;
       btBiasTrade = 0.7;
       cvMaxArmyPop = 140;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -165,7 +165,7 @@ rule henryLusitanianSupremacy
 inactive
 minInterval 90
 {
-   llLogRuleTick("henryLusitanianSupremacy");
+   anwLogRuleTick("henryLusitanianSupremacy");
    if (gHenryRulesEnabled == false)
    {
       xsDisableSelf();

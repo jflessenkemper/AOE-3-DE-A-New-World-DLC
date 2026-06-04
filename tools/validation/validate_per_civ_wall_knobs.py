@@ -110,6 +110,77 @@ CALIB_KEY_MAP = {
 
 DISPATCH_XS = REPO / "game" / "ai" / "core" / "aiWallKnobsByCiv.xs"
 
+# ---------------------------------------------------------------------------
+# Spec cross-check: each CALIBRATION engine token → its playstyle_spec.json key.
+# This makes the calibration table's wall_strategy provably faithful to spec,
+# so that knob == calibration == spec is enforced transitively and cannot drift
+# silently. Mapping is explicit (40 entries) rather than fuzzy to avoid
+# mismatches on near-duplicate display names.
+# ---------------------------------------------------------------------------
+SPEC_PATH = REPO / "playstyle_spec.json"
+
+CALIB_TO_SPEC: dict[str, str] = {
+    "DEInca":              "Inca Pachacuti",
+    "Germans":             "Germans Frederick Great",
+    "Ottomans":            "Ottomans Suleiman",
+    "DEMaltese":           "Maltese Valette",
+    "Chinese":             "Chinese Kangxi",
+    "French":              "French Louis XVIII Bourbon",
+    "Indians":             "Indians Akbar",
+    "DEEthiopians":        "Ethiopians Menelik",
+    "ANWCanadians":        "Canadians Brock Revolution",
+    "ANWChileans":         "Chileans OHiggins Revolution",
+    "ANWPeruvians":        "Peruvians Santa Cruz Peru Revolution",
+    "ANWEgyptians":        "Egyptians Muhammad Ali Revolution",
+    "ANWFinnish":          "Finnish Mannerheim Revolution",
+    "XPAztec":             "Aztecs Montezuma",
+    "ANWHaitians":         "Haitians Louverture Revolution",
+    "ANWIndonesians":      "Indonesians Diponegoro Revolution",
+    "ANWMayans":           "Mayans Canek Maya Revolution",
+    "British":             "British Elizabeth",
+    "Portuguese":          "Portuguese Henry Navigator",
+    "Dutch":               "Dutch Maurice Nassau",
+    "ANWBarbary":          "Barbary Barbarossa Corsair Revolution",
+    "ANWSouthAfricans":    "South Africans Kruger Boer Revolution",
+    "ANWBrazil":           "Brazil Pedro Revolution",
+    "DEHausa":             "Hausa Usman dan Fodio",
+    "Russians":            "Russians Ivan the Terrible",
+    "ANWRomanians":        "Romanians Cuza Revolution",
+    "ANWRevFrance":        "Revolutionary France Robespierre Revolution",
+    "DEItalians":          "Italians Garibaldi",
+    "DEMexicans":          "Mexicans Hidalgo Standard",
+    "DEAmericans":         "United States Washington",
+    "ANWNapoleonicFrance": "Napoleonic France Napoleon Bonaparte Revolution",
+    "ANWArgentines":       "Argentines San Martin Revolution",
+    "ANWColumbians":       "Columbians Bolivar Colombia Revolution",
+    "XPIroquois":          "Haudenosaunee Hiawatha Iroquois",
+    "ANWHungarians":       "Hungarians Kossuth Revolution",
+    "Japanese":            "Japanese Tokugawa Ieyasu",
+    "XPSioux":             "Lakota Crazy Horse",
+    "Spanish":             "Spanish Isabella Castile",
+    "DESwedish":           "Swedes Gustavus Adolphus Swedish",
+    "ANWTexians":          "Texians Sam Houston Texas Revolution",
+}
+
+
+def _load_spec_wall_strategies() -> dict[str, int]:
+    """Return {spec_key: wall_strategy_int} from playstyle_spec.json.
+
+    Returns {} (and the cross-check is skipped) if the spec file is missing or
+    malformed, so this validator never hard-crashes on an absent spec.
+    """
+    try:
+        spec = json.loads(SPEC_PATH.read_text())
+        civs = spec["civs"]
+    except (OSError, KeyError, json.JSONDecodeError):
+        return {}
+    out: dict[str, int] = {}
+    for key, entry in civs.items():
+        ws = entry.get("claims", {}).get("wall_strategy")
+        if isinstance(ws, int):
+            out[key] = ws
+    return out
+
 
 def _normalise_calib(kn: dict) -> dict[str, Any]:
     """Convert a CALIBRATION row to the global-name-keyed dict of expected values,
@@ -169,6 +240,11 @@ def validate_all(verbose: bool = False) -> tuple[list[dict], bool]:
     results = []
     all_passed = True
 
+    spec_ws = _load_spec_wall_strategies()
+    if not spec_ws:
+        print("WARNING: playstyle_spec.json missing/unreadable — "
+              "spec cross-check skipped (calibration check still runs).")
+
     for civ_token, kn in CALIBRATION.items():
         # Engine key: base civs use civ_token directly; revolution civs use
         # rev_token (that's what kbGetCivName returns for them).
@@ -200,6 +276,29 @@ def validate_all(verbose: bool = False) -> tuple[list[dict], bool]:
                     "actual": act_val,
                 })
 
+        # Spec cross-check: knob strategy (== calibration strategy, since the
+        # loop above asserts gLLWallStrategy matches kn["strategy"]) must equal
+        # the wall_strategy claimed in playstyle_spec.json. This catches silent
+        # drift between the calibration table and the canonical spec.
+        spec_mismatch = None
+        if spec_ws:
+            spec_key = CALIB_TO_SPEC.get(civ_token)
+            if spec_key is None or spec_key not in spec_ws:
+                spec_mismatch = {
+                    "global": "spec.wall_strategy",
+                    "expected": f"<spec key for {civ_token} not found>",
+                    "actual": kn["strategy"],
+                }
+            elif spec_ws[spec_key] != kn["strategy"]:
+                spec_mismatch = {
+                    "global": "spec.wall_strategy",
+                    "expected": spec_ws[spec_key],
+                    "actual": kn["strategy"],
+                    "spec_key": spec_key,
+                }
+            if spec_mismatch is not None:
+                mismatches.append(spec_mismatch)
+
         passed = len(mismatches) == 0
         if not passed:
             all_passed = False
@@ -208,6 +307,7 @@ def validate_all(verbose: bool = False) -> tuple[list[dict], bool]:
             "civ": civ_token,
             "engine_key": engine_key,
             "strategy": kn["strategy"],
+            "spec_key": CALIB_TO_SPEC.get(civ_token),
             "status": "PASS" if passed else "FAIL",
             "mismatches": mismatches,
         }

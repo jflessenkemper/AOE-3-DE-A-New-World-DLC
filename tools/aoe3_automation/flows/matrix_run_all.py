@@ -182,7 +182,7 @@ def run_one_civ(
 
 def write_report(results: list[dict], report_path: Path, suites: list[str]) -> None:
     lines = [
-        "# Legendary Leaders 48-civ Matrix Report",
+        "# A New World 48-civ Matrix Report",
         "",
         f"Generated: {datetime.datetime.now().isoformat()}",
         f"Suites: {', '.join(suites)}",

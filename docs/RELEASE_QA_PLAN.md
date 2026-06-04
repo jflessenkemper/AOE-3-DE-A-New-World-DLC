@@ -1,4 +1,4 @@
-# Legendary Leaders AI — Release-Quality QA Plan
+# A New World AI — Release-Quality QA Plan
 
 **Purpose:** define the full set of tests that must pass before calling this mod "release-ready" — i.e., any player can install it via the Steam Workshop / Mods folder and have it work without surprises.
 

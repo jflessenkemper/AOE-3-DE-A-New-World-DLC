@@ -1,20 +1,20 @@
 //==============================================================================
 /* aiLeaderQuotes.xs
 
-   Shared leader quote runtime for Legendary Leaders personalities.
+   Shared leader quote runtime for A New World personalities.
 */
 //==============================================================================
 
-int gLLLeaderEnemyQuoteTime = -600000;
-int gLLLeaderAllyQuoteTime = -600000;
-int gLLLeaderTacticalQuoteTime = -600000;
+int gANWLeaderEnemyQuoteTime = -600000;
+int gANWLeaderAllyQuoteTime = -600000;
+int gANWLeaderTacticalQuoteTime = -600000;
 
-bool llHasLegendaryLeaderQuotes(void)
+bool anwHasLeaderQuotes(void)
 {
-   return (llGetLegendaryLeaderInsult() != "");
+   return (anwGetLeaderInsult() != "");
 }
 
-bool llShouldAppendQuoteForStatement(int commPromptID = -1)
+bool anwShouldAppendQuoteForStatement(int commPromptID = -1)
 {
    switch (commPromptID)
    {
@@ -29,7 +29,7 @@ bool llShouldAppendQuoteForStatement(int commPromptID = -1)
    return (true);
 }
 
-int llGetQuoteIntervalForStatement(int commPromptID = -1)
+int anwGetQuoteIntervalForStatement(int commPromptID = -1)
 {
    switch (commPromptID)
    {
@@ -66,138 +66,138 @@ int llGetQuoteIntervalForStatement(int commPromptID = -1)
    return (120000);
 }
 
-void llSendLegendaryLeaderInsultLine(int playerIDorRelation = -1, int quoteInterval = 90000)
+void anwSendLeaderInsultLine(int playerIDorRelation = -1, int quoteInterval = 90000)
 {
-   if (xsGetTime() < gLLLeaderEnemyQuoteTime + quoteInterval)
+   if (xsGetTime() < gANWLeaderEnemyQuoteTime + quoteInterval)
    {
-      debugLegendaryLeaders("enemy quote throttled for target " + playerIDorRelation + " with interval " + quoteInterval);
+      debugANW("enemy quote throttled for target " + playerIDorRelation + " with interval " + quoteInterval);
       return;
    }
 
-   string message = llGetLegendaryLeaderInsult();
+   string message = anwGetLeaderInsult();
    if (message == "")
    {
-      debugLegendaryLeaders("enemy quote skipped because no insult is defined for " + kbGetCivName(cMyCiv));
+      debugANW("enemy quote skipped because no insult is defined for " + kbGetCivName(cMyCiv));
       return;
    }
 
    sendChatLine(playerIDorRelation, message);
-   gLLLeaderEnemyQuoteTime = xsGetTime();
-   debugLegendaryLeaders("enemy quote sent to " + playerIDorRelation + ": " + message);
+   gANWLeaderEnemyQuoteTime = xsGetTime();
+   debugANW("enemy quote sent to " + playerIDorRelation + ": " + message);
 }
 
-void llSendLegendaryLeaderComplimentLine(int playerIDorRelation = -1, int quoteInterval = 90000)
+void anwSendLeaderComplimentLine(int playerIDorRelation = -1, int quoteInterval = 90000)
 {
-   if (xsGetTime() < gLLLeaderAllyQuoteTime + quoteInterval)
+   if (xsGetTime() < gANWLeaderAllyQuoteTime + quoteInterval)
    {
-      debugLegendaryLeaders("ally quote throttled for target " + playerIDorRelation + " with interval " + quoteInterval);
+      debugANW("ally quote throttled for target " + playerIDorRelation + " with interval " + quoteInterval);
       return;
    }
 
-   string message = llGetLegendaryLeaderCompliment();
+   string message = anwGetLeaderCompliment();
    if (message == "")
    {
-      debugLegendaryLeaders("ally quote skipped because no compliment is defined for " + kbGetCivName(cMyCiv));
+      debugANW("ally quote skipped because no compliment is defined for " + kbGetCivName(cMyCiv));
       return;
    }
 
    sendChatLine(playerIDorRelation, message);
-   gLLLeaderAllyQuoteTime = xsGetTime();
-   debugLegendaryLeaders("ally quote sent to " + playerIDorRelation + ": " + message);
+   gANWLeaderAllyQuoteTime = xsGetTime();
+   debugANW("ally quote sent to " + playerIDorRelation + ": " + message);
 }
 
-void llSendLegendaryLeaderTacticalLine(int playerIDorRelation = -1, string message = "", int quoteInterval = 90000)
+void anwSendLeaderTacticalLine(int playerIDorRelation = -1, string message = "", int quoteInterval = 90000)
 {
    if ((playerIDorRelation < 0) || (message == ""))
    {
       return;
    }
 
-   if (xsGetTime() < gLLLeaderTacticalQuoteTime + quoteInterval)
+   if (xsGetTime() < gANWLeaderTacticalQuoteTime + quoteInterval)
    {
-      debugLegendaryLeaders("tactical quote throttled for target " + playerIDorRelation + " with interval " + quoteInterval);
+      debugANW("tactical quote throttled for target " + playerIDorRelation + " with interval " + quoteInterval);
       return;
    }
 
    sendChatLine(playerIDorRelation, message);
-   gLLLeaderTacticalQuoteTime = xsGetTime();
-   debugLegendaryLeaders("tactical quote sent to " + playerIDorRelation + ": " + message);
+   gANWLeaderTacticalQuoteTime = xsGetTime();
+   debugANW("tactical quote sent to " + playerIDorRelation + ": " + message);
 }
 
-string llGetLegendaryLeaderRetreatLine(void)
+string anwGetLeaderRetreatLine(void)
 {
    return ("Fall back and close ranks. Our leader will not be lost today.");
 }
 
-string llGetLegendaryLeaderRoutLine(void)
+string anwGetLeaderRoutLine(void)
 {
    return ("Your broken soldiers are in full retreat now.");
 }
 
-string llGetLegendaryLeaderBulkAssaultLine(void)
+string anwGetLeaderBulkAssaultLine(void)
 {
    return ("Break their main line first. The army is the real prize.");
 }
 
-string llGetLegendaryLeaderDecapitationLine(void)
+string anwGetLeaderDecapitationLine(void)
 {
    return ("Ignore the rabble. Bring down their leader.");
 }
 
-void llSendLegendaryLeaderRetreatLine(int playerIDorRelation = -1, int quoteInterval = 150000)
+void anwSendLeaderRetreatLine(int playerIDorRelation = -1, int quoteInterval = 150000)
 {
-   llSendLegendaryLeaderTacticalLine(playerIDorRelation, llGetLegendaryLeaderRetreatLine(), quoteInterval);
+   anwSendLeaderTacticalLine(playerIDorRelation, anwGetLeaderRetreatLine(), quoteInterval);
 }
 
-void llSendLegendaryLeaderRoutLine(int playerIDorRelation = -1, int quoteInterval = 120000)
+void anwSendLeaderRoutLine(int playerIDorRelation = -1, int quoteInterval = 120000)
 {
-   llSendLegendaryLeaderTacticalLine(playerIDorRelation, llGetLegendaryLeaderRoutLine(), quoteInterval);
+   anwSendLeaderTacticalLine(playerIDorRelation, anwGetLeaderRoutLine(), quoteInterval);
 }
 
-void llSendLegendaryLeaderBulkAssaultLine(int playerIDorRelation = -1, int quoteInterval = 120000)
+void anwSendLeaderBulkAssaultLine(int playerIDorRelation = -1, int quoteInterval = 120000)
 {
-   llSendLegendaryLeaderTacticalLine(playerIDorRelation, llGetLegendaryLeaderBulkAssaultLine(), quoteInterval);
+   anwSendLeaderTacticalLine(playerIDorRelation, anwGetLeaderBulkAssaultLine(), quoteInterval);
 }
 
-void llSendLegendaryLeaderDecapitationLine(int playerIDorRelation = -1, int quoteInterval = 120000)
+void anwSendLeaderDecapitationLine(int playerIDorRelation = -1, int quoteInterval = 120000)
 {
-   llSendLegendaryLeaderTacticalLine(playerIDorRelation, llGetLegendaryLeaderDecapitationLine(), quoteInterval);
+   anwSendLeaderTacticalLine(playerIDorRelation, anwGetLeaderDecapitationLine(), quoteInterval);
 }
 
-void llMaybeFollowStatementWithQuote(int playerID = -1, int commPromptID = -1)
+void anwMaybeFollowStatementWithQuote(int playerID = -1, int commPromptID = -1)
 {
-   if ((playerID < 0) || (llHasLegendaryLeaderQuotes() == false))
+   if ((playerID < 0) || (anwHasLeaderQuotes() == false))
    {
       return;
    }
 
-   if (llShouldAppendQuoteForStatement(commPromptID) == false)
+   if (anwShouldAppendQuoteForStatement(commPromptID) == false)
    {
-      debugLegendaryLeaders("statement " + commPromptID + " skipped for quote follow-up.");
+      debugANW("statement " + commPromptID + " skipped for quote follow-up.");
       return;
    }
 
-   int interval = llGetQuoteIntervalForStatement(commPromptID);
-   debugLegendaryLeaders("statement " + commPromptID + " evaluating quote follow-up for player " + playerID + " with interval " + interval);
+   int interval = anwGetQuoteIntervalForStatement(commPromptID);
+   debugANW("statement " + commPromptID + " evaluating quote follow-up for player " + playerID + " with interval " + interval);
 
    if (kbIsPlayerEnemy(playerID) == true)
    {
-      llSendLegendaryLeaderInsultLine(playerID, interval);
+      anwSendLeaderInsultLine(playerID, interval);
       return;
    }
 
    if (kbIsPlayerAlly(playerID) == true)
    {
-      llSendLegendaryLeaderComplimentLine(playerID, interval);
+      anwSendLeaderComplimentLine(playerID, interval);
    }
 }
 
-rule legendaryLeaderOpeningQuote
+rule anwLeaderOpeningQuote
 inactive
 minInterval 10
 {
-   llLogRuleTick("legendaryLeaderOpeningQuote");
-   if (llHasLegendaryLeaderQuotes() == false)
+   anwLogRuleTick("anwLeaderOpeningQuote");
+   if (anwHasLeaderQuotes() == false)
    {
       xsDisableSelf();
       return;
@@ -208,24 +208,24 @@ minInterval 10
       return;
    }
 
-   debugLegendaryLeaders("opening quotes firing for " + kbGetCivName(cMyCiv));
+   debugANW("opening quotes firing for " + kbGetCivName(cMyCiv));
    // LL-QUOTE probe — ensures the per-leader opening compliment/insult pair
-   // fires at ~25s and only once. Miss = legendary quote wiring broken.
-   llProbe("chat.quote", "kind=opening");
-   llSendLegendaryLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, 0);
-   llSendLegendaryLeaderInsultLine(cPlayerRelationEnemyNotGaia, 0);
+   // fires at ~25s and only once. Miss = ANW leader quote wiring broken.
+   anwProbe("chat.quote", "kind=opening");
+   anwSendLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, 0);
+   anwSendLeaderInsultLine(cPlayerRelationEnemyNotGaia, 0);
    xsDisableSelf();
 }
 
-void enableLegendaryLeaderQuoteRules(void)
+void anwEnableLeaderQuoteRules(void)
 {
-   if (llHasLegendaryLeaderQuotes() == false)
+   if (anwHasLeaderQuotes() == false)
    {
       return;
    }
 
-   llLogEvent("RULE", "enabling legendary leader opening quote rule");
-   xsEnableRule("legendaryLeaderOpeningQuote");
+   anwLogEvent("RULE", "enabling ANW leader opening quote rule");
+   xsEnableRule("anwLeaderOpeningQuote");
 }
 
 // Map kbGetCivName() internal strings (e.g. "XPIroquois", "DEMaltese") to
@@ -233,7 +233,7 @@ void enableLegendaryLeaderQuoteRules(void)
 // this, leaders for XP/DE-prefixed civs silently get no quote, and the
 // opening-quote rule disables itself (bug observed in replay: Hiawatha/Jean
 // missing opening quotes).
-string llNormalizeCivName(string raw = "")
+string anwNormalizeCivName(string raw = "")
 {
    if (raw == "XPIroquois")   return ("Haudenosaunee");
    if (raw == "XPAztec")      return ("Aztecs");
@@ -249,9 +249,9 @@ string llNormalizeCivName(string raw = "")
    return (raw);
 }
 
-string llGetLegendaryLeaderInsult(void)
+string anwGetLeaderInsult(void)
 {
-   string civName = llNormalizeCivName(kbGetCivName(cMyCiv));
+   string civName = anwNormalizeCivName(kbGetCivName(cMyCiv));
    int quoteIndex = aiRandInt(2);
 
    if (civName == "Aztecs")
@@ -437,6 +437,14 @@ string llGetLegendaryLeaderInsult(void)
          return ("Europe did not fear me for such maneuvers.");
       }
       return ("You waste the moment and the map.");
+   }
+   else if (civName == "ANWRevFrance")
+   {
+      if (quoteIndex == 0)
+      {
+         return ("The Republic has no patience for such timidity.");
+      }
+      return ("Liberty is not won by hesitation.");
    }
    else if (civName == "ANWAmericans")
    {
@@ -626,9 +634,9 @@ string llGetLegendaryLeaderInsult(void)
    return ("");
 }
 
-string llGetLegendaryLeaderCompliment(void)
+string anwGetLeaderCompliment(void)
 {
-   string civName = llNormalizeCivName(kbGetCivName(cMyCiv));
+   string civName = anwNormalizeCivName(kbGetCivName(cMyCiv));
    int quoteIndex = aiRandInt(2);
 
    if (civName == "Aztecs")
@@ -814,6 +822,14 @@ string llGetLegendaryLeaderCompliment(void)
          return ("Take the center and dictate the day.");
       }
       return ("Push hard. Let them live in reaction.");
+   }
+   else if (civName == "ANWRevFrance")
+   {
+      if (quoteIndex == 0)
+      {
+         return ("The Republic advances - follow without hesitation.");
+      }
+      return ("Hold the line for the cause.");
    }
    else if (civName == "ANWAmericans")
    {

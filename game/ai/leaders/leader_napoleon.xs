@@ -29,21 +29,21 @@ bool gNapoleonRulesEnabled = false;
 
 void initLeaderNapoleon(void)
 {
-   llVerboseEcho("A New World: activating Napoleon Bonaparte personality.");
+   anwVerboseEcho("A New World: activating Napoleon Bonaparte personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.1;              // Light boom; the campaign opens fast.
    btOffenseDefense = 0.85;
    btBiasTrade = -0.4;            // Continental System.
    btBiasNative = -0.4;           // No foreign auxiliaries.
-   llSetMilitaryFocus(0.6, 0.4, 0.85);  // Artillery dominant.
+   anwSetMilitaryFocus(0.6, 0.4, 0.85);  // Artillery dominant.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseForwardOperationalLineStyle(2);
-   gLLMilitaryDistanceMultiplier = 0.85;
-   llSetBuildStrongpointProfile(2, 2, 3, true);
+   anwUseForwardOperationalLineStyle(2);
+   gANWMilitaryDistanceMultiplier = 0.85;
+   anwSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.6, 0.4, 1, 3.0);
+   anwSetLeaderTacticalDoctrine(0.6, 0.4, 1, 3.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
@@ -53,8 +53,8 @@ void initLeaderNapoleon(void)
    cvDefenseReflexRadiusPassive = 28.0;
 
    gNapoleonRulesEnabled = true;
-   llLogLeaderState("Napoleon initialized");
-   llProbe("meta.leader_init", "leader=napoleon");
+   anwLogLeaderState("Napoleon initialized");
+   anwProbe("meta.leader_init", "leader=napoleon");
 }
 
 //------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ rule napoleonConventionAssembly
 inactive
 minInterval 60
 {
-   llLogRuleTick("napoleonConventionAssembly");
+   anwLogRuleTick("napoleonConventionAssembly");
    if (gNapoleonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -88,7 +88,7 @@ rule napoleonItalianCampaign
 inactive
 minInterval 50
 {
-   llLogRuleTick("napoleonItalianCampaign");
+   anwLogRuleTick("napoleonItalianCampaign");
    if (gNapoleonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -103,7 +103,7 @@ minInterval 50
       btBiasCav = 0.45;
       btBiasArt = 0.5;
       btBiasTrade = -0.6;          // Continental System hardens.
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -115,7 +115,7 @@ rule napoleonGrandBattery
 inactive
 minInterval 55
 {
-   llLogRuleTick("napoleonGrandBattery");
+   anwLogRuleTick("napoleonGrandBattery");
    if (gNapoleonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -140,7 +140,7 @@ rule napoleonWagramDoctrine
 inactive
 minInterval 70
 {
-   llLogRuleTick("napoleonWagramDoctrine");
+   anwLogRuleTick("napoleonWagramDoctrine");
    if (gNapoleonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -154,7 +154,7 @@ minInterval 70
       btBiasCav = 0.7;
       btBiasArt = 0.95;
       cvMaxArmyPop = 160;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -166,7 +166,7 @@ rule napoleonImperialTempo
 inactive
 minInterval 90
 {
-   llLogRuleTick("napoleonImperialTempo");
+   anwLogRuleTick("napoleonImperialTempo");
    if (gNapoleonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -180,7 +180,7 @@ minInterval 90
       btBiasCav = 0.75;
       btBiasArt = 1.0;
       cvMaxArmyPop = 180;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 

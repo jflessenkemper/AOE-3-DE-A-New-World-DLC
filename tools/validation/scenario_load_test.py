@@ -58,7 +58,7 @@ SCENARIO_CIVS = {
 }
 
 _META_BOOT_RE = re.compile(
-    r"\[LLP v=2 t=\d+ p=\d+ civ=(?P<civ>\S+) ldr=\S+ tag=meta\.boot\]"
+    r"\[ANWP v=2 t=\d+ p=\d+ civ=(?P<civ>\S+) ldr=\S+ tag=meta\.boot\]"
 )
 _LOAD_FAIL_RE = re.compile(
     r"Scenario .* failed to load|Failed to load scenario|"

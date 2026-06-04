@@ -2,7 +2,7 @@
 
 IMPORTANT — use the per-match log slice, NOT the .age3Yrec replay
 ---------------------------------------------------------------------
-Every CPU AI emits ``[LLP v=2 ...]`` probes via the Legendary Leaders XS
+Every CPU AI emits ``[ANWP v=2 ...]`` probes via the A New World XS
 hooks.  These probes are triple-emitted: ``aiEcho()`` → Age3Log.txt,
 ``aiChat(1, ...)`` → replay chat stream, ``aiChat(cMyID, ...)`` → replay
 chat stream.
@@ -68,11 +68,11 @@ from tools.playtest.html_reference import (  # noqa: E402
 )
 
 
-# `[LLP v=2 t=<int> p=<int> civ=<civ> ldr=<ldr> tag=<domain.name>] <tail>`
+# `[ANWP v=2 t=<int> p=<int> civ=<civ> ldr=<ldr> tag=<domain.name>] <tail>`
 # We match against bytes so the same regex can scan both raw .age3Yrec
 # binary payloads and plain-text log files.
 PROBE_RE = re.compile(
-    rb"\[LLP v=2 t=(?P<t>\d+) p=(?P<p>\d+) civ=(?P<civ>\S+) "
+    rb"\[ANWP v=2 t=(?P<t>\d+) p=(?P<p>\d+) civ=(?P<civ>\S+) "
     rb"ldr=(?P<ldr>\S+) tag=(?P<tag>\S+)\]\s*(?P<tail>[ -~]*)"  # tail = printable ASCII only
 )
 KV_RE = re.compile(rb"(\w+)=([^\s]+)")
@@ -341,7 +341,7 @@ def validate(probes: list[ProbeRecord]) -> tuple[list[str], list[str]]:
     summary: list[str] = []
 
     if not by_player:
-        issues.append("no [LLP v=2] probes found — was cLLReplayProbes set true?")
+        issues.append("no [ANWP v=2] probes found — was cLLReplayProbes set true?")
         return issues, summary
 
     for pid in sorted(by_player):

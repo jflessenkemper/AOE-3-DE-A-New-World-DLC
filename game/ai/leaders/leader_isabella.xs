@@ -27,29 +27,29 @@ bool gIsabellaRulesEnabled = false;
 
 void initLeaderIsabella(void)
 {
-   llVerboseEcho("A New World: activating Isabella I personality.");
+   anwVerboseEcho("A New World: activating Isabella I personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the Reconquista does not wait.
    btOffenseDefense = 0.7;
    btBiasTrade = 0.3;             // Camino del Rey shipment cycle.
    btBiasNative = -0.3;
-   llSetMilitaryFocus(0.7, 0.45, 0.3);
+   anwSetMilitaryFocus(0.7, 0.45, 0.3);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseForwardOperationalLineStyle(2);
-   gLLMilitaryDistanceMultiplier = 0.90;
-   llSetBuildStrongpointProfile(2, 2, 3, true);
+   anwUseForwardOperationalLineStyle(2);
+   gANWMilitaryDistanceMultiplier = 0.90;
+   anwSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+   anwSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 120;
 
    gIsabellaRulesEnabled = true;
-   llLogLeaderState("Isabella initialized");
-   llProbe("meta.leader_init", "leader=isabella");
+   anwLogLeaderState("Isabella initialized");
+   anwProbe("meta.leader_init", "leader=isabella");
 }
 
 //------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ rule isabellaCastilianAssembly
 inactive
 minInterval 60
 {
-   llLogRuleTick("isabellaCastilianAssembly");
+   anwLogRuleTick("isabellaCastilianAssembly");
    if (gIsabellaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -83,7 +83,7 @@ rule isabellaCrusadingTempo
 inactive
 minInterval 50
 {
-   llLogRuleTick("isabellaCrusadingTempo");
+   anwLogRuleTick("isabellaCrusadingTempo");
    if (gIsabellaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -97,7 +97,7 @@ minInterval 50
       btBiasInf = 0.85;
       btBiasCav = 0.55;            // Lancer wing.
       btBiasArt = -0.2;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -109,7 +109,7 @@ rule isabellaTercioPrecursor
 inactive
 minInterval 55
 {
-   llLogRuleTick("isabellaTercioPrecursor");
+   anwLogRuleTick("isabellaTercioPrecursor");
    if (gIsabellaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -134,7 +134,7 @@ rule isabellaHapsburgCampaign
 inactive
 minInterval 70
 {
-   llLogRuleTick("isabellaHapsburgCampaign");
+   anwLogRuleTick("isabellaHapsburgCampaign");
    if (gIsabellaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -148,7 +148,7 @@ minInterval 70
       btBiasCav = 0.65;
       btBiasArt = 0.65;
       cvMaxArmyPop = 150;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -160,7 +160,7 @@ rule isabellaCatholicSupremacy
 inactive
 minInterval 90
 {
-   llLogRuleTick("isabellaCatholicSupremacy");
+   anwLogRuleTick("isabellaCatholicSupremacy");
    if (gIsabellaRulesEnabled == false)
    {
       xsDisableSelf();

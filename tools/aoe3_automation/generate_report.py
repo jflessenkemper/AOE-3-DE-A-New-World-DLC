@@ -99,13 +99,13 @@ def main():
 
     # Build report markdown
     report_lines = [
-        "# Legendary Leaders AI Mod - AFK Test Report",
+        "# A New World AI Mod - AFK Test Report",
         "",
         f"**Test Date:** {time.strftime('%Y-%m-%d %H:%M:%S')}",
         "",
         "## Overview",
         "",
-        "This report summarizes the results of an autonomous AFK test of the Legendary Leaders",
+        "This report summarizes the results of an autonomous AFK test of the A New World",
         "AI mod for Age of Empires III: Definitive Edition. The test validates civ loading,",
         "gameplay stability, and mod integration.",
         "",
@@ -226,7 +226,7 @@ def main():
         "",
         "## Conclusion",
         "",
-        "The Legendary Leaders AI mod demonstrates stable integration with AoE3DE.",
+        "The A New World AI mod demonstrates stable integration with AoE3DE.",
         "All tested civs load cleanly and support normal gameplay mechanics.",
         "Further testing with full civ set and extended AI matches recommended.",
         "",

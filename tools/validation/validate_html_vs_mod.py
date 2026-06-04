@@ -6,9 +6,9 @@ For every civ section in the HTML we verify, against the file on disk:
   * The home-city XML the section labels exists in `data/`
   * The civmods.xml block uses the same civ name
   * Every card chip in the HTML deck points at a card name that's in
-    that civ's data/decks_legendary.json or data/decks_standard.json
+    that civ's data/decks_anw_themed.json or data/decks_standard.json
     summary (which is itself derived from the home-city XML's
-    "Legendary Leaders" deck)
+    "A New World" deck)
   * The chip count matches the JSON (25 / civ)
   * Every leader portrait file referenced by the HTML actually exists
 

@@ -22,35 +22,35 @@ bool gMontezumaRulesEnabled = false;
 
 void initLeaderMontezuma(void)
 {
-   llVerboseEcho("A New World: activating Motecuhzoma II personality.");
+   anwVerboseEcho("A New World: activating Motecuhzoma II personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.55;          // Boom first, Flower War second.
    btOffenseDefense = 0.6;
    btBiasTrade = -0.5;         // Tribute, not commerce - smash trade routes.
    btBiasNative = 0.7;         // Tlaxcalan, Zapotec, Otomi auxiliaries.
-   llSetMilitaryFocus(0.85, 0.05, -0.9);  // All-infantry doctrine, no artillery investment.
+   anwSetMilitaryFocus(0.85, 0.05, -0.9);  // All-infantry doctrine, no artillery investment.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseJungleGuerrillaNetworkStyle(0);   // War Huts + chokes; no perimeter wall.
+   anwUseJungleGuerrillaNetworkStyle(0);   // War Huts + chokes; no perimeter wall.
    // Spec override: Aztecs Montezuma doctrine — wall the chokes (Tlaxcala
    // border + causeway entries). The Jungle Guerrilla helper assigns
    // MobileNoWalls(5) by default; spec/playstyle_spec.json wants
    // ChokepointSegments(1) to lock down causeway approaches.
-   gLLWallStrategy = cLLWallStrategyChokepointSegments;
+   gANWWallStrategy = cANWWallStrategyChokepointSegments;
    // Spec override: military_distance_band [1.0, 1.3]; JungleGuerrilla
    // default is 0.95 which falls below the band floor.
-   gLLMilitaryDistanceMultiplier = 1.05;
+   gANWMilitaryDistanceMultiplier = 1.05;
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.7, 0.3, 1, 3.0);
+   anwSetLeaderTacticalDoctrine(0.7, 0.3, 1, 3.0);
 
    cvMaxTowers = 3;            // The causeways are the wall.
    cvOkToBuildForts = false;   // Aztecs cannot build forts; safety guard.
    cvMaxArmyPop = 110;         // Will scale with age in rules below.
 
    gMontezumaRulesEnabled = true;
-   llLogLeaderState("Montezuma initialized");
-   llProbe("meta.leader_init", "leader=montezuma");
+   anwLogLeaderState("Montezuma initialized");
+   anwProbe("meta.leader_init", "leader=montezuma");
 }
 
 //------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ rule montezumaTributeBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("montezumaTributeBoom");
+   anwLogRuleTick("montezumaTributeBoom");
    if (gMontezumaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -84,7 +84,7 @@ rule montezumaFlowerWars
 inactive
 minInterval 50
 {
-   llLogRuleTick("montezumaFlowerWars");
+   anwLogRuleTick("montezumaFlowerWars");
    if (gMontezumaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -98,7 +98,7 @@ minInterval 50
       btBiasInf = 0.95;        // Macehualtin / Puma Spearmen flood.
       btBiasCav = 0.15;        // A trickle of Coyote Runners for chasing.
       btBiasArt = -0.9;        // Refuse Arrow Knights this age - save xp.
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -110,7 +110,7 @@ rule montezumaEagleAscension
 inactive
 minInterval 55
 {
-   llLogRuleTick("montezumaEagleAscension");
+   anwLogRuleTick("montezumaEagleAscension");
    if (gMontezumaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -136,7 +136,7 @@ rule montezumaJaguarStack
 inactive
 minInterval 75
 {
-   llLogRuleTick("montezumaJaguarStack");
+   anwLogRuleTick("montezumaJaguarStack");
    if (gMontezumaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -149,7 +149,7 @@ minInterval 75
       btBiasInf = 1.0;
       btBiasArt = -0.3;        // Now welcome Arrow Knight shipments.
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -161,7 +161,7 @@ rule montezumaTripleAlliance
 inactive
 minInterval 90
 {
-   llLogRuleTick("montezumaTripleAlliance");
+   anwLogRuleTick("montezumaTripleAlliance");
    if (gMontezumaRulesEnabled == false)
    {
       xsDisableSelf();

@@ -24,30 +24,30 @@ bool gKangxiRulesEnabled = false;
 
 void initLeaderKangxi(void)
 {
-   llVerboseEcho("A New World: activating Kangxi Emperor personality.");
+   anwVerboseEcho("A New World: activating Kangxi Emperor personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = -0.15;            // Slow, methodical, banner-build first.
    btOffenseDefense = 0.35;       // Mild offense baseline; scales by age.
    btBiasTrade = 0.35;            // Canton trade tributary system.
    btBiasNative = -0.1;           // Tributary kingdoms, not allied villages.
-   llSetMilitaryFocus(0.55, 0.2, 0.35);  // Infantry-heavy, cavalry banner, real artillery.
+   anwSetMilitaryFocus(0.55, 0.2, 0.35);  // Infantry-heavy, cavalry banner, real artillery.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseCompactFortifiedCoreStyle(4, true);
-   gLLHouseDistanceMultiplier = 0.70;
-   gLLMilitaryDistanceMultiplier = 0.85;   // Spec band [0.7,0.9]: tight banner-army deployment.
-   llSetBuildStrongpointProfile(3, 2, 2, false);
+   anwUseCompactFortifiedCoreStyle(4, true);
+   gANWHouseDistanceMultiplier = 0.70;
+   gANWMilitaryDistanceMultiplier = 0.85;   // Spec band [0.7,0.9]: tight banner-army deployment.
+   anwSetBuildStrongpointProfile(3, 2, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 5;
    cvMaxArmyPop = 115;
 
    gKangxiRulesEnabled = true;
-   llLogLeaderState("Kangxi initialized");
-   llProbe("meta.leader_init", "leader=kangxi");
+   anwLogLeaderState("Kangxi initialized");
+   anwProbe("meta.leader_init", "leader=kangxi");
 }
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ rule kangxiVillageBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("kangxiVillageBoom");
+   anwLogRuleTick("kangxiVillageBoom");
    if (gKangxiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -82,7 +82,7 @@ rule kangxiBannerOpening
 inactive
 minInterval 50
 {
-   llLogRuleTick("kangxiBannerOpening");
+   anwLogRuleTick("kangxiBannerOpening");
    if (gKangxiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -108,7 +108,7 @@ rule kangxiBannerDiscipline
 inactive
 minInterval 55
 {
-   llLogRuleTick("kangxiBannerDiscipline");
+   anwLogRuleTick("kangxiBannerDiscipline");
    if (gKangxiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -122,7 +122,7 @@ minInterval 55
       btBiasCav = 0.4;            // Keshik / Iron Flail wedge.
       btBiasArt = 0.55;           // Flying Crow / Hand Mortar share.
       cvMaxArmyPop = 130;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -135,7 +135,7 @@ rule kangxiPacificationCampaign
 inactive
 minInterval 75
 {
-   llLogRuleTick("kangxiPacificationCampaign");
+   anwLogRuleTick("kangxiPacificationCampaign");
    if (gKangxiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -162,7 +162,7 @@ rule kangxiImperialWeight
 inactive
 minInterval 90
 {
-   llLogRuleTick("kangxiImperialWeight");
+   anwLogRuleTick("kangxiImperialWeight");
    if (gKangxiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -176,7 +176,7 @@ minInterval 90
       btBiasCav = 0.45;
       btBiasArt = 0.85;
       cvMaxArmyPop = 165;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 

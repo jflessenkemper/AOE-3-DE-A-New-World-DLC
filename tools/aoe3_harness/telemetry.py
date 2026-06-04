@@ -1,16 +1,16 @@
 """telemetry.py — ANW probe-event log parser and HTML report generator.
 
-Parses ``[LLP v=2]`` lines from AoE3 log files (Age3Log.txt,
+Parses ``[ANWP v=2]`` lines from AoE3 log files (Age3Log.txt,
 Age3DEAIOutputPlayer*.txt, archived hubtest logs) into per-civ event
 trajectories and renders a self-contained SVG-based HTML report.
 
 Protocol format (one line per probe event)::
 
-    [LLP v=2] tick=<ms> player=<N> <probe_name> [key=value ...]
+    [ANWP v=2] tick=<ms> player=<N> <probe_name> [key=value ...]
 
 Example::
 
-    [LLP v=2] tick=12345 player=2 wall.closure pct=0.6 radius=80.0
+    [ANWP v=2] tick=12345 player=2 wall.closure pct=0.6 radius=80.0
 
 Design goals:
     - Zero external dependencies: SVG charts are inlined, no CDN.
@@ -51,7 +51,7 @@ __all__ = [
 
 @dataclass
 class ProbeEvent:
-    """One ``[LLP v=2]`` probe line from the game log.
+    """One ``[ANWP v=2]`` probe line from the game log.
 
     Attributes:
         tick_ms:    Game tick in milliseconds (integer; 0 if not parsed).
@@ -89,11 +89,11 @@ class ProbeEvent:
 # Parser
 # ---------------------------------------------------------------------------
 
-# Matches the canonical ``[LLP v=2]`` prefix followed by mandatory tick and
+# Matches the canonical ``[ANWP v=2]`` prefix followed by mandatory tick and
 # optional player field, then the probe name, then zero-or-more key=value
 # pairs.  We allow spaces in unexpected places and tolerate extra tokens.
 _LLP_RE = re.compile(
-    r"\[LLP v=2\]\s+"
+    r"\[ANWP v=2\]\s+"
     r"tick=(\d+)\s+"
     r"(?:player=(\d+)\s+)?"
     r"([\w.:-]+)"           # probe name
@@ -104,7 +104,7 @@ _KV_RE = re.compile(r"(\w+)=(\S+)")
 # CLAUDE-NOTE: The player-first variant ``player=N tick=M`` is also accepted
 # via a second regex for resilience.
 _LLP_RE_ALT = re.compile(
-    r"\[LLP v=2\]\s+"
+    r"\[ANWP v=2\]\s+"
     r"player=(\d+)\s+"
     r"tick=(\d+)\s+"
     r"([\w.:-]+)"
@@ -121,7 +121,7 @@ def parse_log_to_trajectories(
     log_path: Path,
     civ_map: dict[int, str] | None = None,
 ) -> dict[str, list[ProbeEvent]]:
-    """Parse ``[LLP v=2]`` lines from *log_path* into per-civ trajectories.
+    """Parse ``[ANWP v=2]`` lines from *log_path* into per-civ trajectories.
 
     Args:
         log_path: Path to an AoE3 log file (Age3Log.txt or similar).
@@ -157,7 +157,7 @@ def parse_log_to_trajectories(
 def _parse_line(line: str) -> Optional[ProbeEvent]:
     """Parse one log line.  Returns None if it is not a valid LLP line."""
     stripped = line.strip()
-    if "[LLP v=2]" not in stripped:
+    if "[ANWP v=2]" not in stripped:
         return None
 
     # Try canonical order first (tick before player).
@@ -425,7 +425,7 @@ def emit_html_report(
 
     if not trajectories:
         body_parts.append(
-            '<p style="color:#779;">No [LLP v=2] probe events found in the log.</p>'
+            '<p style="color:#779;">No [ANWP v=2] probe events found in the log.</p>'
         )
     else:
         for civ_key in sorted(trajectories.keys()):

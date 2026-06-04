@@ -49,10 +49,10 @@ mutable void setUnitPickerPreference(int upID = -1) {}
 mutable void endDefenseReflex(void) {}
 mutable void addUnitsToMilitaryPlan(int planID = -1) {}
 mutable float getMilitaryUnitStrength(int puid = -1) { return (0.0); }
-mutable bool llIsCommanderAvailableForMajorAttack(void) { return (true); }
-mutable void llCancelCommanderlessMajorAttacks(void) {}
-mutable bool llEnsureCommanderRecovery(void) { return (false); }
-mutable void llDestroyCommanderRecoveryPlan(void) {}
+mutable bool anwIsCommanderAvailableForMajorAttack(void) { return (true); }
+mutable void anwCancelCommanderlessMajorAttacks(void) {}
+mutable bool anwEnsureCommanderRecovery(void) { return (false); }
+mutable void anwDestroyCommanderRecoveryPlan(void) {}
 
 // Home City cards.
 mutable void shipGrantedHandler(int parm = -1) {}
@@ -60,18 +60,18 @@ mutable void shipGrantedHandler(int parm = -1) {}
 // Chats.
 mutable void sendStatement(int playerIDorRelation = -1, int commPromptID = -1, vector vec = cInvalidVector) {}
 mutable void sendChatLine(int playerIDorRelation = -1, string message = "") {}
-mutable string llGetLegendaryLeaderInsult(void) { return (""); }
-mutable string llGetLegendaryLeaderCompliment(void) { return (""); }
-mutable void llSendLegendaryLeaderInsultLine(int playerIDorRelation = -1, int quoteInterval = 90000) {}
-mutable void llSendLegendaryLeaderComplimentLine(int playerIDorRelation = -1, int quoteInterval = 90000) {}
-mutable void llMaybeFollowStatementWithQuote(int playerID = -1, int commPromptID = -1) {}
-mutable void enableLegendaryLeaderQuoteRules(void) {}
+mutable string anwGetLeaderInsult(void) { return (""); }
+mutable string anwGetLeaderCompliment(void) { return (""); }
+mutable void anwSendLeaderInsultLine(int playerIDorRelation = -1, int quoteInterval = 90000) {}
+mutable void anwSendLeaderComplimentLine(int playerIDorRelation = -1, int quoteInterval = 90000) {}
+mutable void anwMaybeFollowStatementWithQuote(int playerID = -1, int commPromptID = -1) {}
+mutable void anwEnableLeaderQuoteRules(void) {}
 
 // Setup.
 mutable void deathMatchStartupBegin(void) {}
 mutable void initCeylonNomadStart(void) {}
 mutable void init(void) {}
-mutable int llGetWantedFortCount(void) { return (0); }
+mutable int anwGetWantedFortCount(void) { return (0); }
 
 // Core.
 mutable void updateSettlersAndPopManager() {}
@@ -298,7 +298,7 @@ void setMilPopLimit(int age1Limit = 10, int age2Limit = 30, int age3Limit = 130,
    // Set the military population to its maximum potential...
    // int spaceLeftForMilitary = kbGetPopCap() - aiGetEconomyPop();
    // militaryPopLimit = spaceLeftForMilitary;
-   // llVerboseEcho("MilitaryPop:"+kbUnitCount(cMyID, cUnitTypeAbstractVillager, cUnitStateAlive)+"");
+   // anwVerboseEcho("MilitaryPop:"+kbUnitCount(cMyID, cUnitTypeAbstractVillager, cUnitStateAlive)+"");
    aiSetMilitaryPop(militaryPopLimit);
 }
 
@@ -1061,13 +1061,13 @@ minInterval 20
 }
 
 //==============================================================================
-// llWritePersonalityProbe — write probe data to the AI's personality file.
+// anwWritePersonalityProbe — write probe data to the AI's personality file.
 //
 // 2026-04-29 BREAKTHROUGH:  AoE3-DE's personality serialiser silently drops
 // ANY <uservars> entry whose key is not on a hardcoded engine whitelist.
 // Verified empirically: after a clean game-over with `aiPersonalitySetPlayerUserVar`
 // calls for both whitelisted keys (`iWonLastGame`) and our custom keys
-// (`ll_pid`, `ll_preinit_marker`, etc.), only the whitelisted keys appear in
+//(`anw_pid`, `anw_preinit_marker`, etc.), only the whitelisted keys appear in
 // the .personality file.  The whitelist (gleaned from a real flushed file):
 //
 //    iWonLastGame, iBeatHimLastTime, heBeatMeLastTime, iCarriedHimLastTime,
@@ -1106,10 +1106,10 @@ minInterval 20
 // 8-player matches), so the reader uses this to distinguish a probe write
 // from engine-native data.
 //==============================================================================
-void llWritePersonalityProbe(int nothing = 0)
+void anwWritePersonalityProbe(int nothing = 0)
 {
    // Probe-disable shortcut.
-   if (cLLReplayProbes == false)
+   if (cANWReplayProbes == false)
    {
       return;
    }
@@ -1119,12 +1119,12 @@ void llWritePersonalityProbe(int nothing = 0)
    // values to the field width so an out-of-range global never spills bits.
 
    int pid_b     = cMyID                          & 31;     // 5 bits
-   int style_b   = gLLBuildStyle                  & 31;     // 5 bits
-   int walls_b   = gLLWallLevel                   & 15;     // 4 bits
-   int wstrat_b  = gLLWallStrategy                & 7;      // 3 bits
-   int terrp_b   = gLLPreferredTerrainPrimary     & 31;     // 5 bits in 6-bit slot
-   int terrs_b   = gLLPreferredTerrainSecondary   & 31;     // 5 bits
-   int heading_b = gLLExpansionHeading            & 31;     // 5 bits
+   int style_b   = gANWBuildStyle                  & 31;     // 5 bits
+   int walls_b   = gANWWallLevel                   & 15;     // 4 bits
+   int wstrat_b  = gANWWallStrategy                & 7;      // 3 bits
+   int terrp_b   = gANWPreferredTerrainPrimary     & 31;     // 5 bits in 6-bit slot
+   int terrs_b   = gANWPreferredTerrainSecondary   & 31;     // 5 bits
+   int heading_b = gANWExpansionHeading            & 31;     // 5 bits
    int age_b     = kbGetAge()                     & 7;      // 3 bits
    int civ_b     = kbGetCiv()                     & 255;    // 8 bits
 
@@ -1152,15 +1152,15 @@ void llWritePersonalityProbe(int nothing = 0)
 
    // Quantise float biases [0..1] -> uint8 [0..255].  XS truncates float
    // assignment to int, so multiply then assign.
-   int tbias_q8 = gLLTerrainBiasStrength * 255.0;
+   int tbias_q8 = gANWTerrainBiasStrength * 255.0;
    if (tbias_q8 < 0)   tbias_q8 = 0;
    if (tbias_q8 > 255) tbias_q8 = 255;
-   int hbias_q8 = gLLHeadingBiasStrength * 255.0;
+   int hbias_q8 = gANWHeadingBiasStrength * 255.0;
    if (hbias_q8 < 0)   hbias_q8 = 0;
    if (hbias_q8 > 255) hbias_q8 = 255;
    int biasPack = (tbias_q8 << 8) | hbias_q8;
 
-   debugCore("llWritePersonalityProbe: ally=" + allyPack +
+   debugCore("anwWritePersonalityProbe: ally=" + allyPack +
       " enemy=" + enemyPack + " score=" + score_b +
       " secs=" + secs_b + " bias=" + biasPack);
 
@@ -1206,20 +1206,20 @@ void gameOverHandler(int nothing = 0)
    // including lobby leaver replay. Skip emission inside the first 60s
    // and skip when neither win nor loss is flagged — no legitimate match
    // ends that early and parseable gameover needs a real outcome.
-   // Suppression gate: skip while the AI is still mid-load. gLLPostInitFired
+   // Suppression gate: skip while the AI is still mid-load. gANWPostInitFired
    // flips true at the tail of postInit(), so any earlier engine-driven
    // self-fire (lobby load, identity still stale) gets dropped here.
    // The earlier 60s wall-clock guard blocked legitimate observe<60s smoke
    // runs from ever flushing probes — this gate is identity-correct without
    // that side effect.
-   if (gLLPostInitFired == false)
+   if (gANWPostInitFired == false)
    {
       debugCore("gameOverHandler: suppressing pre-postInit fire (t=" +
          xsGetTime() + " lost=" + kbHasPlayerLost(cMyID) +
          " score=" + aiGetScore(cMyID) + ")");
       return;
    }
-   llProbe("meta.gameover",
+   anwProbe("meta.gameover",
       "lost=" + kbHasPlayerLost(cMyID) +
       " finalAge=" + kbGetAge() +
       " score=" + aiGetScore(cMyID));
@@ -1311,27 +1311,27 @@ void gameOverHandler(int nothing = 0)
    // Encoding: every field is a float stored under a descriptive key.
    // The parser reads the <uservars> block of the SELF player's personality
    // file (keyed by "Flessenkemper" or whoever the human opponent is).
-   // Keys prefixed "ll_" are Legendary Leaders probe fields.
+   // Keys prefixed "anw_" are A New World probe fields.
    //
    // Fields written:
-   //   ll_pid          – cMyID (player slot 2..8 for AI)
-   //   ll_style        – gLLBuildStyle (int 0..14)
-   //   ll_walls        – gLLWallLevel (int)
-   //   ll_wall_strat   – gLLWallStrategy (int 0..5)
-   //   ll_terr_p       – gLLPreferredTerrainPrimary (int)
-   //   ll_terr_s       – gLLPreferredTerrainSecondary (int)
-   //   ll_terr_bias    – gLLTerrainBiasStrength (float)
-   //   ll_heading      – gLLExpansionHeading (int)
-   //   ll_head_bias    – gLLHeadingBiasStrength (float)
-   //   ll_civ          – kbGetCiv() (engine civ ID int)
-   //   ll_age          – kbGetAge() at game end
-   //   ll_score        – aiGetScore(cMyID) at game end
-   //   ll_match_ms     – xsGetTime() at game end (ms)
+   //anw_pid          – cMyID (player slot 2..8 for AI)
+   //   anw_style        – gANWBuildStyle (int 0..14)
+   //   anw_walls        – gANWWallLevel (int)
+   //   anw_wall_strat   – gANWWallStrategy (int 0..5)
+   //   anw_terr_p       – gANWPreferredTerrainPrimary (int)
+   //   anw_terr_s       – gANWPreferredTerrainSecondary (int)
+   //   anw_terr_bias    – gANWTerrainBiasStrength (float)
+   //   anw_heading      – gANWExpansionHeading (int)
+   //   anw_head_bias    – gANWHeadingBiasStrength (float)
+   //   anw_civ          – kbGetCiv() (engine civ ID int)
+   //   anw_age          – kbGetAge() at game end
+   //   anw_score        – aiGetScore(cMyID) at game end
+   //   anw_match_ms     – xsGetTime() at game end (ms)
    //
    // NOTE: personality uservars are per-opponent-player.  We write to the
    // first opponent slot so there is always exactly one record per AI per
    // match regardless of how many opponents exist.
-   llWritePersonalityProbe();
+   anwWritePersonalityProbe();
 }
 
 //==============================================================================
@@ -2219,13 +2219,13 @@ void ageUpEventHandler(int planID = -1)
       gAgeUpResearchPlan = -1;
       // event.age_up — pacing-budget probe; records the wall-clock time
       // (ms) at which this AI completed aging up to the new age.
-      llProbe("event.age_up",
+      anwProbe("event.age_up",
          "age=" + kbGetAge() +
          " t=" + xsGetTime());
       // LL-AGED probe — pairs with LL-AGE. Includes full resource + pop
       // snapshot so post-match timelines can chart economic state at each
       // age transition per AI.
-      llProbe("econ.aged",
+      anwProbe("econ.aged",
          "now=" + kbGetAge() +
          " food=" + kbResourceGet(cResourceFood) +
          " wood=" + kbResourceGet(cResourceWood) +
@@ -2706,8 +2706,8 @@ minInterval 5
       xsEnableRule("rescueExplorer");
       xsEnableRule("settlerUpgradeMonitor");
       xsEnableRule("healerMonitor");
-      xsEnableRule("legendaryEliteGuardMonitor");
-      xsEnableRule("legendaryAiRoutMonitor");
+      xsEnableRule("anwEliteGuardMonitor");
+      xsEnableRule("anwAiRoutMonitor");
 
       if (cRandomMapName == "euitalianwars")
       {
@@ -2749,7 +2749,7 @@ minInterval 10
       // if (gIslandMap == true)
       // {
       //    xsEnableRule("warShipManager");
-      //    llVerboseEcho("Enabling the new Navy Manager.");
+      //    anwVerboseEcho("Enabling the new Navy Manager.");
       // }
 
       // Make sure Germans build settler wagons...
@@ -3037,7 +3037,7 @@ minInterval 10
 	   if (xsIsRuleEnabled("fortManager") == false)
       {
          xsEnableRule("fortManager");
-         llVerboseEcho("Enabling the new Fort Manager.");
+         anwVerboseEcho("Enabling the new Fort Manager.");
       }
       // Maintain the maximum number of forts...
       if (civIsEuropean() == true) {
@@ -3059,7 +3059,7 @@ minInterval 10
          (cRandomMapName == "eumediterraneanlarge")) {
             xsEnableRule("transportMilitaryNaval");
          }
-         llVerboseEcho("Enabling the new Island Invasion logic.");
+         anwVerboseEcho("Enabling the new Island Invasion logic.");
       }
 
       if (civIsEuropean() == true)

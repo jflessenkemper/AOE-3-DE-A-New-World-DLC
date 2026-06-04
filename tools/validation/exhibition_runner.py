@@ -8,7 +8,7 @@ This is an unattended orchestrator that:
 4. Forces game exit after --match-seconds (default 180s)
 5. Parses log delta via validate_runtime_logs.py and checks for:
    - Leader name appears in log at least once
-   - 'Legendary Leaders' mentioned in deck activation
+   - 'A New World' mentioned in deck activation
    - At least one ai_rout_* suite fires (escort plan / ransom)
 6. Records per-civ result (pass/fail per check)
 7. Writes markdown report to tools/validation/exhibition_report.md
@@ -65,6 +65,11 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_LOG_PATH = Path.home() / ".steam/steam/steamapps/compatdata/933110/pfx/drive_c/users/steamuser/Games/Age of Empires 3 DE/Logs/Age3Log.txt"
 ALTERNATE_LOG_PATH = Path.home() / ".local/share/Steam/steamapps/compatdata/933110/pfx/drive_c/users/steamuser/Games/Age of Empires 3 DE/Logs/Age3Log.txt"
 AOEIII_STEAM_ID = "933110"
+
+# Unix socket exposed by AOE3DEHarness when running with --backend headless.
+# Steam's localconfig.vdf launch options wrap the game in AOE3DEHarness so
+# `steam -applaunch 933110` always creates this socket automatically.
+HARNESS_SOCKET_PATH = Path("/tmp/AOE3DEHarness.sock")
 
 # Random map used for all exhibition matches.  Switch back to the scenario
 # by passing --use-scenario to the CLI (see run_one_match / _scenario_mode).
@@ -361,7 +366,7 @@ def snapshot_log_delta(log_path: Path) -> str:
 def harvest_personality_probes(entry: dict, match_window_s: int = 600,
                                  result: Optional["MatchResult"] = None) -> str:
     """Read ll_* uservars from .personality files updated during the match window
-    and emit synthetic [LLP v=2 ...] lines compatible with parse_match_log().
+    and emit synthetic [ANWP v=2 ...] lines compatible with parse_match_log().
 
     Returns a string blob that can be appended to log_delta so leader_found /
     deck_loaded / wall_strategy checks have signal even when Age3Log lacks
@@ -415,14 +420,14 @@ def harvest_personality_probes(entry: dict, match_window_s: int = 600,
         if test_civ_wall_strategy >= 0:
             result.observed_wall_strategy = test_civ_wall_strategy
 
-    # Synthetic 'Legendary Leaders' marker — proves the LL deck/AI harness
+    # Synthetic 'A New World' marker — proves the LL deck/AI harness
     # initialised at least once during the match. Any LL-tagged probe
     # implies the deck loaded; we emit the literal phrase parse_match_log
     # already greps for.
     if len(lines) > 1:
-        lines.append("[HARVEST] Legendary Leaders deck initialised "
+        lines.append("[HARVEST] A New World deck initialised "
                      f"(synth) — {len(lines)-1} probe lines from "
-                     f"{len([l for l in lines if l.startswith('[LLP')])//2} AIs")
+                     f"{len([l for l in lines if l.startswith('[ANWP')])//2} AIs")
 
     if not saw_expected_leader and expected_leader and expected_leader != "unresolved":
         # P1 (the test civ) is human — never writes a personality file. The
@@ -439,7 +444,7 @@ def harvest_personality_probes(entry: dict, match_window_s: int = 600,
             # Add a synthetic line that includes the expected token so
             # the substring grep in parse_match_log succeeds.
             lines.append(
-                f"[LLP v=2 t=0 p=1 civ=test ldr={expected_leader} "
+                f"[ANWP v=2 t=0 p=1 civ=test ldr={expected_leader} "
                 f"tag=meta.test_civ_marker] p1_human=1"
             )
 
@@ -521,6 +526,33 @@ def launch_game_steam_url(scenario: str = "ANEWWORLD") -> bool:
         return False
 
 
+def launch_game_headless_harness() -> bool:
+    """Launch AoE3 DE through the configured AOE3DEHarness headless wrapper.
+
+    Uses ``steam -applaunch 933110`` which picks up Steam's localconfig.vdf
+    launch options.  Those options already wrap the game binary in
+    ``AOE3DEHarness ... --backend headless ... -- %command%``, so this is the
+    ONLY launch path that (a) satisfies the DRM ticket requirement and (b)
+    creates the headless harness compositor at HARNESS_SOCKET_PATH.
+
+    Direct ``proton run AoE3DE_s.exe`` bypasses both DRM and the harness and
+    will NOT work in headless mode.
+
+    Returns True if the subprocess was started without error (does NOT wait
+    for the game to be ready — callers must poll the socket separately).
+    """
+    clear_recent_files()
+    try:
+        subprocess.Popen(
+            ["steam", "-applaunch", AOEIII_STEAM_ID],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        return True
+    except Exception:
+        return False
+
+
 def launch_game_proton(exe: Path, scenario: str = "ANEWWORLD") -> bool:
     """Try to launch via proton. Returns True if process started."""
     # Clear RecentFilesy.xml before launch — see clear_recent_files() docstring.
@@ -555,6 +587,20 @@ def kill_game() -> None:
                            stderr=subprocess.DEVNULL)
         except Exception:
             pass
+    # Also kill any leftover AOE3DEHarness compositor process so a stale
+    # headless harness socket doesn't confuse the next launch's poll.
+    # We match only the specific binary name to avoid killing unrelated processes.
+    try:
+        subprocess.run(["pkill", "-9", "-x", "AOE3DEHarness"], timeout=3,
+                       stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+    # Remove stale socket file so the next launch's poll starts clean.
+    try:
+        HARNESS_SOCKET_PATH.unlink(missing_ok=True)
+    except Exception:
+        pass
     # Give the reaper/proton/gamescope tree ~5s to fully exit.
     time.sleep(5)
 
@@ -583,8 +629,8 @@ def parse_match_log(log_delta: str, entry: dict) -> MatchResult:
         or engine_leader_token.lower() in log_delta.lower()
     )
 
-    # Check 2: Legendary Leaders deck activation
-    result.deck_loaded = "Legendary Leaders" in log_delta
+    # Check 2: A New World deck activation
+    result.deck_loaded = "A New World" in log_delta
 
     # Check 3: Escort plan created / Ransom queued
     result.escort_plan_fired = "created explorer escort plan" in log_delta
@@ -620,9 +666,9 @@ def validate_match(log_delta: str, entry: dict,
             # is actually routing to Age3Log.
             log_has_xs_output = any(
                 m in text for m in (
-                    "[LLP v=2",
+                    "[ANWP v=2",
                     "LL-PROBE",
-                    "Legendary Leaders",
+                    "A New World",
                     "ai-rout-start",
                     "explorer escort plan",
                 )
@@ -797,7 +843,9 @@ def return_to_main_menu_or_kill() -> bool:
 def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
                   manual_launch: bool = False,
                   capture_art: bool = True,
-                  first_match: bool = False) -> MatchResult:
+                  first_match: bool = False,
+                  postgame_dwell_seconds: int = 0,
+                  opponent_override: Optional[list[str]] = None) -> MatchResult:
     """Run one exhibition match for a single ANW roster entry. Return result.
 
     Art capture flow (when capture_art=True):
@@ -867,7 +915,7 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
             # when click_skirmish() fired, so click_play landed on a
             # malformed lobby state and the engine bailed straight to
             # postgame. Cost: ~95s cold-relaunch per match (~71 min for
-            # the 46-civ matrix). Worth it for deterministic state. The
+            # the 40-civ matrix). Worth it for deterministic state. The
             # first_match flag is now effectively ignored — kept for
             # compatibility with manual-launch path.
             if drv.is_running():
@@ -877,29 +925,65 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
                 kill_game()
                 time.sleep(2)
 
-            exe = find_aoe3_exe()
-            launched = False
-            if exe:
-                launched = launch_game_proton(exe)
+            # ---- Headless harness launch via steam -applaunch ----------------
+            # `steam -applaunch 933110` honours Steam's localconfig.vdf launch
+            # options which wrap the game binary in AOE3DEHarness with
+            # --backend headless and expose the control socket at
+            # HARNESS_SOCKET_PATH.  This is the ONLY DRM-safe headless path.
+            # Direct `proton run` bypasses DRM ("Primary child shut down!")
+            # AND does not start the harness compositor.
+            launched = launch_game_headless_harness()
             if not launched:
+                # Windowed fallback (no harness socket; input falls back to
+                # xdotool which requires an X window — kept for non-headless use).
                 launched = launch_game_steam_url()
             if not launched:
                 result.error = "Could not launch game; use --manual-launch"
                 return result
 
-            # Poll until process is alive (up to 120s) before proceeding.
-            # Process detection alone is not enough — we then poll the
-            # engine log for the main-menu-ready marker.
-            print("  [LAUNCH] Waiting for game process (up to 120s)...", flush=True)
+            # Poll until the harness socket appears AND ready=1 (up to 120s).
+            # The socket is created when the harness compositor starts; ready=1
+            # means the inner game window has committed its first frame.
+            # We also accept fallback: process alive even without a socket (e.g.
+            # windowed mode where no harness is present).
+            from tools.aoe3_harness.harness_client import HarnessClient, HarnessError
+            from tools.aoe3_automation.lobby_driver import set_harness_backend
+
+            harness_client: Optional[HarnessClient] = None
+            print("  [LAUNCH] Waiting for harness socket / game process (up to 120s)...",
+                  flush=True)
             deadline = time.time() + 120
+            socket_appeared = False
             while time.time() < deadline:
-                if drv.is_running():
-                    print("  [LAUNCH] game process detected", flush=True)
+                if not socket_appeared and HARNESS_SOCKET_PATH.exists():
+                    socket_appeared = True
+                    print("  [LAUNCH] harness socket appeared", flush=True)
+                if socket_appeared:
+                    try:
+                        client = HarnessClient(str(HARNESS_SOCKET_PATH))
+                        client.connect(timeout=5)
+                        harness_client = client
+                        print("  [LAUNCH] harness socket connected", flush=True)
+                        break
+                    except HarnessError:
+                        pass  # socket exists but harness not yet ready
+                elif drv.is_running():
+                    # Windowed fallback — no harness socket, game process appeared
+                    print("  [LAUNCH] game process detected (no harness socket)", flush=True)
                     break
                 time.sleep(5)
             else:
-                result.error = "Game process never appeared within 120s"
+                result.error = "Game process / harness socket never appeared within 120s"
                 return result
+
+            # Wire harness backend so lobby_driver routes through the socket.
+            # Must happen per-match because each relaunch creates a NEW socket.
+            if harness_client is not None:
+                set_harness_backend(harness_client)
+                print("  [LAUNCH] harness backend wired to lobby_driver", flush=True)
+            else:
+                # No harness — clear any stale backend from a previous match.
+                set_harness_backend(None)
 
             # Wait for main menu to actually become click-responsive.
             # Cold boot takes ~95 s on this hardware; we use a log-based
@@ -973,7 +1057,14 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
             # 7 AI slots get ANW civs — never let the engine assign random
             # base-game civs into empty slots. The slate spans all 6 smart-wall
             # strategies so every wall code path is exercised every match.
-            opponent_slate = _build_opponent_slate(engine_civ_token)
+            if opponent_override is not None:
+                # Pad to 7 slots (repeat last) or truncate to 7.
+                slate_raw = list(opponent_override)
+                if len(slate_raw) < 7:
+                    slate_raw += [slate_raw[-1]] * (7 - len(slate_raw))
+                opponent_slate = slate_raw[:7]
+            else:
+                opponent_slate = _build_opponent_slate(engine_civ_token)
             print(f"  [LOBBY] Opponent slate: {', '.join(opponent_slate)}", flush=True)
             opp_results: list[dict] = []
             for slot_idx, opp_token in enumerate(opponent_slate, start=1):
@@ -1073,6 +1164,16 @@ def run_one_match(entry: dict, log_path: Path, match_seconds: int = 180,
         if capture_art:
             time.sleep(2.0)
             capture_art_surfaces(entry, phase="postgame", art_dir=art_dir)
+
+        # ---- Postgame dwell: let the engine flush .personality files --------
+        # The engine's gameOverHandler writes personality probes via
+        # aiPersonalitySetPlayerUserVar + llWritePersonalityProbe. Killing the
+        # process immediately after resign truncates the flush. Dwell > 0 gives
+        # the engine time to complete the write before teardown.
+        if postgame_dwell_seconds > 0:
+            print(f"  [DWELL] Sleeping {postgame_dwell_seconds}s for personality flush...",
+                  flush=True)
+            time.sleep(postgame_dwell_seconds)
 
         # ---- Return to main menu (cheap path, kill fallback) ----------------
         if not manual_launch:
@@ -1400,7 +1501,7 @@ def write_coverage_report(roster: list[dict], state: dict,
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Exhibition-match sweep: test all 46 ANW civs in 1v1 AI matches and report pass/fail.",
+        description="Exhibition-match sweep: test all 40 ANW civs in 1v1 AI matches and report pass/fail.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -1501,6 +1602,29 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
             "flag only suppresses the skip-message for quieter output."
         ),
     )
+    parser.add_argument(
+        "--postgame-dwell-seconds",
+        type=int,
+        default=0,
+        help=(
+            "Seconds to wait after resign and before game teardown (default: 0). "
+            "Use 30-60 to let the engine flush .personality probe files via "
+            "gameOverHandler before the process is killed."
+        ),
+    )
+    parser.add_argument(
+        "--opponents",
+        type=str,
+        default=None,
+        help=(
+            "Comma-separated list of ANW engine civ tokens to use as P2..P8 "
+            "opponents, overriding the auto-generated slate. "
+            "Example: --opponents \"ANWBarbary,ANWBritish,ANWDutch,ANWPortuguese,"
+            "ANWSouthAfricans,ANWGermans,ANWChinese\". "
+            "Fewer than 7 tokens are padded by repeating the last; more than 7 "
+            "are truncated. When absent, the default collision-avoiding slate is used."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -1521,6 +1645,16 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
         print(f"WARNING: {len(unresolved)} entries could not be resolved and will be skipped:")
         for u in unresolved:
             print(f"  UNRESOLVED: {u['data_name']}")
+
+    # Parse --opponents into a list (None means use auto-slate).
+    opponent_override: Optional[list[str]] = None
+    if args.opponents:
+        opponent_override = [t.strip() for t in args.opponents.split(",") if t.strip()]
+        if not opponent_override:
+            print("ERROR: --opponents produced an empty list after parsing.")
+            return 1
+        print(f"  [OPPONENTS] Custom slate ({len(opponent_override)} tokens): "
+              f"{', '.join(opponent_override)}")
 
     if args.only:
         only_set = set(args.only)
@@ -1624,6 +1758,8 @@ e.g. "Aztecs Montezuma", "Argentines San Martin Revolution".
                     entry, log_path, args.match_seconds, args.manual_launch,
                     capture_art=capture_art,
                     first_match=(i == 1 and attempt == 1),
+                    postgame_dwell_seconds=args.postgame_dwell_seconds,
+                    opponent_override=opponent_override,
                 )
                 if result.is_pass:
                     print("✅ PASS")

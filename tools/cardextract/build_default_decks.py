@@ -8,7 +8,7 @@ localisation tokens (`$$41682$$`, `$$71332$$Beginner`).
 This script:
   • pads every default deck up to TARGET_SIZE cards by drawing additional cards
     from the civ's available pool in `data/decks.json` (skipping duplicates),
-  • renames the deck to "Legendary Leaders" so we can verify in-game that the
+  • renames the deck to "A New World" so we can verify in-game that the
     AI is in fact using our deck,
   • wraps the rewritten deck in `<!-- LL-DEFAULT-DECK-START -->` /
     `<!-- LL-DEFAULT-DECK-END -->` markers so re-runs are idempotent.
@@ -28,7 +28,7 @@ DATA = ROOT / "data"
 DECKS_JSON = DATA / "decks.json"
 
 TARGET_SIZE = 25
-DECK_NAME = "Legendary Leaders"
+DECK_NAME = "A New World"
 
 # decks.json civ key → anwhomecity*.xml stem
 CIV_FILE = {

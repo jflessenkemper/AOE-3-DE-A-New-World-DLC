@@ -28,29 +28,29 @@ bool gSuleimanRulesEnabled = false;
 
 void initLeaderSuleiman(void)
 {
-   llVerboseEcho("A New World: activating Suleiman the Magnificent personality.");
+   anwVerboseEcho("A New World: activating Suleiman the Magnificent personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = -0.15;            // Ottoman vill auto-spawn lets us rush less hard.
    btOffenseDefense = 0.45;
    btBiasTrade = 0.4;             // Imperial trade chains.
    btBiasNative = -0.2;
-   llSetMilitaryFocus(0.65, 0.25, 0.55);  // Janissary + Abus Gun axis.
+   anwSetMilitaryFocus(0.65, 0.25, 0.55);  // Janissary + Abus Gun axis.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseSiegeTrainConcentrationStyle(3);
-   gLLEconomicDistanceMultiplier = 1.05;
-   llSetBuildStrongpointProfile(2, 2, 2, true);
+   anwUseSiegeTrainConcentrationStyle(3);
+   gANWEconomicDistanceMultiplier = 1.05;
+   anwSetBuildStrongpointProfile(2, 2, 2, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.8, 0.2, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.8, 0.2, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 6;               // Topkapi-style fortification.
    cvMaxArmyPop = 115;
 
    gSuleimanRulesEnabled = true;
-   llLogLeaderState("Suleiman initialized");
-   llProbe("meta.leader_init", "leader=suleiman");
+   anwLogLeaderState("Suleiman initialized");
+   anwProbe("meta.leader_init", "leader=suleiman");
 }
 
 //------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ rule suleimanTopkapiBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("suleimanTopkapiBoom");
+   anwLogRuleTick("suleimanTopkapiBoom");
    if (gSuleimanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -84,7 +84,7 @@ rule suleimanJanissaryMuster
 inactive
 minInterval 50
 {
-   llLogRuleTick("suleimanJanissaryMuster");
+   anwLogRuleTick("suleimanJanissaryMuster");
    if (gSuleimanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -98,7 +98,7 @@ minInterval 50
       btBiasInf = 0.85;            // Janissary mass.
       btBiasCav = 0.4;             // Spahi wing.
       btBiasArt = 0.0;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -110,7 +110,7 @@ rule suleimanGunpowderEmpire
 inactive
 minInterval 55
 {
-   llLogRuleTick("suleimanGunpowderEmpire");
+   anwLogRuleTick("suleimanGunpowderEmpire");
    if (gSuleimanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -136,7 +136,7 @@ rule suleimanSublimePorteCampaign
 inactive
 minInterval 70
 {
-   llLogRuleTick("suleimanSublimePorteCampaign");
+   anwLogRuleTick("suleimanSublimePorteCampaign");
    if (gSuleimanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -150,7 +150,7 @@ minInterval 70
       btBiasCav = 0.55;
       btBiasArt = 0.85;            // Highest artillery share of any standard nation.
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -162,7 +162,7 @@ rule suleimanCaliphateHost
 inactive
 minInterval 90
 {
-   llLogRuleTick("suleimanCaliphateHost");
+   anwLogRuleTick("suleimanCaliphateHost");
    if (gSuleimanRulesEnabled == false)
    {
       xsDisableSelf();

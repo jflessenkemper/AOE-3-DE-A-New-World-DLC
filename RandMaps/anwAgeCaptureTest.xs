@@ -79,6 +79,19 @@ void main(void)
 
     chooseMercs();
 
+    // Register native civs so the engine shows correct trading UI labels.
+    if (rmAllocateSubCivs(7) == true)
+    {
+        rmSetSubCiv(0, "Inca");
+        rmSetSubCiv(1, "Mapuche");
+        rmSetSubCiv(2, "Zapotec");
+        rmSetSubCiv(3, "Carib");
+        rmSetSubCiv(4, "Tupi");
+        rmSetSubCiv(5, "Klamath");
+        rmSetSubCiv(6, "Inca");
+    }
+
+
     // Classes
     int classPlayer       = rmDefineClass("player");
     int classCliff        = rmDefineClass("classCliff");
@@ -640,6 +653,7 @@ void main(void)
     // Start at i=2 so only the 7 AI compartments get resource
     // placement. cNumberNonGaiaPlayers is still the upper bound.
     int loopMax = cNumberNonGaiaPlayers + 1;
+    rmClearClosestPointConstraints();
     for (i = 2; < loopMax)
     {
         rmPlaceObjectDefAtLoc(TCID, i, rmPlayerLocXFraction(i), rmPlayerLocZFraction(i));
@@ -662,6 +676,21 @@ void main(void)
     // island (rmPlayerLocXFraction(1) == 0.500, rmPlayerLocZFraction(1) == 0.500).
     rmPlaceObjectDefAtLoc(TCID, 1, rmPlayerLocXFraction(1), rmPlayerLocZFraction(1));
     rmPlaceObjectDefAtLoc(startingUnits, 1, rmPlayerLocXFraction(1), rmPlayerLocZFraction(1));
+
+    // P1 military buildings for complete mod surface testing
+    // ArtilleryFoundry proto not in proto.xml; skipped. ArtilleryDepot exists but name
+    // was not in the plan — needs live-test confirmation before adding.
+    int p1BarracksID = rmCreateObjectDef("p1 barracks");
+    rmAddObjectDefItem(p1BarracksID, "Barracks", 1, 0.0);
+    rmSetObjectDefMinDistance(p1BarracksID, 10.0);
+    rmSetObjectDefMaxDistance(p1BarracksID, 20.0);
+    rmPlaceObjectDefAtLoc(p1BarracksID, 1, 0.500, 0.500);
+
+    int p1StableID = rmCreateObjectDef("p1 stable");
+    rmAddObjectDefItem(p1StableID, "Stable", 1, 0.0);
+    rmSetObjectDefMinDistance(p1StableID, 10.0);
+    rmSetObjectDefMaxDistance(p1StableID, 20.0);
+    rmPlaceObjectDefAtLoc(p1StableID, 1, 0.500, 0.500);
 
     rmSetStatusText("", 0.55);
 
@@ -748,7 +777,8 @@ void main(void)
     rmSetObjectDefMinDistance(seaFishID, 0.0);
     rmSetObjectDefMaxDistance(seaFishID, rmXFractionToMeters(0.20));
     rmAddObjectDefConstraint(seaFishID, avoidFish);
-    rmPlaceObjectDefAtLoc(seaFishID, 0, 0.5, 0.5, 18);
+    rmAddObjectDefConstraint(seaFishID, stayCentralSea);
+    rmPlaceObjectDefAtLoc(seaFishID, 0, 0.5, 0.5, 10);
 
     int seaWhaleID = rmCreateObjectDef("sea whale");
     rmAddObjectDefItem(seaWhaleID, "MinkeWhale", 1, 0.0);
@@ -780,6 +810,7 @@ void main(void)
     rmAddObjectDefItem(bayFishID, "FishSalmon", 5, 8.0);
     rmSetObjectDefMinDistance(bayFishID, 0.0);
     rmSetObjectDefMaxDistance(bayFishID, 12.0);
+    rmAddObjectDefConstraint(bayFishID, avoidImpassableLand);
     rmPlaceObjectDefAtLoc(bayFishID, 0, 0.820, 0.500);
     rmPlaceObjectDefAtLoc(bayFishID, 0, 0.700, 0.750);
     rmPlaceObjectDefAtLoc(bayFishID, 0, 0.430, 0.812);
@@ -793,6 +824,7 @@ void main(void)
     rmSetObjectDefMinDistance(bayWhaleID, 0.0);
     rmSetObjectDefMaxDistance(bayWhaleID, 10.0);
     rmAddObjectDefConstraint(bayWhaleID, avoidWhale);
+    rmAddObjectDefConstraint(bayWhaleID, avoidImpassableLand);
     rmPlaceObjectDefAtLoc(bayWhaleID, 0, 0.820, 0.500);
     rmPlaceObjectDefAtLoc(bayWhaleID, 0, 0.700, 0.750);
     rmPlaceObjectDefAtLoc(bayWhaleID, 0, 0.430, 0.812);
@@ -1082,7 +1114,7 @@ void main(void)
         if (rmBuildArea(forestID) == false)
         {
             failCount++;
-            if (failCount == 8)
+            if (failCount == 5)
                 break;
         }
         else
@@ -1368,9 +1400,9 @@ void main(void)
     rmSetTriggerPriority(4);
     rmSetTriggerActive(true);
     rmSetTriggerRunImmediately(true);
-    rmSetTriggerLoop(false);
+    rmSetTriggerLoop(true);
     rmAddTriggerCondition("Timer");
-    rmSetTriggerConditionParamInt("Param1", 3, false);
+    rmSetTriggerConditionParamInt("Param1", 30, false);
     rmAddTriggerEffect("Grant Resources");
     rmSetTriggerEffectParamInt("PlayerID", 1, false);
     rmSetTriggerEffectParam("ResName", "Food", false);

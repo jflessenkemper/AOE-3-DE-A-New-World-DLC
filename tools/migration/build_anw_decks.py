@@ -1,4 +1,4 @@
-"""Phase 5 of the ANW migration: merge decks_standard.json + decks_legendary.json
+"""Phase 5 of the ANW migration: merge decks_standard.json + decks_anw_themed.json
 into a single `decks_anw.json` keyed by ANW civ token.
 
 Both inputs have the same shape — an outer dict keyed by civ identifier, with
@@ -12,7 +12,7 @@ After the merge:
   decks_anw.json["ANWBritish"]      = decks_standard.json["British"]
   decks_anw.json["ANWMexicans"]     = decks_standard.json["MexicansStd"]
   decks_anw.json["ANWUSA"]          = decks_standard.json["UnitedStates"]
-  decks_anw.json["ANWBarbary"]      = decks_legendary.json["anwhomecitybarbary"]
+  decks_anw.json["ANWBarbary"]      = decks_anw_themed.json["anwhomecitybarbary"]
   ... (48 entries total)
 
 Card IDs inside each deck are unchanged (cards.json keys, civ-agnostic).
@@ -37,7 +37,7 @@ sys.path.insert(0, str(REPO))
 from tools.migration.anw_token_map import iter_anw_civs  # noqa: E402
 
 DECKS_STD = REPO / "data" / "decks_standard.json"
-DECKS_LEG = REPO / "data" / "decks_legendary.json"
+DECKS_LEG = REPO / "data" / "decks_anw_themed.json"
 DECKS_OUT = REPO / "data" / "decks_anw.json"
 
 
@@ -78,7 +78,7 @@ def merge() -> tuple[dict, list[str]]:
 
         out[civ.anw_token] = src_dict[src_key]
 
-    # Surface any decks_standard / decks_legendary keys that we didn't claim —
+    # Surface any decks_standard / decks_anw_themed keys that we didn't claim —
     # those would be silently dropped by the merge.
     claimed_std = {_std_deck_key(c.slug) for c in iter_anw_civs() if not c.is_revolution}
     claimed_leg = {c.old_homecity_stem for c in iter_anw_civs() if c.is_revolution}
@@ -87,7 +87,7 @@ def merge() -> tuple[dict, list[str]]:
     for k in orphan_std:
         warnings.append(f"orphan in decks_standard.json (no ANW slug claims it): {k!r}")
     for k in orphan_leg:
-        warnings.append(f"orphan in decks_legendary.json (no ANW slug claims it): {k!r}")
+        warnings.append(f"orphan in decks_anw_themed.json (no ANW slug claims it): {k!r}")
 
     return out, warnings
 

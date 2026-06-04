@@ -6,7 +6,7 @@ Reads:
   2. reference_matrix.json (the per-civ expected-behavior spec)
 
 Emits a per-civ pass/warn/fail report covering the assertion categories defined
-in the LL playstyle spec and the [LLP v=2] probe taxonomy:
+in the LL playstyle spec and the [ANWP v=2] probe taxonomy:
 
   Milestones:
     - milestone.first_dock         (atMs)
@@ -629,7 +629,7 @@ def print_report(report: dict[str, Any]) -> None:
     print(f"Civ verdicts:      {report['civ_verdict_counts']}")
     print()
     if not report["per_civ"]:
-        print("(no probes found — rerun with cLLReplayProbes=true and a real match)")
+        print("(no probes found — rerun with cANWReplayProbes=true and a real match)")
         return
     for civ, civ_report in sorted(report["per_civ"].items()):
         v = civ_report["verdict"]

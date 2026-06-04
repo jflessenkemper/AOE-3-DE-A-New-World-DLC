@@ -1,4 +1,4 @@
-"""Curate a thematically-coherent 25-card 'Legendary Leaders' deck for every
+"""Curate a thematically-coherent 25-card 'A New World' deck for every
 standard *and* revolution civ.
 
 Replaces the dumb age-padded pickers in build_default_decks.py and
@@ -17,7 +17,7 @@ any standard-civ XML we haven't materialized yet.
 
 Writes:
   • data/<homecity-basename>.xml       (the override the AI loads)
-  • data/decks_legendary.json          (civ_id → {age_str → [card_names]})
+  • data/decks_anw_themed.json          (civ_id → {age_str → [card_names]})
   • data/decks_standard.json           (mirror, kept for inject_standard_decks)
 """
 from __future__ import annotations
@@ -42,7 +42,7 @@ DATA_BAR = GAME / "Data" / "Data.bar"
 DATA_OUT = REPO / "data"
 
 TARGET_SIZE = 25
-DECK_NAME = "Legendary Leaders"
+DECK_NAME = "A New World"
 
 # A floor on how many cards from each age to pick when possible. Real pools
 # don't always have age-4 cards so we'll fall through if the bucket is empty.
@@ -319,11 +319,11 @@ def main() -> int:
         print(f"  {civ_id:38s} {len(pool):5d}  {len(chosen):4d}  "
               f"{'/'.join(bins)}")
 
-    (DATA_OUT / "decks_legendary.json").write_text(
+    (DATA_OUT / "decks_anw_themed.json").write_text(
         json.dumps(summary_legendary, indent=2, sort_keys=True), encoding="utf-8")
     (DATA_OUT / "decks_standard.json").write_text(
         json.dumps(summary_standard, indent=2, sort_keys=True), encoding="utf-8")
-    print(f"\nwrote data/decks_legendary.json ({len(summary_legendary)} civs)")
+    print(f"\nwrote data/decks_anw_themed.json ({len(summary_legendary)} civs)")
     print(f"wrote data/decks_standard.json   ({len(summary_standard)} civs)")
     if warnings:
         print(f"\n{len(warnings)} warnings (must_include cards not in pool):")

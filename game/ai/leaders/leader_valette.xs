@@ -26,21 +26,21 @@ bool gValetteRulesEnabled = false;
 
 void initLeaderValette(void)
 {
-   llVerboseEcho("A New World: activating Jean Parisot de Valette personality.");
+   anwVerboseEcho("A New World: activating Jean Parisot de Valette personality.");
 
-   llSetDefensivePersonality();
+   anwSetDefensivePersonality();
    btRushBoom = -0.45;            // Hard boom; the bastions come first.
    btOffenseDefense = -0.35;      // Defensive doctrine of the Order.
    btBiasTrade = 0.2;
    btBiasNative = -0.4;           // Order and regulars only.
-   llSetMilitaryFocus(0.85, -0.4, 0.45);
+   anwSetMilitaryFocus(0.85, -0.4, 0.45);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseHighlandCitadelStyle(5);
-   gLLMilitaryDistanceMultiplier = 0.75;  // Great Siege of Malta bastion concentration — pull barracks tight to the keep; firmly defensive within spec [0.7,1.0].
-   llSetBuildStrongpointProfile(4, 3, 2, false);
+   anwUseHighlandCitadelStyle(5);
+   gANWMilitaryDistanceMultiplier = 0.75;  // Great Siege of Malta bastion concentration — pull barracks tight to the keep; firmly defensive within spec [0.7,1.0].
+   anwSetBuildStrongpointProfile(4, 3, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.9, 0.1, 2, 5.0);
+   anwSetLeaderTacticalDoctrine(0.9, 0.1, 2, 5.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 10;              // Maximum bastion network.
@@ -50,8 +50,8 @@ void initLeaderValette(void)
    cvDefenseReflexRadiusPassive = 35.0;
 
    gValetteRulesEnabled = true;
-   llLogLeaderState("Valette initialized");
-   llProbe("meta.leader_init", "leader=jean");
+   anwLogLeaderState("Valette initialized");
+   anwProbe("meta.leader_init", "leader=jean");
 }
 
 //------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ rule valetteBastionPlan
 inactive
 minInterval 60
 {
-   llLogRuleTick("valetteBastionPlan");
+   anwLogRuleTick("valetteBastionPlan");
    if (gValetteRulesEnabled == false)
    {
       xsDisableSelf();
@@ -84,7 +84,7 @@ rule valettePikemanBastion
 inactive
 minInterval 50
 {
-   llLogRuleTick("valettePikemanBastion");
+   anwLogRuleTick("valettePikemanBastion");
    if (gValetteRulesEnabled == false)
    {
       xsDisableSelf();
@@ -110,7 +110,7 @@ rule valetteHospitallerLine
 inactive
 minInterval 55
 {
-   llLogRuleTick("valetteHospitallerLine");
+   anwLogRuleTick("valetteHospitallerLine");
    if (gValetteRulesEnabled == false)
    {
       xsDisableSelf();
@@ -136,7 +136,7 @@ rule valetteCounterSiegePark
 inactive
 minInterval 70
 {
-   llLogRuleTick("valetteCounterSiegePark");
+   anwLogRuleTick("valetteCounterSiegePark");
    if (gValetteRulesEnabled == false)
    {
       xsDisableSelf();
@@ -149,7 +149,7 @@ minInterval 70
       btBiasInf = 1.0;
       btBiasArt = 0.75;
       cvMaxArmyPop = 140;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -161,7 +161,7 @@ rule valetteOrderSupremacy
 inactive
 minInterval 90
 {
-   llLogRuleTick("valetteOrderSupremacy");
+   anwLogRuleTick("valetteOrderSupremacy");
    if (gValetteRulesEnabled == false)
    {
       xsDisableSelf();

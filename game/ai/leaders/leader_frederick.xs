@@ -28,14 +28,14 @@ bool gFrederickRulesEnabled = false;
 
 void initLeaderFrederick(void)
 {
-   llVerboseEcho("A New World: activating Frederick the Great personality.");
+   anwVerboseEcho("A New World: activating Frederick the Great personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = 0.05;             // Light boom; campaign begins early.
    btOffenseDefense = 0.55;
    btBiasTrade = -0.25;           // Prussia is an army with a country.
    btBiasNative = -0.2;
-   llSetMilitaryFocus(0.6, 0.45, 0.3);  // Inf-cav-art weighted toward cavalry strike.
+   anwSetMilitaryFocus(0.6, 0.45, 0.3);  // Inf-cav-art weighted toward cavalry strike.
 
    // LL-BUILD-STYLE-BEGIN
    // Spec doctrine = Republican Levee (UrbanBarricade walls). Prussian
@@ -43,19 +43,19 @@ void initLeaderFrederick(void)
    // Siege Train one (which is reserved for Suleiman's cannon doctrine).
    // earlyWalls=true honours spec first_wall_before_ms=900000 (Levee default
    // is false for revolutionary mobile civs; Frederick is a static-base civ).
-   llUseRepublicanLeveeStyle(2, true);
-   gLLMilitaryDistanceMultiplier = 0.85;
-   llSetBuildStrongpointProfile(2, 2, 2, true);
+   anwUseRepublicanLeveeStyle(2, true);
+   gANWMilitaryDistanceMultiplier = 0.85;
+   anwSetBuildStrongpointProfile(2, 2, 2, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.74, 0.26, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 115;
 
    gFrederickRulesEnabled = true;
-   llLogLeaderState("Frederick initialized");
-   llProbe("meta.leader_init", "leader=frederick");
+   anwLogLeaderState("Frederick initialized");
+   anwProbe("meta.leader_init", "leader=frederick");
 }
 
 //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ rule frederickKabinettsBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("frederickKabinettsBoom");
+   anwLogRuleTick("frederickKabinettsBoom");
    if (gFrederickRulesEnabled == false)
    {
       xsDisableSelf();
@@ -88,7 +88,7 @@ rule frederickWagonPush
 inactive
 minInterval 50
 {
-   llLogRuleTick("frederickWagonPush");
+   anwLogRuleTick("frederickWagonPush");
    if (gFrederickRulesEnabled == false)
    {
       xsDisableSelf();
@@ -102,7 +102,7 @@ minInterval 50
       btBiasInf = 0.7;
       btBiasCav = 0.45;            // Uhlan and War Wagon early commitment.
       btBiasArt = -0.2;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -114,7 +114,7 @@ rule frederickObliqueOrder
 inactive
 minInterval 55
 {
-   llLogRuleTick("frederickObliqueOrder");
+   anwLogRuleTick("frederickObliqueOrder");
    if (gFrederickRulesEnabled == false)
    {
       xsDisableSelf();
@@ -139,7 +139,7 @@ rule frederickPrussianReformation
 inactive
 minInterval 70
 {
-   llLogRuleTick("frederickPrussianReformation");
+   anwLogRuleTick("frederickPrussianReformation");
    if (gFrederickRulesEnabled == false)
    {
       xsDisableSelf();
@@ -153,7 +153,7 @@ minInterval 70
       btBiasCav = 0.75;
       btBiasArt = 0.65;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -165,7 +165,7 @@ rule frederickHohenzollernShock
 inactive
 minInterval 90
 {
-   llLogRuleTick("frederickHohenzollernShock");
+   anwLogRuleTick("frederickHohenzollernShock");
    if (gFrederickRulesEnabled == false)
    {
       xsDisableSelf();

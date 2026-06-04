@@ -12,7 +12,7 @@ The exhibition runner automates full-mod testing by launching 48 exhibition matc
 
 - Steam is running
 - Age of Empires 3: DE is installed at `~/.local/share/Steam/steamapps/common/Age of Empires 3 DE/`
-- The Legendary Leaders mod is enabled in your mod list
+- The A New World mod is enabled in your mod list
 - Python 3.10+
 
 ### First Run: Dry Run

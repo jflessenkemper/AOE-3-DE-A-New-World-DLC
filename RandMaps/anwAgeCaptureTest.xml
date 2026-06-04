@@ -1,5 +1,5 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<mapinfo details = "700002" displayNameID = "700001" loadDetails="700003" isLargeMap=""
+<mapinfo details = "700012" displayNameID = "700011" loadDetails="700013" isLargeMap=""
     imagepath = "ui\random_map\andes_upper\andes_upper_mini" cannotReplace = "" loadBackground="ui\random_map\andes_upper\andes_upper_map">
     <loadss>ui\random_map\andes_upper\andes_upper_ss_01</loadss>
     <loadss>ui\random_map\andes_upper\andes_upper_ss_02</loadss>

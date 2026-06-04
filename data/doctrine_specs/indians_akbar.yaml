@@ -2,7 +2,7 @@
 # Generated from playstyle_spec.json — do not edit manually; regenerate via tools/gen_doctrine_specs.py
 
 schema_version: 1
-data_name: Indians Akbar
+data_name: Indians Shivaji
 civ_label: Indians
 leader_label: Shivaji Maharaj
 

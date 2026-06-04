@@ -36,30 +36,30 @@ bool gCatherineRulesEnabled = false;
 
 void initLeaderCatherine(void)
 {
-   llVerboseEcho("A New World DLC: activating Ivan the Terrible personality.");
+   anwVerboseEcho("A New World DLC: activating Ivan the Terrible personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = -0.15;            // Slightly earlier army than Catherine's tuning.
    btOffenseDefense = 0.55;       // More openly offensive - Ivan was a conqueror, not an administrator.
    btBiasTrade = 0.2;             // Less mercantile than Catherine; war pays for war.
    btBiasNative = 0.05;           // Sparse - Ivan absorbed Tatar Khanates by sword, not treaty.
-   llSetMilitaryFocus(0.9, 0.45, 0.45);  // Streltsy mass + Oprichnik shock + siege train.
+   anwSetMilitaryFocus(0.9, 0.45, 0.45);  // Streltsy mass + Oprichnik shock + siege train.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseCossackVoiskoStyle(1);
+   anwUseCossackVoiskoStyle(1);
    // Spec override: Russians Ivan the Terrible doctrine — see playstyle_spec.json
-   gLLWallStrategy = cLLWallStrategyFrontierPalisades;
-   llSetBuildStrongpointProfile(2, 2, 3, true);
+   gANWWallStrategy = cANWWallStrategyFrontierPalisades;
+   anwSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 5;
    cvMaxArmyPop = 130;            // Russian mass.
 
    gCatherineRulesEnabled = true;
-   llLogLeaderState("Ivan the Terrible initialized");
-   llProbe("meta.leader_init", "leader=catherine");
+   anwLogLeaderState("Ivan the Terrible initialized");
+   anwProbe("meta.leader_init", "leader=catherine");
 }
 
 //------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ rule catherinePomestnoyeBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("catherinePomestnoyeBoom");
+   anwLogRuleTick("catherinePomestnoyeBoom");
    if (gCatherineRulesEnabled == false)
    {
       xsDisableSelf();
@@ -93,7 +93,7 @@ rule catherineStreltsyBlock
 inactive
 minInterval 50
 {
-   llLogRuleTick("catherineStreltsyBlock");
+   anwLogRuleTick("catherineStreltsyBlock");
    if (gCatherineRulesEnabled == false)
    {
       xsDisableSelf();
@@ -107,7 +107,7 @@ minInterval 50
       btBiasInf = 0.95;            // Block infantry mass.
       btBiasCav = 0.4;             // Cossack hetmans.
       btBiasArt = -0.1;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -119,7 +119,7 @@ rule catherineImperialExpansion
 inactive
 minInterval 55
 {
-   llLogRuleTick("catherineImperialExpansion");
+   anwLogRuleTick("catherineImperialExpansion");
    if (gCatherineRulesEnabled == false)
    {
       xsDisableSelf();
@@ -144,7 +144,7 @@ rule catherineRussoTurkishCampaign
 inactive
 minInterval 70
 {
-   llLogRuleTick("catherineRussoTurkishCampaign");
+   anwLogRuleTick("catherineRussoTurkishCampaign");
    if (gCatherineRulesEnabled == false)
    {
       xsDisableSelf();
@@ -158,7 +158,7 @@ minInterval 70
       btBiasCav = 0.65;
       btBiasArt = 0.7;
       cvMaxArmyPop = 160;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -170,7 +170,7 @@ rule catherineRomanovSupremacy
 inactive
 minInterval 90
 {
-   llLogRuleTick("catherineRomanovSupremacy");
+   anwLogRuleTick("catherineRomanovSupremacy");
    if (gCatherineRulesEnabled == false)
    {
       xsDisableSelf();

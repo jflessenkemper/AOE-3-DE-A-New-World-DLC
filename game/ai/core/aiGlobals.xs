@@ -80,6 +80,44 @@ extern int gLivestockPenUnit = cUnitTypeLivestockPen;
 extern int gMarketUnit = cUnitTypeMarket;
 extern int gDockUnit = cUnitTypeDock;
 
+//==============================================================================
+/*  Runtime-resolved abstract proto-type IDs (moved here from
+    aiLoaderStandard.xs 2026-05-31).
+
+    These MUST be declared before the probe files that reference them
+    (core\aiDoctrineProbes.xs, core\aiStateSnapshot.xs) are parsed. They
+    used to live in aiLoaderStandard.xs *after* `include "aiMain.xs"`, so
+    by the time aiCore.xs -> aiDoctrineProbes.xs was parsed they did not yet
+    exist and the eager function-body parse failed with
+    "gANWAbstractWarShip is not a valid operator" (XS Error 0172), aborting
+    the whole AI compile. aiGlobals.xs is parsed before those probe files
+    (gFortUnit/gDockUnit above are used in aiDoctrineProbes without error),
+    so this is the correct home. The resolver anwResolveAbstractTypes()
+    that assigns these via kbGetProtoUnitID() stays in aiLoaderStandard.xs
+    and runs at preInit(). */
+//==============================================================================
+extern int gANWAbstractWarShip            = -1;
+extern int gANWAbstractStables            = -1;
+extern int gANWAbstractArtilleryFoundry   = -1;
+extern int gANWAbstractWall               = -1;
+extern int gANWAbstractTradingPost        = -1;
+extern int gANWAbstractMonastery          = -1;
+extern int gANWAbstractInfantry           = -1;
+extern int gANWAbstractCavalry            = -1;
+extern int gANWAbstractArtillery          = -1;
+extern int gANWAbstractNativeWarrior      = -1;
+extern int gANWMercenary                  = -1;
+extern int gANWHero                       = -1;
+
+// Test-harness auto-resign threshold (game-ms). 0 = disabled (released
+// builds). The matrix/test tooling sed-rewrites this literal before a test
+// sync and resets it to 0 afterwards; see tools/aoe3_automation/matrix_runner.py
+// (--auto-resign-ms) and tools/aoe3_automation/test_mode_xs.py. MUST stay
+// declared here (parsed early, before aiLoaderStandard.xs's postInit body
+// references it) or the AI compile aborts with XS Error 0172. Re-homed here
+// 2026-05-31 after a refactor dropped the original declaration.
+extern const int cANWTestModeAutoResignMs = 0;
+
 extern int gForwardBaseStablesPlan = -1;
 extern int gForwardBaseBarracksPlan = -1;
 extern int gForwardBaseTowersPlan = -1;
@@ -525,28 +563,28 @@ extern int gXpValuePlayer8 = -1;
 //==============================================================================
 // Debug variables.
 //==============================================================================
-extern const bool cLLRuntimeTelemetry = true;
-extern const bool cLLVerboseDiagnostics = false;
-// Master switch for replay-capturable chat probes. When true, llProbe() emits
+extern const bool cANWRuntimeTelemetry = true;
+extern const bool cANWVerboseDiagnostics = false;
+// Master switch for replay-capturable chat probes. When true, anwProbe() emits
 // an unthrottled aiChat broadcast tagged "[LL-PROBE]" so community replay
 // parsers (e.g. @canyougiant/aoe3de-replay-parser) record every AI's boot,
 // wall dispatch, age-up, chatset-fire, rout, explorer-escort, and economy
 // snapshot events in the .age3Yrec chat stream.
-extern const bool cLLReplayProbes = true;
-// Phase-3 firehose: when true, every llLogRuleTick() also emits a per-rule
+extern const bool cANWReplayProbes = true;
+// Phase-3 firehose: when true, every anwLogRuleTick() also emits a per-rule
 // `rule.fired` probe. Enables fine-grained per-rule timeline reconstruction
 // from replays at the cost of high chat-stream volume — keep off for
 // release builds, flip on only when chasing a specific rule-firing bug.
-extern const bool cLLDebugRuleFires = false;
+extern const bool cANWDebugRuleFires = false;
 // Per-AI leader identity string set by each initLeader*() in preInit(). Used
 // by the LL-BOOT probe so the replay tells us which leader module each AI
 // actually loaded — catches "Barbary blank leader" / wrong-personality
 // regressions directly.
-extern string gLLLeaderKey = "unassigned";
+extern string gANWLeaderKey = "unassigned";
 // Per-AI chatset name (matches chatsetsmods.xml <Chatset name="...">). Set by
 // each initLeader*(); used in the LL-BOOT probe so we can verify the chat
 // portrait / quote wiring routed to the right chatset at runtime.
-extern string gLLChatsetKey = "unassigned";
+extern string gANWChatsetKey = "unassigned";
 extern const bool cDebugUtilities = false;
 extern const bool cDebugBuildings = false;
 extern const bool cDebugTechs = false;
@@ -557,8 +595,8 @@ extern const bool cDebugHCCards = false;
 extern const bool cDebugChats = false;
 extern const bool cDebugSetup = false;
 extern const bool cDebugCore = false;
-extern const bool cDebugLegendaryLeaders = false;
-extern const bool cDebugLegendaryLeadersVisible = false;
-extern const int cDebugLegendaryLeadersVisibleCooldown = 12000;
-extern int gLLDebugVisiblePlayer = -1;
-extern int gLLDebugVisibleTime = -60000;
+extern const bool cANWDebug = false;
+extern const bool cANWDebugVisible = false;
+extern const int cANWDebugVisibleCooldown = 12000;
+extern int gANWDebugVisiblePlayer = -1;
+extern int gANWDebugVisibleTime = -60000;

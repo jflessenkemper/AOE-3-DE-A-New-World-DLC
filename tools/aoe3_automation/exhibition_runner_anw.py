@@ -6,7 +6,7 @@ Runs the full 48-civ matrix with property validation:
   2. For each ANW civ:
      - Launch match
      - Capture log + screenshots
-     - Extract [LLP v=2] probes
+     - Extract [ANWP v=2] probes
      - Run PropertyValidatorSuite
      - Compare against reference specs
   3. Generate behavioral_compliance_report.json

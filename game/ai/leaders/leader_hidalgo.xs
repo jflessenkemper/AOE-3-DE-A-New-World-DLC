@@ -25,29 +25,29 @@ bool gHidalgoRulesEnabled = false;
 
 void initLeaderHidalgo(void)
 {
-   llVerboseEcho("A New World: activating Miguel Hidalgo personality.");
+   anwVerboseEcho("A New World: activating Miguel Hidalgo personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the Grito comes early.
    btOffenseDefense = 0.65;
    btBiasTrade = 0.1;
    btBiasNative = 0.45;           // Indigenous and mestizo levies.
-   llSetMilitaryFocus(0.7, 0.3, 0.25);
+   anwSetMilitaryFocus(0.7, 0.3, 0.25);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseRepublicanLeveeStyle(1);
-   gLLEconomicDistanceMultiplier = 1.15;
-   llSetBuildStrongpointProfile(2, 1, 2, false);
+   anwUseRepublicanLeveeStyle(1);
+   gANWEconomicDistanceMultiplier = 1.15;
+   anwSetBuildStrongpointProfile(2, 1, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
+   anwSetLeaderTacticalDoctrine(0.7, 0.3, 2, 3.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 120;            // Levée-en-masse is large.
 
    gHidalgoRulesEnabled = true;
-   llLogLeaderState("Hidalgo initialized");
-   llProbe("meta.leader_init", "leader=hidalgo");
+   anwLogLeaderState("Hidalgo initialized");
+   anwProbe("meta.leader_init", "leader=hidalgo");
 }
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ rule hidalgoHaciendaAssembly
 inactive
 minInterval 60
 {
-   llLogRuleTick("hidalgoHaciendaAssembly");
+   anwLogRuleTick("hidalgoHaciendaAssembly");
    if (gHidalgoRulesEnabled == false)
    {
       xsDisableSelf();
@@ -81,7 +81,7 @@ rule hidalgoInsurgenteSurge
 inactive
 minInterval 50
 {
-   llLogRuleTick("hidalgoInsurgenteSurge");
+   anwLogRuleTick("hidalgoInsurgenteSurge");
    if (gHidalgoRulesEnabled == false)
    {
       xsDisableSelf();
@@ -95,7 +95,7 @@ minInterval 50
       btBiasInf = 0.9;
       btBiasCav = 0.3;
       btBiasArt = -0.3;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -107,7 +107,7 @@ rule hidalgoInsurgentMomentum
 inactive
 minInterval 55
 {
-   llLogRuleTick("hidalgoInsurgentMomentum");
+   anwLogRuleTick("hidalgoInsurgentMomentum");
    if (gHidalgoRulesEnabled == false)
    {
       xsDisableSelf();
@@ -132,7 +132,7 @@ rule hidalgoIndependenciaCampaign
 inactive
 minInterval 70
 {
-   llLogRuleTick("hidalgoIndependenciaCampaign");
+   anwLogRuleTick("hidalgoIndependenciaCampaign");
    if (gHidalgoRulesEnabled == false)
    {
       xsDisableSelf();
@@ -146,7 +146,7 @@ minInterval 70
       btBiasCav = 0.65;
       btBiasArt = 0.6;
       cvMaxArmyPop = 150;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -158,7 +158,7 @@ rule hidalgoRepublicAtArms
 inactive
 minInterval 90
 {
-   llLogRuleTick("hidalgoRepublicAtArms");
+   anwLogRuleTick("hidalgoRepublicAtArms");
    if (gHidalgoRulesEnabled == false)
    {
       xsDisableSelf();

@@ -176,85 +176,85 @@ extern float   cvDefenseReflexRadiusActive = 60.0;    // When the AI is in a def
 extern float   cvDefenseReflexRadiusPassive = 30.0;   // When the AI is in a defense reflex, but hiding in its main base to regain strength, this is the main base attack range.
 extern float   cvDefenseReflexSearchRadius = 60.0;    // How far out from a base to look before triggering a defense reflex. THIS MUST NOT BE GREATER THAN 'RadiusActive' ABOVE!
 
-// Legendary Leaders build-style identifiers and placement knobs.
-extern int     cLLBuildStyleCompactFortifiedCore = 1;
-extern int     cLLBuildStyleDistributedEconomicNetwork = 2;
-extern int     cLLBuildStyleForwardOperationalLine = 3;
-extern int     cLLBuildStyleMobileFrontierScatter = 4;
-extern int     cLLBuildStyleShrineTradeNodeSpread = 5;
-extern int     cLLBuildStyleCivicMilitiaCenter = 6;
-extern int     cLLBuildStyleSteppeCavalryWedge = 7;          // dispersed mobile; minimal walls; cavalry-led raiding bases.
-extern int     cLLBuildStyleNavalMercantileCompound = 8;     // coastal bank/dock cluster; eco-heavy; deep harbour.
-extern int     cLLBuildStyleSiegeTrainConcentration = 9;     // clustered military; heavy artillery park; forward grand battery.
-extern int     cLLBuildStyleJungleGuerrillaNetwork = 10;     // scattered war huts; ambush approaches; no perimeter wall.
-extern int     cLLBuildStyleHighlandCitadel = 11;            // multi-ring high-walled mountain fortress; defensive masterpiece.
-extern int     cLLBuildStyleCossackVoisko = 12;              // massed barracks + blockhouse net; forward host muster.
-extern int     cLLBuildStyleRepublicanLevee = 13;            // citizen-army compound; militia centers; civic spine.
-extern int     cLLBuildStyleAndeanTerraceFortress = 14;      // terraced highland fort; tight core; tower-heavy ring.
+// A New World build-style identifiers and placement knobs.
+extern int     cANWBuildStyleCompactFortifiedCore = 1;
+extern int     cANWBuildStyleDistributedEconomicNetwork = 2;
+extern int     cANWBuildStyleForwardOperationalLine = 3;
+extern int     cANWBuildStyleMobileFrontierScatter = 4;
+extern int     cANWBuildStyleShrineTradeNodeSpread = 5;
+extern int     cANWBuildStyleCivicMilitiaCenter = 6;
+extern int     cANWBuildStyleSteppeCavalryWedge = 7;          // dispersed mobile; minimal walls; cavalry-led raiding bases.
+extern int     cANWBuildStyleNavalMercantileCompound = 8;     // coastal bank/dock cluster; eco-heavy; deep harbour.
+extern int     cANWBuildStyleSiegeTrainConcentration = 9;     // clustered military; heavy artillery park; forward grand battery.
+extern int     cANWBuildStyleJungleGuerrillaNetwork = 10;     // scattered war huts; ambush approaches; no perimeter wall.
+extern int     cANWBuildStyleHighlandCitadel = 11;            // multi-ring high-walled mountain fortress; defensive masterpiece.
+extern int     cANWBuildStyleCossackVoisko = 12;              // massed barracks + blockhouse net; forward host muster.
+extern int     cANWBuildStyleRepublicanLevee = 13;            // citizen-army compound; militia centers; civic spine.
+extern int     cANWBuildStyleAndeanTerraceFortress = 14;      // terraced highland fort; tight core; tower-heavy ring.
 
-extern int     gLLBuildStyle = 0;
-extern int     gLLWallLevel = 1;
-extern bool    gLLEarlyWallingEnabled = true;
-extern bool    gLLLateWallingEnabled = true;
+extern int     gANWBuildStyle = 0;
+extern int     gANWWallLevel = 1;
+extern bool    gANWEarlyWallingEnabled = true;
+extern bool    gANWLateWallingEnabled = true;
 
 // Walling strategies (per-leader historical doctrine for wall placement).
 // Selects which routine in aiBuildingsWalls.xs plans the Age-1 fortification.
-extern int     cLLWallStrategyFortressRing        = 0;  // Full double ring, all sides — Valette/Pachacuti/Frederick/Suleiman/Catherine/Bourbon
-extern int     cLLWallStrategyChokepointSegments  = 1;  // Segment walls at terrain pinches — Shivaji/Menelik/Kangxi/Andean civs
-extern int     cLLWallStrategyCoastalBatteries    = 2;  // Land-side ring, gun towers at coast — Wellington/Henry/Maurice/Barbary
-extern int     cLLWallStrategyFrontierPalisades   = 3;  // Quick wooden ring + blockhouses — Washington/Jefferson/Brock/Kruger/Mannerheim/etc.
-extern int     cLLWallStrategyUrbanBarricade      = 4;  // Tight compact inner ring + towers — Robespierre/Garibaldi
-extern int     cLLWallStrategyMobileNoWalls       = 5;  // Scouts + outposts, no walls — Napoleon/Crazy Horse/Hiawatha/Montezuma/Usman/Isabella/Gustavus
+extern int     cANWWallStrategyFortressRing        = 0;  // Full double ring, all sides — Valette/Pachacuti/Frederick/Suleiman/Catherine/Bourbon
+extern int     cANWWallStrategyChokepointSegments  = 1;  // Segment walls at terrain pinches — Shivaji/Menelik/Kangxi/Andean civs
+extern int     cANWWallStrategyCoastalBatteries    = 2;  // Land-side ring, gun towers at coast — Wellington/Henry/Maurice/Barbary
+extern int     cANWWallStrategyFrontierPalisades   = 3;  // Quick wooden ring + blockhouses — Washington/Jefferson/Brock/Kruger/Mannerheim/etc.
+extern int     cANWWallStrategyUrbanBarricade      = 4;  // Tight compact inner ring + towers — Robespierre/Garibaldi
+extern int     cANWWallStrategyMobileNoWalls       = 5;  // Scouts + outposts, no walls — Napoleon/Crazy Horse/Hiawatha/Montezuma/Usman/Isabella/Gustavus
 
-extern int     gLLWallStrategy = 0;  // default = FortressRing
+extern int     gANWWallStrategy = 0;  // default = FortressRing
 
 // ----- Per-civ wall tuning knobs (read by aiBuildingsWalls.xs) -----------
 // Defaults selected so behaviour is identical to pre-knob code when every
 // leader leaves them at default. Leaders override these in their personality
 // files (game/ai/leaders/leader_<name>.xs or leaderCommon.xs branches).
 // Each knob fires a one-time probe at first read so validators can confirm
-// per-civ values reached the engine: [LLP v=2] wall.tune key=<knob> val=<v>
-extern int     gLLWallRadius                = 18;     // ring/segment radius in tiles  (Pachacuti 14, Wellington 22)
-extern int     gLLWallGateCount             = 3;      // gates per ring  (Bourbon 2, Suleiman 4)
-extern bool    gLLWallTierAge2Stone         = false;  // true=jump to stone at Colonial, false=stay palisade
-extern int     gLLWallTriggerAge            = 2;      // first age that lays a wall  (Robespierre 3, Pachacuti 2)
-extern int     gLLWallSegmentLength         = 12;     // chokepoint segment length in tiles  (Shivaji 8, Menelik 16)
-extern int     gLLWallTowerInterleave       = 6;      // tower every N pieces (0=none)  (Maltese 4, Frederick 8, Crazy Horse 0)
-extern int     gLLWallSecondaryStrategy     = -1;     // fallback strategy if primary impossible (-1=none, else cLLWallStrategy*)
-extern int     gLLWallVillagerCount         = 4;      // vils dispatched to wall plan  (Bourbon turtle 10, Napoleon 2)
-extern float   gLLWallForwardBiasFraction   = 0.5;    // 0.0=hug TC, 1.0=push to choke  (Napoleon 0.8, Pachacuti 0.2)
-extern int     gLLWallOuterRingDelta        = 0;      // outer-ring offset (0=single ring)  (Frederick 8, Suleiman 6)
-extern int     gLLWallEarlyOutpostCount     = 1;      // outposts to plant before first wall  (Lakota/Hauden 4, EU 1)
-extern int     gLLWallRepairAggressiveness  = 1;      // 0=ignore, 1=lazy, 2=normal, 3=instant  (Bourbon 3, Crazy Horse 0)
-extern int     gLLWallClosurePctTarget      = 60;     // closure % counted as "done"  (Frederick 85, FrontierPalisade 55)
-extern bool    gLLWallNoWaterBuild          = true;   // refuse to build into water tiles (true for all by default after water-fix)
+// per-civ values reached the engine: [ANWP v=2] wall.tune key=<knob> val=<v>
+extern int     gANWWallRadius                = 18;     // ring/segment radius in tiles  (Pachacuti 14, Wellington 22)
+extern int     gANWWallGateCount             = 3;      // gates per ring  (Bourbon 2, Suleiman 4)
+extern bool    gANWWallTierAge2Stone         = false;  // true=jump to stone at Colonial, false=stay palisade
+extern int     gANWWallTriggerAge            = 2;      // first age that lays a wall  (Robespierre 3, Pachacuti 2)
+extern int     gANWWallSegmentLength         = 12;     // chokepoint segment length in tiles  (Shivaji 8, Menelik 16)
+extern int     gANWWallTowerInterleave       = 6;      // tower every N pieces (0=none)  (Maltese 4, Frederick 8, Crazy Horse 0)
+extern int     gANWWallSecondaryStrategy     = -1;     // fallback strategy if primary impossible (-1=none, else cANWWallStrategy*)
+extern int     gANWWallVillagerCount         = 4;      // vils dispatched to wall plan  (Bourbon turtle 10, Napoleon 2)
+extern float   gANWWallForwardBiasFraction   = 0.5;    // 0.0=hug TC, 1.0=push to choke  (Napoleon 0.8, Pachacuti 0.2)
+extern int     gANWWallOuterRingDelta        = 0;      // outer-ring offset (0=single ring)  (Frederick 8, Suleiman 6)
+extern int     gANWWallEarlyOutpostCount     = 1;      // outposts to plant before first wall  (Lakota/Hauden 4, EU 1)
+extern int     gANWWallRepairAggressiveness  = 1;      // 0=ignore, 1=lazy, 2=normal, 3=instant  (Bourbon 3, Crazy Horse 0)
+extern int     gANWWallClosurePctTarget      = 60;     // closure % counted as "done"  (Frederick 85, FrontierPalisade 55)
+extern bool    gANWWallNoWaterBuild          = true;   // refuse to build into water tiles (true for all by default after water-fix)
 
-extern float   gLLHouseDistanceMultiplier = 1.0;
-extern float   gLLEconomicDistanceMultiplier = 1.0;
-extern float   gLLMilitaryDistanceMultiplier = 1.0;
-extern float   gLLTownCenterDistanceMultiplier = 1.0;
-extern int     gLLTowerLevel = 1;
-extern int     gLLFortLevel = 1;
-extern int     gLLForwardBaseTowerCount = 2;
-extern bool    gLLPreferForwardFortifiedBase = false;
+extern float   gANWHouseDistanceMultiplier = 1.0;
+extern float   gANWEconomicDistanceMultiplier = 1.0;
+extern float   gANWMilitaryDistanceMultiplier = 1.0;
+extern float   gANWTownCenterDistanceMultiplier = 1.0;
+extern int     gANWTowerLevel = 1;
+extern int     gANWFortLevel = 1;
+extern int     gANWForwardBaseTowerCount = 2;
+extern bool    gANWPreferForwardFortifiedBase = false;
 
 // Per-doctrine military building placement preference. Engine accepts 0..3
 // (Front/Back/Left/Right) via cBuildPlanLocationPreference. -1 = legacy
 // random (the engine default). Set per build-style in leaderCommon.xs so
 // barracks/stables/foundry land where the doctrine wants them, not in a
 // random cardinal each time.
-extern int     gLLMilitaryPlacementPreference = -1;
+extern int     gANWMilitaryPlacementPreference = -1;
 
 // When > 0, lowers the gate that delays AI forward-base creation. Engine
 // default in aiBuildings.xs is "Expert difficulty AND time >= 20 min". For
 // expansionist doctrines (ForwardOperationalLine, SiegeTrainConcentration,
 // CossackVoisko, RepublicanLevee) we drop the time gate and remove the
 // difficulty gate so the AI actually expands within a normal-length match.
-extern int     gLLForwardBaseEarliestMs = 1200000;  // engine default
-extern bool    gLLForwardBaseAnyDifficulty = false; // require Expert by default
+extern int     gANWForwardBaseEarliestMs = 1200000;  // engine default
+extern bool    gANWForwardBaseAnyDifficulty = false; // require Expert by default
 
 // ---------------------------------------------------------------------------
-// Legendary Leaders — terrain + expansion-heading enforcement.
+// A New World — terrain + expansion-heading enforcement.
 //
 // These are the "EXACTLY how the AI plays" knobs. Each standard/revolution
 // nation receives one primary and one secondary terrain preference plus a
@@ -282,15 +282,15 @@ extern bool    gLLForwardBaseAnyDifficulty = false; // require Expert by default
 //                 Central American dry corridor).
 //   Jungle      — tropical canopy (Yucatec, Brazilian Mata Atlântica,
 //                 Indonesian Java, Columbian, Mayan Caste War).
-extern int     cLLTerrainAny          = 0;
-extern int     cLLTerrainCoast        = 1;
-extern int     cLLTerrainRiver        = 2;
-extern int     cLLTerrainForestEdge   = 3;
-extern int     cLLTerrainPlain        = 4;
-extern int     cLLTerrainHighland     = 5;
-extern int     cLLTerrainWetland      = 6;
-extern int     cLLTerrainDesertOasis  = 7;
-extern int     cLLTerrainJungle       = 8;
+extern int     cANWTerrainAny          = 0;
+extern int     cANWTerrainCoast        = 1;
+extern int     cANWTerrainRiver        = 2;
+extern int     cANWTerrainForestEdge   = 3;
+extern int     cANWTerrainPlain        = 4;
+extern int     cANWTerrainHighland     = 5;
+extern int     cANWTerrainWetland      = 6;
+extern int     cANWTerrainDesertOasis  = 7;
+extern int     cANWTerrainJungle       = 8;
 
 // Expansion headings (7):
 //   AlongCoast       — secondary TC/dock string hugs the shore
@@ -313,27 +313,27 @@ extern int     cLLTerrainJungle       = 8;
 //   Defensive        — no expansion, consolidate inside perimeter
 //                      (Valette 1565, Menelik Magdala, Mannerheim
 //                      Line, Robespierre Paris, Gall post-1876).
-extern int     cLLHeadingAny              = 0;
-extern int     cLLHeadingAlongCoast       = 1;
-extern int     cLLHeadingUpriver          = 2;
-extern int     cLLHeadingFrontierPush     = 3;
-extern int     cLLHeadingIslandHop        = 4;
-extern int     cLLHeadingOutwardRings     = 5;
-extern int     cLLHeadingFollowTradeRoute = 6;
-extern int     cLLHeadingDefensive        = 7;
+extern int     cANWHeadingAny              = 0;
+extern int     cANWHeadingAlongCoast       = 1;
+extern int     cANWHeadingUpriver          = 2;
+extern int     cANWHeadingFrontierPush     = 3;
+extern int     cANWHeadingIslandHop        = 4;
+extern int     cANWHeadingOutwardRings     = 5;
+extern int     cANWHeadingFollowTradeRoute = 6;
+extern int     cANWHeadingDefensive        = 7;
 
-extern int     gLLPreferredTerrainPrimary   = 0;  // cLLTerrainAny
-extern int     gLLPreferredTerrainSecondary = 0;  // cLLTerrainAny
-extern int     gLLExpansionHeading          = 0;  // cLLHeadingAny
-extern bool    gLLCenterAnchorCivic         = false;  // if true, markets/churches snap tight to TC
-extern float   gLLTerrainBiasStrength       = 0.35; // 0.0=off, 1.0=full drag to feature
-extern float   gLLHeadingBiasStrength       = 0.30; // 0.0=off, 1.0=full drag along heading
+extern int     gANWPreferredTerrainPrimary   = 0;  // cANWTerrainAny
+extern int     gANWPreferredTerrainSecondary = 0;  // cANWTerrainAny
+extern int     gANWExpansionHeading          = 0;  // cANWHeadingAny
+extern bool    gANWCenterAnchorCivic         = false;  // if true, markets/churches snap tight to TC
+extern float   gANWTerrainBiasStrength       = 0.35; // 0.0=off, 1.0=full drag to feature
+extern float   gANWHeadingBiasStrength       = 0.30; // 0.0=off, 1.0=full drag along heading
 
 // Set true at the very end of postInit() so gameOverHandler can distinguish a
 // real end-of-match fire from the engine's spurious early-fire during lobby
 // load (where identity is still stale). Avoids the 60s wall-clock fudge that
 // blocked --observe-seconds=10 smoke runs from ever flushing probes.
-extern bool    gLLPostInitFired             = false;
+extern bool    gANWPostInitFired             = false;
 
 int createInvalidBaseAttackRoute(int playerID = -1, int baseID = -1) { return(-1); }
 extern int(int, int) cvCreateBaseAttackRoute = createInvalidBaseAttackRoute; // Creates an attack route used by attack plans, if this is not set, we let the plan automatically manage it.

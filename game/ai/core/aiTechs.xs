@@ -38,7 +38,7 @@ int chooseEuropeanPolitician()
    // there are harmless — only the probe is affected.
    int uniqueCount = 0;
    int seenTechs = xsArrayCreateInt(32, -1, "tech.polist dedupe");
-   llProbe("tech.polist", "curAge=" + age + " toAge=" + (age + 1) +
+   anwProbe("tech.polist", "curAge=" + age + " toAge=" + (age + 1) +
       " choices=" + numPoliticianChoices);
    for (int pi = 0; pi < numPoliticianChoices; pi++)
    {
@@ -55,7 +55,7 @@ int chooseEuropeanPolitician()
       if (dupe == true) continue;
       xsArraySetInt(seenTechs, uniqueCount, candidate);
       uniqueCount++;
-      llProbe("tech.polistCand", "idx=" + pi + " tech=" + candidate +
+      anwProbe("tech.polistCand", "idx=" + pi + " tech=" + candidate +
          " name=\"" + kbGetTechName(candidate) + "\"");
    }
 
@@ -1086,7 +1086,7 @@ maxInterval 15
             // know the Imperial politician list failed to populate (correlates
             // with the human-Dutch Imperial bug suspected to be an engine-side
             // gate rather than a mod-side tech disable).
-            llProbe("tech.ageReq", "toAge=" + (kbGetAge() + 1) +
+            anwProbe("tech.ageReq", "toAge=" + (kbGetAge() + 1) +
                " priority=" + ageUpPriority +
                " politicianTech=" + politician +
                " politician=\"" + kbGetTechName(politician) + "\"");
@@ -1106,7 +1106,7 @@ maxInterval 15
                wonderToBuild, 1, 100, true, cEmergencyEscrowID, mainBaseID, 4);
             aiPlanSetDesiredResourcePriority(gAgeUpResearchPlan, ageUpPriority);
             aiPlanSetEventHandler(gAgeUpResearchPlan, cPlanEventStateChange, "ageUpEventHandler");
-            llProbe("tech.ageReq", "toAge=" + (kbGetAge() + 1) +
+            anwProbe("tech.ageReq", "toAge=" + (kbGetAge() + 1) +
                " priority=" + ageUpPriority +
                " wonderProto=" + wonderToBuild +
                " wonder=\"" + kbGetProtoUnitName(wonderToBuild) + "\"");

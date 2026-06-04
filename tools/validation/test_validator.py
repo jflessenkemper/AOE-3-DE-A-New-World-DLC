@@ -59,7 +59,7 @@ def _make_log(lines: list[str]) -> Path:
 
 
 def _llp(t: int, p: int, civ: str, ldr: str, tag: str, detail: str = "") -> str:
-    line = f"PreGame {t}: [LLP v=2 t={t} p={p} civ={civ} ldr={ldr} tag={tag}]"
+    line = f"PreGame {t}: [ANWP v=2 t={t} p={p} civ={civ} ldr={ldr} tag={tag}]"
     if detail:
         line = f"{line} {detail}"
     return line

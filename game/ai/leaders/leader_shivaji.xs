@@ -28,38 +28,38 @@ bool gShivajiRulesEnabled = false;
 
 void initLeaderShivaji(void)
 {
-   llVerboseEcho("A New World: activating Shivaji Maharaj personality.");
+   anwVerboseEcho("A New World: activating Shivaji Maharaj personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = 0.0;              // Light boom; the raids open early.
    btOffenseDefense = 0.55;
    btBiasTrade = 0.2;             // Caravanserai economy.
    btBiasNative = 0.2;
-   llSetMilitaryFocus(0.55, 0.6, 0.2);  // Cavalry-leaning composition.
+   anwSetMilitaryFocus(0.55, 0.6, 0.2);  // Cavalry-leaning composition.
 
    // LL-BUILD-STYLE-BEGIN
    // Spec doctrine = Highland Citadel (hill-fort fortress ring). Shivaji's
    // Maratha hill-fort network maps to the Citadel helper, not the Shrine
    // helper (which leaves walls off entirely).
-   llUseHighlandCitadelStyle(2);
-   gLLEconomicDistanceMultiplier = 1.10;
+   anwUseHighlandCitadelStyle(2);
+   gANWEconomicDistanceMultiplier = 1.10;
    // Spec band [1.0, 1.3] with expects_forward=true. The Citadel helper
    // defaults military to 0.80 (tight core), which contradicts the
    // "Maratha Confederacy expands outward" doctrine prose. Push barracks/
    // stables forward to feed the Sowar raids while keeping the citadel
    // ring tight for the hill-fort defense.
-   gLLMilitaryDistanceMultiplier = 1.05;
-   llSetBuildStrongpointProfile(2, 1, 2, false);
+   gANWMilitaryDistanceMultiplier = 1.05;
+   anwSetBuildStrongpointProfile(2, 1, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 6;               // Hill-fort network.
    cvMaxArmyPop = 115;
 
    gShivajiRulesEnabled = true;
-   llLogLeaderState("Shivaji initialized");
-   llProbe("meta.leader_init", "leader=shivaji");
+   anwLogLeaderState("Shivaji initialized");
+   anwProbe("meta.leader_init", "leader=shivaji");
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ rule shivajiVillageBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("shivajiVillageBoom");
+   anwLogRuleTick("shivajiVillageBoom");
    if (gShivajiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -92,7 +92,7 @@ rule shivajiGanimiKava
 inactive
 minInterval 50
 {
-   llLogRuleTick("shivajiGanimiKava");
+   anwLogRuleTick("shivajiGanimiKava");
    if (gShivajiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -106,7 +106,7 @@ minInterval 50
       btBiasInf = 0.55;
       btBiasCav = 0.75;            // Sowar / Mahout raid pressure.
       btBiasArt = -0.3;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -118,7 +118,7 @@ rule shivajiMarathaStatecraft
 inactive
 minInterval 55
 {
-   llLogRuleTick("shivajiMarathaStatecraft");
+   anwLogRuleTick("shivajiMarathaStatecraft");
    if (gShivajiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -144,7 +144,7 @@ rule shivajiHillFortWar
 inactive
 minInterval 70
 {
-   llLogRuleTick("shivajiHillFortWar");
+   anwLogRuleTick("shivajiHillFortWar");
    if (gShivajiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -158,7 +158,7 @@ minInterval 70
       btBiasCav = 0.9;
       btBiasArt = 0.5;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -170,7 +170,7 @@ rule shivajiMarathaHost
 inactive
 minInterval 90
 {
-   llLogRuleTick("shivajiMarathaHost");
+   anwLogRuleTick("shivajiMarathaHost");
    if (gShivajiRulesEnabled == false)
    {
       xsDisableSelf();

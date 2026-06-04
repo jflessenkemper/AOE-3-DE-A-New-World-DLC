@@ -30,22 +30,22 @@ bool gBourbonRulesEnabled = false;
 
 void initLeaderBourbon(void)
 {
-   llVerboseEcho("A New World: activating Louis XVIII personality.");
+   anwVerboseEcho("A New World: activating Louis XVIII personality.");
 
-   llSetDefensivePersonality();
+   anwSetDefensivePersonality();
    btRushBoom = -0.45;            // Heavy boom; restored economy first.
    btOffenseDefense = -0.3;       // Defensive baseline.
    btBiasTrade = 0.55;            // White-flag commerce.
    btBiasNative = -0.4;           // Bourbon traditionalism: regulars only.
-   llSetMilitaryFocus(0.55, 0.35, 0.2);  // Balanced inf/cav, restrained art.
+   anwSetMilitaryFocus(0.55, 0.35, 0.2);  // Balanced inf/cav, restrained art.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseCompactFortifiedCoreStyle(3, true);
-   gLLEconomicDistanceMultiplier = 1.05;
-   gLLMilitaryDistanceMultiplier = 0.85;   // Spec band [0.7,0.9]: Restoration interior fort line.
-   llSetBuildStrongpointProfile(3, 2, 2, false);
+   anwUseCompactFortifiedCoreStyle(3, true);
+   gANWEconomicDistanceMultiplier = 1.05;
+   gANWMilitaryDistanceMultiplier = 0.85;   // Spec band [0.7,0.9]: Restoration interior fort line.
+   anwSetBuildStrongpointProfile(3, 2, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.88, 0.12, 2, 5.0);  // Royal explorer well behind the line.
+   anwSetLeaderTacticalDoctrine(0.88, 0.12, 2, 5.0);  // Royal explorer well behind the line.
 
    cvOkToBuildForts = true;
    cvMaxTowers = 6;
@@ -55,8 +55,8 @@ void initLeaderBourbon(void)
    cvDefenseReflexRadiusPassive = 30.0;
 
    gBourbonRulesEnabled = true;
-   llLogLeaderState("Bourbon initialized");
-   llProbe("meta.leader_init", "leader=bourbon");
+   anwLogLeaderState("Bourbon initialized");
+   anwProbe("meta.leader_init", "leader=bourbon");
 }
 
 //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ rule bourbonCourtEconomy
 inactive
 minInterval 60
 {
-   llLogRuleTick("bourbonCourtEconomy");
+   anwLogRuleTick("bourbonCourtEconomy");
    if (gBourbonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -89,7 +89,7 @@ rule bourbonChateauLine
 inactive
 minInterval 50
 {
-   llLogRuleTick("bourbonChateauLine");
+   anwLogRuleTick("bourbonChateauLine");
    if (gBourbonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -116,7 +116,7 @@ rule bourbonRoyalArmy
 inactive
 minInterval 55
 {
-   llLogRuleTick("bourbonRoyalArmy");
+   anwLogRuleTick("bourbonRoyalArmy");
    if (gBourbonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -143,7 +143,7 @@ rule bourbonRestorationFront
 inactive
 minInterval 80
 {
-   llLogRuleTick("bourbonRestorationFront");
+   anwLogRuleTick("bourbonRestorationFront");
    if (gBourbonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -158,7 +158,7 @@ minInterval 80
       btBiasArt = 0.55;
       cvMaxArmyPop = 140;
       cvMaxTowers = 8;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -171,7 +171,7 @@ rule bourbonRestorationGuard
 inactive
 minInterval 90
 {
-   llLogRuleTick("bourbonRestorationGuard");
+   anwLogRuleTick("bourbonRestorationGuard");
    if (gBourbonRulesEnabled == false)
    {
       xsDisableSelf();

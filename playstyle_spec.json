@@ -26,7 +26,7 @@
     },
     "Aztecs Montezuma": {
       "civ_label": "Aztecs",
-      "leader_label": "Montezuma",
+      "leader_label": "Cuauhtémoc",
       "data_name": "Aztecs Montezuma",
       "doctrine_label": "Jungle Guerrilla Network",
       "doctrine_summary": "Flower War tribute aggression",
@@ -68,7 +68,7 @@
     },
     "Brazil Pedro Revolution": {
       "civ_label": "Brazil",
-      "leader_label": "Pedro I of Brazil",
+      "leader_label": "José Bonifácio",
       "data_name": "Brazil Pedro Revolution",
       "doctrine_label": "Distributed Economic Network",
       "doctrine_summary": "Imperial line and Hessian reserve",
@@ -149,7 +149,7 @@
     },
     "Chinese Kangxi": {
       "civ_label": "Chinese",
-      "leader_label": "Kangxi",
+      "leader_label": "The Kangxi Emperor",
       "data_name": "Chinese Kangxi",
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Eight-Banner pacification macro",
@@ -169,7 +169,7 @@
     },
     "Columbians Bolivar Colombia Revolution": {
       "civ_label": "Columbians",
-      "leader_label": "Simón Bolívar",
+      "leader_label": "Francisco de Paula Santander",
       "data_name": "Columbians Bolivar Colombia Revolution",
       "doctrine_label": "Forward Operational Line",
       "doctrine_summary": "Llanero liberation sweeps",
@@ -233,7 +233,7 @@
     },
     "Ethiopians Menelik": {
       "civ_label": "Ethiopians",
-      "leader_label": "Menelik",
+      "leader_label": "Tewodros II",
       "data_name": "Ethiopians Menelik",
       "doctrine_label": "Highland Citadel",
       "doctrine_summary": "Solomonic highland modernization",
@@ -254,7 +254,7 @@
     },
     "Finnish Mannerheim Revolution": {
       "civ_label": "Finnish",
-      "leader_label": "Carl Gustaf Emil Mannerheim",
+      "leader_label": "Johan Vilhelm Snellman",
       "data_name": "Finnish Mannerheim Revolution",
       "doctrine_label": "Compact Fortified Core",
       "doctrine_summary": "Mannerheim-line ski infantry",
@@ -398,7 +398,7 @@
     },
     "Inca Pachacuti": {
       "civ_label": "Inca",
-      "leader_label": "Pachacuti",
+      "leader_label": "Huayna Capac",
       "data_name": "Inca Pachacuti",
       "doctrine_label": "Andean Terrace Fortress",
       "doctrine_summary": "Tawantinsuyu mass infantry",
@@ -418,7 +418,7 @@
     },
     "Indians Akbar": {
       "civ_label": "Indians",
-      "leader_label": "Shivaji Maharaj",
+      "leader_label": "Akbar the Great",
       "data_name": "Indians Shivaji Maharaj Maratha",
       "doctrine_label": "Ganimi Kava Raid",
       "doctrine_summary": "Maratha Ganimi Kava raid",
@@ -505,7 +505,7 @@
       "data_name": "Lakota Gall",
       "doctrine_label": "Steppe Cavalry Wedge",
       "doctrine_summary": "Little Bighorn envelopment",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_gall.png",
+      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png",
       "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
       "claims": {
         "wall_strategy": 5,
@@ -518,7 +518,9 @@
         ],
         "first_barracks_before_ms": 360000
       },
-      "prose_overrides": ["-first_wall_before_ms_removed_as_inconsistent_with_wall_strategy_5_and_wallLevel_0_SteppeCavalryWedge_doctrine"]
+      "prose_overrides": [
+        "-first_wall_before_ms_removed_as_inconsistent_with_wall_strategy_5_and_wallLevel_0_SteppeCavalryWedge_doctrine"
+      ]
     },
     "Maltese Valette": {
       "civ_label": "Maltese",
@@ -564,7 +566,7 @@
     },
     "Mexicans Hidalgo Standard": {
       "civ_label": "Mexicans",
-      "leader_label": "Miguel Hidalgo y Costilla",
+      "leader_label": "Miguel Hidalgo",
       "data_name": "Mexicans Hidalgo Standard",
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Grito de Dolores levée",
@@ -629,7 +631,7 @@
     },
     "Peruvians Santa Cruz Peru Revolution": {
       "civ_label": "Peruvians",
-      "leader_label": "Andrés de Santa Cruz",
+      "leader_label": "Simón Bolívar",
       "data_name": "Peruvians Santa Cruz Peru Revolution",
       "doctrine_label": "Andean Terrace Fortress",
       "doctrine_summary": "Andean fort line and native levy",
@@ -674,7 +676,7 @@
       "data_name": "Revolutionary France Robespierre Revolution",
       "doctrine_label": "Republican Levee",
       "doctrine_summary": "Levée-en-masse Republic",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_robespierre.png",
+      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png",
       "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
       "claims": {
         "wall_strategy": 4,

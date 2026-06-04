@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Synthetic probe-log fixtures for testing the validator without running a real match.
 
-Generates realistic [LLP v=2 ...] log lines that mirror what aiDoctrineProbes.xs
+Generates realistic [ANWP v=2 ...] log lines that mirror what aiDoctrineProbes.xs
 would emit for a given civ and a given doctrine compliance pattern.
 
 Used by:
@@ -24,9 +24,9 @@ DEFAULT_PLAYER_ID = 1
 
 
 def _line(t_ms: int, p: int, civ: str, ldr: str, tag: str, detail: str = "") -> str:
-    """Format a single [LLP v=2 ...] line, preceded by an Age3Log-style prefix."""
+    """Format a single [ANWP v=2 ...] line, preceded by an Age3Log-style prefix."""
     base = (
-        f"PreGame  {t_ms}:  [LLP v=2 t={t_ms} p={p} civ={civ} ldr={ldr} tag={tag}]"
+        f"PreGame  {t_ms}:  [ANWP v=2 t={t_ms} p={p} civ={civ} ldr={ldr} tag={tag}]"
     )
     if detail:
         return f"{base} {detail}"

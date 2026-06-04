@@ -39,8 +39,8 @@ include "leaders\leader_gustavus.xs";
 
 // ── Per-civ wall-knob dispatch (auto-generated from
 //    tools/ai_design/wall_knob_calibration.py).
-//    Defines void llSetWallKnobsForCiv(void) which sets all 14
-//    gLLWall* tuning knobs for the active civ. Called from preInit()
+//    Defines void anwSetWallKnobsForCiv(void) which sets all 14
+//    gANWWall* tuning knobs for the active civ. Called from preInit()
 //    AFTER initLeader<Name>() so it overrides leader-set defaults.
 include "core\aiWallKnobsByCiv.xs";
 
@@ -67,35 +67,32 @@ include "core\aiWallKnobsByCiv.xs";
     bodies that the parser only resolves when invoked) — they don't blow
     up at load time. The compliance probes in this file are at top-level
     rule scope and DO get parsed eagerly.
+
+    The `extern int gANWAbstract*` declarations now live in
+    core\aiGlobals (moved there 2026-05-31). They MUST be declared before
+    the probe files aiDoctrineProbes and aiStateSnapshot are parsed;
+    aiGlobals.xs is parsed early in the aiMain include chain, whereas the
+    declarations previously sat here in aiLoaderStandard.xs *after*
+    `include "aiMain.xs"` — too late, so the eager probe-function parse hit
+    "gANWAbstractWarShip is not a valid operator" (XS Error 0172) and the
+    whole AI compile aborted. The resolver below still owns the
+    kbGetProtoUnitID() lookups and runs at preInit().
 */
 //==============================================================================
-extern int gLLAbstractWarShip            = -1;
-extern int gLLAbstractStables            = -1;
-extern int gLLAbstractArtilleryFoundry   = -1;
-extern int gLLAbstractWall               = -1;
-extern int gLLAbstractTradingPost        = -1;
-extern int gLLAbstractMonastery          = -1;
-extern int gLLAbstractInfantry           = -1;
-extern int gLLAbstractCavalry            = -1;
-extern int gLLAbstractArtillery          = -1;
-extern int gLLAbstractNativeWarrior      = -1;
-extern int gLLMercenary                  = -1;
-extern int gLLHero                       = -1;
-
-void llResolveAbstractTypes(void)
+void anwResolveAbstractTypes(void)
 {
-   gLLAbstractWarShip          = kbGetProtoUnitID("AbstractWarShip");
-   gLLAbstractStables          = kbGetProtoUnitID("AbstractStables");
-   gLLAbstractArtilleryFoundry = kbGetProtoUnitID("AbstractArtilleryFoundry");
-   gLLAbstractWall             = kbGetProtoUnitID("AbstractWall");
-   gLLAbstractTradingPost      = kbGetProtoUnitID("AbstractTradingPost");
-   gLLAbstractMonastery        = kbGetProtoUnitID("AbstractMonastery");
-   gLLAbstractInfantry         = kbGetProtoUnitID("AbstractInfantry");
-   gLLAbstractCavalry          = kbGetProtoUnitID("AbstractCavalry");
-   gLLAbstractArtillery        = kbGetProtoUnitID("AbstractArtillery");
-   gLLAbstractNativeWarrior    = kbGetProtoUnitID("AbstractNativeWarrior");
-   gLLMercenary                = kbGetProtoUnitID("Mercenary");
-   gLLHero                     = kbGetProtoUnitID("Hero");
+   gANWAbstractWarShip          = kbGetProtoUnitID("AbstractWarShip");
+   gANWAbstractStables          = kbGetProtoUnitID("AbstractStables");
+   gANWAbstractArtilleryFoundry = kbGetProtoUnitID("AbstractArtilleryFoundry");
+   gANWAbstractWall             = kbGetProtoUnitID("AbstractWall");
+   gANWAbstractTradingPost      = kbGetProtoUnitID("AbstractTradingPost");
+   gANWAbstractMonastery        = kbGetProtoUnitID("AbstractMonastery");
+   gANWAbstractInfantry         = kbGetProtoUnitID("AbstractInfantry");
+   gANWAbstractCavalry          = kbGetProtoUnitID("AbstractCavalry");
+   gANWAbstractArtillery        = kbGetProtoUnitID("AbstractArtillery");
+   gANWAbstractNativeWarrior    = kbGetProtoUnitID("AbstractNativeWarrior");
+   gANWMercenary                = kbGetProtoUnitID("Mercenary");
+   gANWHero                     = kbGetProtoUnitID("Hero");
 }
 
 
@@ -109,28 +106,28 @@ void llResolveAbstractTypes(void)
 //==============================================================================
 void preInit(void)
 {
-   llVerboseEcho("preInit() starting.");
+   anwVerboseEcho("preInit() starting.");
 
    // Resolve Abstract* proto IDs that aren't exposed as cUnitType* enum
    // values. Must run BEFORE any rule/probe that uses the gLL* cache.
-   llResolveAbstractTypes();
+   anwResolveAbstractTypes();
 
    // ── DIAGNOSTIC: bulletproof load-marker. Write to AI's OWN slot (history
    // index 0), before any other XS code that could fail. If this var ever
    // appears in <leader>.personality, AI loaded + flush works. If not, the
    // AI never even reaches preInit (XS compile error or earlier fault).
-   aiPersonalitySetPlayerUserVar(0, "ll_preinit_marker", 1.0);
-   aiPersonalitySetPlayerUserVar(0, "ll_preinit_t",      xsGetTime());
+   aiPersonalitySetPlayerUserVar(0, "anw_preinit_marker", 1.0);
+   aiPersonalitySetPlayerUserVar(0, "anw_preinit_t",      xsGetTime());
 
-   string legendaryLeaderCivName = kbGetCivName(cMyCiv);
+   string anwLeaderCivName = kbGetCivName(cMyCiv);
 
-   initLegendaryRevolutionSupport();
+   anwInitRevolutionSupport();
 
    if (cMyCiv == cCivFrench)
    {
       initLeaderBourbon();
    }
-   else if (legendaryLeaderCivName == "ANWNapoleonicFrance")
+   else if (anwLeaderCivName == "ANWNapoleonicFrance")
    {
       initLeaderNapoleon();
    }
@@ -220,20 +217,20 @@ void preInit(void)
    }
    else if (civIsRevolution() == true)
    {
-      initLegendaryRevolutionCommander();
+      anwInitRevolutionCommander();
    }
 
-   llAssignLeaderIdentity();
-   llApplyBuildStyleForActiveCiv();
+   anwAssignLeaderIdentity();
+   anwApplyBuildStyleForActiveCiv();
 
    // Per-civ wall-knob calibration (overrides leader-file strategy when
    // the per-age doctrine table in tools/ai_design/wall_knob_calibration.py
    // disagrees with the historical leader file).
-   llSetWallKnobsForCiv();
+   anwSetWallKnobsForCiv();
 
    if (aiGetGameMode() == cGameModeEconomyMode)
    {
-      llVerboseEcho("Economy mode setup");
+      anwVerboseEcho("Economy mode setup");
 
       btRushBoom = -1.0; // boom
       btOffenseDefense = -1.0; // defend
@@ -256,11 +253,11 @@ void preInit(void)
 //==============================================================================
 void postInit(void)
 {
-   llVerboseEcho("postInit() starting.");
+   anwVerboseEcho("postInit() starting.");
 
    // Per-nation walling: enable the Age-1 ring-wall rule for every leader.
-   // The rule itself checks llShouldBuildLegendaryWalls(true) which respects
-   // gLLEarlyWallingEnabled and gLLWallLevel per leader — aggressive styles
+   // The rule itself checks anwShouldBuildWalls(true) which respects
+   // gANWEarlyWallingEnabled and gANWWallLevel per leader — aggressive styles
    // (SteppeCavalryWedge / MobileFrontierScatter / JungleGuerrillaNetwork)
    // opt out via earlyWalls=false in their style helpers, so the rule
    // effectively no-ops for them. Defensive leaders (Wellington, Valette,
@@ -269,31 +266,31 @@ void postInit(void)
    // Watchdog: destroy stalled wall plans so held villagers free up.
    xsEnableRule("wallPlanStallWatchdog");
 
-   if (cLLReplayProbes == true)
+   if (cANWReplayProbes == true)
    {
-      xsEnableRule("llHeartbeat");
-      xsEnableRule("llPlanSnapshot");
-      xsEnableRule("llComplianceSnapshot");
-      xsEnableRule("llAgeUpProbe");
+      xsEnableRule("anwHeartbeat");
+      xsEnableRule("anwPlanSnapshot");
+      xsEnableRule("anwComplianceSnapshot");
+      xsEnableRule("anwAgeUpProbe");
       // Coverage-push family — combat / econ / shipments / placement /
       // wall geometry / diplomacy / rule-health. Each runs on its own
       // 60–120s interval, so total probe overhead stays bounded.
-      xsEnableRule("llCombatComplianceSnapshot");
-      xsEnableRule("llEconComplianceSnapshot");
-      xsEnableRule("llShipmentComplianceSnapshot");
-      xsEnableRule("llPlacementDeepSnapshot");
-      xsEnableRule("llWallGeometrySnapshot");
-      xsEnableRule("llDiplomacyComplianceSnapshot");
-      xsEnableRule("llRuleHealthSnapshot");
-      xsEnableRule("llTacticsComplianceSnapshot");
-      xsEnableRule("llEventDeltaSnapshot");
+      xsEnableRule("anwCombatComplianceSnapshot");
+      xsEnableRule("anwEconComplianceSnapshot");
+      xsEnableRule("anwShipmentComplianceSnapshot");
+      xsEnableRule("anwPlacementDeepSnapshot");
+      xsEnableRule("anwWallGeometrySnapshot");
+      xsEnableRule("anwDiplomacyComplianceSnapshot");
+      xsEnableRule("anwRuleHealthSnapshot");
+      xsEnableRule("anwTacticsComplianceSnapshot");
+      xsEnableRule("anwEventDeltaSnapshot");
       // Per-civ playstyle-fidelity probes (milestones + comp/posture
       // snapshots) consumed by tools/validation/validate_doctrine_compliance.py.
-      xsEnableRule("llDoctrineProbes");
+      xsEnableRule("anwDoctrineProbes");
    }
 
-   enableLegendaryRevolutionSupportRules();
-   enableLegendaryRevolutionCommanderRules();
+   anwEnableRevolutionSupportRules();
+   anwEnableRevolutionCommanderRules();
    enableLeaderBourbonRules();
    enableLeaderNapoleonRules();
    enableLeaderWellingtonRules();
@@ -323,12 +320,12 @@ void postInit(void)
    // leader/chatset/doctrine/wall-strategy wiring at t=0 for every AI in the
    // match. Catches Barbary-blank, Napoleon-wrong-name, wrong-chatset
    // regressions immediately without needing in-match screenshots.
-   llProbe("meta.boot",
-      "chatset=" + gLLChatsetKey +
-      " wallStrategy=" + gLLWallStrategy +
-      " buildStyle=" + llGetBuildStyleName(gLLBuildStyle) +
-      " wallLevel=" + gLLWallLevel +
-      " earlyWalls=" + gLLEarlyWallingEnabled +
+   anwProbe("meta.boot",
+      "chatset=" + gANWChatsetKey +
+      " wallStrategy=" + gANWWallStrategy +
+      " buildStyle=" + anwGetBuildStyleName(gANWBuildStyle) +
+      " wallLevel=" + gANWWallLevel +
+      " earlyWalls=" + gANWEarlyWallingEnabled +
       " rush=" + btRushBoom +
       " off=" + btOffenseDefense +
       " inf=" + btBiasInf +
@@ -339,7 +336,7 @@ void postInit(void)
    // Match-level context: game mode, difficulty, team, player count. Shared
    // context for every AI's probes so post-match analysis can normalise
    // across Supremacy/Deathmatch/Treaty/Empire-Wars runs.
-   llProbe("meta.setup",
+   anwProbe("meta.setup",
       "gameMode=" + aiGetGameMode() +
       " difficulty=" + cDifficultyCurrent +
       " team=" + kbGetPlayerTeam(cMyID) +
@@ -351,21 +348,21 @@ void postInit(void)
    // ── LL-ECOSNAP probe ────────────────────────────────────────────────────
    // Initial economic state snapshot — DEFERRED: postInit runs before the
    // engine seeds starting resources/villagers, so an immediate snapshot
-   // captures all-zero garbage (verified in replay). llInitialEconSnapshot
+   // captures all-zero garbage (verified in replay). anwInitialEconSnapshot
    // fires once after 5s when the starting bundle is populated.
-   if (cLLReplayProbes == true)
+   if (cANWReplayProbes == true)
    {
-      xsEnableRule("llInitialEconSnapshot");
+      xsEnableRule("anwInitialEconSnapshot");
    }
 
    // ── LL-TEST-AUTO-RESIGN ────────────────────────────────────────────────
-   // When the harness sets cLLTestModeAutoResignMs > 0 (via sed before sync),
+   // When the harness sets cANWTestModeAutoResignMs > 0 (via sed before sync),
    // arm a rule that resigns this AI as soon as the wall-clock threshold
    // hits. Bounds match length so 47-civ coverage runs in minutes, not hours.
-   if (cLLTestModeAutoResignMs > 0)
+   if (cANWTestModeAutoResignMs > 0)
    {
-      xsEnableRule("llTestModeAutoResign");
-      llProbe("test.armed", "resignAtMs=" + cLLTestModeAutoResignMs);
+      xsEnableRule("anwTestModeAutoResign");
+      anwProbe("test.armed", "resignAtMs=" + cANWTestModeAutoResignMs);
    }
 
    // ── LL-PERSONALITY-PROBE (early write) ──────────────────────────────────
@@ -375,11 +372,11 @@ void postInit(void)
    // probe lands even on human-resign matches where gameOverHandler may not
    // fire its disk flush. gameOverHandler() also calls this with end-state
    // values when it does fire — last writer wins.
-   llWritePersonalityProbe();
+   anwWritePersonalityProbe();
 
    // Mark post-init complete. gameOverHandler() reads this flag instead of a
    // wall-clock threshold so probe writes still fire on observe<60s smoke runs.
-   gLLPostInitFired = true;
+   gANWPostInitFired = true;
 }
 
 
@@ -393,16 +390,16 @@ void postInit(void)
 //==============================================================================
 
 //==============================================================================
-// llHeartbeat
+// anwHeartbeat
 // Periodic time-series probe. Emits age, resources, pop, army, score every
 // 60s so replay analysis can chart economic/military trajectory without
 // relying on spiky event-driven probes alone.
 //==============================================================================
-rule llHeartbeat
+rule anwHeartbeat
 inactive
 minInterval 60
 {
-   llProbe("telem.heartbeat",
+   anwProbe("telem.heartbeat",
       "age=" + kbGetAge() +
       " food=" + kbResourceGet(cResourceFood) +
       " wood=" + kbResourceGet(cResourceWood) +
@@ -414,20 +411,20 @@ minInterval 60
 }
 
 //==============================================================================
-// llTestModeAutoResign
-// Test-harness rule. When cLLTestModeAutoResignMs > 0 and the wall-clock
+// anwTestModeAutoResign
+// Test-harness rule. When cANWTestModeAutoResignMs > 0 and the wall-clock
 // crosses that threshold, dump a final state snapshot then call aiResign().
-// Released builds (cLLTestModeAutoResignMs == 0) never enable this rule.
+// Released builds (cANWTestModeAutoResignMs == 0) never enable this rule.
 //==============================================================================
-rule llTestModeAutoResign
+rule anwTestModeAutoResign
 inactive
 minInterval 5
 {
-   if (xsGetTime() < cLLTestModeAutoResignMs)
+   if (xsGetTime() < cANWTestModeAutoResignMs)
    {
       return;
    }
-   llProbe("test.resign",
+   anwProbe("test.resign",
       "atMs=" + xsGetTime() +
       " age=" + kbGetAge() +
       " pop=" + kbGetPop() +
@@ -442,7 +439,7 @@ minInterval 5
 }
 
 //==============================================================================
-// llPlanSnapshot
+// anwPlanSnapshot
 // Phase-2 periodic snapshot of the AI's active plan inventory. Fires every
 // 60s alongside the heartbeat. Three probes per tick:
 //   * mil.plan_snap   — combat plan count (offense + defense)
@@ -451,7 +448,7 @@ minInterval 5
 // We use periodic snapshots rather than instrumenting all 91 aiPlanCreate
 // call sites — equivalent ground truth, far less integration risk.
 //==============================================================================
-rule llPlanSnapshot
+rule anwPlanSnapshot
 inactive
 minInterval 60
 {
@@ -466,14 +463,14 @@ minInterval 60
    int transportPlans = aiPlanGetNumber(cPlanTransport, -1, true);
    int explorePlans = aiPlanGetNumber(cPlanExplore, -1, true);
 
-   llProbe("mil.plan_snap",
+   anwProbe("mil.plan_snap",
       "combat=" + combatPlans +
       " attack=" + attackPlans +
       " defend=" + defendPlans +
       " explore=" + explorePlans +
       " militaryPop=" + aiGetMilitaryPop());
 
-   llProbe("plan.build_snap",
+   anwProbe("plan.build_snap",
       "build=" + buildPlans +
       " walls=" + wallPlans +
       " repair=" + repairPlans +
@@ -482,15 +479,15 @@ minInterval 60
       " tcs=" + kbUnitCount(cMyID, cUnitTypeTownCenter, cUnitStateABQ) +
       " houses=" + kbUnitCount(cMyID, gHouseUnit, cUnitStateABQ));
 
-   llProbe("navy.fleet_snap",
+   anwProbe("navy.fleet_snap",
       "transports=" + transportPlans +
-      " warships=" + kbUnitCount(cMyID, gLLAbstractWarShip, cUnitStateAlive) +
+      " warships=" + kbUnitCount(cMyID, gANWAbstractWarShip, cUnitStateAlive) +
       " fishing=" + kbUnitCount(cMyID, gFishingUnit, cUnitStateAlive) +
       " docks=" + kbUnitCount(cMyID, gDockUnit, cUnitStateABQ));
 }
 
 //==============================================================================
-// llPersonalitySnapshot
+// anwPersonalitySnapshot
 // Periodic re-fire of the personality-channel probe so the .personality
 // file on disk reflects mid-game / end-of-observe state instead of just
 // the postInit init-time snapshot. Crucial for the matrix's deep-mode
@@ -499,29 +496,29 @@ minInterval 60
 //
 // Pairs with the postInit + gameOverHandler writes already in place:
 //   * postInit       — t≈3 s,  initial bias / map / difficulty fields.
-//   * llPersonalitySnapshot — t = 60, 120, 180, …, current state each time.
+//   * anwPersonalitySnapshot — t = 60, 120, 180, …, current state each time.
 //   * gameOverHandler — final write at resign / defeat with outcome flags.
 //
 // Last writer wins on disk, so the matrix harvester (which reads the file
 // post-run) sees the most recent behavioural snapshot — exactly what the
-// deep axes want. Enabled unconditionally because llWritePersonalityProbe
-// is cheap and gated internally on gLLPostInitFired.
+// deep axes want. Enabled unconditionally because anwWritePersonalityProbe
+// is cheap and gated internally on gANWPostInitFired.
 //==============================================================================
-rule llPersonalitySnapshot
+rule anwPersonalitySnapshot
 active
 minInterval 60
 {
-   if (gLLPostInitFired == false) return;
-   llWritePersonalityProbe();
+   if (gANWPostInitFired == false) return;
+   anwWritePersonalityProbe();
 }
 
 //==============================================================================
-// llInitialEconSnapshot
+// anwInitialEconSnapshot
 // Fires once after starting resources/villagers seed. Deferred from postInit
 // because immediate emission captures zero-state garbage before the engine
 // grants the starting bundle.
 //==============================================================================
-rule llInitialEconSnapshot
+rule anwInitialEconSnapshot
 inactive
 minInterval 5
 {
@@ -532,7 +529,7 @@ minInterval 5
    {
       return;
    }
-   llProbe("econ.snap",
+   anwProbe("econ.snap",
       "age=" + kbGetAge() +
       " food=" + kbResourceGet(cResourceFood) +
       " wood=" + kbResourceGet(cResourceWood) +
@@ -543,29 +540,29 @@ minInterval 5
    // One-shot terrain-anchor resolution probe. Records the actual feature
    // vectors the placement pipeline will steer toward, so post-match we can
    // confirm e.g. an Iroquois AI's ForestEdge anchor is over real woods and
-   // not the water center. Uses the same lookups as llGetPlacementBiasedCenter.
+   // not the water center. Uses the same lookups as anwGetPlacementBiasedCenter.
    int mainBaseID = kbBaseGetMainID(cMyID);
    if (mainBaseID >= 0)
    {
       vector basePos     = kbBaseGetLocation(cMyID, mainBaseID);
-      vector terrPrimVec = llGetTerrainFeatureVector(gLLPreferredTerrainPrimary, basePos);
-      vector terrSecVec  = llGetTerrainFeatureVector(gLLPreferredTerrainSecondary, basePos);
-      vector headingVec  = llGetHeadingFeatureVector(gLLExpansionHeading, basePos);
-      llProbe("compliance.anchor",
-         "base=" + llFmtVec(basePos) +
-         " navyVec=" + llFmtVec(gNavyVec) +
-         " terrPrim=" + gLLPreferredTerrainPrimary + ":" + llFmtVec(terrPrimVec) +
-         " terrSec=" + gLLPreferredTerrainSecondary + ":" + llFmtVec(terrSecVec) +
-         " heading=" + gLLExpansionHeading + ":" + llFmtVec(headingVec) +
-         " biasT=" + gLLTerrainBiasStrength +
-         " biasH=" + gLLHeadingBiasStrength);
+      vector terrPrimVec = anwGetTerrainFeatureVector(gANWPreferredTerrainPrimary, basePos);
+      vector terrSecVec  = anwGetTerrainFeatureVector(gANWPreferredTerrainSecondary, basePos);
+      vector headingVec  = anwGetHeadingFeatureVector(gANWExpansionHeading, basePos);
+      anwProbe("compliance.anchor",
+         "base=" + anwFmtVec(basePos) +
+         " navyVec=" + anwFmtVec(gNavyVec) +
+         " terrPrim=" + gANWPreferredTerrainPrimary + ":" + anwFmtVec(terrPrimVec) +
+         " terrSec=" + gANWPreferredTerrainSecondary + ":" + anwFmtVec(terrSecVec) +
+         " heading=" + gANWExpansionHeading + ":" + anwFmtVec(headingVec) +
+         " biasT=" + gANWTerrainBiasStrength +
+         " biasH=" + gANWHeadingBiasStrength);
    }
 
    xsDisableSelf();
 }
 
 //==============================================================================
-// llComplianceSnapshot
+// anwComplianceSnapshot
 // Per-civ doctrine compliance snapshot. Fires every 60s and emits FIVE probe
 // lines so post-match analysis can confirm each AI is playing per its
 // LEGENDARY_LEADERS_TREE.html spec:
@@ -585,41 +582,41 @@ minInterval 5
 //                         in water-adjacent vs inland area groups. Verifies
 //                         coastal/river civs actually cluster near water.
 //==============================================================================
-rule llComplianceSnapshot
+rule anwComplianceSnapshot
 inactive
 minInterval 60
 {
    // ── 1. Doctrine profile (echo of static state every tick — handy for
    //       cross-checking against meta.buildstyle which only fires once.)
-   llProbe("compliance.profile",
-      "style=" + gLLBuildStyle +
-      " wallStrat=" + gLLWallStrategy +
-      " wallLevel=" + gLLWallLevel +
-      " earlyWalls=" + gLLEarlyWallingEnabled +
-      " terrPrim=" + gLLPreferredTerrainPrimary +
-      " terrSec=" + gLLPreferredTerrainSecondary +
-      " heading=" + gLLExpansionHeading +
-      " milPlace=" + gLLMilitaryPlacementPreference +
-      " milDist=" + gLLMilitaryDistanceMultiplier +
-      " ecoDist=" + gLLEconomicDistanceMultiplier +
-      " houseDist=" + gLLHouseDistanceMultiplier);
+   anwProbe("compliance.profile",
+      "style=" + gANWBuildStyle +
+      " wallStrat=" + gANWWallStrategy +
+      " wallLevel=" + gANWWallLevel +
+      " earlyWalls=" + gANWEarlyWallingEnabled +
+      " terrPrim=" + gANWPreferredTerrainPrimary +
+      " terrSec=" + gANWPreferredTerrainSecondary +
+      " heading=" + gANWExpansionHeading +
+      " milPlace=" + gANWMilitaryPlacementPreference +
+      " milDist=" + gANWMilitaryDistanceMultiplier +
+      " ecoDist=" + gANWEconomicDistanceMultiplier +
+      " houseDist=" + gANWHouseDistanceMultiplier);
 
    // ── 2. Building census ─────────────────────────────────────────────────
    int milBarracks  = kbUnitCount(cMyID, cUnitTypeBarracks, cUnitStateABQ);
-   int milStables   = kbUnitCount(cMyID, gLLAbstractStables, cUnitStateABQ);
-   int milArtillery = kbUnitCount(cMyID, gLLAbstractArtilleryFoundry, cUnitStateABQ);
+   int milStables   = kbUnitCount(cMyID, gANWAbstractStables, cUnitStateABQ);
+   int milArtillery = kbUnitCount(cMyID, gANWAbstractArtilleryFoundry, cUnitStateABQ);
    int defOutposts  = kbUnitCount(cMyID, gTowerUnit, cUnitStateABQ);
    int defForts     = kbUnitCount(cMyID, gFortUnit, cUnitStateABQ);
-   int wallSegs     = kbUnitCount(cMyID, gLLAbstractWall, cUnitStateABQ);
+   int wallSegs     = kbUnitCount(cMyID, gANWAbstractWall, cUnitStateABQ);
    int navDocks     = kbUnitCount(cMyID, gDockUnit, cUnitStateABQ);
    int ecoMills     = kbUnitCount(cMyID, gFarmUnit, cUnitStateABQ);
    int ecoMarkets   = kbUnitCount(cMyID, gMarketUnit, cUnitStateABQ);
-   int ecoTPosts    = kbUnitCount(cMyID, gLLAbstractTradingPost, cUnitStateABQ);
+   int ecoTPosts    = kbUnitCount(cMyID, gANWAbstractTradingPost, cUnitStateABQ);
    int civHouses    = kbUnitCount(cMyID, gHouseUnit, cUnitStateABQ);
    int civTCs       = kbUnitCount(cMyID, cUnitTypeTownCenter, cUnitStateABQ);
-   int civMonast    = kbUnitCount(cMyID, gLLAbstractMonastery, cUnitStateABQ);
+   int civMonast    = kbUnitCount(cMyID, gANWAbstractMonastery, cUnitStateABQ);
 
-   llProbe("compliance.bldg",
+   anwProbe("compliance.bldg",
       "barracks=" + milBarracks +
       " stables=" + milStables +
       " foundry=" + milArtillery +
@@ -635,15 +632,15 @@ minInterval 60
       " monasteries=" + civMonast);
 
    // ── 3. Army composition ────────────────────────────────────────────────
-   int armyInf   = kbUnitCount(cMyID, gLLAbstractInfantry, cUnitStateAlive);
-   int armyCav   = kbUnitCount(cMyID, gLLAbstractCavalry, cUnitStateAlive);
-   int armyArt   = kbUnitCount(cMyID, gLLAbstractArtillery, cUnitStateAlive);
-   int armyNav   = kbUnitCount(cMyID, gLLAbstractWarShip, cUnitStateAlive);
-   int armyMerc  = kbUnitCount(cMyID, gLLMercenary, cUnitStateAlive);
-   int armyNat   = kbUnitCount(cMyID, gLLAbstractNativeWarrior, cUnitStateAlive);
-   int armyHero  = kbUnitCount(cMyID, gLLHero, cUnitStateAlive);
+   int armyInf   = kbUnitCount(cMyID, gANWAbstractInfantry, cUnitStateAlive);
+   int armyCav   = kbUnitCount(cMyID, gANWAbstractCavalry, cUnitStateAlive);
+   int armyArt   = kbUnitCount(cMyID, gANWAbstractArtillery, cUnitStateAlive);
+   int armyNav   = kbUnitCount(cMyID, gANWAbstractWarShip, cUnitStateAlive);
+   int armyMerc  = kbUnitCount(cMyID, gANWMercenary, cUnitStateAlive);
+   int armyNat   = kbUnitCount(cMyID, gANWAbstractNativeWarrior, cUnitStateAlive);
+   int armyHero  = kbUnitCount(cMyID, gANWHero, cUnitStateAlive);
 
-   llProbe("compliance.army",
+   anwProbe("compliance.army",
       "inf=" + armyInf +
       " cav=" + armyCav +
       " art=" + armyArt +
@@ -697,12 +694,12 @@ minInterval 60
          kbUnitQueryDestroy(q);
       }
    }
-   llProbe("compliance.placement",
+   anwProbe("compliance.placement",
       "front=" + frontC +
       " back=" + backC +
       " left=" + leftC +
       " right=" + rightC +
-      " expectedPref=" + gLLMilitaryPlacementPreference);
+      " expectedPref=" + gANWMilitaryPlacementPreference);
 
    // ── 5. Terrain compliance ──────────────────────────────────────────────
    // For each barracks, classify the area-group of its position. Compare
@@ -737,19 +734,19 @@ minInterval 60
       }
    }
    kbUnitQueryDestroy(qB);
-   llProbe("compliance.terrain",
+   anwProbe("compliance.terrain",
       "barracksWaterAdj=" + waterAdj +
       " barracksInland=" + inland +
-      " navyVec=" + llFmtVec(gNavyVec));
+      " navyVec=" + anwFmtVec(gNavyVec));
 }
 
 //==============================================================================
-// llAgeUpProbe
+// anwAgeUpProbe
 // Stamps a probe whenever the AI advances to a new age. Lets analysis chart
 // each civ's age-up tempo against its doctrine (e.g., Naval Mercantile is
 // supposed to push Age 2 fast, Compact Fortified Core ages slower).
 //==============================================================================
-rule llAgeUpProbe
+rule anwAgeUpProbe
 inactive
 minInterval 5
 {
@@ -757,7 +754,7 @@ minInterval 5
    int age = kbGetAge();
    if (age != lastAge)
    {
-      llProbe("compliance.age",
+      anwProbe("compliance.age",
          "from=" + lastAge +
          " to=" + age +
          " atMs=" + xsGetTime() +
@@ -771,7 +768,7 @@ minInterval 5
 }
 
 //==============================================================================
-// llCombatComplianceSnapshot
+// anwCombatComplianceSnapshot
 // Periodic poll of combat-plan health: how many active combat / attack /
 // defend plans, current military stance, total mil pop vs current cap, total
 // army value (HP * count proxy via unit counts × type weights), and recent
@@ -785,7 +782,7 @@ minInterval 5
 //   - flags AIs whose army population stagnates (a sign settlerless rules or
 //     trainPlan starvation went sideways)
 //==============================================================================
-rule llCombatComplianceSnapshot
+rule anwCombatComplianceSnapshot
 inactive
 minInterval 60
 {
@@ -808,7 +805,7 @@ minInterval 60
    // threat. Useful to confirm aggressive doctrines don't get distracted.
    int hatedEnemy = aiGetMostHatedPlayerID();
 
-   llProbe("compliance.combat",
+   anwProbe("compliance.combat",
       "attackPlans=" + attackPlans +
       " defendPlans=" + defendPlans +
       " reservePlans=" + reservePlans +
@@ -825,7 +822,7 @@ minInterval 60
 }
 
 //==============================================================================
-// llEconComplianceSnapshot
+// anwEconComplianceSnapshot
 // Periodic poll of villager allocation per resource. Compares actual
 // gatherer % against the doctrine's expected emphasis. Doctrines like
 // "Manor Boom" should bias food/wood; "Naval Mercantile" should push wood
@@ -833,7 +830,7 @@ minInterval 60
 // food + wood early. The probe also samples idle villager count, a proxy
 // for plan-starvation bugs.
 //==============================================================================
-rule llEconComplianceSnapshot
+rule anwEconComplianceSnapshot
 inactive
 minInterval 60
 {
@@ -853,7 +850,7 @@ minInterval 60
    float woodNet   = kbGetAmountValidResources(0, cResourceWood, cAIResourceSubTypeEasy, 99999.0);
    float goldNet   = kbGetAmountValidResources(0, cResourceGold, cAIResourceSubTypeEasy, 99999.0);
 
-   llProbe("compliance.econ",
+   anwProbe("compliance.econ",
       "pctFood=" + pctFood +
       " pctWood=" + pctWood +
       " pctGold=" + pctGold +
@@ -867,13 +864,13 @@ minInterval 60
 }
 
 //==============================================================================
-// llShipmentComplianceSnapshot
+// anwShipmentComplianceSnapshot
 // Tracks shipment economy. Reports shipments available now, total XP,
 // current age (so the analyser can correlate shipment cadence with age-up
 // tempo). The shipGrantedHandler hook in aiHCCards.xs emits per-ship
 // `tech.shipment` events for the actual cards chosen.
 //==============================================================================
-rule llShipmentComplianceSnapshot
+rule anwShipmentComplianceSnapshot
 inactive
 minInterval 90
 {
@@ -881,14 +878,14 @@ minInterval 90
    float xp         = kbResourceGet(cResourceXP);
    int   age        = kbGetAge();
 
-   llProbe("compliance.ship",
+   anwProbe("compliance.ship",
       "shipsReady=" + shipsReady +
       " xp=" + xp +
       " age=" + age);
 }
 
 //==============================================================================
-// llPlacementDeepSnapshot
+// anwPlacementDeepSnapshot
 // Extends compliance.placement to ALL major building types — TC, market,
 // dock, mill, monastery — each tallied per cardinal quadrant. Lets the
 // validator confirm civic vs military buildings cluster differently per
@@ -900,7 +897,7 @@ minInterval 90
 // `label` is a reserved keyword in XS (goto-style label syntax) — using
 // it as a parameter name parses as `parseExpression2 → 'LABEL' is not a
 // valid operator` at the first reference. Renamed to `bldgLabel`.
-void llTallyBuildingQuadrants(int bldgType = -1, string bldgLabel = "?")
+void anwTallyBuildingQuadrants(int bldgType = -1, string bldgLabel = "?")
 {
    int mainBaseID = kbBaseGetMainID(cMyID);
    if (mainBaseID < 0) { return; }
@@ -939,7 +936,7 @@ void llTallyBuildingQuadrants(int bldgType = -1, string bldgLabel = "?")
 
    if ((frontC + backC + leftC + rightC) == 0) { return; }
 
-   llProbe("compliance.placeAll",
+   anwProbe("compliance.placeAll",
       "bldg=" + bldgLabel +
       " front=" + frontC +
       " back=" + backC +
@@ -947,29 +944,29 @@ void llTallyBuildingQuadrants(int bldgType = -1, string bldgLabel = "?")
       " right=" + rightC);
 }
 
-rule llPlacementDeepSnapshot
+rule anwPlacementDeepSnapshot
 inactive
 minInterval 90
 {
-   llTallyBuildingQuadrants(cUnitTypeTownCenter,            "tc");
-   llTallyBuildingQuadrants(gMarketUnit,                    "market");
-   llTallyBuildingQuadrants(gDockUnit,                      "dock");
-   llTallyBuildingQuadrants(gFarmUnit,                      "mill");
-   llTallyBuildingQuadrants(gLLAbstractMonastery,     "monastery");
-   llTallyBuildingQuadrants(gTowerUnit,                     "outpost");
-   llTallyBuildingQuadrants(gLLAbstractStables,       "stables");
-   llTallyBuildingQuadrants(gLLAbstractArtilleryFoundry, "foundry");
-   llTallyBuildingQuadrants(gLLAbstractTradingPost,   "tpost");
+   anwTallyBuildingQuadrants(cUnitTypeTownCenter,            "tc");
+   anwTallyBuildingQuadrants(gMarketUnit,                    "market");
+   anwTallyBuildingQuadrants(gDockUnit,                      "dock");
+   anwTallyBuildingQuadrants(gFarmUnit,                      "mill");
+   anwTallyBuildingQuadrants(gANWAbstractMonastery,     "monastery");
+   anwTallyBuildingQuadrants(gTowerUnit,                     "outpost");
+   anwTallyBuildingQuadrants(gANWAbstractStables,       "stables");
+   anwTallyBuildingQuadrants(gANWAbstractArtilleryFoundry, "foundry");
+   anwTallyBuildingQuadrants(gANWAbstractTradingPost,   "tpost");
 }
 
 //==============================================================================
-// llWallGeometrySnapshot
+// anwWallGeometrySnapshot
 // Wall ring health: count of segments, wall plan IDs active, and the
 // minimum / maximum distance of any wall segment from the main base. Big
 // gap between min and max distance is a sign the ring tried to close but
 // had to detour; tightly clustered = unfinished partial ring.
 //==============================================================================
-rule llWallGeometrySnapshot
+rule anwWallGeometrySnapshot
 inactive
 minInterval 90
 {
@@ -978,7 +975,7 @@ minInterval 90
    vector basePos = kbBaseGetLocation(cMyID, mainBaseID);
    if (basePos == cInvalidVector) { return; }
 
-   int q = createSimpleUnitQuery(gLLAbstractWall, cMyID, cUnitStateAlive);
+   int q = createSimpleUnitQuery(gANWAbstractWall, cMyID, cUnitStateAlive);
    int n = kbUnitQueryExecute(q);
    float minDist = 99999.0;
    float maxDist = 0.0;
@@ -1001,29 +998,29 @@ minInterval 90
 
    int wallPlans = aiPlanGetNumber(cPlanBuildWall, -1, true);
 
-   llProbe("compliance.wallGeom",
+   anwProbe("compliance.wallGeom",
       "segments=" + n +
       " plans=" + wallPlans +
       " minDist=" + minDist +
       " maxDist=" + maxDist +
       " avgDist=" + avgDist +
-      " strategy=" + gLLWallStrategy);
+      " strategy=" + gANWWallStrategy);
 }
 
 //==============================================================================
-// llDiplomacyComplianceSnapshot
+// anwDiplomacyComplianceSnapshot
 // Diplomatic posture: tribute received/sent (via aiResourceGetTribute*),
 // allied native count (TPs on native sites), revolution state if any.
 // Captures the kind of strategic decision that the HTML reference cares
 // about — e.g., Lakota's "Native Confederation" doctrine should ally with
 // natives early, Bourbon France should not rush revolution.
 //==============================================================================
-rule llDiplomacyComplianceSnapshot
+rule anwDiplomacyComplianceSnapshot
 inactive
 minInterval 90
 {
-   int  tposts      = kbUnitCount(cMyID, gLLAbstractTradingPost, cUnitStateABQ);
-   int  nativeWar   = kbUnitCount(cMyID, gLLAbstractNativeWarrior, cUnitStateAlive);
+   int  tposts      = kbUnitCount(cMyID, gANWAbstractTradingPost, cUnitStateABQ);
+   int  nativeWar   = kbUnitCount(cMyID, gANWAbstractNativeWarrior, cUnitStateAlive);
    int  age         = kbGetAge();
    // Revolution detection without civIsRevolted(): post-revolt players hit
    // age 5 with cvMaxAge==cAge5; we proxy via "did we reach an age past
@@ -1033,7 +1030,7 @@ minInterval 90
 
    int enemy     = aiGetMostHatedPlayerID();
 
-   llProbe("compliance.diplo",
+   anwProbe("compliance.diplo",
       "tposts=" + tposts +
       " nativeWar=" + nativeWar +
       " age=" + age +
@@ -1042,12 +1039,12 @@ minInterval 90
 }
 
 //==============================================================================
-// llRuleHealthSnapshot
+// anwRuleHealthSnapshot
 // Reports active vs inactive count of LL-managed rules (anything starting
 // with "ll"). Quickly answers "did postInit's xsEnableRule calls actually
 // stick?" — a class of bug we've hit before.
 //==============================================================================
-rule llRuleHealthSnapshot
+rule anwRuleHealthSnapshot
 inactive
 minInterval 120
 {
@@ -1056,21 +1053,21 @@ minInterval 120
    int comb = 0; int econ = 0; int ship = 0; int placeD = 0; int wall = 0;
    int diplo = 0; int age = 0; int tac = 0; int evt = 0;
 
-   if (xsIsRuleEnabled("llHeartbeat"))                  hb = 1;
-   if (xsIsRuleEnabled("llPlanSnapshot"))               plan = 1;
-   if (xsIsRuleEnabled("llComplianceSnapshot"))         prof = 1;
-   if (xsIsRuleEnabled("llCombatComplianceSnapshot"))   comb = 1;
-   if (xsIsRuleEnabled("llEconComplianceSnapshot"))     econ = 1;
-   if (xsIsRuleEnabled("llShipmentComplianceSnapshot")) ship = 1;
-   if (xsIsRuleEnabled("llPlacementDeepSnapshot"))      placeD = 1;
-   if (xsIsRuleEnabled("llWallGeometrySnapshot"))       wall = 1;
-   if (xsIsRuleEnabled("llDiplomacyComplianceSnapshot")) diplo = 1;
-   if (xsIsRuleEnabled("llAgeUpProbe"))                 age = 1;
+   if (xsIsRuleEnabled("anwHeartbeat"))                  hb = 1;
+   if (xsIsRuleEnabled("anwPlanSnapshot"))               plan = 1;
+   if (xsIsRuleEnabled("anwComplianceSnapshot"))         prof = 1;
+   if (xsIsRuleEnabled("anwCombatComplianceSnapshot"))   comb = 1;
+   if (xsIsRuleEnabled("anwEconComplianceSnapshot"))     econ = 1;
+   if (xsIsRuleEnabled("anwShipmentComplianceSnapshot")) ship = 1;
+   if (xsIsRuleEnabled("anwPlacementDeepSnapshot"))      placeD = 1;
+   if (xsIsRuleEnabled("anwWallGeometrySnapshot"))       wall = 1;
+   if (xsIsRuleEnabled("anwDiplomacyComplianceSnapshot")) diplo = 1;
+   if (xsIsRuleEnabled("anwAgeUpProbe"))                 age = 1;
    if (xsIsRuleEnabled("wallPlanStallWatchdog"))        build = 1;
-   if (xsIsRuleEnabled("llTacticsComplianceSnapshot"))  tac = 1;
-   if (xsIsRuleEnabled("llEventDeltaSnapshot"))         evt = 1;
+   if (xsIsRuleEnabled("anwTacticsComplianceSnapshot"))  tac = 1;
+   if (xsIsRuleEnabled("anwEventDeltaSnapshot"))         evt = 1;
 
-   llProbe("compliance.rules",
+   anwProbe("compliance.rules",
       "hb=" + hb +
       " planSnap=" + plan +
       " profile=" + prof +
@@ -1087,13 +1084,13 @@ minInterval 120
 }
 
 //==============================================================================
-// llTacticsComplianceSnapshot
+// anwTacticsComplianceSnapshot
 // Bundles per-AI tactical state that doesn't fit elsewhere: treaty status,
 // base count, forward-base ID + state, hero alive/idle, exploration plan
 // counts, total bases, total villager-on-trade-route gather. This is the
 // snapshot that closes the "what is the AI doing right now overall" gap.
 //==============================================================================
-rule llTacticsComplianceSnapshot
+rule anwTacticsComplianceSnapshot
 inactive
 minInterval 60
 {
@@ -1102,13 +1099,13 @@ minInterval 60
    int  bases    = kbBaseGetNumber(cMyID);
    int  fwdBase  = gForwardBaseID;
    int  fwdState = gForwardBaseState;
-   int  heroes   = kbUnitCount(cMyID, gLLHero, cUnitStateAlive);
+   int  heroes   = kbUnitCount(cMyID, gANWHero, cUnitStateAlive);
    int  explore  = aiPlanGetNumber(cPlanExplore, -1, true);
    int  transp   = aiPlanGetNumber(cPlanTransport, -1, true);
    int  repair   = aiPlanGetNumber(cPlanRepair, -1, true);
    int  defReflex = gDefenseReflexBaseID;
 
-   llProbe("compliance.tactics",
+   anwProbe("compliance.tactics",
       "treaty=" + treaty +
       " treatyEnd=" + treatyEnd +
       " bases=" + bases +
@@ -1122,13 +1119,13 @@ minInterval 60
 }
 
 //==============================================================================
-// llEventDeltaSnapshot
+// anwEventDeltaSnapshot
 // Delta-detector. Polls counters that increment on key events and emits a
 // probe whenever any moved since the last tick. Lets us reconstruct an
 // event log without per-call-site hooks for: shipment grants, TPs built,
 // natives allied, attack-plan churn, base births/deaths.
 //==============================================================================
-rule llEventDeltaSnapshot
+rule anwEventDeltaSnapshot
 inactive
 minInterval 30
 {
@@ -1139,14 +1136,14 @@ minInterval 30
    static int lastShipsTotal  = 0;
    static int lastHeroes      = 0;
 
-   int tposts = kbUnitCount(cMyID, gLLAbstractTradingPost, cUnitStateABQ);
+   int tposts = kbUnitCount(cMyID, gANWAbstractTradingPost, cUnitStateABQ);
    int bases  = kbBaseGetNumber(cMyID);
    int fwd    = gForwardBaseID;
    int atk    = aiPlanGetNumber(cPlanCombat, -1, true);
    // Shipments-total proxy: sum of "ships sent" if engine exposes; otherwise
    // approximate by current XP (monotonic) — simpler is just to record the
    // count of distinct tech.ship probes via heartbeat counter.
-   int heroes = kbUnitCount(cMyID, gLLHero, cUnitStateAlive);
+   int heroes = kbUnitCount(cMyID, gANWHero, cUnitStateAlive);
 
    bool moved = false;
    int  dTP   = tposts - lastTPosts;
@@ -1162,7 +1159,7 @@ minInterval 30
 
    if (moved == true)
    {
-      llProbe("event.delta",
+      anwProbe("event.delta",
          "dTP=" + dTP +
          " dBases=" + dBase +
          " dAttacks=" + dAtk +

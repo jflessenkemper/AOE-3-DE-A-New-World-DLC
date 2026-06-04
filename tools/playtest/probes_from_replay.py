@@ -3,7 +3,7 @@
 Background
 ----------
 AoE3 DE FINAL_RELEASE builds strip the ``aiEcho()`` dev-mode log channel, so
-``Age3Log.txt`` never receives ``[LLP v=2 ...]`` lines.  This tool uses an
+``Age3Log.txt`` never receives ``[ANWP v=2 ...]`` lines.  This tool uses an
 alternative channel that works without developer mode:
 
   ``aiPersonalitySetPlayerUserVar()`` writes float key/value pairs into the
@@ -31,7 +31,7 @@ Usage
     # Validate against expectations (same checks as replay_probes.py):
     python3 -m tools.playtest.probes_from_replay --validate
 
-    # Generate synthetic [LLP v=2 ...] lines to stdout (for match.log compat):
+    # Generate synthetic [ANWP v=2 ...] lines to stdout (for match.log compat):
     python3 -m tools.playtest.probes_from_replay --emit-llp
 
 Exit codes: 0 = OK, 1 = validation issues, 2 = no probe data found.
@@ -71,7 +71,7 @@ PERSONALITY_DIR: Path = (
 )
 
 # Prefix used by the XS side to mark our injected probe vars.
-LL_PREFIX = "ll_"
+ANW_PREFIX = "anw_"
 
 # Known civ ID → name mapping (engine integers, from aiHeader.xs constants).
 # Only need the ones we actually use; update as new civs are added.
@@ -271,9 +271,9 @@ class PersonalityProbe:
         )
 
     def to_llp_line(self) -> str:
-        """Emit a synthetic [LLP v=2 ...] line compatible with replay_probes.py."""
+        """Emit a synthetic [ANWP v=2 ...] line compatible with replay_probes.py."""
         return (
-            f"[LLP v=2 t={self.match_ms} p={self.pid}"
+            f"[ANWP v=2 t={self.match_ms} p={self.pid}"
             f" civ={self.civ_name} ldr={self.leader_key}"
             f" tag=meta.buildstyle]"
             f" style={self.style}"
@@ -286,9 +286,9 @@ class PersonalityProbe:
         )
 
     def to_llp_leader_line(self) -> str:
-        """Emit a synthetic meta.leader_assigned [LLP v=2 ...] line."""
+        """Emit a synthetic meta.leader_assigned [ANWP v=2 ...] line."""
         return (
-            f"[LLP v=2 t={self.match_ms} p={self.pid}"
+            f"[ANWP v=2 t={self.match_ms} p={self.pid}"
             f" civ={self.civ_name} ldr={self.leader_key}"
             f" tag=meta.leader_assigned]"
             f" leader={self.leader_key}"
@@ -402,8 +402,8 @@ def _unpack_probe(block: dict[str, float]) -> dict:
     # v2: look for ll_playstyle_v2a custom key; bit 0 = sentinel.
     # ll_playstyle_v2b carries wall_q5 in bits 4..0 (separate key to keep
     # both values within float32-exact range, i.e. ≤2^23-1 = 8388607).
-    pack_a = block.get("ll_playstyle_v2a")
-    pack_b = block.get("ll_playstyle_v2b")
+    pack_a = block.get("anw_playstyle_v2a")
+    pack_b = block.get("anw_playstyle_v2b")
     v2_raw = int(round(pack_a)) if pack_a is not None else 0
     has_playstyle_v2 = pack_a is not None and bool(v2_raw & PLAYSTYLE_V2_SENTINEL_BIT)
 
@@ -668,7 +668,7 @@ def main() -> int:
     )
     ap.add_argument(
         "--emit-llp", action="store_true",
-        help="emit synthetic [LLP v=2 ...] lines compatible with replay_probes.py",
+        help="emit synthetic [ANWP v=2 ...] lines compatible with replay_probes.py",
     )
     ap.add_argument(
         "--validate", action="store_true",

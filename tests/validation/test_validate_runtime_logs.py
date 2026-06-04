@@ -13,13 +13,13 @@ SAMPLE_SPEC = {
         {
             "name": "runtime_happy_path",
             "required": [
-                {"value": "Legendary Leaders: [RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control", "description": "bootstrap"},
-                {"value": "Legendary Leaders: created explorer escort plan", "description": "escort"},
+                {"value": "A New World: [RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control", "description": "bootstrap"},
+                {"value": "A New World: created explorer escort plan", "description": "escort"},
             ],
             "ordered": [
-                {"value": "Legendary Leaders: [UNIT] ai-rout-start unit=", "description": "start"},
-                {"value": "Legendary Leaders: [UNIT] ai-rout-move unit=", "description": "move"},
-                {"value": "Legendary Leaders: [UNIT] ai-rout-arrival unit=", "description": "arrival"},
+                {"value": "A New World: [UNIT] ai-rout-start unit=", "description": "start"},
+                {"value": "A New World: [UNIT] ai-rout-move unit=", "description": "move"},
+                {"value": "A New World: [UNIT] ai-rout-arrival unit=", "description": "arrival"},
             ],
             "forbidden": [
                 {"value": "Runtime log validation failed", "description": "validator recursion"}
@@ -28,24 +28,24 @@ SAMPLE_SPEC = {
         {
             "name": "regex_suite",
             "required": [
-                {"kind": "regex", "value": r"Legendary Leaders: \[UNIT\] ai-rout-move unit=\d+", "description": "AI move"}
+                {"kind": "regex", "value": r"A New World: \[UNIT\] ai-rout-move unit=\d+", "description": "AI move"}
             ]
         }
     ]
 }
 
 
-GOOD_LOG = """Legendary Leaders: [RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control
-Legendary Leaders: created explorer escort plan 12 for attack plan 8 using 4 non-elite troops.
-Legendary Leaders: [UNIT] ai-rout-start unit=27 destination=<7,8,9>
-Legendary Leaders: [UNIT] ai-rout-move unit=27 destination=<7,8,9>
-Legendary Leaders: [UNIT] ai-rout-arrival unit=27 destination=<7,8,9>
+GOOD_LOG = """A New World: [RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control
+A New World: created explorer escort plan 12 for attack plan 8 using 4 non-elite troops.
+A New World: [UNIT] ai-rout-start unit=27 destination=<7,8,9>
+A New World: [UNIT] ai-rout-move unit=27 destination=<7,8,9>
+A New World: [UNIT] ai-rout-arrival unit=27 destination=<7,8,9>
 """
 
 
-BAD_ORDER_LOG = """Legendary Leaders: [UNIT] ai-rout-arrival unit=27 destination=<7,8,9>
-Legendary Leaders: [UNIT] ai-rout-start unit=27 destination=<7,8,9>
-Legendary Leaders: [UNIT] ai-rout-move unit=27 destination=<7,8,9>
+BAD_ORDER_LOG = """A New World: [UNIT] ai-rout-arrival unit=27 destination=<7,8,9>
+A New World: [UNIT] ai-rout-start unit=27 destination=<7,8,9>
+A New World: [UNIT] ai-rout-move unit=27 destination=<7,8,9>
 """
 
 
@@ -69,7 +69,7 @@ class ValidateRuntimeLogsTests(unittest.TestCase):
         )
 
     def test_reports_missing_required_marker(self) -> None:
-        repo_root, log_path, spec_path = self.make_inputs("Legendary Leaders: [UNIT] ai-rout-move unit=11")
+        repo_root, log_path, spec_path = self.make_inputs("A New World: [UNIT] ai-rout-move unit=11")
         issues = validate_runtime_log(repo_root=repo_root, log_path=log_path, spec_path=spec_path, suite_names=["runtime_happy_path"])
         self.assertIn("[runtime_happy_path] missing required log marker: bootstrap", issues)
 

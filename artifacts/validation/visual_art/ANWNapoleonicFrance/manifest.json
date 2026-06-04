@@ -44,10 +44,73 @@
           "thumb_path": "thumbs/loading_flag.webp"
         }
       ]
+    },
+    {
+      "label": "03_ingame",
+      "full_path": "01_diplomacy.png",
+      "captured_ms": null,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "diplomacy_panel",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "01_diplomacy.png"
+        },
+        {
+          "name": "scoreboard_player_row",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "02_scoreboard.png"
+        },
+        {
+          "name": "home_city_scene",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "03_homecity.png",
+          "thumb_path": "thumbs/home_city_scene.webp"
+        },
+        {
+          "name": "04_ally_homecity",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "04_ally_homecity.png"
+        },
+        {
+          "name": "endgame_flag",
+          "crop_region": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "crop_path": "05_postgame.png",
+          "thumb_path": "thumbs/endgame_flag.webp"
+        }
+      ]
     }
   ],
-  "status": "failed",
+  "status": "partial",
   "warnings": [
-    "wait_for_in_game:timeout_or_failure"
+    "wait_for_in_game:timeout_or_failure",
+    "lobby_portrait:oversized_raw_source_art:needs_recapture_from_lobby_screenshot",
+    "crops:diplomacy_panel+esc_menu+scoreboard_share_same_raw_art:needs_recapture",
+    "manifest reconciled with on-disk crops 2026-05-30"
   ]
 }

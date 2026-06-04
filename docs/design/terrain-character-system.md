@@ -2,7 +2,7 @@
 
 **Status:** Draft for review
 **Scope:** Broad — all 23 civs, every building type, scout-first TC siting, archetype-driven spending
-**Owner:** Legendary Leaders AI mod
+**Owner:** A New World AI mod
 **Date:** 2026-04-24
 
 ---

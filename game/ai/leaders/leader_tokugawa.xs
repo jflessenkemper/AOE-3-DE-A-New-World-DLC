@@ -24,35 +24,35 @@ bool gTokugawaRulesEnabled = false;
 
 void initLeaderTokugawa(void)
 {
-   llVerboseEcho("A New World: activating Tokugawa Ieyasu personality.");
+   anwVerboseEcho("A New World: activating Tokugawa Ieyasu personality.");
 
-   llSetDefensivePersonality();
+   anwSetDefensivePersonality();
    btRushBoom = -0.4;             // Hard boom; the Bakufu builds first.
    btOffenseDefense = -0.15;      // Defensive baseline.
    btBiasTrade = 0.5;             // Shrine network IS the economy.
    btBiasNative = -0.5;           // Sakoku - closed country.
-   llSetMilitaryFocus(0.7, 0.0, 0.3);  // Infantry-led, light cavalry, real artillery.
+   anwSetMilitaryFocus(0.7, 0.0, 0.3);  // Infantry-led, light cavalry, real artillery.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseShrineTradeNodeSpreadStyle(3);
-   gLLEconomicDistanceMultiplier = 1.25;
+   anwUseShrineTradeNodeSpreadStyle(3);
+   gANWEconomicDistanceMultiplier = 1.25;
    // Spec band [1.0, 1.3]. The Shrine/Trade-Node style defaults military
    // to 0.95 (tight muster), which falls just under the band. The Edo
    // Bakufu pushes Ashigaru musket lines and shrine garrisons outward
    // along trade-node corridors — bump military distance slightly so the
    // garrisons reach the shrines they're meant to defend.
-   gLLMilitaryDistanceMultiplier = 1.05;
-   llSetBuildStrongpointProfile(2, 2, 1, false);
+   gANWMilitaryDistanceMultiplier = 1.05;
+   anwSetBuildStrongpointProfile(2, 2, 1, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.85, 0.15, 2, 4.5);
+   anwSetLeaderTacticalDoctrine(0.85, 0.15, 2, 4.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 6;
    cvMaxArmyPop = 110;
 
    gTokugawaRulesEnabled = true;
-   llLogLeaderState("Tokugawa initialized");
-   llProbe("meta.leader_init", "leader=tokugawa");
+   anwLogLeaderState("Tokugawa initialized");
+   anwProbe("meta.leader_init", "leader=tokugawa");
 }
 
 //------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ rule tokugawaShrineEconomy
 inactive
 minInterval 60
 {
-   llLogRuleTick("tokugawaShrineEconomy");
+   anwLogRuleTick("tokugawaShrineEconomy");
    if (gTokugawaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -86,7 +86,7 @@ rule tokugawaYumiScreen
 inactive
 minInterval 50
 {
-   llLogRuleTick("tokugawaYumiScreen");
+   anwLogRuleTick("tokugawaYumiScreen");
    if (gTokugawaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -112,7 +112,7 @@ rule tokugawaBakufuOrder
 inactive
 minInterval 55
 {
-   llLogRuleTick("tokugawaBakufuOrder");
+   anwLogRuleTick("tokugawaBakufuOrder");
    if (gTokugawaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -139,7 +139,7 @@ rule tokugawaSengokuConsolidation
 inactive
 minInterval 70
 {
-   llLogRuleTick("tokugawaSengokuConsolidation");
+   anwLogRuleTick("tokugawaSengokuConsolidation");
    if (gTokugawaRulesEnabled == false)
    {
       xsDisableSelf();
@@ -153,7 +153,7 @@ minInterval 70
       btBiasCav = 0.45;
       btBiasArt = 0.65;
       cvMaxArmyPop = 145;
-      // Spec expects_treaty=true with no expects_forward: removed llEnableForwardBaseStyle.
+      // Spec expects_treaty=true with no expects_forward: removed anwEnableForwardBaseStyle.
       // The Bakufu doctrine consolidates shrines and Edo defenses, not aggressive forward camps.
    }
 }
@@ -166,7 +166,7 @@ rule tokugawaEdoSupremacy
 inactive
 minInterval 90
 {
-   llLogRuleTick("tokugawaEdoSupremacy");
+   anwLogRuleTick("tokugawaEdoSupremacy");
    if (gTokugawaRulesEnabled == false)
    {
       xsDisableSelf();

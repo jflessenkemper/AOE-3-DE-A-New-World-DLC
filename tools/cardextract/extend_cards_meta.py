@@ -22,7 +22,7 @@ GAME = Path(
 ICON_OUT = REPO / "resources" / "images" / "icons" / "cards"
 META_OUT = REPO / "data" / "cards.json"
 DECKS_STD = REPO / "data" / "decks_standard.json"
-DECKS_LEG = REPO / "data" / "decks_legendary.json"
+DECKS_LEG = REPO / "data" / "decks_anw_themed.json"
 ICON_OUT.mkdir(parents=True, exist_ok=True)
 
 

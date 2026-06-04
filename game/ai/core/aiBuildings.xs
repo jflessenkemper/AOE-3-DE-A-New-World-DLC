@@ -223,7 +223,7 @@ minInterval 1
 // selectClosestBuildPlanPosition
 // Find the closest location to the unit to build.
 //==============================================================================
-float llClampBuildValue(float value = 0.0, float minValue = 0.0, float maxValue = 0.0)
+float anwClampBuildValue(float value = 0.0, float minValue = 0.0, float maxValue = 0.0)
 {
    if (value < minValue)
    {
@@ -236,7 +236,7 @@ float llClampBuildValue(float value = 0.0, float minValue = 0.0, float maxValue 
    return (value);
 }
 
-bool llIsEconomicBuildStyleStructure(int puid = -1)
+bool anwIsEconomicBuildStyleStructure(int puid = -1)
 {
    switch (puid)
    {
@@ -262,7 +262,7 @@ bool llIsEconomicBuildStyleStructure(int puid = -1)
    return (false);
 }
 
-bool llIsMilitaryBuildStyleStructure(int puid = -1)
+bool anwIsMilitaryBuildStyleStructure(int puid = -1)
 {
    int numMilitaryBuildings = xsArrayGetSize(gMilitaryBuildings);
    for (i = 0; < numMilitaryBuildings)
@@ -276,13 +276,13 @@ bool llIsMilitaryBuildStyleStructure(int puid = -1)
    return (false);
 }
 
-float llGetBuildStyleDistanceMultiplier(int puid = -1)
+float anwGetBuildStyleDistanceMultiplier(int puid = -1)
 {
    switch (puid)
    {
       case cUnitTypeTownCenter:
       {
-         return (gLLTownCenterDistanceMultiplier);
+         return (gANWTownCenterDistanceMultiplier);
       }
       case cUnitTypedeHouseAfrican:
       case cUnitTypeHouse:
@@ -295,24 +295,24 @@ float llGetBuildStyleDistanceMultiplier(int puid = -1)
       case cUnitTypeHouseAztec:
       case cUnitTypedeHouseInca:
       {
-         return (gLLHouseDistanceMultiplier);
+         return (gANWHouseDistanceMultiplier);
       }
    }
 
-   if (llIsEconomicBuildStyleStructure(puid) == true)
+   if (anwIsEconomicBuildStyleStructure(puid) == true)
    {
-      return (gLLEconomicDistanceMultiplier);
+      return (gANWEconomicDistanceMultiplier);
    }
-   if (llIsMilitaryBuildStyleStructure(puid) == true)
+   if (anwIsMilitaryBuildStyleStructure(puid) == true)
    {
-      return (gLLMilitaryDistanceMultiplier);
+      return (gANWMilitaryDistanceMultiplier);
    }
 
-   return ((gLLHouseDistanceMultiplier + gLLEconomicDistanceMultiplier + gLLMilitaryDistanceMultiplier) / 3.0);
+   return ((gANWHouseDistanceMultiplier + gANWEconomicDistanceMultiplier + gANWMilitaryDistanceMultiplier) / 3.0);
 }
 
 //==============================================================================
-// Legendary Leaders — terrain / heading anchor resolution.
+// A New World — terrain / heading anchor resolution.
 //
 // Given a nation's preferred terrain (coast/river/forest/plain/highland/
 // wetland/desert-oasis/jungle) and expansion heading (along-coast / upriver
@@ -341,10 +341,10 @@ float llGetBuildStyleDistanceMultiplier(int puid = -1)
 // (Iroquois, Sioux, Maya, Brazilian, Indonesian, Finnish taiga) bias their
 // build cluster toward dense woods rather than the water center like the
 // coastal civs. AoE3 XS exposes trees as cUnitTypeTree owned by player 0.
-vector llFindForestClusterVector(vector origin = cInvalidVector, float radius = 80.0)
+vector anwFindForestClusterVector(vector origin = cInvalidVector, float radius = 80.0)
 {
    if (origin == cInvalidVector) { return (cInvalidVector); }
-   int q = kbUnitQueryCreate("llForestQuery");
+   int q = kbUnitQueryCreate("anwForestQuery");
    if (q < 0) { return (cInvalidVector); }
    kbUnitQuerySetPlayerID(q, 0);
    kbUnitQuerySetUnitType(q, cUnitTypeTree);
@@ -368,10 +368,10 @@ vector llFindForestClusterVector(vector origin = cInvalidVector, float radius = 
 // Average position of nearby Gaia gold mines / treasure-likely sites.
 // Used for civs whose doctrine implies mining cluster (Spanish Reconquista,
 // Mexican insurgent, Californian gold camps, German silver towns).
-vector llFindGoldClusterVector(vector origin = cInvalidVector, float radius = 80.0)
+vector anwFindGoldClusterVector(vector origin = cInvalidVector, float radius = 80.0)
 {
    if (origin == cInvalidVector) { return (cInvalidVector); }
-   int q = kbUnitQueryCreate("llGoldQuery");
+   int q = kbUnitQueryCreate("anwGoldQuery");
    if (q < 0) { return (cInvalidVector); }
    kbUnitQuerySetPlayerID(q, 0);
    kbUnitQuerySetUnitType(q, cUnitTypeAbstractMine);
@@ -392,46 +392,46 @@ vector llFindGoldClusterVector(vector origin = cInvalidVector, float radius = 80
    return (xsVectorSet(ax / (1.0 * sample), xsVectorGetY(origin), az / (1.0 * sample)));
 }
 
-vector llGetTerrainFeatureVector(int terrain = 0, vector baseLocation = cInvalidVector)
+vector anwGetTerrainFeatureVector(int terrain = 0, vector baseLocation = cInvalidVector)
 {
    // Coast / Wetland: pure shoreline cluster — anchor on the water center.
-   if (terrain == cLLTerrainCoast) { return (gNavyVec); }
-   if (terrain == cLLTerrainWetland) { return (gNavyVec); }
+   if (terrain == cANWTerrainCoast) { return (gNavyVec); }
+   if (terrain == cANWTerrainWetland) { return (gNavyVec); }
    // River: shoreline-adjacent but inland. Half-blend against base so we
    // don't plaster docks like a coastal civ — caller's strength is already
    // half on secondary, so returning gNavyVec is the right primitive here.
-   if (terrain == cLLTerrainRiver) { return (gNavyVec); }
+   if (terrain == cANWTerrainRiver) { return (gNavyVec); }
    // ForestEdge / Jungle: bias toward a dense tree patch, NOT water. Falls
    // back to base center if no Gaia trees within 80m (e.g., late-game when
    // forests are exhausted, or treeless maps).
-   if ((terrain == cLLTerrainForestEdge) || (terrain == cLLTerrainJungle))
+   if ((terrain == cANWTerrainForestEdge) || (terrain == cANWTerrainJungle))
    {
-      vector forest = llFindForestClusterVector(baseLocation, 80.0);
+      vector forest = anwFindForestClusterVector(baseLocation, 80.0);
       if (forest != cInvalidVector) { return (forest); }
       return (baseLocation);
    }
    // DesertOasis: gold/mine cluster as oasis proxy (mines and treasures
    // tend to anchor real oases on RM scripts). Base fallback if none found.
-   if (terrain == cLLTerrainDesertOasis)
+   if (terrain == cANWTerrainDesertOasis)
    {
-      vector mines = llFindGoldClusterVector(baseLocation, 90.0);
+      vector mines = anwFindGoldClusterVector(baseLocation, 90.0);
       if (mines != cInvalidVector) { return (mines); }
       return (baseLocation);
    }
    // Plain / Highland / Any — no external feature; anchor on base.
    // (Highland would want elevation but XS Y-axis is decorative — we
    // compensate behaviourally via tighter strongpoint profile / smaller
-   // wall radius set by llUseHighlandCitadelStyle.)
+   // wall radius set by anwUseHighlandCitadelStyle.)
    return (baseLocation);
 }
 
-vector llGetHeadingFeatureVector(int heading = 0, vector baseLocation = cInvalidVector)
+vector anwGetHeadingFeatureVector(int heading = 0, vector baseLocation = cInvalidVector)
 {
-   if (heading == cLLHeadingAlongCoast) { return (gNavyVec); }
-   if (heading == cLLHeadingIslandHop) { return (gNavyVec); }
-   if (heading == cLLHeadingFrontierPush) { return (gForwardBaseLocation); }
-   if (heading == cLLHeadingFollowTradeRoute) { return (gForwardBaseLocation); }
-   if (heading == cLLHeadingUpriver)
+   if (heading == cANWHeadingAlongCoast) { return (gNavyVec); }
+   if (heading == cANWHeadingIslandHop) { return (gNavyVec); }
+   if (heading == cANWHeadingFrontierPush) { return (gForwardBaseLocation); }
+   if (heading == cANWHeadingFollowTradeRoute) { return (gForwardBaseLocation); }
+   if (heading == cANWHeadingUpriver)
    {
       // Push inland: reflect gNavyVec across baseLocation so the anchor is
       // on the opposite side of the base from the water.
@@ -447,7 +447,7 @@ vector llGetHeadingFeatureVector(int heading = 0, vector baseLocation = cInvalid
    return (baseLocation);
 }
 
-vector llBlendAnchor(vector baseLocation = cInvalidVector, vector featureLocation = cInvalidVector, float strength = 0.0)
+vector anwBlendAnchor(vector baseLocation = cInvalidVector, vector featureLocation = cInvalidVector, float strength = 0.0)
 {
    if (baseLocation == cInvalidVector) { return (featureLocation); }
    if (featureLocation == cInvalidVector) { return (baseLocation); }
@@ -460,26 +460,26 @@ vector llBlendAnchor(vector baseLocation = cInvalidVector, vector featureLocatio
       xsVectorGetZ(baseLocation) * inv + xsVectorGetZ(featureLocation) * strength));
 }
 
-vector llGetPlacementBiasedCenter(vector baseLocation = cInvalidVector, int puid = -1)
+vector anwGetPlacementBiasedCenter(vector baseLocation = cInvalidVector, int puid = -1)
 {
    vector center = baseLocation;
 
    // Primary terrain drag.
-   if (gLLPreferredTerrainPrimary != cLLTerrainAny)
+   if (gANWPreferredTerrainPrimary != cANWTerrainAny)
    {
-      vector feature = llGetTerrainFeatureVector(gLLPreferredTerrainPrimary, baseLocation);
-      center = llBlendAnchor(center, feature, gLLTerrainBiasStrength);
+      vector feature = anwGetTerrainFeatureVector(gANWPreferredTerrainPrimary, baseLocation);
+      center = anwBlendAnchor(center, feature, gANWTerrainBiasStrength);
    }
    // Secondary terrain drag (half strength).
-   if (gLLPreferredTerrainSecondary != cLLTerrainAny)
+   if (gANWPreferredTerrainSecondary != cANWTerrainAny)
    {
-      vector feature2 = llGetTerrainFeatureVector(gLLPreferredTerrainSecondary, baseLocation);
-      center = llBlendAnchor(center, feature2, gLLTerrainBiasStrength * 0.5);
+      vector feature2 = anwGetTerrainFeatureVector(gANWPreferredTerrainSecondary, baseLocation);
+      center = anwBlendAnchor(center, feature2, gANWTerrainBiasStrength * 0.5);
    }
 
    // Heading drag — only biases non-house economic/military spreads so the
    // TC-relative house ring stays intact. Houses still go near TC.
-   if ((gLLExpansionHeading != cLLHeadingAny) && (gLLExpansionHeading != cLLHeadingDefensive))
+   if ((gANWExpansionHeading != cANWHeadingAny) && (gANWExpansionHeading != cANWHeadingDefensive))
    {
       if ((puid != cUnitTypedeHouseAfrican) && (puid != cUnitTypeHouse) &&
           (puid != cUnitTypeypVillage) && (puid != cUnitTypeypHouseIndian) &&
@@ -487,17 +487,17 @@ vector llGetPlacementBiasedCenter(vector baseLocation = cInvalidVector, int puid
           (puid != cUnitTypeHouseMed) && (puid != cUnitTypeLonghouse) &&
           (puid != cUnitTypeHouseAztec) && (puid != cUnitTypedeHouseInca))
       {
-         vector heading = llGetHeadingFeatureVector(gLLExpansionHeading, baseLocation);
-         center = llBlendAnchor(center, heading, gLLHeadingBiasStrength);
+         vector heading = anwGetHeadingFeatureVector(gANWExpansionHeading, baseLocation);
+         center = anwBlendAnchor(center, heading, gANWHeadingBiasStrength);
       }
    }
 
    return (center);
 }
 
-extern int gLLBaseInfluenceProbeBudget = 8;
+extern int gANWBaseInfluenceProbeBudget = 8;
 
-void llApplyLegendaryBaseInfluence(int planID = -1, int baseID = -1, int puid = -1,
+void anwApplyBaseInfluence(int planID = -1, int baseID = -1, int puid = -1,
    float defaultCenterDistance = 30.0, float defaultInfluenceDistance = 100.0, float defaultInfluenceValue = 200.0)
 {
    if (baseID < 0)
@@ -512,15 +512,15 @@ void llApplyLegendaryBaseInfluence(int planID = -1, int baseID = -1, int puid = 
       return;
    }
 
-   float distanceMultiplier = llGetBuildStyleDistanceMultiplier(puid);
+   float distanceMultiplier = anwGetBuildStyleDistanceMultiplier(puid);
 
    // Center-anchored civic: tight radius on non-house, non-military, non-TC
    // plans (markets, churches, plaza buildings). Aztec/Inca/Ottoman/
    // Kangxi/Valette/Tokugawa/Isabella historically built these right on the
    // plaza rather than scattered.
-   if ((gLLCenterAnchorCivic == true) &&
+   if ((gANWCenterAnchorCivic == true) &&
        (puid != cUnitTypeTownCenter) &&
-       (llIsMilitaryBuildStyleStructure(puid) == false) &&
+       (anwIsMilitaryBuildStyleStructure(puid) == false) &&
        (puid != cUnitTypedeHouseAfrican) && (puid != cUnitTypeHouse) &&
        (puid != cUnitTypeypVillage) && (puid != cUnitTypeypHouseIndian) &&
        (puid != cUnitTypeManor) && (puid != cUnitTypeHouseEast) &&
@@ -534,14 +534,14 @@ void llApplyLegendaryBaseInfluence(int planID = -1, int baseID = -1, int puid = 
       }
    }
 
-   float centerDistance = llClampBuildValue(defaultCenterDistance * distanceMultiplier, 8.0, 90.0);
-   float influenceDistance = llClampBuildValue(defaultInfluenceDistance * distanceMultiplier, 35.0, 220.0);
-   float influenceValue = llClampBuildValue(defaultInfluenceValue / distanceMultiplier, 60.0, 320.0);
+   float centerDistance = anwClampBuildValue(defaultCenterDistance * distanceMultiplier, 8.0, 90.0);
+   float influenceDistance = anwClampBuildValue(defaultInfluenceDistance * distanceMultiplier, 35.0, 220.0);
+   float influenceValue = anwClampBuildValue(defaultInfluenceValue / distanceMultiplier, 60.0, 320.0);
 
    // Terrain + heading-biased anchor. The influence center is dragged
    // toward the feature so the probability-weighted build site actually
    // lands on coast/river/frontier-forward etc. instead of the base center.
-   vector anchor = llGetPlacementBiasedCenter(baseLocation, puid);
+   vector anchor = anwGetPlacementBiasedCenter(baseLocation, puid);
 
    aiPlanSetVariableVector(planID, cBuildPlanCenterPosition, 0, anchor);
    aiPlanSetVariableFloat(planID, cBuildPlanCenterPositionDistance, 0, centerDistance);
@@ -550,22 +550,22 @@ void llApplyLegendaryBaseInfluence(int planID = -1, int baseID = -1, int puid = 
    aiPlanSetVariableFloat(planID, cBuildPlanInfluencePositionValue, 0, influenceValue);
    aiPlanSetVariableInt(planID, cBuildPlanInfluencePositionFalloff, 0, cBPIFalloffLinear);
    aiPlanSetBaseID(planID, baseID);
-   if (gLLBaseInfluenceProbeBudget > 0)
+   if (gANWBaseInfluenceProbeBudget > 0)
    {
-      gLLBaseInfluenceProbeBudget = gLLBaseInfluenceProbeBudget - 1;
-      llProbe("event.base.influence",
+      gANWBaseInfluenceProbeBudget = gANWBaseInfluenceProbeBudget - 1;
+      anwProbe("event.base.influence",
          "plan=" + planID + " base=" + baseID + " puid=" + puid +
          " centerDist=" + centerDistance +
          " influDist=" + influenceDistance +
          " influVal=" + influenceValue +
          " distMul=" + distanceMultiplier +
-         " anchor=" + llFmtVec(anchor));
+         " anchor=" + anwFmtVec(anchor));
    }
 }
 
 void selectClosestBuildPlanPosition(int planID = -1, int baseID = -1, int puid = -1)
 {
-   llApplyLegendaryBaseInfluence(planID, baseID, puid);
+   anwApplyBaseInfluence(planID, baseID, puid);
    aiPlanSetVariableBool(planID, cBuildPlanInfluenceAtBuilderPosition, 0, true);
    aiPlanSetVariableFloat(planID, cBuildPlanInfluenceBuilderPositionValue, 0, 100.0);    // 100m range.
    aiPlanSetVariableFloat(planID, cBuildPlanInfluenceBuilderPositionDistance, 0, 200.0); // 200 points max
@@ -1110,7 +1110,7 @@ void selectTCBuildPlanPosition(int buildPlan = -1, int baseID = -1)
       mineQuery = kbUnitQueryCreate("Mine query for TC placement");
       kbUnitQuerySetPlayerID(mineQuery, 0);
       kbUnitQuerySetUnitType(mineQuery, cUnitTypeMine);
-      kbUnitQuerySetMaximumDistance(mineQuery, 100.0 * gLLTownCenterDistanceMultiplier);
+      kbUnitQuerySetMaximumDistance(mineQuery, 100.0 * gANWTownCenterDistanceMultiplier);
       kbUnitQuerySetAscendingSort(mineQuery, true); // Ascending distance from initial location
    }
    kbUnitQuerySetPosition(mineQuery, kbBaseGetLocation(cMyID, kbBaseGetMainID(cMyID)));
@@ -1165,24 +1165,24 @@ void selectTCBuildPlanPosition(int buildPlan = -1, int baseID = -1)
       }
    }
 
-   // Legendary Leaders — expansion-heading bias on secondary TC placement.
+   // A New World — expansion-heading bias on secondary TC placement.
    // If the leader has a directional heading (AlongCoast / Upriver /
    // FrontierPush / IslandHop / FollowTradeRoute), blend the mine-anchored
    // location toward the heading vector so the secondary TC lands on the
    // historical axis. OutwardRings / Defensive / Any leave loc as-is.
    vector mainBaseLoc = kbBaseGetLocation(cMyID, kbBaseGetMainID(cMyID));
-   if ((gLLExpansionHeading != cLLHeadingAny) &&
-       (gLLExpansionHeading != cLLHeadingOutwardRings) &&
-       (gLLExpansionHeading != cLLHeadingDefensive) &&
+   if ((gANWExpansionHeading != cANWHeadingAny) &&
+       (gANWExpansionHeading != cANWHeadingOutwardRings) &&
+       (gANWExpansionHeading != cANWHeadingDefensive) &&
        (loc != cInvalidVector))
    {
-      vector heading = llGetHeadingFeatureVector(gLLExpansionHeading, mainBaseLoc);
-      loc = llBlendAnchor(loc, heading, gLLHeadingBiasStrength);
+      vector heading = anwGetHeadingFeatureVector(gANWExpansionHeading, mainBaseLoc);
+      loc = anwBlendAnchor(loc, heading, gANWHeadingBiasStrength);
    }
-   else if (gLLExpansionHeading == cLLHeadingDefensive)
+   else if (gANWExpansionHeading == cANWHeadingDefensive)
    {
       // Defensive leaders pull secondary TCs inward toward main base.
-      loc = llBlendAnchor(loc, mainBaseLoc, 0.5);
+      loc = anwBlendAnchor(loc, mainBaseLoc, 0.5);
    }
 
    gTCSearchVector = loc;
@@ -1190,7 +1190,7 @@ void selectTCBuildPlanPosition(int buildPlan = -1, int baseID = -1)
    // Instead of base ID or areas, use a center position and falloff.
    aiPlanSetVariableVector(buildPlan, cBuildPlanCenterPosition, 0, loc);
    aiPlanSetVariableFloat(buildPlan, cBuildPlanCenterPositionDistance, 0,
-      llClampBuildValue(50.0 * gLLTownCenterDistanceMultiplier, 35.0, 85.0));
+      anwClampBuildValue(50.0 * gANWTownCenterDistanceMultiplier, 35.0, 85.0));
 
    // Add position influences for trees, gold, TCs.
    aiPlanSetNumberVariableValues(buildPlan, cBuildPlanInfluenceUnitTypeID, 4, true);
@@ -1223,9 +1223,9 @@ void selectTCBuildPlanPosition(int buildPlan = -1, int baseID = -1)
    // Weight it to prefer the general starting neighborhood
    aiPlanSetVariableVector(buildPlan, cBuildPlanInfluencePosition, 0, loc);          // Position influence for landing position
    aiPlanSetVariableFloat(buildPlan, cBuildPlanInfluencePositionDistance, 0,
-      llClampBuildValue(100.0 * gLLTownCenterDistanceMultiplier, 60.0, 180.0));      // 100m range.
+      anwClampBuildValue(100.0 * gANWTownCenterDistanceMultiplier, 60.0, 180.0));      // 100m range.
    aiPlanSetVariableFloat(buildPlan, cBuildPlanInfluencePositionValue, 0,
-      llClampBuildValue(300.0 / gLLTownCenterDistanceMultiplier, 150.0, 420.0));     // 300 points max
+      anwClampBuildValue(300.0 / gANWTownCenterDistanceMultiplier, 150.0, 420.0));     // 300 points max
    aiPlanSetVariableInt(buildPlan, cBuildPlanInfluencePositionFalloff, 0, cBPIFalloffLinear); // Linear slope falloff
 
    aiPlanSetActive(buildPlan);
@@ -1537,7 +1537,7 @@ bool selectBuildPlanPosition(int planID = -1, int puid = -1, int baseID = -1)
       {
          // Usually we need to defend with Banks, thus placing Banks with high HP at front is a good choice.
          aiPlanSetVariableInt(planID, cBuildPlanLocationPreference, 0, cBuildingPlacementPreferenceFront);
-         llApplyLegendaryBaseInfluence(planID, baseID, puid, 24.0, 85.0, 180.0);
+         anwApplyBaseInfluence(planID, baseID, puid, 24.0, 85.0, 180.0);
          break;
       }
       case cUnitTypeTownCenter:
@@ -1587,8 +1587,8 @@ bool selectBuildPlanPosition(int planID = -1, int puid = -1, int baseID = -1)
             // Doctrine-aware placement: each LL build-style sets its own
             // cardinal preference (Front for forward/expansionist, Back for
             // tight-core/citadel, -1 to keep legacy random for genuinely
-            // dispersed doctrines). Set in leaderCommon.xs::llUseXxxStyle.
-            int placementPref = gLLMilitaryPlacementPreference;
+            // dispersed doctrines). Set in leaderCommon.xs::anwUseXxxStyle.
+            int placementPref = gANWMilitaryPlacementPreference;
             if (placementPref < 0)
             {
                placementPref = aiRandInt(4);  // legacy fallback
@@ -1596,7 +1596,7 @@ bool selectBuildPlanPosition(int planID = -1, int puid = -1, int baseID = -1)
             aiPlanSetVariableInt(planID, cBuildPlanLocationPreference, 0, placementPref);
             break;
          }
-         llApplyLegendaryBaseInfluence(planID, baseID, puid);
+         anwApplyBaseInfluence(planID, baseID, puid);
          break;
       }
    }
@@ -3167,10 +3167,10 @@ minInterval 5
          // Operational Line, Siege Train Concentration, Cossack Voisko,
          // Republican Levee, Civic Militia, Distributed Economic Network,
          // Steppe Cavalry Wedge, Jungle Guerrilla Network) lower the gate
-         // via gLLForwardBaseEarliestMs / gLLForwardBaseAnyDifficulty so
+         // via gANWForwardBaseEarliestMs / gANWForwardBaseAnyDifficulty so
          // they actually expand inside a normal-length match.
-         bool difficultyOk = (cDifficultyCurrent >= gDifficultyExpert) || (gLLForwardBaseAnyDifficulty == true);
-         int  earliestMs   = gLLForwardBaseEarliestMs;
+         bool difficultyOk = (cDifficultyCurrent >= gDifficultyExpert) || (gANWForwardBaseAnyDifficulty == true);
+         int  earliestMs   = gANWForwardBaseEarliestMs;
          buildForward = (gForwardBaseID >= 0 && getUnitCountByLocation(cUnitTypeLogicalTypeLandMilitary,
                         cPlayerRelationEnemyNotGaia, cUnitStateAlive, gForwardBaseLocation, 50.0) <= 2) ||
                         ((time - lastForwardBaseCheckTime >= 30000) && (difficultyOk == true) &&
@@ -3633,15 +3633,15 @@ void updateWantedTowers()
    }
 
    // Safety check.
-   if (gLLTowerLevel <= 0)
+   if (gANWTowerLevel <= 0)
    {
       gNumTowers = gNumTowers - 2;
    }
-   else if (gLLTowerLevel == 2)
+   else if (gANWTowerLevel == 2)
    {
       gNumTowers = gNumTowers + 1;
    }
-   else if (gLLTowerLevel >= 3)
+   else if (gANWTowerLevel >= 3)
    {
       gNumTowers = gNumTowers + 2;
    }

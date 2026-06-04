@@ -26,36 +26,36 @@ bool gPachacutiRulesEnabled = false;
 
 void initLeaderPachacuti(void)
 {
-   llVerboseEcho("A New World: activating Pachacuti personality.");
+   anwVerboseEcho("A New World: activating Pachacuti personality.");
 
-   llSetDefensivePersonality();
+   anwSetDefensivePersonality();
    btRushBoom = -0.3;             // Hard boom - Mit'a economy first.
    btOffenseDefense = -0.1;
    btBiasTrade = -0.1;
    btBiasNative = 0.45;           // Quechua / Aymara / Chimu drafts.
-   llSetMilitaryFocus(0.85, -0.3, 0.1);  // Infantry-only doctrine.
+   anwSetMilitaryFocus(0.85, -0.3, 0.1);  // Infantry-only doctrine.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseAndeanTerraceFortressStyle(4);
-   gLLHouseDistanceMultiplier = 0.75;
-   gLLMilitaryDistanceMultiplier = 0.80;  // Sacsayhuamán-tight concentric fortress — mid-band of spec [0.7,1.0]; barracks ring inside the wall belt, not at the ceiling.
-   llSetBuildStrongpointProfile(3, 3, 2, false);
+   anwUseAndeanTerraceFortressStyle(4);
+   gANWHouseDistanceMultiplier = 0.75;
+   gANWMilitaryDistanceMultiplier = 0.80;  // Sacsayhuamán-tight concentric fortress — mid-band of spec [0.7,1.0]; barracks ring inside the wall belt, not at the ceiling.
+   anwSetBuildStrongpointProfile(3, 3, 2, false);
    // Spec override: Inca Pachacuti doctrine — Sacsayhuamán concentric
    // ring fortress (Tier-walls the high ground in two or three concentric
    // rings — see playstyle_spec.json "Inca Pachacuti".doctrine_prose).
    // Andean Terrace helper defaults to ChokepointSegments(1); override
    // to FortressRing(0) to match the spec.
-   gLLWallStrategy = cLLWallStrategyFortressRing;
+   gANWWallStrategy = cANWWallStrategyFortressRing;
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
+   anwSetLeaderTacticalDoctrine(0.82, 0.18, 2, 4.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 7;               // Andean fortress emphasis.
    cvMaxArmyPop = 115;
 
    gPachacutiRulesEnabled = true;
-   llLogLeaderState("Pachacuti initialized");
-   llProbe("meta.leader_init", "leader=pachacuti");
+   anwLogLeaderState("Pachacuti initialized");
+   anwProbe("meta.leader_init", "leader=pachacuti");
 }
 
 //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ rule pachacutiMitaEconomy
 inactive
 minInterval 60
 {
-   llLogRuleTick("pachacutiMitaEconomy");
+   anwLogRuleTick("pachacutiMitaEconomy");
    if (gPachacutiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -89,7 +89,7 @@ rule pachacutiBolasScreen
 inactive
 minInterval 50
 {
-   llLogRuleTick("pachacutiBolasScreen");
+   anwLogRuleTick("pachacutiBolasScreen");
    if (gPachacutiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -115,7 +115,7 @@ rule pachacutiMountainEmpire
 inactive
 minInterval 55
 {
-   llLogRuleTick("pachacutiMountainEmpire");
+   anwLogRuleTick("pachacutiMountainEmpire");
    if (gPachacutiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -142,7 +142,7 @@ rule pachacutiTawantinsuyuWar
 inactive
 minInterval 70
 {
-   llLogRuleTick("pachacutiTawantinsuyuWar");
+   anwLogRuleTick("pachacutiTawantinsuyuWar");
    if (gPachacutiRulesEnabled == false)
    {
       xsDisableSelf();
@@ -156,7 +156,7 @@ minInterval 70
       btBiasCav = -0.3;
       btBiasArt = 0.1;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -168,7 +168,7 @@ rule pachacutiSapaIncaHost
 inactive
 minInterval 90
 {
-   llLogRuleTick("pachacutiSapaIncaHost");
+   anwLogRuleTick("pachacutiSapaIncaHost");
    if (gPachacutiRulesEnabled == false)
    {
       xsDisableSelf();

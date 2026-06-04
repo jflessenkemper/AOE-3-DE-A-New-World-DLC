@@ -14,7 +14,7 @@ if (!apiKey) {
 }
 
 const server = new McpServer({
-  name: "legendary-leaders-elevenlabs",
+  name: "anw-elevenlabs",
   version: "0.1.0"
 });
 

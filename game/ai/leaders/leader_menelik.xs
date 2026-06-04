@@ -26,30 +26,30 @@ bool gMenelikRulesEnabled = false;
 
 void initLeaderMenelik(void)
 {
-   llVerboseEcho("A New World: activating Menelik II personality.");
+   anwVerboseEcho("A New World: activating Menelik II personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.15;             // Mild boom, then commit.
    btOffenseDefense = 0.55;
    btBiasTrade = 0.15;
    btBiasNative = 0.5;            // Oromo, Tigrayan, Afar levies.
-   llSetMilitaryFocus(0.7, 0.05, 0.35);
+   anwSetMilitaryFocus(0.7, 0.05, 0.35);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseHighlandCitadelStyle(3);
-   gLLHouseDistanceMultiplier = 0.80;
-   gLLMilitaryDistanceMultiplier = 0.85;  // Defensive highland citadel — mid-band of spec [0.7,1.0]; barracks/stables tuck back from front, not at the very ceiling.
-   llSetBuildStrongpointProfile(3, 2, 2, false);
+   anwUseHighlandCitadelStyle(3);
+   gANWHouseDistanceMultiplier = 0.80;
+   gANWMilitaryDistanceMultiplier = 0.85;  // Defensive highland citadel — mid-band of spec [0.7,1.0]; barracks/stables tuck back from front, not at the very ceiling.
+   anwSetBuildStrongpointProfile(3, 2, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 5;
    cvMaxArmyPop = 120;            // Highland levies are numerous.
 
    gMenelikRulesEnabled = true;
-   llLogLeaderState("Menelik initialized");
-   llProbe("meta.leader_init", "leader=menelik");
+   anwLogLeaderState("Menelik initialized");
+   anwProbe("meta.leader_init", "leader=menelik");
 }
 
 //------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ rule menelikHighlandLevy
 inactive
 minInterval 60
 {
-   llLogRuleTick("menelikHighlandLevy");
+   anwLogRuleTick("menelikHighlandLevy");
    if (gMenelikRulesEnabled == false)
    {
       xsDisableSelf();
@@ -82,7 +82,7 @@ rule menelikWarbandPressure
 inactive
 minInterval 50
 {
-   llLogRuleTick("menelikWarbandPressure");
+   anwLogRuleTick("menelikWarbandPressure");
    if (gMenelikRulesEnabled == false)
    {
       xsDisableSelf();
@@ -96,7 +96,7 @@ minInterval 50
       btBiasInf = 0.95;
       btBiasCav = 0.25;            // Javelin Riders for chase.
       btBiasArt = -0.4;            // Save xp for Fortress imports.
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -108,7 +108,7 @@ rule menelikHighlandModernization
 inactive
 minInterval 55
 {
-   llLogRuleTick("menelikHighlandModernization");
+   anwLogRuleTick("menelikHighlandModernization");
    if (gMenelikRulesEnabled == false)
    {
       xsDisableSelf();
@@ -133,7 +133,7 @@ rule menelikAdwaPosture
 inactive
 minInterval 70
 {
-   llLogRuleTick("menelikAdwaPosture");
+   anwLogRuleTick("menelikAdwaPosture");
    if (gMenelikRulesEnabled == false)
    {
       xsDisableSelf();
@@ -147,7 +147,7 @@ minInterval 70
       btBiasCav = 0.3;
       btBiasArt = 0.75;
       cvMaxArmyPop = 150;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -159,7 +159,7 @@ rule menelikSolomonicWar
 inactive
 minInterval 90
 {
-   llLogRuleTick("menelikSolomonicWar");
+   anwLogRuleTick("menelikSolomonicWar");
    if (gMenelikRulesEnabled == false)
    {
       xsDisableSelf();

@@ -9,7 +9,7 @@
 
 extern int gCommanderRecoveryPlanID = -1;
 
-void llDestroyCommanderRecoveryPlan(void)
+void anwDestroyCommanderRecoveryPlan(void)
 {
    if (gCommanderRecoveryPlanID < 0)
    {
@@ -19,10 +19,10 @@ void llDestroyCommanderRecoveryPlan(void)
    int destroyedID = gCommanderRecoveryPlanID;
    aiPlanDestroy(gCommanderRecoveryPlanID);
    gCommanderRecoveryPlanID = -1;
-   llProbe("event.commander.recovery_destroyed", "plan=" + destroyedID + " atMs=" + xsGetTime());
+   anwProbe("event.commander.recovery_destroyed", "plan=" + destroyedID + " atMs=" + xsGetTime());
 }
 
-bool llIsCommanderAvailableForMajorAttack(void)
+bool anwIsCommanderAvailableForMajorAttack(void)
 {
    if (aiGetFallenExplorerID() >= 0)
    {
@@ -33,7 +33,7 @@ bool llIsCommanderAvailableForMajorAttack(void)
    return (kbUnitQueryExecute(heroQueryID) > 0);
 }
 
-bool llHasStartedBaseWalling(int mainBaseID = -1)
+bool anwHasStartedBaseWalling(int mainBaseID = -1)
 {
    if (mainBaseID < 0)
    {
@@ -53,7 +53,7 @@ bool llHasStartedBaseWalling(int mainBaseID = -1)
    return (false);
 }
 
-bool llEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
+bool anwEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
 {
    if (cvOkToBuildWalls == false)
    {
@@ -70,14 +70,14 @@ bool llEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
       return (true);
    }
 
-   if (llHasStartedBaseWalling(mainBaseID) == true)
+   if (anwHasStartedBaseWalling(mainBaseID) == true)
    {
       return (true);
    }
 
    if (aiPlanGetIDByTypeAndVariableType(cPlanBuildWall, cBuildWallPlanWallType, cBuildWallPlanWallTypeRing, true) >= 0)
    {
-      llLogDecision("WALL", "holding major attack until base walls begin construction");
+      anwLogDecision("WALL", "holding major attack until base walls begin construction");
       return (false);
    }
 
@@ -89,7 +89,7 @@ bool llEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
 
    if (kbResourceGet(cResourceWood) < 125.0)
    {
-      llLogDecision("WALL", "holding major attack until enough wood is available for pre-attack walls");
+      anwLogDecision("WALL", "holding major attack until enough wood is available for pre-attack walls");
       return (false);
    }
 
@@ -100,17 +100,17 @@ bool llEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
       wallRadius = 55.0;
    }
 
-   if (gLLWallLevel == 1)
+   if (gANWWallLevel == 1)
    {
       wallRadius = wallRadius - 6.0;
       gateCount = gateCount + 2;
    }
-   else if (gLLWallLevel == 3)
+   else if (gANWWallLevel == 3)
    {
       wallRadius = wallRadius + 6.0;
       gateCount = gateCount - 1;
    }
-   else if (gLLWallLevel >= 4)
+   else if (gANWWallLevel >= 4)
    {
       wallRadius = wallRadius + 10.0;
       gateCount = gateCount - 2;
@@ -124,7 +124,7 @@ bool llEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
    int wallPlanID = aiPlanCreate("Pre-Attack Base Wall", cPlanBuildWall);
    if (wallPlanID < 0)
    {
-      llLogDecision("WALL", "failed to create pre-attack wall plan");
+      anwLogDecision("WALL", "failed to create pre-attack wall plan");
       return (false);
    }
 
@@ -139,13 +139,13 @@ bool llEnsureBaseWallsBeforeMajorAttack(int mainBaseID = -1)
    aiPlanSetActive(wallPlanID, true);
    xsEnableRule("fillInWallGapsNew");
 
-   llLogPlanEvent("create", wallPlanID, "pre-attack-wall center=" + baseCenter + " radius=" + wallRadius +
+   anwLogPlanEvent("create", wallPlanID, "pre-attack-wall center=" + baseCenter + " radius=" + wallRadius +
       " gates=" + gateCount);
-   llLogDecision("WALL", "holding major attack until base walls begin construction");
+   anwLogDecision("WALL", "holding major attack until base walls begin construction");
    return (false);
 }
 
-void llCancelCommanderlessMajorAttacks(void)
+void anwCancelCommanderlessMajorAttacks(void)
 {
    int numPlans = aiPlanGetActiveCount();
    int cancelled = 0;
@@ -202,15 +202,15 @@ void llCancelCommanderlessMajorAttacks(void)
       aiPlanDestroy(gIslandSearchPlanID);
       gIslandSearchPlanID = -1;
    }
-   llProbe("event.commander.cancel_attacks", "cancelled=" + cancelled + " atMs=" + xsGetTime());
+   anwProbe("event.commander.cancel_attacks", "cancelled=" + cancelled + " atMs=" + xsGetTime());
 }
 
-bool llEnsureCommanderRecovery(void)
+bool anwEnsureCommanderRecovery(void)
 {
    int fallenExplorerID = aiGetFallenExplorerID();
    if (fallenExplorerID < 0)
    {
-      llDestroyCommanderRecoveryPlan();
+      anwDestroyCommanderRecoveryPlan();
       return (false);
    }
 
@@ -222,8 +222,8 @@ bool llEnsureCommanderRecovery(void)
       {
          createProtoUnitCommandResearchPlan(cProtoUnitCommandRansomExplorer, tcID, cMilitaryEscrowID, 95, 95);
          debugMilitary("Creating commander ransom plan");
-         llDestroyCommanderRecoveryPlan();
-         llProbe("event.commander.ransom_initiated", "fallenID=" + fallenExplorerID + " tcID=" + tcID);
+         anwDestroyCommanderRecoveryPlan();
+         anwProbe("event.commander.ransom_initiated", "fallenID=" + fallenExplorerID + " tcID=" + tcID);
          return (true);
       }
    }
@@ -238,7 +238,7 @@ bool llEnsureCommanderRecovery(void)
       return (true);
    }
 
-   llDestroyCommanderRecoveryPlan();
+   anwDestroyCommanderRecoveryPlan();
 
    int scoutType = findBestScoutType();
    if (scoutType < 0)
@@ -330,7 +330,7 @@ inactive
       aiSetMostHatedPlayerID(xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy));
       debugMilitary("Treaty targeting randomly selected Player " +
          xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy) + " to be our most hated player");
-      llLogDecision("TARGET", "treaty selected mostHatedPlayer=" + xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy) +
+      anwLogDecision("TARGET", "treaty selected mostHatedPlayer=" + xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy) +
          " enemyCount=" + gNumEnemies + " ffa=" + kbGetIsFFA());
 
       if (gLandUnitPicker >= 0)
@@ -378,7 +378,7 @@ inactive
       aiSetMostHatedPlayerID(xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy));
       debugMilitary("Randomly selected Player " + xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy) +
          " to be our most hated player");
-      llLogDecision("TARGET", "selected mostHatedPlayer=" + xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy) +
+      anwLogDecision("TARGET", "selected mostHatedPlayer=" + xsArrayGetInt(gArrayEnemyPlayerIDs, arrayIndexOfSelectedEnemy) +
          " enemyCount=" + gNumEnemies + " ffa=" + kbGetIsFFA());
 
       if (gLandUnitPicker >= 0)
@@ -1626,24 +1626,24 @@ minInterval 15
    vector gatherPoint = kbBaseGetMilitaryGatherPoint(cMyID, mainBaseID);
    if (targetIsEnemy == true)
    {
-      if (llIsCommanderAvailableForMajorAttack() == false)
+      if (anwIsCommanderAvailableForMajorAttack() == false)
       {
          debugMilitary("Holding major land attack until commander returns");
          return;
       }
 
-      if (llEnsureBaseWallsBeforeMajorAttack(mainBaseID) == false)
+      if (anwEnsureBaseWallsBeforeMajorAttack(mainBaseID) == false)
       {
          debugMilitary("Holding major land attack until base walling begins");
          return;
       }
 
-      llLogDecision("COMBAT", "launching land attack targetPlayer=" + targetPlayer + " targetBase=" + targetBaseID +
+      anwLogDecision("COMBAT", "launching land attack targetPlayer=" + targetPlayer + " targetBase=" + targetBaseID +
          " gatherPoint=" + gatherPoint + " targetPoint=" + targetBaseLocation);
       // LL-ATTACK probe — first primary land attack launched. Includes target
       // player, base, age, army pop so we can correlate doctrine (btOffense,
-      // gLLWallStrategy) with actual aggression.
-      llProbe("mil.attack",
+      // gANWWallStrategy) with actual aggression.
+      anwProbe("mil.attack",
          "target=p" + targetPlayer +
          " base=" + targetBaseID +
          " age=" + kbGetAge() +
@@ -1729,15 +1729,15 @@ minInterval 15
             sendStatement(cPlayerRelationAllyExcludingSelf, cAICommPromptToAllyIWillAttackEnemySettlers, targetBaseLocation);
          }
 
-         llSendLegendaryLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, 120000);
-         llSendLegendaryLeaderInsultLine(targetPlayer, 120000);
+         anwSendLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, 120000);
+         anwSendLeaderInsultLine(targetPlayer, 120000);
       }
 
       aiPlanSetBaseID(planID, mainBaseID);
       aiPlanSetInitialPosition(planID, gatherPoint);
 
       addUnitsToMilitaryPlan(planID);
-      llLogCombatPlanConfig("create", planID, "land-attack");
+      anwLogCombatPlanConfig("create", planID, "land-attack");
 
       aiPlanSetActive(planID);
 
@@ -1746,7 +1746,7 @@ minInterval 15
    }
    else 
    {
-      llLogDecision("COMBAT", "launching land defense targetPlayer=" + targetPlayer + " targetBase=" + targetBaseID +
+      anwLogDecision("COMBAT", "launching land defense targetPlayer=" + targetPlayer + " targetBase=" + targetBaseID +
          " defendPoint=" + baseLocation);
       planID = aiPlanCreate("Defend Player " + targetPlayer + " Base " + targetBaseID, cPlanCombat);
 
@@ -1769,7 +1769,7 @@ minInterval 15
       aiPlanSetOrphan(planID, true);
 
       addUnitsToMilitaryPlan(planID);
-      llLogCombatPlanConfig("create", planID, "land-defend");
+      anwLogCombatPlanConfig("create", planID, "land-defend");
 
       aiPlanSetActive(planID);
 
@@ -1955,7 +1955,7 @@ minInterval 30
       //aiPlanSetVariableFloat(dockPlan, cBuildPlanBuildingBufferSpace, 0, 3.0); // Put some space between docks...
      
       aiPlanSetActive(dockPlan);
-      llVerboseEcho("**** STARTING NAVY DOCK PLAN, plan ID "+dockPlan);
+      anwVerboseEcho("**** STARTING NAVY DOCK PLAN, plan ID "+dockPlan);
       return;  // Nothing else to do until dock is complete
    }
 
@@ -2839,8 +2839,8 @@ void moveDefenseReflex(vector location = cInvalidVector, float radius = -1.0, in
    // Probe entry: lets analysers correlate "defense reflex fired"
    // events with army composition / pressure events. Single-call-site
    // hook (only this function moves the reflex).
-   llProbe("event.combat.defense_reflex",
-      "loc=" + llFmtVec(location) +
+   anwProbe("event.combat.defense_reflex",
+      "loc=" + anwFmtVec(location) +
       " radius=" + radius +
       " baseID=" + baseID +
       " atMs=" + xsGetTime());
@@ -3045,8 +3045,8 @@ minInterval 13
       aiPlanSetDesiredPriority(gLandDefendPlan0, 10); // Very low priority, don't steal from attack plans.
       aiPlanSetActive(gLandDefendPlan0);
       debugMilitary("Creating primary land defend plan");
-      llLogCombatPlanConfig("create", gLandDefendPlan0, "primary-land-defend");
-      llProbe("mil.defend", "plan=" + gLandDefendPlan0 + " base=" + mainBaseID +
+      anwLogCombatPlanConfig("create", gLandDefendPlan0, "primary-land-defend");
+      anwProbe("mil.defend", "plan=" + gLandDefendPlan0 + " base=" + mainBaseID +
          " age=" + kbGetAge() + " armyPop=" + aiGetMilitaryPop());
 
       gLandReservePlan = aiPlanCreate("Land Reserve Units", cPlanCombat);
@@ -3091,7 +3091,7 @@ minInterval 13
       aiPlanSetDesiredPriority(gLandReservePlan, 5); // Very very low priority, gather unused units.
       aiPlanSetActive(gLandReservePlan);
       debugMilitary("Creating reserve plan");
-      llLogCombatPlanConfig("create", gLandReservePlan, "land-reserve");
+      anwLogCombatPlanConfig("create", gLandReservePlan, "land-reserve");
       xsEnableRule("endDefenseReflexDelay"); // Reset to relaxed stances after plans have a second to be created.
       xsDisableSelf();
    }
@@ -3250,7 +3250,7 @@ minInterval 10
             if ((enemyPlayerUnitCount > (2 * gGoodArmyPop)) && (enemyPlayerUnitCount > (3 * armySize)))
             { // Enemy army is big, and we're badly outnumbered.
                sendStatement(enemyPlayerID, cAICommPromptToEnemyISpotHisArmyMyBaseOverrun, kbBaseGetLocation(cMyID, gDefenseReflexBaseID));
-               llSendLegendaryLeaderInsultLine(enemyPlayerID, 120000);
+               anwSendLeaderInsultLine(enemyPlayerID, 120000);
                debugMilitary("Sending OVERRUN prompt to player " + enemyPlayerID + ", he has " + enemyPlayerUnitCount + " units.");
                debugMilitary("I have " + armySize + " units, and " + gGoodArmyPop + " is a good army size.");
                return;
@@ -3258,7 +3258,7 @@ minInterval 10
             if (enemyPlayerUnitCount > (2 * gGoodArmyPop))
             { // Big army, but I'm still in the fight.
                sendStatement(enemyPlayerID, cAICommPromptToEnemyISpotHisArmyMyBaseLarge, kbBaseGetLocation(cMyID, gDefenseReflexBaseID));
-               llSendLegendaryLeaderInsultLine(enemyPlayerID, 120000);
+               anwSendLeaderInsultLine(enemyPlayerID, 120000);
                debugMilitary("Sending LARGE ARMY prompt to player " + enemyPlayerID + ", he has " + enemyPlayerUnitCount + " units.");
                debugMilitary("I have " + armySize + " units, and " + gGoodArmyPop + " is a good army size.");
                return;
@@ -3267,7 +3267,7 @@ minInterval 10
             {
                // Moderate size.
                sendStatement(enemyPlayerID, cAICommPromptToEnemyISpotHisArmyMyBaseMedium, kbBaseGetLocation(cMyID, gDefenseReflexBaseID));
-               llSendLegendaryLeaderInsultLine(enemyPlayerID, 120000);
+               anwSendLeaderInsultLine(enemyPlayerID, 120000);
                debugMilitary("Sending MEDIUM ARMY prompt to player " + enemyPlayerID + ", he has " + enemyPlayerUnitCount + " units.");
                debugMilitary("I have " + armySize + " units, and " + gGoodArmyPop + " is a good army size.");
                return;
@@ -3275,7 +3275,7 @@ minInterval 10
             if ((enemyPlayerUnitCount < gGoodArmyPop) && (enemyPlayerUnitCount < armySize))
             { // Small, and under control.
                sendStatement(enemyPlayerID, cAICommPromptToEnemyISpotHisArmyMyBaseSmall, kbBaseGetLocation(cMyID, gDefenseReflexBaseID));
-               llSendLegendaryLeaderInsultLine(enemyPlayerID, 120000);
+               anwSendLeaderInsultLine(enemyPlayerID, 120000);
                debugMilitary("Sending SMALL ARMY prompt to player " + enemyPlayerID + ", he has " + enemyPlayerUnitCount + " units.");
                debugMilitary("I have " + armySize + " units, and " + gGoodArmyPop + " is a good army size.");
                return;
@@ -4011,7 +4011,7 @@ rule rescueExplorer
 inactive
 minInterval 15
 {
-   llEnsureCommanderRecovery();
+   anwEnsureCommanderRecovery();
 }
 
 //==============================================================================
@@ -4021,7 +4021,7 @@ rule ransomExplorer
 inactive
 minInterval 15
 {
-   llEnsureCommanderRecovery();
+   anwEnsureCommanderRecovery();
 }
 
 //==============================================================================
@@ -4031,7 +4031,7 @@ rule commanderRecoveryMonitor
 inactive
 minInterval 10
 {
-   if (llIsCommanderAvailableForMajorAttack() == true)
+   if (anwIsCommanderAvailableForMajorAttack() == true)
    {
       if ((gCommanderRecoveryPlanID >= 0) && (aiPlanGetState(gCommanderRecoveryPlanID) < 0))
       {
@@ -4040,8 +4040,8 @@ minInterval 10
       return;
    }
 
-   llCancelCommanderlessMajorAttacks();
-   llEnsureCommanderRecovery();
+   anwCancelCommanderlessMajorAttacks();
+   anwEnsureCommanderRecovery();
 }
 
 //==============================================================================

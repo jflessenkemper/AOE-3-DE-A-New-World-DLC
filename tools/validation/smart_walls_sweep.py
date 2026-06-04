@@ -2,7 +2,7 @@
 """smart_walls_sweep.py — 4-civ smart-walls AI validation sweep.
 
 Runs 4 x 1v1 AoE3 DE Skirmish matches (each ~4 min wall-clock) against
-Napoleonic France (Napoleon) and captures [LLP v=2] probe data from
+Napoleonic France (Napoleon) and captures [ANWP v=2] probe data from
 Age3Log.txt to verify smart-walls AI behaviour for four wall-strategy
 archetypes.
 
@@ -420,7 +420,7 @@ def resign_match() -> None:
 # ── log analysis ──────────────────────────────────────────────────────────────
 
 PROBE_RE = re.compile(
-    r"\[LLP v=2\s+t=\d+\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)"
+    r"\[ANWP v=2\s+t=\d+\s+p=\d+\s+civ=([^\s]+)\s+ldr=([^\s]+)\s+tag=([^\]]+)\](.*)"
 )
 CLOSURE_RE = re.compile(r"closure=([\d.]+)")
 
@@ -666,7 +666,7 @@ def write_report(results: list[dict], partial: bool = False) -> None:
             f"### {r['civ']} ({r['archetype']})",
             f"- Leader: {r.get('leader','?')} | Map: {r.get('map','?')}",
             f"- Status: {r['status']}",
-            f"- Total [LLP v=2] probes: {r.get('probes',0)}",
+            f"- Total [ANWP v=2] probes: {r.get('probes',0)}",
             f"- Tag breakdown: `{json.dumps(r.get('tag_counts', {}), sort_keys=True)}`",
             f"- wall.closure: `{json.dumps(r.get('wall_closure', {}))}`",
             f"- **Verdict: {v}**",

@@ -455,7 +455,7 @@ def main() -> int:
     # Telemetry: parse probe logs and emit HTML report
     p_telemetry = sub.add_parser(
         "telemetry",
-        help="parse [LLP v=2] probe logs and render telemetry HTML report",
+        help="parse [ANWP v=2] probe logs and render telemetry HTML report",
     )
     telemetry_sub = p_telemetry.add_subparsers(dest="telemetry_cmd", required=True)
     p_tel_parse = telemetry_sub.add_parser(

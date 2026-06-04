@@ -85,7 +85,7 @@ void assignCoastalUnitsToAssault()
    }
    
    if (unitsAssigned > 0) {
-      llVerboseEcho("Assigned " + unitsAssigned + " coastal units to invasion plan");
+      anwVerboseEcho("Assigned " + unitsAssigned + " coastal units to invasion plan");
    }
 }
 //==============================================================================
@@ -144,7 +144,7 @@ int createInvasionTransportPlan(vector gatherPoint = cInvalidVector, vector targ
    int numDocks = kbUnitQueryExecute(dockQueryID);
    
    if (numDocks > 0) {
-      llVerboseEcho("Gather point too close to dock, searching for alternative...");
+      anwVerboseEcho("Gather point too close to dock, searching for alternative...");
       
       bool foundValidPoint = false;
       vector directionToTarget = cInvalidVector;
@@ -187,7 +187,7 @@ int createInvasionTransportPlan(vector gatherPoint = cInvalidVector, vector targ
             if (kbAreAreaGroupsPassableByLand(gatherPointGroupId, testGroupId) == true) {
                adjustedGatherPoint = testCoastalPoint;
                foundValidPoint = true;
-               llVerboseEcho("Found dock-free gather point at offset " + offsetDistance);
+               anwVerboseEcho("Found dock-free gather point at offset " + offsetDistance);
                break;
             }
          }
@@ -216,7 +216,7 @@ int createInvasionTransportPlan(vector gatherPoint = cInvalidVector, vector targ
                   if (kbAreAreaGroupsPassableByLand(gatherPointGroupId, testGroupId) == true) {
                      adjustedGatherPoint = testCoastalPoint;
                      foundValidPoint = true;
-                     llVerboseEcho("Found dock-free gather point along coast (positive)");
+                     anwVerboseEcho("Found dock-free gather point along coast (positive)");
                      break;
                   }
                }
@@ -235,7 +235,7 @@ int createInvasionTransportPlan(vector gatherPoint = cInvalidVector, vector targ
                   if (kbAreAreaGroupsPassableByLand(gatherPointGroupId, testGroupId) == true) {
                      adjustedGatherPoint = testCoastalPoint;
                      foundValidPoint = true;
-                     llVerboseEcho("Found dock-free gather point along coast (negative)");
+                     anwVerboseEcho("Found dock-free gather point along coast (negative)");
                      break;
                   }
                }
@@ -244,7 +244,7 @@ int createInvasionTransportPlan(vector gatherPoint = cInvalidVector, vector targ
       }
       
       if (foundValidPoint == false) {
-         llVerboseEcho("Warning: Could not find dock-free gather point, using original");
+         anwVerboseEcho("Warning: Could not find dock-free gather point, using original");
       }
    }
    // === END ===
@@ -285,8 +285,8 @@ int createInvasionTransportPlan(vector gatherPoint = cInvalidVector, vector targ
 //==============================================================================
 void createIslandAssaultPlan(vector gatherPoint = cInvalidVector, vector targetPoint = cInvalidVector)
 {
-   if (llIsCommanderAvailableForMajorAttack() == false) {
-      llVerboseEcho("createIslandAssaultPlan: Waiting for commander to return before assaulting");
+   if (anwIsCommanderAvailableForMajorAttack() == false) {
+      anwVerboseEcho("createIslandAssaultPlan: Waiting for commander to return before assaulting");
       return;
    }
 
@@ -304,7 +304,7 @@ void createIslandAssaultPlan(vector gatherPoint = cInvalidVector, vector targetP
       targetPoint = gIslandCenterPoint;
    }
    if (targetPoint == cInvalidVector) {
-      llVerboseEcho("createIslandAssaultPlan: No valid target point!");
+      anwVerboseEcho("createIslandAssaultPlan: No valid target point!");
       return;
    }
    
@@ -313,7 +313,7 @@ void createIslandAssaultPlan(vector gatherPoint = cInvalidVector, vector targetP
    gIslandAssaultPlanID = aiPlanCreate("Island Assault Plan", cPlanCombat);
    
    if (gIslandAssaultPlanID < 0) {
-      llVerboseEcho("Failed to create assault plan!");
+      anwVerboseEcho("Failed to create assault plan!");
       return;
    }
    
@@ -370,7 +370,7 @@ void createIslandAssaultPlan(vector gatherPoint = cInvalidVector, vector targetP
    aiPlanSetRequiresAllNeedUnits(gIslandAssaultPlanID, false);  // Don't wait for all units
    aiPlanSetActive(gIslandAssaultPlanID, true);
    
-   llVerboseEcho("Assault plan created with " + numberInPlan + " units, target: " + targetPoint);
+   anwVerboseEcho("Assault plan created with " + numberInPlan + " units, target: " + targetPoint);
 }
 
 //==============================================================================
@@ -396,7 +396,7 @@ void createIslandSearchPlan(vector gatherPoint = cInvalidVector, vector targetPo
       targetPoint = gProbableEnemyIsland;
    }
    if (targetPoint == cInvalidVector) {
-      llVerboseEcho("createIslandSearchPlan: No valid target point!");
+      anwVerboseEcho("createIslandSearchPlan: No valid target point!");
       return;
    }
    
@@ -407,7 +407,7 @@ void createIslandSearchPlan(vector gatherPoint = cInvalidVector, vector targetPo
    gIslandSearchPlanID = aiPlanCreate("Island Search Plan", cPlanCombat);
    
    if (gIslandSearchPlanID < 0) {
-      llVerboseEcho("Failed to create search plan!");
+      anwVerboseEcho("Failed to create search plan!");
       return;
    }
    
@@ -464,7 +464,7 @@ void createIslandSearchPlan(vector gatherPoint = cInvalidVector, vector targetPo
    aiPlanSetRequiresAllNeedUnits(gIslandSearchPlanID, false);
    aiPlanSetActive(gIslandSearchPlanID, true);
    
-   llVerboseEcho("Search plan created with " + numberInPlan + " units, targeting island center");
+   anwVerboseEcho("Search plan created with " + numberInPlan + " units, targeting island center");
 }
 //==============================================================================
 // getStrandedUnitsLocation
@@ -573,7 +573,7 @@ void checkAndRecreateStrandedUnitPlans(int currentMode = -1, bool hasTarget = fa
          strandedLocation = gNavalInvasionCoastalPoint;
       }
       
-      llVerboseEcho("Plans died but " + numberOnIsland + " units still on island, recreating at " + strandedLocation);
+      anwVerboseEcho("Plans died but " + numberOnIsland + " units still on island, recreating at " + strandedLocation);
       
       // Determine which plan to create based on mode and target
       if (hasTarget == true || currentMode == 1) {
@@ -583,16 +583,16 @@ void checkAndRecreateStrandedUnitPlans(int currentMode = -1, bool hasTarget = fa
          
          if (enemyBuildingId > 0) {
             vector enemyLocation = kbUnitGetPosition(enemyBuildingId);
-            llVerboseEcho("Recreating assault plan targeting enemy at " + enemyLocation);
+            anwVerboseEcho("Recreating assault plan targeting enemy at " + enemyLocation);
             createIslandAssaultPlan(strandedLocation, enemyLocation);
          } else {
             // No enemy found, create search plan instead
-            llVerboseEcho("No enemy found, recreating search plan");
+            anwVerboseEcho("No enemy found, recreating search plan");
             createIslandSearchPlan(strandedLocation, gIslandCenterPoint);
          }
       } else {
          // Search mode
-         llVerboseEcho("Recreating search plan");
+         anwVerboseEcho("Recreating search plan");
          createIslandSearchPlan(strandedLocation, gIslandCenterPoint);
       }
    }
@@ -665,7 +665,7 @@ void addUnitsToInvasionPlan(int planId = -1) {
       // Update the plan's unit type counts
       int currentInPlan = aiPlanGetNumberUnits(planId, cUnitTypeLogicalTypeLandMilitary);
       aiPlanAddUnitType(planId, cUnitTypeLogicalTypeLandMilitary, currentInPlan / 2, currentInPlan, 200);
-      llVerboseEcho("Added " + unitsAdded + " units to invasion plan, total: " + currentInPlan);
+      anwVerboseEcho("Added " + unitsAdded + " units to invasion plan, total: " + currentInPlan);
    }
 }
 
@@ -704,7 +704,7 @@ void warshipTraining()
       
       // Validate we have units to train
       if (gGalleonLandUnit == -1) {
-         llVerboseEcho("warshipTraining: No land unit found to train");
+         anwVerboseEcho("warshipTraining: No land unit found to train");
          return;
       }
       
@@ -724,7 +724,7 @@ void warshipTraining()
          aiPlanSetVariableVector(gGalleonArtilleryTrainingPlan, cTrainPlanGatherPoint, 0, gNavalInvasionCoastalPoint);
       }
       
-      llVerboseEcho("Galleon Maintain Plans Created!");
+      anwVerboseEcho("Galleon Maintain Plans Created!");
    }
    
    // Active invasion sequence - manually control ships
@@ -787,7 +787,7 @@ void warshipTraining()
          
          if (unitsOnboard > 0)
          {
-            llVerboseEcho("Galleon " + unitID + " ejecting " + unitsOnboard + " units");
+            anwVerboseEcho("Galleon " + unitID + " ejecting " + unitsOnboard + " units");
             aiTaskUnitEject(unitID);
             
             // After ejecting, assign ejected units to assault plan
@@ -801,7 +801,7 @@ void warshipTraining()
          {
             bool trainArtillery = ((i % 2) == 1) && (gGalleonArtilleryUnit != -1);
             int unitToTrain = trainArtillery ? gGalleonArtilleryUnit : gGalleonLandUnit;
-            llVerboseEcho("Galleon " + unitID + " training: " + kbGetUnitTypeName(unitToTrain));
+            anwVerboseEcho("Galleon " + unitID + " training: " + kbGetUnitTypeName(unitToTrain));
             aiTaskUnitTrain(unitID, unitToTrain);
          }
       }
@@ -819,7 +819,7 @@ bool homeIslandUnderAttack() {
    int enemyUnitQueryID = createSimpleUnitQuery(cUnitTypeLogicalTypeLandMilitary, cPlayerRelationEnemyNotGaia, cUnitStateAlive, startingLoc, 125);
    int enemyNumberFound = kbUnitQueryExecute(enemyUnitQueryID);
    if (enemyNumberFound > 15) {
-      //llVerboseEcho("Clear a path, I'm going home!");
+      //anwVerboseEcho("Clear a path, I'm going home!");
       return true;
    }
 
@@ -829,7 +829,7 @@ bool homeIslandUnderAttack() {
 // resetInvasionSequence - Necessarily resets the invasion sequence...
 //==============================================================================
 void resetInvasionSequence() {
-   llVerboseEcho("Could not do something that was necessary, resetting!");
+   anwVerboseEcho("Could not do something that was necessary, resetting!");
    aiPlanDestroy(gIslandAssaultTransportPlanID);
    aiPlanDestroy(gIslandAssaultTransportPlan2ID);
    aiPlanDestroy(gIslandAssaultPlanID);

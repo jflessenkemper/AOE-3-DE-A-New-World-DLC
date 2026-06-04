@@ -25,11 +25,11 @@ After ``zlib.decompress`` the payload contains, among other things, the
 **compiled XS script blob for each AI player** stitched into the replay
 header so the engine can replay deterministically. Each AI's blob carries
 its own copy of any string literals from the script — including the
-``[LLP v=2 t=`` format-string template defined in
+``[ANWP v=2 t=`` format-string template defined in
 ``aiUtilities.xs::llProbe`` and the tag literals (``meta.boot``,
 ``meta.gameover``, etc.).
 
-So the count of ``[LLP v=2 t=`` literal hits in a decompressed replay
+So the count of ``[ANWP v=2 t=`` literal hits in a decompressed replay
 equals the number of AI players whose XS script was loaded. In a 1v7
 match: 7 hits = all AI loaded; 0 hits = AI failed to load entirely.
 
@@ -66,7 +66,7 @@ REPLAY_PAYLOAD_OFFSET = 8
 # game/ai/core/aiUtilities.xs (llProbe) or aiCore.xs (gameOverHandler etc.).
 # Counting any of them gives a per-AI-script-loaded count; we report all
 # three for redundancy.
-PROBE_FORMAT_LITERAL = b"LLP v=2 t="
+PROBE_FORMAT_LITERAL = b"ANWP v=2 t="
 META_BOOT_LITERAL = b"meta.boot"
 META_GAMEOVER_LITERAL = b"meta.gameover"
 

@@ -9,7 +9,7 @@ include "core/aiCore.xs";
 //==============================================================================
 void main(void)
 {
-   llVerboseEcho("Main is starting");
+   anwVerboseEcho("Main is starting");
 
    // Set our random seed, "-1" is a random init. 
    // Very important that this is done early so we can use our rand functions.

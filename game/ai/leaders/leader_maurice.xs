@@ -25,29 +25,29 @@ bool gMauriceRulesEnabled = false;
 
 void initLeaderMaurice(void)
 {
-   llVerboseEcho("A New World: activating Maurice of Nassau personality.");
+   anwVerboseEcho("A New World: activating Maurice of Nassau personality.");
 
-   llSetDefensivePersonality();
+   anwSetDefensivePersonality();
    btRushBoom = -0.45;            // Hard boom; banks finance the war.
    btOffenseDefense = -0.05;      // Defensive baseline.
    btBiasTrade = 0.6;             // VOC trade-route emphasis.
    btBiasNative = -0.3;           // Regulars only; no native treaty leaning.
-   llSetMilitaryFocus(0.7, -0.2, 0.35);  // Infantry-heavy, almost no cavalry, real artillery.
+   anwSetMilitaryFocus(0.7, -0.2, 0.35);  // Infantry-heavy, almost no cavalry, real artillery.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseNavalMercantileCompoundStyle(2);
-   gLLEconomicDistanceMultiplier = 1.40;
-   gLLHouseDistanceMultiplier = 1.05;
+   anwUseNavalMercantileCompoundStyle(2);
+   gANWEconomicDistanceMultiplier = 1.40;
+   gANWHouseDistanceMultiplier = 1.05;
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.85, 0.15, 2, 4.5);   // Stadtholder stays well behind the line.
+   anwSetLeaderTacticalDoctrine(0.85, 0.15, 2, 4.5);   // Stadtholder stays well behind the line.
 
    cvOkToBuildForts = true;
    cvMaxTowers = 8;               // Engineer corps - lots of towers.
    cvMaxArmyPop = 110;
 
    gMauriceRulesEnabled = true;
-   llLogLeaderState("Maurice initialized");
-   llProbe("meta.leader_init", "leader=maurice");
+   anwLogLeaderState("Maurice initialized");
+   anwProbe("meta.leader_init", "leader=maurice");
 }
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ rule mauriceBankBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("mauriceBankBoom");
+   anwLogRuleTick("mauriceBankBoom");
    if (gMauriceRulesEnabled == false)
    {
       xsDisableSelf();
@@ -81,7 +81,7 @@ rule mauricePikeShotScreen
 inactive
 minInterval 50
 {
-   llLogRuleTick("mauricePikeShotScreen");
+   anwLogRuleTick("mauricePikeShotScreen");
    if (gMauriceRulesEnabled == false)
    {
       xsDisableSelf();
@@ -107,7 +107,7 @@ rule mauriceDrillReforms
 inactive
 minInterval 55
 {
-   llLogRuleTick("mauriceDrillReforms");
+   anwLogRuleTick("mauriceDrillReforms");
    if (gMauriceRulesEnabled == false)
    {
       xsDisableSelf();
@@ -134,7 +134,7 @@ rule mauriceEngineerCorps
 inactive
 minInterval 70
 {
-   llLogRuleTick("mauriceEngineerCorps");
+   anwLogRuleTick("mauriceEngineerCorps");
    if (gMauriceRulesEnabled == false)
    {
       xsDisableSelf();
@@ -148,7 +148,7 @@ minInterval 70
       btBiasArt = 0.7;            // Mortar + Heavy Cannon emphasis.
       btBiasTrade = 0.7;
       cvMaxArmyPop = 140;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -160,7 +160,7 @@ rule mauriceEightyYearsLine
 inactive
 minInterval 90
 {
-   llLogRuleTick("mauriceEightyYearsLine");
+   anwLogRuleTick("mauriceEightyYearsLine");
    if (gMauriceRulesEnabled == false)
    {
       xsDisableSelf();

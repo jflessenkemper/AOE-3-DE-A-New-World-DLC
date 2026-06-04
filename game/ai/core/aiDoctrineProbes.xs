@@ -35,7 +35,7 @@
 //                           ring radius used. expected is 2*PI*radius/4
 //                           (4-unit segment length). placed is actual owned
 //                           wall segments (kbUnitCount ABQ). closure=placed/expected.
-//                           strategy matches the cLLWallStrategy* enum.
+//                           strategy matches the cANWWallStrategy* enum.
 //                           elapsed is game-time seconds.
 //        wall.escalate  plan=<int> closure=<float>
 //                         — fired when coverage < 0.60 after 4 min and the
@@ -45,19 +45,19 @@
 //                         — fired when coverage < 0.60 after 4 min and the
 //                           plan was destroyed; a fresh plan is emitted.
 //        wall.water_fix orig=<vec> final=<vec> steps=<int> fixed=<bool>
-//                         — fired by llGetForwardBiasedWallCenter whenever a
+//                         — fired by anwGetForwardBiasedWallCenter whenever a
 //                           water/cliff fixup is attempted (steps=0 and
 //                           fixed=false on flat inland maps).
 //        wall.chokepoint vec=<vec> tiles=<int> cached=<0|1> [fallback=<tag>]
-//                         — fired by llDetectChokepointVector; tiles is the
+//                         — fired by anwDetectChokepointVector; tiles is the
 //                           narrowest border area's tile count (0 on cache hits
 //                           or flat-map fallback). cached=1 means a previously
 //                           computed vector was reused.
 //        wall.coast      vec=<vec> waterBorders=<int> cached=<0|1>
-//                         — fired by llDetectCoastVector; waterBorders is the
+//                         — fired by anwDetectCoastVector; waterBorders is the
 //                           count of water-typed border areas found.
 //        wall.perimeter_gaps  land=<int> water=<int> radius=<float>
-//                         — fired by llCountPerimeterGaps (Track 1.2a); land
+//                         — fired by anwCountPerimeterGaps (Track 1.2a); land
 //                           is the count of the 8 ring sample points that are
 //                           NOT water-typed (0–8). water is the complement.
 //                           Emitted from delayWallsNew before every ring plan
@@ -68,15 +68,15 @@
 //                           only reason=noLandPerimeter (all 8 sample points
 //                           are water or unmappable).
 //        wall.threat_vector  vec=<vec> enemies=<int>
-//                         — fired by llComputeThreatVector (Track 1.2b) on
+//                         — fired by anwComputeThreatVector (Track 1.2b) on
 //                           every 60s cache-miss recompute. vec is the
 //                           centroid of all visible enemy land-military units
 //                           (cInvalidVector when none spotted). enemies is
 //                           the raw unit count fed into the centroid.
 //        wall.adaptive_radius  base=<float> ratio=<float> result=<float>
 //                              age=<int> strategy=<int>
-//                         — fired by llComputeAdaptiveRadius (Track 1.2c) on
-//                           every call. base is llGetLegendaryWallRadius(),
+//                         — fired by anwComputeAdaptiveRadius (Track 1.2c) on
+//                           every call. base is anwGetWallRadius(),
 //                           ratio is vilCount/popCap, result is the clamped
 //                           scaled radius actually used.
 //
@@ -93,7 +93,7 @@
 //                          mdist=<float> walls=… forts=… docks=… tposts=…
 //                          heading=… terr=…
 //
-// All emission goes through llProbe() so the global cLLReplayProbes kill
+// All emission goes through anwProbe() so the global cANWReplayProbes kill
 // switch in aiGlobals.xs disables every line at once for release builds.
 //
 // Performance: all queries are kbUnitCount with cached abstract type
@@ -105,35 +105,35 @@
 // Per-milestone "already-fired" flags. Initialised false on script load
 // (XS reloads per match), so the first observation each match emits the
 // probe and sets the flag.
-extern bool gLLMilestoneFiredDock         = false;
-extern bool gLLMilestoneFiredBarracks     = false;
-extern bool gLLMilestoneFiredStable       = false;
-extern bool gLLMilestoneFiredWall         = false;
-extern bool gLLMilestoneFiredFort         = false;
-extern bool gLLMilestoneFiredTradingPost  = false;
-extern bool gLLMilestoneFiredArtillery    = false;
+extern bool gANWMilestoneFiredDock         = false;
+extern bool gANWMilestoneFiredBarracks     = false;
+extern bool gANWMilestoneFiredStable       = false;
+extern bool gANWMilestoneFiredWall         = false;
+extern bool gANWMilestoneFiredFort         = false;
+extern bool gANWMilestoneFiredTradingPost  = false;
+extern bool gANWMilestoneFiredArtillery    = false;
 // Forward-base milestone — fires the first tick gForwardBaseState flips to
 // cForwardBaseStateActive (a forward base/operating point has been chosen
 // AND construction has begun). Lets the validator close the
 // `expects_forward` claim for Forward Operational Line / Plains Cavalry
 // Wedge / Mobile Frontier Scatter / Steppe Cavalry Wedge / Jungle
 // Guerrilla Network civs without UNKNOWN stubs.
-extern bool gLLMilestoneFiredForwardBase  = false;
+extern bool gANWMilestoneFiredForwardBase  = false;
 
 // Last time we emitted a snapshot pair, in game ms. -1 = never.
-extern int  gLLLastDoctrineSnapshotMs = -1;
+extern int  gANWLastDoctrineSnapshotMs = -1;
 
 // Snapshot interval — 60s of game time. Rule itself fires every 30s, so
 // snapshots emit every other tick; milestones are checked every tick.
-extern const int cLLDoctrineSnapshotIntervalMs = 60000;
+extern const int cANWDoctrineSnapshotIntervalMs = 60000;
 
 
 //------------------------------------------------------------------------------
-// llCheckMilestone — emit "milestone.first_<tag>" once when count ≥ 1.
+// anwCheckMilestone — emit "milestone.first_<tag>" once when count ≥ 1.
 // Returns true if the milestone was just fired this call (the caller
 // flips the global), false otherwise.
 //------------------------------------------------------------------------------
-bool llCheckMilestone(string tag = "", int abstractType = -1, bool alreadyFired = false)
+bool anwCheckMilestone(string tag = "", int abstractType = -1, bool alreadyFired = false)
 {
    if (alreadyFired == true)  return(false);
    if (abstractType < 0)      return(false);
@@ -141,7 +141,7 @@ bool llCheckMilestone(string tag = "", int abstractType = -1, bool alreadyFired 
    int n = kbUnitCount(cMyID, abstractType, cUnitStateABQ);
    if (n < 1) return(false);
 
-   llProbe("milestone.first_" + tag,
+   anwProbe("milestone.first_" + tag,
       "atMs=" + xsGetTime() + " count=" + n + " age=" + kbGetAge());
    return(true);
 }
@@ -150,22 +150,22 @@ bool llCheckMilestone(string tag = "", int abstractType = -1, bool alreadyFired 
 //------------------------------------------------------------------------------
 // Per-tick snapshot helpers — kept tiny so the rule body stays readable.
 //------------------------------------------------------------------------------
-void llEmitCompositionSnapshot(int ageMs = 0)
+void anwEmitCompositionSnapshot(int ageMs = 0)
 {
    int vil   = kbUnitCount(cMyID, cUnitTypeAbstractVillager, cUnitStateAlive);
    int inf   = kbUnitCount(cMyID, cUnitTypeAbstractInfantry,  cUnitStateAlive);
    int cav   = kbUnitCount(cMyID, cUnitTypeAbstractCavalry,   cUnitStateAlive);
    int arty  = kbUnitCount(cMyID, cUnitTypeAbstractArtillery, cUnitStateAlive);
    int land  = kbUnitCount(cMyID, cUnitTypeLogicalTypeLandMilitary, cUnitStateAlive);
-   // Warship count uses gLLAbstractWarShip when the civ has one; otherwise 0.
+   // Warship count uses gANWAbstractWarShip when the civ has one; otherwise 0.
    // (Matches the existing pattern in aiNavalUtilities.xs.)
    int navy  = 0;
-   if (gLLAbstractWarShip > 0)
+   if (gANWAbstractWarShip > 0)
    {
-      navy = kbUnitCount(cMyID, gLLAbstractWarShip, cUnitStateAlive);
+      navy = kbUnitCount(cMyID, gANWAbstractWarShip, cUnitStateAlive);
    }
 
-   llProbe("comp.snapshot",
+   anwProbe("comp.snapshot",
       "ageMs=" + ageMs +
       " vil=" + vil +
       " inf=" + inf +
@@ -176,7 +176,7 @@ void llEmitCompositionSnapshot(int ageMs = 0)
 }
 
 
-void llEmitPostureSnapshot(int ageMs = 0)
+void anwEmitPostureSnapshot(int ageMs = 0)
 {
    int walls  = kbUnitCount(cMyID, cUnitTypeAbstractWall,    cUnitStateABQ);
    int forts  = 0;
@@ -185,25 +185,25 @@ void llEmitPostureSnapshot(int ageMs = 0)
    if (gDockUnit > 0) docks = kbUnitCount(cMyID, gDockUnit,  cUnitStateABQ);
    int tposts = kbUnitCount(cMyID, cUnitTypeTradingPost,     cUnitStateABQ);
 
-   llProbe("posture.snapshot",
+   anwProbe("posture.snapshot",
       "ageMs=" + ageMs +
       " age="  + kbGetAge() +
-      " ws="   + gLLWallStrategy +
-      " bs="   + gLLBuildStyle +
-      " mdist=" + gLLMilitaryDistanceMultiplier +
-      " edist=" + gLLEconomicDistanceMultiplier +
+      " ws="   + gANWWallStrategy +
+      " bs="   + gANWBuildStyle +
+      " mdist=" + gANWMilitaryDistanceMultiplier +
+      " edist=" + gANWEconomicDistanceMultiplier +
       " walls=" + walls +
       " forts=" + forts +
       " docks=" + docks +
       " tposts=" + tposts +
-      " heading=" + gLLExpansionHeading +
-      " terrP=" + gLLPreferredTerrainPrimary +
-      " terrS=" + gLLPreferredTerrainSecondary);
+      " heading=" + gANWExpansionHeading +
+      " terrP=" + gANWPreferredTerrainPrimary +
+      " terrS=" + gANWPreferredTerrainSecondary);
 }
 
 
 //==============================================================================
-// llDoctrineProbes — periodic milestone + snapshot rule. Enabled from
+// anwDoctrineProbes — periodic milestone + snapshot rule. Enabled from
 // aiCore.xs at game start (alongside other always-on probes). We keep
 // minInterval at 30s — fine-grained enough to catch a "first dock by
 // 6:00" claim without spamming chat (≤2 lines per AI per minute).
@@ -213,14 +213,14 @@ void llEmitPostureSnapshot(int ageMs = 0)
 // late-game composition (e.g. confirm Plains Cavalry Wedge actually
 // keeps cavalry > infantry through Age 4).
 //==============================================================================
-rule llDoctrineProbes
+rule anwDoctrineProbes
 inactive
 minInterval 30
 {
    // Bail cheaply when the global probe channel is off — a release build
-   // ships with cLLReplayProbes=false, so the rule body becomes a single
+   // ships with cANWReplayProbes=false, so the rule body becomes a single
    // boolean check per tick.
-   if (cLLReplayProbes == false)
+   if (cANWReplayProbes == false)
    {
       xsDisableSelf();
       return;
@@ -229,39 +229,39 @@ minInterval 30
    int nowMs = xsGetTime();
 
    // ── milestones (each once per match) ─────────────────────────────────
-   if (llCheckMilestone("dock",          cUnitTypeAbstractDock,    gLLMilestoneFiredDock))
-      gLLMilestoneFiredDock = true;
-   if (llCheckMilestone("barracks",      cUnitTypeBarracks,        gLLMilestoneFiredBarracks))
-      gLLMilestoneFiredBarracks = true;
-   if (llCheckMilestone("stable",        cUnitTypeAbstractStables, gLLMilestoneFiredStable))
-      gLLMilestoneFiredStable = true;
-   if (llCheckMilestone("wall_segment",  cUnitTypeAbstractWall,    gLLMilestoneFiredWall))
-      gLLMilestoneFiredWall = true;
-   if (llCheckMilestone("fort",          cUnitTypeAbstractFort,    gLLMilestoneFiredFort))
-      gLLMilestoneFiredFort = true;
-   if (llCheckMilestone("trading_post",  cUnitTypeTradingPost,     gLLMilestoneFiredTradingPost))
-      gLLMilestoneFiredTradingPost = true;
-   if (llCheckMilestone("artillery",     cUnitTypeAbstractArtillery, gLLMilestoneFiredArtillery))
-      gLLMilestoneFiredArtillery = true;
+   if (anwCheckMilestone("dock",          cUnitTypeAbstractDock,    gANWMilestoneFiredDock))
+      gANWMilestoneFiredDock = true;
+   if (anwCheckMilestone("barracks",      cUnitTypeBarracks,        gANWMilestoneFiredBarracks))
+      gANWMilestoneFiredBarracks = true;
+   if (anwCheckMilestone("stable",        cUnitTypeAbstractStables, gANWMilestoneFiredStable))
+      gANWMilestoneFiredStable = true;
+   if (anwCheckMilestone("wall_segment",  cUnitTypeAbstractWall,    gANWMilestoneFiredWall))
+      gANWMilestoneFiredWall = true;
+   if (anwCheckMilestone("fort",          cUnitTypeAbstractFort,    gANWMilestoneFiredFort))
+      gANWMilestoneFiredFort = true;
+   if (anwCheckMilestone("trading_post",  cUnitTypeTradingPost,     gANWMilestoneFiredTradingPost))
+      gANWMilestoneFiredTradingPost = true;
+   if (anwCheckMilestone("artillery",     cUnitTypeAbstractArtillery, gANWMilestoneFiredArtillery))
+      gANWMilestoneFiredArtillery = true;
 
    // Forward base milestone — gated on the global state machine in
-   // aiBuildingsWalls.xs flipping to Active. We don't use llCheckMilestone
+   // aiBuildingsWalls.xs flipping to Active. We don't use anwCheckMilestone
    // here because the predicate is a state-int, not a unit count.
-   if (gLLMilestoneFiredForwardBase == false &&
+   if (gANWMilestoneFiredForwardBase == false &&
        gForwardBaseState == cForwardBaseStateActive)
    {
-      llProbe("milestone.first_forward_base",
+      anwProbe("milestone.first_forward_base",
          "atMs=" + nowMs + " age=" + kbGetAge() +
          " baseID=" + gForwardBaseID);
-      gLLMilestoneFiredForwardBase = true;
+      gANWMilestoneFiredForwardBase = true;
    }
 
-   // ── snapshots (every cLLDoctrineSnapshotIntervalMs) ──────────────────
-   if (gLLLastDoctrineSnapshotMs < 0 ||
-      (nowMs - gLLLastDoctrineSnapshotMs) >= cLLDoctrineSnapshotIntervalMs)
+   // ── snapshots (every cANWDoctrineSnapshotIntervalMs) ──────────────────
+   if (gANWLastDoctrineSnapshotMs < 0 ||
+      (nowMs - gANWLastDoctrineSnapshotMs) >= cANWDoctrineSnapshotIntervalMs)
    {
-      llEmitCompositionSnapshot(nowMs);
-      llEmitPostureSnapshot(nowMs);
-      gLLLastDoctrineSnapshotMs = nowMs;
+      anwEmitCompositionSnapshot(nowMs);
+      anwEmitPostureSnapshot(nowMs);
+      gANWLastDoctrineSnapshotMs = nowMs;
    }
 }

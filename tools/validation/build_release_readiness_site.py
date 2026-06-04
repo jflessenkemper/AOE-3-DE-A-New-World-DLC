@@ -220,6 +220,11 @@ SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
     ("lobby",      ["01_lobby.png"]),
     ("loading",    ["02_loading.png"]),
     ("HUD",        ["02_hud_default.png", "03_hud.png"]),
+    # Hero/Explorer selected in the HUD — the selection panel shows the
+    # unit's name, letting the user visually confirm each nation's hero
+    # name is correct.  Captured by recapture.py surface "hero".
+    ("hero",       ["09_hero_selected.png", "10_hero_selected.png",
+                    "hero_selected.png"]),
     ("scoreboard", ["03_scoreboard.png", "07_scoreboard_with_banter.png", "02_scoreboard.png"]),
     ("diplomacy",  ["04_diplomacy.png", "06_diplomacy.png", "01_diplomacy.png"]),
     ("home city",  ["05_homecity_panel.png", "04_homecity_panel.png", "03_homecity.png"]),
@@ -251,6 +256,7 @@ RECAPTURE_SURFACE_KEY: dict[str, str] = {
     "lobby": "lobby",
     "loading": "loading",
     "HUD": "hud",
+    "hero": "hero",
     "scoreboard": "scoreboard",
     "diplomacy": "diplomacy",
     "home city": "homecity",
@@ -356,90 +362,214 @@ _SITE_UNIT_ICONS_DIR = REPO_ROOT / "artifacts" / "validation" / "unit_icons"
 # where the simple slug + "_icon.png" doesn't resolve directly are listed;
 # the _resolve_unit_icon() helper falls back to the slug for the rest.
 _UNIT_NAME_TO_ICON: dict[str, str] = {
-    "Aenna": "iro_aenna_icon.png",
-    "Axe Rider": "sx_axe_rider_icon.png",
-    "Coyote Runner": "az_coyote_man_icon.png",
-    "Chu Ko Nu": "hc_chu_ko_nu_icon.png",
-    "Cuirassier": "hc_saxon_cuirassier_icon.png",
-    "Dog Soldier": "sx_warclub_icon.png",
-    "Doppelsoldner": "dopplesoldner_icon.png",
-    "Eagle Runner Knight": "az_eagle_knight_icon.png",
-    "Grenadier": "hc_grenadier_icon.png",
-    "Hussar": "hungarian_hussar_icon.png",
-    "Iron Flail": "hc_iron_flail_icon.png",
-    "Jaguar Knight": "az_jaguar_warrior_icon.png",
-    "Janissary": "hc_janissary_icon.png",
-    "Longbowman": "longbow_icon.png",
-    "Macehualtin": "az_macehuatlin_icon.png",
-    "Meteor Hammer": "hc_meteor_hammer_icon.png",
-    "Mohawk Warrior": "iro_tomahawk_icon.png",
-    "Regular": "us_regular_icon.png",
-    "Rocket": "rocket_icon.png",
-    "Ruyter": "hc_reiter_icon.png",
-    "Sepoy": "hc_sepoy_icon.png",
-    "Skull Knight": "az_skull_knight_icon.png",
-    "Strelet": "hc_strelet_icon.png",
-    "Tokala Soldier": "sx_tokala_icon.png",
-    "Urumi Swordsman": "hc_urumi_icon.png",
-    "Wakina Rifle": "sx_rifle_rider_icon.png",
-    "War Wagon": "hc_war_wagon_icon.png",
-    "Zamburak": "hc_zamburak_icon.png",
-    "Congreve Rocket": "rocket_icon.png",
+    # Every unit maps to its OWN authentic in-game portrait icon, extracted from
+    # the AoE3 DE game bars (UIResources*/ArtUnits) via tools/bar_extract.py.
+    # NO approximations: each entry below is the unit's real, dedicated icon.
+    # Units lacking a square portrait but with authentic encyclopedia-card art
+    # are cropped from that card (still real game art). Units with no authentic
+    # art at all are flagged BOGUS-DATA (see BOGUS_UNIT_NAMES.md) and given a
+    # temporary non-authentic stand-in only to avoid a placeholder.
+    # --- Authentic dedicated unit icons --------------------------------------
+    "Abus Gun": "abus_gun_icon.png",
+    "Aenna": "aenna_icon.png",
+    "Arquebusier": "arquebusier_icon.png",
+    "Arrow Knight": "arrow_knight_icon.png",
+    "Artillery": "artillery_icon.png",
+    "Ashigaru": "ashigaru_icon.png",
+    "Axe Rider": "axe_rider_icon.png",
+    "Azap": "azap_icon.png",
+    "Barbary Warrior": "barbary_warrior_icon.png",
+    "Bedouin Horse Archer": "bedouin_horse_archer_icon.png",
+    "Bersagliere": "bersagliere_icon.png",
+    "Bolas Warrior": "bolas_warrior_icon.png",
+    "Bow Rider": "bow_rider_icon.png",
+    "Camel Riders": "camel_riders_icon.png",
+    "Cannon Crews": "cannon_crews_icon.png",
+    "Carolean": "carolean_icon.png",
+    "Cassador": "cassador_icon.png",
+    "Cavalry Archer": "cavalry_archer_icon.png",
+    "Cetbang Cannon": "cetbang_cannon_icon.png",
+    "Changdao": "changdao_icon.png",
+    "Chasqui": "chasqui_icon.png",
+    "Chinaco": "chinaco_icon.png",
+    "Chu Ko Nu": "chu_ko_nu_icon.png",
+    "Club Warrior": "club_warrior_icon.png",
+    "Colonial Militia": "colonial_militia_icon.png",
+    "Congreve Rocket": "congreve_rocket_icon.png",
+    "Corsair Infantry": "corsair_infantry_icon.png",
+    "Corsair Marksman": "corsair_marksman_icon.png",
+    "Cossack": "cossack_icon.png",
+    "Coureur des Bois": "coureur_des_bois_icon.png",
+    "Coyote Runner": "coyote_runner_icon.png",
+    "Crossbowman": "crossbowman_icon.png",
+    "Cruzob Avenger": "cruzob_avenger_icon.png",
+    "Cruzob Infantry": "cruzob_infantry_icon.png",
+    "Cuirassier": "cuirassier_icon.png",
+    "Culverin": "culverin_icon.png",
+    "Deli": "deli_icon.png",
+    "Desert Archer": "desert_archer_icon.png",
+    "Dog Soldier": "dog_soldier_icon.png",
+    "Doppelsoldner": "doppelsoldner_icon.png",
+    "Dorabant": "dorabant_icon.png",
+    "Dorobant": "dorobant_icon.png",
+    "Dragoon": "dragoon_icon.png",
+    "Eagle Runner": "eagle_runner_icon.png",
+    "Eagle Runner Knight": "eagle_runner_knight_icon.png",
+    "Emboscador": "emboscador_icon.png",
+    "Falconet": "falconet_icon.png",
+    "Field Guns": "field_guns_icon.png",
+    "Finnish Rider": "finnish_rider_icon.png",
+    "Fire Thrower": "fire_thrower_icon.png",
+    "Flamethrower": "flamethrower_icon.png",
+    "Flaming Arrow": "flaming_arrow_icon.png",
+    "Fluyt": "fluyt_icon.png",
+    "Flying Crow": "flying_crow_icon.png",
+    "Forest Prowler": "forest_prowler_icon.png",
     "Fula Warrior": "fula_warrior_icon.png",
-    # --- Aliases recovered from a_new_world.html cross-reference ---
-    # From HTML unit-icon src mappings (verified against resources/images/icons/units/)
-    "Cassador": "hc_cacadore_icon.png",
-    "Chimu Runner": "runner_icon.png",
-    "Fire Thrower": "hc_arquebusier_icon.png",
-    "Flaming Arrow": "hc_arquebusier_icon.png",
-    "Howdah": "hc_musketeer_icon.png",
-    "Huaraca": "slinger_icon.png",
-    "Lifidi Knight": "knight_icon.png",
-    "Maroon": "hc_emboscador_icon.png",
-    "Naginata Rider": "hc_cav_archer_icon.png",
-    "Organ Gun": "hc_arquebusier_icon.png",
-    "Ranger": "hc_rifleman_icon.png",
-    "Rodelero": "hc_redolero_icon.png",
-    "Salteador": "emboscador_icon.png",
-    "Sharpshooter": "hc_rifleman_icon.png",
-    # --- Additional aliases mapped to closest existing icon by unit type ---
-    "Azap": "deli_icon.png",              # Ottoman light inf
-    "Cetbang Cannon": "cannon_icon.png",   # Indonesian bronze cannon
-    "Chasqui": "runner_icon.png",          # Inca messenger/runner
-    "Corsair Marksman": "hc_barbary_corsair_icon.png",
-    "Coureur des Bois": "iro_forrest_runner_icon.png",
-    "Cruzob Avenger": "insurgente_icon.png",
-    "Cruzob Infantry": "insurgente_icon.png",
-    "Eclaireur": "hc_dragoon_icon.png",    # French scout cavalry
-    "Flamethrower": "hc_arquebusier_icon.png",
-    "Fulani Archer": "desert_archer_icon.png",
-    "Granadero a Caballo": "lancer_icon.png",
-    "Great Bombard": "cannon_icon.png",
-    "Grenzer": "hc_counter_jaeger_icon.png",
-    "Hajduk": "skirmisher_icon.png",
-    "Holcan Javelineer": "hoop_thrower_icon.png",
-    "Hospitaller Knight": "hospitaller_icon.png",
-    "Javanese Spearman": "spearman_icon.png",
-    "Karelian Jaeger": "hc_counter_jaeger_icon.png",
-    "Khevite Fusilier": "hc_musketeer_icon.png",
-    "Llanero": "chinaco_icon.png",         # South American light cavalry
-    "Mameluke": "hc_keshik_icon.png",
-    "Metis Pathfinder": "iro_forrest_runner_icon.png",
-    "Metis Voyageur": "iro_forrest_runner_icon.png",
-    "Musketeer (Jarma)": "hc_musketeer_icon.png",
-    "Old Guard": "line_infantry_icon.png",
-    "Pandour": "skirmisher_icon.png",
-    "Papal Guard": "papal_zouave_icon.png",
-    "Papal Lancer": "papal_zouave_icon.png",
-    "Pirate": "hc_barbary_corsair_icon.png",
-    "Plumed Spearman": "az_puma_man_icon.png",
-    "Sans Culottes": "line_infantry_icon.png",
-    "Trek Wagon": "mantlet_icon.png",
-    "Voltigeur": "skirmisher_icon.png",
-    "Voluntario Da Patria": "line_infantry_icon.png",
-    "War Dog": "raider_icon.png",
-    "Yucateco Insurgente": "insurgente_icon.png",
-    "Yumi Archer": "hc_bowman_icon.png",
+    "Gascenya": "gascenya_icon.png",
+    "Gatling Gun": "gatling_gun_icon.png",
+    "Granadero a Caballo": "granadero_a_caballo_icon.png",
+    "Great Bombard": "great_bombard_icon.png",
+    "Grenadier": "grenadier_icon.png",
+    "Gunner Levy": "gunner_levy_icon.png",
+    "Gurkha": "gurkha_icon.png",
+    "Hajduk": "hajduk_icon.png",
+    "Hakkapelit": "hakkapelit_icon.png",
+    "Halberdier": "halberdier_icon.png",
+    "Heavy Cannon": "heavy_cannon_icon.png",
+    "Holcan Javelineer": "holcan_javelineer_icon.png",
+    "Hoop Thrower": "hoop_thrower_icon.png",
+    "Horse Artillery": "horse_artillery_icon.png",
+    "Hospitaller": "hospitaller_icon.png",
+    "Hospitaller Knight": "hospitaller_knight_icon.png",
+    "Howdah": "howdah_icon.png",
+    "Humbaraci": "humbaraci_icon.png",
+    "Hussar": "hussar_icon.png",
+    "Insurgente": "insurgente_icon.png",
+    "Insurgentes": "insurgentes_icon.png",
+    "Iron Flail": "iron_flail_icon.png",
+    "Jaguar Knight": "jaguar_knight_icon.png",
+    "Janissary": "janissary_icon.png",
+    "Javanese Spearman": "javanese_spearman_icon.png",
+    "Javelin Rider": "javelin_rider_icon.png",
+    "Jungle Bowman": "jungle_bowman_icon.png",
+    "Karelian Jaeger": "karelian_jaeger_icon.png",
+    "Kensei": "kensei_icon.png",
+    "Keshik": "keshik_icon.png",
+    "Lancer": "lancer_icon.png",
+    "Leather Cannon": "leather_cannon_icon.png",
+    "Lifidi Knight": "lifidi_knight_icon.png",
+    "Light Cannon": "light_cannon_icon.png",
+    "Line Infantry": "line_infantry_icon.png",
+    "Llanero": "llanero_icon.png",
+    "Longbowman": "longbowman_icon.png",
+    "Macehualtin": "macehualtin_icon.png",
+    "Maceman": "maceman_icon.png",
+    "Mahout": "mahout_icon.png",
+    "Maigadi": "maigadi_icon.png",
+    "Mameluke": "mameluke_icon.png",
+    "Mantlet": "mantlet_icon.png",
+    "Maroon": "maroon_icon.png",
+    "Meteor Hammer": "meteor_hammer_icon.png",
+    "Metis Pathfinder": "metis_pathfinder_icon.png",
+    "Metis Voyageur": "metis_voyageur_icon.png",
+    "Militia": "militia_icon.png",
+    "Minuteman": "minuteman_icon.png",
+    "Missionary": "missionary_icon.png",
+    "Mohawk Warrior": "mohawk_warrior_icon.png",
+    "Monk Disciple": "monk_disciple_icon.png",
+    "Mortar": "mortar_icon.png",
+    "Mortar Crews": "mortar_crews_icon.png",
+    "Morutaru": "morutaru_icon.png",
+    "Mounted Infantry": "mounted_infantry_icon.png",
+    "Musket Rider": "musket_rider_icon.png",
+    "Musketeer": "musketeer_icon.png",
+    "Musketeer (Jarma)": "musketeer_icon.png",
+    "Naginata Rider": "naginata_rider_icon.png",
+    "Neftenya": "neftenya_icon.png",
+    "Nizam Fusilier": "nizam_fusilier_icon.png",
+    "Old Guard": "old_guard_icon.png",
+    "Oprichnik": "oprichnik_icon.png",
+    "Organ Gun": "organ_gun_icon.png",
+    "Oromo Warrior": "oromo_warrior_icon.png",
+    "Padre": "padre_icon.png",
+    "Pandour": "pandour_icon.png",
+    "Papal Guard": "papal_guard_icon.png",
+    "Papal Lancer": "papal_lancer_icon.png",
+    "Papal Zouave": "papal_zouave_icon.png",
+    "Pavisier": "pavisier_icon.png",
+    "Pikeman": "pikeman_icon.png",
+    "Pirate": "pirate_icon.png",
+    "Plumed Spearman": "plumed_spearman_icon.png",
+    "Puma Spearman": "puma_spearman_icon.png",
+    "Raider": "raider_icon.png",
+    "Rajput": "rajput_icon.png",
+    "Ranger": "ranger_icon.png",
+    "Regular": "regular_icon.png",
+    "Revolutionaries": "revolutionaries_icon.png",
+    "Rifle Rider": "rifle_rider_icon.png",
+    "Rifleman": "rifleman_icon.png",
+    "Rodelero": "rodelero_icon.png",
+    "Rosior Dragoon": "rosior_dragoon_icon.png",
+    "Ruyter": "ruyter_icon.png",
+    "Samurai": "samurai_icon.png",
+    "Sans Culottes": "sans_culottes_icon.png",
+    "Schiavone": "schiavone_icon.png",
+    "Sebastopol Mortar": "sebastopol_mortar_icon.png",
+    "Sentinel": "sentinel_icon.png",
+    "Sepoy": "sepoy_icon.png",
+    "Shotel Warrior": "shotel_warrior_icon.png",
+    "Siege Elephant": "siege_elephant_icon.png",
+    "Siege Elephant Mansabdar": "siege_elephant_mansabdar_icon.png",
+    "Skirmisher": "skirmisher_icon.png",
+    "Skull Knight": "skull_knight_icon.png",
+    "Soldado": "soldado_icon.png",
+    "Soldados": "soldados_icon.png",
+    "Sowar": "sowar_icon.png",
+    "Spahi": "spahi_icon.png",
+    "State Militia": "state_militia_icon.png",
+    "Steppe Rider": "steppe_rider_icon.png",
+    "Strelet": "strelet_icon.png",
+    "Streltsy": "streltsy_icon.png",
+    "Tokala Soldier": "tokala_soldier_icon.png",
+    "Tomahawk": "tomahawk_icon.png",
+    "Trek Wagon": "trek_wagon_icon.png",
+    "Tribal Horseman": "tribal_horseman_icon.png",
+    "US Cavalry": "us_cavalry_icon.png",
+    "Uhlan": "uhlan_icon.png",
+    "Urumi": "urumi_icon.png",
+    "Urumi Swordsman": "urumi_swordsman_icon.png",
+    "Voltigeur": "voltigeur_icon.png",
+    "Voluntario Da Patria": "voluntario_da_patria_icon.png",
+    "Volunteer": "volunteer_icon.png",
+    "War Dog": "war_dog_icon.png",
+    "War Wagon": "war_wagon_icon.png",
+    "Yabusame": "yabusame_icon.png",
+    "Yucateco Insurgente": "yucateco_insurgente_icon.png",
+    "Yumi": "yumi_icon.png",
+    "Yumi Archer": "yumi_archer_icon.png",
+    "Zamburak": "zamburak_icon.png",
+    # --- Authentic encyclopedia-card art (cropped from the game's own 600x1320
+    #     in-game history/encyclopedia illustration in UIResources2.bar, squared
+    #     to 128x128). Still 100% authentic game art for that exact unit. --------
+    # --- VERIFIED REAL UNITS with their own authentic art (foreign-language or
+    #     ethnonym display names that resolve to a real trainable proto). These
+    #     are NOT bogus: each maps to its OWN authentic unit icon. -------------
+    "Eclaireur": "revolutionary_scout_icon.png",  # REAL: French "scout" = RevFrance revolution proto deRevolutionaryScout (resolved_rosters ANWRevFrance, src=revolution); authentic art
+    "Fulani Archer": "fula_warrior_icon.png",  # REAL: Hausa proto deFulaWarrior (core_unique); Fula/Fulani are the same people, the Fula Warrior is their archer; authentic art resources\\art\\units\\africans\\hausa\\fula_warrior\\fula_warrior_icon.png
+    "Carbine Cavalry": "carbine_cavalry_icon.png",  # cropped from m_carbine_cavalry card art
+    "Cetan Bow": "cetan_bow_icon.png",  # cropped from "m_i_cetan bow" card art
+    "Chimu Runner": "chimu_runner_icon.png",  # cropped from "m_i_chimu runner" card art
+    "Huaraca": "huaraca_icon.png",  # cropped from m_i_huaraca card art
+    "Kanya Horseman": "kanya_horseman_icon.png",  # cropped from "m_c_kanya horseman" card art
+    "Sharpshooter": "sharpshooter_icon.png",  # cropped from m_sharpshooter card art
+    "Wakina Rifle": "wakina_rifle_icon.png",  # cropped from "m_i_wakina rifle" card art
+    # --- BOGUS / VAGUE DATA: previously stand-in mapped, now eliminated from the
+    #     data files (see artifacts/roster_audit/BOGUS_UNIT_NAMES_VERIFIED.md).
+    #     The bogus display names Grenzer, Grensers, Gunpowder Troops,
+    #     Khevite Fusilier, and Support Infantry were replaced/removed in
+    #     data/anw_standard_units.json and data/anw_civ_blurbs.json, so their
+    #     temporary stand-in icon entries have been deleted from this table.
 }
 
 
@@ -596,8 +726,165 @@ def _load_civ_blurbs() -> dict:
         return {}
 
 
-def _stage_unit_icons(blurbs: dict) -> set[str]:
-    """Copy every unique-unit icon referenced by any civ into the served tree.
+def _load_anw_standard_units() -> dict[str, list[str]]:
+    """Load data/anw_standard_units.json. Returns {} on missing/parse error.
+
+    Structure: {ANWCivToken: [unit_display_name, ...]}
+    Hand-curated standard (non-unique) military roster per civ.
+    """
+    path = REPO_ROOT / "data" / "anw_standard_units.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  [warn] could not load anw_standard_units.json: {exc}",
+              file=sys.stderr)
+        return {}
+
+
+def _load_explorer_resolution() -> dict[str, dict]:
+    """Load artifacts/retreat_design/explorer_resolution.json. {} on error.
+
+    Structure: {ANWCivToken: {"proto", "displaynameid", "unit_type_name",
+    "icon_filename"}}. This is the AUTHORITATIVE explorer/hero per civ for
+    the "A New World" mod — the proto named in the civ's first
+    <startingunit> (data/civmods.xml), its in-game unit-type display name
+    (proto <displaynameid> resolved against the base string table), and its
+    extracted unit icon. Used by _render_hero_explorer_row to show the real
+    in-game explorer (e.g. British → "Explorer", Haudenosaunee → "War Chief",
+    India → "Brahmin", Malta → "Grand Master") instead of a leader portrait.
+    """
+    path = REPO_ROOT / "artifacts" / "retreat_design" / "explorer_resolution.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  [warn] could not load explorer_resolution.json: {exc}",
+              file=sys.stderr)
+        return {}
+
+
+# ── Hero / Explorer unit display names per civ ──────────────────────────────
+# Source for revolution civs: HTML explorer-block entries in a_new_world.html.
+# Source for standard civs: AoE3 DE base game / DLC known explorer unit names.
+# All suppression of nearby-unit retreat (per AI rout system) is triggered by
+# the presence of a unit of cUnitTypeExplorer within 18m — these are the
+# display-name labels for that unit per civ.
+_ANW_HERO_EXPLORER: dict[str, list[str]] = {
+    # ── Revolution civs (HTML explorer-block verified) ──────────────────────
+    "ANWArgentines":       ["José de San Martín"],
+    "ANWBarbary":          ["Hayreddin Barbarossa"],
+    "ANWBrazil":           ["Pedro I"],
+    "ANWCanadians":        ["Isaac Brock"],
+    "ANWChileans":         ["Bernardo O'Higgins"],
+    "ANWColumbians":       ["Simón Bolívar"],
+    "ANWEgyptians":        ["Muhammad Ali Pasha"],
+    "ANWFinnish":          ["Carl Gustaf Emil Mannerheim"],
+    "ANWFrench":           ["Louis XVIII"],
+    "ANWHaitians":         ["Toussaint L'Ouverture"],
+    "ANWHungarians":       ["Lajos Kossuth"],
+    "ANWIndonesians":      ["Prince Diponegoro"],
+    "ANWMayans":           ["Jacinto Canek"],
+    "ANWMexicans":         ["Miguel Hidalgo"],
+    "ANWNapoleonicFrance": ["Napoleon Bonaparte"],
+    "ANWPeruvians":        ["Andrés de Santa Cruz"],
+    "ANWRevFrance":        ["Maximilien Robespierre"],
+    "ANWRomanians":        ["Alexandru Ioan Cuza"],
+    "ANWSouthAfricans":    ["Paul Kruger"],
+    "ANWTexians":          ["Sam Houston"],
+    # ── Standard / base-game civs (AoE3 DE known explorer unit names) ───────
+    "ANWAztecs":           ["Nahuatl Warrior Priest"],
+    "ANWBritish":          ["Explorer"],
+    "ANWChinese":          ["Shaolin Monk"],
+    "ANWDutch":            ["Explorer"],
+    "ANWEthiopians":       ["Abun"],
+    "ANWGermans":          ["Explorer"],
+    "ANWHaudenosaunee":    ["War Chief"],
+    "ANWHausa":            ["Mallam"],
+    "ANWInca":             ["Chasqui Scout"],
+    "ANWIndians":          ["Brahmin"],
+    "ANWItalians":         ["Explorer"],
+    "ANWJapanese":         ["Daimyo"],
+    "ANWLakota":           ["War Chief"],
+    "ANWMaltese":          ["Explorer"],
+    "ANWOttomans":         ["Explorer"],
+    "ANWPortuguese":       ["Explorer"],
+    "ANWRussians":         ["Explorer"],
+    "ANWSpanish":          ["Explorer"],
+    "ANWSwedes":           ["Explorer"],
+    "ANWUSA":              ["Explorer"],
+}
+
+# NOTE: the former ``_ANW_HERO_ICON_MAP`` (token → leader_avatars/anw<token>.png)
+# was removed 2026-06-02. Those anw<token>.png files never existed (the staged
+# avatars are slug-named, e.g. british_elizabeth.png), so every hero portrait
+# 404'd. The HERO/EXPLORER row now reuses the authoritative ``avatars`` dict
+# returned by _stage_leader_avatars() (keyed by spec token), the same source
+# the card header uses — see _render_hero_explorer_row().
+
+
+def _load_anw_unit_rosters() -> dict[str, list[str]]:
+    """Parse a_new_world.html to extract per-civ military unit lists.
+
+    The HTML embeds a ``data-search`` attribute on each nation node with the
+    format ``"NationName Leader · Unit1 · Unit2 · ... · CardName — desc · ..."``.
+    Units appear before the first card (cards contain " — " or start with TEAM).
+    Items starting with a digit (e.g. "16 Musketeers") are shipment quantities,
+    not unit types, and are excluded.
+
+    Returns {ANWToken: [unit_display_name, ...]} — empty list if the HTML is
+    missing or unparseable.
+    """
+    html_path = REPO_ROOT / "a_new_world.html"
+    if not html_path.is_file():
+        print("  [warn] a_new_world.html not found — retreat-units rows will be empty",
+              file=sys.stderr)
+        return {}
+
+    html_text = html_path.read_text(encoding="utf-8")
+    nation_searches = re.findall(r'data-name="([^"]+)" data-search="([^"]+)"',
+                                 html_text)
+
+    # Known ANW tokens for lookup (populated lazily from blurbs keys)
+    _known = set(_ANW_HERO_EXPLORER.keys())
+
+    def _to_anw_token(html_name: str) -> str | None:
+        first = html_name.split()[0].lower()
+        _overrides = {
+            "haudenosaunee": "ANWHaudenosaunee",
+            "revolutionary":  "ANWRevFrance",
+            "napoleonic":     "ANWNapoleonicFrance",
+            "south":          "ANWSouthAfricans",
+            "united":         "ANWUSA",
+        }
+        if first in _overrides:
+            return _overrides[first]
+        candidate = "ANW" + html_name.split()[0]
+        return candidate if candidate in _known else None
+
+    result: dict[str, list[str]] = {}
+    for html_name, search in nation_searches:
+        tok = _to_anw_token(html_name)
+        if not tok:
+            continue
+        parts = search.split(" · ")
+        units: list[str] = []
+        for part in parts[1:]:   # skip first (nation+leader string)
+            part = part.strip()
+            if " \u2014 " in part or part.startswith("TEAM "):
+                break            # reached home-city cards section
+            if part and not part[0].isdigit():
+                units.append(part)
+        result[tok] = units
+    return result
+
+
+def _stage_unit_icons(blurbs: dict,
+                      rosters: dict[str, list[str]] | None = None,
+                      standard_units: dict[str, list[str]] | None = None) -> set[str]:
+    """Copy every unit icon referenced by any civ into the served tree.
+
+    Covers unique-units (from blurbs), hero/explorer units (_ANW_HERO_EXPLORER),
+    retreat-units (from rosters derived from a_new_world.html), and curated
+    standard-unit rosters (from data/anw_standard_units.json).
 
     Mirrors the pattern of _stage_card_icons(): source files come from
     resources/images/icons/units/, destination is
@@ -607,11 +894,34 @@ def _stage_unit_icons(blurbs: dict) -> set[str]:
     """
     _SITE_UNIT_ICONS_DIR.mkdir(parents=True, exist_ok=True)
     wanted: set[str] = set()
+    # Unique units (blurbs)
     for civ_info in blurbs.values():
         for unit_name in (civ_info.get("unique_units") or []):
             icon = _resolve_unit_icon(unit_name)
             if icon:
                 wanted.add(icon)
+    # Hero / Explorer units
+    for unit_names in _ANW_HERO_EXPLORER.values():
+        for unit_name in unit_names:
+            icon = _resolve_unit_icon(unit_name)
+            if icon:
+                wanted.add(icon)
+    # Curated standard units (data/anw_standard_units.json)
+    if standard_units:
+        for tok, unit_list in standard_units.items():
+            for unit_name in unit_list:
+                icon = _resolve_unit_icon(unit_name)
+                if icon:
+                    wanted.add(icon)
+    # Retreat units (from HTML rosters)
+    if rosters:
+        for tok, all_units in rosters.items():
+            unique_set = set((blurbs.get(tok) or {}).get("unique_units") or [])
+            for unit_name in all_units:
+                if unit_name not in unique_set:
+                    icon = _resolve_unit_icon(unit_name)
+                    if icon:
+                        wanted.add(icon)
     staged: set[str] = set()
     missing: list[str] = []
     for icon in sorted(wanted):
@@ -633,73 +943,310 @@ def _stage_unit_icons(blurbs: dict) -> set[str]:
     return staged
 
 
-def _render_unique_units_row(anw_token: str, blurbs: dict) -> str:
-    """Render a horizontal strip of unique-unit icon thumbnails for one civ.
+def _render_unit_row(title: str, unit_names: list[str],
+                     css_block: str = "unique-units-block",
+                     css_label: str = "unique-units-label",
+                     css_row: str = "unique-units-row",
+                     tooltip_prefix: str = "") -> str:
+    """Render a labeled horizontal strip of unit icon chips.
 
-    Each icon gets a title= tooltip with the unit display name and a small
-    caption underneath. Units whose icons can't be resolved render as a dashed
-    placeholder chip. Returns "" if the civ has no unique_units entry.
+    Generic helper used by _render_unique_units_row, _render_hero_explorer_row,
+    and _render_retreat_units_row.  Each chip shows an icon + caption; units
+    without a resolvable icon render as a dashed placeholder chip.
 
-    Placed directly after the home-city deck block on each civ card.
+    Args:
+        title:      Row label (e.g. "UNIQUE UNITS").
+        unit_names: Ordered list of display-name strings.
+        css_block/css_label/css_row: CSS class names for the wrapper elements.
+
+    Returns an HTML fragment, or a "none / data unavailable" notice row if
+    ``unit_names`` is empty.
     """
-    civ_info = blurbs.get(anw_token)
-    if not civ_info:
-        return ""
-    unit_names = civ_info.get("unique_units") or []
     if not unit_names:
-        return ""
+        return (
+            f'<div class="{css_block}">'
+            f'<div class="{css_label}">{html.escape(title)}</div>'
+            f'<div class="{css_row}">'
+            f'<span style="font-size:11px;color:#6e7681;padding:4px 6px;">'
+            f'(none / data unavailable)</span>'
+            f'</div>'
+            f'</div>'
+        )
 
     cells: list[str] = []
     for unit_name in unit_names:
         icon = _resolve_unit_icon(unit_name)
         safe_name = html.escape(unit_name)
+        # Hover tooltip: optionally role-prefixed (e.g. "Explorer: …") so the
+        # user can confirm each nation's hero/explorer name on hover.
+        tip = html.escape(f"{tooltip_prefix}{unit_name}") if tooltip_prefix \
+            else safe_name
         if icon:
             icon_url = f"unit_icons/{html.escape(icon)}"
             cells.append(
                 f'<div class="unit-cell">'
                 f'<img src="{icon_url}" '
                 f'alt="{safe_name}" '
-                f'title="{safe_name}" '
+                f'title="{tip}" '
                 f'loading="lazy">'
                 f'<div class="unit-caption">{safe_name}</div>'
                 f'</div>'
             )
         else:
             cells.append(
-                f'<div class="unit-cell unit-cell-missing" title="{safe_name}">'
+                f'<div class="unit-cell unit-cell-missing" title="{tip}">'
                 f'<div class="unit-placeholder">?</div>'
                 f'<div class="unit-caption">{safe_name}</div>'
                 f'</div>'
             )
 
     return (
-        f'<div class="unique-units-block">'
-        f'<div class="unique-units-label">UNIQUE UNITS</div>'
-        f'<div class="unique-units-row">{"".join(cells)}</div>'
+        f'<div class="{css_block}">'
+        f'<div class="{css_label}">{html.escape(title)}</div>'
+        f'<div class="{css_row}">{"".join(cells)}</div>'
         f'</div>'
     )
 
 
+def _render_unique_units_row(anw_token: str, blurbs: dict) -> str:
+    """Render the UNIQUE UNITS strip for one civ (10% retreat tier).
+
+    Data from data/anw_civ_blurbs.json unique_units lists.  Returns "" if the
+    civ has no unique_units entry in blurbs (renders as unavailable notice via
+    _render_unit_row when the list is empty).
+    """
+    civ_info = blurbs.get(anw_token)
+    if not civ_info:
+        return _render_unit_row("UNIQUE UNITS", [])
+    unit_names = list(civ_info.get("unique_units") or [])
+    return _render_unit_row("UNIQUE UNITS", unit_names)
+
+
+def _render_hero_explorer_row(anw_token: str,
+                              explorer_map: dict[str, dict] | None = None) -> str:
+    """Render the HERO / EXPLORER strip for one civ.
+
+    "A New World" uses the stock AoE3 explorer/hero system, so this shows the
+    civ's actual in-game explorer/hero by NAME — e.g. Argentines → "William
+    Brown", British → "Walter Raleigh", Haudenosaunee → "Raven", Inca →
+    "Manco Inca". The proper name comes from the in-game name pools
+    (``primary_name`` in artifacts/retreat_design/explorer_resolution.json —
+    resolved from data/strings + base randomnames, or curated where the base
+    pool is generic/empty). The hero's unit-type (Explorer / War Chief /
+    Brahmin / Grand Master / General …) is shown in the tooltip, and the
+    unit's own extracted icon is used. ``explorer_map`` is loaded via
+    _load_explorer_resolution().
+
+    Falls back to the curated ``_ANW_HERO_EXPLORER`` name + ``_resolve_unit_icon``
+    only when the resolution file lacks the civ.
+    """
+    entry = (explorer_map or {}).get(anw_token) or {}
+    # Caption = the explorer/hero's proper NAME; unit-type goes in the tooltip.
+    name = (entry.get("primary_name") or "").strip()
+    unit_type = (entry.get("unit_type_name") or "").strip()
+    icon_url: str | None = None
+    icon_fn = entry.get("icon_filename")
+    if icon_fn:
+        icon_url = f"unit_icons/{icon_fn}"
+    if not name:
+        name = unit_type
+    if not name:
+        names = list(_ANW_HERO_EXPLORER.get(anw_token) or [])
+        name = names[0] if names else ""
+    if not name:
+        return _render_unit_row("HERO / EXPLORER", [])
+
+    safe_name = html.escape(name)
+    tip_text = f"Hero / Explorer: {name}"
+    if unit_type and unit_type.lower() != name.lower():
+        tip_text += f" ({unit_type})"
+    tip = html.escape(tip_text)
+    if not icon_url:
+        resolved = _resolve_unit_icon(unit_type or name)
+        icon_url = f"unit_icons/{resolved}" if resolved else None
+    if icon_url:
+        cell = (
+            f'<div class="unit-cell">'
+            f'<img src="{html.escape(icon_url)}" '
+            f'alt="{safe_name}" '
+            f'title="{tip}" '
+            f'loading="lazy">'
+            f'<div class="unit-caption">{safe_name}</div>'
+            f'</div>'
+        )
+    else:
+        cell = (
+            f'<div class="unit-cell unit-cell-missing" title="{tip}">'
+            f'<div class="unit-placeholder">?</div>'
+            f'<div class="unit-caption">{safe_name}</div>'
+            f'</div>'
+        )
+    return (
+        f'<div class="unique-units-block">'
+        f'<div class="unique-units-label">HERO / EXPLORER</div>'
+        f'<div class="unique-units-row">{cell}</div>'
+        f'</div>'
+    )
+
+
+def _render_retreat_units_row(anw_token: str, blurbs: dict,
+                               rosters: dict[str, list[str]],
+                               standard_units: dict[str, list[str]] | None = None) -> str:
+    """Render the RETREAT UNITS strip for one civ (25% retreat tier).
+
+    Retreat units = standard-unit roster for the civ (from curated
+    data/anw_standard_units.json when non-empty, else HTML-derived rosters)
+    MINUS the civ's unique_units (which retreat at 10% instead) AND minus
+    the civ's hero/explorer units (which never retreat; they suppress nearby
+    retreats).
+    Source: data/anw_standard_units.json (curated) or a_new_world.html
+    data-search attributes (fallback), filtered against blurbs unique_units
+    + _ANW_HERO_EXPLORER.
+    """
+    curated = (standard_units or {}).get(anw_token)
+    all_units = curated if curated else (rosters.get(anw_token) or [])
+    exclude = set((blurbs.get(anw_token) or {}).get("unique_units") or [])
+    exclude |= set(_ANW_HERO_EXPLORER.get(anw_token) or [])
+    # Case-insensitive exclusion
+    exclude_lower = {e.lower() for e in exclude}
+    retreat = [u for u in all_units if u.lower() not in exclude_lower]
+    return _render_unit_row("RETREAT UNITS", retreat)
+
+
+def _load_civmods_leader_portraits() -> dict[str, str]:
+    """Map each ANW civ token to its ACTUAL in-game leader portrait filename.
+
+    Authoritative source: ``data/civmods.xml`` ``<homecitypreviewwpf>`` — the
+    home-city leader preview portrait the GAME itself shows for that civ. This
+    is the base-game leader for base civs (e.g. ANWBritish →
+    ``cpai_avatar_british.png``, ANWSpanish → ``cpai_avatar_spanish_isabella.png``)
+    and the new-nation leader for the custom civs (e.g. ANWArgentines →
+    ``cpai_avatar_argentines_san_martin.png``, ANWHaudenosaunee →
+    ``cpai_avatar_haudenosaunee_hiawatha.png``).
+
+    Returns ``{ANWToken: basename.png}`` (basename only; the file lives in
+    ``resources/images/icons/singleplayer/``). Empty dict on read error.
+    """
+    path = REPO_ROOT / "data" / "civmods.xml"
+    out: dict[str, str] = {}
+    try:
+        txt = path.read_text(encoding="utf-8", errors="replace")
+    except Exception as exc:
+        print(f"  [warn] could not read civmods.xml: {exc}", file=sys.stderr)
+        return out
+    for blk in txt.split("<civ>"):
+        m = re.search(r"<name>(ANW[A-Za-z]+)</name>", blk)
+        if not m:
+            continue
+        pv = re.search(r"<homecitypreviewwpf>([^<]+)</homecitypreviewwpf>", blk)
+        if not pv:
+            continue
+        base = pv.group(1).strip().replace("\\", "/").rsplit("/", 1)[-1]
+        out[m.group(1)] = base
+    return out
+
+
+# Leader-portrait art surfaces (in priority order) whose captured crop is the
+# in-game leader portrait. Sourcing the card-header circle from the first
+# available one keeps the circle identical to the per-civ "Art surfaces"
+# portrait shown on the same card.
+_PORTRAIT_CROP_SURFACES = (
+    "lobby_portrait",
+    "scoreboard_player_row",
+    "diplomacy_panel",
+    "esc_menu_player_summary",
+)
+
+
+def _load_portrait_overrides() -> dict[str, str]:
+    """Map ANW civ token -> hand-picked canonical leader-portrait path.
+
+    Source: ``artifacts/retreat_design/leader_portrait_choice.json`` —
+    ``{ANWToken: repo_relative_png_path}``. Used when a civ's auto-detected
+    in-game crop is a BAD capture (e.g. ANWBritish's lobby_portrait crop is a
+    harbor scene, not Queen Elizabeth). This override is the highest-priority
+    circle source and also drives the leader-portrait art surface, so both
+    match. Empty dict if the file is absent.
+    """
+    path = REPO_ROOT / "artifacts" / "retreat_design" / "leader_portrait_choice.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _best_portrait_crop(anw_token: str) -> Path | None:
+    """Return the best captured in-game leader-portrait crop for a civ, or None.
+
+    Looks in ``artifacts/validation/visual_art/<ANWtoken>/crops/`` for the
+    leader-portrait surfaces in priority order, skipping any flagged
+    ``*.needs_recapture.png`` (stale/wrong captures). Returns the first match
+    so the card-header circle is the SAME image the card's Art-surfaces strip
+    displays for that nation.
+    """
+    crops_dir = ART_DIR / anw_token / "crops"
+    if not crops_dir.is_dir():
+        return None
+    for surf in _PORTRAIT_CROP_SURFACES:
+        cand = crops_dir / f"{surf}.png"
+        if cand.is_file():
+            return cand
+    return None
+
+
 def _stage_leader_avatars(spec: dict) -> dict[str, str]:
-    """Copy each civ's resolved avatar into the site tree.
+    """Copy each civ's actual in-game leader portrait into the site tree.
 
     Returns ``{civ_token: site_relative_path}`` where ``site_relative_path``
     is e.g. ``leader_avatars/argentines_san_martin_revolution.png`` — already
     in the form the locally hosted HTML can use.
+
+    The portrait source is the AUTHORITATIVE in-game leader portrait declared
+    in ``data/civmods.xml`` (<homecitypreviewwpf>, via
+    _load_civmods_leader_portraits) — the same image the game shows for that
+    nation's leader. Falls back to the legacy pattern-based
+    ``_resolve_leader_avatar`` only if civmods has no entry / the file is
+    absent.
 
     Files are copied (not symlinked) so the http.server in
     ``artifacts/validation/`` can serve them without needing follow-symlinks
     semantics, and so the directory is self-contained for archive/upload.
     """
     _SITE_AVATAR_DIR.mkdir(parents=True, exist_ok=True)
+    portrait_map = _load_civmods_leader_portraits()
+    portrait_overrides = _load_portrait_overrides()
     out: dict[str, str] = {}
     unresolved: list[str] = []
     for token, civ in (spec.get("civs") or {}).items():
         civ_label = civ.get("civ_label") or token
         leader_label = civ.get("leader_label") or ""
         portrait_path = civ.get("portrait_path") or None
-        src = _resolve_leader_avatar(token, civ_label, leader_label,
-                                     portrait_path=portrait_path)
+        src: Path | None = None
+        anw_token = _civ_token_to_anw(token)
+        # 1) Hand-picked override (for civs whose base art / capture is wrong).
+        ov = portrait_overrides.get(anw_token)
+        if ov:
+            cand = REPO_ROOT / ov
+            if cand.is_file():
+                src = cand
+        # 2) BASE GAME ART: the official cpai_avatar leader portrait declared
+        #    in civmods.xml <homecitypreviewwpf> (e.g. ANWBritish →
+        #    cpai_avatar_british.png = Queen Elizabeth). Per user preference,
+        #    use the clean base-game portrait rather than a screenshot crop.
+        if src is None:
+            base = portrait_map.get(anw_token)
+            if base:
+                cand = _SINGLEPLAYER_AVATAR_DIR / base
+                if cand.is_file():
+                    src = cand
+        # 3) Fall back to a captured in-game leader-portrait crop (skips
+        #    ``.needs_recapture``) only when no base-game portrait exists.
+        if src is None:
+            src = _best_portrait_crop(anw_token)
+        # 4) Last resort: legacy pattern-based avatar resolver.
+        if src is None:
+            src = _resolve_leader_avatar(token, civ_label, leader_label,
+                                         portrait_path=portrait_path)
         if src is None:
             unresolved.append(token)
             continue
@@ -1269,7 +1816,8 @@ def _render_civ_revolution_block(civ_label: str,
 
 
 def _render_civ_art_surfaces_block(anw_token: str,
-                                    art_info: dict | None) -> str:
+                                    art_info: dict | None,
+                                    avatar_rel: str | None = None) -> str:
     """Render a horizontal strip of every art surface for one civ.
 
     Per user feedback (2026-05-27) the standalone "Art surfaces" section
@@ -1280,6 +1828,13 @@ def _render_civ_art_surfaces_block(anw_token: str,
 
     ``art_info`` is the entry from ``collect_art_surfaces()`` for this
     civ (or None if no folder exists yet).
+
+    The ``lobby_portrait`` (leader portrait) surface is rendered from the
+    civ's staged card-header avatar (``avatar_rel``) rather than the raw
+    capture, so the art-surfaces leader portrait is GUARANTEED to be the
+    same image as the little circle in the card header (the user requires
+    these to match, and some raw lobby captures are bad — e.g. a harbor
+    scene instead of the leader).
     """
     thumb_map: dict[str, str] = {}
     if art_info:
@@ -1287,14 +1842,27 @@ def _render_civ_art_surfaces_block(anw_token: str,
             thumb_map[name] = rel
     parts: list[str] = []
     parts.append('<div class="civ-art-block">')
+    captured = sum(1 for s in ART_SURFACE_ORDER
+                   if s in thumb_map or (s == "lobby_portrait" and avatar_rel))
     parts.append('<div class="civ-art-title">Art surfaces '
                  f'<span class="civ-art-meta">'
-                 f'({sum(1 for s in ART_SURFACE_ORDER if s in thumb_map)}/'
-                 f'{len(ART_SURFACE_ORDER)} captured)</span></div>')
+                 f'({captured}/{len(ART_SURFACE_ORDER)} captured)</span></div>')
     parts.append('<div class="civ-art-row">')
     for surf in ART_SURFACE_ORDER:
         label = ART_SURFACE_LABELS.get(surf, surf)
         rel = thumb_map.get(surf)
+        # Leader portrait: always mirror the card-header circle so the two match.
+        if surf == "lobby_portrait" and avatar_rel:
+            parts.append(
+                '<div class="civ-art-cell">'
+                f'<img src="{html.escape(avatar_rel)}" '
+                f'alt="lobby_portrait" '
+                f'title="{html.escape(anw_token)} — Leader portrait" '
+                f'onclick="showImg(this)">'
+                f'<div class="civ-art-label">Leader portrait</div>'
+                '</div>'
+            )
+            continue
         if rel:
             rel_from_site = _site_relative(rel)
             parts.append(
@@ -1596,50 +2164,25 @@ def _render_civ_screenshots_block(
                 '</div>'
             )
 
+    # Single unified group (user request 2026-06-02): all surfaces — player
+    # round + AI round — in ONE wrapped row with no "HUMAN ROUND" / "AI ROUND"
+    # / "Additional captures" sub-headings. The redundant "extras" (alternate
+    # captures of surfaces already shown as canonical columns) are intentionally
+    # NOT rendered, so the strip never shows duplicate images of the same
+    # surface. ``extras`` is still computed above only to mark those paths seen.
+    _ = extras  # intentionally unused in the merged single-group layout
+    total_present = n_present + n_ai_present
+    total_slots = len(SCREENSHOT_COLUMNS) + len(AI_SCREENSHOT_COLUMNS)
     parts: list[str] = []
     parts.append('<div class="civ-shot-block">')
     parts.append('<div class="civ-shot-title">In-game screenshots '
                  f'<span class="civ-shot-meta">'
-                 f'({n_present}/{len(SCREENSHOT_COLUMNS)} captured'
-                 f'{f", +{len(extras)} extras" if extras else ""})'
+                 f'({total_present}/{total_slots} captured)'
                  '</span></div>')
-    parts.append('<div class="civ-shot-row-label">HUMAN ROUND</div>')
     parts.append('<div class="civ-shot-row">')
     parts.extend(cell_rows)
-    parts.append('</div>')
-    parts.append('<div class="civ-shot-row-label civ-shot-row-label-ai">AI ROUND '
-                 f'<span class="civ-shot-meta">({n_ai_present}/{len(AI_SCREENSHOT_COLUMNS)} captured)</span>'
-                 '</div>')
-    parts.append('<div class="civ-shot-row">')
     parts.extend(ai_cell_rows)
     parts.append('</div>')
-
-    if extras:
-        parts.append('<div class="civ-shot-extras-title">'
-                     'Additional captures</div>')
-        parts.append('<div class="civ-shot-row civ-shot-row-extras">')
-        for entry in extras:
-            try:
-                rel = entry.relative_to(REPO_ROOT)
-            except ValueError:
-                rel = entry
-            rel_from_site = _site_relative(str(rel))
-            # Strip leading "NN_" or "NNa_" prefix and ".png" suffix
-            # for a compact label.
-            stem = entry.stem
-            label = re.sub(r"^\d+[a-z]?_", "", stem).replace("_", " ")
-            cell_html = (
-                '<div class="civ-shot-cell">'
-                f'<img src="{html.escape(rel_from_site)}" '
-                f'alt="{html.escape(label)}" '
-                f'title="{html.escape(anw_token)} — {html.escape(entry.name)}" '
-                f'onclick="showImg(this)">'
-                f'<div class="civ-shot-label">{html.escape(label)}</div>'
-                '</div>'
-            )
-            parts.append(cell_html)
-        parts.append('</div>')
-
     parts.append('</div>')
     return "".join(parts)
 
@@ -1772,8 +2315,10 @@ def get_git_meta() -> dict:
 
 CSS = """
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{max-width:100%;overflow-x:hidden}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-     background:#0e1117;color:#c9d1d9;line-height:1.5;padding:0}
+     background:#0e1117;color:#c9d1d9;line-height:1.5;padding:0;
+     overflow-wrap:break-word;word-break:break-word}
 header{background:linear-gradient(135deg,#0d4429 0%,#0a3621 100%);
        padding:32px 48px;border-bottom:1px solid #21262d}
 header h1{font-size:32px;color:#f0f6fc;margin-bottom:8px}
@@ -1789,7 +2334,7 @@ header .meta strong{color:#c9d1d9}
 
 nav{background:#161b22;padding:12px 48px;border-bottom:1px solid #21262d;
     position:sticky;top:0;z-index:100;display:flex;gap:24px;
-    overflow-x:auto;white-space:nowrap}
+    flex-wrap:wrap}
 nav a{color:#8b949e;text-decoration:none;font-size:14px;padding:6px 0}
 nav a:hover{color:#58a6ff}
 nav .tag{color:#3fb950;margin-left:4px;font-size:11px}
@@ -1834,7 +2379,8 @@ section .content{padding:24px}
 .civ-card-header{padding:12px 16px;border-bottom:1px solid #21262d;
                  display:flex;justify-content:space-between;align-items:center;gap:12px}
 .civ-card-header .leader-avatar{width:48px;height:48px;border-radius:50%;
-                                object-fit:cover;border:2px solid #30363d;
+                                object-fit:cover;object-position:center top;
+                                border:2px solid #30363d;
                                 background:#0d1117;flex-shrink:0;cursor:pointer;
                                 transition:border-color 0.15s ease}
 .civ-card-header .leader-avatar:hover{border-color:#58a6ff}
@@ -1950,8 +2496,8 @@ section .content{padding:24px}
   margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .civ-card .civ-art-meta{font-weight:400;color:#6e7681;font-size:10px;
   text-transform:none;letter-spacing:0}
-.civ-card .civ-art-row{display:flex;gap:6px;flex-wrap:nowrap;
-  overflow-x:auto;padding-bottom:2px}
+.civ-card .civ-art-row{display:flex;gap:6px;flex-wrap:wrap;
+  padding-bottom:2px}
 .civ-card .civ-art-cell{flex-shrink:0;text-align:center;width:56px}
 .civ-card .civ-art-cell img{height:56px;width:56px;object-fit:cover;
   border:1px solid #30363d;border-radius:3px;cursor:pointer;
@@ -1977,8 +2523,8 @@ section .content{padding:24px}
   margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .civ-card .civ-shot-meta{font-weight:400;color:#6e7681;font-size:10px;
   text-transform:none;letter-spacing:0}
-.civ-card .civ-shot-row{display:flex;gap:6px;flex-wrap:nowrap;
-  overflow-x:auto;padding-bottom:2px}
+.civ-card .civ-shot-row{display:flex;gap:6px;flex-wrap:wrap;
+  padding-bottom:2px}
 .civ-card .civ-shot-cell{flex-shrink:0;text-align:center;width:110px}
 .civ-card .civ-shot-cell img{height:62px;width:110px;object-fit:cover;
   border:1px solid #30363d;border-radius:3px;cursor:pointer;
@@ -2100,7 +2646,8 @@ code{background:#21262d;color:#7fd1ff;padding:1px 6px;border-radius:3px;
      font-family:'SF Mono','Monaco',monospace;font-size:12px}
 pre{background:#010409;color:#c9d1d9;padding:14px;border-radius:6px;
     border:1px solid #30363d;font-family:'SF Mono','Monaco',monospace;
-    font-size:12px;line-height:1.5;overflow-x:auto;margin:8px 0}
+    font-size:12px;line-height:1.5;white-space:pre-wrap;
+    overflow-wrap:break-word;word-break:break-word;margin:8px 0}
 
 .footnote{padding:12px 24px;font-size:11px;color:#6e7681}
 footer{padding:32px 48px;font-size:12px;color:#6e7681;text-align:center;
@@ -2122,10 +2669,17 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # The source dir is outside artifacts/validation/ and therefore not
     # reachable via the http.server, so we must copy them in.
     _stage_card_icons(decks, cards_db)
-    # Unique-unit data + icon staging for the per-civ unique-units row.
-    # Source: data/anw_civ_blurbs.json unique_units lists.
+    # Unit-row data + icon staging for the three per-civ unit strips:
+    # Hero/Explorer (suppresses retreat), Unique Units (10% tier),
+    # Retreat Units (25% tier).
+    # Sources: data/anw_civ_blurbs.json, _ANW_HERO_EXPLORER constant,
+    # and a_new_world.html data-search unit rosters.
     civ_blurbs = _load_civ_blurbs()
-    _stage_unit_icons(civ_blurbs)
+    anw_unit_rosters = _load_anw_unit_rosters()
+    anw_standard_units = _load_anw_standard_units()
+    explorer_map = _load_explorer_resolution()
+    _stage_unit_icons(civ_blurbs, rosters=anw_unit_rosters,
+                      standard_units=anw_standard_units)
     # Per-age strategy text, keyed by spec token. Replaces the old
     # ``first build / expects / distance / deadlines`` claim block in
     # the per-civ card with five short DLC-aware strategy paragraphs
@@ -2364,24 +2918,21 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         deck_html = _render_civ_deck_html(anw_token, decks, cards_db,
                                           spec_token=token)
 
-        # Unique units strip — placed directly after the home-city deck
-        # block. Data from data/anw_civ_blurbs.json unique_units lists;
-        # icons staged into artifacts/validation/unit_icons/ by
-        # _stage_unit_icons(). Units without a resolved icon get a dashed
-        # placeholder so we never crash or emit a broken src= path.
-        unique_units_html = _render_unique_units_row(anw_token, civ_blurbs)
+        # Three-row unit strip — vertically ordered: Hero/Explorer (top),
+        # Unique Units (middle, 10% retreat tier), Retreat Units (bottom,
+        # 25% tier). All rows rendered for every civ; empty rows show an
+        # explicit "(none / data unavailable)" notice rather than being
+        # silently omitted. Icons staged into artifacts/validation/unit_icons/
+        # by _stage_unit_icons(); units without a resolved icon get a dashed
+        # placeholder chip so we never emit a broken src= path.
+        unique_units_html   = _render_unique_units_row(anw_token, civ_blurbs)
+        retreat_units_html  = _render_retreat_units_row(
+                                  anw_token, civ_blurbs, anw_unit_rosters,
+                                  standard_units=anw_standard_units)
 
-        # Per-civ art-surfaces strip + in-game screenshot strip — inlined
-        # under the deck per user feedback (2026-05-27). Standalone
-        # "Art surfaces" / "In-game screenshots" sections were removed
-        # in the same pass. Every civ shows all surfaces/screenshots
-        # even if not yet captured, with dashed placeholders for gaps.
-        # British: art-surfaces strip suppressed per user request
-        # (2026-06-01) — its in-game thumbs were incomplete/mislabeled.
-        if anw_token == "ANWBritish":
-            art_block = ""
-        else:
-            art_block = _render_civ_art_surfaces_block(anw_token, art_info)
+        # Per-civ in-game screenshot strip — inlined under the deck. The
+        # art-surfaces strip is rendered later (after avatar_rel is resolved)
+        # so its leader-portrait cell can mirror the card-header circle.
         shots_block = _render_civ_screenshots_block(anw_token,
                                                     screenshot_index)
 
@@ -2397,10 +2948,12 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # value — only the user-visible string is renamed.
         civ_label_display = CIV_LABEL_DISPLAY_OVERRIDE.get(civ_label,
                                                           civ_label)
-        if leader_label:
-            display_name = f"{civ_label_display} — {leader_label}"
-        else:
-            display_name = civ_label_display
+        # "A New World" is a nation-identity mod (NOT named Legendary
+        # Leaders), so the card title is the NATION name only — the per-civ
+        # leader name (e.g. "Elizabeth", "Frederick the Great") is dropped
+        # from all user-visible strings. leader_label is still read above for
+        # data plumbing but no longer shown.
+        display_name = civ_label_display
         # Leader avatar — the actual cpai_avatar PNG the game ships, copied
         # into ``artifacts/validation/leader_avatars/`` so the locally-hosted
         # http.server (rooted at ``artifacts/validation/``) can serve it.
@@ -2411,7 +2964,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
             avatar_img = (
                 f'<img class="leader-avatar" '
                 f'src="{html.escape(avatar_rel)}" '
-                f'alt="{_safe_text(leader_label or civ_label)} portrait" '
+                f'alt="{_safe_text(civ_label_display)} portrait" '
                 f'title="{_safe_text(display_name)}" '
                 f'onclick="showImg(this)">'
             )
@@ -2421,6 +2974,15 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
                 'style="display:flex;align-items:center;justify-content:center;'
                 'color:#484f58;font-size:18px" title="no avatar resolved">·</div>'
             )
+        # Hero/Explorer row — the civ's actual in-game explorer UNIT
+        # (proto + unit-type name + icon) from explorer_resolution.json.
+        hero_explorer_html = _render_hero_explorer_row(anw_token, explorer_map)
+        # Art-surfaces strip — the leader-portrait cell mirrors avatar_rel so
+        # it matches the card-header circle (resolved just above). Shown for
+        # every civ including British (the leader portrait now comes from the
+        # clean base-game avatar, not the old mislabeled in-game thumb).
+        art_block = _render_civ_art_surfaces_block(anw_token, art_info,
+                                                   avatar_rel=avatar_rel)
         parts.append(f'''
 <div class="civ-card">
   <div class="civ-card-header">
@@ -2438,7 +3000,9 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     {rev_block}
   </div>
   {deck_html}
+  {hero_explorer_html}
   {unique_units_html}
+  {retreat_units_html}
   {art_block}
   {shots_block}
 </div>''')

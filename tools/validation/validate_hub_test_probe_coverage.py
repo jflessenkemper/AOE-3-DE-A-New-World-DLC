@@ -10,7 +10,7 @@ in the AI XS scripts:
         that mentions a probe name (matched by regex
         ``\\b([a-z]+\\.[a-z_]+)\\b`` — dotted lowercase identifier) must
         reference a probe that exists, either as a literal
-        ``llProbe("name"`` site in any AI XS file, or as a known dynamic
+        ``anwProbe("name"`` site in any AI XS file, or as a known dynamic
         emission (``llCheckMilestone(tag)`` → ``milestone.first_<tag>``).
 
   C-2 — MILESTONE TAG COVERAGE
@@ -71,8 +71,8 @@ _HUBTEST_MSG_RE = re.compile(
     r'rmSetTriggerEffectParam\s*\(\s*"Message"\s*,\s*"([^"]*\[HUBTEST\][^"]*)"',
 )
 
-# Pattern to find llProbe("name" literal sites.
-_LLPROBE_LITERAL_RE = re.compile(r'llProbe\s*\(\s*"([^"]+)"')
+# Pattern to find anwProbe("name" literal sites.
+_LLPROBE_LITERAL_RE = re.compile(r'anwProbe\s*\(\s*"([^"]+)"')
 
 # Pattern to find llCheckMilestone("<tag>", ...) calls.
 _MILESTONE_TAG_RE = re.compile(r'llCheckMilestone\s*\(\s*"([^"]+)"')
@@ -88,7 +88,7 @@ def collect_hubtest_messages(xs_text: str) -> list[str]:
 
 
 def collect_literal_probes(ai_dir: Path) -> set[str]:
-    """Scan all XS files under *ai_dir* for ``llProbe("name"`` sites.
+    """Scan all XS files under *ai_dir* for ``anwProbe("name"`` sites.
 
     Returns the set of literal probe name strings found.
     """
@@ -136,7 +136,7 @@ def check_c1_narrative_cites_real_probes(
                     "bad_token": tok,
                     "msg": (
                         f"[HUBTEST] message cites '{tok}' which is not emitted "
-                        f"by any llProbe() or llCheckMilestone() in game/ai/"
+                        f"by any anwProbe() or llCheckMilestone() in game/ai/"
                     ),
                 })
     return violations
@@ -180,7 +180,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--map", type=Path, default=HUB_TEST_XS,
                     help="Path to anwHubTest.xs (default: repo-relative)")
     ap.add_argument("--ai-dir", type=Path, default=AI_DIR,
-                    help="Root of AI XS files to scan for llProbe() sites")
+                    help="Root of AI XS files to scan for anwProbe() sites")
     ap.add_argument("--doctrine-xs", type=Path, default=DOCTRINE_PROBES_XS,
                     help="Path to aiDoctrineProbes.xs for milestone tags")
     ap.add_argument("--json", type=Path, dest="json_out",
@@ -213,7 +213,7 @@ def main(argv: list[str] | None = None) -> int:
     all_probes = build_all_probe_names(literal_probes, milestone_tags)
 
     print(f"  [HUBTEST] messages found : {len(hubtest_messages)}")
-    print(f"  Literal llProbe() sites  : {len(literal_probes)}")
+    print(f"  Literal anwProbe() sites  : {len(literal_probes)}")
     print(f"  llCheckMilestone tags    : {len(milestone_tags)} "
           f"({len(MILESTONE_TAG_EXEMPT)} exempt)")
     print(f"  Total known probe names  : {len(all_probes)}")

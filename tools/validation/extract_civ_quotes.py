@@ -32,7 +32,7 @@ _CALIB_TO_QUOTES_CIVNAME: dict[str, str] = {
     "ANWIndonesians": "ANWIndonesians", "ANWMayans": "ANWMayans",
     "ANWNapoleonicFrance": "ANWNapoleonicFrance",
     "ANWPeruvians": "ANWPeruvians",
-    "ANWRevFrance": "ANWNapoleonicFrance",  # shares quotes branch
+    "ANWRevFrance": "ANWRevFrance",
     "ANWRomanians": "ANWRomanians", "ANWSouthAfricans": "ANWSouthAfricans",
     "ANWTexians": "ANWTexians",
     # DE / XP — normalized via llNormalizeCivName

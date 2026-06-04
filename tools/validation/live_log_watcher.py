@@ -8,7 +8,7 @@ when you're done; the digest at ``artifacts/validation/live_test/digest.md``
 will summarise the session. Each line of the live log is bucketed into one
 of five categories:
 
-  * **probes** — every ``[LLP v=2 …]`` line (one per civ-doctrine event)
+  * **probes** — every ``[ANWP v=2 …]`` line (one per civ-doctrine event)
   * **wall_closure** — ``wall.closure=`` ratio per ring (closes vs. spec)
   * **errors** — ``cmdsExecXS`` failures, ``failed to load``, asserts
   * **warnings** — engine warnings (xs runtime, file-load misses, etc.)
@@ -39,7 +39,7 @@ RAW_PROBES = OUT_DIR / "probes.log"
 RAW_ERRORS = OUT_DIR / "errors.log"
 
 # Buckets
-_PROBE_RE = re.compile(r"\[LLP v=2[^\]]*\][^\n]*")
+_PROBE_RE = re.compile(r"\[ANWP v=2[^\]]*\][^\n]*")
 _WALL_RE = re.compile(r"wall\.closure[=:]\s*([0-9.]+)")
 _ERR_RE = re.compile(
     r"(cmdsExecXS|failed to load|assertion|fatal|EXCEPTION|XS error|"
@@ -58,7 +58,7 @@ def _format_digest(state: dict, started_at: float, log_size: int) -> str:
     out.append("")
     out.append("## Counts")
     out.append("")
-    out.append(f"- `[LLP v=2]` probes: **{state['probes']}**")
+    out.append(f"- `[ANWP v=2]` probes: **{state['probes']}**")
     out.append(f"- `wall.closure` samples: **{len(state['wall_ratios'])}**")
     out.append(f"- Errors: **{state['errors']}**")
     out.append(f"- Warnings: **{state['warnings']}**")
@@ -163,7 +163,7 @@ def main() -> int:
                     chunk = f.read(cur_size - pos).decode("utf-8", "replace")
                     pos = cur_size
                 for line in chunk.splitlines():
-                    if "[LLP v=2" in line:
+                    if "[ANWP v=2" in line:
                         state["probes"] += 1
                         raw_p.write(line + "\n")
                         raw_p.flush()

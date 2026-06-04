@@ -118,7 +118,7 @@
     },
     {
       "action": "click_image",
-      "image": "../templates/dutch_napoleon_vs_russia_egypt/map_legendary_leaders_test.png",
+      "image": "../templates/dutch_napoleon_vs_russia_egypt/map_anw_test.png",
       "timeout": 30,
       "confidence": 0.92
     },

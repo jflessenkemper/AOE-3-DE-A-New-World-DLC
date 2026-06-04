@@ -34,7 +34,7 @@ def synth_for_civ(spec: dict, *, player_id: int = 1) -> list[str]:
 
     def emit(t_ms: int, tag: str, detail: str = "") -> None:
         head = (
-            f"PreGame  {t_ms}:  [LLP v=2 t={t_ms} p={player_id} "
+            f"PreGame  {t_ms}:  [ANWP v=2 t={t_ms} p={player_id} "
             f"civ={civ} ldr={ldr_key} tag={tag}]"
         )
         if detail:

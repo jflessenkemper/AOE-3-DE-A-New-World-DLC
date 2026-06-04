@@ -1,5 +1,5 @@
 """Pull each standard-civ home city XMB out of Data.bar, swap its `<default>`
-deck for a 25-card 'Legendary Leaders' deck, and drop the result as plain XML
+deck for a 25-card 'A New World' deck, and drop the result as plain XML
 into `data/`. The mod's data layer overrides vanilla XMB with our XML, so the
 AI for every civilization (standard + revolution) ends up playing our deck.
 
@@ -12,7 +12,7 @@ For each civ:
         designer's intent)
       - pad to TARGET_SIZE from the available pool, age 0 → 4
   • rewrite the deck:
-      - rename to "Legendary Leaders"
+      - rename to "A New World"
       - keep `<default/>` flag
       - drop dbid attributes (the engine accepts both forms)
   • serialize the whole homecity tree back to XML and write to
@@ -46,7 +46,7 @@ DATA_OUT = REPO / "data"
 DECKS_OUT = DATA_OUT / "decks_standard.json"
 
 TARGET_SIZE = 25
-DECK_NAME = "Legendary Leaders"
+DECK_NAME = "A New World"
 
 # Standard 22-civ map: HTML civ slug → home city XMB basename in Data.bar.
 # `civ_id` is what we'll key the JSON output on (used by inject_decks.py).

@@ -118,7 +118,7 @@ def main() -> int:
     # Family breakdown
     families: dict[str, int] = {}
     for line in log_content.splitlines():
-        idx = line.find("[LLP v=2 ")
+        idx = line.find("[ANWP v=2 ")
         if idx < 0:
             continue
         ti = line.find("tag=", idx)

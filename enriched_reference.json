@@ -1464,12 +1464,12 @@
     "ANWIndians": {
       "anw_token": "ANWIndians",
       "display_name": "Maratha Empire",
-      "data_name": "Indians Akbar",
+      "data_name": "Indians Shivaji",
       "playstyle_spec": {
         "doctrine_label": "Highland Citadel",
         "doctrine_summary": "Maratha Ganimi Kava raid",
         "civ_label": "Indians",
-        "leader_label": "Akbar"
+        "leader_label": "Shivaji"
       },
       "expected_milestones": {
         "wall_segment": true,
@@ -2472,12 +2472,12 @@
     "ANWRussians": {
       "anw_token": "ANWRussians",
       "display_name": "Russia",
-      "data_name": "Russians Catherine",
+      "data_name": "Russians Ivan",
       "playstyle_spec": {
         "doctrine_label": "Streltsy siege",
         "doctrine_summary": "Oprichnik terror",
         "civ_label": "Russians",
-        "leader_label": "Catherine"
+        "leader_label": "Ivan the Terrible"
       },
       "expected_milestones": {
         "wall_segment": true,

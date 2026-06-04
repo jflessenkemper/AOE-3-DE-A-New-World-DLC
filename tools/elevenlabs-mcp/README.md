@@ -1,6 +1,6 @@
 # ElevenLabs MCP Helper
 
-This is a small local MCP server for voice generation workflows tied to Legendary Leaders AI.
+This is a small local MCP server for voice generation workflows tied to A New World AI.
 
 ## What it exposes
 

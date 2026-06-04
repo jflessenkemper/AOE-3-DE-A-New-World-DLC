@@ -7,11 +7,11 @@
 // silent divergence (population drift, age-up timing, resource skew,
 // army composition wander).
 //
-// All emission goes through llProbe(), which:
+// All emission goes through anwProbe(), which:
 //   • Triple-emits via aiEcho + aiChat-to-host + aiChat-to-self so the
 //     marker lands in match.log regardless of which sink the runner
 //     scrapes.
-//   • Honours the global cLLReplayProbes kill switch in aiGlobals.xs —
+//   • Honours the global cANWReplayProbes kill switch in aiGlobals.xs —
 //     a release build flips that bool and the rule self-disables on the
 //     next tick (see the early-out below).
 //
@@ -24,7 +24,7 @@
 //                   landmil=<int>
 //
 // Kept tiny on purpose — query budget is identical to the existing
-// llDoctrineProbes rule (a handful of cached kbUnitCount calls + three
+// anwDoctrineProbes rule (a handful of cached kbUnitCount calls + three
 // kbResourceGet calls), so per-tick cost is well under a millisecond.
 //==============================================================================
 
@@ -32,17 +32,17 @@
 // so we emit on every fire (no double-gating like the doctrine probe's
 // 60s sub-interval). The validator down-samples if it wants coarser
 // resolution.
-extern const int cLLStateSnapshotIntervalMs = 30000;
+extern const int cANWStateSnapshotIntervalMs = 30000;
 
 // Last emission, in game ms. -1 = never emitted yet.
-extern int gLLLastStateSnapshotMs = -1;
+extern int gANWLastStateSnapshotMs = -1;
 
 
 //------------------------------------------------------------------------------
-// llEmitStateSnapshot — collect the cheap-to-query state and ship it
-// off as a single llProbe line. Called from the rule body below.
+// anwEmitStateSnapshot — collect the cheap-to-query state and ship it
+// off as a single anwProbe line. Called from the rule body below.
 //------------------------------------------------------------------------------
-void llEmitStateSnapshot(int ageMs = 0)
+void anwEmitStateSnapshot(int ageMs = 0)
 {
    // Population --------------------------------------------------------------
    int popUsed = kbGetPop();
@@ -64,14 +64,14 @@ void llEmitStateSnapshot(int ageMs = 0)
    int land = kbUnitCount(cMyID, cUnitTypeLogicalTypeLandMilitary,  cUnitStateAlive);
 
    // Warship count (only meaningful if civ has a warship abstract type;
-   // gLLAbstractWarShip mirrors the pattern in aiNavalUtilities.xs).
+   // gANWAbstractWarShip mirrors the pattern in aiNavalUtilities.xs).
    int navy = 0;
-   if (gLLAbstractWarShip > 0)
+   if (gANWAbstractWarShip > 0)
    {
-      navy = kbUnitCount(cMyID, gLLAbstractWarShip, cUnitStateAlive);
+      navy = kbUnitCount(cMyID, gANWAbstractWarShip, cUnitStateAlive);
    }
 
-   llProbe("state.snapshot",
+   anwProbe("state.snapshot",
       "ageMs=" + ageMs +
       " age=" + kbGetAge() +
       " pop_used=" + popUsed +
@@ -89,22 +89,22 @@ void llEmitStateSnapshot(int ageMs = 0)
 
 
 //==============================================================================
-// llStateSnapshot — periodic state-trajectory rule. Enabled from
-// aiLoaderStandard.xs alongside llDoctrineProbes when probes are on.
+// anwStateSnapshot — periodic state-trajectory rule. Enabled from
+// aiLoaderStandard.xs alongside anwDoctrineProbes when probes are on.
 //
 // minInterval=30 (game seconds) — matches the snapshot cadence so we
 // emit on every fire. The interval-guard below is a belt-and-braces
 // check against rule re-entry (XS schedules can fire slightly early
 // when the engine is catching up after a slow tick).
 //==============================================================================
-rule llStateSnapshot
+rule anwStateSnapshot
 inactive
 minInterval 30
 {
    // Bail cheaply when the global probe channel is off — release builds
-   // ship with cLLReplayProbes=false, so the rule body becomes a single
+   // ship with cANWReplayProbes=false, so the rule body becomes a single
    // boolean check per tick and then permanently self-disables.
-   if (cLLReplayProbes == false)
+   if (cANWReplayProbes == false)
    {
       xsDisableSelf();
       return;
@@ -114,12 +114,12 @@ minInterval 30
 
    // Interval guard — only emit if we're past the configured interval
    // since the last snapshot (or this is the first emission).
-   if (gLLLastStateSnapshotMs >= 0 &&
-      (nowMs - gLLLastStateSnapshotMs) < cLLStateSnapshotIntervalMs)
+   if (gANWLastStateSnapshotMs >= 0 &&
+      (nowMs - gANWLastStateSnapshotMs) < cANWStateSnapshotIntervalMs)
    {
       return;
    }
 
-   llEmitStateSnapshot(nowMs);
-   gLLLastStateSnapshotMs = nowMs;
+   anwEmitStateSnapshot(nowMs);
+   gANWLastStateSnapshotMs = nowMs;
 }

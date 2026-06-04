@@ -13,7 +13,7 @@ from tools.validation.common import REPO_ROOT, build_repo_root_parser, repo_rela
 
 
 DEFAULT_LOG_PATH = Path.home() / ".steam/steam/steamapps/compatdata/933110/pfx/drive_c/users/steamuser/Games/Age of Empires 3 DE/Logs/Age3Log.txt"
-DEFAULT_SPEC_PATH = REPO_ROOT / "tools" / "validation" / "runtime_specs" / "legendary_runtime_suites.json"
+DEFAULT_SPEC_PATH = REPO_ROOT / "tools" / "validation" / "runtime_specs" / "anw_runtime_suites.json"
 DEFAULT_XS_GLOB = "game/ai/core/*.xs"
 
 
@@ -136,25 +136,25 @@ def validate_static_emitters(repo_root: Path, spec_path: Path,
         # In static mode we check that the *values* (substrings) appear in XS source.
         #
         # Subtlety: the production helper ``debugLegendaryLeaders(msg)`` in
-        # game/ai/core/aiUtilities.xs prepends the literal "Legendary Leaders: "
+        # game/ai/core/aiUtilities.xs prepends the literal "A New World: "
         # at runtime — call sites pass only the suffix. So when the spec
-        # wants e.g. "Legendary Leaders: [UNIT] ai-rout-start unit=", an XS
+        # wants e.g. "A New World: [UNIT] ai-rout-start unit=", an XS
         # source check for that exact string will fail even when the
         # emitter exists. We therefore *also* try the value with the
-        # "Legendary Leaders: " prefix stripped — that's the form callers
+        # "A New World: " prefix stripped — that's the form callers
         # actually use in source code.
-        _LL_PREFIX = "Legendary Leaders: "
-        _LL_REGEX_PREFIX = "Legendary Leaders: "  # same string, in regex form
+        _ANW_PREFIX = "A New World: "
+        _ANW_REGEX_PREFIX = "A New World: "  # same string, in regex form
         for expectation in list(required) + list(ordered):
             total_checked += 1
             if expectation.kind == "substring":
                 found = expectation.value in combined_xs
-                if not found and expectation.value.startswith(_LL_PREFIX):
-                    found = expectation.value[len(_LL_PREFIX):] in combined_xs
+                if not found and expectation.value.startswith(_ANW_PREFIX):
+                    found = expectation.value[len(_ANW_PREFIX):] in combined_xs
             else:
                 found = re.search(expectation.value, combined_xs, re.MULTILINE) is not None
-                if not found and expectation.value.startswith(_LL_REGEX_PREFIX):
-                    stripped = expectation.value[len(_LL_REGEX_PREFIX):]
+                if not found and expectation.value.startswith(_ANW_REGEX_PREFIX):
+                    stripped = expectation.value[len(_ANW_REGEX_PREFIX):]
                     found = re.search(stripped, combined_xs, re.MULTILINE) is not None
                 # Regex patterns with variable parts (e.g. ``unit=\d+``) won't
                 # match XS source where the runtime value is filled by string
@@ -165,8 +165,8 @@ def validate_static_emitters(repo_root: Path, spec_path: Path,
                     literal_prefix = _regex_literal_prefix(expectation.value)
                     if literal_prefix:
                         found = literal_prefix in combined_xs
-                        if not found and literal_prefix.startswith(_LL_PREFIX):
-                            found = literal_prefix[len(_LL_PREFIX):] in combined_xs
+                        if not found and literal_prefix.startswith(_ANW_PREFIX):
+                            found = literal_prefix[len(_ANW_PREFIX):] in combined_xs
             if not found:
                 issues.append(
                     f"[{suite_name}] no emitter found in game/ai/core/*.xs "
@@ -233,7 +233,7 @@ def validate_runtime_log(repo_root: Path = REPO_ROOT, log_path: Path = DEFAULT_L
 
 
 def main() -> int:
-    parser = build_repo_root_parser("Validate Age of Empires III runtime logs against suite-based Legendary Leaders expectations.")
+    parser = build_repo_root_parser("Validate Age of Empires III runtime logs against suite-based A New World expectations.")
     parser.add_argument(
         "--log-path",
         type=Path,

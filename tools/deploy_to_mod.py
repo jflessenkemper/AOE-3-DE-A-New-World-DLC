@@ -52,6 +52,11 @@ SYNC_ROOTS = [
     # reads the .png for lobby + scoreboard portraits.
     ("art", ["**/*.ddt", "**/*.png", "**/*.xml"]),
     ("resources", ["**/*.png", "**/*.xml", "**/*.json"]),
+    # 2026-05-31: UI XAML overrides for tech tree pages. The AVUI engine
+    # constructs page URIs as /pages/uitechtree/techtree_%S.xaml. Loose files
+    # placed at <modroot>/ui/pages/uitechtree/ may override the UI.bar entries.
+    # Proof civ: techtree_anwargentines.xaml -> copy of techtree_spanish.xaml.
+    ("ui", ["**/*.xaml"]),
 ]
 
 # Files we don't want to overwrite in deploy dir (e.g. user-saved history).

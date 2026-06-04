@@ -2,7 +2,7 @@
 
 **Status:** Draft reference for map-grid modal visualization
 **Scope:** Per-civ building-placement doctrine grounded in real settlement archaeology, military history, and economic patterns
-**Owner:** Legendary Leaders AI mod
+**Owner:** A New World AI mod
 **Date:** 2026-04-24
 
 ---
@@ -17,7 +17,7 @@ Each nation has 11 fields. Every evidence line is confidence-graded:
 
 Wall archetype names match the constants in `game/ai/leaders/leaderCommon.xs` where possible: `CoastalBatteries`, `FortressRing`, `FrontierPalisades`, `MobileNoWalls`, `UrbanBarricade`, `ChokepointSegments`. Where a nation's historical doctrine doesn't match any existing archetype (e.g. Barbary corsair harbors, Lakota camp circles, Finnish trench-line defense), the schema's expanded archetypes are used: `NomadScreen`, `StarFort`, `ChainTowers`, `None`. The map-grid modal can collapse the expanded set into the six coded archetypes using the mapping provided at the end of each entry.
 
-Leader-era anchor follows the Legendary Leaders roster as of 2026-04-24. British = Elizabeth I (not Wellington); Russians = Ivan the Terrible (not Catherine); Lakota = Chief Gall (Little Bighorn era); French base = Louis XVIII Bourbon Restoration; Napoleonic France = Napoleon post-1804 coronation.
+Leader-era anchor follows the A New World roster as of 2026-04-24. British = Elizabeth I (not Wellington); Russians = Ivan the Terrible (not Catherine); Lakota = Chief Gall (Little Bighorn era); French base = Louis XVIII Bourbon Restoration; Napoleonic France = Napoleon post-1804 coronation.
 
 ---
 

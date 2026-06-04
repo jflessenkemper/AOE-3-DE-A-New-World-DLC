@@ -27,35 +27,35 @@ bool gGustavusRulesEnabled = false;
 
 void initLeaderGustavus(void)
 {
-   llVerboseEcho("A New World: activating Gustavus Adolphus personality.");
+   anwVerboseEcho("A New World: activating Gustavus Adolphus personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.05;             // Light boom; the campaign opens early.
    btOffenseDefense = 0.65;
    btBiasTrade = 0.25;
    btBiasNative = 0.1;
-   llSetMilitaryFocus(0.7, 0.4, 0.6);  // Infantry-led, real cavalry, very real artillery.
+   anwSetMilitaryFocus(0.7, 0.4, 0.6);  // Infantry-led, real cavalry, very real artillery.
 
    // LL-BUILD-STYLE-BEGIN
    // Spec doctrine = Forward Operational Line. Gustavus pushed forward
    // operating bases ("Lion of the North"), so the Forward helper fits
    // better than the static Siege Train doctrine.
-   // Note: gLLMilitaryDistanceMultiplier is set authoritatively in
-   // leaderCommon.xs llApplyBuildStyleForActiveCiv (cCivDESwedish → 0.85,
+   // Note: gANWMilitaryDistanceMultiplier is set authoritatively in
+   // leaderCommon.xs anwApplyBuildStyleForActiveCiv (cCivDESwedish → 0.85,
    // mid-band of spec [0.8, 1.1]). Do NOT set it here — the override would
    // be silently clobbered after this init runs, which is misleading.
-   llUseForwardOperationalLineStyle(1);
-   llSetBuildStrongpointProfile(2, 2, 3, true);
+   anwUseForwardOperationalLineStyle(1);
+   anwSetBuildStrongpointProfile(2, 2, 3, true);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.74, 0.26, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.74, 0.26, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 115;
 
    gGustavusRulesEnabled = true;
-   llLogLeaderState("Gustavus initialized");
-   llProbe("meta.leader_init", "leader=gustav");
+   anwLogLeaderState("Gustavus initialized");
+   anwProbe("meta.leader_init", "leader=gustav");
 }
 
 //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ rule gustavusTorpBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("gustavusTorpBoom");
+   anwLogRuleTick("gustavusTorpBoom");
    if (gGustavusRulesEnabled == false)
    {
       xsDisableSelf();
@@ -89,7 +89,7 @@ rule gustavusCarolineLine
 inactive
 minInterval 50
 {
-   llLogRuleTick("gustavusCarolineLine");
+   anwLogRuleTick("gustavusCarolineLine");
    if (gGustavusRulesEnabled == false)
    {
       xsDisableSelf();
@@ -103,7 +103,7 @@ minInterval 50
       btBiasInf = 0.85;
       btBiasCav = 0.45;
       btBiasArt = 0.15;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -115,7 +115,7 @@ rule gustavusMobileArtillery
 inactive
 minInterval 55
 {
-   llLogRuleTick("gustavusMobileArtillery");
+   anwLogRuleTick("gustavusMobileArtillery");
    if (gGustavusRulesEnabled == false)
    {
       xsDisableSelf();
@@ -140,7 +140,7 @@ rule gustavusLutzenDoctrine
 inactive
 minInterval 70
 {
-   llLogRuleTick("gustavusLutzenDoctrine");
+   anwLogRuleTick("gustavusLutzenDoctrine");
    if (gGustavusRulesEnabled == false)
    {
       xsDisableSelf();
@@ -154,7 +154,7 @@ minInterval 70
       btBiasCav = 0.65;
       btBiasArt = 0.85;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -166,7 +166,7 @@ rule gustavusLionOfTheNorth
 inactive
 minInterval 90
 {
-   llLogRuleTick("gustavusLionOfTheNorth");
+   anwLogRuleTick("gustavusLionOfTheNorth");
    if (gGustavusRulesEnabled == false)
    {
       xsDisableSelf();

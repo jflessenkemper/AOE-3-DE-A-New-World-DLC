@@ -1,4 +1,4 @@
-"""Refresh the Legendary Leaders deck block between
+"""Refresh the A New World deck block between
 <!-- DECK-START <civ> --> and <!-- DECK-END <civ> --> markers in
 a_new_world.html for all 48 ANW civs.
 

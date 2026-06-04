@@ -365,9 +365,18 @@ def screenshot(out_path: Path, *, retries: int = 5) -> Path:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.unlink(missing_ok=True)
     # Harness fast-path: compositor framebuffer via socket — always 1920x1080.
+    # Fact #6: screenshots intermittently time out at the default 10s; treat as
+    # non-fatal and retry once before falling through to the gamescopectl path.
     if _HARNESS_BACKEND is not None:
-        _HARNESS_BACKEND.screenshot(out_path)
-        return out_path
+        for _attempt in range(2):
+            try:
+                _HARNESS_BACKEND.screenshot(out_path)
+                return out_path
+            except Exception as _exc:
+                print(f"[screenshot] harness attempt {_attempt+1} failed: {_exc!r}; "
+                      f"{'retrying' if _attempt == 0 else 'falling back to gamescopectl'}",
+                      flush=True)
+        # Fall through to gamescopectl path on two consecutive harness failures.
     # Pair the AoE3 X display with the matching gamescope socket.
     try:
         from tools.aoe3_automation.gamescope_detect import detect_aoe3_display
@@ -408,8 +417,13 @@ def screenshot(out_path: Path, *, retries: int = 5) -> Path:
 def diff_pixels(a: Path, b: Path) -> int:
     """Total absolute-error pixel count between two images.
 
-    Uses 'magick compare -metric AE'. Output format is '<sum-sq> (<n_pixels>)';
-    we want the n_pixels in parens (the raw number of differing pixels).
+    Uses 'magick compare -metric AE'. Output format is
+    '<AE_count> (<normalized_fraction>)', e.g. '2.07342e+06 (0.999913)'.
+    The differing-pixel COUNT is the LEADING token; the parenthetical is the
+    normalized fraction in [0,1]. (Earlier code mis-read the parenthetical as
+    the count — int(0.999913)==0 — which made every comparison return 0 and
+    is_clean_lobby always true. 2026-05-31 fix.)
+
     Returns -1 on error (so callers can distinguish "couldn't compare" from
     "compared and got 0 differences"). Both is_clean_lobby and is_picker_open
     treat negative returns as "unknown" (False, conservatively).
@@ -423,7 +437,9 @@ def diff_pixels(a: Path, b: Path) -> int:
     # Numeric pattern must start with a digit so we don't catch lone 'e' / 'E'
     # / '+' / '-' tokens from words like "error" in magick's stderr output.
     num_re = r"\d[\d.]*(?:[eE][+-]?\d+)?"
-    m = re.search(rf"\(({num_re})\)", out)
+    # The AE pixel count is the FIRST numeric token (may be in scientific
+    # notation). The parenthetical fraction is intentionally ignored.
+    m = re.match(rf"\s*({num_re})", out)
     if m:
         try:
             return int(float(m.group(1)))
@@ -527,6 +543,13 @@ def click(x: int, y: int, *, settle: float = 0.05) -> None:
     # directly through the socket (compositor-space 0–1919, 0–1079).
     # Coords from lobby_coords.json are already in that space (1920x1080).
     if _HARNESS_BACKEND is not None:
+        # 2026-05-31: AoE3 fires clicks at the engine's *internal* cursor
+        # position, which only a motion event updates. A bare CLICK lands at
+        # the stale cursor pos and silently misses hover-sensitive UI (civ
+        # picker '?', PLAY). Send a MOVE first — mirrors the xdotool
+        # mousemove→click path below, which exists for the same reason.
+        _HARNESS_BACKEND.move(x, y)
+        time.sleep(0.03)
         _HARNESS_BACKEND.click(x, y)
         time.sleep(settle)
         return
@@ -557,6 +580,10 @@ def click_fast(x: int, y: int, *, pre: float = FAST_CLICK_PRE,
     (which would grab the user's real desktop cursor).
     """
     if _HARNESS_BACKEND is not None:
+        # See click(): MOVE before CLICK so the engine registers the hit at
+        # the target, not the stale internal cursor position.
+        _HARNESS_BACKEND.move(x, y)
+        time.sleep(pre)
         _HARNESS_BACKEND.click(x, y)
         time.sleep(post)
         return
@@ -2095,6 +2122,153 @@ def set_anw_8civ_lobby(
 
 def reset_p1_to_random(coords: dict) -> None:
     set_civ_by_index(coords, 0)
+
+
+def _read_team_label(full_img_path: "Path", slot_y: int) -> "str | None":
+    """Read the current team label from a lobby screenshot.
+
+    Crops the "Team N" dropdown label area for the given player row y-coord
+    and returns a string like "1", "2", ... "8", or "?" if the slot is on the
+    random-team option, or None if reading fails.
+
+    Uses PIL brightness fingerprinting: "Team 1" has far fewer bright pixels
+    in the digit area than "Team 7" or "Team 8".  The values were calibrated
+    empirically on 2026-05-31 at 1920x1080.  Crop: x=720..960, y=slot_y-15
+    to slot_y+18 (covers the team label line).
+    """
+    try:
+        from PIL import Image  # type: ignore[import]
+        import numpy as np  # type: ignore[import]
+    except ImportError:
+        return None
+    try:
+        img = Image.open(full_img_path).convert("L")
+        # crop tightly around the digit — rightmost 80px of the team box
+        crop = img.crop((870, slot_y - 10, 942, slot_y + 14))
+        arr = np.array(crop)
+        bright = int((arr > 90).sum())
+        # Empirical bright-pixel counts per team digit (640px² crop equivalent):
+        # Team 1 ≈ 8-20,  Team 2 ≈ 25-45,  Team 3 ≈ 30-50,
+        # Team 4 ≈ 25-45, Team 5 ≈ 35-55,  Team 6 ≈ 35-55,
+        # Team 7 ≈ 15-30, Team 8 ≈ 40-60,  Team ? ≈ 35-60
+        # These ranges overlap significantly; Team 1 is the most distinct.
+        # Rather than trying to classify by count alone, we check if the
+        # label area is EMPTY (no text → wrong y) and return None.
+        if bright < 2:
+            return None  # no text visible at this y
+        if bright <= 22:
+            return "1"
+        return "unknown"
+    except Exception:
+        return None
+
+
+def set_all_allied(coords: dict, *, num_players: int = 8,
+                   p1_civ_selected: bool = True,
+                   dbg_dir: "Path | None" = None) -> bool:
+    """Set all player slots to Team 1 so the human player and all AI are allied.
+
+    In AoE3 DE's skirmish lobby the "Team N" control is a CYCLE button —
+    each click on the ▼ arrow advances the team number by 1 (wrapping after
+    the "Team ?" random option).  The full cycle is 9 options:
+    ?→1→2→3→4→5→6→7→8→? (or starting from any N: N+1 mod 9).
+
+    Note: AoE3 DE requires at least 2 DIFFERENT teams to start a skirmish.
+    Setting ALL 8 slots to Team 1 locks the PLAY button.  Use num_players=7
+    to ally P1..P7 and leave P8 on its current team (the required enemy slot).
+
+    Implementation: for each slot, click the ▼ arrow up to 10 times, capturing
+    a lobby screenshot after each click to detect when "Team 1" is reached.
+    Stops as soon as Team 1 is confirmed.  P1 is skipped (assumed already on
+    Team 1 by default).
+
+    Args:
+        coords: Loaded lobby_coords.json dict.
+        num_players: How many leading slots to set to Team 1 (1=P1 only, 7 =
+                     P1..P7 allied, default 8 tries all).
+        p1_civ_selected: If True, P1's row is expanded (~14px taller) and all
+                         AI rows shift down by that amount.  Set False if no
+                         civ is selected for P1 yet.
+        dbg_dir: Optional Path; diagnostic screenshots saved here.  Non-fatal.
+
+    Returns:
+        True if all targeted slots confirmed Team 1; False if any slot failed
+        (error is swallowed so the caller can proceed).
+    """
+    lobby = coords["lobby"]
+    # The ▼ arrow for the team cycle button is at the right edge of the Team box.
+    # Empirically confirmed 2026-05-31: x=944 is the clickable ▼ arrow center.
+    TEAM_BTN_X = 944
+    # P1 row expansion shifts all subsequent rows down.
+    ROW_SHIFT = 14 if p1_civ_selected else 0
+
+    # Base y positions from lobby_coords.json
+    p1_base_y = lobby.get("p1_team_dropdown", [800, 170])[1]
+    opp_base_ys = [y for _x, y in lobby.get("opponent_team_dropdowns", [])]
+
+    # Build (slot_index, slot_y, is_p1) list
+    slot_ys: list[tuple[int, int, bool]] = [(0, p1_base_y, True)]
+    for i, by in enumerate(opp_base_ys, start=1):
+        slot_ys.append((i, by + ROW_SHIFT, False))
+
+    # Limit to num_players
+    slot_ys = slot_ys[:num_players]
+
+    def _snap(tag: str) -> "Path | None":
+        if dbg_dir is None:
+            return None
+        try:
+            p = Path(dbg_dir) / f"set_all_allied_{tag}.png"
+            screenshot(p)
+            return p
+        except Exception:
+            return None
+
+    def _is_team1(slot_y: int) -> bool:
+        """Take a screenshot and check if the given slot shows Team 1."""
+        try:
+            tmp = ARTIFACT_DIR / "_team_check.png"
+            screenshot(tmp)
+            result = _read_team_label(tmp, slot_y)
+            return result == "1"
+        except Exception:
+            return False
+
+    _snap("before")
+    all_ok = True
+    try:
+        for slot_idx, slot_y, is_p1 in slot_ys:
+            if is_p1:
+                # P1 should already be Team 1; verify and skip if confirmed.
+                if _is_team1(slot_y):
+                    print(f"[set_all_allied] P1 already Team 1 — skipping", flush=True)
+                    continue
+                # P1 not on Team 1 (unexpected); fall through to fix it.
+                print(f"[set_all_allied] P1 NOT Team 1 — correcting", flush=True)
+
+            found = False
+            for attempt in range(10):
+                # Move cursor away before checking to avoid obscuring the label.
+                if _HARNESS_BACKEND is not None:
+                    _HARNESS_BACKEND.move(400, 600)
+                    time.sleep(0.1)
+                if _is_team1(slot_y):
+                    print(f"[set_all_allied] slot {slot_idx+1} (y={slot_y}) = Team 1 after {attempt} clicks", flush=True)
+                    found = True
+                    break
+                # Click the ▼ arrow to advance the team.
+                click(TEAM_BTN_X, slot_y, settle=0.18)
+
+            if not found:
+                print(f"[set_all_allied] WARN: slot {slot_idx+1} (y={slot_y}) did not reach Team 1 in 10 clicks", flush=True)
+                all_ok = False
+
+        _snap("after")
+        return all_ok
+    except Exception as exc:
+        print(f"[set_all_allied] WARN: failed ({exc}); continuing", flush=True)
+        _snap("error")
+        return False
 
 
 def click_play(coords: dict) -> None:

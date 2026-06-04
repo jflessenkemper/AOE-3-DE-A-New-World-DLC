@@ -26,7 +26,7 @@ from tools.playtest.coverage_v2 import (
 
 def make_probe(tag: str, t: int = 60000, player: int = 1,
                civ: str = "British", ldr: str = "elizabeth", kv: str = "") -> str:
-    return f"[LLP v=2 t={t} p={player} civ={civ} ldr={ldr} tag={tag}] {kv}"
+    return f"[ANWP v=2 t={t} p={player} civ={civ} ldr={ldr} tag={tag}] {kv}"
 
 
 # ---------------------------------------------------------------------------

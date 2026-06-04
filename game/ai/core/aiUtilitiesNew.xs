@@ -272,22 +272,22 @@ int getNavalTargetPlayerId()
    kbUnitQuerySetState(unitQueryID, cUnitStateABQ);
    kbUnitQueryResetResults(unitQueryID);
 	count = kbUnitQueryExecute(unitQueryID);
-   //llVerboseEcho("Enemy fishing boats: "+ count);
+   //anwVerboseEcho("Enemy fishing boats: "+ count);
    
    kbUnitQuerySetUnitType(unitQueryID, cUnitTypeAbstractWarShip);
    kbUnitQuerySetState(unitQueryID, cUnitStateABQ);
 	count = kbUnitQueryExecute(unitQueryID); // This value is cumulative.
-   //llVerboseEcho("Enemy fishing boats and warships: "+ count);
+   //anwVerboseEcho("Enemy fishing boats and warships: "+ count);
    
    kbUnitQuerySetUnitType(unitQueryID, gDockUnit);
    kbUnitQuerySetState(unitQueryID, cUnitStateABQ);
 	count = kbUnitQueryExecute(unitQueryID); // This value is cumulative.
-   //llVerboseEcho("Enemy fishing boats, warships and docks: "+ count);
+   //anwVerboseEcho("Enemy fishing boats, warships and docks: "+ count);
    
    if (count > 0) {
       enemyPlayerId = kbUnitGetPlayerID(kbUnitQueryGetResult(unitQueryID, 0));
    } 
-   llVerboseEcho("Enemy Unit Owner: "+enemyPlayerId+" Unit Count: "+count+"");
+   anwVerboseEcho("Enemy Unit Owner: "+enemyPlayerId+" Unit Count: "+count+"");
    
    return(enemyPlayerId);
 }
@@ -997,7 +997,7 @@ void trainFromIslandBase() {
 
       if (kbProtoUnitIsType(candidate, cUnitTypeAbstractInfantry) && gIslandBaseLandUnit < 1) {
          gIslandBaseLandUnit = candidate;
-         llVerboseEcho("Land Unit To Train: " + kbGetProtoUnitName(gIslandBaseLandUnit));
+         anwVerboseEcho("Land Unit To Train: " + kbGetProtoUnitName(gIslandBaseLandUnit));
       } else if (i == randomInteger) {
          gIslandBaseArtilleryUnit = candidate;
       }
@@ -1015,7 +1015,7 @@ void trainFromIslandBase() {
       //aiPlanSetVariableInt(gIslandBaseMaintainPlan, cTrainPlanBuildFromType, 1, cUnitTypeStable);
       aiPlanSetActive(gIslandBaseMaintainPlan, true);
       
-      llVerboseEcho("Island base training initiated!");
+      anwVerboseEcho("Island base training initiated!");
    }
    else
    {

@@ -7,9 +7,9 @@ expects_forward) into the static gate so they cannot regress unnoticed.
 For each ANW civ in playstyle_spec.json → civs.*.claims, this validator:
   1. Maps the spec entry to the canonical XS dispatch token (e.g. "ANWAztecs").
   2. Finds the matching ``else if (rvltName == "<token>")`` block in
-     ``game/ai/leaders/leaderCommon.xs:llApplyBuildStyleForActiveCiv()``.
-  3. Identifies the ``llUse*Style(...)`` call to derive style defaults.
-  4. Applies any post-style overrides (``gLLWallStrategy = ...`` assignment or
+     ``game/ai/leaders/leaderCommon.xs:anwApplyBuildStyleForActiveCiv()``.
+  3. Identifies the ``anwUse*Style(...)`` call to derive style defaults.
+  4. Applies any post-style overrides (``gANWWallStrategy = ...`` assignment or
      ``gLLForwardBaseEarliestMs = ...`` reset or ``llEnableEarlyForwardBase(...)``
      call) that appear inside the same dispatch block.
   5. Compares the final values against the spec claims.
@@ -40,7 +40,7 @@ LEADER_REVOLUTION_XS = REPO_ROOT / "game" / "ai" / "leaders" / "leader_revolutio
 
 # ---------------------------------------------------------------------------
 # Style → doctrine defaults (derived from leaderCommon.xs style functions)
-# Wall strategy values match aiHeader.xs cLLWallStrategy* constants:
+# Wall strategy values match aiHeader.xs cANWWallStrategy* constants:
 #   0 = FortressRing, 1 = ChokepointSegments, 2 = CoastalBatteries,
 #   3 = FrontierPalisades, 4 = UrbanBarricade, 5 = MobileNoWalls
 # expects_forward = True iff the style calls llEnableEarlyForwardBase(...)
@@ -52,20 +52,20 @@ LEADER_REVOLUTION_XS = REPO_ROOT / "game" / "ai" / "leaders" / "leader_revolutio
 #   everything else → "barracks_or_stable"
 # ---------------------------------------------------------------------------
 STYLE_DEFAULTS: dict[str, dict[str, Any]] = {
-    "llUseCompactFortifiedCoreStyle":         {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": False},
-    "llUseAndeanTerraceFortressStyle":         {"wall_strategy": 1, "first_military_building": "barracks_or_stable", "expects_forward": False},
-    "llUseNavalMercantileCompoundStyle":       {"wall_strategy": 2, "first_military_building": "dock",                 "expects_forward": False},
-    "llUseDistributedEconomicNetworkStyle":    {"wall_strategy": 3, "first_military_building": "trading_post_or_market", "expects_forward": True},
-    "llUseCivicMilitiaCenterStyle":            {"wall_strategy": 3, "first_military_building": "outpost",              "expects_forward": True},
-    "llUseRepublicanLeveeStyle":               {"wall_strategy": 4, "first_military_building": "barracks_or_stable", "expects_forward": True},
-    "llUseForwardOperationalLineStyle":        {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
-    "llUseMobileFrontierScatterStyle":         {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
-    "llUseShrineTradeNodeSpreadStyle":         {"wall_strategy": 5, "first_military_building": "trading_post_or_market", "expects_forward": True},
-    "llUseSteppeCavalryWedgeStyle":            {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
-    "llUseJungleGuerrillaNetworkStyle":        {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
-    "llUseHighlandCitadelStyle":               {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": False},
-    "llUseSiegeTrainConcentrationStyle":       {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": True},
-    "llUseCossackVoiskoStyle":                 {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseCompactFortifiedCoreStyle":         {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": False},
+    "anwUseAndeanTerraceFortressStyle":         {"wall_strategy": 1, "first_military_building": "barracks_or_stable", "expects_forward": False},
+    "anwUseNavalMercantileCompoundStyle":       {"wall_strategy": 2, "first_military_building": "dock",                 "expects_forward": False},
+    "anwUseDistributedEconomicNetworkStyle":    {"wall_strategy": 3, "first_military_building": "trading_post_or_market", "expects_forward": True},
+    "anwUseCivicMilitiaCenterStyle":            {"wall_strategy": 3, "first_military_building": "outpost",              "expects_forward": True},
+    "anwUseRepublicanLeveeStyle":               {"wall_strategy": 4, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseForwardOperationalLineStyle":        {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseMobileFrontierScatterStyle":         {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseShrineTradeNodeSpreadStyle":         {"wall_strategy": 5, "first_military_building": "trading_post_or_market", "expects_forward": True},
+    "anwUseSteppeCavalryWedgeStyle":            {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseJungleGuerrillaNetworkStyle":        {"wall_strategy": 5, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseHighlandCitadelStyle":               {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": False},
+    "anwUseSiegeTrainConcentrationStyle":       {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": True},
+    "anwUseCossackVoiskoStyle":                 {"wall_strategy": 0, "first_military_building": "barracks_or_stable", "expects_forward": True},
 }
 
 # Wall strategy integer → name (for readable output)
@@ -79,14 +79,14 @@ WALL_STRATEGY_NAMES = {
 }
 
 # Explicit wall-strategy override constants used in XS source (right-hand side of
-# gLLWallStrategy = ...; assignments).
+# gANWWallStrategy = ...; assignments).
 WALL_STRATEGY_VALUES: dict[str, int] = {
-    "cLLWallStrategyFortressRing":       0,
-    "cLLWallStrategyChokepointSegments": 1,
-    "cLLWallStrategyCoastalBatteries":   2,
-    "cLLWallStrategyFrontierPalisades":  3,
-    "cLLWallStrategyUrbanBarricade":     4,
-    "cLLWallStrategyMobileNoWalls":      5,
+    "cANWWallStrategyFortressRing":       0,
+    "cANWWallStrategyChokepointSegments": 1,
+    "cANWWallStrategyCoastalBatteries":   2,
+    "cANWWallStrategyFrontierPalisades":  3,
+    "cANWWallStrategyUrbanBarricade":     4,
+    "cANWWallStrategyMobileNoWalls":      5,
 }
 
 # ---------------------------------------------------------------------------
@@ -96,7 +96,7 @@ WALL_STRATEGY_VALUES: dict[str, int] = {
 # For canonical (non-revolution) mod civs the token is "ANW<CivName>".
 # For revolution-only civs the token is "ANW<Nation>" (same ANW prefix).
 # The base-engine civs (cCivXPAztec etc.) are handled via the matching ANW
-# canonical nation block in llApplyBuildStyleForActiveCiv — we use that path
+# canonical nation block in anwApplyBuildStyleForActiveCiv — we use that path
 # as the ground truth for doctrine because the ANW mod always runs the ANW civ.
 # ---------------------------------------------------------------------------
 SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
@@ -147,8 +147,8 @@ SPEC_DATA_NAME_TO_XS_TOKEN: dict[str, str] = {
 def _verify_style_defaults_against_xs(xs_source: str) -> list[str]:
     """Lock STYLE_DEFAULTS[*]['wall_strategy'] against the actual style helpers.
 
-    For each ``void llUse<Name>Style(...)`` definition in leaderCommon.xs, walk
-    the function body until the first ``gLLWallStrategy = cLLWallStrategy<X>;``
+    For each ``void anwUse<Name>Style(...)`` definition in leaderCommon.xs, walk
+    the function body until the first ``gANWWallStrategy = cANWWallStrategy<X>;``
     assignment and check that it matches our hardcoded STYLE_DEFAULTS entry.
     Returns a list of mismatch strings; empty if every style helper is in sync
     with our table.
@@ -159,31 +159,31 @@ def _verify_style_defaults_against_xs(xs_source: str) -> list[str]:
     engine doctrine has drifted.
     """
     issues: list[str] = []
-    # Match function header: `void llUse<Name>Style(...)` then take the body
+    # Match function header: `void anwUse<Name>Style(...)` then take the body
     # from the opening { to the matching }.
     fn_header_re = re.compile(
-        r"^void\s+(llUse[A-Za-z]+Style)\s*\([^)]*\)\s*$", re.MULTILINE
+        r"^void\s+(anwUse[A-Za-z]+Style)\s*\([^)]*\)\s*$", re.MULTILINE
     )
     code = _strip_comments(xs_source)
     for m in fn_header_re.finditer(code):
         fn_name = m.group(1)
         if fn_name not in STYLE_DEFAULTS:
-            # Not every llUse*Style helper appears in our defaults table;
+            # Not every anwUse*Style helper appears in our defaults table;
             # only those used by ANW civs do. Skip unrelated ones.
             continue
         brace_start = code.find("{", m.end())
         if brace_start < 0:
             issues.append(f"{fn_name}: no opening brace after definition")
             continue
-        # Find first gLLWallStrategy assignment inside the body (within the
+        # Find first gANWWallStrategy assignment inside the body (within the
         # next ~600 chars — body of these helpers is short).
         body_window = code[brace_start:brace_start + 800]
         ws_match = re.search(
-            r"gLLWallStrategy\s*=\s*(cLLWallStrategy\w+)\s*;", body_window
+            r"gANWWallStrategy\s*=\s*(cANWWallStrategy\w+)\s*;", body_window
         )
         if not ws_match:
             issues.append(
-                f"{fn_name}: no gLLWallStrategy assignment in body — "
+                f"{fn_name}: no gANWWallStrategy assignment in body — "
                 f"STYLE_DEFAULTS expects ws={STYLE_DEFAULTS[fn_name]['wall_strategy']}"
             )
             continue
@@ -274,7 +274,7 @@ def _apply_block_overrides(state: dict[str, Any], block: str) -> None:
     and should start AFTER the style-call line (post-style content).
     """
     ws_override_re = re.compile(
-        r"\bgLLWallStrategy\s*=\s*(cLLWallStrategy\w+)\s*;"
+        r"\bgANWWallStrategy\s*=\s*(cANWWallStrategy\w+)\s*;"
     )
     for mo in ws_override_re.finditer(block):
         const = mo.group(1)
@@ -296,9 +296,9 @@ def _compute_xs_doctrine(block: str,
                          override_block: str | None = None) -> dict[str, Any]:
     """Parse a dispatch block and return the final doctrine values.
 
-    ``block`` is the primary dispatch block (from llApplyBuildStyleForActiveCiv).
+    ``block`` is the primary dispatch block (from anwApplyBuildStyleForActiveCiv).
     ``override_block`` is an optional secondary block (from
-    initLegendaryRevolutionCommander) that can further override doctrine
+    anwInitRevolutionCommander) that can further override doctrine
     values AFTER the primary block runs. For ANW* civs the revolution
     commanders file runs second and its overrides win.
 
@@ -308,9 +308,9 @@ def _compute_xs_doctrine(block: str,
     # Strip comments so we don't match commented-out lines.
     block = _strip_comments(block)
 
-    # Find the llUse*Style() call — there should be exactly one.
+    # Find the anwUse*Style() call — there should be exactly one.
     style_call_re = re.compile(
-        r"\b(llUse(?:CompactFortifiedCore|AndeanTerraceFortress|NavalMercantileCompound"
+        r"\b(anwUse(?:CompactFortifiedCore|AndeanTerraceFortress|NavalMercantileCompound"
         r"|DistributedEconomicNetwork|CivicMilitiaCenter|RepublicanLevee"
         r"|ForwardOperationalLine|MobileFrontierScatter|ShrineTradeNodeSpread"
         r"|SteppeCavalryWedge|JungleGuerrillaNetwork|HighlandCitadel"
@@ -319,7 +319,7 @@ def _compute_xs_doctrine(block: str,
     m_style = style_call_re.search(block)
     if not m_style:
         return {"wall_strategy": -1, "first_military_building": "unknown", "expects_forward": False,
-                "_error": "no llUse*Style call found"}
+                "_error": "no anwUse*Style call found"}
 
     style_fn = m_style.group(1)
     state = STYLE_DEFAULTS[style_fn].copy()
@@ -330,7 +330,7 @@ def _compute_xs_doctrine(block: str,
 
     # Apply overrides from the secondary block (revolution commanders), if any.
     # These run AFTER the primary block so they win. The secondary block may
-    # contain its own llUse*Style() call that resets state — if present, we
+    # contain its own anwUse*Style() call that resets state — if present, we
     # recompute from that style; otherwise we only apply the override lines.
     if override_block is not None:
         override_block = _strip_comments(override_block)
@@ -445,22 +445,22 @@ def main() -> int:
         return 2
     print("  STYLE_DEFAULTS table in sync with XS style helpers")
 
-    # Extract the llApplyBuildStyleForActiveCiv function body once.
-    apply_fn_body = _extract_function_body(xs_raw, "llApplyBuildStyleForActiveCiv")
+    # Extract the anwApplyBuildStyleForActiveCiv function body once.
+    apply_fn_body = _extract_function_body(xs_raw, "anwApplyBuildStyleForActiveCiv")
     if apply_fn_body is None:
-        print("  ERROR: llApplyBuildStyleForActiveCiv not found in leaderCommon.xs")
+        print("  ERROR: anwApplyBuildStyleForActiveCiv not found in leaderCommon.xs")
         return 2
-    print(f"  Scoped to llApplyBuildStyleForActiveCiv ({len(apply_fn_body)} chars)")
+    print(f"  Scoped to anwApplyBuildStyleForActiveCiv ({len(apply_fn_body)} chars)")
 
     # Load leader_revolution_commanders.xs (for ANW* overrides).
     rev_fn_body: str | None = None
     if args.xs_revolution.exists():
         rev_raw = args.xs_revolution.read_text(encoding="utf-8")
-        rev_fn_body = _extract_function_body(rev_raw, "initLegendaryRevolutionCommander")
+        rev_fn_body = _extract_function_body(rev_raw, "anwInitRevolutionCommander")
         if rev_fn_body:
-            print(f"  Scoped to initLegendaryRevolutionCommander ({len(rev_fn_body)} chars)")
+            print(f"  Scoped to anwInitRevolutionCommander ({len(rev_fn_body)} chars)")
         else:
-            print("  WARN: initLegendaryRevolutionCommander not found in revolution commanders xs")
+            print("  WARN: anwInitRevolutionCommander not found in revolution commanders xs")
     else:
         print(f"  WARN: revolution commanders XS not found: {args.xs_revolution}")
     print()
@@ -487,7 +487,7 @@ def main() -> int:
             continue
 
         # For ANW* civs, also fetch the override block from
-        # initLegendaryRevolutionCommander which runs after llApplyBuildStyleForActiveCiv
+        # anwInitRevolutionCommander which runs after anwApplyBuildStyleForActiveCiv
         # and can override doctrine values (e.g. resetting gLLForwardBaseEarliestMs).
         override_block: str | None = None
         if xs_token.startswith("ANW") and rev_fn_body is not None:

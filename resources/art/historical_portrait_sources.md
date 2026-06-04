@@ -166,4 +166,4 @@ The most likely game-facing portrait hook discovered in this repo is in `data/ci
 - `SmallPortraitTexture`
 - `SmallPortraitTextureCoords`
 
-This appears to drive the civilization portrait shown in quick-launch or AI-selection style UI, and is the cleanest current candidate for wiring Legendary Leaders headshots. The current standalone build now uses direct `SmallPortraitTextureWPF` image paths for Napoleon, Washington, and Hidalgo under `resources/images/icons/singleplayer/`, while the staged historical files in `art/ui/leaders/` remain the source set for broader future wiring.
+This appears to drive the civilization portrait shown in quick-launch or AI-selection style UI, and is the cleanest current candidate for wiring A New World headshots. The current standalone build now uses direct `SmallPortraitTextureWPF` image paths for Napoleon, Washington, and Hidalgo under `resources/images/icons/singleplayer/`, while the staged historical files in `art/ui/leaders/` remain the source set for broader future wiring.

@@ -28,28 +28,28 @@ bool gWashingtonRulesEnabled = false;
 
 void initLeaderWashington(void)
 {
-   llVerboseEcho("A New World: activating George Washington personality.");
+   anwVerboseEcho("A New World: activating George Washington personality.");
 
-   llSetBalancedPersonality();
+   anwSetBalancedPersonality();
    btRushBoom = -0.15;            // Hard boom; Continental Army needs the supply train.
    btOffenseDefense = 0.25;       // Defensive baseline that ramps later.
    btBiasTrade = 0.1;
    btBiasNative = 0.1;
-   llSetMilitaryFocus(0.7, 0.3, 0.4);
+   anwSetMilitaryFocus(0.7, 0.3, 0.4);
 
    // LL-BUILD-STYLE-BEGIN
-   llUseRepublicanLeveeStyle(1);
-   gLLTownCenterDistanceMultiplier = 1.10;
+   anwUseRepublicanLeveeStyle(1);
+   gANWTownCenterDistanceMultiplier = 1.10;
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
+   anwSetLeaderTacticalDoctrine(0.78, 0.22, 2, 4.0);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 5;
    cvMaxArmyPop = 115;
 
    gWashingtonRulesEnabled = true;
-   llLogLeaderState("Washington initialized");
-   llProbe("meta.leader_init", "leader=washington");
+   anwLogLeaderState("Washington initialized");
+   anwProbe("meta.leader_init", "leader=washington");
 }
 
 //------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ rule washingtonContinentalCongress
 inactive
 minInterval 60
 {
-   llLogRuleTick("washingtonContinentalCongress");
+   anwLogRuleTick("washingtonContinentalCongress");
    if (gWashingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -82,7 +82,7 @@ rule washingtonStateMilitiaMuster
 inactive
 minInterval 50
 {
-   llLogRuleTick("washingtonStateMilitiaMuster");
+   anwLogRuleTick("washingtonStateMilitiaMuster");
    if (gWashingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -109,7 +109,7 @@ rule washingtonContinentalArmy
 inactive
 minInterval 55
 {
-   llLogRuleTick("washingtonContinentalArmy");
+   anwLogRuleTick("washingtonContinentalArmy");
    if (gWashingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -123,7 +123,7 @@ minInterval 55
       btBiasCav = 0.5;
       btBiasArt = 0.45;
       cvMaxArmyPop = 130;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -135,7 +135,7 @@ rule washingtonYorktownCampaign
 inactive
 minInterval 70
 {
-   llLogRuleTick("washingtonYorktownCampaign");
+   anwLogRuleTick("washingtonYorktownCampaign");
    if (gWashingtonRulesEnabled == false)
    {
       xsDisableSelf();
@@ -149,7 +149,7 @@ minInterval 70
       btBiasCav = 0.55;
       btBiasArt = 0.7;
       cvMaxArmyPop = 145;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -161,7 +161,7 @@ rule washingtonRepublicAtArms
 inactive
 minInterval 90
 {
-   llLogRuleTick("washingtonRepublicAtArms");
+   anwLogRuleTick("washingtonRepublicAtArms");
    if (gWashingtonRulesEnabled == false)
    {
       xsDisableSelf();

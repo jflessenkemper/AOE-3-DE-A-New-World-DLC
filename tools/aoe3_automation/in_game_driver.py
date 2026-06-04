@@ -89,7 +89,7 @@ Usage:
 
 Log capture
 -----------
-Per-match [LLP v=2 ...] probe lines are captured from Age3Log.txt (NOT from
+Per-match [ANWP v=2 ...] probe lines are captured from Age3Log.txt (NOT from
 the .age3Yrec replay — replay chat is binary-encoded and unparseable).  The
 ``log_capture`` module snapshots the log byte-offset before each match and
 reads the delta after resign.  Requires developer mode to be active (managed
@@ -255,7 +255,7 @@ DIPLOMACY_BTN = (1691, 35)
 # Player row spacing is fixed 40px starting at P1=385.
 DIPLOMACY_ROW_Y0 = 385   # y of P1
 DIPLOMACY_ROW_DY = 40
-DIPLOMACY_FLAG_X = 380   # clicking flag opens that player's HC view
+DIPLOMACY_FLAG_X = 500   # click player name text to open their HC view (verified 2026-06-01; x=380 flag icon does NOT trigger HC navigation)
 DIPLOMACY_ALLY_X = 970   # ALLY radio column
 DIPLOMACY_NEUTRAL_X = 1080
 DIPLOMACY_ENEMY_X = 1190
@@ -350,6 +350,11 @@ def _click(x: int, y: int, *, delay: float = 0.25) -> None:
     constants).  Falls back to the xdotool path when no backend is set.
     """
     if _HARNESS_BACKEND is not None:
+        # Same cursor-settle requirement as the xdotool path below: a bare
+        # CLICK lands at the engine's stale internal cursor position, so MOVE
+        # first then CLICK.
+        _HARNESS_BACKEND.move(x, y)
+        time.sleep(0.05)
         _HARNESS_BACKEND.click(x, y)
         time.sleep(delay)
         return
@@ -1177,12 +1182,12 @@ class GameDriver:
             time.sleep(poll_interval)
             elapsed = time.time() - start
             content = log_mirror.current_content()
-            probe_count = content.count("[LLP v=2 ")
+            probe_count = content.count("[ANWP v=2 ")
 
-            # Extract families from each [LLP v=2 ... tag=foo.bar] line.
+            # Extract families from each [ANWP v=2 ... tag=foo.bar] line.
             families_seen = set()
             for line in content.splitlines():
-                idx = line.find("[LLP v=2 ")
+                idx = line.find("[ANWP v=2 ")
                 if idx < 0:
                     continue
                 tag_idx = line.find("tag=", idx)
@@ -1331,7 +1336,7 @@ def self_test() -> int:
             probe_n = probe_count_in_slice(log_content)
             print(f"  match.log: {match_log_path} ({len(log_content)} bytes, {probe_n} probe lines)")
             if probe_n == 0:
-                print("  WARN: zero [LLP v=2] probes in match.log — dev mode may not be active")
+                print("  WARN: zero [ANWP v=2] probes in match.log — dev mode may not be active")
                 print("    Ensure manage_game.py open (not --no-dev-mode) was used to launch.")
         except Exception as exc:
             print(f"  WARN: log capture failed: {exc}")

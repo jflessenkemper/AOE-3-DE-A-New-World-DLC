@@ -1,5 +1,5 @@
 {
-  "_doc": "Pixel-coord map for AoE3 DE Skirmish lobby at 1920x1080. Empirically verified 2026-04-28 against game v100.15.59076.0 P2 with Legendary Leaders AI mod. Use with lobby_driver.py. 2026-05-07: skirmish_button shifted from y=488 (now Multiplayer) to y=482 after a content patch added a row.",
+  "_doc": "Pixel-coord map for AoE3 DE Skirmish lobby at 1920x1080. Empirically verified 2026-04-28 against game v100.15.59076.0 P2 with A New World AI mod. Use with lobby_driver.py. 2026-05-07: skirmish_button shifted from y=488 (now Multiplayer) to y=482 after a content patch added a row.",
   "main_menu": {
     "skirmish_button": [
       130,
@@ -21,8 +21,8 @@
     ],
     "back_button_keynav": "Escape",
     "play_button": [
-      1700,
-      1029
+      1645,
+      1019
     ],
     "_opponent_pickers_doc": "Civ picker buttons for AI slots P2..P8. P1 is at y=170; in_game_driver.py empirically measured P2/P3/P4 at y=276/382/488 (106px row spacing). P5..P8 extrapolated with the same delta \u2014 verified-good coords if the lobby has 8 player rows visible (FFA 1v7 default). x=630 matches p1_civ_picker. Used by matrix_runner --opponent-civs to test up to 8 civs per match.",
     "opponent_civ_pickers": [
@@ -90,6 +90,21 @@
         825
       ]
     },
+    "_team_dropdowns_doc": "Team assignment dropdowns, one per player row. x=800 is the center of the 'Team N' label; x=835 is the arrow/click target. P1 y=170; P2..P8 follow the same 106px row spacing as opponent_civ_pickers. Empirically verified 2026-05-31 via pixel crop of the lobby screenshot.",
+    "p1_team_dropdown": [800, 170],
+    "opponent_team_dropdowns": [
+      [800, 276],
+      [800, 382],
+      [800, 488],
+      [800, 594],
+      [800, 700],
+      [800, 806],
+      [800, 912]
+    ],
+    "_team_popup_doc": "When a team dropdown is clicked, a popup appears listing Team 1..Team 8. Each option is ~26px tall. The popup opens DOWNWARD from the dropdown. Empirically-guessed offsets: first option (Team 1) at dy=+26 from click y; subsequent options +26px each. x_center matches the dropdown x=800.",
+    "team_popup_x": 800,
+    "team_popup_dy_first": 26,
+    "team_popup_dy_step": 26,
     "right_column_radios": {
       "player_handicap": [
         1530,

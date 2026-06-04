@@ -36,9 +36,9 @@ DEFAULT_LOG = (
 )
 
 # meta.boot is the first probe each AI player emits in preInit().
-# Format: [LLP v=2 t=<ms> p=<pid> civ=<token> ldr=<key> tag=meta.boot] ...
+# Format: [ANWP v=2 t=<ms> p=<pid> civ=<token> ldr=<key> tag=meta.boot] ...
 _META_BOOT_RE = re.compile(
-    r"\[LLP v=2 t=\d+ p=\d+ civ=(?P<civ>\S+) ldr=\S+ tag=meta\.boot\]"
+    r"\[ANWP v=2 t=\d+ p=\d+ civ=(?P<civ>\S+) ldr=\S+ tag=meta\.boot\]"
 )
 
 # Known scenario-load failure markers (heuristic, expand as we observe more).

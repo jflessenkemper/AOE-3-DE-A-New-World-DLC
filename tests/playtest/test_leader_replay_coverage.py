@@ -27,7 +27,7 @@ from tools.playtest.replay_probes import parse_probes, validate
 
 
 def _probe(t: int, p: int, civ: str, ldr: str, tag: str, tail: str = "") -> str:
-    return f"[LLP v=2 t={t} p={p} civ={civ} ldr={ldr} tag={tag}] {tail}"
+    return f"[ANWP v=2 t={t} p={p} civ={civ} ldr={ldr} tag={tag}] {tail}"
 
 
 def _civ_token(exp) -> str:

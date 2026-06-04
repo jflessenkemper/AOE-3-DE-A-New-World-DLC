@@ -33,7 +33,7 @@
     },
     {
       "action": "click_image",
-      "image": "../templates/legendary_leaders_test_map.png",
+      "image": "../templates/anw_test_map.png",
       "timeout": 30,
       "confidence": 0.92
     },

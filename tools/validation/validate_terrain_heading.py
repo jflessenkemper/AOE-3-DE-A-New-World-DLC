@@ -3,13 +3,13 @@ for every civ.
 
 For the 22 base civs, 26 revolution civs, and 40 ANW civs we expect:
 
-  * `llApplyBuildStyleForActiveCiv()` in
+  * `anwApplyBuildStyleForActiveCiv()` in
     `game/ai/leaders/leaderCommon.xs` to contain a branch that calls
-    `llSetPreferredTerrain(...)` and `llSetExpansionHeading(...)`.
-  * Each call must reference a `cLLTerrain*` / `cLLHeading*` constant
+    `anwSetPreferredTerrain(...)` and `anwSetExpansionHeading(...)`.
+  * Each call must reference a `cANWTerrain*` / `cANWHeading*` constant
     that is actually declared in `game/ai/aiHeader.xs`.
   * The bias-strength argument (third positional arg to
-    `llSetPreferredTerrain`, second to `llSetExpansionHeading`) must be
+    `anwSetPreferredTerrain`, second to `anwSetExpansionHeading`) must be
     a numeric literal in the closed range [0.0, 1.0].
 
 Exits 1 with a per-civ report on any mismatch.
@@ -138,10 +138,10 @@ VANILLA_COMPAT_CIVS = frozenset({
 
 EXPECTED_TOTAL = len(BASE_CIVS) + len(REVOLUTION_CIVS) + len(ANW_CIVS)
 
-TERRAIN_CONST_RE = re.compile(r"\bcLLTerrain[A-Za-z]+\b")
-HEADING_CONST_RE = re.compile(r"\bcLLHeading[A-Za-z]+\b")
+TERRAIN_CONST_RE = re.compile(r"\bcANWTerrain[A-Za-z]+\b")
+HEADING_CONST_RE = re.compile(r"\bcANWHeading[A-Za-z]+\b")
 APPLY_FN_HEADER_RE = re.compile(
-    r"void\s+llApplyBuildStyleForActiveCiv\s*\(.*?\)\s*\{",
+    r"void\s+anwApplyBuildStyleForActiveCiv\s*\(.*?\)\s*\{",
     re.DOTALL,
 )
 
@@ -213,54 +213,54 @@ def _check_branch(
     issues: list[str] = []
 
     terrain_calls = re.findall(
-        r"llSetPreferredTerrain\s*\(\s*([^,]+?)\s*,\s*([^,]+?)\s*,\s*([^\)]+?)\s*\)",
+        r"anwSetPreferredTerrain\s*\(\s*([^,]+?)\s*,\s*([^,]+?)\s*,\s*([^\)]+?)\s*\)",
         branch_body,
     )
     heading_calls = re.findall(
-        r"llSetExpansionHeading\s*\(\s*([^,]+?)\s*,\s*([^\)]+?)\s*\)",
+        r"anwSetExpansionHeading\s*\(\s*([^,]+?)\s*,\s*([^\)]+?)\s*\)",
         branch_body,
     )
 
     if not terrain_calls:
-        issues.append(f"{label}: missing llSetPreferredTerrain(...) call")
+        issues.append(f"{label}: missing anwSetPreferredTerrain(...) call")
     if not heading_calls:
-        issues.append(f"{label}: missing llSetExpansionHeading(...) call")
+        issues.append(f"{label}: missing anwSetExpansionHeading(...) call")
 
     for primary, secondary, strength in terrain_calls:
         for token in (primary, secondary):
             token = token.strip()
             if token not in terrain_consts:
                 issues.append(
-                    f"{label}: llSetPreferredTerrain refers to unknown terrain constant '{token}'"
+                    f"{label}: anwSetPreferredTerrain refers to unknown terrain constant '{token}'"
                 )
         try:
             value = float(strength.strip())
         except ValueError:
             issues.append(
-                f"{label}: llSetPreferredTerrain strength '{strength.strip()}' is not a numeric literal"
+                f"{label}: anwSetPreferredTerrain strength '{strength.strip()}' is not a numeric literal"
             )
         else:
             if not 0.0 <= value <= 1.0:
                 issues.append(
-                    f"{label}: llSetPreferredTerrain strength {value} outside [0.0, 1.0]"
+                    f"{label}: anwSetPreferredTerrain strength {value} outside [0.0, 1.0]"
                 )
 
     for heading, strength in heading_calls:
         token = heading.strip()
         if token not in heading_consts:
             issues.append(
-                f"{label}: llSetExpansionHeading refers to unknown heading constant '{token}'"
+                f"{label}: anwSetExpansionHeading refers to unknown heading constant '{token}'"
             )
         try:
             value = float(strength.strip())
         except ValueError:
             issues.append(
-                f"{label}: llSetExpansionHeading strength '{strength.strip()}' is not a numeric literal"
+                f"{label}: anwSetExpansionHeading strength '{strength.strip()}' is not a numeric literal"
             )
         else:
             if not 0.0 <= value <= 1.0:
                 issues.append(
-                    f"{label}: llSetExpansionHeading strength {value} outside [0.0, 1.0]"
+                    f"{label}: anwSetExpansionHeading strength {value} outside [0.0, 1.0]"
                 )
 
     return issues
@@ -280,14 +280,14 @@ def validate_terrain_heading(repo_root: Path = REPO_ROOT) -> list[str]:
 
     terrain_consts, heading_consts = _extract_constants(header_text)
     if not terrain_consts:
-        return [f"{repo_relative(header_path, repo_root)}: no cLLTerrain* constants found"]
+        return [f"{repo_relative(header_path, repo_root)}: no cANWTerrain* constants found"]
     if not heading_consts:
-        return [f"{repo_relative(header_path, repo_root)}: no cLLHeading* constants found"]
+        return [f"{repo_relative(header_path, repo_root)}: no cANWHeading* constants found"]
 
     body = _extract_apply_body(leader_text)
     if body is None:
         return [
-            f"{repo_relative(leader_path, repo_root)}: llApplyBuildStyleForActiveCiv() function body not found"
+            f"{repo_relative(leader_path, repo_root)}: anwApplyBuildStyleForActiveCiv() function body not found"
         ]
 
     branches = _split_branches(body)
@@ -298,7 +298,7 @@ def validate_terrain_heading(repo_root: Path = REPO_ROOT) -> list[str]:
     expected = set(BASE_CIVS) | set(REVOLUTION_CIVS) | set(ANW_CIVS)
     missing = sorted(expected - branch_labels)
     for label in missing:
-        issues.append(f"{label}: no branch in llApplyBuildStyleForActiveCiv()")
+        issues.append(f"{label}: no branch in anwApplyBuildStyleForActiveCiv()")
 
     for label, branch_body in branches:
         if label not in expected:

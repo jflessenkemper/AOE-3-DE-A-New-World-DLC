@@ -93,10 +93,10 @@ DEFAULT_DECK_RE = re.compile(
     r"<!-- LL-DEFAULT-DECK-START -->(.*?)<!-- LL-DEFAULT-DECK-END -->",
     re.DOTALL,
 )
-# Find a named "Legendary Leaders" deck block (the one build_themed_decks.py
+# Find a named "A New World" deck block (the one build_themed_decks.py
 # writes). XML serializers strip comment markers so we can't rely on them.
 LL_DECK_RE = re.compile(
-    r"<deck>\s*<name>\s*Legendary Leaders\s*</name>(.*?)</deck>",
+    r"<deck>\s*<name>\s*A New World\s*</name>(.*?)</deck>",
     re.DOTALL,
 )
 DECK_CARD_RE = re.compile(r"<card[^>]*>([^<]+)</card>")
@@ -107,7 +107,7 @@ def load_default_deck(fname: str) -> list[str]:
 
     Tries (in order):
       1. The legacy `<!-- LL-DEFAULT-DECK-START -->` marker block
-      2. A `<deck>` whose `<name>` is exactly "Legendary Leaders"
+      2. A `<deck>` whose `<name>` is exactly "A New World"
       3. The first `<deck>…</deck>` block in the file
     """
     fp = REPO / "data" / fname
@@ -188,7 +188,7 @@ def render_deck(civ: str, fname: str, decks: dict, cards: dict) -> str:
     total = sum(len(v) for v in by_age.values())
     header = (
         f'<p style="margin:4px 0 6px;font-size:.85rem;color:var(--dim)">'
-        f'Legendary Leaders deck &mdash; {total} cards across '
+        f'A New World deck &mdash; {total} cards across '
         f'{len(rows)} ages. Hover any card for its description.</p>\n'
     )
     return (

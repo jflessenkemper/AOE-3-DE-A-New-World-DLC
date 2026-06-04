@@ -78,11 +78,11 @@ class DoctrineComplianceValidator(PropertyValidator):
         super().__init__("DoctrineComplianceValidator")
 
     def validate(self, log_content: str, context: Dict) -> Tuple[bool, str]:
-        """Check [LLP v=2] probes match expected wall strategy."""
+        """Check [ANWP v=2] probes match expected wall strategy."""
         try:
-            # Extract [LLP v=2] probes
+            # Extract [ANWP v=2] probes
             probes = re.findall(
-                r'\[LLP v=2.*?wall_strategy[=:](\d)\]',
+                r'\[ANWP v=2.*?wall_strategy[=:](\d)\]',
                 log_content,
                 re.DOTALL
             )
@@ -114,7 +114,7 @@ class UnitProductionValidator(PropertyValidator):
         try:
             # Extract unit count probes
             unit_counts = re.findall(
-                r'\[LLP.*?units\[(\w+)\]\s*[=:](\d+)',
+                r'\[ANWP.*?units\[(\w+)\]\s*[=:](\d+)',
                 log_content
             )
 
@@ -142,7 +142,7 @@ class BuildingPlacementValidator(PropertyValidator):
         try:
             # Look for first building placement marker
             matches = re.findall(
-                r'\[LLP.*?first_(\w+_)?building[=:](\d+)',
+                r'\[ANWP.*?first_(\w+_)?building[=:](\d+)',
                 log_content
             )
 
@@ -169,13 +169,13 @@ class LogFormatValidator(PropertyValidator):
         super().__init__("LogFormatValidator")
 
     def validate(self, log_content: str, context: Dict) -> Tuple[bool, str]:
-        """Check log has [LLP v=2] probes."""
+        """Check log has [ANWP v=2] probes."""
         if not log_content:
             return False, "Empty log content"
 
-        # Check for at least one [LLP v=2] marker
-        if '[LLP v=2' not in log_content:
-            return False, "No [LLP v=2] probes in log"
+        # Check for at least one [ANWP v=2] marker
+        if '[ANWP v=2' not in log_content:
+            return False, "No [ANWP v=2] probes in log"
 
         return True, "Log format valid"
 

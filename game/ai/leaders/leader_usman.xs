@@ -4,7 +4,7 @@
    Muhammadu Kanta of Kebbi - Hausa heartland personality.
 
    File-name kept as 'usman' because the engine personality ID (set via
-   gLLLeaderKey in leaderCommon.xs::llAssignLeaderIdentity()) is "usman" and
+   gANWLeaderKey in leaderCommon.xs::anwAssignLeaderIdentity()) is "usman" and
    the AI loader indexes rule-set names from this token. All user-visible
    strings, comments, and lore have been rebranded to Muhammadu Kanta of
    the Kebbi Kingdom — the actual native Hausa figure (16th-century, the
@@ -36,35 +36,35 @@ bool gUsmanRulesEnabled = false;
 
 void initLeaderUsman(void)
 {
-   llVerboseEcho("A New World: activating Muhammadu Kanta of Kebbi personality.");
+   anwVerboseEcho("A New World: activating Muhammadu Kanta of Kebbi personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.1;              // Light boom; the jihad starts early.
    btOffenseDefense = 0.6;
    btBiasTrade = 0.3;             // Trans-Saharan trade funds the Caliphate.
    btBiasNative = 0.2;
-   llSetMilitaryFocus(0.45, 0.55, 0.2);  // Cavalry-leaning composition.
+   anwSetMilitaryFocus(0.45, 0.55, 0.2);  // Cavalry-leaning composition.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseDistributedEconomicNetworkStyle(2);
-   gLLEconomicDistanceMultiplier = 1.30;
+   anwUseDistributedEconomicNetworkStyle(2);
+   gANWEconomicDistanceMultiplier = 1.30;
    // Spec override: military_distance_band [1.1, 1.3]; DistributedEcoNetwork
    // default is 1.0 which falls below the band floor.
-   gLLMilitaryDistanceMultiplier = 1.10;
+   gANWMilitaryDistanceMultiplier = 1.10;
    // Spec doctrine_summary: "Surame fortress and trans-Saharan caravan
    // lattice" — the single Sokoto/Surame fortress anchors the caravan
    // network. Tower ring screens the markets; fort=1 for Surame itself.
-   llSetBuildStrongpointProfile(2, 1, 2, false);
+   anwSetBuildStrongpointProfile(2, 1, 2, false);
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
+   anwSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
 
    cvOkToBuildForts = true;
    cvMaxTowers = 4;
    cvMaxArmyPop = 115;
 
    gUsmanRulesEnabled = true;
-   llLogLeaderState("Kanta initialized");
-   llProbe("meta.leader_init", "leader=usman");
+   anwLogLeaderState("Kanta initialized");
+   anwProbe("meta.leader_init", "leader=usman");
 }
 
 //------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ rule usmanCaravanBoom
 inactive
 minInterval 60
 {
-   llLogRuleTick("usmanCaravanBoom");
+   anwLogRuleTick("usmanCaravanBoom");
    if (gUsmanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -98,7 +98,7 @@ rule usmanFulaRaid
 inactive
 minInterval 50
 {
-   llLogRuleTick("usmanFulaRaid");
+   anwLogRuleTick("usmanFulaRaid");
    if (gUsmanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -108,7 +108,7 @@ minInterval 50
    if (kbGetAge() == cAge2)
    {
       btRushBoom = 0.05;
-      btOffenseDefense = 0.45;     // Spec expects_treaty=true: no llEnableForwardBaseStyle in Colonial (would set btOffenseDefense=1.0 and contradict treaty posture).
+      btOffenseDefense = 0.45;     // Spec expects_treaty=true: no anwEnableForwardBaseStyle in Colonial (would set btOffenseDefense=1.0 and contradict treaty posture).
       btBiasInf = 0.55;
       btBiasCav = 0.7;             // Raider as the early hammer.
       btBiasArt = -0.4;
@@ -123,7 +123,7 @@ rule usmanCaliphateExpansion
 inactive
 minInterval 55
 {
-   llLogRuleTick("usmanCaliphateExpansion");
+   anwLogRuleTick("usmanCaliphateExpansion");
    if (gUsmanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -149,7 +149,7 @@ rule usmanSokotoWar
 inactive
 minInterval 70
 {
-   llLogRuleTick("usmanSokotoWar");
+   anwLogRuleTick("usmanSokotoWar");
    if (gUsmanRulesEnabled == false)
    {
       xsDisableSelf();
@@ -175,7 +175,7 @@ rule usmanCaliphateHost
 inactive
 minInterval 90
 {
-   llLogRuleTick("usmanCaliphateHost");
+   anwLogRuleTick("usmanCaliphateHost");
    if (gUsmanRulesEnabled == false)
    {
       xsDisableSelf();

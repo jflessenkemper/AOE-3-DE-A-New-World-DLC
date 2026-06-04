@@ -266,7 +266,7 @@ def run_runtime_stage(repo_root: Path, log_path: Path, suite_names: list[str],
 
 
 def format_stage_report(stage_results: list[StageResult]) -> str:
-    lines = ["Legendary Leaders staged validation report", ""]
+    lines = ["A New World staged validation report", ""]
     for stage in stage_results:
         lines.append(f"[{stage.status.upper()}] {stage.name}: {stage.summary}")
         for detail in stage.details:
@@ -276,7 +276,7 @@ def format_stage_report(stage_results: list[StageResult]) -> str:
 
 
 def main() -> int:
-    parser = build_repo_root_parser("Run the staged Legendary Leaders validation workflow locally.")
+    parser = build_repo_root_parser("Run the staged A New World validation workflow locally.")
     parser.add_argument(
         "--stage",
         action="append",

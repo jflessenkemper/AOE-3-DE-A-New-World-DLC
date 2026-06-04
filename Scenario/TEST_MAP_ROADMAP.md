@@ -1,6 +1,6 @@
 # Test Map Roadmap
 
-This roadmap turns the Age of Pirates testing pattern into a concrete Legendary Leaders plan.
+This roadmap turns the Age of Pirates testing pattern into a concrete A New World plan.
 
 ## What Age of Pirates Appears To Do
 
@@ -16,7 +16,7 @@ Relevant examples in that repo:
 - `randmaps/zpvenicecit_test.xs`: explicit test variant of a content map.
 - many random maps contain commented `ZP Test Plr...` trigger blocks for fast tech grants and setup shortcuts.
 
-That is a useful pattern for Legendary Leaders because this repo already has stronger validators and runtime-log tooling than Age of Pirates. What it lacks is a wider set of targeted test surfaces.
+That is a useful pattern for A New World because this repo already has stronger validators and runtime-log tooling than Age of Pirates. What it lacks is a wider set of targeted test surfaces.
 
 ## Recommended Map Set
 
@@ -129,7 +129,7 @@ Why: real map behavior often diverges from clean-lab behavior.
 
 Borrow the spirit, not the exact implementation, from Age of Pirates.
 
-For Legendary Leaders, the better model is:
+For A New World, the better model is:
 
 - Scenario Editor GUI triggers for the binary scenario
 - runtime log markers for machine-checkable assertions

@@ -15,7 +15,7 @@ from tools.playtest.replay_probes import coverage_report, parse_probes, validate
 
 
 def _probe(t: int, p: int, civ: str, ldr: str, tag: str, tail: str = "") -> str:
-    return f"[LLP v=2 t={t} p={p} civ={civ} ldr={ldr} tag={tag}] {tail}"
+    return f"[ANWP v=2 t={t} p={p} civ={civ} ldr={ldr} tag={tag}] {tail}"
 
 
 def _civ_token(exp) -> str:
@@ -633,7 +633,7 @@ class TestCoverageReport(unittest.TestCase):
 class TestNoProbes(unittest.TestCase):
     def test_no_probes_at_all_returns_helpful_error(self) -> None:
         issues, _ = validate(parse_probes(b"no probes in this file"))
-        self.assertTrue(any("no [LLP v=2] probes" in i for i in issues), issues)
+        self.assertTrue(any("no [ANWP v=2] probes" in i for i in issues), issues)
 
 
 if __name__ == "__main__":

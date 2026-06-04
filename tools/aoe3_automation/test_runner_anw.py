@@ -5,7 +5,7 @@ Tests the full pipeline:
   1. Launch game
   2. Select a civ
   3. Run match + capture log
-  4. Extract [LLP v=2] probes
+  4. Extract [ANWP v=2] probes
   5. Validate with PropertyValidatorSuite
   6. Report results
 

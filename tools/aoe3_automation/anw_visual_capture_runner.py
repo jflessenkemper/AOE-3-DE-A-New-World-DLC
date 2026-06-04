@@ -165,6 +165,17 @@ from tools.aoe3_automation.lobby_driver import screenshot as _gs_screenshot
 from tools.aoe3_automation.ally_all import ally_all
 
 # ---------------------------------------------------------------------------
+# Splash-detection guard (graceful-degradation import)
+# ---------------------------------------------------------------------------
+# If PIL / image_utils is unavailable the splash poll is silently skipped and
+# the pipeline falls back to the plain HUD_SETTLE sleep — no crash.
+try:
+    from tools.aoe3_automation.image_utils import is_splash_frame as _is_splash_frame
+    _SPLASH_DETECTION_AVAILABLE = True
+except Exception:
+    _SPLASH_DETECTION_AVAILABLE = False
+
+# ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
@@ -184,10 +195,17 @@ LOADING_SCREEN_SLEEP = 9
 # but the visual loading screen can persist for another ~20-25s while assets
 # stream in.  Was 40s; observed on Alaska (forced) the lag is ~20s.
 # 2026-05-28 speed-up #2: cut from 22 → 17 for the overnight all-civs sweep.
-# 17s still clears the "Asset Preloading" splash on Alaska in all observed
-# runs (typical preload window is 14-16s). If a civ shows up with a loading-
-# screen caption still visible at 03_hud, bump back to 22.
+# 2026-05-30: HUD_SETTLE kept at 17 as a belt-and-suspenders floor.  The new
+# splash-clear poll (see wait_for_splash_clear below) now handles correctness;
+# 17s covers the case where splash detection is unavailable or the probe fails.
 HUD_SETTLE = 17
+
+# Splash-clear poll parameters.  After wait_for_in_game returns True the
+# "Asset Preloading" splash can persist for 14-25 s.  We probe with a
+# throwaway screenshot and loop until the frame is no longer a splash OR until
+# SPLASH_CLEAR_TIMEOUT elapses (then proceed anyway — belt-and-suspenders).
+SPLASH_CLEAR_TIMEOUT = 35   # seconds before giving up and proceeding
+SPLASH_POLL_INTERVAL = 2    # seconds between probe screenshots
 
 # In-game wait timeout
 IN_GAME_TIMEOUT = 240
@@ -304,6 +322,53 @@ def _safe_screenshot(label: str, out_path: Path, warnings: list[str]) -> bool:
     if not ok:
         warnings.append(f"screenshot:{label}:no_png_produced")
     return ok
+
+
+def wait_for_splash_clear(log: Any, civ_token: str) -> None:
+    """Poll until the "Asset Preloading" splash is gone, then return.
+
+    Takes throwaway probe screenshots to a temp path and calls is_splash_frame
+    from image_utils.  Loops while splash is detected and elapsed < SPLASH_CLEAR_TIMEOUT.
+    Logs each poll attempt.
+
+    Degrades silently if PIL / image_utils is unavailable (_SPLASH_DETECTION_AVAILABLE
+    is False) — control returns immediately and the caller's HUD_SETTLE covers it.
+    """
+    import tempfile
+    if not _SPLASH_DETECTION_AVAILABLE:
+        log.info("splash_poll_skipped", civ=civ_token,
+                 reason="image_utils_or_pil_unavailable")
+        return
+
+    probe_path = Path(tempfile.gettempdir()) / ".aoe3_splash_probe.png"
+    t_start = time.time()
+    poll_idx = 0
+    while True:
+        elapsed = time.time() - t_start
+        if elapsed >= SPLASH_CLEAR_TIMEOUT:
+            log.warning("splash_poll_timeout", civ=civ_token,
+                        elapsed_s=round(elapsed, 1),
+                        timeout_s=SPLASH_CLEAR_TIMEOUT)
+            break
+        # Capture probe frame
+        try:
+            _gs_screenshot(probe_path)
+        except Exception as exc:
+            log.info("splash_poll_probe_failed", civ=civ_token, poll=poll_idx,
+                     error=str(exc))
+            break
+        still_splash = _is_splash_frame(probe_path)
+        log.info("splash_poll", civ=civ_token, poll=poll_idx,
+                 elapsed_s=round(elapsed, 1), still_splash=still_splash)
+        if not still_splash:
+            break
+        poll_idx += 1
+        time.sleep(SPLASH_POLL_INTERVAL)
+    # Clean up probe
+    try:
+        probe_path.unlink(missing_ok=True)
+    except Exception:
+        pass
 
 
 # Coords empirically located 2026-05-18 against the SELECT MAP picker at
@@ -876,7 +941,11 @@ def _run_host_civ(
                     elapsed_s=round(time.time() - t0, 1))
         return {"civ_token": civ_token, "status": "failed", "elapsed_s": round(time.time() - t0, 1)}
 
-    # ── 7. Settle, then 03_hud ────────────────────────────────────────────────
+    # ── 7. Splash-clear poll, then settle, then 03_hud ───────────────────────
+    # Poll until the "Asset Preloading" splash visual has cleared (typically
+    # 14-25 s after the mode-27 log marker).  Degrades gracefully if PIL is
+    # unavailable.  HUD_SETTLE follows as a belt-and-suspenders floor.
+    wait_for_splash_clear(log, civ_token)
     log.info("in_game", civ=civ_token, settling_s=HUD_SETTLE)
     time.sleep(HUD_SETTLE)
     _focus_window()

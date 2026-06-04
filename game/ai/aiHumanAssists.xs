@@ -38,9 +38,9 @@ extern float gTSFactorDanger = -10.0;		// negative is good
 //==============================================================================
 void main(void)
 {
-   llVerboseEcho("Human player assists AI startup.");
-   llVerboseEcho("Game type is " + aiGetGameType() + ", 0=Scn, 1=Saved, 2=Rand, 3=GC, 4=Cmpgn");
-   llVerboseEcho("Map name is " + cRandomMapName);
+   anwVerboseEcho("Human player assists AI startup.");
+   anwVerboseEcho("Game type is " + aiGetGameType() + ", 0=Scn, 1=Saved, 2=Rand, 3=GC, 4=Cmpgn");
+   anwVerboseEcho("Map name is " + cRandomMapName);
 
    aiRandSetSeed(-1);         // Set our random seed.  "-1" is a random init.
    kbAreaCalculate();         // Analyze the map, create area matrix
@@ -53,5 +53,5 @@ void main(void)
    kbSetTargetSelectorFactor(cTSFactorBase, gTSFactorBase);
    kbSetTargetSelectorFactor(cTSFactorDanger, gTSFactorDanger);
 
-   llLogEvent("RULE", "human assist AI startup complete; player-controlled units keep manual control");
+   anwLogEvent("RULE", "human assist AI startup complete; player-controlled units keep manual control");
 }

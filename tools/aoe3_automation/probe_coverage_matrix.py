@@ -6,7 +6,7 @@ against the per-match Age3Log.txt slice.
 
 Why Age3Log.txt and not the .age3Yrec replay
 ────────────────────────────────────────────
-Each AI emits ``[LLP v=2 ...]`` probe lines via ``aiEcho()`` (→ Age3Log.txt)
+Each AI emits ``[ANWP v=2 ...]`` probe lines via ``aiEcho()`` (→ Age3Log.txt)
 AND ``aiChat()`` (→ replay).  The aiChat path stores values as string-table
 indices in the .age3Yrec binary format — NOT plain text.  Regex scanning the
 raw replay bytes therefore returns zero probe lines.  ``aiEcho()`` writes
@@ -63,7 +63,7 @@ Timing estimate (CoH2 coexistence, gamescope resource contention):
 Pre-flight gate (run automatically unless --skip-preflight):
   (a) unittest discover tests/validation must pass
   (b) manage_game.py sync --dry-run must report no pending changes
-  (c) cLLReplayProbes = true must be set in game/ai/core/aiGlobals.xs
+  (c) cANWReplayProbes = true must be set in game/ai/core/aiGlobals.xs
   (d) Smoke-test baseline (if present) must parse and yield >=1 probe line
   (e) AoE3 must be running and at the main menu
   (f) Developer mode must be active (user.cfg with "developer" token present)
@@ -419,14 +419,14 @@ def _run_preflight(art_dir: Path) -> list[str]:
     else:
         print("    (c) no smoke-test baseline present — skipping")
 
-    # (d) cLLReplayProbes = true in aiGlobals.xs
-    print("[preflight] (d) checking cLLReplayProbes …")
+    # (d) cANWReplayProbes = true in aiGlobals.xs
+    print("[preflight] (d) checking cANWReplayProbes …")
     globals_xs = REPO / "game/ai/core/aiGlobals.xs"
     if globals_xs.exists():
         content = globals_xs.read_text()
-        if "cLLReplayProbes = true" not in content:
+        if "cANWReplayProbes = true" not in content:
             failures.append(
-                "(d) cLLReplayProbes is NOT true in game/ai/core/aiGlobals.xs. "
+                "(d) cANWReplayProbes is NOT true in game/ai/core/aiGlobals.xs. "
                 "Probes will not fire. Set it to true and re-sync."
             )
         else:
@@ -588,7 +588,7 @@ def run_pack(
     probe_n = probe_count_in_slice(log_content)
     log(pack_dir, f"match.log: {len(log_content)} bytes, {probe_n} probe lines")
     if probe_n == 0:
-        log(pack_dir, "WARN: zero [LLP v=2] probes — engine may have buffered "
+        log(pack_dir, "WARN: zero [ANWP v=2] probes — engine may have buffered "
             "without flushing, or AI did not boot.")
     log(pack_dir, f"phase_timings: {phase_timings}")
 
@@ -725,7 +725,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         print("  (a) unittest discover tests/validation")
         print("  (b) manage_game.py sync --dry-run must show no changes")
         print("  (c) smoke-test baseline (smoke_test_baseline/baseline.log) yields >=1 probe")
-        print("  (d) cLLReplayProbes = true in game/ai/core/aiGlobals.xs")
+        print("  (d) cANWReplayProbes = true in game/ai/core/aiGlobals.xs")
         print("  (e) AoE3 running and at main menu")
         print("  (f) developer mode user.cfg present (aiEcho -> Age3Log.txt)")
 

@@ -7,16 +7,16 @@
 */
 //==============================================================================
 
-bool gLegendaryRevolutionSupportEnabled = false;
+bool gANWRevolutionSupportEnabled = false;
 
-void initLegendaryRevolutionSupport(void)
+void anwInitRevolutionSupport(void)
 {
    if (civIsRevolution() == false)
    {
       return;
    }
 
-   gLegendaryRevolutionSupportEnabled = true;
+   gANWRevolutionSupportEnabled = true;
    cvMaxAge = cAge5;
    cvMaxArmyPop = 120;
    cvMaxCivPop = 80;
@@ -68,20 +68,20 @@ void initLegendaryRevolutionSupport(void)
       btBiasTrade = 0.2;
    }
 
-   llLogLeaderState("revolution support initialized for " + rvltName);
+   anwLogLeaderState("revolution support initialized for " + rvltName);
    // Boot-time heartbeat probe — matches the pattern in every named leader
-   // file (`llProbe("meta.leader_init", "leader=<name>")`). Without this the
+   // file (`anwProbe("meta.leader_init", "leader=<name>")`). Without this the
    // hub-test + compliance probe scrapers can't tell whether the support
    // layer ever ran for a given revolution civ.
-   llProbe("meta.leader_init", "leader=revolution_support rvlt=" + rvltName);
+   anwProbe("meta.leader_init", "leader=revolution_support rvlt=" + rvltName);
 }
 
-rule legendaryRevolutionArmyProfile
+rule anwRevolutionArmyProfile
 inactive
 minInterval 60
 {
-   llLogRuleTick("legendaryRevolutionArmyProfile");
-   if (gLegendaryRevolutionSupportEnabled == false)
+   anwLogRuleTick("anwRevolutionArmyProfile");
+   if (gANWRevolutionSupportEnabled == false)
    {
       xsDisableSelf();
       return;
@@ -109,12 +109,12 @@ minInterval 60
    }
 }
 
-void enableLegendaryRevolutionSupportRules(void)
+void anwEnableRevolutionSupportRules(void)
 {
-   if (gLegendaryRevolutionSupportEnabled == false)
+   if (gANWRevolutionSupportEnabled == false)
    {
       return;
    }
 
-   xsEnableRule("legendaryRevolutionArmyProfile");
+   xsEnableRule("anwRevolutionArmyProfile");
 }

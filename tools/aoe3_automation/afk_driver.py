@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Autonomous AFK test driver for Legendary Leaders AI mod.
+Autonomous AFK test driver for A New World AI mod.
 Handles civ picker, loading screens, match starts, and AI observer phases.
 """
 

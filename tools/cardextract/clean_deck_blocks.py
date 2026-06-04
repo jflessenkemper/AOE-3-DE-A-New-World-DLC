@@ -12,7 +12,7 @@ Three legacy patterns being removed:
   2. Standard civs had `<p>Base game home city. The AI selects an
      Enhanced-Land or Enhanced-Naval pre-built deck if one exists, or
      builds a deck dynamically card-by-card.</p>` — also stale, since
-     our XML overrides force the curated Legendary Leaders deck.
+     our XML overrides force the curated A New World deck.
 
   3. A handful of standard civs (Aztecs, etc.) had a hand-curated
      TEXT-ONLY deck (`<dl class="buildparam">` + a "Bespoke deck
@@ -53,12 +53,12 @@ DECK_INJECTION_RE = re.compile(
     r'<!--\s*(?:STD-)?DECK-START\s+\S+\s*-->',
 )
 
-# Strip the redundant "Legendary Leaders deck — N cards across N ages.
+# Strip the redundant "A New World deck — N cards across N ages.
 # Hover any card for its description." paragraph that the inject scripts
 # emit RIGHT INSIDE the marker block. The Card Deck summary already
 # tells the user what they're looking at.
 INTRO_P_RE = re.compile(
-    r'<p style="[^"]*">Legendary Leaders deck[^<]*</p>\n?',
+    r'<p style="[^"]*">A New World deck[^<]*</p>\n?',
 )
 
 
@@ -79,7 +79,7 @@ def clean(text: str) -> tuple[str, int, int]:
         if marker.start() > 0:
             text_decks += 1
         new_body = body[marker.start():]
-        # Drop the "Legendary Leaders deck — N cards…" intro paragraph.
+        # Drop the "A New World deck — N cards…" intro paragraph.
         new_body = INTRO_P_RE.sub("", new_body, count=1)
         new_body = "\n" + new_body.lstrip("\n")
         return m.group(1) + "Card Deck" + m.group(2) + new_body + m.group(4)

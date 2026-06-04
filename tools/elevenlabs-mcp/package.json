@@ -1,9 +1,9 @@
 {
-  "name": "legendary-leaders-elevenlabs-mcp",
+  "name": "anw-elevenlabs-mcp",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Local MCP server for ElevenLabs voice generation used by Legendary Leaders AI asset workflows.",
+  "description": "Local MCP server for ElevenLabs voice generation used by A New World AI asset workflows.",
   "scripts": {
     "start": "node src/index.mjs",
     "check": "node --check src/index.mjs",

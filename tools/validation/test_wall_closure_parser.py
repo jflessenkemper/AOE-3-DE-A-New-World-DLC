@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unit tests for the wall-closure section of validate_doctrine_compliance.
 
-Synthesises [LLP v=2 …] probe lines covering three scenarios:
+Synthesises [ANWP v=2 …] probe lines covering three scenarios:
   • PASS path  — closure climbs past 0.6 by the time the AI hits Age 3
   • FAIL path  — closure stays under 0.4 even after multiple emissions
   • SKIP path  — MobileNoWalls (wall_strategy=5) civ emits zero wall.closure
@@ -35,7 +35,7 @@ from tools.validation.validate_doctrine_compliance import (
 
 def _probe_line(t: int, civ: str, ldr: str, tag: str, kv: str) -> str:
     """Render a single canonical probe line matching aiUtilities.xs:llProbe."""
-    return f"[LLP v=2 t={t} p=1 civ={civ} ldr={ldr} tag={tag}] {kv}\n"
+    return f"[ANWP v=2 t={t} p=1 civ={civ} ldr={ldr} tag={tag}] {kv}\n"
 
 
 def _make_synthetic_log() -> str:

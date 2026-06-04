@@ -10,7 +10,7 @@ Run order (executed by `tools/migration/run_anw_migration.py`):
   2. build_anw_civmods.py    — emit 48-block civmods.xml
   3. migrate_strings.py      — rewrite stringmods.xml + randomnamemods.xml
   4. migrate_personalities.py — rename + rewrite all 48 .personality files
-  5. build_anw_decks.py      — merge decks_standard.json + decks_legendary.json
+  5. build_anw_decks.py      — merge decks_standard.json + decks_anw_themed.json
                                 into decks_anw.json
   6. (manual) update validators in tools/validation/ to drop base/rev branching
 

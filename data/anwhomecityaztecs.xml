@@ -161,7 +161,7 @@
       <name>HCShipWoodCrates4</name>
       <maxcount>1</maxcount>
       <level>10</level>
-      <prereqtech>HCShipwoodCrates3</prereqtech>
+      <prereqtech>HCShipWoodCrates3</prereqtech>
       <age>2</age>
       <displayunitcount>1000</displayunitcount>
       <infiniteinlastage>1</infiniteinlastage>
@@ -170,7 +170,7 @@
       <name>HCShipWoodCrates5</name>
       <maxcount>1</maxcount>
       <level>10</level>
-      <prereqtech>HCShipwoodCrates4</prereqtech>
+      <prereqtech>HCShipWoodCrates4</prereqtech>
       <age>3</age>
       <displayunitcount>1600</displayunitcount>
       <infiniteinlastage>1</infiniteinlastage>

@@ -20,7 +20,7 @@ void sendStatement(int playerIDorRelation = -1, int commPromptID = -1, vector ve
 {
    if (cvOkToTaunt == false)
    {
-      llLogEvent("CHAT", "statement blocked by cvOkToTaunt target=" + llDescribePlayerOrRelation(playerIDorRelation) +
+      anwLogEvent("CHAT", "statement blocked by cvOkToTaunt target=" + anwDescribePlayerOrRelation(playerIDorRelation) +
          " prompt=" + commPromptID);
       return;
    }
@@ -31,13 +31,13 @@ void sendStatement(int playerIDorRelation = -1, int commPromptID = -1, vector ve
       if (playerIDorRelation < 100)
       {
          int playerID = playerIDorRelation;
-         llLogChatDispatch("statement", playerID, "commPromptID=" + commPromptID, vec);
+         anwLogChatDispatch("statement", playerID, "commPromptID=" + commPromptID, vec);
          // LL-TAG probe — records every chatset statement fire (commPromptID
          // maps to the <Tag name="..."> trigger, e.g. ToAllyIntro) so replay
          // parsing can confirm which triggers actually fired, at what time,
          // from which leader. Matched against chatsetsmods.xml to verify
          // quote wiring end-to-end.
-         llProbe("chat.tag", "commPromptID=" + commPromptID + " to=" + playerID);
+         anwProbe("chat.tag", "commPromptID=" + commPromptID + " to=" + playerID);
          debugChats("Sending AI Chat to player: " + playerID + ", commPromptID: " + commPromptID + ", vector: " + vec);
          if (vec == cInvalidVector)
          {
@@ -47,7 +47,7 @@ void sendStatement(int playerIDorRelation = -1, int commPromptID = -1, vector ve
          {
             aiCommsSendStatementWithVector(playerID, commPromptID, vec);
          }
-         llMaybeFollowStatementWithQuote(playerID, commPromptID);
+         anwMaybeFollowStatementWithQuote(playerID, commPromptID);
       }
       else // It's a player relation.
       {
@@ -102,8 +102,8 @@ void sendStatement(int playerIDorRelation = -1, int commPromptID = -1, vector ve
             }
             if (send == true)
             {
-               llLogChatDispatch("statement", player, "commPromptID=" + commPromptID, vec);
-               llProbe("chat.tag", "commPromptID=" + commPromptID + " to=" + player + " rel=" + playerIDorRelation);
+               anwLogChatDispatch("statement", player, "commPromptID=" + commPromptID, vec);
+               anwProbe("chat.tag", "commPromptID=" + commPromptID + " to=" + player + " rel=" + playerIDorRelation);
                if (vec == cInvalidVector)
                {
                   aiCommsSendStatement(player, commPromptID);
@@ -114,7 +114,7 @@ void sendStatement(int playerIDorRelation = -1, int commPromptID = -1, vector ve
                   aiCommsSendStatementWithVector(player, commPromptID, vec);
                   debugChats("Sending AI Chat to player: " + player + ", commPromptID: " + commPromptID + ", vector: " + vec);
                }
-               llMaybeFollowStatementWithQuote(player, commPromptID);
+               anwMaybeFollowStatementWithQuote(player, commPromptID);
             }
          }
       }
@@ -125,20 +125,20 @@ void sendChatLine(int playerIDorRelation = -1, string message = "")
 {
    if (message == "")
    {
-      llLogEvent("CHAT", "freeform chat suppressed because payload was empty for target=" + llDescribePlayerOrRelation(playerIDorRelation));
+      anwLogEvent("CHAT", "freeform chat suppressed because payload was empty for target=" + anwDescribePlayerOrRelation(playerIDorRelation));
       return;
    }
 
    if (cvOkToTaunt == false)
    {
-      llLogEvent("CHAT", "freeform chat blocked by cvOkToTaunt target=" + llDescribePlayerOrRelation(playerIDorRelation) +
+      anwLogEvent("CHAT", "freeform chat blocked by cvOkToTaunt target=" + anwDescribePlayerOrRelation(playerIDorRelation) +
          " payload=" + message);
       return;
    }
 
    if (playerIDorRelation < 100)
    {
-      llLogChatDispatch("freeform", playerIDorRelation, message);
+      anwLogChatDispatch("freeform", playerIDorRelation, message);
       aiChat(playerIDorRelation, message);
       return;
    }
@@ -174,7 +174,7 @@ void sendChatLine(int playerIDorRelation = -1, string message = "")
 
       if (send == true)
       {
-         llLogChatDispatch("freeform", player, message);
+         anwLogChatDispatch("freeform", player, message);
          aiChat(player, message);
       }
    }
@@ -208,8 +208,8 @@ minInterval 5
       if (getUnitByLocation(cUnitTypeUnit, cMyID, cUnitStateAlive, kbUnitGetPosition(tcID), 50.0) >= 0)
       { // I have a unit nearby, presumably I have LOS.
          sendStatement(targetPlayer, cAICommPromptToEnemyISpotHisTC, kbUnitGetPosition(tcID));
-         llProbe("chat.contact", "target=p" + targetPlayer + " tc=" + tcID +
-            " pos=" + llFmtVec(kbUnitGetPosition(tcID)));
+         anwProbe("chat.contact", "target=p" + targetPlayer + " tc=" + tcID +
+            " pos=" + anwFmtVec(kbUnitGetPosition(tcID)));
       }
       xsDisableSelf();
    }

@@ -1,4 +1,4 @@
-# Legendary Leaders AI Test Scenario
+# A New World AI Test Scenario
 
 The `.age3Yscn` file in this folder is a binary AoE3DE scenario file, so it is not practical to author or review safely with normal repo tools. The reliable workflow is to edit it in the in-game Scenario Editor and keep this file as the source of truth for what the test map should contain.
 

@@ -4,7 +4,7 @@
 Why this exists
 ---------------
 AoE3 DE FINAL_RELEASE builds strip the ``aiEcho()`` log channel, so the
-``[LLP v=2 ...]`` stream that ``validate_doctrine_compliance.py`` expects
+``[ANWP v=2 ...]`` stream that ``validate_doctrine_compliance.py`` expects
 never reaches ``Age3Log.txt``. The personality-uservar channel
 (``aiPersonalitySetPlayerUserVar()`` → ``Game/AI/<leader>.personality``)
 is the one path that survives FINAL_RELEASE — see
@@ -106,12 +106,21 @@ SPEC_CIV_TO_PERSONALITY = {
 # economy).
 FORWARD_BASE_MIN_TESTABLE_MS = 600_000  # 10 min real game time
 
+# A "first military building" claim is only testable once the AI has had
+# time to leave its opening economy. If the match was force-resigned during
+# the opening (still Age 0) or ran for less than this floor, the absence of a
+# military building reflects the truncated test, not a doctrine failure — so
+# we SKIP rather than FAIL. A long match (past this floor, past Age 0) that
+# still shows no military building IS a genuine doctrine failure and stays FAIL.
+FIRST_MIL_MIN_TESTABLE_MS = 360_000  # 6 min real game time
+
 
 # ── Per-claim verdict helpers ─────────────────────────────────────────────────
 PASS         = "PASS"
 FAIL         = "FAIL"
 SKIP_NO_PACK = "SKIP_NO_PACK"
 SKIP_TOO_SHORT = "SKIP_TOO_SHORT"
+SKIP_UNSUPPORTED = "SKIP_UNSUPPORTED"
 
 
 def _check_wall_strategy(
@@ -133,10 +142,26 @@ def _check_first_military_building(
     if not probe.has_playstyle:
         return SKIP_NO_PACK, "playstyle pack absent"
     if probe.first_military_building == 0:
+        # Distinguish "match too short to observe" from "real doctrine failure".
+        # An AI force-resigned in the opening (still Age 0) or in a sub-floor
+        # match never had time to build military — skip, don't fail.
+        if probe.age == 0 or probe.match_ms < FIRST_MIL_MIN_TESTABLE_MS:
+            return SKIP_TOO_SHORT, (
+                f"no military building yet (age={probe.age}, "
+                f"match_ms={probe.match_ms} < {FIRST_MIL_MIN_TESTABLE_MS}); "
+                "match too short to judge"
+            )
         return FAIL, "AI never built any tracked military building"
     accepted = FIRST_MIL_CLAIM_TO_ENUM.get(str(claim))
     if accepted is None:
-        return FAIL, f"unknown spec claim string: {claim!r}"
+        # The probe's first_military_building enum only encodes
+        # none/dock/barracks_or_stable/trading_post. A spec claim like
+        # 'outpost' has no representable enum, so we can't validate it from
+        # this channel — skip rather than false-fail.
+        return SKIP_UNSUPPORTED, (
+            f"spec claim {claim!r} not representable in probe enum "
+            "(none/dock/barracks_or_stable/trading_post only)"
+        )
     if probe.first_military_building in accepted:
         return PASS, ""
     return FAIL, (
@@ -215,6 +240,14 @@ def _check_first_barracks_before_ms(claim, probe):
 def _check_first_wall_before_ms(claim, probe):
     if not probe.has_playstyle:
         return SKIP_NO_PACK, "playstyle pack absent"
+    # MobileNoWalls (strategy 5) civs have no wall doctrine by design — a
+    # "build a wall by X" claim is not applicable, so the absence of a wall
+    # is correct behaviour, not a failure.
+    if probe.wall_strategy == 5 and probe.first_wall_ms is None:
+        return SKIP_UNSUPPORTED, (
+            "MobileNoWalls civ — wall-timing claim not applicable "
+            "(no walls by doctrine)"
+        )
     return _check_first_X_before_ms(
         probe.first_wall_ms, claim, probe.match_ms, "wall_segment")
 

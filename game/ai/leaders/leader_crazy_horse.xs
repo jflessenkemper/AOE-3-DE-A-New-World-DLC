@@ -33,28 +33,28 @@ bool gCrazyHorseRulesEnabled = false;
 
 void initLeaderCrazyHorse(void)
 {
-   llVerboseEcho("A New World DLC: activating Chief Gall personality.");
+   anwVerboseEcho("A New World DLC: activating Chief Gall personality.");
 
-   llSetAggressivePersonality();
+   anwSetAggressivePersonality();
    btRushBoom = 0.4;              // Almost no boom; the warpath opens immediately.
    btOffenseDefense = 0.85;       // Maximum offensive lean of any standard nation.
    btBiasTrade = -0.55;
    btBiasNative = 0.55;
-   llSetMilitaryFocus(0.15, 0.85, -0.3);  // Cavalry totem.
+   anwSetMilitaryFocus(0.15, 0.85, -0.3);  // Cavalry totem.
 
    // LL-BUILD-STYLE-BEGIN
-   llUseSteppeCavalryWedgeStyle(0);
-   gLLMilitaryDistanceMultiplier = 1.15;   // Spec band [1.1,1.3]: forward cavalry envelopment.
+   anwUseSteppeCavalryWedgeStyle(0);
+   gANWMilitaryDistanceMultiplier = 1.15;   // Spec band [1.1,1.3]: forward cavalry envelopment.
    // LL-BUILD-STYLE-END
-   llSetLeaderTacticalDoctrine(0.55, 0.45, 2, 2.5);
+   anwSetLeaderTacticalDoctrine(0.55, 0.45, 2, 2.5);
 
    cvOkToBuildForts = false;      // Lakota do not turtle.
    cvMaxTowers = 2;
    cvMaxArmyPop = 110;
 
    gCrazyHorseRulesEnabled = true;
-   llLogLeaderState("Chief Gall initialized");
-   llProbe("meta.leader_init", "leader=crazyhorse");
+   anwLogLeaderState("Chief Gall initialized");
+   anwProbe("meta.leader_init", "leader=crazyhorse");
 }
 
 //------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ rule crazyHorseBuffaloCamp
 inactive
 minInterval 55
 {
-   llLogRuleTick("crazyHorseBuffaloCamp");
+   anwLogRuleTick("crazyHorseBuffaloCamp");
    if (gCrazyHorseRulesEnabled == false)
    {
       xsDisableSelf();
@@ -88,7 +88,7 @@ rule crazyHorseRunningFight
 inactive
 minInterval 45
 {
-   llLogRuleTick("crazyHorseRunningFight");
+   anwLogRuleTick("crazyHorseRunningFight");
    if (gCrazyHorseRulesEnabled == false)
    {
       xsDisableSelf();
@@ -102,7 +102,7 @@ minInterval 45
       btBiasInf = 0.0;
       btBiasCav = 0.95;            // Axe Rider and Cetan as the hammer.
       btBiasArt = -0.6;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -114,7 +114,7 @@ rule crazyHorseWakinaWar
 inactive
 minInterval 50
 {
-   llLogRuleTick("crazyHorseWakinaWar");
+   anwLogRuleTick("crazyHorseWakinaWar");
    if (gCrazyHorseRulesEnabled == false)
    {
       xsDisableSelf();
@@ -139,7 +139,7 @@ rule crazyHorseBighornWar
 inactive
 minInterval 65
 {
-   llLogRuleTick("crazyHorseBighornWar");
+   anwLogRuleTick("crazyHorseBighornWar");
    if (gCrazyHorseRulesEnabled == false)
    {
       xsDisableSelf();
@@ -154,7 +154,7 @@ minInterval 65
       btBiasArt = -0.4;
       btBiasNative = 0.7;
       cvMaxArmyPop = 140;
-      llEnableForwardBaseStyle();
+      anwEnableForwardBaseStyle();
    }
 }
 
@@ -166,7 +166,7 @@ rule crazyHorseLakotaHost
 inactive
 minInterval 80
 {
-   llLogRuleTick("crazyHorseLakotaHost");
+   anwLogRuleTick("crazyHorseLakotaHost");
    if (gCrazyHorseRulesEnabled == false)
    {
       xsDisableSelf();

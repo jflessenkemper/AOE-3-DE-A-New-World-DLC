@@ -78,7 +78,7 @@ class TestParseLine(unittest.TestCase):
     """Tests for the low-level line parser."""
 
     # The spec example from the task brief
-    _SPEC_LINE = "[LLP v=2] tick=12345 player=2 wall.closure pct=0.6 radius=80.0"
+    _SPEC_LINE = "[ANWP v=2] tick=12345 player=2 wall.closure pct=0.6 radius=80.0"
 
     def test_spec_example_tick(self) -> None:
         ev = _parse_line(self._SPEC_LINE)
@@ -109,7 +109,7 @@ class TestParseLine(unittest.TestCase):
         self.assertIsNone(_parse_line("INFO tick=100 some_probe x=1.0"))
 
     def test_no_player_field(self) -> None:
-        line = "[LLP v=2] tick=5000 ai.attack count=3"
+        line = "[ANWP v=2] tick=5000 ai.attack count=3"
         ev = _parse_line(line)
         self.assertIsNotNone(ev)
         self.assertEqual(ev.player, 0)
@@ -117,7 +117,7 @@ class TestParseLine(unittest.TestCase):
         self.assertEqual(ev.params.get("count"), "3")
 
     def test_alternate_player_tick_order(self) -> None:
-        line = "[LLP v=2] player=3 tick=9999 econ.idle pct=0.12"
+        line = "[ANWP v=2] player=3 tick=9999 econ.idle pct=0.12"
         ev = _parse_line(line)
         self.assertIsNotNone(ev)
         self.assertEqual(ev.player, 3)
@@ -125,25 +125,25 @@ class TestParseLine(unittest.TestCase):
         self.assertEqual(ev.probe_name, "econ.idle")
 
     def test_zero_tick(self) -> None:
-        line = "[LLP v=2] tick=0 player=1 init.start"
+        line = "[ANWP v=2] tick=0 player=1 init.start"
         ev = _parse_line(line)
         self.assertIsNotNone(ev)
         self.assertEqual(ev.tick_ms, 0)
 
     def test_no_params(self) -> None:
-        line = "[LLP v=2] tick=100 player=1 heartbeat"
+        line = "[ANWP v=2] tick=100 player=1 heartbeat"
         ev = _parse_line(line)
         self.assertIsNotNone(ev)
         self.assertEqual(ev.params, {})
 
     def test_leading_whitespace_and_log_prefix(self) -> None:
-        line = "  2026-05-01 12:00:00 [LLP v=2] tick=1000 player=1 wall.ring pct=0.8"
+        line = "  2026-05-01 12:00:00 [ANWP v=2] tick=1000 player=1 wall.ring pct=0.8"
         ev = _parse_line(line)
         self.assertIsNotNone(ev)
         self.assertEqual(ev.tick_ms, 1000)
 
     def test_malformed_llp_returns_none(self) -> None:
-        self.assertIsNone(_parse_line("[LLP v=2] garbage with no tick"))
+        self.assertIsNone(_parse_line("[ANWP v=2] garbage with no tick"))
 
     def test_empty_string_returns_none(self) -> None:
         self.assertIsNone(_parse_line(""))
@@ -155,12 +155,12 @@ class TestParseLine(unittest.TestCase):
 
 _SAMPLE_LOG = """\
 Not a probe line
-[LLP v=2] tick=1000 player=1 wall.closure pct=0.5
-[LLP v=2] tick=2000 player=1 wall.closure pct=0.7
-[LLP v=2] tick=1500 player=2 econ.idle count=2
-[LLP v=2] tick=3000 player=1 ai.attack n=5
+[ANWP v=2] tick=1000 player=1 wall.closure pct=0.5
+[ANWP v=2] tick=2000 player=1 wall.closure pct=0.7
+[ANWP v=2] tick=1500 player=2 econ.idle count=2
+[ANWP v=2] tick=3000 player=1 ai.attack n=5
 More noise here
-[LLP v=2] tick=500 player=1 wall.closure pct=0.3
+[ANWP v=2] tick=500 player=1 wall.closure pct=0.3
 """
 
 
@@ -201,7 +201,7 @@ class TestParseLogToTrajectories(unittest.TestCase):
         with tempfile.NamedTemporaryFile(
             mode="w", suffix=".txt", delete=False, encoding="utf-8"
         ) as f:
-            f.write("[LLP v=2] tick=100 player=2 probe.x v=1.0\n")
+            f.write("[ANWP v=2] tick=100 player=2 probe.x v=1.0\n")
             tmp = Path(f.name)
         try:
             traj = parse_log_to_trajectories(tmp, civ_map={2: "ANWFrench"})
@@ -292,7 +292,7 @@ class TestEmitHtmlReport(unittest.TestCase):
     def test_empty_trajectories_produces_valid_html(self) -> None:
         text, _ = self._render_to_temp({})
         self.assertIn("<!DOCTYPE html>", text)
-        self.assertIn("No [LLP v=2] probe events", text)
+        self.assertIn("No [ANWP v=2] probe events", text)
 
     def test_no_numeric_placeholder_for_string_params(self) -> None:
         traj = {
