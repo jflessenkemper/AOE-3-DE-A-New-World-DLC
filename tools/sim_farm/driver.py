@@ -91,6 +91,20 @@ def harvest_delta(offsets: dict) -> dict:
     return out
 
 
+def _capture_civ_surfaces(engine_civ: str, res: dict) -> None:
+    """While in-game, grab hard-to-capture surfaces (e.g. British AI-deck) by
+    navigating Diplomacy -> opponent flag -> their home-city deck view. This is
+    the clean place to do it — the game is already in a stable in-match state."""
+    if engine_civ != "British":
+        return
+    try:
+        import tools.aoe3_automation.capture_ai_homecity as cap
+        cap.main()   # writes ai_02_homecity.png + ai_03_deck.png for ANWBritish
+        res["captured_surfaces"] = ["ai_02_homecity", "ai_03_deck"]
+    except Exception as exc:
+        res["capture_error"] = str(exc)
+
+
 def run_match(test_civ: str, engine_civ: str, opponent: str, seed: int,
               observe_s: int, coords: dict, spec_civ: dict) -> dict:
     res = {"civ": test_civ, "engine_civ": engine_civ, "opponent": opponent,
@@ -130,6 +144,8 @@ def run_match(test_civ: str, engine_civ: str, opponent: str, seed: int,
             time.sleep(10); guard.beat()
             if not aoe3_running():   # precise check (game_safety, not pgrep -f self-match)
                 res["error"] = "crash during observe"; res["status"] = "CRASH"; return res
+        # grab per-civ surfaces (e.g. British AI-deck) while still in-match
+        _capture_civ_surfaces(engine_civ, res)
         try: sw.resign_match()
         except Exception: pass
         time.sleep(5)

@@ -1597,6 +1597,57 @@ def _render_per_age_doctrine_block(claims: dict) -> str:
     )
 
 
+def _load_farm_results() -> dict:
+    """{engine_civ: grade} from the latest sim-farm run; {} if not yet run.
+
+    grade = {intensity, overall, checks:[[name, verdict, detail], ...]} written
+    by tools/sim_farm/driver.py to artifacts/sim_farm/results.json.
+    """
+    path = REPO_ROOT / "artifacts" / "sim_farm" / "results.json"
+    try:
+        rows = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out: dict[str, dict] = {}
+    for r in rows:
+        eng, g = r.get("engine_civ"), r.get("grade")
+        if eng and g:
+            out[eng] = g   # latest wins
+    return out
+
+
+def _render_tested_block(engine_civ: str | None, farm_results: dict) -> str:
+    """Observed (tested) behaviour beside the designed doctrine. Shows the farm's
+    PASS/WARN/FAIL per check, or a 'not yet tested' note before the farm runs."""
+    g = farm_results.get(engine_civ or "")
+    if not g:
+        return (
+            '<div class="tested-block tested-empty-block">'
+            '<div class="tested-head">Tested behaviour '
+            '<span class="tested-sub">designed vs. observed</span></div>'
+            '<div class="tested-empty">Not yet tested \u2014 run the sim farm to '
+            'populate (<code>python3 -m tools.sim_farm.driver</code>).</div></div>'
+        )
+    overall = g.get("overall", "?")
+    inten = g.get("intensity", "")
+    rows = []
+    for chk in g.get("checks", []):
+        name, verdict, detail = (list(chk) + ["", "", ""])[:3]
+        rows.append(
+            f'<div class="tested-row tested-{verdict}">'
+            f'<span class="tested-check">{html.escape(str(name))}</span>'
+            f'<span class="tested-verdict">{html.escape(str(verdict))}</span>'
+            f'<span class="tested-detail">{html.escape(str(detail))}</span></div>'
+        )
+    return (
+        '<div class="tested-block">'
+        '<div class="tested-head">Tested behaviour '
+        f'<span class="tested-sub">observed @ {inten}% intensity \u2014 '
+        f'<b class="tested-{overall}">{overall}</b></span></div>'
+        + "".join(rows) + '</div>'
+    )
+
+
 def _render_wall_doctrine_block(token: str, calib: dict,
                                  ws: int | None) -> str:
     """Render the per-civ wall doctrine block: 15-knob compact summary +
@@ -2547,6 +2598,25 @@ section .content{padding:24px}
   background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:6px 8px}
 .civ-card .pad-diff b{color:#58a6ff}
 
+/* Observed/tested behaviour block (designed vs observed, from the sim farm). */
+.civ-card .tested-block{margin-top:10px;border-top:1px solid #21262d;padding-top:10px}
+.civ-card .tested-head{font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.06em;color:#a371f7;margin-bottom:5px}
+.civ-card .tested-sub{font-size:9.5px;font-weight:600;color:#6e7681;
+  text-transform:none;letter-spacing:0;margin-left:6px}
+.civ-card .tested-empty{font-size:10.5px;color:#6e7681;font-style:italic;
+  background:#0d1117;border:1px dashed #30363d;border-radius:4px;padding:6px 8px}
+.civ-card .tested-empty code{color:#8b98a5;font-size:10px}
+.civ-card .tested-row{display:grid;grid-template-columns:120px 52px 1fr;
+  column-gap:8px;align-items:baseline;font-size:10.5px;padding:2px 0;
+  border-bottom:1px solid #1b2129}
+.civ-card .tested-check{color:#c9d1d9;font-weight:600}
+.civ-card .tested-verdict{font-weight:700;font-size:10px}
+.civ-card .tested-detail{color:#8b98a5;font-variant-numeric:tabular-nums}
+.civ-card .tested-PASS .tested-verdict,.civ-card b.tested-PASS{color:#3fb950}
+.civ-card .tested-WARN .tested-verdict,.civ-card b.tested-WARN{color:#d29922}
+.civ-card .tested-FAIL .tested-verdict,.civ-card b.tested-FAIL{color:#f85149}
+
 /* One knob per line: fixed-width label · value · explanation. */
 .civ-card .wall-knobs{display:flex;flex-direction:column;gap:0;
   font-size:11px;margin-top:4px}
@@ -2842,6 +2912,8 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # block under each civ card. Sourced from
     # ``tools/ai_design/wall_knob_calibration.py``.
     wall_calib = _load_wall_calibration()
+    # Latest sim-farm verdicts (observed behaviour) — empty until the farm runs.
+    farm_results = _load_farm_results()
 
     # Per-civ AI quote bundles — script-driven insults / compliments
     # (``game/ai/core/aiLeaderQuotes.xs``), engine chatset lines
@@ -3046,6 +3118,9 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # scaling) from the v2 spec claims. Shows what the AI is asserted to
         # do per age and how it scales by difficulty.
         per_age_doctrine_block = _render_per_age_doctrine_block(claims)
+        # Observed/tested behaviour from the sim farm (designed vs observed).
+        tested_block = _render_tested_block(
+            _spec_token_to_calib_key(token), farm_results)
         # Per-civ quote / chat block — every AI voice line this civ speaks
         # (engine chatset + leader script insults/compliments + the 4
         # shared tactical lines). Rendered under the wall block per user
@@ -3158,6 +3233,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     <p style="font-size:12px;color:#8b949e;margin-bottom:10px;line-height:1.6">{_safe_text(prose_short)}</p>
     {ages_block}
     {per_age_doctrine_block}
+    {tested_block}
     {wall_block}
     {quotes_block}
     {rev_block}
