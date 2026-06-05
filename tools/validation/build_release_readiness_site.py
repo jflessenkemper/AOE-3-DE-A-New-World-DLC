@@ -1269,6 +1269,63 @@ def _stage_leader_avatars(spec: dict) -> dict[str, str]:
     return out
 
 
+# civmods <homecityflagtexture> basenames whose name doesn't match the
+# Flag_*.png icon filename directly (prefixes / singular-plural / spelling).
+_FLAG_TEXTURE_ALIAS: dict[str, str] = {
+    "canadian": "Flag_Canadians.png", "romanian": "Flag_Romanians.png",
+    "spc_barbary": "Flag_barbary.png", "egyptian": "Flag_Egyptians.png",
+    "mx_mayan": "Flag_mayan.png", "us_texan": "Flag_texan.png",
+    "china": "Flag_Chinese.png", "spc_ethiopians": "Flag_Ethiopian.png",
+    "germans": "Flag_German.png", "inca": "Flag_Incan.png",
+    "india": "Flag_Indian.png", "japan": "Flag_Japanese.png",
+    "malta": "Flag_Maltese.png", "ottomans": "Flag_Ottoman.png",
+    "russians": "Flag_Russian.png", "spc_americans": "Flag_American.png",
+}
+
+_FLAGS_SRC_DIR = REPO_ROOT / "resources" / "images" / "icons" / "flags"
+_SITE_FLAG_DIR = REPO_ROOT / "artifacts" / "validation" / "flags"
+
+
+def _load_flag_map() -> dict[str, str]:
+    """{ANWtoken: Flag_*.png} from the authoritative civmods
+    <homecityflagtexture> (the flag the game actually shows for that nation)."""
+    try:
+        txt = (REPO_ROOT / "data" / "civmods.xml").read_text(
+            encoding="utf-8", errors="replace")
+    except OSError:
+        return {}
+    pngs = {p.stem.lower().removeprefix("flag_"): p.name
+            for p in _FLAGS_SRC_DIR.glob("Flag_*.png")}
+    out: dict[str, str] = {}
+    for blk in txt.split("<civ>"):
+        m = re.search(r"<name>(ANW[A-Za-z]+)</name>", blk)
+        fm = re.search(r"<homecityflagtexture>([^<]+)</homecityflagtexture>", blk)
+        if not (m and fm):
+            continue
+        base = fm.group(1).strip().replace("\\", "/").rsplit("/", 1)[-1].lower()
+        png = _FLAG_TEXTURE_ALIAS.get(base) or pngs.get(base)
+        if png:
+            out[m.group(1)] = png
+    return out
+
+
+def _stage_flags(flag_map: dict[str, str]) -> dict[str, str]:
+    """Copy each nation's flag into the served tree. Returns {ANWtoken: rel}."""
+    _SITE_FLAG_DIR.mkdir(parents=True, exist_ok=True)
+    out: dict[str, str] = {}
+    for anw_token, png in flag_map.items():
+        src = _FLAGS_SRC_DIR / png
+        if not src.is_file():
+            continue
+        dst = _SITE_FLAG_DIR / f"{anw_token}.png"
+        try:
+            shutil.copy2(src, dst)
+        except OSError:
+            continue
+        out[anw_token] = f"flags/{anw_token}.png"
+    return out
+
+
 # ── Home-city deck rendering (per-civ doctrine area) ────────────────────────
 
 _AGE_LABELS = {
@@ -2540,6 +2597,14 @@ section .content{padding:24px}
                                 background:#0d1117;flex-shrink:0;cursor:pointer;
                                 transition:border-color 0.15s ease}
 .civ-card-header .leader-avatar:hover{border-color:#58a6ff}
+/* Nation flag in the card header (replaces the circular leader portrait). */
+.civ-card-header .civ-flag{height:42px;width:auto;max-width:72px;
+                           object-fit:contain;border:1px solid #30363d;
+                           border-radius:3px;background:#0d1117;flex-shrink:0;
+                           padding:2px;box-shadow:0 1px 3px rgba(0,0,0,0.4)}
+.civ-card-header .civ-flag-missing{display:flex;align-items:center;
+                           justify-content:center;height:42px;width:56px;
+                           color:#484f58;font-size:20px}
 .civ-card-header .title-block{flex:1;min-width:0}
 .civ-card-header h3{font-size:15px;color:#f0f6fc;
                     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -2881,8 +2946,10 @@ footer{padding:32px 48px;font-size:12px;color:#6e7681;text-align:center;
 
 def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
                 git_meta: dict,
-                avatars: dict[str, str] | None = None) -> str:
+                avatars: dict[str, str] | None = None,
+                flags: dict[str, str] | None = None) -> str:
     avatars = avatars or {}
+    flags = flags or {}
     civs = spec.get("civs", {})
     now = _dt.datetime.now().strftime("%Y-%m-%d %H:%M")
     # Home-city deck data for the per-civ doctrine cards. Loaded once here
@@ -3208,6 +3275,18 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
                 'style="display:flex;align-items:center;justify-content:center;'
                 'color:#484f58;font-size:18px" title="no avatar resolved">·</div>'
             )
+        # Nation flag for the card header (replaces the circular leader
+        # portrait, per user request). Authoritative source: civmods.xml
+        # <homecityflagtexture> -> resources/images/icons/flags/Flag_*.png.
+        flag_rel = flags.get(anw_token)
+        if flag_rel:
+            flag_img = (
+                f'<img class="civ-flag" src="{html.escape(flag_rel)}" '
+                f'alt="{_safe_text(civ_label_display)} flag" '
+                f'title="{_safe_text(display_name)}">'
+            )
+        else:
+            flag_img = '<div class="civ-flag civ-flag-missing">&#9873;</div>'
         # Hero/Explorer row — the civ's actual in-game explorer UNIT
         # (proto + unit-type name + icon) from explorer_resolution.json.
         hero_explorer_html = _render_hero_explorer_row(anw_token, explorer_map)
@@ -3218,7 +3297,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         parts.append(f'''
 <div class="civ-card" id="card-{html.escape(anw_token)}" data-civ="{html.escape(anw_token)}">
   <div class="civ-card-header">
-    {avatar_img}
+    {flag_img}
     <div class="title-block"><h3>{_safe_text(display_name)}</h3></div>
     <span class="strategy" style="background:{ws_color}">{ws_name}</span>
     <label class="complete-check" title="Mark {_safe_text(display_name)} complete">
@@ -3427,18 +3506,21 @@ def main() -> int:
     # served artifacts tree. Done here (not inside render_page) so the
     # filesystem mutation stays explicit and visible in the build log.
     avatars = _stage_leader_avatars(spec)
+    # Stage nation flags (the card-header now shows the flag, not the portrait).
+    flags = _stage_flags(_load_flag_map())
 
     print(f"  Gate: {gate.get('overall','?')}  "
           f"({gate.get('counts',{}).get('PASS',0)}/{gate.get('total',0)} passing)")
     print(f"  Civs in spec: {len(spec.get('civs',{}))}")
     print(f"  Civs with art capture: {len(art)}")
     print(f"  Civs with leader avatar: {len(avatars)}")
+    print(f"  Civs with nation flag: {len(flags)}")
     print(f"  Git: {git_meta.get('branch')}@{git_meta.get('sha')}"
           f"{' (dirty)' if git_meta.get('dirty') else ''}")
     print()
 
     html_text = render_page(gate, spec, art, behaviour_map, git_meta,
-                            avatars=avatars)
+                            avatars=avatars, flags=flags)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(html_text, encoding="utf-8")
     print(f"  Wrote: {args.out}  ({len(html_text):,} bytes)")
