@@ -1950,6 +1950,64 @@ def _load_revolution_paths() -> dict:
         return {}
 
 
+# Revolution targets that aren't full ANW civs but have a flag icon.
+_REV_TARGET_FLAG_EXTRA: dict[str, str] = {
+    "Baja Californians": "Flag_baja_californian.png",
+    "Californians": "Flag_californian.png",
+    "Central Americans": "Flag_Central_American.png",
+    "Rio Grande": "Flag_rio_grande.png",
+    "Yucatan": "Flag_yucatan.png",
+}
+
+
+def _stage_revolution_target_flags(spec: dict, staged_flags: dict,
+                                   revolution_paths: dict) -> dict[str, str]:
+    """{target_label: flag_rel} for every revolution target (roster + extras)."""
+    civs = spec.get("civs", spec)
+    label2anw = {(c.get("civ_label") or ""): _civ_token_to_anw(tok)
+                 for tok, c in civs.items()}
+    out: dict[str, str] = {}
+    targets = {t for v in (revolution_paths.get("parent_to_targets") or {}).values()
+               for t in v}
+    for t in targets:
+        anw = label2anw.get(t)
+        if anw and anw in staged_flags:
+            out[t] = staged_flags[anw]
+        elif t in _REV_TARGET_FLAG_EXTRA:
+            src = _FLAGS_SRC_DIR / _REV_TARGET_FLAG_EXTRA[t]
+            if src.is_file():
+                slug = re.sub(r"[^a-z0-9]+", "_", t.lower()).strip("_")
+                _SITE_FLAG_DIR.mkdir(parents=True, exist_ok=True)
+                try:
+                    shutil.copy2(src, _SITE_FLAG_DIR / f"rev_{slug}.png")
+                    out[t] = f"flags/rev_{slug}.png"
+                except OSError:
+                    pass
+    return out
+
+
+def _render_revolt_into_header(civ_label: str, revolution_paths: dict,
+                                target_flags: dict) -> str:
+    """Header chips listing the nations this civ can revolt INTO (flag + name).
+    Empty string for civs that are not revolution parents."""
+    targets = (revolution_paths.get("parent_to_targets") or {}).get(civ_label) or []
+    if not targets:
+        return ""
+    chips = []
+    for t in targets:
+        disp = CIV_LABEL_DISPLAY_OVERRIDE.get(t, t)
+        fr = target_flags.get(t)
+        flag = (f'<img class="rev-into-flag" src="{html.escape(fr)}" alt="">'
+                if fr else '')
+        chips.append(
+            f'<span class="rev-into-chip" title="{_safe_text(disp)}">'
+            f'{flag}<span class="rev-into-name">{_safe_text(disp)}</span></span>'
+        )
+    return ('<div class="rev-into">'
+            '<span class="rev-into-label">Revolts&nbsp;into</span>'
+            + "".join(chips) + '</div>')
+
+
 def _render_civ_revolution_block(civ_label: str,
                                   revolution_paths: dict) -> str:
     """Render the revolution-paths block for one civ.
@@ -2605,6 +2663,18 @@ section .content{padding:24px}
 .civ-card-header .civ-flag-missing{display:flex;align-items:center;
                            justify-content:center;height:42px;width:56px;
                            color:#484f58;font-size:20px}
+/* "Revolts into" chips in the header (flag + name of each revolution target). */
+.civ-card-header .rev-into{display:flex;align-items:center;gap:6px;
+                           flex-wrap:wrap;flex:1 1 auto;margin:0 4px}
+.civ-card-header .rev-into-label{font-size:9px;text-transform:uppercase;
+                           letter-spacing:0.05em;color:#6e7681;font-weight:700}
+.civ-card-header .rev-into-chip{display:inline-flex;align-items:center;gap:4px;
+                           background:#161b22;border:1px solid #30363d;
+                           border-radius:10px;padding:2px 8px 2px 3px;
+                           font-size:10.5px;color:#c9d1d9}
+.civ-card-header .rev-into-flag{height:14px;width:auto;border-radius:2px;
+                           border:1px solid #30363d;flex-shrink:0}
+.civ-card-header .rev-into-name{white-space:nowrap}
 .civ-card-header .title-block{flex:1;min-width:0}
 .civ-card-header h3{font-size:15px;color:#f0f6fc;
                     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -3009,6 +3079,8 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # ``_render_civ_revolution_block`` to surface which nations can
     # revolt into which on every civ card.
     revolution_paths = _load_revolution_paths()
+    # Flags for the "Revolts into" header chips (roster civs + non-roster targets).
+    rev_target_flags = _stage_revolution_target_flags(spec, flags, revolution_paths)
 
     counts = gate.get("counts", {})
     n_pass = counts.get("PASS", 0)
@@ -3204,8 +3276,10 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # directions so the user can read either down or up from any
         # civ card. Curated data in tools/validation/revolution_paths.json.
         civ_label_for_rev = civ.get("civ_label") or ""
-        rev_block = _render_civ_revolution_block(civ_label_for_rev,
-                                                  revolution_paths)
+        # "Revolts into" now lives in the card header (flag + name of each
+        # revolution this nation can become), replacing the old rev section.
+        revolt_into_header = _render_revolt_into_header(
+            civ_label_for_rev, revolution_paths, rev_target_flags)
         # Deep-dive links removed per user feedback (2026-05-27): the
         # "Art folder →" and "AI behaviour deep-dive →" links exposed
         # raw scratch directories that confused the release-readiness
@@ -3299,6 +3373,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
   <div class="civ-card-header">
     {flag_img}
     <div class="title-block"><h3>{_safe_text(display_name)}</h3></div>
+    {revolt_into_header}
     <span class="strategy" style="background:{ws_color}">{ws_name}</span>
     <label class="complete-check" title="Mark {_safe_text(display_name)} complete">
       <input type="checkbox" onchange="toggleComplete(this,'{html.escape(anw_token)}')">
@@ -3314,8 +3389,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     {tested_block}
     {wall_block}
     {quotes_block}
-    {rev_block}
-  </div>
+    </div>
   {deck_html}
   {hero_explorer_html}
   {unique_units_html}
