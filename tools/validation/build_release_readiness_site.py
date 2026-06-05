@@ -1528,6 +1528,15 @@ def _spec_token_to_calib_key(token: str) -> str | None:
     return _SPEC_TO_CALIB_KEY.get(token)
 
 
+def _capture_date(p) -> str:
+    """YYYY-MM-DD the screenshot file was captured (file mtime); '' on error."""
+    try:
+        import datetime as _dt
+        return _dt.datetime.fromtimestamp(p.stat().st_mtime).strftime("%Y-%m-%d")
+    except (OSError, ValueError, AttributeError):
+        return ""
+
+
 _AGE_NAMES_NUM = {"2": "Colonial", "3": "Fortress", "4": "Industrial"}
 
 
@@ -2171,6 +2180,7 @@ def _render_civ_screenshots_block(
                 f'alt="{html.escape(label)}" '
                 f'title="{html.escape(_tip)}" '
                 f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
+                f'data-date="{_capture_date(hit)}" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2240,6 +2250,7 @@ def _render_civ_screenshots_block(
                 f'alt="{html.escape(label)}" '
                 f'title="{html.escape(_tip)}" '
                 f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
+                f'data-date="{_capture_date(hit)}" '
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2760,6 +2771,9 @@ table a{color:#58a6ff;text-decoration:none}
                  color:#f0f6fc;font-size:15px;font-weight:600;text-align:center;
                  background:rgba(13,17,23,0.9);padding:8px 18px;border-radius:6px;
                  border:1px solid #30363d;pointer-events:none;z-index:1001;max-width:82%}
+#imgModalCaption .img-cap-title{font-size:15px;font-weight:600}
+#imgModalCaption .img-cap-date{font-size:11.5px;font-weight:500;color:#8b98a5;
+                 margin-top:3px;letter-spacing:0.02em}
 .img-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:1001;
          background:rgba(22,27,34,0.85);color:#f0f6fc;border:1px solid #30363d;
          border-radius:50%;width:56px;height:56px;font-size:34px;line-height:1;
@@ -3236,13 +3250,26 @@ function renderModal(){
   // screenshots have no /thumbs/ segment so the replace is a no-op for them.
   var hiRes = src.replace('/thumbs/', '/crops/').replace(/\\.webp$/, '.png');
   var title = el.getAttribute('data-title') || el.title || el.alt || '';
+  var date = el.getAttribute('data-date') || '';
   var pos = modalGroup.length > 1
     ? '  (' + (modalIdx + 1) + ' / ' + modalGroup.length + ')' : '';
-  cap.textContent = title + pos + ' — loading…';
+  function setCap(suffix){
+    cap.innerHTML = '';
+    var t = document.createElement('div');
+    t.className = 'img-cap-title';
+    t.textContent = title + pos + suffix;
+    cap.appendChild(t);
+    if (date){
+      var d = document.createElement('div');
+      d.className = 'img-cap-date';
+      d.textContent = 'Captured ' + date;
+      cap.appendChild(d);
+    }
+  }
+  setCap('  —  loading…');
   img.onerror = function(){ img.onerror = null; img.src = src; };
   img.onload = function(){
-    cap.textContent = title + pos + '  —  ' +
-      img.naturalWidth + '×' + img.naturalHeight;
+    setCap('  —  ' + img.naturalWidth + '×' + img.naturalHeight);
   };
   img.src = hiRes;
   document.getElementById('imgModal').scrollTop = 0;
