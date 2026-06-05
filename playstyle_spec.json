@@ -32,6 +32,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.25,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -77,6 +96,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -89,6 +112,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -132,6 +177,25 @@
      "radius": 10
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.74,
+        1.0
+       ],
+       "cav": [
+        0.02,
+        0.32
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_montezuma.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -177,6 +241,32 @@
       "_source": "leader_montezuma.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
+      "comp": {
+       "inf": [
+        0.79,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.27
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_montezuma.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
       "comp": {
        "inf": [
         0.79,
@@ -232,6 +322,25 @@
      "radius": 20
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -277,6 +386,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -289,6 +402,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -331,6 +466,25 @@
      "radius": 20
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -376,6 +530,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -388,6 +546,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -431,6 +611,25 @@
      "radius": 22
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.77,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.29
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_wellington.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -476,6 +675,10 @@
       "_source": "leader_wellington.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -488,6 +691,28 @@
        "art": [
         0.23,
         0.53
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_wellington.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.47,
+        0.77
+       ],
+       "cav": [
+        0.06,
+        0.36
+       ],
+       "art": [
+        0.12,
+        0.42
        ]
       },
       "posture": "offensive",
@@ -530,6 +755,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -575,6 +819,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -587,6 +835,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "defensive",
@@ -629,6 +899,25 @@
      "radius": 16
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -674,6 +963,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -689,6 +982,28 @@
        ]
       },
       "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
+       ]
+      },
+      "posture": "defensive",
       "_source": "leader_revolution_commanders.xs (per-civ)"
      }
     },
@@ -728,6 +1043,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.58,
+        0.88
+       ],
+       "cav": [
+        0.18,
+        0.48
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_kangxi.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -773,6 +1107,10 @@
       "_source": "leader_kangxi.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.34,
@@ -785,6 +1123,28 @@
        "art": [
         0.22,
         0.52
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_kangxi.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.08,
+        0.38
+       ],
+       "art": [
+        0.25,
+        0.55
        ]
       },
       "posture": "offensive",
@@ -825,6 +1185,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.25,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -870,6 +1249,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -882,6 +1265,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -925,6 +1330,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_maurice.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -970,6 +1394,10 @@
       "_source": "leader_maurice.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.45,
@@ -982,6 +1410,28 @@
        "art": [
         0.28,
         0.58
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_maurice.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.42,
+        0.72
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.34,
+        0.64
        ]
       },
       "posture": "offensive",
@@ -1025,6 +1475,25 @@
      "radius": 22
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.1,
+        0.15
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1070,6 +1539,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -1085,6 +1558,28 @@
        ]
       },
       "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.22,
+        0.42
+       ]
+      },
+      "posture": "defensive",
       "_source": "leader_revolution_commanders.xs (per-civ)"
      }
     },
@@ -1125,6 +1620,25 @@
      "radius": 20
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.67,
+        0.97
+       ],
+       "cav": [
+        0.09,
+        0.39
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_menelik.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1170,6 +1684,10 @@
       "_source": "leader_menelik.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.37,
@@ -1182,6 +1700,28 @@
        "art": [
         0.25,
         0.55
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_menelik.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.33,
+        0.63
+       ],
+       "cav": [
+        0.04,
+        0.34
+       ],
+       "art": [
+        0.27,
+        0.57
        ]
       },
       "posture": "offensive",
@@ -1224,6 +1764,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1269,6 +1828,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -1281,6 +1844,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "defensive",
@@ -1323,6 +1908,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.81,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.25
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_bourbon.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1368,6 +1972,10 @@
       "_source": "leader_bourbon.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.34,
@@ -1380,6 +1988,28 @@
        "art": [
         0.15,
         0.45
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_bourbon.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.14,
+        0.44
+       ],
+       "art": [
+        0.18,
+        0.48
        ]
       },
       "posture": "offensive",
@@ -1424,6 +2054,25 @@
      "radius": 14
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.49,
+        0.79
+       ],
+       "cav": [
+        0.27,
+        0.57
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_frederick.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -1469,6 +2118,10 @@
       "_source": "leader_frederick.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.28,
@@ -1481,6 +2134,28 @@
        "art": [
         0.16,
         0.46
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_frederick.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.26,
+        0.56
+       ],
+       "cav": [
+        0.21,
+        0.51
+       ],
+       "art": [
+        0.17,
+        0.47
        ]
       },
       "posture": "offensive",
@@ -1524,6 +2199,25 @@
      "radius": 10
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.6,
+        0.9
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1569,6 +2263,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.48,
@@ -1581,6 +2279,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.68
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -1618,6 +2338,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.77,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.29
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_hiawatha.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1663,6 +2402,10 @@
       "_source": "leader_hiawatha.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.42,
@@ -1675,6 +2418,28 @@
        "art": [
         0.12,
         0.42
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hiawatha.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.38,
+        0.68
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.16,
+        0.46
        ]
       },
       "posture": "offensive",
@@ -1717,6 +2482,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.32,
+        0.62
+       ],
+       "cav": [
+        0.44,
+        0.74
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_usman.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1762,6 +2546,10 @@
       "_source": "leader_usman.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.25,
@@ -1774,6 +2562,28 @@
        "art": [
         0.12,
         0.42
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_usman.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.23,
+        0.53
+       ],
+       "cav": [
+        0.26,
+        0.56
+       ],
+       "art": [
+        0.15,
+        0.45
        ]
       },
       "posture": "offensive",
@@ -1814,6 +2624,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.25,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -1859,6 +2688,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -1871,6 +2704,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -1913,6 +2768,25 @@
      "radius": 14
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_pachacuti.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -1958,6 +2832,10 @@
       "_source": "leader_pachacuti.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.79,
@@ -1970,6 +2848,28 @@
        "art": [
         0.0,
         0.27
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_pachacuti.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.68,
+        0.98
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.08,
+        0.38
        ]
       },
       "posture": "offensive",
@@ -2014,6 +2914,25 @@
      "radius": 16
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.3,
+        0.6
+       ],
+       "cav": [
+        0.46,
+        0.76
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_shivaji.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -2059,6 +2978,10 @@
       "_source": "leader_shivaji.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.26,
@@ -2071,6 +2994,28 @@
        "art": [
         0.1,
         0.4
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_shivaji.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.23,
+        0.53
+       ],
+       "cav": [
+        0.27,
+        0.57
+       ],
+       "art": [
+        0.13,
+        0.43
        ]
       },
       "posture": "offensive",
@@ -2114,6 +3059,25 @@
      "radius": 10
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.6,
+        0.9
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -2159,6 +3123,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.48,
@@ -2171,6 +3139,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.68
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -2214,6 +3204,25 @@
      "radius": 12
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.65,
+        0.95
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_garibaldi.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -2259,6 +3268,10 @@
       "_source": "leader_garibaldi.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.36,
@@ -2271,6 +3284,28 @@
        "art": [
         0.17,
         0.47
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_garibaldi.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.12,
+        0.42
+       ],
+       "art": [
+        0.21,
+        0.51
        ]
       },
       "posture": "offensive",
@@ -2308,6 +3343,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_tokugawa.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -2353,6 +3407,10 @@
       "_source": "leader_tokugawa.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.36,
@@ -2365,6 +3423,28 @@
        "art": [
         0.19,
         0.49
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_tokugawa.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.1,
+        0.4
+       ],
+       "art": [
+        0.23,
+        0.53
        ]
       },
       "posture": "offensive",
@@ -2404,6 +3484,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.0,
+        0.18
+       ],
+       "cav": [
+        0.88,
+        1.0
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_crazy_horse.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -2449,6 +3548,10 @@
       "_source": "leader_crazy_horse.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.01,
@@ -2456,6 +3559,28 @@
        ],
        "cav": [
         0.75,
+        1.0
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_crazy_horse.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.05,
+        0.35
+       ],
+       "cav": [
+        0.71,
         1.0
        ],
        "art": [
@@ -2506,6 +3631,25 @@
      "radius": 16
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_valette.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -2551,6 +3695,10 @@
       "_source": "leader_valette.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.45,
@@ -2563,6 +3711,28 @@
        "art": [
         0.31,
         0.61
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_valette.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.41,
+        0.71
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.35,
+        0.65
        ]
       },
       "posture": "offensive",
@@ -2606,6 +3776,25 @@
      "radius": 10
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.6,
+        0.9
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -2651,6 +3840,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.48,
@@ -2663,6 +3856,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.68
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -2706,6 +3921,25 @@
      "radius": 11
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.63,
+        0.93
+       ],
+       "cav": [
+        0.13,
+        0.43
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_hidalgo.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -2751,6 +3985,10 @@
       "_source": "leader_hidalgo.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.32,
@@ -2763,6 +4001,28 @@
        "art": [
         0.15,
         0.45
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hidalgo.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.29,
+        0.59
+       ],
+       "cav": [
+        0.17,
+        0.47
+       ],
+       "art": [
+        0.19,
+        0.49
        ]
       },
       "posture": "offensive",
@@ -2804,6 +4064,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.35,
+        0.65
+       ],
+       "cav": [
+        0.13,
+        0.43
+       ],
+       "art": [
+        0.16,
+        0.46
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_napoleon.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -2849,6 +4128,10 @@
       "_source": "leader_napoleon.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.26,
@@ -2857,6 +4140,28 @@
        "cav": [
         0.14,
         0.44
+       ],
+       "art": [
+        0.24,
+        0.54
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_napoleon.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.24,
+        0.54
+       ],
+       "cav": [
+        0.15,
+        0.45
        ],
        "art": [
         0.24,
@@ -2904,6 +4209,25 @@
      "radius": 20
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.56,
+        0.86
+       ],
+       "cav": [
+        0.2,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_suleiman.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -2949,6 +4273,10 @@
       "_source": "leader_suleiman.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.3,
@@ -2961,6 +4289,28 @@
        "art": [
         0.23,
         0.53
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_suleiman.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.26,
+        0.56
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.26,
+        0.56
        ]
       },
       "posture": "offensive",
@@ -3003,6 +4353,25 @@
      "radius": 16
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -3048,6 +4417,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -3060,6 +4433,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "defensive",
@@ -3103,6 +4498,25 @@
      "radius": 22
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.7,
+        1.0
+       ],
+       "cav": [
+        0.06,
+        0.36
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_henry.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -3148,6 +4562,10 @@
       "_source": "leader_henry.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.31,
@@ -3160,6 +4578,28 @@
        "art": [
         0.22,
         0.52
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_henry.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.3,
+        0.6
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.23,
+        0.53
        ]
       },
       "posture": "offensive",
@@ -3203,6 +4643,25 @@
      "radius": 10
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.6,
+        0.9
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -3248,6 +4707,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.48,
@@ -3263,6 +4726,28 @@
        ]
       },
       "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.68
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
+       ]
+      },
+      "posture": "defensive",
       "_source": "leader_revolution_commanders.xs (per-civ)"
      }
     },
@@ -3301,6 +4786,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.1,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -3346,6 +4850,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -3358,6 +4866,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "defensive",
@@ -3403,6 +4933,25 @@
      "radius": 22
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.58,
+        0.88
+       ],
+       "cav": [
+        0.18,
+        0.48
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_catherine.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -3448,6 +4997,10 @@
       "_source": "leader_catherine.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.31,
@@ -3460,6 +5013,28 @@
        "art": [
         0.18,
         0.48
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_catherine.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.27,
+        0.57
+       ],
+       "cav": [
+        0.15,
+        0.45
+       ],
+       "art": [
+        0.21,
+        0.51
        ]
       },
       "posture": "offensive",
@@ -3506,6 +5081,25 @@
      "radius": 18
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.25,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        360000,
@@ -3551,6 +5145,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -3563,6 +5161,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -3603,6 +5223,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.49,
+        0.79
+       ],
+       "cav": [
+        0.27,
+        0.57
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_isabella.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -3648,6 +5287,10 @@
       "_source": "leader_isabella.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.31,
@@ -3660,6 +5303,28 @@
        "art": [
         0.16,
         0.46
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_isabella.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.28,
+        0.58
+       ],
+       "cav": [
+        0.16,
+        0.46
+       ],
+       "art": [
+        0.2,
+        0.5
        ]
       },
       "posture": "offensive",
@@ -3701,6 +5366,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.47,
+        0.77
+       ],
+       "cav": [
+        0.19,
+        0.49
+       ],
+       "art": [
+        0.0,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_gustavus.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -3746,6 +5430,10 @@
       "_source": "leader_gustavus.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.28,
@@ -3758,6 +5446,28 @@
        "art": [
         0.22,
         0.52
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_gustavus.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.25,
+        0.55
+       ],
+       "cav": [
+        0.14,
+        0.44
+       ],
+       "art": [
+        0.25,
+        0.55
        ]
       },
       "posture": "offensive",
@@ -3798,6 +5508,25 @@
      "note": "MobileNoWalls — outpost screen, no perimeter"
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.5,
+        0.8
+       ],
+       "cav": [
+        0.25,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.05
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -3843,6 +5572,10 @@
       "_source": "leader_revolution_commanders.xs (per-civ)"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.38,
@@ -3855,6 +5588,28 @@
        "art": [
         0.1,
         0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.58
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.12,
+        0.32
        ]
       },
       "posture": "offensive",
@@ -3898,6 +5653,25 @@
      "radius": 12
     },
     "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.69,
+        0.99
+       ],
+       "cav": [
+        0.07,
+        0.37
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_washington.xs bt biases"
+     },
      "2": {
       "ageup_by_ms": [
        240000,
@@ -3943,6 +5717,10 @@
       "_source": "leader_washington.xs bt biases"
      },
      "4": {
+      "ageup_by_ms": [
+       840000,
+       1200000
+      ],
       "comp": {
        "inf": [
         0.32,
@@ -3955,6 +5733,28 @@
        "art": [
         0.19,
         0.49
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_washington.xs bt biases"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1200000,
+       1680000
+      ],
+      "comp": {
+       "inf": [
+        0.29,
+        0.59
+       ],
+       "cav": [
+        0.12,
+        0.42
+       ],
+       "art": [
+        0.23,
+        0.53
        ]
       },
       "posture": "offensive",

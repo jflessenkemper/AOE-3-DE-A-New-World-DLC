@@ -1537,7 +1537,8 @@ def _capture_date(p) -> str:
         return ""
 
 
-_AGE_NAMES_NUM = {"2": "Colonial", "3": "Fortress", "4": "Industrial"}
+_AGE_NAMES_NUM = {"1": "Discovery", "2": "Colonial", "3": "Fortress",
+                  "4": "Industrial", "5": "Imperial"}
 
 
 def _fmt_pct_band(b) -> str:
@@ -1561,7 +1562,7 @@ def _render_per_age_doctrine_block(claims: dict) -> str:
     (anwDifficultyScale.xs) scales execution intensity by difficulty."""
     pa = (claims or {}).get("per_age") or {}
     rows = []
-    for an in ("2", "3", "4"):
+    for an in ("1", "2", "3", "4", "5"):
         a = pa.get(an)
         if not a:
             continue
@@ -3210,12 +3211,10 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # Hero/Explorer row — the civ's actual in-game explorer UNIT
         # (proto + unit-type name + icon) from explorer_resolution.json.
         hero_explorer_html = _render_hero_explorer_row(anw_token, explorer_map)
-        # Art-surfaces strip — the leader-portrait cell mirrors avatar_rel so
-        # it matches the card-header circle (resolved just above). Shown for
-        # every civ including British (the leader portrait now comes from the
-        # clean base-game avatar, not the old mislabeled in-game thumb).
-        art_block = _render_civ_art_surfaces_block(anw_token, art_info,
-                                                   avatar_rel=avatar_rel)
+        # Art-surfaces strip REMOVED (2026-06-05): every art surface
+        # (lobby portrait, scoreboard row, diplomacy, esc summary, HC button,
+        # endgame flag, …) is already shown by the in-game screenshot section
+        # below, which the strip was merely cropping. No separate strip needed.
         parts.append(f'''
 <div class="civ-card" id="card-{html.escape(anw_token)}" data-civ="{html.escape(anw_token)}">
   <div class="civ-card-header">
@@ -3242,7 +3241,6 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
   {hero_explorer_html}
   {unique_units_html}
   {retreat_units_html}
-  {art_block}
   {shots_block}
 </div>''')
     parts.append('</div></div></section>')

@@ -83,13 +83,22 @@ def build_per_age(claims: dict) -> dict:
 
     a2 = [240000, 420000] if rush else [360000, 540000]
     a3 = [540000, 840000] if rush else [660000, 960000]
+    a4 = [840000, 1200000] if rush else [1020000, 1440000]
+    a5 = [1200000, 1680000] if rush else [1440000, 1920000]
+    pres = "offensive" if offensive else "defensive"
     return {
+        # Age 1 (Discovery): eco/scout phase — minimal military, so posture only.
+        "1": {"comp": comp([0.50, 0.80], [0.10, 0.35], [0.00, 0.05]),
+              "posture": "offensive" if (offensive and rush) else "defensive",
+              "note": "Discovery — economy / scouting"},
         "2": {"ageup_by_ms": a2, "comp": comp([0.45, 0.70], [0.15, 0.40], [0.00, 0.10]),
               "posture": "offensive" if (offensive and rush) else "defensive"},
         "3": {"ageup_by_ms": a3, "comp": comp([0.40, 0.62], [0.20, 0.45], [0.05, 0.22]),
-              "posture": "offensive" if offensive else "defensive"},
-        "4": {"comp": comp([0.38, 0.60], [0.20, 0.45], [0.10, 0.28]),
-              "posture": "offensive" if offensive else "defensive"},
+              "posture": pres},
+        "4": {"ageup_by_ms": a4, "comp": comp([0.38, 0.60], [0.20, 0.45], [0.10, 0.28]),
+              "posture": pres},
+        "5": {"ageup_by_ms": a5, "comp": comp([0.35, 0.58], [0.20, 0.45], [0.12, 0.32]),
+              "posture": pres},
     }
 
 

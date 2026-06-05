@@ -143,7 +143,7 @@ def main() -> int:
                 continue
             checked += 1
         src = f"leader_{leader}.xs bt biases" if leader else "leader_revolution_commanders.xs (per-civ)"
-        for age in (2, 3, 4):
+        for age in (1, 2, 3, 4, 5):
             true_post = posture(eff.get(age, {}).get("btOffenseDefense"))
             spec_post = pa.get(str(age), {}).get("posture")
             if true_post in ("offensive", "defensive") and spec_post != true_post:
