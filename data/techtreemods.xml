@@ -8702,6 +8702,14 @@
 			<Effect type ='TechStatus' status ='unobtainable'>DERevolutionMXMaya</Effect>
 			<Effect type ='TechStatus' status ='unobtainable'>DEHCFlemishRevolution</Effect>
 			<Effect type ='TechStatus' status ='unobtainable'>DEHCBelgianRevolution</Effect>
+			<!-- ANW: completeness — these revolution triggers are UNOBTAINABLE by their
+			     own definition; listed here so the global disabler covers the full
+			     revolution-target set and can never regress to obtainable. -->
+			<Effect type ='TechStatus' status ='unobtainable'>DERevolutionMXCentralAmerica</Effect>
+			<Effect type ='TechStatus' status ='unobtainable'>DERevolutionMXRioGrande</Effect>
+			<Effect type ='TechStatus' status ='unobtainable'>DERevolutionFrance</Effect>
+			<Effect type ='TechStatus' status ='unobtainable'>DERevolutionFranceNE</Effect>
+			<Effect type ='TechStatus' status ='unobtainable'>DERevolutionHungaryMaltese</Effect>
 		</Effects>
 	</Tech>
 	<Tech name ='LLObserverConsoleGlobal' type ='Normal'>
