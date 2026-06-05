@@ -21,7 +21,7 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 import tools.validation.smart_walls_sweep as sw          # calibrated lobby/lifecycle
 import tools.validation.validate_per_age_v2 as v2         # grading + probe parse
-from tools.aoe3_automation.game_safety import GameSession, kill_game_stack
+from tools.aoe3_automation.game_safety import GameSession, kill_game_stack, aoe3_running
 try:
     import tools.aoe3_automation.lobby_driver as lobby
 except Exception:
@@ -128,7 +128,7 @@ def run_match(test_civ: str, engine_civ: str, opponent: str, seed: int,
         end = time.time() + observe_s
         while time.time() < end:
             time.sleep(10); guard.beat()
-            if not sw.aoe3_exe_running():
+            if not aoe3_running():   # precise check (game_safety, not pgrep -f self-match)
                 res["error"] = "crash during observe"; res["status"] = "CRASH"; return res
         try: sw.resign_match()
         except Exception: pass

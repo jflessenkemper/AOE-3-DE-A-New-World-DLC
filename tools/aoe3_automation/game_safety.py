@@ -58,19 +58,50 @@ def _pgrep(pattern: str, exact: bool = False) -> list[str]:
     return [p for p in r.stdout.split() if p.strip().isdigit()]
 
 
+# Interpreter/tool process names that may merely *contain* "AoE3DE_s.exe" or the
+# appid in their command line (a shell running pgrep, the farm driver, the
+# validator, …). These are NEVER the game and MUST NOT be killed.
+_NON_GAME_COMMS = {
+    "bash", "sh", "dash", "zsh", "fish", "python", "python3", "pgrep", "grep",
+    "ps", "node", "claude", "awk", "sed", "perl", "ruby", "ssh", "tmux", "vim",
+}
+
+
+def _comm(pid: str) -> str:
+    try:
+        return Path(f"/proc/{pid}/comm").read_text().strip()
+    except OSError:
+        return ""
+
+
+def _real_game_pids() -> list[str]:
+    """pgrep -f for the game, then drop interpreter/tool processes that only
+    *mention* the exe in their argv (the pgrep self-match / driver / validator).
+    The real wine process has comm == 'AoE3DE_s.exe'."""
+    out = []
+    for pid in _pgrep(_AOE3_EXE):
+        if _comm(pid) in _NON_GAME_COMMS:
+            continue
+        out.append(pid)
+    return out
+
+
 def kill_game_stack(reason: str = "", dry_run: bool = False) -> list[int]:
     """SIGKILL only the AoE3 game stack. Returns the pids killed. CoH2-safe."""
     killed: list[int] = []
-    # 1) the game binary (the big memory consumer)
-    for pid in _pgrep(_AOE3_EXE):
-        cl = _cmdline(pid)
-        if any(m in cl for m in _COH2_MARKERS):
+    # 1) the game binary (the big memory consumer) — real wine procs only,
+    #    never a shell/python that merely contains "AoE3DE_s.exe" in argv.
+    for pid in _real_game_pids():
+        if any(m in _cmdline(pid) for m in _COH2_MARKERS):
             continue
         killed.append(int(pid))
     # 2) the AoE3 gamescope fork (exact name — never the desktop compositor)
     killed += [int(p) for p in _pgrep(_HARNESS_EXACT, exact=True)]
-    # 3) pressure-vessel / proton reaper scoped to this appid only
+    # 3) pressure-vessel / proton reaper scoped to this appid only — and only
+    #    real (non-interpreter) processes, so we never kill a tool command.
     for pid in _pgrep(_AOE3_APPID):
+        if _comm(pid) in _NON_GAME_COMMS:
+            continue
         cl = _cmdline(pid)
         if _AOE3_APPID in cl and not any(m in cl for m in _COH2_MARKERS):
             killed.append(int(pid))
@@ -100,7 +131,7 @@ def read_mem() -> tuple[int, int]:
 
 
 def aoe3_running() -> bool:
-    return bool(_pgrep(_AOE3_EXE))
+    return bool(_real_game_pids())
 
 
 def _log(msg: str) -> None:
