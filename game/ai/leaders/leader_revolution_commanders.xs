@@ -87,6 +87,28 @@ void anwInitRevolutionCommander(void)
       cvMaxArmyPop = 115;
       gRvltCivId = 24;
    }
+   else if (rvltName == "ANWBajaCalifornians")
+   {
+      anwVerboseEcho("A New World: activating ANW Baja Californians Alvarado personality.");
+      anwSetAggressivePersonality();
+      btRushBoom = -0.1;
+      btOffenseDefense = 0.5;
+      btBiasTrade = 0.35;
+      btBiasNative = 0.2;
+      anwSetMilitaryFocus(0.35, 0.85, -0.2);
+      // LL-BUILD-STYLE-BEGIN
+      anwUseMobileFrontierScatterStyle(0);  // sparse desert-coast raiders, no perimeter.
+      anwEnableForwardBaseStyle();           // Californio horse raid forward.
+      gANWMilitaryDistanceMultiplier = 1.0;
+      anwSetBuildStrongpointProfile(1, 2, 2, false);
+      gANWWallStrategy = cANWWallStrategyCoastalBatteries;  // matches aiWallKnobsByCiv strategy 2.
+      // LL-BUILD-STYLE-END
+      anwSetLeaderTacticalDoctrine(0.72, 0.28, 2, 3.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 4;
+      cvMaxArmyPop = 120;
+      gRvltCivId = 18;
+   }
    else if (rvltName == "ANWBarbary")
    {
       anwVerboseEcho("A New World: activating ANW Barbary Barbarossa personality.");
@@ -128,6 +150,49 @@ void anwInitRevolutionCommander(void)
       cvMaxTowers = 5;
       cvMaxArmyPop = 115;
       gRvltCivId = 26;
+   }
+   else if (rvltName == "ANWCalifornians")
+   {
+      anwVerboseEcho("A New World: activating ANW Californians Vallejo personality.");
+      anwSetBalancedPersonality();
+      btRushBoom = -0.5;
+      btOffenseDefense = -0.1;
+      btBiasTrade = 0.7;
+      btBiasNative = 0.15;
+      anwSetMilitaryFocus(0.45, 0.6, -0.1);
+      // LL-BUILD-STYLE-BEGIN
+      anwUseMobileFrontierScatterStyle(0);  // open ranch country, rancho cavalry, no perimeter.
+      gANWMilitaryDistanceMultiplier = 1.0;
+      anwSetBuildStrongpointProfile(1, 2, 2, false);
+      gANWWallStrategy = cANWWallStrategyMobileNoWalls;  // matches aiWallKnobsByCiv strategy 5.
+      // LL-BUILD-STYLE-END
+      anwSetLeaderTacticalDoctrine(0.7, 0.3, 2, 4.0);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 2;
+      cvMaxArmyPop = 120;
+      gRvltCivId = 22;
+   }
+   else if (rvltName == "ANWCentralAmericans")
+   {
+      anwVerboseEcho("A New World: activating ANW Central Americans Morazan personality.");
+      anwSetBalancedPersonality();
+      btRushBoom = -0.2;
+      btOffenseDefense = 0.35;
+      btBiasTrade = 0.3;
+      btBiasNative = 0.5;
+      anwSetMilitaryFocus(0.85, 0.3, 0.0);
+      // LL-BUILD-STYLE-BEGIN
+      anwUseDistributedEconomicNetworkStyle(1);  // Morazan / Central American federation frontier palisade.
+      anwEnableForwardBaseStyle();               // Morazan's offensive isthmus campaigns.
+      gANWMilitaryDistanceMultiplier = 0.95;
+      anwSetBuildStrongpointProfile(2, 2, 2, false);
+      gANWWallStrategy = cANWWallStrategyFrontierPalisades;  // matches aiWallKnobsByCiv strategy 3.
+      // LL-BUILD-STYLE-END
+      anwSetLeaderTacticalDoctrine(0.78, 0.22, 2, 3.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 5;
+      cvMaxArmyPop = 125;
+      gRvltCivId = 17;
    }
    else if (rvltName == "ANWCanadians")
    {
@@ -415,6 +480,28 @@ void anwInitRevolutionCommander(void)
       cvMaxTowers = 4;
       cvMaxArmyPop = 130;
       gRvltCivId = 39;
+   }
+   else if (rvltName == "ANWRioGrande")
+   {
+      anwVerboseEcho("A New World: activating ANW Rio Grande Canales personality.");
+      anwSetAggressivePersonality();
+      btRushBoom = -0.1;
+      btOffenseDefense = 0.6;
+      btBiasTrade = 0.0;
+      btBiasNative = 0.15;
+      anwSetMilitaryFocus(0.4, 0.85, -0.1);
+      // LL-BUILD-STYLE-BEGIN
+      anwUseCivicMilitiaCenterStyle(1);  // northern frontier ranchero, blockhouse palisades.
+      anwEnableForwardBaseStyle();
+      gANWMilitaryDistanceMultiplier = 1.05;
+      anwSetBuildStrongpointProfile(2, 2, 3, false);
+      gANWWallStrategy = cANWWallStrategyFrontierPalisades;  // matches aiWallKnobsByCiv strategy 3.
+      // LL-BUILD-STYLE-END
+      anwSetLeaderTacticalDoctrine(0.74, 0.26, 2, 3.5);
+      cvOkToBuildForts = true;
+      cvMaxTowers = 4;
+      cvMaxArmyPop = 120;
+      gRvltCivId = 20;
    }
    else if (rvltName == "ANWRomanians")
    {
