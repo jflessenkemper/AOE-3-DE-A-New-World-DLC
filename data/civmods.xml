@@ -11454,7 +11454,7 @@
 		</empirewarsageuprates>
 		<randomstartingunits>0</randomstartingunits>
 		<partisans>1</partisans>
-		<homecityfilename>anwhomecitymexicans.xml</homecityfilename>
+		<homecityfilename>anwhomecitycalifornians.xml</homecityfilename>
 		<usetwoheronames></usetwoheronames>
 		<secondherohclabelid>112249</secondherohclabelid>
 		<useextendeddeckui></useextendeddeckui>
@@ -11908,7 +11908,7 @@
 		</empirewarsageuprates>
 		<randomstartingunits>0</randomstartingunits>
 		<partisans>1</partisans>
-		<homecityfilename>anwhomecitymexicans.xml</homecityfilename>
+		<homecityfilename>anwhomecitycentralamericans.xml</homecityfilename>
 		<usetwoheronames></usetwoheronames>
 		<secondherohclabelid>112249</secondherohclabelid>
 		<useextendeddeckui></useextendeddeckui>
@@ -12362,7 +12362,7 @@
 		</empirewarsageuprates>
 		<randomstartingunits>0</randomstartingunits>
 		<partisans>1</partisans>
-		<homecityfilename>anwhomecitymexicans.xml</homecityfilename>
+		<homecityfilename>anwhomecitybajacalifornians.xml</homecityfilename>
 		<usetwoheronames></usetwoheronames>
 		<secondherohclabelid>112249</secondherohclabelid>
 		<useextendeddeckui></useextendeddeckui>
@@ -12816,7 +12816,7 @@
 		</empirewarsageuprates>
 		<randomstartingunits>0</randomstartingunits>
 		<partisans>1</partisans>
-		<homecityfilename>anwhomecitymexicans.xml</homecityfilename>
+		<homecityfilename>anwhomecityriogrande.xml</homecityfilename>
 		<usetwoheronames></usetwoheronames>
 		<secondherohclabelid>112249</secondherohclabelid>
 		<useextendeddeckui></useextendeddeckui>
