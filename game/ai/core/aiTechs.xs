@@ -194,9 +194,12 @@ int chooseEuropeanPolitician()
       }
       case cAge4:
          {
-         // Check if we can revolt.
+         // Check if we can revolt.  ANW: mid-game revolting is disabled
+         // (gANWAllowRevolt=false) — the nation you start with is the nation
+         // you play the whole game; revoltable nations are their own civs.
          randomizer = aiRandInt(4); // 25% Chance.
-         if ((cDifficultyCurrent >= cDifficultyModerate) && (gSPC == false) &&
+         if ((gANWAllowRevolt == true) &&
+             (cDifficultyCurrent >= cDifficultyModerate) && (gSPC == false) &&
              (randomizer == 0) && (gStartOnDifferentIslands == false) &&
              (xsGetTime() < 30 * 60 * 1000) && (gTimeToFarm == false) && (gTimeForPlantations == false) &&
              (aiTreatyActive() == false) && (kbGetPop() > gMaxPop * 0.60) && (cMyCiv != cCivFrench))

@@ -210,6 +210,10 @@ extern const int cAllianceJesuitIndex = 3;
 extern const int cAllianceOromoIndex = 4;
 
 extern int gRevolutionList = -1; // List of Revolutions.
+// ANW design: the nation you start with is the nation you play the whole game.
+// Mid-game revolting is DISABLED — every revoltable nation is instead its own
+// lobby-selectable civ. Set true only to restore vanilla mid-game revolutions.
+extern bool gANWAllowRevolt = false;
 extern int gAfricanAlliances = -1;     // Array used to select from the different African alliances
 extern int gMexicanFederalStates = -1; // Array used to select from the different Mexican Federal States.
 extern int gAmericanFederalStates = -1; // Array used to select from the different United States Federal States.
