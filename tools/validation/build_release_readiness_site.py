@@ -3078,9 +3078,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # ``tools/validation/revolution_paths.json``). Used by
     # ``_render_civ_revolution_block`` to surface which nations can
     # revolt into which on every civ card.
-    revolution_paths = _load_revolution_paths()
-    # Flags for the "Revolts into" header chips (roster civs + non-roster targets).
-    rev_target_flags = _stage_revolution_target_flags(spec, flags, revolution_paths)
+    revolution_paths = _load_revolution_paths()  # retained for data only; not rendered
 
     counts = gate.get("counts", {})
     n_pass = counts.get("PASS", 0)
@@ -3275,11 +3273,9 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # is this derived from"). Surfaces the same info from both
         # directions so the user can read either down or up from any
         # civ card. Curated data in tools/validation/revolution_paths.json.
-        civ_label_for_rev = civ.get("civ_label") or ""
-        # "Revolts into" now lives in the card header (flag + name of each
-        # revolution this nation can become), replacing the old rev section.
-        revolt_into_header = _render_revolt_into_header(
-            civ_label_for_rev, revolution_paths, rev_target_flags)
+        # Revolution paths REMOVED (2026-06-05): the mod no longer uses
+        # mid-game revolutions — the nation you start with is the nation you
+        # play the whole game — so there is no "revolts into / from" to show.
         # Deep-dive links removed per user feedback (2026-05-27): the
         # "Art folder →" and "AI behaviour deep-dive →" links exposed
         # raw scratch directories that confused the release-readiness
@@ -3373,7 +3369,6 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
   <div class="civ-card-header">
     {flag_img}
     <div class="title-block"><h3>{_safe_text(display_name)}</h3></div>
-    {revolt_into_header}
     <span class="strategy" style="background:{ws_color}">{ws_name}</span>
     <label class="complete-check" title="Mark {_safe_text(display_name)} complete">
       <input type="checkbox" onchange="toggleComplete(this,'{html.escape(anw_token)}')">
