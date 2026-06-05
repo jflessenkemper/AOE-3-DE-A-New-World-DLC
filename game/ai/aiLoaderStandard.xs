@@ -43,6 +43,13 @@ include "leaders\leader_gustavus.xs";
 //    gANWWall* tuning knobs for the active civ. Called from preInit()
 //    AFTER initLeader<Name>() so it overrides leader-set defaults.
 include "core\aiWallKnobsByCiv.xs";
+// Simulation-farm determinism hook: defines anwApplyFarmSeed() which seeds
+// the RNG (aiRandSetSeed) when the farm driver has patched gANWFarmSeed != 0.
+// No-op in normal play. See docs/SIM_FARM_IMPLEMENTATION_PLAN.md (Phase 0).
+include "core\anwFarmSeed.xs";
+// Difficulty-aware doctrine: anwApplyDifficultyScaling() scales how completely
+// each nation executes its (unchanged) historical doctrine, by difficulty.
+include "core\anwDifficultyScale.xs";
 
 
 //==============================================================================
@@ -227,6 +234,14 @@ void preInit(void)
    // the per-age doctrine table in tools/ai_design/wall_knob_calibration.py
    // disagrees with the historical leader file).
    anwSetWallKnobsForCiv();
+
+   // Simulation-farm determinism: seed the RNG if the driver patched a seed
+   // (no-op when gANWFarmSeed == 0, i.e. normal play).
+   anwApplyFarmSeed();
+
+   // Difficulty-aware execution: scale how completely/aggressively this civ
+   // executes its doctrine (Expert = full; Sandbox = looser). Style unchanged.
+   anwApplyDifficultyScaling();
 
    if (aiGetGameMode() == cGameModeEconomyMode)
    {

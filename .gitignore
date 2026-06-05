@@ -27,6 +27,14 @@ logs/
 # Python coverage output
 .coverage
 
+# Extracted-from-game content (copyrighted) — regenerate via `strings AoE3DE_s.exe`
+# or the simulator's `aoe3sim setup`; never commit the raw dump.
+docs/engine/xs_api_reference.txt
+
+# Local spec migration backups + sim-farm run output
+*.json.v1bak
+/artifacts/sim_farm/
+
 # Stray root-level scratch capture scripts (throwaway iterations; the
 # maintained versions live under tools/aoe3_harness/ and tools/aoe3_automation/)
 /british_ageup_*.py

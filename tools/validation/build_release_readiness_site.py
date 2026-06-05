@@ -1528,6 +1528,66 @@ def _spec_token_to_calib_key(token: str) -> str | None:
     return _SPEC_TO_CALIB_KEY.get(token)
 
 
+_AGE_NAMES_NUM = {"2": "Colonial", "3": "Fortress", "4": "Industrial"}
+
+
+def _fmt_pct_band(b) -> str:
+    if isinstance(b, list) and len(b) == 2:
+        return f"{int(round(b[0] * 100))}\u2013{int(round(b[1] * 100))}%"
+    return "\u2013"
+
+
+def _fmt_ms_window(w) -> str:
+    if not (isinstance(w, list) and len(w) == 2):
+        return "\u2013"
+    def mmss(ms):
+        s = ms // 1000
+        return f"{s // 60}:{s % 60:02d}"
+    return f"{mmss(w[0])}\u2013{mmss(w[1])}"
+
+
+def _render_per_age_doctrine_block(claims: dict) -> str:
+    """Testable per-age doctrine: posture + composition bands + age-up window,
+    with the difficulty-scaling model. Bands are Expert-level; the engine
+    (anwDifficultyScale.xs) scales execution intensity by difficulty."""
+    pa = (claims or {}).get("per_age") or {}
+    rows = []
+    for an in ("2", "3", "4"):
+        a = pa.get(an)
+        if not a:
+            continue
+        comp = a.get("comp", {})
+        post = a.get("posture", "\u2013")
+        rows.append(
+            f'<div class="pad-row">'
+            f'<span class="pad-age">{_AGE_NAMES_NUM.get(an, an)}</span>'
+            f'<span class="pad-post pad-{post}">{post}</span>'
+            f'<span class="pad-comp">inf {_fmt_pct_band(comp.get("inf"))} '
+            f'&middot; cav {_fmt_pct_band(comp.get("cav"))} '
+            f'&middot; art {_fmt_pct_band(comp.get("art"))}</span>'
+            f'<span class="pad-ageup">{_fmt_ms_window(a.get("ageup_by_ms"))}</span>'
+            f'</div>'
+        )
+    if not rows:
+        return ""
+    diff = (
+        '<div class="pad-diff"><b>Difficulty scaling:</b> Sandbox&nbsp;25% '
+        '&rarr; Easy&nbsp;45% &rarr; Moderate&nbsp;65% &rarr; Hard&nbsp;85% '
+        '&rarr; Expert&nbsp;100% intensity. The bands above are the Expert '
+        'doctrine; lower difficulty scales execution down (closure&nbsp;%, '
+        'wall villagers, army size, forward aggression). Style never changes '
+        '\u2014 only how completely the nation executes it.</div>'
+    )
+    return (
+        '<div class="pad-block">'
+        '<div class="pad-head">Per-age doctrine '
+        '<span class="pad-sub">verifiable &middot; Expert bands, difficulty-scaled</span></div>'
+        '<div class="pad-cols"><span>Age</span><span>Posture</span>'
+        '<span>Composition&nbsp;(inf&middot;cav&middot;art)</span><span>Age-up</span></div>'
+        + "".join(rows) + diff + '</div>'
+    )
+
+
 def _render_wall_doctrine_block(token: str, calib: dict,
                                  ws: int | None) -> str:
     """Render the per-civ wall doctrine block: 15-knob compact summary +
@@ -1544,37 +1604,66 @@ def _render_wall_doctrine_block(token: str, calib: dict,
     age2stone = "yes" if kn.get("age2stone") else "no"
     no_water = "yes" if kn.get("no_water") else "no"
 
+    # Each knob renders on its OWN line: fixed-width label · value · a
+    # plain-English explanation to the right of what that knob actually
+    # does (descriptions mirror the canonical comments in aiHeader.xs).
+    def _krow(label: str, val, desc: str, emph: bool = False) -> str:
+        cls = "wall-knob-row wk-emph" if emph else "wall-knob-row"
+        return (
+            f'<div class="{cls}">'
+            f'<span class="wk-label">{label}</span>'
+            f'<span class="wk-val">{val}</span>'
+            f'<span class="wk-desc">{desc}</span>'
+            f'</div>'
+        )
+
     # Mobile civs get a short "no walls — outpost screen" block; everyone
-    # else gets the full 15-knob grid so the user can sanity-check the
-    # actual gLLWall* values that fire for that civ.
+    # else gets the full 15-knob list so the user can sanity-check the
+    # actual gANWWall* values that fire for that civ.
     if is_mobile:
-        body = (
-            f'<div class="wall-knobs">'
-            f'<span class="wall-knob"><b>Strategy</b> Mobile (s5)</span>'
-            f'<span class="wall-knob"><b>Outposts</b> {kn.get("outposts", 0)}</span>'
-            f'<span class="wall-knob"><b>Secondary&nbsp;fallback</b> {sec_name}</span>'
-            f'<span class="wall-knob"><b>No-water&nbsp;build</b> {no_water}</span>'
-            f'</div>'
-        )
+        rows = [
+            _krow("Strategy", "Mobile (s5)",
+                  "No perimeter walls — relies on army, scouts and outposts"),
+            _krow("Outposts", kn.get("outposts", 0),
+                  "Outposts planted as a detection / defensive screen"),
+            _krow("Secondary fallback", sec_name,
+                  "Wall strategy used only if forced onto the defensive"),
+            _krow("No-water build", no_water,
+                  "Refuse to place wall pieces on water tiles"),
+        ]
     else:
-        body = (
-            f'<div class="wall-knobs">'
-            f'<span class="wall-knob"><b>Radius</b> {kn.get("radius",0)}</span>'
-            f'<span class="wall-knob"><b>Gates</b> {kn.get("gates",0)}</span>'
-            f'<span class="wall-knob"><b>Age&nbsp;2&nbsp;stone</b> {age2stone}</span>'
-            f'<span class="wall-knob"><b>Triggers&nbsp;age</b> {kn.get("trigger_age",0)}</span>'
-            f'<span class="wall-knob"><b>Segment&nbsp;len</b> {kn.get("seg_len",0)}</span>'
-            f'<span class="wall-knob"><b>Towers</b> {kn.get("towers",0)}</span>'
-            f'<span class="wall-knob"><b>Secondary</b> {sec_name}</span>'
-            f'<span class="wall-knob"><b>Vils</b> {kn.get("vils",0)}</span>'
-            f'<span class="wall-knob"><b>Fwd&nbsp;bias</b> {kn.get("fwd_bias",0)}</span>'
-            f'<span class="wall-knob"><b>Outer&nbsp;ring</b> {kn.get("outer_ring",0)}</span>'
-            f'<span class="wall-knob"><b>Outposts</b> {kn.get("outposts",0)}</span>'
-            f'<span class="wall-knob"><b>Repair</b> {kn.get("repair",0)}</span>'
-            f'<span class="wall-knob wk-emph"><b>Closure&nbsp;target</b> {kn.get("closure_pct",0)}%</span>'
-            f'<span class="wall-knob"><b>No-water&nbsp;build</b> {no_water}</span>'
-            f'</div>'
-        )
+        rows = [
+            _krow("Radius", kn.get("radius", 0),
+                  "Ring / segment radius in tiles"),
+            _krow("Gates", kn.get("gates", 0),
+                  "Number of gates left in the ring for traffic / sorties"),
+            _krow("Age 2 stone", age2stone,
+                  "Upgrade palisade &rarr; stone at Colonial (Age II) vs. staying wood"),
+            _krow("Triggers age", kn.get("trigger_age", 0),
+                  "First age in which the AI starts laying walls"),
+            _krow("Segment len", kn.get("seg_len", 0),
+                  "Length (tiles) of each chokepoint wall segment"),
+            _krow("Towers", kn.get("towers", 0),
+                  "Place a defensive tower every N wall pieces (0 = none)"),
+            _krow("Secondary", sec_name,
+                  "Fallback strategy if the primary is impossible on this map"),
+            _krow("Vils", kn.get("vils", 0),
+                  "Villagers dispatched to build the wall plan"),
+            _krow("Fwd bias", kn.get("fwd_bias", 0),
+                  "0.0 = hug Town Center &middot; 1.0 = push out to the chokepoint"),
+            _krow("Outer ring", kn.get("outer_ring", 0),
+                  "Offset for a second outer ring (0 = single ring)"),
+            _krow("Outposts", kn.get("outposts", 0),
+                  "Outposts planted before the first wall goes up"),
+            _krow("Repair", kn.get("repair", 0),
+                  "Repair urgency: 0 ignore &middot; 1 lazy &middot; 2 normal &middot; 3 instant"),
+            _krow("Closure target", f'{kn.get("closure_pct", 0)}%',
+                  "Ring coverage % the AI counts as &ldquo;walled in / done&rdquo;",
+                  emph=True),
+            _krow("No-water build", no_water,
+                  "Refuse to place wall pieces on water tiles"),
+        ]
+    body = '<div class="wall-knobs">' + "".join(rows) + '</div>'
     doctrine = _safe_text(kn.get("doctrine") or "")
     ws_name = STRATEGY_NAMES.get(ws, "?") if ws is not None else "?"
     return (
@@ -2425,16 +2514,42 @@ section .content{padding:24px}
   letter-spacing:0.04em}
 .civ-card .wall-block-prose{font-size:11.5px;color:#a3b3c2;
   line-height:1.55;font-style:italic;margin-bottom:6px}
-.civ-card .wall-knobs{display:flex;flex-wrap:wrap;gap:4px;
-  font-size:10.5px}
-.civ-card .wall-knob{background:#161b22;border:1px solid #30363d;
-  border-radius:3px;padding:2px 6px;color:#a3b3c2;line-height:1.4}
-.civ-card .wall-knob b{color:#c9d1d9;font-weight:600;
-  margin-right:3px;font-size:10px;text-transform:uppercase;
-  letter-spacing:0.04em}
-.civ-card .wall-knob.wk-emph{background:#0e2a1d;border-color:#1f6f43;
-  color:#a3d9b8}
-.civ-card .wall-knob.wk-emph b{color:#3fb950}
+/* Per-age doctrine block: testable posture/composition/age-up + difficulty. */
+.civ-card .pad-block{margin-top:10px;border-top:1px solid #21262d;padding-top:10px}
+.civ-card .pad-head{font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.06em;color:#58a6ff;margin-bottom:5px}
+.civ-card .pad-sub{font-size:9.5px;font-weight:600;color:#6e7681;
+  text-transform:none;letter-spacing:0;margin-left:6px}
+.civ-card .pad-cols,.civ-card .pad-row{display:grid;
+  grid-template-columns:74px 78px 1fr 64px;column-gap:8px;align-items:baseline}
+.civ-card .pad-cols{font-size:9px;text-transform:uppercase;letter-spacing:0.04em;
+  color:#6e7681;padding-bottom:3px;border-bottom:1px solid #1b2129}
+.civ-card .pad-row{font-size:11px;padding:3px 0;border-bottom:1px solid #1b2129}
+.civ-card .pad-age{color:#c9d1d9;font-weight:600}
+.civ-card .pad-post{font-weight:700;font-size:10px;text-transform:uppercase}
+.civ-card .pad-offensive{color:#f0883e}
+.civ-card .pad-defensive{color:#58a6ff}
+.civ-card .pad-balanced{color:#8b98a5}
+.civ-card .pad-comp{color:#a3b3c2;font-variant-numeric:tabular-nums}
+.civ-card .pad-ageup{color:#8b98a5;text-align:right;font-variant-numeric:tabular-nums}
+.civ-card .pad-diff{margin-top:6px;font-size:10.5px;color:#8b98a5;line-height:1.5;
+  background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:6px 8px}
+.civ-card .pad-diff b{color:#58a6ff}
+
+/* One knob per line: fixed-width label · value · explanation. */
+.civ-card .wall-knobs{display:flex;flex-direction:column;gap:0;
+  font-size:11px;margin-top:4px}
+.civ-card .wall-knob-row{display:grid;
+  grid-template-columns:104px 52px 1fr;align-items:baseline;
+  column-gap:10px;padding:3px 0;border-bottom:1px solid #1b2129}
+.civ-card .wall-knob-row:last-child{border-bottom:none}
+.civ-card .wk-label{color:#c9d1d9;font-weight:600;font-size:10px;
+  text-transform:uppercase;letter-spacing:0.04em}
+.civ-card .wk-val{color:#e6edf3;font-weight:700;text-align:right;
+  font-variant-numeric:tabular-nums}
+.civ-card .wk-desc{color:#8b98a5;font-size:10.5px;line-height:1.4}
+.civ-card .wall-knob-row.wk-emph .wk-val{color:#3fb950}
+.civ-card .wall-knob-row.wk-emph .wk-label{color:#3fb950}
 
 /* Quote / chat-line block — every AI voice line this civ speaks, in
    English, in one flat list. Per user feedback (2026-05-27): no
@@ -2913,6 +3028,10 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # (2026-05-27: "put the walling strategy underneath the each
         # age strategy for the nations").
         wall_block = _render_wall_doctrine_block(token, wall_calib, ws)
+        # Testable per-age doctrine (posture/composition/age-up + difficulty
+        # scaling) from the v2 spec claims. Shows what the AI is asserted to
+        # do per age and how it scales by difficulty.
+        per_age_doctrine_block = _render_per_age_doctrine_block(claims)
         # Per-civ quote / chat block — every AI voice line this civ speaks
         # (engine chatset + leader script insults/compliments + the 4
         # shared tactical lines). Rendered under the wall block per user
@@ -3024,6 +3143,7 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     <p class="doctrine-summary">{_safe_text(summary)}</p>
     <p style="font-size:12px;color:#8b949e;margin-bottom:10px;line-height:1.6">{_safe_text(prose_short)}</p>
     {ages_block}
+    {per_age_doctrine_block}
     {wall_block}
     {quotes_block}
     {rev_block}

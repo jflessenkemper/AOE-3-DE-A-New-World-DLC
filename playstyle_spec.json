@@ -1,849 +1,3971 @@
 {
-  "schema_version": 1,
-  "source": "a_new_world.html",
-  "civs": {
-    "Argentines San Martin Revolution": {
-      "civ_label": "Argentines",
-      "leader_label": "José de San Martín",
-      "data_name": "Argentines San Martin Revolution",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Granadero shock-cavalry liberation",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.85,
-          1.3
-        ],
-        "expects_cavalry": true
-      },
-      "prose_overrides": []
+ "schema_version": 1,
+ "source": "a_new_world.html",
+ "civs": {
+  "Argentines San Martin Revolution": {
+   "civ_label": "Argentines",
+   "leader_label": "José de San Martín",
+   "data_name": "Argentines San Martin Revolution",
+   "doctrine_label": "Forward Operational Line",
+   "doctrine_summary": "Granadero shock-cavalry liberation",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_argentines_san_martin.png",
+   "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.85,
+     1.3
+    ],
+    "expects_cavalry": true,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
     },
-    "Aztecs Montezuma": {
-      "civ_label": "Aztecs",
-      "leader_label": "Cuauhtémoc",
-      "data_name": "Aztecs Montezuma",
-      "doctrine_label": "Jungle Guerrilla Network",
-      "doctrine_summary": "Flower War tribute aggression",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png",
-      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
-      "claims": {
-        "wall_strategy": 1,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 420000,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ],
-        "expects_infantry": true
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.3,
+        0.55
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Barbary Barbarossa Corsair Revolution": {
-      "civ_label": "Barbary",
-      "leader_label": "Hayreddin Barbarossa",
-      "data_name": "Barbary Barbarossa Corsair Revolution",
-      "doctrine_label": "Naval Mercantile Compound",
-      "doctrine_summary": "Corsair raider economy",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
-      "claims": {
-        "wall_strategy": 2,
-        "first_military_building": "dock",
-        "expects_naval": true,
-        "first_dock_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.9,
-          1.2
-        ]
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Aztecs Montezuma": {
+   "civ_label": "Aztecs",
+   "leader_label": "Cuauhtémoc",
+   "data_name": "Aztecs Montezuma",
+   "doctrine_label": "Jungle Guerrilla Network",
+   "doctrine_summary": "Flower War tribute aggression",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_aztecs_montezuma.png",
+   "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+   "claims": {
+    "wall_strategy": 1,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 420000,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "expects_infantry": true,
+    "wall": {
+     "strategy": 1,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 3,
+     "chokepoint": true,
+     "radius": 10
     },
-    "Brazil Pedro Revolution": {
-      "civ_label": "Brazil",
-      "leader_label": "José Bonifácio",
-      "data_name": "Brazil Pedro Revolution",
-      "doctrine_label": "Distributed Economic Network",
-      "doctrine_summary": "Imperial line and Hessian reserve",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png",
-      "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
-      "claims": {
-        "first_military_building": "trading_post_or_market",
-        "expects_treaty": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ],
-        "wall_strategy": 3,
-        "first_wall_before_ms": 900000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.74,
+        1.0
+       ],
+       "cav": [
+        0.02,
+        0.32
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_montezuma.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.79,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.27
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_montezuma.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.79,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.27
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_montezuma.xs bt biases"
+     }
     },
-    "British Elizabeth": {
-      "civ_label": "British",
-      "leader_label": "Elizabeth",
-      "data_name": "British Elizabeth",
-      "doctrine_label": "Naval Mercantile Compound",
-      "doctrine_summary": "Tudor naval and mercantile",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
-      "claims": {
-        "wall_strategy": 2,
-        "first_military_building": "dock",
-        "expects_naval": true,
-        "first_dock_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.9,
-          1.2
-        ]
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Barbary Barbarossa Corsair Revolution": {
+   "civ_label": "Barbary",
+   "leader_label": "Hayreddin Barbarossa",
+   "data_name": "Barbary Barbarossa Corsair Revolution",
+   "doctrine_label": "Naval Mercantile Compound",
+   "doctrine_summary": "Corsair raider economy",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_barbary_barbarossa.png",
+   "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
+   "claims": {
+    "wall_strategy": 2,
+    "first_military_building": "dock",
+    "expects_naval": true,
+    "first_dock_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.9,
+     1.2
+    ],
+    "wall": {
+     "strategy": 2,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 6,
+     "chokepoint": false,
+     "radius": 20
     },
-    "Canadians Brock Revolution": {
-      "civ_label": "Canadians",
-      "leader_label": "Isaac Brock",
-      "data_name": "Canadians Brock Revolution",
-      "doctrine_label": "Compact Fortified Core",
-      "doctrine_summary": "Blockhouse infantry frontier",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 600000,
-        "military_distance_band": [
-          0.7,
-          0.9
-        ],
-        "first_barracks_before_ms": 480000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Chileans OHiggins Revolution": {
-      "civ_label": "Chileans",
-      "leader_label": "Bernardo O'Higgins",
-      "data_name": "Chileans OHiggins Revolution",
-      "doctrine_label": "Andean Terrace Fortress",
-      "doctrine_summary": "Balanced Republican infantry",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png",
-      "doctrine_prose": "Tier-walls the high ground in two or three concentric stone rings, anchors outposts in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.7,
-          1.0
-        ],
-        "first_barracks_before_ms": 480000
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Brazil Pedro Revolution": {
+   "civ_label": "Brazil",
+   "leader_label": "José Bonifácio",
+   "data_name": "Brazil Pedro Revolution",
+   "doctrine_label": "Distributed Economic Network",
+   "doctrine_summary": "Imperial line and Hessian reserve",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_brazil_pedro_i.png",
+   "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
+   "claims": {
+    "first_military_building": "trading_post_or_market",
+    "expects_treaty": true,
+    "military_distance_band": [
+     1.1,
+     1.3
+    ],
+    "wall_strategy": 3,
+    "first_wall_before_ms": 900000,
+    "wall": {
+     "strategy": 3,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 4,
+     "chokepoint": false,
+     "radius": 20
     },
-    "Chinese Kangxi": {
-      "civ_label": "Chinese",
-      "leader_label": "The Kangxi Emperor",
-      "data_name": "Chinese Kangxi",
-      "doctrine_label": "Compact Fortified Core",
-      "doctrine_summary": "Eight-Banner pacification macro",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 600000,
-        "military_distance_band": [
-          0.7,
-          0.9
-        ],
-        "first_barracks_before_ms": 480000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Columbians Bolivar Colombia Revolution": {
-      "civ_label": "Columbians",
-      "leader_label": "Francisco de Paula Santander",
-      "data_name": "Columbians Bolivar Colombia Revolution",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Llanero liberation sweeps",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.85,
-          1.3
-        ],
-        "expects_cavalry": true
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "British Elizabeth": {
+   "civ_label": "British",
+   "leader_label": "Elizabeth",
+   "data_name": "British Elizabeth",
+   "doctrine_label": "Naval Mercantile Compound",
+   "doctrine_summary": "Tudor naval and mercantile",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png",
+   "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
+   "claims": {
+    "wall_strategy": 2,
+    "first_military_building": "dock",
+    "expects_naval": true,
+    "first_dock_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.9,
+     1.2
+    ],
+    "wall": {
+     "strategy": 2,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 6,
+     "chokepoint": false,
+     "radius": 22
     },
-    "Dutch Maurice Nassau": {
-      "civ_label": "Dutch",
-      "leader_label": "Maurice of Nassau",
-      "data_name": "Dutch Maurice Nassau",
-      "doctrine_label": "Naval Mercantile Compound",
-      "doctrine_summary": "Stadtholder drill-and-bank",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
-      "claims": {
-        "wall_strategy": 2,
-        "first_military_building": "dock",
-        "expects_naval": true,
-        "first_dock_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.9,
-          1.2
-        ]
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.77,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.29
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_wellington.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.42,
+        0.72
+       ],
+       "cav": [
+        0.07,
+        0.37
+       ],
+       "art": [
+        0.15,
+        0.45
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_wellington.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.68
+       ],
+       "cav": [
+        0.03,
+        0.33
+       ],
+       "art": [
+        0.23,
+        0.53
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_wellington.xs bt biases"
+     }
     },
-    "Egyptians Muhammad Ali Revolution": {
-      "civ_label": "Egyptians",
-      "leader_label": "Muhammad Ali Pasha",
-      "data_name": "Egyptians Muhammad Ali Revolution",
-      "doctrine_label": "Highland Citadel",
-      "doctrine_summary": "Nizam-i Cedid modernization",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png",
-      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "expects_artillery": true,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.7,
-          1.0
-        ],
-        "first_barracks_before_ms": 480000
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Canadians Brock Revolution": {
+   "civ_label": "Canadians",
+   "leader_label": "Isaac Brock",
+   "data_name": "Canadians Brock Revolution",
+   "doctrine_label": "Compact Fortified Core",
+   "doctrine_summary": "Blockhouse infantry frontier",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_canadians_brock.png",
+   "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 600000,
+    "military_distance_band": [
+     0.7,
+     0.9
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 5,
+     "chokepoint": false,
+     "radius": 18
     },
-    "Ethiopians Menelik": {
-      "civ_label": "Ethiopians",
-      "leader_label": "Tewodros II",
-      "data_name": "Ethiopians Menelik",
-      "doctrine_label": "Highland Citadel",
-      "doctrine_summary": "Solomonic highland modernization",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png",
-      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "expects_artillery": true,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.7,
-          1.0
-        ],
-        "first_barracks_before_ms": 480000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Finnish Mannerheim Revolution": {
-      "civ_label": "Finnish",
-      "leader_label": "Johan Vilhelm Snellman",
-      "data_name": "Finnish Mannerheim Revolution",
-      "doctrine_label": "Compact Fortified Core",
-      "doctrine_summary": "Mannerheim-line ski infantry",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 600000,
-        "military_distance_band": [
-          0.7,
-          0.9
-        ],
-        "first_barracks_before_ms": 480000
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Chileans OHiggins Revolution": {
+   "civ_label": "Chileans",
+   "leader_label": "Bernardo O'Higgins",
+   "data_name": "Chileans OHiggins Revolution",
+   "doctrine_label": "Andean Terrace Fortress",
+   "doctrine_summary": "Balanced Republican infantry",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_chileans_ohiggins.png",
+   "doctrine_prose": "Tier-walls the high ground in two or three concentric stone rings, anchors outposts in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.7,
+     1.0
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 5,
+     "chokepoint": true,
+     "radius": 16
     },
-    "French Louis XVIII Bourbon": {
-      "civ_label": "French Louis",
-      "leader_label": "Louis XVIII",
-      "data_name": "French Louis XVIII Bourbon",
-      "doctrine_label": "Compact Fortified Core",
-      "doctrine_summary": "Bourbon Restoration court army",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png",
-      "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 600000,
-        "military_distance_band": [
-          0.7,
-          0.9
-        ],
-        "first_barracks_before_ms": 480000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Germans Frederick Great": {
-      "civ_label": "Germans",
-      "leader_label": "Frederick the Great",
-      "data_name": "Germans Frederick Great",
-      "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Hohenzollern oblique-order shock",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png",
-      "doctrine_prose": "Drills a Musketeer-and-Skirmisher line backed by Uhlan cavalry on the flanks. Production hugs the Town Center in early Colonial, then projects a forward base from Fortress onward. Cavalry weight escalates significantly in the mid-game — the oblique hammer wing grows until it rivals the infantry core.",
-      "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ],
-        "expects_cavalry": true
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Chinese Kangxi": {
+   "civ_label": "Chinese",
+   "leader_label": "The Kangxi Emperor",
+   "data_name": "Chinese Kangxi",
+   "doctrine_label": "Compact Fortified Core",
+   "doctrine_summary": "Eight-Banner pacification macro",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_chinese_kangxi.png",
+   "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 600000,
+    "military_distance_band": [
+     0.7,
+     0.9
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 5,
+     "chokepoint": true,
+     "radius": 18
     },
-    "Haitians Louverture Revolution": {
-      "civ_label": "Haitians",
-      "leader_label": "Toussaint Louverture",
-      "data_name": "Haitians Louverture Revolution",
-      "doctrine_label": "Jungle Guerrilla Network",
-      "doctrine_summary": "Mass infantry insurrection",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png",
-      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
-      "claims": {
-        "wall_strategy": 1,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 420000,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ],
-        "expects_infantry": true
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.58,
+        0.88
+       ],
+       "cav": [
+        0.18,
+        0.48
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_kangxi.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.65
+       ],
+       "cav": [
+        0.1,
+        0.4
+       ],
+       "art": [
+        0.19,
+        0.49
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_kangxi.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.34,
+        0.64
+       ],
+       "cav": [
+        0.08,
+        0.38
+       ],
+       "art": [
+        0.22,
+        0.52
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_kangxi.xs bt biases"
+     }
     },
-    "Haudenosaunee Hiawatha Iroquois": {
-      "civ_label": "Haudenosaunee",
-      "leader_label": "Hiawatha",
-      "data_name": "Haudenosaunee Hiawatha Iroquois",
-      "doctrine_label": "Shrine or Trade Node Spread",
-      "doctrine_summary": "Confederacy forest warfare",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png",
-      "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "trading_post_or_market",
-        "expects_treaty": true,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ]
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Columbians Bolivar Colombia Revolution": {
+   "civ_label": "Columbians",
+   "leader_label": "Francisco de Paula Santander",
+   "data_name": "Columbians Bolivar Colombia Revolution",
+   "doctrine_label": "Forward Operational Line",
+   "doctrine_summary": "Llanero liberation sweeps",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_columbians_bolivar.png",
+   "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.85,
+     1.3
+    ],
+    "expects_cavalry": true,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
     },
-    "Hausa Usman dan Fodio": {
-      "civ_label": "Hausa",
-      "leader_label": "Usman dan Fodio",
-      "data_name": "Hausa Usman dan Fodio",
-      "doctrine_label": "Distributed Economic Network",
-      "doctrine_summary": "Surame fortress and trans-Saharan caravan lattice",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_hausa_usman.png",
-      "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
-      "claims": {
-        "first_military_building": "trading_post_or_market",
-        "expects_treaty": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ],
-        "wall_strategy": 3,
-        "first_wall_before_ms": 900000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.3,
+        0.55
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Hungarians Kossuth Revolution": {
-      "civ_label": "Hungarians",
-      "leader_label": "Lajos Kossuth",
-      "data_name": "Hungarians Kossuth Revolution",
-      "doctrine_label": "Steppe Cavalry Wedge",
-      "doctrine_summary": "Honved hussar uprising",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png",
-      "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_cavalry": true,
-        "expects_forward": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ],
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Dutch Maurice Nassau": {
+   "civ_label": "Dutch",
+   "leader_label": "Maurice of Nassau",
+   "data_name": "Dutch Maurice Nassau",
+   "doctrine_label": "Naval Mercantile Compound",
+   "doctrine_summary": "Stadtholder drill-and-bank",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_dutch_maurice.png",
+   "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
+   "claims": {
+    "wall_strategy": 2,
+    "first_military_building": "dock",
+    "expects_naval": true,
+    "first_dock_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.9,
+     1.2
+    ],
+    "wall": {
+     "strategy": 2,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 7,
+     "chokepoint": false,
+     "radius": 18
     },
-    "Inca Pachacuti": {
-      "civ_label": "Inca",
-      "leader_label": "Huayna Capac",
-      "data_name": "Inca Pachacuti",
-      "doctrine_label": "Andean Terrace Fortress",
-      "doctrine_summary": "Tawantinsuyu mass infantry",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png",
-      "doctrine_prose": "Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.7,
-          1.0
-        ],
-        "first_barracks_before_ms": 480000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_maurice.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.55,
+        0.85
+       ],
+       "cav": [
+        0.0,
+        0.21
+       ],
+       "art": [
+        0.18,
+        0.48
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_maurice.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.45,
+        0.75
+       ],
+       "cav": [
+        0.0,
+        0.21
+       ],
+       "art": [
+        0.28,
+        0.58
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_maurice.xs bt biases"
+     }
     },
-    "Indians Akbar": {
-      "civ_label": "Indians",
-      "leader_label": "Akbar the Great",
-      "data_name": "Indians Shivaji Maharaj Maratha",
-      "doctrine_label": "Ganimi Kava Raid",
-      "doctrine_summary": "Maratha Ganimi Kava raid",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png",
-      "doctrine_prose": "Opens with Sowar cavalry raids and Sepoy screens from Colonial on (forward-base style enables at age 2). The hill-fort line anchors ground already taken rather than a home base. Howdah Elephants and Mansabdar units commit once the raid has bled the opponent's economy; the Maratha Confederacy expands outward, not inward.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "expects_cavalry": true,
-        "expects_forward": true,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ],
-        "first_barracks_before_ms": 420000
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Egyptians Muhammad Ali Revolution": {
+   "civ_label": "Egyptians",
+   "leader_label": "Muhammad Ali Pasha",
+   "data_name": "Egyptians Muhammad Ali Revolution",
+   "doctrine_label": "Highland Citadel",
+   "doctrine_summary": "Nizam-i Cedid modernization",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_egyptians_muhammad_ali.png",
+   "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "expects_artillery": true,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.7,
+     1.0
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 5,
+     "chokepoint": false,
+     "radius": 22
     },
-    "Indonesians Diponegoro Revolution": {
-      "civ_label": "Indonesians",
-      "leader_label": "Prince Diponegoro",
-      "data_name": "Indonesians Diponegoro Revolution",
-      "doctrine_label": "Jungle Guerrilla Network",
-      "doctrine_summary": "Java War guerrilla and kraton fort",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png",
-      "doctrine_prose": "Hugs natural chokes &mdash; cliffs, jungle, river bends &mdash; and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
-      "claims": {
-        "wall_strategy": 1,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 420000,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ],
-        "expects_infantry": true
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.1,
+        0.2
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.15,
+        0.32
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.2,
+        0.38
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Italians Garibaldi": {
-      "civ_label": "Italians",
-      "leader_label": "Garibaldi",
-      "data_name": "Italians Garibaldi",
-      "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Risorgimento volunteer columns",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
-      "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ]
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Ethiopians Menelik": {
+   "civ_label": "Ethiopians",
+   "leader_label": "Tewodros II",
+   "data_name": "Ethiopians Menelik",
+   "doctrine_label": "Highland Citadel",
+   "doctrine_summary": "Solomonic highland modernization",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_ethiopians_menelik.png",
+   "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "expects_artillery": true,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.7,
+     1.0
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 4,
+     "chokepoint": true,
+     "radius": 20
     },
-    "Japanese Tokugawa Ieyasu": {
-      "civ_label": "Japanese",
-      "leader_label": "Tokugawa Ieyasu",
-      "data_name": "Japanese Tokugawa Ieyasu",
-      "doctrine_label": "Shrine or Trade Node Spread",
-      "doctrine_summary": "Bakufu shrine-and-musket order",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png",
-      "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "trading_post_or_market",
-        "expects_treaty": true,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ]
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.67,
+        0.97
+       ],
+       "cav": [
+        0.09,
+        0.39
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_menelik.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.42,
+        0.72
+       ],
+       "cav": [
+        0.02,
+        0.32
+       ],
+       "art": [
+        0.2,
+        0.5
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_menelik.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.37,
+        0.67
+       ],
+       "cav": [
+        0.03,
+        0.33
+       ],
+       "art": [
+        0.25,
+        0.55
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_menelik.xs bt biases"
+     }
     },
-    "Lakota Crazy Horse": {
-      "civ_label": "Lakota",
-      "leader_label": "Chief Gall",
-      "data_name": "Lakota Gall",
-      "doctrine_label": "Steppe Cavalry Wedge",
-      "doctrine_summary": "Little Bighorn envelopment",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png",
-      "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_cavalry": true,
-        "expects_forward": true,
-        "military_distance_band": [
-          1.1,
-          1.3
-        ],
-        "first_barracks_before_ms": 360000
-      },
-      "prose_overrides": [
-        "-first_wall_before_ms_removed_as_inconsistent_with_wall_strategy_5_and_wallLevel_0_SteppeCavalryWedge_doctrine"
-      ]
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Finnish Mannerheim Revolution": {
+   "civ_label": "Finnish",
+   "leader_label": "Johan Vilhelm Snellman",
+   "data_name": "Finnish Mannerheim Revolution",
+   "doctrine_label": "Compact Fortified Core",
+   "doctrine_summary": "Mannerheim-line ski infantry",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_finnish_mannerheim.png",
+   "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 600000,
+    "military_distance_band": [
+     0.7,
+     0.9
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 6,
+     "chokepoint": false,
+     "radius": 18
     },
-    "Maltese Valette": {
-      "civ_label": "Maltese",
-      "leader_label": "Valette",
-      "data_name": "Maltese Valette",
-      "doctrine_label": "Highland Citadel",
-      "doctrine_summary": "Great Siege bastion defense",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png",
-      "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "expects_artillery": true,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.7,
-          1.0
-        ],
-        "first_barracks_before_ms": 480000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Mayans Canek Maya Revolution": {
-      "civ_label": "Mayans",
-      "leader_label": "Jacinto Canek",
-      "data_name": "Mayans Canek Maya Revolution",
-      "doctrine_label": "Jungle Guerrilla Network",
-      "doctrine_summary": "Indigenous insurrection mass",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png",
-      "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
-      "claims": {
-        "wall_strategy": 1,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 420000,
-        "military_distance_band": [
-          1.0,
-          1.3
-        ],
-        "expects_infantry": true
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "French Louis XVIII Bourbon": {
+   "civ_label": "French Louis",
+   "leader_label": "Louis XVIII",
+   "data_name": "French Louis XVIII Bourbon",
+   "doctrine_label": "Compact Fortified Core",
+   "doctrine_summary": "Bourbon Restoration court army",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_french_bourbon.png",
+   "doctrine_prose": "Clusters every production building tight around the Town Center, walls early with stone, and only walks out for nearby resources. Expects to be sieged, not skirmished — the AI hunkers in and counter-attacks from a hardened core.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 600000,
+    "military_distance_band": [
+     0.7,
+     0.9
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 7,
+     "chokepoint": false,
+     "radius": 18
     },
-    "Mexicans Hidalgo Standard": {
-      "civ_label": "Mexicans",
-      "leader_label": "Miguel Hidalgo",
-      "data_name": "Mexicans Hidalgo Standard",
-      "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Grito de Dolores levée",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
-      "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ]
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.81,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.25
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "defensive",
+      "_source": "leader_bourbon.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.38,
+        0.68
+       ],
+       "cav": [
+        0.2,
+        0.5
+       ],
+       "art": [
+        0.06,
+        0.36
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_bourbon.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.34,
+        0.64
+       ],
+       "cav": [
+        0.15,
+        0.45
+       ],
+       "art": [
+        0.15,
+        0.45
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_bourbon.xs bt biases"
+     }
     },
-    "Napoleonic France Napoleon Bonaparte Revolution": {
-      "civ_label": "Napoleonic France",
-      "leader_label": "Napoleon Bonaparte",
-      "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Grande Armée combined-arms empire",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned. Gribeauval-system field artillery and horse artillery form the spine of every engagement.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.85,
-          1.3
-        ],
-        "expects_cavalry": true,
-        "expects_artillery": true
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Germans Frederick Great": {
+   "civ_label": "Germans",
+   "leader_label": "Frederick the Great",
+   "data_name": "Germans Frederick Great",
+   "doctrine_label": "Republican Levee",
+   "doctrine_summary": "Hohenzollern oblique-order shock",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_germans_frederick.png",
+   "doctrine_prose": "Drills a Musketeer-and-Skirmisher line backed by Uhlan cavalry on the flanks. Production hugs the Town Center in early Colonial, then projects a forward base from Fortress onward. Cavalry weight escalates significantly in the mid-game — the oblique hammer wing grows until it rivals the infantry core.",
+   "claims": {
+    "wall_strategy": 4,
+    "first_military_building": "barracks_or_stable",
+    "expects_infantry": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "expects_cavalry": true,
+    "wall": {
+     "strategy": 4,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 8,
+     "chokepoint": false,
+     "radius": 14
     },
-    "Ottomans Suleiman": {
-      "civ_label": "Ottomans",
-      "leader_label": "Suleiman",
-      "data_name": "Ottomans Suleiman",
-      "doctrine_label": "Siege Train Concentration",
-      "doctrine_summary": "Sublime Porte gunpowder empire",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png",
-      "doctrine_prose": "Over-builds Artillery Foundries and stockpiles cannons. Every push is a slow siege column with infantry escort, and walls are stone-and-forward to give the guns a safe staging line.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "expects_artillery": true,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ],
-        "first_barracks_before_ms": 480000,
-        "first_wall_before_ms": 720000
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.49,
+        0.79
+       ],
+       "cav": [
+        0.27,
+        0.57
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_frederick.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.32,
+        0.62
+       ],
+       "cav": [
+        0.24,
+        0.54
+       ],
+       "art": [
+        0.09,
+        0.39
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_frederick.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.28,
+        0.58
+       ],
+       "cav": [
+        0.2,
+        0.5
+       ],
+       "art": [
+        0.16,
+        0.46
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_frederick.xs bt biases"
+     }
     },
-    "Peruvians Santa Cruz Peru Revolution": {
-      "civ_label": "Peruvians",
-      "leader_label": "Simón Bolívar",
-      "data_name": "Peruvians Santa Cruz Peru Revolution",
-      "doctrine_label": "Andean Terrace Fortress",
-      "doctrine_summary": "Andean fort line and native levy",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png",
-      "doctrine_prose": "Tier-walls the high ground in two or three concentric stone rings, anchors outposts in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
-      "claims": {
-        "wall_strategy": 0,
-        "first_military_building": "barracks_or_stable",
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.7,
-          1.0
-        ],
-        "first_barracks_before_ms": 480000
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Haitians Louverture Revolution": {
+   "civ_label": "Haitians",
+   "leader_label": "Toussaint Louverture",
+   "data_name": "Haitians Louverture Revolution",
+   "doctrine_label": "Jungle Guerrilla Network",
+   "doctrine_summary": "Mass infantry insurrection",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_haitians_louverture.png",
+   "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+   "claims": {
+    "wall_strategy": 1,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 420000,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "expects_infantry": true,
+    "wall": {
+     "strategy": 1,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 4,
+     "chokepoint": true,
+     "radius": 10
     },
-    "Portuguese Henry Navigator": {
-      "civ_label": "Portuguese",
-      "leader_label": "Prince Henry the Navigator",
-      "data_name": "Portuguese Henry Navigator",
-      "doctrine_label": "Naval Mercantile Compound",
-      "doctrine_summary": "Sagres carrack-and-padrao empire",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png",
-      "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
-      "claims": {
-        "wall_strategy": 2,
-        "first_military_building": "dock",
-        "expects_naval": true,
-        "first_dock_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.9,
-          1.2
-        ]
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.55,
+        0.8
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.5,
+        0.72
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.48,
+        0.7
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Revolutionary France Robespierre Revolution": {
-      "civ_label": "French Republic",
-      "leader_label": "Maximilien Robespierre",
-      "data_name": "Revolutionary France Robespierre Revolution",
-      "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Levée-en-masse Republic",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
-      "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ]
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Haudenosaunee Hiawatha Iroquois": {
+   "civ_label": "Haudenosaunee",
+   "leader_label": "Hiawatha",
+   "data_name": "Haudenosaunee Hiawatha Iroquois",
+   "doctrine_label": "Shrine or Trade Node Spread",
+   "doctrine_summary": "Confederacy forest warfare",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_haudenosaunee_hiawatha.png",
+   "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "trading_post_or_market",
+    "expects_treaty": true,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
     },
-    "Romanians Cuza Revolution": {
-      "civ_label": "Romanians",
-      "leader_label": "Alexandru Ioan Cuza",
-      "data_name": "Romanians Cuza Revolution",
-      "doctrine_label": "Civic Militia Center",
-      "doctrine_summary": "Danubian Principalities consolidation",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png",
-      "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
-      "claims": {
-        "wall_strategy": 3,
-        "first_military_building": "outpost",
-        "expects_forward": false,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ]
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.77,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.29
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_hiawatha.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.54,
+        0.84
+       ],
+       "cav": [
+        0.12,
+        0.42
+       ],
+       "art": [
+        0.0,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hiawatha.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.42,
+        0.72
+       ],
+       "cav": [
+        0.1,
+        0.4
+       ],
+       "art": [
+        0.12,
+        0.42
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hiawatha.xs bt biases"
+     }
     },
-    "Russians Ivan the Terrible": {
-      "civ_label": "Russians",
-      "leader_label": "Ivan the Terrible",
-      "data_name": "Russians Ivan Terrible",
-      "doctrine_label": "Cossack Voisko",
-      "doctrine_summary": "Oprichnik terror",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png",
-      "doctrine_prose": "Plays an offensive, fortified game suited to the Tsar: massed Streltsy musketeer blocks form the backbone, Oprichnik cavalry hits as a shock arm, and a siege train accompanies the army for fortress reduction. Frontier palisades and Blockhouses anchor the eastern marches; the Tsar pushes a forward base early to project terror onto rival capitals.",
-      "claims": {
-        "wall_strategy": 3,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
-        "expects_artillery": true,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ],
-        "expects_forward": true,
-        "first_barracks_before_ms": 420000,
-        "first_wall_before_ms": 720000
-      },
-      "prose_overrides": [
-        "+expects_forward"
-      ]
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Hausa Usman dan Fodio": {
+   "civ_label": "Hausa",
+   "leader_label": "Usman dan Fodio",
+   "data_name": "Hausa Usman dan Fodio",
+   "doctrine_label": "Distributed Economic Network",
+   "doctrine_summary": "Surame fortress and trans-Saharan caravan lattice",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_hausa_usman.png",
+   "doctrine_prose": "Scatters Mills, Plantations, and Markets across multiple resource patches so production never bottlenecks on one site. Light walling, heavy investment in Market upgrades, and a constant villager trickle to the most under-worked node.",
+   "claims": {
+    "first_military_building": "trading_post_or_market",
+    "expects_treaty": true,
+    "military_distance_band": [
+     1.1,
+     1.3
+    ],
+    "wall_strategy": 3,
+    "first_wall_before_ms": 900000,
+    "wall": {
+     "strategy": 3,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 5,
+     "towers_every": 3,
+     "chokepoint": false,
+     "radius": 18
     },
-    "South Africans Kruger Boer Revolution": {
-      "civ_label": "South Africans",
-      "leader_label": "Paul Kruger",
-      "data_name": "South Africans Kruger Boer Revolution",
-      "doctrine_label": "Naval Mercantile Compound",
-      "doctrine_summary": "Boer commando trader-cavalry",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png",
-      "doctrine_prose": "Plays a hybrid trader-cavalry game keyed to map type. On coastal spawns the AI builds Docks first to set up a mercantile compound — the Cape trade hub funds the war — and a wall ring screens the harbor. Inland, the Boer commando carries the fight: mounted infantry on swift horses, a single fort serves as a laager command post, and forward outposts press out into the veldt. Home-city shipments and mercenary contracts keep the cavalry stream fed.",
-      "claims": {
-        "wall_strategy": 2,
-        "first_military_building": "dock",
-        "expects_naval": true,
-        "first_dock_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.9,
-          1.2
-        ],
-        "expects_cavalry": true
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.32,
+        0.62
+       ],
+       "cav": [
+        0.44,
+        0.74
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_usman.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.28,
+        0.58
+       ],
+       "cav": [
+        0.37,
+        0.67
+       ],
+       "art": [
+        0.0,
+        0.29
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_usman.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.25,
+        0.55
+       ],
+       "cav": [
+        0.27,
+        0.57
+       ],
+       "art": [
+        0.12,
+        0.42
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_usman.xs bt biases"
+     }
     },
-    "Spanish Isabella Castile": {
-      "civ_label": "Spanish",
-      "leader_label": "Isabella I of Castile",
-      "data_name": "Spanish Isabella Castile",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Reconquista Tercio precursor",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.85,
-          1.3
-        ],
-        "expects_cavalry": true
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Hungarians Kossuth Revolution": {
+   "civ_label": "Hungarians",
+   "leader_label": "Lajos Kossuth",
+   "data_name": "Hungarians Kossuth Revolution",
+   "doctrine_label": "Steppe Cavalry Wedge",
+   "doctrine_summary": "Honved hussar uprising",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_hungarians_kossuth.png",
+   "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_cavalry": true,
+    "expects_forward": true,
+    "military_distance_band": [
+     1.1,
+     1.3
+    ],
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
     },
-    "Swedes Gustavus Adolphus Swedish": {
-      "civ_label": "Swedes",
-      "leader_label": "Gustavus Adolphus",
-      "data_name": "Swedes Gustavus Adolphus Swedish",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Lion of the North combined arms",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned. Regimental gun teams and the Lützen-era leather guns make light artillery a permanent line-element rather than a siege-only commitment.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.85,
-          1.3
-        ],
-        "expects_cavalry": true,
-        "expects_artillery": true
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.3,
+        0.55
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
       },
-      "prose_overrides": []
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
     },
-    "Texians Sam Houston Texas Revolution": {
-      "civ_label": "Texians",
-      "leader_label": "Sam Houston",
-      "data_name": "Texians Sam Houston Texas Revolution",
-      "doctrine_label": "Forward Operational Line",
-      "doctrine_summary": "Republic of Texas militia",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png",
-      "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
-      "claims": {
-        "wall_strategy": 5,
-        "first_military_building": "barracks_or_stable",
-        "expects_forward": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 720000,
-        "military_distance_band": [
-          0.85,
-          1.3
-        ],
-        "expects_cavalry": true
-      },
-      "prose_overrides": []
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Inca Pachacuti": {
+   "civ_label": "Inca",
+   "leader_label": "Huayna Capac",
+   "data_name": "Inca Pachacuti",
+   "doctrine_label": "Andean Terrace Fortress",
+   "doctrine_summary": "Tawantinsuyu mass infantry",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_inca_pachacuti.png",
+   "doctrine_prose": "Tier-walls the high ground in two or three concentric rings, plants Kallankas and Tambos in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.7,
+     1.0
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 4,
+     "chokepoint": true,
+     "radius": 14
     },
-    "United States Washington": {
-      "civ_label": "United States",
-      "leader_label": "Washington",
-      "data_name": "United States Washington",
-      "doctrine_label": "Republican Levee",
-      "doctrine_summary": "Continental Army Fabian-to-Yorktown",
-      "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png",
-      "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
-      "claims": {
-        "wall_strategy": 4,
-        "first_military_building": "barracks_or_stable",
-        "expects_infantry": true,
-        "first_barracks_before_ms": 360000,
-        "first_wall_before_ms": 900000,
-        "military_distance_band": [
-          0.8,
-          1.1
-        ]
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
       },
-      "prose_overrides": []
-    }
+      "posture": "offensive",
+      "_source": "leader_pachacuti.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_pachacuti.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.79,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.27
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_pachacuti.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Indians Akbar": {
+   "civ_label": "Indians",
+   "leader_label": "Akbar the Great",
+   "data_name": "Indians Shivaji Maharaj Maratha",
+   "doctrine_label": "Ganimi Kava Raid",
+   "doctrine_summary": "Maratha Ganimi Kava raid",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indians_shivaji.png",
+   "doctrine_prose": "Opens with Sowar cavalry raids and Sepoy screens from Colonial on (forward-base style enables at age 2). The hill-fort line anchors ground already taken rather than a home base. Howdah Elephants and Mansabdar units commit once the raid has bled the opponent's economy; the Maratha Confederacy expands outward, not inward.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "expects_cavalry": true,
+    "expects_forward": true,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "first_barracks_before_ms": 420000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 7,
+     "chokepoint": true,
+     "radius": 16
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.3,
+        0.6
+       ],
+       "cav": [
+        0.46,
+        0.76
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_shivaji.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.26,
+        0.56
+       ],
+       "cav": [
+        0.34,
+        0.64
+       ],
+       "art": [
+        0.04,
+        0.34
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_shivaji.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.26,
+        0.56
+       ],
+       "cav": [
+        0.28,
+        0.58
+       ],
+       "art": [
+        0.1,
+        0.4
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_shivaji.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Indonesians Diponegoro Revolution": {
+   "civ_label": "Indonesians",
+   "leader_label": "Prince Diponegoro",
+   "data_name": "Indonesians Diponegoro Revolution",
+   "doctrine_label": "Jungle Guerrilla Network",
+   "doctrine_summary": "Java War guerrilla and kraton fort",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_indonesians_diponegoro.png",
+   "doctrine_prose": "Hugs natural chokes &mdash; cliffs, jungle, river bends &mdash; and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+   "claims": {
+    "wall_strategy": 1,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 420000,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "expects_infantry": true,
+    "wall": {
+     "strategy": 1,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 3,
+     "chokepoint": true,
+     "radius": 10
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.55,
+        0.8
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.5,
+        0.72
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.48,
+        0.7
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Italians Garibaldi": {
+   "civ_label": "Italians",
+   "leader_label": "Garibaldi",
+   "data_name": "Italians Garibaldi",
+   "doctrine_label": "Republican Levee",
+   "doctrine_summary": "Risorgimento volunteer columns",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_italians_garibaldi.png",
+   "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+   "claims": {
+    "wall_strategy": 4,
+    "first_military_building": "barracks_or_stable",
+    "expects_infantry": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "wall": {
+     "strategy": 4,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 5,
+     "chokepoint": false,
+     "radius": 12
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.65,
+        0.95
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_garibaldi.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.41,
+        0.71
+       ],
+       "cav": [
+        0.13,
+        0.43
+       ],
+       "art": [
+        0.1,
+        0.4
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_garibaldi.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.36,
+        0.66
+       ],
+       "cav": [
+        0.12,
+        0.42
+       ],
+       "art": [
+        0.17,
+        0.47
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_garibaldi.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Japanese Tokugawa Ieyasu": {
+   "civ_label": "Japanese",
+   "leader_label": "Tokugawa Ieyasu",
+   "data_name": "Japanese Tokugawa Ieyasu",
+   "doctrine_label": "Shrine or Trade Node Spread",
+   "doctrine_summary": "Bakufu shrine-and-musket order",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_japanese_tokugawa.png",
+   "doctrine_prose": "Plants shrines, Trading Posts, or fishing posts the moment the route is found, then defends them with isolated towers and fast cavalry response. The XP and resource trickle from these structures funds everything else.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "trading_post_or_market",
+    "expects_treaty": true,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_tokugawa.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.44,
+        0.74
+       ],
+       "cav": [
+        0.06,
+        0.36
+       ],
+       "art": [
+        0.14,
+        0.44
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_tokugawa.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.36,
+        0.66
+       ],
+       "cav": [
+        0.09,
+        0.39
+       ],
+       "art": [
+        0.19,
+        0.49
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_tokugawa.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Lakota Crazy Horse": {
+   "civ_label": "Lakota",
+   "leader_label": "Chief Gall",
+   "data_name": "Lakota Gall",
+   "doctrine_label": "Steppe Cavalry Wedge",
+   "doctrine_summary": "Little Bighorn envelopment",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_lakota_crazy_horse.png",
+   "doctrine_prose": "Over-builds Stables and runs cavalry-heavy compositions. The base is loosely walled so horsemen can pour out fast, and the AI keeps constant pressure rather than waiting for a deathball.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_cavalry": true,
+    "expects_forward": true,
+    "military_distance_band": [
+     1.1,
+     1.3
+    ],
+    "first_barracks_before_ms": 360000,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.0,
+        0.18
+       ],
+       "cav": [
+        0.88,
+        1.0
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_crazy_horse.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.0,
+        0.27
+       ],
+       "cav": [
+        0.79,
+        1.0
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_crazy_horse.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.01,
+        0.31
+       ],
+       "cav": [
+        0.75,
+        1.0
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_crazy_horse.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": [
+    "-first_wall_before_ms_removed_as_inconsistent_with_wall_strategy_5_and_wallLevel_0_SteppeCavalryWedge_doctrine"
+   ]
+  },
+  "Maltese Valette": {
+   "civ_label": "Maltese",
+   "leader_label": "Valette",
+   "data_name": "Maltese Valette",
+   "doctrine_label": "Highland Citadel",
+   "doctrine_summary": "Great Siege bastion defense",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_maltese_valette.png",
+   "doctrine_prose": "Fortifies a single high-ground position with stone walls, layered towers, and a fort. Slow to expand and slow to push, but extremely hard to dislodge once entrenched. Builds wide only after the citadel is unbreakable.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "expects_artillery": true,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.7,
+     1.0
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 8,
+     "chokepoint": false,
+     "radius": 16
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.88,
+        1.0
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_valette.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.53,
+        0.83
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.23,
+        0.53
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_valette.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.45,
+        0.75
+       ],
+       "cav": [
+        0.0,
+        0.18
+       ],
+       "art": [
+        0.31,
+        0.61
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_valette.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Mayans Canek Maya Revolution": {
+   "civ_label": "Mayans",
+   "leader_label": "Jacinto Canek",
+   "data_name": "Mayans Canek Maya Revolution",
+   "doctrine_label": "Jungle Guerrilla Network",
+   "doctrine_summary": "Indigenous insurrection mass",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mayans_canek.png",
+   "doctrine_prose": "Hugs natural chokes — cliffs, jungle, river bends — and substitutes War Huts and causeways for walls. Stages quick, repeated infantry strikes from forward warbands and refuses to fight in the open.",
+   "claims": {
+    "wall_strategy": 1,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 420000,
+    "military_distance_band": [
+     1.0,
+     1.3
+    ],
+    "expects_infantry": true,
+    "wall": {
+     "strategy": 1,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 3,
+     "chokepoint": true,
+     "radius": 10
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.55,
+        0.8
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.5,
+        0.72
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.48,
+        0.7
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Mexicans Hidalgo Standard": {
+   "civ_label": "Mexicans",
+   "leader_label": "Miguel Hidalgo",
+   "data_name": "Mexicans Hidalgo Standard",
+   "doctrine_label": "Republican Levee",
+   "doctrine_summary": "Grito de Dolores levée",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_hidalgo.png",
+   "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+   "claims": {
+    "wall_strategy": 4,
+    "first_military_building": "barracks_or_stable",
+    "expects_infantry": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "wall": {
+     "strategy": 4,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 4,
+     "chokepoint": false,
+     "radius": 11
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.63,
+        0.93
+       ],
+       "cav": [
+        0.13,
+        0.43
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hidalgo.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.39,
+        0.69
+       ],
+       "cav": [
+        0.18,
+        0.48
+       ],
+       "art": [
+        0.07,
+        0.37
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hidalgo.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.32,
+        0.62
+       ],
+       "cav": [
+        0.17,
+        0.47
+       ],
+       "art": [
+        0.15,
+        0.45
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_hidalgo.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Napoleonic France Napoleon Bonaparte Revolution": {
+   "civ_label": "Napoleonic France",
+   "leader_label": "Napoleon Bonaparte",
+   "data_name": "Napoleonic France Napoleon Bonaparte Revolution",
+   "doctrine_label": "Forward Operational Line",
+   "doctrine_summary": "Grande Armée combined-arms empire",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_napoleonic_france_napoleon.png",
+   "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned. Gribeauval-system field artillery and horse artillery form the spine of every engagement.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.85,
+     1.3
+    ],
+    "expects_cavalry": true,
+    "expects_artillery": true,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.35,
+        0.65
+       ],
+       "cav": [
+        0.13,
+        0.43
+       ],
+       "art": [
+        0.16,
+        0.46
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_napoleon.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.26,
+        0.55
+       ],
+       "cav": [
+        0.13,
+        0.43
+       ],
+       "art": [
+        0.26,
+        0.55
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_napoleon.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.26,
+        0.56
+       ],
+       "cav": [
+        0.14,
+        0.44
+       ],
+       "art": [
+        0.24,
+        0.54
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_napoleon.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Ottomans Suleiman": {
+   "civ_label": "Ottomans",
+   "leader_label": "Suleiman",
+   "data_name": "Ottomans Suleiman",
+   "doctrine_label": "Siege Train Concentration",
+   "doctrine_summary": "Sublime Porte gunpowder empire",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_ottomans_suleiman.png",
+   "doctrine_prose": "Over-builds Artillery Foundries and stockpiles cannons. Every push is a slow siege column with infantry escort, and walls are stone-and-forward to give the guns a safe staging line.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "expects_artillery": true,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "first_barracks_before_ms": 480000,
+    "first_wall_before_ms": 720000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 6,
+     "chokepoint": false,
+     "radius": 20
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.56,
+        0.86
+       ],
+       "cav": [
+        0.2,
+        0.5
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_suleiman.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.32,
+        0.62
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.21,
+        0.51
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_suleiman.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.3,
+        0.6
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.23,
+        0.53
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_suleiman.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Peruvians Santa Cruz Peru Revolution": {
+   "civ_label": "Peruvians",
+   "leader_label": "Simón Bolívar",
+   "data_name": "Peruvians Santa Cruz Peru Revolution",
+   "doctrine_label": "Andean Terrace Fortress",
+   "doctrine_summary": "Andean fort line and native levy",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_peruvians_santa_cruz.png",
+   "doctrine_prose": "Tier-walls the high ground in two or three concentric stone rings, anchors outposts in the gaps, and never overextends. A slow snowball to a tightly defended Industrial timing rather than an early aggressive game.",
+   "claims": {
+    "wall_strategy": 0,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.7,
+     1.0
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 0,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 6,
+     "chokepoint": true,
+     "radius": 16
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Portuguese Henry Navigator": {
+   "civ_label": "Portuguese",
+   "leader_label": "Prince Henry the Navigator",
+   "data_name": "Portuguese Henry Navigator",
+   "doctrine_label": "Naval Mercantile Compound",
+   "doctrine_summary": "Sagres carrack-and-padrao empire",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_portuguese_henry.png",
+   "doctrine_prose": "Builds the docks first. Two or three Docks plus a full fishing fleet come before the second barracks, then a wall ring locks down the harbor. Land army arrives via naval shipments and mercenary contracts — the home city pays for the war.",
+   "claims": {
+    "wall_strategy": 2,
+    "first_military_building": "dock",
+    "expects_naval": true,
+    "first_dock_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.9,
+     1.2
+    ],
+    "wall": {
+     "strategy": 2,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 5,
+     "chokepoint": false,
+     "radius": 22
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.7,
+        1.0
+       ],
+       "cav": [
+        0.06,
+        0.36
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_henry.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.34,
+        0.64
+       ],
+       "cav": [
+        0.1,
+        0.4
+       ],
+       "art": [
+        0.2,
+        0.5
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_henry.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.11,
+        0.41
+       ],
+       "art": [
+        0.22,
+        0.52
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_henry.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Revolutionary France Robespierre Revolution": {
+   "civ_label": "French Republic",
+   "leader_label": "Maximilien Robespierre",
+   "data_name": "Revolutionary France Robespierre Revolution",
+   "doctrine_label": "Republican Levee",
+   "doctrine_summary": "Levée-en-masse Republic",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_revolutionary_france.png",
+   "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+   "claims": {
+    "wall_strategy": 4,
+    "first_military_building": "barracks_or_stable",
+    "expects_infantry": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "wall": {
+     "strategy": 4,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 6,
+     "chokepoint": false,
+     "radius": 10
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.55,
+        0.8
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.5,
+        0.72
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.48,
+        0.7
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Romanians Cuza Revolution": {
+   "civ_label": "Romanians",
+   "leader_label": "Alexandru Ioan Cuza",
+   "data_name": "Romanians Cuza Revolution",
+   "doctrine_label": "Civic Militia Center",
+   "doctrine_summary": "Danubian Principalities consolidation",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_romanians_cuza.png",
+   "doctrine_prose": "Tight civic core. The AI relies on settler-callable defenses — Town Centers and Outposts that summon militia — rather than a forward army. Reactive: hits hard when threatened, less aggressive on the open map.",
+   "claims": {
+    "wall_strategy": 3,
+    "first_military_building": "outpost",
+    "expects_forward": false,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "wall": {
+     "strategy": 3,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 3,
+     "chokepoint": false,
+     "radius": 18
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.15,
+        0.4
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.2,
+        0.45
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Russians Ivan the Terrible": {
+   "civ_label": "Russians",
+   "leader_label": "Ivan the Terrible",
+   "data_name": "Russians Ivan Terrible",
+   "doctrine_label": "Cossack Voisko",
+   "doctrine_summary": "Oprichnik terror",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_russians_ivan.png",
+   "doctrine_prose": "Plays an offensive, fortified game suited to the Tsar: massed Streltsy musketeer blocks form the backbone, Oprichnik cavalry hits as a shock arm, and a siege train accompanies the army for fortress reduction. Frontier palisades and Blockhouses anchor the eastern marches; the Tsar pushes a forward base early to project terror onto rival capitals.",
+   "claims": {
+    "wall_strategy": 3,
+    "first_military_building": "barracks_or_stable",
+    "expects_infantry": true,
+    "expects_artillery": true,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "expects_forward": true,
+    "first_barracks_before_ms": 420000,
+    "first_wall_before_ms": 720000,
+    "wall": {
+     "strategy": 3,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 4,
+     "towers_every": 4,
+     "chokepoint": false,
+     "radius": 22
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.58,
+        0.88
+       ],
+       "cav": [
+        0.18,
+        0.48
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_catherine.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.37,
+        0.67
+       ],
+       "cav": [
+        0.15,
+        0.45
+       ],
+       "art": [
+        0.12,
+        0.42
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_catherine.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.16,
+        0.46
+       ],
+       "art": [
+        0.18,
+        0.48
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_catherine.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": [
+    "+expects_forward"
+   ]
+  },
+  "South Africans Kruger Boer Revolution": {
+   "civ_label": "South Africans",
+   "leader_label": "Paul Kruger",
+   "data_name": "South Africans Kruger Boer Revolution",
+   "doctrine_label": "Naval Mercantile Compound",
+   "doctrine_summary": "Boer commando trader-cavalry",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_south_africans_kruger.png",
+   "doctrine_prose": "Plays a hybrid trader-cavalry game keyed to map type. On coastal spawns the AI builds Docks first to set up a mercantile compound — the Cape trade hub funds the war — and a wall ring screens the harbor. Inland, the Boer commando carries the fight: mounted infantry on swift horses, a single fort serves as a laager command post, and forward outposts press out into the veldt. Home-city shipments and mercenary contracts keep the cavalry stream fed.",
+   "claims": {
+    "wall_strategy": 2,
+    "first_military_building": "dock",
+    "expects_naval": true,
+    "first_dock_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.9,
+     1.2
+    ],
+    "expects_cavalry": true,
+    "wall": {
+     "strategy": 2,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 5,
+     "chokepoint": false,
+     "radius": 18
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.3,
+        0.55
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Spanish Isabella Castile": {
+   "civ_label": "Spanish",
+   "leader_label": "Isabella I of Castile",
+   "data_name": "Spanish Isabella Castile",
+   "doctrine_label": "Forward Operational Line",
+   "doctrine_summary": "Reconquista Tercio precursor",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_spanish_isabella.png",
+   "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.85,
+     1.3
+    ],
+    "expects_cavalry": true,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.49,
+        0.79
+       ],
+       "cav": [
+        0.27,
+        0.57
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_isabella.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.37,
+        0.67
+       ],
+       "cav": [
+        0.19,
+        0.49
+       ],
+       "art": [
+        0.09,
+        0.39
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_isabella.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.31,
+        0.61
+       ],
+       "cav": [
+        0.16,
+        0.46
+       ],
+       "art": [
+        0.16,
+        0.46
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_isabella.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Swedes Gustavus Adolphus Swedish": {
+   "civ_label": "Swedes",
+   "leader_label": "Gustavus Adolphus",
+   "data_name": "Swedes Gustavus Adolphus Swedish",
+   "doctrine_label": "Forward Operational Line",
+   "doctrine_summary": "Lion of the North combined arms",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_swedes_gustavus.png",
+   "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned. Regimental gun teams and the Lützen-era leather guns make light artillery a permanent line-element rather than a siege-only commitment.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.85,
+     1.3
+    ],
+    "expects_cavalry": true,
+    "expects_artillery": true,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.47,
+        0.77
+       ],
+       "cav": [
+        0.19,
+        0.49
+       ],
+       "art": [
+        0.0,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_gustavus.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.3,
+        0.6
+       ],
+       "cav": [
+        0.12,
+        0.42
+       ],
+       "art": [
+        0.21,
+        0.51
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_gustavus.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.28,
+        0.58
+       ],
+       "cav": [
+        0.14,
+        0.44
+       ],
+       "art": [
+        0.22,
+        0.52
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_gustavus.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "Texians Sam Houston Texas Revolution": {
+   "civ_label": "Texians",
+   "leader_label": "Sam Houston",
+   "data_name": "Texians Sam Houston Texas Revolution",
+   "doctrine_label": "Forward Operational Line",
+   "doctrine_summary": "Republic of Texas militia",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_texians_sam_houston.png",
+   "doctrine_prose": "Pushes barracks, stables, and outposts up toward the map&#x27;s contested edge, leaving the home base lightly fortified. Sustained pressure is the doctrine: shipments rally to the forward base, and lost ground is re-walled rather than abandoned.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "expects_forward": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 720000,
+    "military_distance_band": [
+     0.85,
+     1.3
+    ],
+    "expects_cavalry": true,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 0,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "note": "MobileNoWalls — outpost screen, no perimeter"
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.45,
+        0.7
+       ],
+       "cav": [
+        0.3,
+        0.55
+       ],
+       "art": [
+        0.0,
+        0.1
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.4,
+        0.62
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.05,
+        0.22
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.38,
+        0.6
+       ],
+       "cav": [
+        0.35,
+        0.6
+       ],
+       "art": [
+        0.1,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (per-civ)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
+  },
+  "United States Washington": {
+   "civ_label": "United States",
+   "leader_label": "Washington",
+   "data_name": "United States Washington",
+   "doctrine_label": "Republican Levee",
+   "doctrine_summary": "Continental Army Fabian-to-Yorktown",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_united_states_washington.png",
+   "doctrine_prose": "Mass-produces cheap line infantry from many barracks and trains General units to inspire them. Civic-style layout — production hugs the Town Center, Outposts call up militia, and shipments favor more of the same line over elite alternatives.",
+   "claims": {
+    "wall_strategy": 4,
+    "first_military_building": "barracks_or_stable",
+    "expects_infantry": true,
+    "first_barracks_before_ms": 360000,
+    "first_wall_before_ms": 900000,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "wall": {
+     "strategy": 4,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "stone",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 3,
+     "towers_every": 5,
+     "chokepoint": false,
+     "radius": 12
+    },
+    "per_age": {
+     "2": {
+      "ageup_by_ms": [
+       240000,
+       420000
+      ],
+      "comp": {
+       "inf": [
+        0.69,
+        0.99
+       ],
+       "cav": [
+        0.07,
+        0.37
+       ],
+       "art": [
+        0.0,
+        0.18
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_washington.xs bt biases"
+     },
+     "3": {
+      "ageup_by_ms": [
+       540000,
+       840000
+      ],
+      "comp": {
+       "inf": [
+        0.38,
+        0.68
+       ],
+       "cav": [
+        0.14,
+        0.44
+       ],
+       "art": [
+        0.12,
+        0.42
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_washington.xs bt biases"
+     },
+     "4": {
+      "comp": {
+       "inf": [
+        0.32,
+        0.62
+       ],
+       "cav": [
+        0.12,
+        0.42
+       ],
+       "art": [
+        0.19,
+        0.49
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_washington.xs bt biases"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=intent-seeded → refine via sim-farm"
+   },
+   "prose_overrides": []
   }
+ },
+ "_spec_version": 2,
+ "_difficulty_model": "bands are Expert-level; validator scales by meta.difficulty intensity (Sandbox25/Easy45/Moderate65/Hard85/Expert100)"
 }
