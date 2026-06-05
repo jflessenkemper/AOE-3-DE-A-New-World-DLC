@@ -556,6 +556,36 @@ bool civIsRevolution(void)
    return (false);
 }
 
+//==============================================================================
+// A New World: Mexican-stats civ detection (statsid MX).
+//
+// Every civmods.xml civ with <statsid>MX</statsid> ages up through the
+// Mexican Federal-State politician list, NOT the European politician list.
+// The base game's AI dispatch keys this off `cMyCiv == cCivDEMexicans`, but
+// modded civs are assigned their OWN engine civ id, so cMyCiv never equals
+// cCivDEMexicans for them and they fall through to chooseEuropeanPolitician()
+// -> failsafe index 0 (first Federal State, no map-aware filtering).
+//
+// This helper restores parity: it returns true for the literal Mexicans AND
+// every ANW MX-stats civ, so they all reach chooseMexicanFederalState() and
+// get the same map-aware Federal-State selection the base Mexicans get.
+//
+// Keep in sync with <statsid>MX</statsid> blocks in data/civmods.xml.
+//==============================================================================
+bool civIsMexicanStats(void)
+{
+   if (cMyCiv == cCivDEMexicans) return (true);
+   string name = kbGetCivName(cMyCiv);
+   if (name == "ANWMexicans")          return (true);
+   if (name == "ANWMayans")            return (true);
+   if (name == "ANWTexians")           return (true);
+   if (name == "ANWCalifornians")      return (true);
+   if (name == "ANWCentralAmericans")  return (true);
+   if (name == "ANWBajaCalifornians")  return (true);
+   if (name == "ANWRioGrande")         return (true);
+   return (false);
+}
+
 bool isMinorNativePresent(int minorNative = -1)
 {
    return(minorNative >= 0 ? ((gNativeTribeCiv1 == minorNative) || (gNativeTribeCiv2 == minorNative) || 

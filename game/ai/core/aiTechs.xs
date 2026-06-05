@@ -1058,8 +1058,14 @@ maxInterval 15
          {
             politician = chooseAmericanFederalState();
          }
-         else if (cMyCiv == cCivDEMexicans)
+         else if (civIsMexicanStats() == true)
          {
+            // A New World: routes the literal Mexicans AND every ANW MX-stats
+            // civ (Mayans, Texians, Californians, CentralAmericans,
+            // BajaCalifornians, RioGrande) into map-aware Federal-State
+            // selection. Without civIsMexicanStats() these modded civs (own
+            // engine civ id != cCivDEMexicans) fell through to the European
+            // path and failsafed to Federal-State index 0.
             politician = chooseMexicanFederalState();
          }
          else // European.
@@ -1145,8 +1151,11 @@ minInterval 180 // Research to be started 3 minutes into the Commerce Age.
    {
       villagerHPTechID = cTechypMarketSpiritMedicine;
    }
-   else if ((cMyCiv == cCivDEAmericans) || (cMyCiv == cCivDEMexicans))
+   else if ((cMyCiv == cCivDEAmericans) || (civIsMexicanStats() == true))
    {
+      // A New World: civIsMexicanStats() includes the ANW MX-stats civs so
+      // they research the Mexican/American frontier villager-HP tech for eco
+      // parity (base check was cMyCiv == cCivDEMexicans only).
       villagerHPTechID = cTechDEFrontiersmen;
    }
    else if (civIsAfrican() == true)

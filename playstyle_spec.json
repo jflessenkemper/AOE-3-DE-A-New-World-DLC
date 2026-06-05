@@ -867,6 +867,578 @@
    },
    "prose_overrides": []
   },
+  "Baja Californians Alvarado Revolution": {
+   "civ_label": "Baja Californians",
+   "leader_label": "Juan Bautista Alvarado",
+   "data_name": "Baja Californians Alvarado Revolution",
+   "doctrine_label": "Naval Mercantile Compound",
+   "doctrine_summary": "Coastal cavalry raider",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_iturbide.png",
+   "doctrine_prose": "Holds a fortified coastline with shore batteries and forward outposts, then raids inland with light cavalry. Defends the harbour core, trades for resources, and pressures the enemy economy with mobile horse rather than committing to a pitched line.",
+   "claims": {
+    "wall_strategy": 2,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 660000,
+    "military_distance_band": [
+     0.85,
+     1.1
+    ],
+    "first_barracks_before_ms": 510000,
+    "wall": {
+     "strategy": 2,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "stone",
+      "4": "fortified"
+     },
+     "gate_count": 2,
+     "towers_every": 4,
+     "chokepoint": false,
+     "radius": 16
+    },
+    "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.22,
+        0.42
+       ],
+       "cav": [
+        0.54,
+        0.74
+       ],
+       "art": [
+        0.0,
+        0.15
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.15,
+        0.35
+       ],
+       "cav": [
+        0.61,
+        0.81
+       ],
+       "art": [
+        0.0,
+        0.14
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.19,
+        0.39
+       ],
+       "cav": [
+        0.58,
+        0.78
+       ],
+       "art": [
+        0.0,
+        0.14
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
+      "comp": {
+       "inf": [
+        0.2,
+        0.4
+       ],
+       "cav": [
+        0.51,
+        0.71
+       ],
+       "art": [
+        0.0,
+        0.19
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.22,
+        0.42
+       ],
+       "cav": [
+        0.43,
+        0.63
+       ],
+       "art": [
+        0.06,
+        0.26
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=derived from wired btBias values"
+   },
+   "prose_overrides": []
+  },
+  "Californians Vallejo Revolution": {
+   "civ_label": "Californians",
+   "leader_label": "Mariano Vallejo",
+   "data_name": "Californians Vallejo Revolution",
+   "doctrine_label": "Mobile Frontier Scatter",
+   "doctrine_summary": "Wall-less cavalry swarm",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_iturbide.png",
+   "doctrine_prose": "Builds no walls at all. Spreads production wide, lives off trade and the map, and answers every threat with mounted mobility — hit-and-run cavalry that refuses to be pinned to a static line.",
+   "claims": {
+    "wall_strategy": 5,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 0,
+    "military_distance_band": [
+     0.9,
+     1.3
+    ],
+    "first_barracks_before_ms": 510000,
+    "wall": {
+     "strategy": 5,
+     "closure_pct_target": 0,
+     "trigger_age": 5,
+     "tier_by_age": {},
+     "gate_count": 0,
+     "towers_every": 0,
+     "chokepoint": false,
+     "radius": 0
+    },
+    "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.31,
+        0.51
+       ],
+       "cav": [
+        0.45,
+        0.65
+       ],
+       "art": [
+        0.0,
+        0.15
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "2": {
+      "ageup_by_ms": [
+       330000,
+       510000
+      ],
+      "comp": {
+       "inf": [
+        0.31,
+        0.51
+       ],
+       "cav": [
+        0.45,
+        0.65
+       ],
+       "art": [
+        0.0,
+        0.15
+       ]
+      },
+      "posture": "defensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       630000,
+       930000
+      ],
+      "comp": {
+       "inf": [
+        0.23,
+        0.43
+       ],
+       "cav": [
+        0.32,
+        0.52
+       ],
+       "art": [
+        0.14,
+        0.34
+       ]
+      },
+      "posture": "mixed",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "4": {
+      "ageup_by_ms": [
+       990000,
+       1410000
+      ],
+      "comp": {
+       "inf": [
+        0.23,
+        0.43
+       ],
+       "cav": [
+        0.3,
+        0.5
+       ],
+       "art": [
+        0.18,
+        0.38
+       ]
+      },
+      "posture": "mixed",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1410000,
+       1890000
+      ],
+      "comp": {
+       "inf": [
+        0.22,
+        0.42
+       ],
+       "cav": [
+        0.28,
+        0.48
+       ],
+       "art": [
+        0.2,
+        0.4
+       ]
+      },
+      "posture": "mixed",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=derived from wired btBias values"
+   },
+   "prose_overrides": []
+  },
+  "Central Americans Morazan Revolution": {
+   "civ_label": "Central Americans",
+   "leader_label": "Francisco Morazan",
+   "data_name": "Central Americans Morazan Revolution",
+   "doctrine_label": "Distributed Economic Network",
+   "doctrine_summary": "Native-allied infantry frontier",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_iturbide.png",
+   "doctrine_prose": "Spreads a web of forward economic buildings behind palisade frontiers, leans hard on native alliances, and grinds out a defensive infantry mass before transitioning to offensive pushes in the late game.",
+   "claims": {
+    "wall_strategy": 3,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 600000,
+    "military_distance_band": [
+     0.8,
+     1.1
+    ],
+    "first_barracks_before_ms": 480000,
+    "wall": {
+     "strategy": 3,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "palisade",
+      "4": "stone"
+     },
+     "gate_count": 3,
+     "towers_every": 4,
+     "chokepoint": false,
+     "radius": 18
+    },
+    "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.6,
+        0.8
+       ],
+       "cav": [
+        0.15,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.15
+       ]
+      },
+      "posture": "defensive",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "2": {
+      "ageup_by_ms": [
+       360000,
+       540000
+      ],
+      "comp": {
+       "inf": [
+        0.61,
+        0.81
+       ],
+       "cav": [
+        0.15,
+        0.35
+       ],
+       "art": [
+        0.0,
+        0.14
+       ]
+      },
+      "posture": "mixed",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       660000,
+       960000
+      ],
+      "comp": {
+       "inf": [
+        0.48,
+        0.68
+       ],
+       "cav": [
+        0.14,
+        0.34
+       ],
+       "art": [
+        0.08,
+        0.28
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "4": {
+      "ageup_by_ms": [
+       1020000,
+       1440000
+      ],
+      "comp": {
+       "inf": [
+        0.43,
+        0.63
+       ],
+       "cav": [
+        0.14,
+        0.34
+       ],
+       "art": [
+        0.14,
+        0.34
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1440000,
+       1920000
+      ],
+      "comp": {
+       "inf": [
+        0.37,
+        0.57
+       ],
+       "cav": [
+        0.16,
+        0.36
+       ],
+       "art": [
+        0.18,
+        0.38
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=derived from wired btBias values"
+   },
+   "prose_overrides": []
+  },
+  "Rio Grande Canales Revolution": {
+   "civ_label": "Rio Grande",
+   "leader_label": "Antonio Canales",
+   "data_name": "Rio Grande Canales Revolution",
+   "doctrine_label": "Civic Militia Center",
+   "doctrine_summary": "Forward militia cavalry",
+   "portrait_path": "resources/images/icons/singleplayer/cpai_avatar_mexicans_iturbide.png",
+   "doctrine_prose": "Plants a forward militia base behind palisade lines and pressures with mounted irregulars from the first age. Aggressive at every stage — the wall exists to anchor a launch point, not to turtle.",
+   "claims": {
+    "wall_strategy": 3,
+    "first_military_building": "barracks_or_stable",
+    "first_wall_before_ms": 600000,
+    "military_distance_band": [
+     0.9,
+     1.2
+    ],
+    "first_barracks_before_ms": 450000,
+    "wall": {
+     "strategy": 3,
+     "closure_pct_target": 100,
+     "trigger_age": 2,
+     "tier_by_age": {
+      "2": "palisade",
+      "3": "palisade",
+      "4": "stone"
+     },
+     "gate_count": 3,
+     "towers_every": 4,
+     "chokepoint": false,
+     "radius": 18
+    },
+    "per_age": {
+     "1": {
+      "comp": {
+       "inf": [
+        0.25,
+        0.45
+       ],
+       "cav": [
+        0.51,
+        0.71
+       ],
+       "art": [
+        0.0,
+        0.14
+       ]
+      },
+      "posture": "mixed",
+      "note": "Discovery — economy / scouting",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "2": {
+      "ageup_by_ms": [
+       345000,
+       525000
+      ],
+      "comp": {
+       "inf": [
+        0.21,
+        0.41
+       ],
+       "cav": [
+        0.55,
+        0.75
+       ],
+       "art": [
+        0.0,
+        0.14
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "3": {
+      "ageup_by_ms": [
+       645000,
+       945000
+      ],
+      "comp": {
+       "inf": [
+        0.21,
+        0.41
+       ],
+       "cav": [
+        0.49,
+        0.69
+       ],
+       "art": [
+        0.0,
+        0.19
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "4": {
+      "ageup_by_ms": [
+       1005000,
+       1425000
+      ],
+      "comp": {
+       "inf": [
+        0.22,
+        0.42
+       ],
+       "cav": [
+        0.43,
+        0.63
+       ],
+       "art": [
+        0.06,
+        0.26
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     },
+     "5": {
+      "ageup_by_ms": [
+       1425000,
+       1905000
+      ],
+      "comp": {
+       "inf": [
+        0.23,
+        0.43
+       ],
+       "cav": [
+        0.37,
+        0.57
+       ],
+       "art": [
+        0.11,
+        0.31
+       ]
+      },
+      "posture": "offensive",
+      "_source": "leader_revolution_commanders.xs (wired btBias, derived)"
+     }
+    },
+    "_calibration": "wall=real(knobs); per_age=derived from wired btBias values"
+   },
+   "prose_overrides": []
+  },
   "Chileans OHiggins Revolution": {
    "civ_label": "Chileans",
    "leader_label": "Bernardo O'Higgins",

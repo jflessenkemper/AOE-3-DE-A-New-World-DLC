@@ -1565,6 +1565,11 @@ _SPEC_TO_CALIB_KEY: dict[str, str] = {
     "Columbians Bolivar Colombia Revolution": "ANWColumbians",
     "Hungarians Kossuth Revolution": "ANWHungarians",
     "Texians Sam Houston Texas Revolution": "ANWTexians",
+    # ANW new American nations (MX-stats standalone civs)
+    "Californians Vallejo Revolution": "ANWCalifornians",
+    "Central Americans Morazan Revolution": "ANWCentralAmericans",
+    "Baja Californians Alvarado Revolution": "ANWBajaCalifornians",
+    "Rio Grande Canales Revolution": "ANWRioGrande",
 }
 
 
