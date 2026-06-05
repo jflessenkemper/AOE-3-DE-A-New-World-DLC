@@ -110,6 +110,35 @@ CALIBRATION = {
         outposts=3, repair=3, closure_pct=100, no_water=1,
         doctrine="Lake-and-river defensive line, staying palisade till Fortress for cost, Frontier fallback"),
 
+    # ── New standalone American nations (former Mexican state-revolutions) ──
+    "ANWCalifornians": dict(  # Vallejo — Californio lancer cavalry, mobile
+        rev_token="ANWCalifornians", strategy=5,
+        radius=0, gates=0, age2stone=0, trigger_age=5, seg_len=0,
+        towers=0, secondary=2, vils=0, fwd_bias=0.0, outer_ring=0,
+        outposts=4, repair=0, closure_pct=0, no_water=1,
+        doctrine="Californio rancho cavalry — vaqueros & lancers, mobile raiding, coastal fallback"),
+
+    "ANWCentralAmericans": dict(  # Morazan — federalist militia, frontier palisade
+        rev_token="ANWCentralAmericans", strategy=3,
+        radius=18, gates=3, age2stone=0, trigger_age=2, seg_len=20,
+        towers=4, secondary=1, vils=5, fwd_bias=0.4, outer_ring=4,
+        outposts=3, repair=3, closure_pct=100, no_water=1,
+        doctrine="Federalist militia frontier palisade, cordillera-pass chokepoint fallback"),
+
+    "ANWBajaCalifornians": dict(  # Alvarado — desert-coast guerrilla, coastal
+        rev_token="ANWBajaCalifornians", strategy=2,
+        radius=16, gates=2, age2stone=0, trigger_age=2, seg_len=20,
+        towers=4, secondary=1, vils=4, fwd_bias=0.3, outer_ring=4,
+        outposts=3, repair=3, closure_pct=100, no_water=1,
+        doctrine="Desert-coast guerrilla coastal defense, chokepoint ambush fallback"),
+
+    "ANWRioGrande": dict(  # Canales Rosillo — frontier cavalry raiders
+        rev_token="ANWRioGrande", strategy=3,
+        radius=18, gates=3, age2stone=0, trigger_age=2, seg_len=20,
+        towers=3, secondary=5, vils=5, fwd_bias=0.5, outer_ring=4,
+        outposts=4, repair=3, closure_pct=100, no_water=1,
+        doctrine="Northern-frontier federalist cavalry, raid-and-retreat, mobile fallback"),
+
     "ANWChileans": dict(  # OHiggins — Fortress per spec
         rev_token="ANWChileans", strategy=0,
         radius=16, gates=3, age2stone=1, trigger_age=2, seg_len=20,

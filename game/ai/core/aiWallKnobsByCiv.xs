@@ -448,6 +448,82 @@ void anwSetWallKnobsForCiv(void)
       gANWWallClosurePctTarget     = 100;
       gANWWallNoWaterBuild         = true;
    }
+   else if (civKey == "ANWCalifornians")
+   {
+      // ANWCalifornians (Vallejo): Californio rancho cavalry — vaqueros & lancers, mobile raiding, coastal fallback
+      gANWWallStrategy             = 5;
+      gANWWallRadius               = 0;
+      gANWWallGateCount            = 0;
+      gANWWallTierAge2Stone        = false;
+      gANWWallTriggerAge           = 5;
+      gANWWallSegmentLength        = 0;
+      gANWWallTowerInterleave      = 0;
+      gANWWallSecondaryStrategy    = 2;
+      gANWWallVillagerCount        = 0;
+      gANWWallForwardBiasFraction  = 0.0;
+      gANWWallOuterRingDelta       = 0;
+      gANWWallEarlyOutpostCount    = 4;
+      gANWWallRepairAggressiveness = 0;
+      gANWWallClosurePctTarget     = 0;
+      gANWWallNoWaterBuild         = true;
+   }
+   else if (civKey == "ANWCentralAmericans")
+   {
+      // ANWCentralAmericans (Morazan): Federalist militia frontier palisade, cordillera-pass chokepoint fallback
+      gANWWallStrategy             = 3;
+      gANWWallRadius               = 18;
+      gANWWallGateCount            = 3;
+      gANWWallTierAge2Stone        = false;
+      gANWWallTriggerAge           = 2;
+      gANWWallSegmentLength        = 20;
+      gANWWallTowerInterleave      = 4;
+      gANWWallSecondaryStrategy    = 1;
+      gANWWallVillagerCount        = 5;
+      gANWWallForwardBiasFraction  = 0.4;
+      gANWWallOuterRingDelta       = 4;
+      gANWWallEarlyOutpostCount    = 3;
+      gANWWallRepairAggressiveness = 3;
+      gANWWallClosurePctTarget     = 100;
+      gANWWallNoWaterBuild         = true;
+   }
+   else if (civKey == "ANWBajaCalifornians")
+   {
+      // ANWBajaCalifornians (Alvarado): Desert-coast guerrilla coastal defense, chokepoint ambush fallback
+      gANWWallStrategy             = 2;
+      gANWWallRadius               = 16;
+      gANWWallGateCount            = 2;
+      gANWWallTierAge2Stone        = false;
+      gANWWallTriggerAge           = 2;
+      gANWWallSegmentLength        = 20;
+      gANWWallTowerInterleave      = 4;
+      gANWWallSecondaryStrategy    = 1;
+      gANWWallVillagerCount        = 4;
+      gANWWallForwardBiasFraction  = 0.3;
+      gANWWallOuterRingDelta       = 4;
+      gANWWallEarlyOutpostCount    = 3;
+      gANWWallRepairAggressiveness = 3;
+      gANWWallClosurePctTarget     = 100;
+      gANWWallNoWaterBuild         = true;
+   }
+   else if (civKey == "ANWRioGrande")
+   {
+      // ANWRioGrande (Canales Rosillo): Northern-frontier federalist cavalry, raid-and-retreat, mobile fallback
+      gANWWallStrategy             = 3;
+      gANWWallRadius               = 18;
+      gANWWallGateCount            = 3;
+      gANWWallTierAge2Stone        = false;
+      gANWWallTriggerAge           = 2;
+      gANWWallSegmentLength        = 20;
+      gANWWallTowerInterleave      = 3;
+      gANWWallSecondaryStrategy    = 5;
+      gANWWallVillagerCount        = 5;
+      gANWWallForwardBiasFraction  = 0.5;
+      gANWWallOuterRingDelta       = 4;
+      gANWWallEarlyOutpostCount    = 4;
+      gANWWallRepairAggressiveness = 3;
+      gANWWallClosurePctTarget     = 100;
+      gANWWallNoWaterBuild         = true;
+   }
    else if (civKey == "ANWChileans")
    {
       // ANWChileans (ANWChileans): Andes-flank pocket fort, stone Colonial, choke fallback for cordillera pass
