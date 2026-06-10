@@ -14,14 +14,14 @@ Reference: [`game/ai/anwbritish.personality`](../../../game/ai/anwbritish.person
 <AI>
    <version>2</version>
    <script>aiLoaderStandard</script>
-   <nameID>490331</nameID>
+   <nameID>490200</nameID>
    <tooltipID>490201</tooltipID>
-   <forcedciv>British</forcedciv>
+   <forcedciv>ANWBritish</forcedciv>
    <rushboom>0</rushboom>
    <icon>resources/images/icons/singleplayer/cpai_avatar_british_elizabeth.png</icon>
    <chatset>anw_british</chatset>
    <playerNames>
-      <nameID>490331<civ>British</civ></nameID>
+      <nameID>490200<civ>ANWBritish</civ></nameID>
    </playerNames>
 </AI>
 ```
@@ -32,7 +32,7 @@ Reference: [`game/ai/anwbritish.personality`](../../../game/ai/anwbritish.person
 | `<script>` | string | Yes | XS loader to invoke (e.g. `aiLoaderStandard`, `aiLoaderInactive`); resolves to `game/ai/<script>.xs` |
 | `<nameID>` | int | Yes | `_locID` of personality display name |
 | `<tooltipID>` | int | No | `_locID` of hover tooltip |
-| `<forcedciv>` | string | No | Civ name (must match `<civ><name>` in merged civs.xml). If absent, AI uses lobby-selected civ |
+| `<forcedciv>` | string | No | Civ name (must match `<civ><name>` in merged civs.xml). For ANW personalities this is the **ANW-prefixed token** (e.g. `ANWBritish`), not the base-game token (`British`) — verified against `game/ai/anwbritish.personality`. If absent, AI uses lobby-selected civ |
 | `<rushboom>` | int | No | Strategy hint flag (community-observed: 0/1) |
 | `<icon>` | path | No | PNG (or DDT) avatar icon |
 | `<chatset>` | string | No | Identifier for chat-line bundle |

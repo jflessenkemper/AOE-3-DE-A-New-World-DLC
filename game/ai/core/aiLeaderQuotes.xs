@@ -126,22 +126,22 @@ void anwSendLeaderTacticalLine(int playerIDorRelation = -1, string message = "",
 
 string anwGetLeaderRetreatLine(void)
 {
-   return ("Fall back and close ranks. Our leader will not be lost today.");
+   return ("Order the withdrawal. A disciplined retreat is not defeat.");
 }
 
 string anwGetLeaderRoutLine(void)
 {
-   return ("Your broken soldiers are in full retreat now.");
+   return ("Their line has broken. Press the advantage before they can reform.");
 }
 
 string anwGetLeaderBulkAssaultLine(void)
 {
-   return ("Break their main line first. The army is the real prize.");
+   return ("Strike the main body. Scatter the wings and the center collapses.");
 }
 
 string anwGetLeaderDecapitationLine(void)
 {
-   return ("Ignore the rabble. Bring down their leader.");
+   return ("Bypass their foot. Take their commander and the army dissolves.");
 }
 
 void anwSendLeaderRetreatLine(int playerIDorRelation = -1, int quoteInterval = 150000)
@@ -209,7 +209,7 @@ minInterval 10
    }
 
    debugANW("opening quotes firing for " + kbGetCivName(cMyCiv));
-   // LL-QUOTE probe — ensures the per-leader opening compliment/insult pair
+   // LL-QUOTE probe  --  ensures the per-leader opening compliment/insult pair
    // fires at ~25s and only once. Miss = ANW leader quote wiring broken.
    anwProbe("chat.quote", "kind=opening");
    anwSendLeaderComplimentLine(cPlayerRelationAllyExcludingSelf, 0);
@@ -260,15 +260,15 @@ string anwGetLeaderInsult(void)
       {
          return ("The omens condemn such disorder.");
       }
-      return ("Even Tenochtitlan deserved a better foe.");
+      return ("The smoking mirror of Tezcatlipoca shows me your end. Come and meet Tenochtitlan.");
    }
    else if (civName == "British")
    {
       if (quoteIndex == 0)
       {
-         return ("That advance would die nameless on a ridge in Spain.");
+         return ("I have the heart and stomach of a king, and of a King of England too. Your threat is nothing.");
       }
-      return ("You confuse obstinacy with discipline.");
+      return ("I will have here but one mistress and no master. Yield, or be swept from this field.");
    }
    else if (civName == "Chinese")
    {
@@ -276,7 +276,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You bring disorder to a field that demands harmony.");
       }
-      return ("Even frontier rebels show firmer order.");
+      return ("Even the Dzungars showed firmer order before Zunghar fell.");
    }
    else if (civName == "Dutch")
    {
@@ -284,7 +284,7 @@ string anwGetLeaderInsult(void)
       {
          return ("Your volley is late and your drill worse.");
       }
-      return ("A republic deserves firmer drill than this.");
+      return ("A republic that cannot drill its musketeers will not long remain one.");
    }
    else if (civName == "Ethiopians")
    {
@@ -292,15 +292,15 @@ string anwGetLeaderInsult(void)
       {
          return ("You climb these heights without judgment.");
       }
-      return ("Adwa would have buried such ambition.");
+      return ("At Adwa, Italy learned what judgment means. You have not yet learned it.");
    }
    else if (civName == "French")
    {
       if (quoteIndex == 0)
       {
-         return ("You maneuver like a clerk and expect empire to follow.");
+         return ("A throne is only a bench covered with velvet. Learn to fight, not to sit.");
       }
-      return ("Even at Austerlitz I saw less confusion.");
+      return ("Soldiers, I am satisfied with you. In the battle of Austerlitz you have justified all my hopes.");
    }
    else if (civName == "Germans")
    {
@@ -308,7 +308,7 @@ string anwGetLeaderInsult(void)
       {
          return ("Your line offends both reason and powder.");
       }
-      return ("Leuthen required more nerve than this.");
+      return ("God is on the side not of the heavy battalions, but the best shots. Be better.");
    }
    else if ((civName == "Haudenosaunee") || (civName == "XPIroquois"))
    {
@@ -316,7 +316,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You break ranks as easily as broken councils.");
       }
-      return ("A careless warrior shames his people twice.");
+      return ("The Great Law binds us. What binds you together? Nothing I can see.");
    }
    else if (civName == "Hausa")
    {
@@ -324,7 +324,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You advance without justice or discipline.");
       }
-      return ("A ruler without justice invites his own ruin.");
+      return ("He who conceals injustice in his heart will find it revealed on the battlefield.");
    }
    else if (civName == "Inca")
    {
@@ -332,7 +332,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You cannot build victory on such loose stones.");
       }
-      return ("The mountain road would reject this army.");
+      return ("Sacsayhuaman was raised without mortar and has outlasted every conqueror. You will not.");
    }
    else if (civName == "Indians")
    {
@@ -340,7 +340,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You guard no flank and deserve none.");
       }
-      return ("Even a hill fort sees through this plan.");
+      return ("The Sahyadri hills taught me to strike and vanish. You have learned neither.");
    }
    else if (civName == "Italians")
    {
@@ -348,7 +348,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You march like ceremony, not revolution.");
       }
-      return ("Italy is not made by men who wait.");
+      return ("I offer neither pay, nor quarters, nor provisions. I offer hunger, thirst, and death. Any who love their country, follow me.");
    }
    else if (civName == "Japanese")
    {
@@ -356,7 +356,7 @@ string anwGetLeaderInsult(void)
       {
          return ("The impatient commander defeats himself first.");
       }
-      return ("Sekigahara was won with more patience than this.");
+      return ("One who is hasty cannot govern. Sekigahara required twenty years of patience to win.");
    }
    else if (civName == "Lakota")
    {
@@ -388,7 +388,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You bring neither law nor strength.");
       }
-      return ("Belgrade demanded more order than this.");
+      return ("Rhodes and Belgrade bowed to my Kanun. Your disorder will bow to my cannon.");
    }
    else if (civName == "Portuguese")
    {
@@ -396,15 +396,15 @@ string anwGetLeaderInsult(void)
       {
          return ("You mistake horizon for mastery.");
       }
-      return ("Such seamanship would shame Sagres.");
+      return ("Sagres charts the world. You cannot chart this field.");
    }
    else if (civName == "Russians")
    {
       if (quoteIndex == 0)
       {
-         return ("You have breadth but no design.");
+         return ("I am not a tsar of Moscow  --  I am tsar of all Rus. You will learn the difference.");
       }
-      return ("Even the frontier deserves a sharper will.");
+      return ("To show mercy to the treacherous is to show cruelty to the loyal.");
    }
    else if (civName == "Spanish")
    {
@@ -412,7 +412,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You squander zeal as well as steel.");
       }
-      return ("Granada required sterner resolve than this.");
+      return ("Granada fell after ten years of resolve. Your courage has not lasted ten minutes.");
    }
    else if (civName == "Swedes")
    {
@@ -426,9 +426,9 @@ string anwGetLeaderInsult(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Liberty is not defended by blundering in plain sight.");
+         return ("Discipline is the soul of an army. Washington knew it. You have not learned it.");
       }
-      return ("You would not survive a winter at Valley Forge.");
+      return ("The Continental Line held at Yorktown under fire. You have not shown their resolve.");
    }
    else if (civName == "ANWNapoleonicFrance")
    {
@@ -442,17 +442,17 @@ string anwGetLeaderInsult(void)
    {
       if (quoteIndex == 0)
       {
-         return ("The Republic has no patience for such timidity.");
+         return ("The virtue of the Republic is terror. Yours is merely cowardice.");
       }
-      return ("Liberty is not won by hesitation.");
+      return ("Citizens must arm themselves with the severity of truth. Show some.");
    }
    else if (civName == "ANWAmericans")
    {
       if (quoteIndex == 0)
       {
-         return ("A republic cannot survive such command.");
+         return ("Even a militia deserves better direction than this.");
       }
-      return ("Your cause buckles under poor leadership.");
+      return ("Bunker Hill was lost but cost them dear. You have not yet made them pay at all.");
    }
    else if (civName == "ANWMexicans")
    {
@@ -466,17 +466,17 @@ string anwGetLeaderInsult(void)
    {
       if (quoteIndex == 0)
       {
-         return ("This frontier has broken louder men than you.");
+         return ("Most of the men were cut down at Queenston Heights. We held. You will not.");
       }
-      return ("You rush the woods and call it strategy.");
+      return ("You rush the woods and call it strategy. The frontier calls it folly.");
    }
    else if (civName == "ANWBrazil")
    {
       if (quoteIndex == 0)
       {
-         return ("Empires are not born from such hesitation.");
+         return ("Independence or death. You have chosen neither, so I will decide for you.");
       }
-      return ("You bring pomp without vigor.");
+      return ("You bring pomp without vigor. Brazil needs blood and iron, not theater.");
    }
    else if (civName == "ANWArgentines")
    {
@@ -484,7 +484,7 @@ string anwGetLeaderInsult(void)
       {
          return ("The Andes would laugh at such a march.");
       }
-      return ("You spend men where nerve would suffice.");
+      return ("I crossed the Cordillera to liberate a continent. You cannot cross this field.");
    }
    else if (civName == "ANWChileans")
    {
@@ -500,7 +500,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You campaign without altitude or vision.");
       }
-      return ("The Andes grant no pardon to such noise.");
+      return ("Peru and Bolivia stand as one Confederation. Your confusion stands alone.");
    }
    else if (civName == "ANWColumbians")
    {
@@ -508,7 +508,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You dream of empire and cannot hold a ridge.");
       }
-      return ("History does not wait for weaker men.");
+      return ("Carabobo was fought by men who did not know retreat. You have not met such men before.");
    }
    else if (civName == "ANWHaitians")
    {
@@ -516,7 +516,7 @@ string anwGetLeaderInsult(void)
       {
          return ("No army stands long upon the whip.");
       }
-      return ("You command fear and mistake it for loyalty.");
+      return ("In overthrowing me, you have done no more than cut down the trunk of the tree of liberty. It will spring back from the roots.");
    }
    else if (civName == "ANWIndonesians")
    {
@@ -524,7 +524,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You occupy land you do not understand.");
       }
-      return ("Java has buried stronger arrogance than this.");
+      return ("The VOC is gone and the Dutch still do not understand Java. Neither do you.");
    }
    else if (civName == "ANWSouthAfricans")
    {
@@ -532,7 +532,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You spend strength like a man with borrowed land.");
       }
-      return ("Noise is not resolve.");
+      return ("Majuba showed the Empire that a Boer does not yield. You will learn the same lesson.");
    }
    else if (civName == "ANWFinnish")
    {
@@ -540,7 +540,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You waste terrain as if it were free.");
       }
-      return ("Such a line would not survive a winter.");
+      return ("The Mannerheim Line held what your line cannot. Sisu is not given  --  it is earned.");
    }
    else if (civName == "ANWHungarians")
    {
@@ -548,7 +548,7 @@ string anwGetLeaderInsult(void)
       {
          return ("A nation is not led by hesitation.");
       }
-      return ("You bow to events before the battle is decided.");
+      return ("Magyarok! The cause of liberty requires that you not bend until the last cannon is spent.");
    }
    else if (civName == "ANWRomanians")
    {
@@ -556,7 +556,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You confuse disorder with liberty.");
       }
-      return ("Your command lacks both nerve and order.");
+      return ("Unirea Principatelor was achieved by law, not by chaos. Learn the difference.");
    }
    else if (civName == "ANWBarbary")
    {
@@ -564,7 +564,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You sail and march with equal confusion.");
       }
-      return ("The sea would have judged you already.");
+      return ("Charles V came to Algiers with fifty thousand men. The sea and I sent them back. You have fewer men.");
    }
    else if (civName == "ANWEgyptians")
    {
@@ -572,7 +572,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You inherit strength and waste it.");
       }
-      return ("Ambition without administration is just noise.");
+      return ("I destroyed the Mamluks at the Citadel because they were disorder dressed as power. So are you.");
    }
    else if (civName == "ANWCentralAmericans")
    {
@@ -580,7 +580,7 @@ string anwGetLeaderInsult(void)
       {
          return ("A divided command defeats itself.");
       }
-      return ("You split what you are too weak to govern.");
+      return ("The conservatives have always feared a united isthmus. You are no different.");
    }
    else if (civName == "ANWBajaCalifornians")
    {
@@ -588,7 +588,7 @@ string anwGetLeaderInsult(void)
       {
          return ("The frontier swallows slower men than you.");
       }
-      return ("You ride hard and think late.");
+      return ("Las Californias stretches from Loreto to Sonoma. You cannot even hold this field.");
    }
    else if (civName == "ANWYucatan")
    {
@@ -602,9 +602,9 @@ string anwGetLeaderInsult(void)
    {
       if (quoteIndex == 0)
       {
-         return ("You were too slow for this border.");
+         return ("The Republic of Rio Grande was carved from two empires. You are less than either.");
       }
-      return ("Your retreat started before your charge.");
+      return ("Canales held this river against Santa Anna himself. You will not hold it against us.");
    }
    else if (civName == "ANWMayans")
    {
@@ -620,7 +620,7 @@ string anwGetLeaderInsult(void)
       {
          return ("You threaten the province more than you command it.");
       }
-      return ("That advance has no staying power.");
+      return ("I governed California from Sonoma. You cannot govern this engagement.");
    }
    else if (civName == "ANWTexians")
    {
@@ -643,105 +643,105 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Hold the causeway and let them shatter on it.");
+         return ("Hold the causeway. Tenochtitlan was built on water and held by will.");
       }
-      return ("Fight with ceremony and with teeth.");
+      return ("Fight with ceremony and with teeth. That is the xochiyaoyotl  --  the flower war.");
    }
    else if (civName == "British")
    {
       if (quoteIndex == 0)
       {
-         return ("Hold the line. After that, the rest is arithmetic.");
+         return ("Though I be a woman, I have as good a courage as ever my father had. Your valor is worthy of England.");
       }
-      return ("Steady now. Disorder loses battles.");
+      return ("England has defeated the Armada and will not falter here. You fight well  --  press the advantage.");
    }
    else if (civName == "Chinese")
    {
       if (quoteIndex == 0)
       {
-         return ("Keep the banners aligned and the field is ours.");
+         return ("Keep the Eight Banners aligned and the field is ours.");
       }
-      return ("Discipline first. Triumph follows.");
+      return ("Discipline first. The Qing did not conquer from the Amur to Tibet by carelessness.");
    }
    else if (civName == "Dutch")
    {
       if (quoteIndex == 0)
       {
-         return ("Dress the line and trust the drill.");
+         return ("Dress the line and trust the drill. Maurice of Nassau invented the countermarch for a reason.");
       }
-      return ("Measure, volley, advance.");
+      return ("Measure, volley, advance. The Republic built its army on discipline, not inspiration.");
    }
    else if (civName == "Ethiopians")
    {
       if (quoteIndex == 0)
       {
-         return ("Stand firm and let the high ground judge them.");
+         return ("Stand firm. At Adwa, the high ground judged Italy. Let it judge them here.");
       }
-      return ("Order the line. Let them spend themselves.");
+      return ("Order the line. Let them spend themselves on our shields, as Menelik planned.");
    }
    else if (civName == "French")
    {
       if (quoteIndex == 0)
       {
-         return ("Take the ground quickly, then make it ours.");
+         return ("Soldiers of France, forty centuries look down upon you from those heights.");
       }
-      return ("Momentum, not hesitation, wins empires.");
+      return ("The moral is to the physical as three is to one. Keep faith and press on.");
    }
    else if (civName == "Germans")
    {
       if (quoteIndex == 0)
       {
-         return ("Dress the ranks and fire by measure.");
+         return ("Dress the ranks and fire by measure. Leuthen was won by exactly this.");
       }
-      return ("Speed and precision, nothing else.");
+      return ("Speed and precision. At Rossbach I beat the French in ninety minutes. Set the same pace.");
    }
    else if (civName == "Haudenosaunee")
    {
       if (quoteIndex == 0)
       {
-         return ("Stand together. A strong confederacy does not bend.");
+         return ("Stand together. The Great Law binds the six fires  --  let that strength guide you.");
       }
-      return ("Let wisdom guide the first blow.");
+      return ("Let the wisdom of the longhouse guide the first blow and the last.");
    }
    else if (civName == "Hausa")
    {
       if (quoteIndex == 0)
       {
-         return ("Keep faith and order, and the day will answer.");
+         return ("Keep faith and order. The Sokoto Caliphate was built on both.");
       }
-      return ("Discipline first. Victory after.");
+      return ("Discipline first. The walls of Kano stood because discipline held them. So must you.");
    }
    else if (civName == "Inca")
    {
       if (quoteIndex == 0)
       {
-         return ("Hold the heights and let them climb to ruin.");
+         return ("Hold the heights and let them climb to ruin. Sacsayhuaman was never taken from above.");
       }
-      return ("Build the field as you would an empire.");
+      return ("Build the field as Pachacuti built the empire  --  each stone set so none can be moved.");
    }
    else if (civName == "Indians")
    {
       if (quoteIndex == 0)
       {
-         return ("Strike fast, vanish faster.");
+         return ("Strike fast, vanish faster. That is the Ganimi Kava of the Maratha.");
       }
-      return ("Guard every pass. Yield none.");
+      return ("Guard every pass through the Sahyadri. Yield none  --  Shivaji never did.");
    }
    else if (civName == "Italians")
    {
       if (quoteIndex == 0)
       {
-         return ("Forward. Italy is made by those who move.");
+         return ("Forward. Italy is made by those who move. The Thousand proved it.");
       }
-      return ("Keep the pressure. Do not give them breath.");
+      return ("Keep the pressure. Garibaldi marched from Sicily to Naples. Do not give them breath.");
    }
    else if (civName == "Japanese")
    {
       if (quoteIndex == 0)
       {
-         return ("Step slow and steady, then strike to finish it.");
+         return ("Step slow and steady, then strike to finish it. Sekigahara was won in one day after twenty years.");
       }
-      return ("Keep order. Let them waste themselves.");
+      return ("Keep order. Let them waste themselves, as Ieyasu waited for Hideyoshi's heirs to fall.");
    }
    else if (civName == "Lakota")
    {
@@ -771,33 +771,33 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Advance with order and with law.");
+         return ("Advance with order and with Kanun. The law of Suleiman is the strength of the empire.");
       }
-      return ("Make the empire look inevitable.");
+      return ("Make the empire look inevitable. It is  --  from the Danube to the Euphrates.");
    }
    else if (civName == "Portuguese")
    {
       if (quoteIndex == 0)
       {
-         return ("Chart the field, then claim it.");
+         return ("Chart the field, then claim it. The caravel does not wait for permission.");
       }
-      return ("Let patience guide the expedition.");
+      return ("Let patience and science guide the expedition. Sagres trained navigators, not wanderers.");
    }
    else if (civName == "Russians")
    {
       if (quoteIndex == 0)
       {
-         return ("Press on. Empire is not built timidly.");
+         return ("Press on. The Tsardom of Rus does not stop until the frontier is answered.");
       }
-      return ("Stretch them until they break.");
+      return ("Stretch them until they break. Russia is wider than their resolve.");
    }
    else if (civName == "Spanish")
    {
       if (quoteIndex == 0)
       {
-         return ("Press the matter and do not relent.");
+         return ("Press the matter and do not relent. God and Granada taught us what persistence wins.");
       }
-      return ("Faith and order. Keep both.");
+      return ("Faith and order. Isabella did not take the New World by one or the other  --  she kept both.");
    }
    else if (civName == "Swedes")
    {
@@ -811,9 +811,9 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Stand steady. Let the line prove the cause.");
+         return ("Stand steady. Let the line prove the cause. Valley Forge proved ours.");
       }
-      return ("Hold fast. Resolve carries free men through.");
+      return ("Hold fast. It is not our numbers that win liberty  --  it is resolve.");
    }
    else if (civName == "ANWNapoleonicFrance")
    {
@@ -827,9 +827,9 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("The Republic advances - follow without hesitation.");
+         return ("The Republic is virtue. Advance  --  do not waver before the enemies of the people.");
       }
-      return ("Hold the line for the cause.");
+      return ("Death is nothing. To live defeated and inglorious is to die daily. Hold the line.");
    }
    else if (civName == "ANWAmericans")
    {
@@ -837,7 +837,7 @@ string anwGetLeaderCompliment(void)
       {
          return ("Hold firm. The line is our argument.");
       }
-      return ("Resolve first. Victory after.");
+      return ("Valley Forge tested the resolve of this army. That test was not in vain.");
    }
    else if (civName == "ANWMexicans")
    {
@@ -851,25 +851,25 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Hold the frontier and let them come on.");
+         return ("Hold the frontier. Brock held Queenston Heights with far fewer. You can hold this.");
       }
-      return ("Steady fire. Waste nothing.");
+      return ("Steady fire. The forest fights for those who know it.");
    }
    else if (civName == "ANWBrazil")
    {
       if (quoteIndex == 0)
       {
-         return ("Advance with confidence. The crown must look certain.");
+         return ("Advance with confidence. Independencia ou morte  --  there is no other road.");
       }
-      return ("Push on. Let them see a nation rising.");
+      return ("Push on. The empire of Brazil rises with each step you hold.");
    }
    else if (civName == "ANWArgentines")
    {
       if (quoteIndex == 0)
       {
-         return ("Keep the column lean and relentless.");
+         return ("Keep the column lean and relentless. San Martin did not cross the Andes to linger.");
       }
-      return ("Forward. The Andes taught us not to linger.");
+      return ("Forward. Let each step be worthy of those who climbed the Cordillera.");
    }
    else if (civName == "ANWChileans")
    {
@@ -883,97 +883,97 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Keep the line measured and the heights ours.");
+         return ("Keep the line measured and the heights ours. The Confederation demands no less.");
       }
-      return ("Advance with order, and let the heights favor us.");
+      return ("Advance with order. Peru and Bolivia stand as one  --  let them feel our weight.");
    }
    else if (civName == "ANWColumbians")
    {
       if (quoteIndex == 0)
       {
-         return ("Strike hard. Let liberty outrun fatigue.");
+         return ("Strike hard. At Carabobo the day was won by men who did not count the cost.");
       }
-      return ("Carry the fire forward.");
+      return ("Carry the fire of Bolivar forward. Gran Colombia does not stop here.");
    }
    else if (civName == "ANWHaitians")
    {
       if (quoteIndex == 0)
       {
-         return ("Stand unbroken. Liberty remembers courage.");
+         return ("Stand unbroken. The liberty of Saint-Domingue was not given  --  it was seized.");
       }
-      return ("Hold your ground with dignity and fire.");
+      return ("Hold your ground. Toussaint did not retreat from Crete-a-Pierrot. Neither will you.");
    }
    else if (civName == "ANWIndonesians")
    {
       if (quoteIndex == 0)
       {
-         return ("Fight with patience and conviction.");
+         return ("Fight with patience and conviction. Diponegoro held the Java War for five years against the Dutch.");
       }
-      return ("Let the land fight beside us.");
+      return ("Let the land fight beside us. Java knows where to hide and when to strike.");
    }
    else if (civName == "ANWSouthAfricans")
    {
       if (quoteIndex == 0)
       {
-         return ("Save your powder and make it count.");
+         return ("Save your powder and make it count. Majuba was won with careful aim.");
       }
-      return ("Hold steady. Stubborn men outlast empires.");
+      return ("Hold steady. A Boer behind a kopje outlasts any empire that marches in the open.");
    }
    else if (civName == "ANWFinnish")
    {
       if (quoteIndex == 0)
       {
-         return ("Make the ground do half the work.");
+         return ("Make the ground do half the work. The Mannerheim Line proved the principle.");
       }
-      return ("Order, cold nerve, and exact fire.");
+      return ("Sisu. Cold nerve and exact fire. Finland has never fought any other way.");
    }
    else if (civName == "ANWHungarians")
    {
       if (quoteIndex == 0)
       {
-         return ("Fight as if the nation is watching.");
+         return ("Fight as if Hungary is watching. She is.");
       }
-      return ("Let resolve outrun their numbers.");
+      return ("The cause of freedom outlasts every army that opposes it. Press on.");
    }
    else if (civName == "ANWRomanians")
    {
       if (quoteIndex == 0)
       {
-         return ("Keep the line ordered and the state intact.");
+         return ("Keep the line ordered. Unirea was built on discipline, not on luck.");
       }
-      return ("Method first. Glory later.");
+      return ("Method first. The Principalities were united by law and will be defended by it.");
    }
    else if (civName == "ANWBarbary")
    {
       if (quoteIndex == 0)
       {
-         return ("Strike boldly and leave them no harbor.");
+         return ("Strike boldly and leave them no harbor. Algiers never gives quarter to hesitation.");
       }
-      return ("Let speed and nerve carry the day.");
+      return ("Speed and nerve carry the Barbary fleet. They carry us today as well.");
    }
    else if (civName == "ANWEgyptians")
    {
       if (quoteIndex == 0)
       {
-         return ("Build pressure carefully and keep it there.");
+         return ("Build pressure carefully. Egypt is built by discipline, not by impulse.");
       }
-      return ("Advance in order. Let discipline carry the day.");
+      return ("Advance in order. The Nizam Jedid is the army that mastered the Mamluks. Be worthy of it.");
    }
    else if (civName == "ANWCentralAmericans")
    {
       if (quoteIndex == 0)
       {
-         return ("Stand together. Federation is strength.");
+         return ("Stand together. The Federal Republic of Central America stands or falls as one.");
       }
-      return ("Keep formation and keep faith.");
+      return ("Keep formation. Morazan unified the isthmus against those who said it could not be done.");
    }
    else if (civName == "ANWBajaCalifornians")
    {
       if (quoteIndex == 0)
       {
-         return ("Keep the saddle and the initiative.");
+         return ("Keep the saddle and the initiative. From Loreto to the frontier, California rides fast.");
       }
-      return ("Raid cleanly. Vanish quickly.");
+      return ("Raid cleanly. Vanish quickly. The Californias owe their survival to exactly that.");
    }
    else if (civName == "ANWYucatan")
    {
@@ -1003,9 +1003,9 @@ string anwGetLeaderCompliment(void)
    {
       if (quoteIndex == 0)
       {
-         return ("Conserve strength and strike when it matters.");
+         return ("Conserve strength and strike when it matters. Sonoma was taken without a drop of blood.");
       }
-      return ("Hold the province together.");
+      return ("Hold the province together. California kept her own counsel when empires quarreled over her.");
    }
    else if (civName == "ANWTexians")
    {

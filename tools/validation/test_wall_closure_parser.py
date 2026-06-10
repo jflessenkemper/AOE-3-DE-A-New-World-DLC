@@ -108,7 +108,9 @@ class WallClosureParserTests(unittest.TestCase):
         # 2026-05-14: parse_probes now returns (probes, plan_closures) — was
         # a flat list when this test was first written. Unpack here so the
         # rest of the test body sees a list of Probe objects.
-        cls.probes, cls.plan_closures = parse_probes([cls.log_path])
+        # 2026-06-09: parse_probes now returns a 3-tuple
+        # (probes, plan_closures, flat_closures); discard flat_closures.
+        cls.probes, cls.plan_closures, _flat_closures = parse_probes([cls.log_path])
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -178,7 +180,7 @@ class WallClosureParserTests(unittest.TestCase):
         ])
         log = _write_log_to_tempfile(synthetic)
         try:
-            probes, _plan_closures = parse_probes([log])
+            probes, _plan_closures, _flat_closures = parse_probes([log])
             summary = evaluate_wall_closure(
                 "Argentines San Martin Revolution",
                 {"wall_strategy": 5},
@@ -199,7 +201,7 @@ class WallClosureParserTests(unittest.TestCase):
                                 "ageMs=60000 age=1 ws=2 bs=1")
         log = _write_log_to_tempfile(synthetic)
         try:
-            probes, _plan_closures = parse_probes([log])
+            probes, _plan_closures, _flat_closures = parse_probes([log])
             summary = evaluate_wall_closure(
                 "British Elizabeth", {"wall_strategy": 2}, probes)
             self.assertEqual(summary.verdict, "INCOMPLETE")

@@ -17,6 +17,11 @@
       "click_row": 9,
       "raw_ocr": "ZTEC EMPIRE (TENOCHTITLAN)"
     },
+    "ANWBajaCalifornians": {
+      "scroll_count": 22,
+      "click_row": 8,
+      "raw_ocr": "AJA CALIFORNIANS (LA FAZ)"
+    },
     "ANWBarbary": {
       "scroll_count": 23,
       "click_row": 8,
@@ -32,10 +37,21 @@
       "click_row": 9,
       "raw_ocr": "RITAIN (LONDON)"
     },
+
+    "ANWCalifornians": {
+      "scroll_count": 27,
+      "click_row": 9,
+      "raw_ocr": "ALIFORNIANS (SONOMA)"
+    },
     "ANWCanadians": {
       "scroll_count": 28,
       "click_row": 9,
       "raw_ocr": "ANADIANS (QUEBEC)"
+    },
+    "ANWCentralAmericans": {
+      "scroll_count": 31,
+      "click_row": 8,
+      "raw_ocr": "ENTRAL AMERICANS (GUATEMALA CITY)"
     },
     "ANWChileans": {
       "scroll_count": 31,
@@ -171,6 +187,11 @@
       "scroll_count": 67,
       "click_row": 8,
       "raw_ocr": "EVOLUTIONARY FRENCH (PARIS)"
+    },
+    "ANWRioGrande": {
+      "scroll_count": 70,
+      "click_row": 7,
+      "raw_ocr": "IO GRANDEANS (LAKEVDO)"
     },
     "ANWRomanians": {
       "scroll_count": 68,

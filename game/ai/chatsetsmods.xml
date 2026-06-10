@@ -102,7 +102,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>As at Breitenfeld — combined arms, light cannon, cavalry flank. The day is ours.</String>
+         <String>Breitenfeld was won before the first volley was fired. This field is no different.</String>
          <Sound>chats\GUST0000.mp3</Sound>
          <StringID>491065</StringID>
       </Sentence>
@@ -278,7 +278,7 @@
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>Mille cammie rosse — and one more victory for the nation.</String>
+         <String>Mille camicie rosse — and one more victory for the nation.</String>
          <Sound>chats\GARI0000.mp3</Sound>
          <StringID>491265</StringID>
       </Sentence>
@@ -2047,42 +2047,42 @@
 <Chatset name="anw_british">
    <Tag type="AiChat" name="ToAllyIntro" priority="Background">
       <Sentence>
-         <String>Hold the line, sir. The rest is arithmetic.</String>
+         <String>I have the heart and stomach of a king, and of a King of England too. We shall prevail together.</String>
          <Sound>chats\ELIZ0000.mp3</Sound>
          <StringID>493350</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyIntro" priority="Background">
       <Sentence>
-         <String>I have seen your kind at Vitoria. Discipline will decide this.</String>
+         <String>I know I have the body of a weak woman, but I have the heart of a King of England. Come, and learn that.</String>
          <Sound>chats\ELIZ0000.mp3</Sound>
          <StringID>493351</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyWhenIWallIn" priority="Background">
       <Sentence>
-         <String>The lines are up. Let them come.</String>
+         <String>England's walls are her fleet and her resolve. Both stand ready.</String>
          <Sound>chats\ELIZ0000.mp3</Sound>
          <StringID>493358</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToEnemyWhenHeWallsIn" priority="Background">
       <Sentence>
-         <String>He hides behind stone. A near-run thing favours the prepared.</String>
+         <String>Spain sent an Armada of one hundred and thirty ships. I sent a storm and English guns. Stone walls are no deterrent.</String>
          <Sound>chats\ELIZ0000.mp3</Sound>
          <StringID>493359</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyILoseExplorerEnemy" priority="Background">
       <Sentence>
-         <String>A gentleman is down. Pity — and advance.</String>
+         <String>A brave servant is lost. England does not forget her own. Press on.</String>
          <Sound>chats\ELIZ0000.mp3</Sound>
          <StringID>493362</StringID>
       </Sentence>
    </Tag>
    <Tag type="AiChat" name="ToAllyBattleOverIWonAsExpected" priority="Background">
       <Sentence>
-         <String>As expected. Brought up the Guards, brought up the Hussars, and that was that.</String>
+         <String>The Elizabethan age does not yield. This field is ours, as it was always meant to be.</String>
          <Sound>chats\ELIZ0000.mp3</Sound>
          <StringID>493365</StringID>
       </Sentence>

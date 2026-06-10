@@ -277,18 +277,27 @@ void anwProbe(string tag = "", string detail = "")
    {
       line = line + " " + detail;
    }
-   // Triple-emit so at least one channel survives:
-   //   1) aiEcho — engine debug stream (visible with developer console / -dev_mode).
-   //   2) aiChat to host (P1) — live chat overlay during the match.
-   //   3) aiChat to self (cMyID) — sometimes preserved when broadcast isn't.
-   // The replay parser greps for "[ANWP v=2" verbatim, so any successful
-   // channel is sufficient. We deliberately do NOT loop over every player
-   // (would 8x the chat volume in 8-player matches) — host receipt is enough.
+   // Emit so at least one channel survives, WITHOUT spamming the host's
+   // on-screen chat box by default:
+   //   1) aiEcho — engine debug stream (no-op on FINAL_RELEASE retail builds,
+   //      live with developer console / -dev_mode).
+   //   2) aiChat to self (cMyID) — recorded in the replay/log chat stream
+   //      (the parser reads every aiChat record regardless of recipient) but
+   //      does NOT render on the human host's on-screen chat box. This is the
+   //      always-on capture channel.
+   //   3) aiChat to host (P1) — ONLY when cANWProbeToHostChat is true. This is
+   //      the live on-screen overlay; it floods the chat box and buries AI
+   //      personality quotes, so it is opt-in (default off) for clean quote
+   //      testing. We deliberately do NOT loop over every player (would 8x the
+   //      chat volume in 8-player matches).
    aiEcho(line);
-   aiChat(1, line);
-   if (cMyID != 1)
+   if (cANWProbeToSelfChat == true)
    {
       aiChat(cMyID, line);
+   }
+   if (cANWProbeToHostChat == true)
+   {
+      aiChat(1, line);
    }
 }
 

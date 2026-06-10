@@ -5,7 +5,6 @@
       "Granadero a Caballo",
       "Lancer",
       "Rodelero",
-      "War Dog",
       "Gatling Gun"
     ],
     "unique_buildings": [],
@@ -88,7 +87,6 @@
     "unique_units": [
       "Rodelero",
       "Lancer",
-      "War Dog",
       "Gatling Gun"
     ],
     "unique_buildings": [],
@@ -117,7 +115,6 @@
     "unique_units": [
       "Lancer",
       "Rodelero",
-      "War Dog",
       "Llanero"
     ],
     "unique_buildings": [],
@@ -416,7 +413,6 @@
     "unique_units": [
       "Lancer",
       "Rodelero",
-      "War Dog",
       "Chasqui"
     ],
     "unique_buildings": [],
@@ -448,8 +444,7 @@
     "civ_bonus": "Outpost Wagon shipped each Age; Outposts spawn Rosior Dragoons when built.",
     "unique_units": [
       "Rosior Dragoon",
-      "Dorobant",
-      "Dorabant"
+      "Dorobant"
     ],
     "unique_buildings": [],
     "playstyle": "Tight civic core with Outpost militia; Rosior Dragoon cavalry from every Outpost; reactive defense that counter-punches hard.",
@@ -487,7 +482,6 @@
     "unique_units": [
       "Rodelero",
       "Lancer",
-      "War Dog",
       "Missionary"
     ],
     "unique_buildings": [],
@@ -534,5 +528,65 @@
     "unique_buildings": [],
     "playstyle": "Multi-barracks line infantry boom with Outpost militia; Federal State cards provide powerful wagons; Minutemen defend early; Regular + Sharpshooter mid-game.",
     "age_up": "Federal States politicians"
+  },
+  "ANWCalifornians": {
+    "civ_bonus": "Hacienda economy sustains ranching and California Lancer cavalry production throughout the game.",
+    "unique_units": [
+      "Padre",
+      "Insurgente",
+      "Soldado",
+      "Chinaco"
+    ],
+    "unique_buildings": [
+      "Hacienda",
+      "Cathedral"
+    ],
+    "playstyle": "Rancho economy from massed Haciendas; California Lancers form the striking arm while Insurgente levies hold the line; Sharpshooter cards from Colonial onward support a grinding advance.",
+    "age_up": "Hacienda wagon politicians"
+  },
+  "ANWBajaCalifornians": {
+    "civ_bonus": "Hacienda economy and Barbacoa food bonus sustain a prolonged mid-game attrition campaign.",
+    "unique_units": [
+      "Padre",
+      "Insurgente",
+      "Soldado",
+      "Chinaco"
+    ],
+    "unique_buildings": [
+      "Hacienda",
+      "Cathedral"
+    ],
+    "playstyle": "Hacienda boom anchors the economy while Padre healing and Insurgente mass-levy absorb early aggression; Chinaco cavalry raids flank the enemy when Soldados advance.",
+    "age_up": "Hacienda wagon politicians"
+  },
+  "ANWCentralAmericans": {
+    "civ_bonus": "Strong Hacienda eco supports continuous barracks production across multiple fronts.",
+    "unique_units": [
+      "Padre",
+      "Insurgente",
+      "Soldado",
+      "Chinaco"
+    ],
+    "unique_buildings": [
+      "Hacienda",
+      "Cathedral"
+    ],
+    "playstyle": "Insurgente + Soldado combined-arms push backed by Padre support and Fortified Hacienda walls; General hero inspires lines as Empressario shipments sustain the war effort into Industrial age.",
+    "age_up": "Hacienda wagon politicians"
+  },
+  "ANWRioGrande": {
+    "civ_bonus": "Ranching Haciendas and Copper Canyon coin production finance a fast cavalry-heavy revolution.",
+    "unique_units": [
+      "Padre",
+      "Insurgente",
+      "Soldado",
+      "Chinaco"
+    ],
+    "unique_buildings": [
+      "Hacienda",
+      "Cathedral"
+    ],
+    "playstyle": "Chinaco cavalry and Insurgente infantry raid from multiple Hacienda-anchored Ranchos; Padre-backed Soldados hold chokepoints as Republic of the Rio Grande cards deliver an elite finishing force.",
+    "age_up": "Hacienda wagon politicians"
   }
 }

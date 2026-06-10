@@ -15,6 +15,16 @@ from typing import Any
 
 
 @dataclass
+class AreaInfo:
+    """Minimal area descriptor for kbArea* mock builtins."""
+    area_id: int
+    area_type: int           # 0=land, 1=water, 2=impassable, 3=cliff
+    center: tuple            # (x, y, z)
+    num_tiles: int
+    border_area_ids: list    # list[int]
+
+
+@dataclass
 class GameState:
     # Time
     sim_time_s: float = 0.0          # simulated game time (seconds)
@@ -54,6 +64,17 @@ class GameState:
     has_water: bool = False
     threat_level: float = 0.0         # 0..1
     enemy_distance: float = 200.0     # tiles to nearest enemy
+
+    # Area graph: dict[area_id -> AreaInfo] for kbArea* mock builtins
+    areas: dict = field(default_factory=dict)
+
+    # Base info: dict[base_id -> dict] for kbBase* mock builtins
+    # Each entry: {"player_id": int, "location": (x,y,z), "front_vector": (x,y,z), "main": bool}
+    bases: dict = field(default_factory=dict)
+
+    # Map dimensions
+    map_x_size: int = 256
+    map_z_size: int = 256
 
     # Action log (side effects of aiTask* / aiCommand* calls)
     actions: list = field(default_factory=list)
@@ -103,9 +124,60 @@ def scenario_industrial() -> GameState:
     return gs
 
 
+def scenario_chokepoint_area_graph() -> "GameState":
+    """Land map with a real chokepoint — area 3 is a narrow corridor (80 tiles)
+    between base area 1 and enemy area 4 with impassable flanks (areas 5, 6).
+    Designed so anwDetectChokepointVector returns a real vector, not the fallback.
+    """
+    gs = scenario_open_age2()
+    gs.map_class = "land"
+    gs.has_water = False
+    # Area 1: main land base (player 1)
+    gs.areas[1] = AreaInfo(1, 0, (100.0, 0.0, 100.0), 500, [3, 5])
+    # Area 3: narrow corridor — the chokepoint (borderless narrow gap)
+    gs.areas[3] = AreaInfo(3, 0, (160.0, 0.0, 100.0), 80, [1, 4, 5, 6])
+    # Area 4: enemy side
+    gs.areas[4] = AreaInfo(4, 0, (220.0, 0.0, 100.0), 400, [3])
+    # Areas 5, 6: impassable flanks
+    gs.areas[5] = AreaInfo(5, 2, (130.0, 0.0, 60.0),  10, [1, 3, 6])
+    gs.areas[6] = AreaInfo(6, 2, (130.0, 0.0, 140.0), 10, [3, 4])
+    # Base 1: player base at area 1 center
+    gs.bases[1] = {
+        "player_id": 1,
+        "location": (100.0, 0.0, 100.0),
+        "front_vector": (1.0, 0.0, 0.0),
+        "main": True,
+    }
+    return gs
+
+
+def scenario_coastal_area_graph() -> "GameState":
+    """Coastal map with water border on the north side.
+    Area 2 is water, bordered by the main land base area 1.
+    Designed so anwDetectCoastVector returns a real (non-fallback) vector.
+    """
+    gs = scenario_coastal_age2()
+    # Area 1: main land base
+    gs.areas[1] = AreaInfo(1, 0, (100.0, 0.0, 100.0), 500, [2, 3])
+    # Area 2: water to the north
+    gs.areas[2] = AreaInfo(2, 1, (100.0, 0.0, 170.0), 200, [1])
+    # Area 3: open land to the east
+    gs.areas[3] = AreaInfo(3, 0, (170.0, 0.0, 100.0), 300, [1])
+    # Base 1: player base at area 1 center
+    gs.bases[1] = {
+        "player_id": 1,
+        "location": (100.0, 0.0, 100.0),
+        "front_vector": (1.0, 0.0, 0.0),
+        "main": True,
+    }
+    return gs
+
+
 SCENARIOS = {
     "open_age2": scenario_open_age2,
     "coastal_age2": scenario_coastal_age2,
     "under_threat_age2": scenario_under_threat_age2,
     "industrial": scenario_industrial,
+    "chokepoint_area_graph": scenario_chokepoint_area_graph,
+    "coastal_area_graph": scenario_coastal_area_graph,
 }

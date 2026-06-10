@@ -23,7 +23,6 @@ MAPPING = {
     # North America
     "anwhomecityamericans":        "british",    # US is British-descended
     "anwhomecitycanada":           "british",    # Canadian Dominion
-    "anwhomecityfrenchcanada":     "french",     # Québec
     "anwhomecitytexas":            "mexico",     # Texian uses Mexican architecture closer
     "anwhomecitycalifornia":       "mexico",     # Californio
     "anwhomecitybajacalifornians": "mexico",     # Baja Californio

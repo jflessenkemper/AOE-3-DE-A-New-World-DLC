@@ -69,8 +69,18 @@ APP_ID = "933110"
 HARNESS_BINARY = (
     "/var/home/jflessenkemper/AOE-3-DE-Harness/build-f44/src/AOE3DEHarness"
 )
+# Framerate cap (-r / --framerate-limit): without these, the headless
+# gamescope backend has no monitor vsync to pace it, so the compositor and
+# the nested AoE3 client both render UNCAPPED — pegging GPU+CPU near 90%
+# while producing thousands of throwaway frames per second. This rig is
+# headless (output is read via harness screenshots, never displayed live),
+# so 30 fps is plenty; AoE3's simulation is fixed-timestep and unaffected by
+# the render cap. -r sets the nested refresh, --framerate-limit clamps the
+# client's presented FPS. Raise to 60 if a future use case needs smoother
+# live capture. (See main.cpp: g_nNestedRefresh / framerate-limit default 0.)
 DESIRED_LAUNCH_OPTIONS = (
     f"{HARNESS_BINARY} --keep-alive -W 1920 -H 1080 -w 1920 -h 1080 "
+    "-r 30 --framerate-limit 30 "
     "--backend headless --xwayland-count 1 -- %command%"
 )
 

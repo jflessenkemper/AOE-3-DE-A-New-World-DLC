@@ -1,3 +1,4 @@
+"""Validate that every ANW civ's age-up tech references resolve to real techs in techtreemods.xml."""
 from __future__ import annotations
 
 from pathlib import Path

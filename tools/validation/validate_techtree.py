@@ -1,3 +1,4 @@
+"""Check data/techtreemods.xml for duplicate tech names and dbid values that would cause silent engine overrides."""
 from __future__ import annotations
 
 from collections import Counter

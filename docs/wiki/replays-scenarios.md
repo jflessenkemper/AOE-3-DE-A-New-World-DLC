@@ -83,7 +83,6 @@ edits are not a community pattern.
 | Path | Purpose |
 |---|---|
 | [`tools/cardextract/l33t_codec.py`](../../tools/cardextract/l33t_codec.py) | Pure-Python wrapper decompressor + compressor |
-| [`tools/aoe3_automation/scenario_emitter.py`](../../tools/aoe3_automation/scenario_emitter.py) | Partial scenario emitter |
 | [`tools/validation/scenario_emitter.py`](../../tools/validation/scenario_emitter.py) | This repo's scenario emitter (validation tier) |
 | [`tools/validation/validate_scenario_binary.py`](../../tools/validation/validate_scenario_binary.py) | `.age3Yscn` binary checks |
 | [`tools/validation/replay_determinism_validator.py`](../../tools/validation/replay_determinism_validator.py) | Replay determinism |

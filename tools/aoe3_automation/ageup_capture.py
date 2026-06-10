@@ -19,6 +19,7 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import sys
 import time
 from pathlib import Path
@@ -34,10 +35,6 @@ from tools.aoe3_automation.in_game_driver import (
 )
 
 SOCKET = "/tmp/AOE3DEHarness.sock"
-OUT_DIR = REPO / "artifacts/validation/visual_art/ANWBritish/full"
-OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-BRITISH_IDX = 3   # Down×3 in civ picker = British Empire (London)
 
 # Resource cheats — try in order; verify by watching resource bar
 RESOURCE_CHEATS = [
@@ -52,8 +49,8 @@ def log(msg: str) -> None:
     print(f"[ageup] {msg}", flush=True)
 
 
-def snap(c: HarnessClient, name: str) -> Path:
-    dest = OUT_DIR / name
+def snap(c: HarnessClient, name: str, out_dir: Path) -> Path:
+    dest = out_dir / name
     r = c.screenshot(str(dest))
     log(f"  => {dest.name} ({r.bytes_written:,} bytes)")
     return dest
@@ -138,7 +135,34 @@ def pixel_brightness(img_path: Path, x: int, y: int) -> int:
 
 
 def main() -> int:
-    log("=== ANWBritish age-up capture ===")
+    ap = argparse.ArgumentParser(
+        description="Age-up dialog capture — parameterized by civ token.")
+    ap.add_argument("--civ", default="ANWBritish",
+                    help="ANW civ token (e.g. ANWFrench).  Default: ANWBritish")
+    ap.add_argument("--out-root", default="artifacts/validation/visual_art",
+                    help="Output root directory (relative to repo root or absolute).  "
+                         "Output goes to <out-root>/<civ>/full/")
+    args = ap.parse_args()
+
+    civ_token = args.civ
+    out_root = Path(args.out_root)
+    if not out_root.is_absolute():
+        out_root = REPO / out_root
+    out_dir = out_root / civ_token / "full"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Resolve picker index from lobby_driver's civ order so any of the 44
+    # ANW civs can be selected without hardcoding per-civ indices.
+    from tools.aoe3_automation import lobby_driver as ld
+    civ_order = ld.get_civ_order()   # list of civ tokens in picker scroll order
+    try:
+        civ_idx = civ_order.index(civ_token)
+    except ValueError:
+        log(f"ERROR: {civ_token!r} not found in picker order; cannot auto-select")
+        log(f"  Available tokens: {civ_order}")
+        return 1
+
+    log(f"=== {civ_token} age-up capture (picker index {civ_idx}) ===")
 
     # Connect to harness
     log(f"Connecting to harness socket {SOCKET} ...")
@@ -165,7 +189,6 @@ def main() -> int:
 
     # Register as harness backend
     set_harness_backend(c)
-    from tools.aoe3_automation import lobby_driver as ld
     ld.set_harness_backend(c)
 
     d = GameDriver(art_dir="/tmp/ageup_capture")
@@ -173,12 +196,12 @@ def main() -> int:
     # ---- Step 1: Navigate to skirmish setup ----
     log("Step 1: Navigate to skirmish setup ...")
     hclick(c, *SKIRMISH_BTN, settle=3.0)
-    snap(c, "dbg_skirmish_setup.png")
+    snap(c, "dbg_skirmish_setup.png", out_dir)
 
-    # ---- Step 2: Select British (P1) ----
-    log("Step 2: Select British Empire (Down×3) for P1 ...")
-    select_civ(c, P1_CIV_FLAG, BRITISH_IDX)
-    snap(c, "dbg_british_selected.png")
+    # ---- Step 2: Select civ (P1) ----
+    log(f"Step 2: Select {civ_token} (Down×{civ_idx}) for P1 ...")
+    select_civ(c, P1_CIV_FLAG, civ_idx)
+    snap(c, "dbg_civ_selected.png", out_dir)
 
     # ---- Step 3: Set P2 to Easy AI (leave default, just verify) ----
     # P2 already defaults to AI. We start with 2 players (1v1 easy).
@@ -189,17 +212,17 @@ def main() -> int:
     # ---- Step 4: Click Play ----
     log("Step 4: Clicking Play ...")
     hclick(c, *PLAY_BTN, settle=3.0)
-    snap(c, "dbg_loading.png")
+    snap(c, "dbg_loading.png", out_dir)
 
     # ---- Step 5: Wait for in-game ----
     log("Step 5: Waiting for in-game HUD (up to 240s) ...")
     if not d.wait_for_in_game(timeout=240):
         log("  ERROR: never reached in-game state")
-        snap(c, "dbg_waitfail.png")
+        snap(c, "dbg_waitfail.png", out_dir)
         return 1
     time.sleep(5)  # extra settle
     log("  In-game!")
-    snap(c, "dbg_ingame_hud.png")
+    snap(c, "dbg_ingame_hud.png", out_dir)
 
     # ---- Step 6: Set game speed to max ----
     log("Step 6: Setting speed to max ...")
@@ -209,7 +232,7 @@ def main() -> int:
     # ---- Step 7: Capture clean scoreboard (03_scoreboard.png) ----
     log("Step 7: Capturing clean scoreboard ...")
     # Game map should be fully visible; just take a screenshot now
-    scoreboard_path = snap(c, "03_scoreboard.png")
+    scoreboard_path = snap(c, "03_scoreboard.png", out_dir)
     log(f"  Scoreboard saved: {scoreboard_path}")
     # Verify it's not black
     brightness = pixel_brightness(scoreboard_path, 960, 540)
@@ -226,7 +249,7 @@ def main() -> int:
         log(f"  Sending cheat: {cheat!r}")
         send_chat_cheat(c, cheat)
     time.sleep(1)
-    snap(c, "dbg_after_cheats.png")
+    snap(c, "dbg_after_cheats.png", out_dir)
 
     # ---- Step 9: Select Town Center (click near screen center) ----
     log("Step 9: Selecting Town Center by clicking near screen center ...")
@@ -236,15 +259,15 @@ def main() -> int:
     # Try Home key to center on TC
     subprocess.run(["xdotool", "key", "Home"], env=env_x, capture_output=True)
     time.sleep(1.5)
-    snap(c, "dbg_after_home.png")
+    snap(c, "dbg_after_home.png", out_dir)
 
     # Click center of screen where TC should be
     hclick(c, 960, 500, settle=0.5)
-    snap(c, "dbg_tc_click1.png")
+    snap(c, "dbg_tc_click1.png", out_dir)
 
     # Check if TC is selected — look at bottom command panel
     # TC's command panel shows at y≈900-1080, we look for non-black pixels there
-    tc_brightness = pixel_brightness(OUT_DIR / "dbg_tc_click1.png", 960, 950)
+    tc_brightness = pixel_brightness(out_dir / "dbg_tc_click1.png", 960, 950)
     log(f"  Command panel brightness at (960,950): {tc_brightness}")
 
     # Also try pressing spacebar (center camera on TC / last event)
@@ -253,8 +276,8 @@ def main() -> int:
         subprocess.run(["xdotool", "key", "space"], env=env_x, capture_output=True)
         time.sleep(1.0)
         hclick(c, 960, 500, settle=0.5)
-        snap(c, "dbg_tc_click2.png")
-        tc_brightness = pixel_brightness(OUT_DIR / "dbg_tc_click2.png", 960, 950)
+        snap(c, "dbg_tc_click2.png", out_dir)
+        tc_brightness = pixel_brightness(out_dir / "dbg_tc_click2.png", 960, 950)
         log(f"  After spacebar, command panel brightness: {tc_brightness}")
 
     # ---- Step 10: Find and probe the Age-Up button ----
@@ -267,7 +290,7 @@ def main() -> int:
     # Age-up is typically bottom-right of command card
 
     # Before clicking age-up, verify we're still in-game
-    snap(c, "dbg_before_ageup.png")
+    snap(c, "dbg_before_ageup.png", out_dir)
 
     # Try clicking several candidate age-up button positions
     # Standard AoE3 command card grid: 5 columns x 3 rows
@@ -284,7 +307,7 @@ def main() -> int:
     # We'll do a visual scan: take a screenshot, view the command panel area
     # to find where the age-up button is
     log("  Taking scan screenshot to identify TC command card ...")
-    scan_path = snap(c, "dbg_tc_command_card.png")
+    scan_path = snap(c, "dbg_tc_command_card.png", out_dir)
 
     # Try to find the age-up button by probing the command panel for
     # a golden/bright pixel (age-up button often has a distinctive color)
@@ -308,7 +331,7 @@ def main() -> int:
         time.sleep(0.3)
         # Click candidate age-up position
         hclick(c, ax, ay, settle=1.5)
-        cand_path = snap(c, f"dbg_ageup_try_{ax}_{ay}.png")
+        cand_path = snap(c, f"dbg_ageup_try_{ax}_{ay}.png", out_dir)
         # Check if a dialog appeared: look for bright pixels in center-screen area
         # A dialog would show bright UI in the ~y=200-800 range
         dialog_brightness = pixel_brightness(cand_path, 960, 400)
@@ -336,7 +359,7 @@ def main() -> int:
     time.sleep(0.5)
     # Click age-up
     hclick(c, *age_up_button_xy, settle=2.0)
-    age2_path = snap(c, "08_ageup_age2.png")
+    age2_path = snap(c, "08_ageup_age2.png", out_dir)
     brightness2 = pixel_brightness(age2_path, 960, 400)
     log(f"  Age II dialog brightness at (960,400): {brightness2}")
 
@@ -347,9 +370,9 @@ def main() -> int:
         time.sleep(0.5)
         # Try a different approach: single-click TC, then probe command card more carefully
         hclick(c, 960, 480, settle=0.5)  # slightly higher
-        snap(c, "dbg_tc_higher_click.png")
+        snap(c, "dbg_tc_higher_click.png", out_dir)
         hclick(c, *age_up_button_xy, settle=2.0)
-        age2_path = snap(c, "08_ageup_age2.png")
+        age2_path = snap(c, "08_ageup_age2.png", out_dir)
         brightness2 = pixel_brightness(age2_path, 960, 400)
         log(f"  Retry Age II brightness: {brightness2}")
 
@@ -360,7 +383,7 @@ def main() -> int:
     # Wait for age-up to complete (can take 30-60s at game speed; at max speed ~5-10s)
     log("  Waiting 15s for age-up to complete ...")
     time.sleep(15)
-    snap(c, "dbg_after_age2.png")
+    snap(c, "dbg_after_age2.png", out_dir)
 
     # ---- Step 12: Capture Age III dialog ----
     log("\nStep 12: Capturing Age III dialog ...")
@@ -369,14 +392,14 @@ def main() -> int:
     hclick(c, 960, 500, settle=0.5)
     time.sleep(0.3)
     hclick(c, *age_up_button_xy, settle=2.0)
-    age3_path = snap(c, "08_ageup_age3.png")
+    age3_path = snap(c, "08_ageup_age3.png", out_dir)
     brightness3 = pixel_brightness(age3_path, 960, 400)
     log(f"  Age III dialog brightness at (960,400): {brightness3}")
     # Choose politician
     hclick(c, 600, 500, settle=2.0)
     log("  Waiting 15s for age-up ...")
     time.sleep(15)
-    snap(c, "dbg_after_age3.png")
+    snap(c, "dbg_after_age3.png", out_dir)
 
     # ---- Step 13: Capture Age IV dialog ----
     log("\nStep 13: Capturing Age IV dialog ...")
@@ -385,13 +408,13 @@ def main() -> int:
     hclick(c, 960, 500, settle=0.5)
     time.sleep(0.3)
     hclick(c, *age_up_button_xy, settle=2.0)
-    age4_path = snap(c, "08_ageup_age4.png")
+    age4_path = snap(c, "08_ageup_age4.png", out_dir)
     brightness4 = pixel_brightness(age4_path, 960, 400)
     log(f"  Age IV dialog brightness at (960,400): {brightness4}")
     hclick(c, 600, 500, settle=2.0)
     log("  Waiting 15s for age-up ...")
     time.sleep(15)
-    snap(c, "dbg_after_age4.png")
+    snap(c, "dbg_after_age4.png", out_dir)
 
     # ---- Step 14: Capture Age V dialog ----
     log("\nStep 14: Capturing Age V dialog ...")
@@ -400,7 +423,7 @@ def main() -> int:
     hclick(c, 960, 500, settle=0.5)
     time.sleep(0.3)
     hclick(c, *age_up_button_xy, settle=2.0)
-    age5_path = snap(c, "08_ageup_age5.png")
+    age5_path = snap(c, "08_ageup_age5.png", out_dir)
     brightness5 = pixel_brightness(age5_path, 960, 400)
     log(f"  Age V dialog brightness at (960,400): {brightness5}")
     hclick(c, 600, 500, settle=2.0)
@@ -418,12 +441,12 @@ def main() -> int:
         status = "LIKELY_OK" if bri > 300 else "POSSIBLE_FAIL"
         log(f"  {name:15s}: {fname}  brightness={bri}  [{status}]")
 
-    log(f"\nFiles in {OUT_DIR}:")
+    log(f"\nFiles in {out_dir}:")
     for fname in ["03_scoreboard.png", "08_ageup_age2.png", "08_ageup_age3.png",
                   "08_ageup_age4.png", "08_ageup_age5.png"]:
-        p = OUT_DIR / fname
-        exists = p.exists()
-        size = p.stat().st_size if exists else 0
+        fp = out_dir / fname
+        exists = fp.exists()
+        size = fp.stat().st_size if exists else 0
         log(f"  {'OK' if exists else 'MISSING':6s} {fname} ({size:,} bytes)")
 
     return 0

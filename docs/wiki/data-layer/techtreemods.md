@@ -8,7 +8,7 @@
 ## Schema
 
 ```xml
-<techtree>
+<techtreemods>                          <!-- root is <techtreemods>, not <techtree> -->
   <Tech name='ColonializeBritish' type='Normal'>
     <DBID>30001</DBID>
     <Status>UNOBTAINABLE</Status>
@@ -28,8 +28,12 @@
     <Cost resourcetype='Food'>...</Cost>
     <ResearchPoints>...</ResearchPoints>
   </Tech>
-</techtree>
+</techtreemods>
 ```
+
+> ANW's `data/techtreemods.xml` is rooted at `<techtreemods>` and currently
+> defines **278** `<Tech>` entries (verified). Each `<Tech>` merges into the
+> base techtree by its `name` attribute.
 
 ### Per-`<Tech>` fields
 
@@ -70,8 +74,10 @@
 ## File paths
 
 - Base: `techtree.xml.xmb` and `techtreey.xml.xmb` inside base BARs.
-- Mod overlay: `data/techtreemods.xml` (additive) and optionally
-  `data/techtreeymods.xml` for the DE patch-y branch.
+- Mod overlay: `data/techtreemods.xml` (additive). A
+  `data/techtreeymods.xml` for the DE patch-y (`techtreey`) branch is
+  possible in principle but **ANW does not ship one** (verified: no such
+  file in `data/`).
 - Politician entries reference `politiciandata.xml` for portraits.
 
 ## Cross-references

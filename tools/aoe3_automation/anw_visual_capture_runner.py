@@ -162,7 +162,71 @@ from tools.aoe3_automation.in_game_driver import (
     _focus_window,
 )
 from tools.aoe3_automation.lobby_driver import screenshot as _gs_screenshot
+from tools.aoe3_automation import in_game_driver as _igd
 from tools.aoe3_automation.ally_all import ally_all
+
+# ---------------------------------------------------------------------------
+# Harness backend wiring.
+# ---------------------------------------------------------------------------
+# CRITICAL (2026-06-05): this runner historically never connected the
+# AOE3DEHarness control socket, so EVERY click fell through to the flaky
+# xdotool path. In this Proton/gamescope build, xdotool clicks frequently
+# mis-target in-game panels (home-city button, player-summary rows, resign),
+# leaving the runner stuck on an AI home-city screen — which then got
+# re-snapped as scoreboard/esc/endgame. The harness routes clicks through
+# the engine control socket and lands reliably (verified: menu + tech-tree
+# clicks land first-try). Wire it into BOTH lobby_driver and in_game_driver.
+_HARNESS_SOCKET = "/tmp/AOE3DEHarness.sock"
+
+
+def _wire_harness() -> bool:
+    """Connect the AOE3DEHarness socket and register it as the input backend.
+
+    Returns True if the harness is connected+ready (clicks route through the
+    socket); False if unavailable (callers continue on the xdotool fallback).
+    """
+    try:
+        from tools.aoe3_harness.harness_client import HarnessClient
+        client = HarnessClient(_HARNESS_SOCKET, timeout=5.0)
+        client.connect(timeout=5.0)
+        if client.state().ready == 1:
+            ldr.set_harness_backend(client)
+            _igd.set_harness_backend(client)
+            log.info("harness_connected", socket=_HARNESS_SOCKET)
+            return True
+        log.warning("harness_not_ready", socket=_HARNESS_SOCKET)
+    except Exception as exc:
+        log.warning("harness_connect_failed", socket=_HARNESS_SOCKET, exc=str(exc))
+    return False
+
+
+def _return_to_game_world(max_tries: int = 4) -> bool:
+    """Force the UI back to the plain in-game world (no panel, no ESC menu).
+
+    The in-game capture flow opens several modal surfaces (Home City panel,
+    Player Summary, ESC menu). If one is left open it blocks every later
+    click and poisons subsequent captures. This routine normalises the state:
+
+      * If the ESC menu is up (pixel probe), press Escape to dismiss it.
+      * Otherwise press Escape once to close any open panel; if that *opened*
+        the ESC menu (because nothing was open), press Escape again.
+
+    Returns True once the game world is confirmed clean (no ESC menu pixel).
+    """
+    for _ in range(max_tries):
+        if _igd._esc_menu_open():
+            _igd._key("Escape")
+            time.sleep(0.8)
+            continue
+        # No ESC menu visible — either game world, or a panel is open.
+        _igd._key("Escape")
+        time.sleep(0.8)
+        if _igd._esc_menu_open():
+            # Escape opened the menu => we were already at game world. Dismiss.
+            _igd._key("Escape")
+            time.sleep(0.8)
+        return True
+    return False
 
 # ---------------------------------------------------------------------------
 # Splash-detection guard (graceful-degradation import)
@@ -171,9 +235,11 @@ from tools.aoe3_automation.ally_all import ally_all
 # the pipeline falls back to the plain HUD_SETTLE sleep — no crash.
 try:
     from tools.aoe3_automation.image_utils import is_splash_frame as _is_splash_frame
+    from tools.aoe3_automation.image_utils import is_asset_preloading_frame as _is_asset_preloading_frame
     _SPLASH_DETECTION_AVAILABLE = True
 except Exception:
     _SPLASH_DETECTION_AVAILABLE = False
+    _is_asset_preloading_frame = None  # type: ignore[assignment]
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -185,10 +251,18 @@ SKIP_CIVS: set[str] = set()
 # Smoke-test civ list (2 civs, chosen for being near top of picker)
 SMOKE_CIVS: list[str] = ["ANWBritish", "ANWFrench"]
 
-# Seconds to wait after click_play before capturing the loading screen frame
-# 2026-05-28 speed-up #2: 11 → 9. Loading flag is fully rendered by 8s in all
-# observed cases; the 11s value had 3s slack we don't need.
-LOADING_SCREEN_SLEEP = 9
+# Seconds to wait after click_play before capturing the loading screen frame.
+# 2026-05-28 speed-up #2 trimmed this from 11 → 9, but that caused a race for
+# ANWBritish (02_loading showed the lobby, not the loading banner, because the
+# engine hadn't transitioned within 9s).  Restored to 11 to restore the safety
+# margin.  The state-transition guard below provides an additional correctness
+# check at minimal overhead.
+LOADING_SCREEN_SLEEP = 11
+
+# Minimum elapsed time (seconds) since click_play before we allow the
+# 02_loading capture.  If is_in_game() is True before this many seconds pass,
+# we have already missed the loading screen and will warn.
+_LOADING_SCREEN_GUARD_S = 5
 
 # Seconds to settle before HUD captures after wait_for_in_game.
 # wait_for_in_game returns once the engine emits "entering mode 27 (SinglePlayer)"
@@ -200,12 +274,32 @@ LOADING_SCREEN_SLEEP = 9
 # 17s covers the case where splash detection is unavailable or the probe fails.
 HUD_SETTLE = 17
 
+# Reduced settle when wait_for_splash_clear positively confirmed the splash is
+# gone via pixel probe.  The frame is already rendered; we only need a short
+# gap for gamescope to flush the next vsync and _focus_window() to land.
+# Old: always 17s → New: 3s when visually confirmed, 17s when blind.
+# (2026-06-09 speed-up #3)
+HUD_SETTLE_CONFIRMED = 3
+
 # Splash-clear poll parameters.  After wait_for_in_game returns True the
 # "Asset Preloading" splash can persist for 14-25 s.  We probe with a
 # throwaway screenshot and loop until the frame is no longer a splash OR until
 # SPLASH_CLEAR_TIMEOUT elapses (then proceed anyway — belt-and-suspenders).
-SPLASH_CLEAR_TIMEOUT = 35   # seconds before giving up and proceeding
+# 2026-06-09 raised 35→75: the loading screen can APPEAR as late as ~25 s and
+# then persist another ~30-40 s while assets stream, so 35 s could time out
+# mid-load and fall through to a contaminated capture.
+SPLASH_CLEAR_TIMEOUT = 75   # seconds before giving up and proceeding
 SPLASH_POLL_INTERVAL = 2    # seconds between probe screenshots
+# A single not-loading probe at t=0 is meaningless: the Asset-Preloading screen
+# can take a few seconds to APPEAR, so an early "clear" reading just means it
+# hasn't shown up yet (this is the 2026-06-09 regression — poll=0 said clear,
+# settle 3 s, then the screen appeared and the capture landed on it).  We only
+# trust a "clear" reading if EITHER we positively watched the loading screen
+# clear (a seen→gone transition, stable for SPLASH_CLEAR_STREAK consecutive
+# probes), OR we have polled past SPLASH_APPEAR_WINDOW_S with no loading screen
+# ever seen (the load genuinely finished before we started polling).
+SPLASH_APPEAR_WINDOW_S = 27   # max time the loading screen may take to appear
+SPLASH_CLEAR_STREAK = 2       # consecutive not-loading probes to confirm a clear
 
 # In-game wait timeout
 IN_GAME_TIMEOUT = 240
@@ -324,7 +418,7 @@ def _safe_screenshot(label: str, out_path: Path, warnings: list[str]) -> bool:
     return ok
 
 
-def wait_for_splash_clear(log: Any, civ_token: str) -> None:
+def wait_for_splash_clear(log: Any, civ_token: str) -> bool:
     """Poll until the "Asset Preloading" splash is gone, then return.
 
     Takes throwaway probe screenshots to a temp path and calls is_splash_frame
@@ -333,22 +427,31 @@ def wait_for_splash_clear(log: Any, civ_token: str) -> None:
 
     Degrades silently if PIL / image_utils is unavailable (_SPLASH_DETECTION_AVAILABLE
     is False) — control returns immediately and the caller's HUD_SETTLE covers it.
+
+    Returns True ONLY when the splash was positively confirmed clear via the
+    pixel probe (the ``if not still_splash: break`` path).  Returns False in
+    every other exit: PIL/image_utils unavailable, probe exception, or timeout.
+    The caller uses the return value to choose between HUD_SETTLE_CONFIRMED (fast
+    path — visually verified) and HUD_SETTLE (full belt-and-suspenders floor).
     """
     import tempfile
     if not _SPLASH_DETECTION_AVAILABLE:
         log.info("splash_poll_skipped", civ=civ_token,
                  reason="image_utils_or_pil_unavailable")
-        return
+        return False
 
     probe_path = Path(tempfile.gettempdir()) / ".aoe3_splash_probe.png"
     t_start = time.time()
     poll_idx = 0
+    confirmed_clear = False
+    seen_splash = False     # have we ever observed the loading screen?
+    clear_streak = 0        # consecutive not-loading probes
     while True:
         elapsed = time.time() - t_start
         if elapsed >= SPLASH_CLEAR_TIMEOUT:
             log.warning("splash_poll_timeout", civ=civ_token,
                         elapsed_s=round(elapsed, 1),
-                        timeout_s=SPLASH_CLEAR_TIMEOUT)
+                        timeout_s=SPLASH_CLEAR_TIMEOUT, seen_splash=seen_splash)
             break
         # Capture probe frame
         try:
@@ -358,10 +461,24 @@ def wait_for_splash_clear(log: Any, civ_token: str) -> None:
                      error=str(exc))
             break
         still_splash = _is_splash_frame(probe_path)
+        if still_splash:
+            seen_splash = True
+            clear_streak = 0
+        else:
+            clear_streak += 1
         log.info("splash_poll", civ=civ_token, poll=poll_idx,
-                 elapsed_s=round(elapsed, 1), still_splash=still_splash)
+                 elapsed_s=round(elapsed, 1), still_splash=still_splash,
+                 seen_splash=seen_splash, clear_streak=clear_streak)
         if not still_splash:
-            break
+            # Trust a "clear" reading only if we positively watched the loading
+            # screen clear (seen→gone, stable), OR the appearance window has
+            # fully elapsed with no loading screen ever observed (already done).
+            if seen_splash and clear_streak >= SPLASH_CLEAR_STREAK:
+                confirmed_clear = True
+                break
+            if (not seen_splash) and elapsed >= SPLASH_APPEAR_WINDOW_S:
+                confirmed_clear = True
+                break
         poll_idx += 1
         time.sleep(SPLASH_POLL_INTERVAL)
     # Clean up probe
@@ -369,6 +486,61 @@ def wait_for_splash_clear(log: Any, civ_token: str) -> None:
         probe_path.unlink(missing_ok=True)
     except Exception:
         pass
+    return confirmed_clear
+
+
+def _wait_assetpreload_clear(
+    probe_path: Path,
+    *,
+    timeout_s: float = 30.0,
+    poll_s: float = 2.0,
+) -> bool:
+    """Poll until the AoE3 "Asset Preloading (Beta)" splash is gone.
+
+    AoE3's "Asset Preloading (Beta)" splash lingers after opening the Home City
+    panel (and the AI Home City scene) — if we shoot immediately we save a dark
+    loading screen, not the real scene. This helper polls until the splash clears
+    before the caller takes the real screenshot — see validate_no_loading_screen_contamination.py.
+
+    Takes a throwaway probe screenshot to *probe_path* (reuses _gs_screenshot,
+    the same backend used by _safe_screenshot), calls is_asset_preloading_frame,
+    and if True sleeps *poll_s* and retries until the frame is clean or
+    *timeout_s* elapses.
+
+    Returns True if the splash cleared (or was never detected).
+    Returns False on timeout.
+    Never raises — wraps everything in try/except so the caller always gets
+    a bool and can still proceed to take the real shot.
+    """
+    if not _SPLASH_DETECTION_AVAILABLE or _is_asset_preloading_frame is None:
+        # PIL / image_utils unavailable — degrade silently, let caller proceed.
+        return True
+    try:
+        t_start = time.time()
+        while True:
+            elapsed = time.time() - t_start
+            if elapsed >= timeout_s:
+                return False
+            try:
+                _gs_screenshot(probe_path)
+            except Exception:
+                # Probe shot failed — stop polling, let real capture try anyway.
+                return True
+            try:
+                still_loading = _is_asset_preloading_frame(probe_path)
+            except Exception:
+                # Detector error — degrade, let caller proceed.
+                return True
+            if not still_loading:
+                return True
+            time.sleep(poll_s)
+    except Exception:
+        return True
+    finally:
+        try:
+            probe_path.unlink(missing_ok=True)
+        except Exception:
+            pass
 
 
 # Coords empirically located 2026-05-18 against the SELECT MAP picker at
@@ -590,6 +762,20 @@ def _relaunch_aoe3(timeout_s: int = 240) -> bool:
                 test_path.unlink(missing_ok=True)
                 log.info("aoe3_relaunch_ready",
                          elapsed_s=round(time.time() - t0, 1))
+                # 2026-06-09: re-wire the harness BEFORE the popup dismiss.
+                # The relaunch killed the old AoE3 process, so the harness
+                # socket wired for it is dead; without re-wiring here,
+                # _dismiss_weekly_popup()'s clicks (harness MOVE/CLICK) hit a
+                # broken pipe (Errno 32) every relaunch and silently degrade to
+                # xdotool. The CALLER also re-wires post-relaunch (kept as
+                # belt-and-suspenders and so validate_harness_rewire_after_relaunch
+                # stays green); this in-function re-wire just makes the
+                # immediately-following popup dismiss use a live socket.
+                try:
+                    _wire_harness()
+                    log.info("harness_rewired_in_relaunch")
+                except Exception as exc:
+                    log.warning("harness_rewire_in_relaunch_failed", exc=str(exc))
                 # 2026-05-28: dismiss the recurring "Choose One Free Weekly
                 # Profile Picture Reward" modal that blocked the entire
                 # overnight run (0/40 civs progressed past it). The popup
@@ -661,22 +847,36 @@ def _dismiss_weekly_popup_quick() -> None:
     settled (wait_for_main_menu just returned successfully).
 
     Skips the 10s fresh-launch settle that the original _dismiss_weekly_popup
-    needs. If the popup is present we click Close twice with a short gap;
-    if not, the clicks land on background art (no-op).
+    needs. Three-step defence:
+      1. Press Escape — closes any focused modal that accepts Escape, including
+         the weekly profile-picture-reward popup.  Harmless on the bare menu.
+      2. Click the known Close button coord twice with a short gap — catches
+         popups that don't respond to Escape (e.g. are focused on a button
+         that traps the key).  If no popup is present, the coord lands on
+         background art and the click is a no-op.
+      3. Short settle to let the animation complete before the next click.
 
-    Total cost: ~2s per civ. Without this, the British capture's 01_lobby
-    showed the popup blocking the main menu — proves the runner-startup
-    dismiss alone is insufficient (popup can re-arm or be missed entirely
-    if AoE3 was already running before the runner started).
+    If AoE3 is not alive, returns immediately.
+
+    Total cost: ~2.5s per civ.
     """
     try:
         if not _is_aoe3_alive():
             return
         _focus_window()
-        time.sleep(0.3)
+        time.sleep(0.5)
+        # Step 1: Escape — closes Escape-dismissible modals (including the
+        # Weekly Profile Picture Reward popup and any stuck OK-dialog).
+        _key("Escape")
+        time.sleep(0.6)
+        # Step 2: Three blind clicks at the Close button location.  Three
+        # because the popup is sometimes mid-fade when click 1 fires and
+        # the engine swallows click 2 on some frame-timing paths.
         _click(*_WEEKLY_POPUP_CLOSE, delay=0.4)
-        time.sleep(0.8)
+        time.sleep(0.5)
         _click(*_WEEKLY_POPUP_CLOSE, delay=0.4)
+        time.sleep(0.5)
+        _click(*_WEEKLY_POPUP_CLOSE, delay=0.3)
         time.sleep(0.4)
         log.info("popup_dismiss_quick_done")
     except Exception as exc:
@@ -785,6 +985,7 @@ def _run_host_civ(
     coords: dict,
     enriched_ref: dict,
     resume: bool,
+    buildings: bool = False,
 ) -> dict:
     """Capture all 9 host-perspective surfaces for one civ.
 
@@ -826,6 +1027,38 @@ def _run_host_civ(
     except Exception as exc:
         warnings.append(f"per_civ_popup_dismiss:{exc!r}")
 
+    # ── 0c. Screen-state precondition ────────────────────────────────────────
+    # Guard against the case where the game is sitting in a paused match (or
+    # other non-menu state) when this civ's capture run begins.
+    # wait_for_main_menu() above is unreliable mid-session (Age3Log already
+    # contains the mode-1 marker from boot). This pixel+OCR check is the
+    # authoritative gate.
+    try:
+        from tools.aoe3_automation.screen_state import ensure_at_main_menu
+        if not ensure_at_main_menu(driver, max_attempts=3):
+            _state = __import__(
+                "tools.aoe3_automation.screen_state",
+                fromlist=["detect_screen_state"],
+            ).detect_screen_state()
+            warnings.append(f"precondition:not_at_main_menu:state={_state}:aborting")
+            log.warning(
+                "precondition_failed_bad_screen_state",
+                civ=civ_token,
+                state=_state,
+            )
+            _write_manifest(
+                civ_dir, civ_token=civ_token, host_perspective=True,
+                host_civ_token=None, match_id=mid, captured_at=captured_at,
+                captures=captures, status="bad_screen_state", warnings=warnings,
+            )
+            return {
+                "civ_token": civ_token,
+                "status": "bad_screen_state",
+                "elapsed_s": round(time.time() - t0, 1),
+            }
+    except Exception as exc:
+        warnings.append(f"precondition:screen_state_check:{exc!r}")
+
     # ── 1. Click Skirmish ────────────────────────────────────────────────────
     try:
         ldr.click_skirmish(coords)
@@ -839,16 +1072,19 @@ def _run_host_civ(
                     elapsed_s=round(time.time() - t0, 1))
         return {"civ_token": civ_token, "status": "failed", "elapsed_s": round(time.time() - t0, 1)}
 
-    # ── 2. Pick P1 civ via cache-driven fast path ────────────────────────────
-    # 2026-05-18: prefer_ocr=False uses picker_civ_order.json (fresh as of
-    # 2026-05-17) scroll_count + click_row, no OCR. The OCR fallback is
-    # broken in this build (PATH_B_NOTES.md: picker auto-recentres on
-    # currently-selected civ, "reset to Random" pre-step not implemented).
-    # The lobby/loading/HUD captures themselves serve as visual verification.
+    # ── 2. Pick P1 civ via OCR-verified selection ────────────────────────────
+    # 2026-06-09: prefer_ocr=True forces the OCR-walk path in
+    # set_civ_by_token_verified, bypassing the stale picker_civ_order.json
+    # cache. The cache was frozen before Californians/Canadians/CentralAmericans
+    # were added, so every civ after those three has a wrong scroll_count/click_row
+    # (e.g. ANWBritish scroll_count=24 now lands on NapoleonicFrance/French).
+    # With prefer_ocr=True the function OCR-walks the picker, locates the row
+    # whose text matches the expected civ token via _find_target_row_in_picker,
+    # clicks it, and confirms — it never trusts stale coordinates.
     try:
         _focus_window()
         res = ldr.set_civ_by_token_verified(coords, civ_token, enriched_ref,
-                                            prefer_ocr=False)
+                                            prefer_ocr=True)
         if not res.get("ok"):
             raise RuntimeError(f"set_civ_verified not ok: {res.get('history', [])!r}")
         time.sleep(0.6)
@@ -909,18 +1145,58 @@ def _run_host_civ(
                     elapsed_s=round(time.time() - t0, 1))
         return {"civ_token": civ_token, "status": "failed", "elapsed_s": round(time.time() - t0, 1)}
 
-    # ── 5. Capture 02_loading (12-15s after click_play) ───────────────────────
-    # Sleep ~13s to be mid-loading-screen, then snap. We must NOT wait for
-    # in-game first because the loading screen will be gone. After the snap
-    # we continue into wait_for_in_game as normal.
-    time.sleep(LOADING_SCREEN_SLEEP)
-    p = full_dir / "02_loading.png"
-    ms = _utc_now_ms()
-    if _safe_screenshot("02_loading", p, warnings):
-        captures.append(_build_capture_entry(
-            "02_loading", "full/02_loading.png", ms, LABEL_TO_CROPS["02_loading"]))
+    # ── 5. Capture 02_loading ─────────────────────────────────────────────────
+    # Wait LOADING_SCREEN_SLEEP seconds to be mid-loading-screen, then snap.
+    # We must NOT call wait_for_in_game first because the loading screen will
+    # be gone by the time that returns.  After the snap we continue into
+    # wait_for_in_game as normal.
+    #
+    # State-transition guard (BUG 4 fix): poll in 1-second ticks while we wait.
+    # If is_in_game() returns True before _LOADING_SCREEN_GUARD_S seconds have
+    # elapsed, the engine transitioned faster than expected and we risk
+    # capturing the lobby instead of the loading screen — record a warning.
+    # If is_in_game() is already True at the moment we take the screenshot, we
+    # have missed the loading screen entirely and record a different warning.
+    _play_t0 = time.time()
+    _snap_at = _play_t0 + LOADING_SCREEN_SLEEP
+    _transitioned_early = False
+    while time.time() < _snap_at:
+        elapsed_since_play = time.time() - _play_t0
+        if elapsed_since_play < _LOADING_SCREEN_GUARD_S:
+            # Still inside the guard window — check for suspiciously fast
+            # transition (means we may still be on the lobby).
+            try:
+                if driver.is_in_game():
+                    _transitioned_early = True
+                    warnings.append("02_loading:in_game_before_guard_expired"
+                                    f"_elapsed={elapsed_since_play:.1f}s")
+                    break
+            except Exception:
+                pass
+        time.sleep(1.0)
+    if _transitioned_early:
+        warnings.append("02_loading:skipped_transitioned_too_fast")
+        log.warning("loading_capture_skipped_too_fast", civ=civ_token,
+                    elapsed_s=round(time.time() - _play_t0, 1))
     else:
-        warnings.append("02_loading:loading_screen_too_short_or_already_past")
+        # Verify we haven't already passed the loading screen
+        _already_in_game = False
+        try:
+            _already_in_game = driver.is_in_game()
+        except Exception:
+            pass
+        if _already_in_game:
+            warnings.append("02_loading:skipped_already_in_game_at_capture_time")
+            log.warning("loading_capture_skipped_already_in_game", civ=civ_token)
+        else:
+            p = full_dir / "02_loading.png"
+            ms = _utc_now_ms()
+            if _safe_screenshot("02_loading", p, warnings):
+                captures.append(_build_capture_entry(
+                    "02_loading", "full/02_loading.png", ms,
+                    LABEL_TO_CROPS["02_loading"]))
+            else:
+                warnings.append("02_loading:screenshot_failed")
 
     # ── 6. Wait for in-game ───────────────────────────────────────────────────
     try:
@@ -945,9 +1221,14 @@ def _run_host_civ(
     # Poll until the "Asset Preloading" splash visual has cleared (typically
     # 14-25 s after the mode-27 log marker).  Degrades gracefully if PIL is
     # unavailable.  HUD_SETTLE follows as a belt-and-suspenders floor.
-    wait_for_splash_clear(log, civ_token)
-    log.info("in_game", civ=civ_token, settling_s=HUD_SETTLE)
-    time.sleep(HUD_SETTLE)
+    # 2026-06-09 speed-up #3: use HUD_SETTLE_CONFIRMED (3s) when the probe
+    # positively confirmed the frame is clear; fall back to HUD_SETTLE (17s)
+    # when blind (PIL unavailable, probe failed, or timeout).
+    splash_confirmed = wait_for_splash_clear(log, civ_token)
+    settle_s = HUD_SETTLE_CONFIRMED if splash_confirmed else HUD_SETTLE
+    log.info("in_game", civ=civ_token, settling_s=settle_s,
+             splash_confirmed=splash_confirmed)
+    time.sleep(settle_s)
     _focus_window()
     p = full_dir / "03_hud.png"
     ms = _utc_now_ms()
@@ -956,130 +1237,189 @@ def _run_host_civ(
             "03_hud", "full/03_hud.png", ms, LABEL_TO_CROPS["03_hud"]))
 
     # ── 8. Home City panel (04) ───────────────────────────────────────────────
+    # The 'H' hotkey opens the in-game Home City panel (verified 2026-06-01,
+    # verified_coords_british.md line 152). The previous HOMECITY_BTN=(1850,80)
+    # click targeted empty HUD space and never opened the panel — every prior
+    # run captured the plain game world here.
+    _hc_panel_opened = False
     try:
         _focus_window()
-        _click(*HOMECITY_BTN, delay=1.5)
-        time.sleep(1.5)
+        _key("h")
+        _hc_panel_opened = True
+        time.sleep(2.2)
+        # Guard: AoE3 "Asset Preloading (Beta)" splash lingers after opening Home
+        # City — poll until it clears before shooting, else we save a loading
+        # screen — see validate_no_loading_screen_contamination.py.
+        _ap_probe = full_dir / "_preload_probe.png"
+        if not _wait_assetpreload_clear(_ap_probe):
+            warnings.append("homecity_panel_assetpreload_timeout")
         p = full_dir / "04_homecity_panel.png"
         ms = _utc_now_ms()
         if _safe_screenshot("04_homecity_panel", p, warnings):
             captures.append(_build_capture_entry(
                 "04_homecity_panel", "full/04_homecity_panel.png", ms,
                 LABEL_TO_CROPS["04_homecity_panel"]))
-        _key("Escape")
-        time.sleep(0.8)
+
+            # ── 8b. Post-launch civ assertion ────────────────────────────────
+            # 2026-06-09: guard against stale-cache wrong-civ launches.
+            # Invert HOME_CITY_TO_TOKEN to get the expected on-screen home-city
+            # name for this civ token, then OCR the HC panel screenshot and
+            # compare.  If the names don't match, log a clear warning and mark
+            # the result as civ_mismatch so it is excluded from promotion.
+            try:
+                import re as _re
+                # Build token→home-city mapping from the canonical reverse table.
+                _token_to_hc: dict[str, list[str]] = {}
+                for _hc_name, _tok in ldr.HOME_CITY_TO_TOKEN.items():
+                    _token_to_hc.setdefault(_tok, []).append(_hc_name)
+                _expected_hc_names = _token_to_hc.get(civ_token, [])
+
+                # OCR the saved HC-panel screenshot for any home-city name.
+                _ocr_text_raw = ""
+                try:
+                    import pytesseract
+                    from PIL import Image as _PILImage
+                    _hc_img = _PILImage.open(p)
+                    _ocr_text_raw = pytesseract.image_to_string(_hc_img)
+                except Exception as _ocr_exc:
+                    log.warning("civ_assert_ocr_unavailable",
+                                civ=civ_token, exc=str(_ocr_exc))
+                    warnings.append(f"civ_assert:ocr_unavailable:{_ocr_exc!r}")
+
+                if _ocr_text_raw:
+                    _ocr_upper = _ocr_text_raw.upper()
+                    # Check whether ANY known home-city name appears in the OCR.
+                    _found_hc_names = [
+                        n for n in ldr.HOME_CITY_TO_TOKEN
+                        if n in _ocr_upper
+                    ]
+                    _expected_found = any(
+                        n in _ocr_upper for n in _expected_hc_names
+                    )
+                    # Check whether a DIFFERENT civ's home-city name is visible.
+                    _wrong_tokens = {
+                        ldr.HOME_CITY_TO_TOKEN[n]
+                        for n in _found_hc_names
+                        if ldr.HOME_CITY_TO_TOKEN[n] != civ_token
+                    }
+                    if not _expected_found and _found_hc_names:
+                        # A foreign home-city name is present → wrong civ launched.
+                        log.warning(
+                            "civ_mismatch_detected",
+                            civ_expected=civ_token,
+                            hc_expected=_expected_hc_names,
+                            hc_found=_found_hc_names,
+                            wrong_tokens=list(_wrong_tokens),
+                        )
+                        warnings.append(
+                            f"civ_assert:MISMATCH expected={_expected_hc_names}"
+                            f" found={_found_hc_names}"
+                        )
+                        # Mark result and write manifest, then skip remaining captures.
+                        _write_manifest(
+                            civ_dir, civ_token=civ_token, host_perspective=True,
+                            host_civ_token=None, match_id=mid,
+                            captured_at=captured_at, captures=captures,
+                            status="civ_mismatch", warnings=warnings,
+                        )
+                        # Close HC panel before bailing out (best-effort).
+                        try:
+                            _key("h")
+                            time.sleep(1.0)
+                            _hc_panel_opened = False
+                        except Exception:
+                            pass
+                        log.warning(
+                            "civ_skipped_mismatch",
+                            civ=civ_token,
+                            elapsed_s=round(time.time() - t0, 1),
+                        )
+                        return {
+                            "civ_token": civ_token,
+                            "status": "civ_mismatch",
+                            "elapsed_s": round(time.time() - t0, 1),
+                        }
+                    elif _expected_found:
+                        log.info("civ_assert_ok", civ=civ_token,
+                                 hc_found=_found_hc_names)
+                    else:
+                        # OCR ran but found no recognisable home-city name at all —
+                        # HC panel may not have fully rendered; log but continue.
+                        log.warning("civ_assert_ocr_no_match",
+                                    civ=civ_token, ocr_snippet=_ocr_text_raw[:120])
+                        warnings.append(
+                            f"civ_assert:no_hc_name_in_ocr snippet={_ocr_text_raw[:80]!r}"
+                        )
+            except Exception as _assert_exc:
+                # Non-fatal — assertion failure must never abort the run.
+                log.warning("civ_assert_exception", civ=civ_token,
+                            exc=str(_assert_exc))
+                warnings.append(f"civ_assert:exception:{_assert_exc!r}")
+
+        # Close the Home City scene by toggling 'h' again (verified live: 'h'
+        # both opens AND closes the in-game Home City view, leaving the camera
+        # untouched). CRITICAL: do NOT click (1870,865) to close — that point
+        # is inside the minimap, so the click jumps the camera to an unexplored
+        # (black) map corner and every later game-world capture renders pure
+        # black. Escape is also wrong here (it opens the ESC menu over the
+        # sticky HC scene instead of dismissing it).
+        _key("h")
+        _hc_panel_opened = False
+        time.sleep(1.5)
     except Exception as exc:
         warnings.append(f"homecity_panel:{exc!r}")
+        # Defensive close: ensure the HC panel is shut before the building tour
+        # or any subsequent step, regardless of where the exception occurred.
+        if _hc_panel_opened:
+            try:
+                _key("h")
+                time.sleep(1.0)
+                _hc_panel_opened = False
+                log.info("hc_panel_closed_in_except", civ=civ_token)
+            except Exception:
+                pass
+    # Belt-and-suspenders: if _hc_panel_opened is still True something went
+    # wrong above — make one final best-effort close before continuing.
+    if _hc_panel_opened:
+        try:
+            _key("h")
+            time.sleep(1.0)
+            log.warning("hc_panel_force_closed", civ=civ_token)
+        except Exception:
+            pass
 
     # ── 9. ESC menu → Tech Tree (05) ─────────────────────────────────────────
-    # Open ESC menu via the gears icon (more reliable than Escape key in this
-    # build), click Technology Tree, screenshot, then close.
+    # Open the ESC menu via the pixel-verified Escape opener (the gears-icon
+    # click at (1860,30) proved unreliable — it frequently failed to open the
+    # menu, leaving this step capturing the plain game world). Then click
+    # Technology Tree, screenshot, and normalise back to the game world.
     try:
         _focus_window()
-        _click(*GEARS_BTN, delay=1.2)
-        time.sleep(1.2)
+        # Open the ESC menu with a plain Escape (reliable from a clean game
+        # world in this build). The old pixel-verified opener probed (1750,100)
+        # which sits inside the always-on score panel, so it false-positived
+        # and never actually opened the menu.
+        _key("Escape")
+        time.sleep(1.5)
         # Click Technology Tree button in the ESC menu panel (y=140 verified).
         _click(*TECH_TREE_BTN, delay=2.0)
-        time.sleep(2.0)
+        time.sleep(2.5)
         p = full_dir / "05_tech_tree.png"
         ms = _utc_now_ms()
         if _safe_screenshot("05_tech_tree", p, warnings):
             captures.append(_build_capture_entry(
                 "05_tech_tree", "full/05_tech_tree.png", ms,
                 LABEL_TO_CROPS["05_tech_tree"]))
-        # Close tech tree (Escape returns to ESC menu, second Escape closes it)
+        # Close: tech tree → ESC menu (Escape), ESC menu → game world (Escape).
         _key("Escape")
-        time.sleep(0.6)
+        time.sleep(1.0)
         _key("Escape")
-        time.sleep(0.6)
+        time.sleep(1.0)
     except Exception as exc:
         warnings.append(f"tech_tree:{exc!r}")
-        # Make sure we're not stuck in ESC menu
         try:
             _key("Escape")
-            time.sleep(0.5)
-        except Exception:
-            pass
-
-    # ── 10. Diplomacy panel (06) — open via in-HUD inkwell, ally P2, APPLY ──
-    # Verified 2026-05-20: F4 hotkey does NOT open diplomacy in this build.
-    # Use the inkwell+red-quill icon at (1691, 35). Then click the ALLY radio
-    # for the demo player row, then APPLY at (510, 815).
-    try:
-        _focus_window()
-        _click(*DIPLOMACY_BTN, delay=1.5)
-        time.sleep(1.5)
-        # Snapshot the open diplomacy panel before allying — captures the
-        # full PLAYER SUMMARY layout for verification.
-        p_pre = full_dir / "06_diplomacy.png"
-        ms_pre = _utc_now_ms()
-        if _safe_screenshot("06_diplomacy", p_pre, warnings):
-            captures.append(_build_capture_entry(
-                "06_diplomacy", "full/06_diplomacy.png", ms_pre,
-                LABEL_TO_CROPS["06_diplomacy"]))
-        # Click ALLY radio for P2 (or DIPLOMACY_DEMO_PLAYER_INDEX), then APPLY.
-        # In-game notification "X has changed their diplomatic stance" confirms.
-        try:
-            row_y = diplomacy_row_y(DIPLOMACY_DEMO_PLAYER_INDEX)
-            _click(DIPLOMACY_ALLY_X, row_y, delay=0.4)
-            time.sleep(0.4)
-            _click(*DIPLOMACY_APPLY, delay=0.8)
-            time.sleep(1.5)
-            # Capture post-APPLY state showing ally relationship for completeness
-            p_post = full_dir / "06b_diplomacy_after_ally.png"
-            ms_post = _utc_now_ms()
-            _safe_screenshot("06b_diplomacy_after_ally", p_post, warnings)
-        except Exception as exc:
-            warnings.append(f"diplomacy_ally_apply:{exc!r}")
-        # Close diplomacy panel via the CLOSE button (more reliable than Esc).
-        _click(*DIPLOMACY_CLOSE, delay=0.6)
-        time.sleep(0.8)
-    except Exception as exc:
-        warnings.append(f"diplomacy:{exc!r}")
-        # Best-effort recovery: Esc out of any open modal.
-        try:
-            _key("Escape")
-            time.sleep(0.5)
-        except Exception:
-            pass
-
-    # ── 10b. AI Home City visual confirmation (optional surface 10) ──────────
-    # User-requested feature 2026-05-20: "click on the diplomacy ai flag to
-    # break up their homecity, and ensure that their new world deck appears
-    # there for visual confirmation too".
-    #
-    # Flow:
-    #   1. Reopen diplomacy panel (inkwell icon at 1691,35).
-    #   2. Click the demo player's flag at (380, row_y) — opens that AI's
-    #      Home City scene with the AI's deck visible. Deck name displays
-    #      as "HIDDEN" (engine privacy feature for AI decks, NOT a bug —
-    #      see verified_coords_british.md).
-    #   3. Snapshot. Then close HC (Escape) to return to the game world.
-    #
-    # If this step fails (e.g. AI eliminated mid-match), the main 06_diplomacy
-    # capture is sufficient for v1.0; this is a "nice to have" extra surface.
-    try:
-        _focus_window()
-        _click(*DIPLOMACY_BTN, delay=1.2)
-        time.sleep(1.2)
-        row_y = diplomacy_row_y(DIPLOMACY_DEMO_PLAYER_INDEX)
-        _click(DIPLOMACY_FLAG_X, row_y, delay=1.0)
-        time.sleep(2.5)  # HC scene takes a moment to render
-        p = full_dir / "10_ai_homecity.png"
-        ms = _utc_now_ms()
-        if _safe_screenshot("10_ai_homecity", p, warnings):
-            captures.append(_build_capture_entry(
-                "10_ai_homecity", "full/10_ai_homecity.png", ms,
-                LABEL_TO_CROPS["10_ai_homecity"]))
-        # Close AI HC view (Escape) back to game world.
-        _key("Escape")
-        time.sleep(0.8)
-    except Exception as exc:
-        warnings.append(f"ai_homecity:{exc!r}")
-        # Best-effort: Esc out of any modal that may have opened.
-        try:
-            _key("Escape")
-            time.sleep(0.5)
+            time.sleep(0.6)
         except Exception:
             pass
 
@@ -1100,27 +1440,123 @@ def _run_host_civ(
         warnings.append(f"scoreboard:{exc!r}")
 
     # ── 12. ESC menu (08) ────────────────────────────────────────────────────
-    # Open via gears icon at (1860, 30) instead of Escape key.
+    # Open via the pixel-verified Escape opener (the gears-icon click proved
+    # unreliable — it was eaten by the still-open Player Summary panel and the
+    # menu never appeared).
     try:
         _focus_window()
-        _click(*GEARS_BTN, delay=1.2)
-        time.sleep(1.2)
+        # Plain Escape opens the ESC menu (no pixel probe — see step 9 note).
+        _key("Escape")
+        time.sleep(1.5)
         p = full_dir / "08_esc_menu.png"
         ms = _utc_now_ms()
         if _safe_screenshot("08_esc_menu", p, warnings):
             captures.append(_build_capture_entry(
                 "08_esc_menu", "full/08_esc_menu.png", ms,
                 LABEL_TO_CROPS["08_esc_menu"]))
+        # Close the ESC menu (Escape) before the AI-homecity step so diplomacy
+        # opens cleanly.
+        _key("Escape")
+        time.sleep(1.0)
     except Exception as exc:
         warnings.append(f"esc_menu:{exc!r}")
+        try:
+            _key("Escape")
+            time.sleep(0.6)
+        except Exception:
+            pass
+
+    # -- 12. Diplomacy (06/06b) + AI Home City (10) -- MUST RUN LAST ----------
+    # CRITICAL state-machine note: the diplomacy PLAYER SUMMARY panel and the AI
+    # home-city scene are BOTH "sticky" -- they do NOT close on Escape (Escape
+    # merely opens the ESC menu *on top of* them). So every clean-world surface
+    # (hud, scoreboard, esc-menu, home-city, tech-tree) is captured ABOVE, and
+    # these two sticky panels are captured here at the very end. The only action
+    # after them is resign, which works because the ESC menu's Resign button is
+    # clickable over the sticky overlay.
+    #
+    # Flow: open diplomacy (1691,35) -> capture 06 -> best-effort ally P2 +
+    # APPLY -> capture 06b -> click the demo player's NAME text at
+    # (DIPLOMACY_FLAG_X, row_y), which opens that AI's Home City scene (verified
+    # 2026-06-01: x=500 name text, NOT x=380 flag icon) -> capture 10. The panel
+    # is already open from the 06 capture, so NO reopen is needed -- the prior
+    # run's AI-HC miss was caused by reopening when the ESC menu (not diplomacy)
+    # was on top.
+    try:
+        _focus_window()
+        _click(*DIPLOMACY_BTN, delay=1.5)
+        time.sleep(1.5)
+        p_pre = full_dir / "06_diplomacy.png"
+        ms_pre = _utc_now_ms()
+        if _safe_screenshot("06_diplomacy", p_pre, warnings):
+            captures.append(_build_capture_entry(
+                "06_diplomacy", "full/06_diplomacy.png", ms_pre,
+                LABEL_TO_CROPS["06_diplomacy"]))
+        # Best-effort ally + APPLY (non-critical 06b surface). Wrapped so a miss
+        # cannot abort the AI-home-city capture that follows.
+        try:
+            row_y = diplomacy_row_y(DIPLOMACY_DEMO_PLAYER_INDEX)
+            _click(DIPLOMACY_ALLY_X, row_y, delay=0.4)
+            time.sleep(0.4)
+            _click(*DIPLOMACY_APPLY, delay=0.8)
+            time.sleep(1.5)
+            p_post = full_dir / "06b_diplomacy_after_ally.png"
+            ms_post = _utc_now_ms()
+            _safe_screenshot("06b_diplomacy_after_ally", p_post, warnings)
+        except Exception as exc:
+            warnings.append(f"diplomacy_ally_apply:{exc!r}")
+        # Click the AI player's NAME text to open their Home City scene. The
+        # diplomacy panel is still open from the 06 capture above, so this lands
+        # on the live panel (no reopen needed).
+        try:
+            row_y = diplomacy_row_y(DIPLOMACY_DEMO_PLAYER_INDEX)
+            _click(DIPLOMACY_FLAG_X, row_y, delay=1.0)
+            time.sleep(2.5)  # HC scene takes a moment to render
+            # Guard: AoE3 "Asset Preloading (Beta)" splash lingers after opening
+            # the AI Home City scene — poll until it clears before shooting, else
+            # we save a loading screen — see validate_no_loading_screen_contamination.py.
+            _ap_probe_ai = full_dir / "_preload_probe_ai.png"
+            if not _wait_assetpreload_clear(_ap_probe_ai):
+                warnings.append("ai_homecity_assetpreload_timeout")
+            p = full_dir / "10_ai_homecity.png"
+            ms = _utc_now_ms()
+            if _safe_screenshot("10_ai_homecity", p, warnings):
+                captures.append(_build_capture_entry(
+                    "10_ai_homecity", "full/10_ai_homecity.png", ms,
+                    LABEL_TO_CROPS["10_ai_homecity"]))
+        except Exception as exc:
+            warnings.append(f"ai_homecity:{exc!r}")
+    except Exception as exc:
+        warnings.append(f"diplomacy:{exc!r}")
+
+    # ── 12b. Building tour (optional, --buildings) ───────────────────────────
+    # Runs AFTER all core in-game surfaces (HUD/HC/tech-tree/diplomacy/AI-HC)
+    # and BEFORE resign so the game is still live with a settler on the map.
+    # Failure is isolated: a building-tour exception is logged as a warning
+    # and never aborts the civ or the sweep.
+    if buildings:
+        try:
+            from tools.aoe3_automation.anw_building_tour import run_building_tour  # lazy import
+            n_built = run_building_tour(civ_token, out_root)
+            log.info("building_tour_done", civ=civ_token, n_buildings=n_built)
+        except Exception as exc:
+            log.warning("building_tour_failed", civ=civ_token, exc=str(exc))
+            warnings.append(f"building_tour:{exc!r}")
 
     # ── 13. Resign → View Postgame → endgame (09) ────────────────────────────
     # Verified 2026-05-20: full resign flow is
-    #   gears(1860,30) → Resign(1830,365) → YES(760,605)
+    #   ESC menu → Resign(1830,365) → YES(760,605)
     #     → "You Abandon Your Town" → VIEW POSTGAME(1145,737)
     #     → postgame results screen with all 8 flags + scores
+    # We open the ESC menu via Escape here (rather than the gears icon) because
+    # this step may run with the AI home-city view still on screen; Escape
+    # reliably surfaces the ESC menu (with a clickable Resign) on top of it.
     try:
-        # ESC menu should already be open from step 12.
+        # Open the ESC menu via a plain Escape (works over the sticky AI HC
+        # view — verified live this session). No pixel probe: it samples the
+        # always-on score panel and false-positives.
+        _key("Escape")
+        time.sleep(1.5)
         # Click Resign.
         _click(*ESC_RESIGN, delay=0.5)
         time.sleep(0.8)
@@ -1383,6 +1819,12 @@ def main() -> int:
                         "observed AoE3 silently crashes on 2nd-iter mode 27 entry, "
                         "so a fresh game per civ gives 100%% success at ~10s/civ "
                         "extra cost.")
+    p.add_argument("--buildings", action="store_true", default=False,
+                   help="After each civ's core in-game captures, run the building tour "
+                        "(anw_building_tour.run_building_tour) to screenshot every "
+                        "constructable structure. Output lands in the same <civ>/full/ "
+                        "dir as core surfaces. Failure is isolated per civ and never "
+                        "aborts the sweep.")
     args = p.parse_args()
 
     out_root = Path(args.out)
@@ -1391,6 +1833,11 @@ def main() -> int:
     out_root.mkdir(parents=True, exist_ok=True)
 
     _configure_logging(out_root)
+
+    # Wire the harness BEFORE any clicks. Without this every click used the
+    # flaky xdotool fallback (see _wire_harness docstring). Best-effort: if the
+    # socket is down we log a warning and continue on xdotool.
+    _wire_harness()
 
     civs = _resolve_civs(args.civs, smoke=args.smoke, max_civs=args.max_civs)
     log.info("runner_start", mode=args.mode, n_civs=len(civs),
@@ -1446,15 +1893,41 @@ def main() -> int:
                     results.append({"civ_token": civ_token, "status": "failed",
                                     "elapsed_s": 0.0})
                     continue
+                # Re-wire the harness: the old socket belonged to the dead process;
+                # without this every click hits a broken pipe (Errno 32).
+                _wire_harness()
+                log.info("harness_rewired_post_relaunch", civ=civ_token)
                 try:
                     driver.ensure_main_menu(retries=8)
                 except Exception:
                     pass
+            # Loop-level screen-state gate: catches the case where relaunch
+            # succeeded but the game booted into a non-menu state (e.g. resumed
+            # a save, or the boot animation hasn't finished clearing to menu).
+            try:
+                from tools.aoe3_automation.screen_state import ensure_at_main_menu as _eamm
+                if not _eamm(driver, max_attempts=3):
+                    from tools.aoe3_automation.screen_state import detect_screen_state as _dss
+                    _bad_state = _dss()
+                    log.warning(
+                        "loop_precondition_failed_bad_screen_state",
+                        civ=civ_token,
+                        state=_bad_state,
+                    )
+                    results.append({
+                        "civ_token": civ_token,
+                        "status": "bad_screen_state",
+                        "elapsed_s": 0.0,
+                    })
+                    continue
+            except Exception as _exc:
+                log.warning("loop_screen_state_check_error", civ=civ_token, exc=str(_exc))
             try:
                 r = _run_host_civ(
                     civ_token, out_root,
                     driver=driver, coords=coords,
                     enriched_ref=enriched_ref, resume=args.resume,
+                    buildings=args.buildings,
                 )
             except Exception as exc:
                 tb = traceback.format_exc()
@@ -1484,6 +1957,10 @@ def main() -> int:
                     results.append({"civ_token": ally_token, "status": "failed",
                                     "elapsed_s": 0.0})
                     continue
+                # Re-wire the harness: the old socket belonged to the dead process;
+                # without this every click hits a broken pipe (Errno 32).
+                _wire_harness()
+                log.info("harness_rewired_post_relaunch", ally=ally_token)
                 try:
                     driver.ensure_main_menu(retries=8)
                 except Exception:

@@ -252,7 +252,9 @@ def main() -> int:
     for d in civ_dirs:
         idx, slug = _slug_from_dir(d)
         log = d / "match.log"
-        probes = vdc.parse_probes([log]) if log.exists() else []
+        # parse_probes returns a 3-tuple (probes, plan_closures, flat_closures);
+        # this report only needs the flat probe list.
+        probes = vdc.parse_probes([log])[0] if log.exists() else []
 
         # Pick the dominant (civ, ldr) pair for THIS civ's slot. Most
         # match.logs carry probes for 8 AIs in the batch, but the slot's

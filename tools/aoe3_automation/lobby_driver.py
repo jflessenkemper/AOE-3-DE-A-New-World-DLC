@@ -801,12 +801,41 @@ def is_clean_lobby(coords: dict) -> bool:
 
 
 def is_picker_open(coords: dict) -> bool:
-    """Picker open means the screen differs significantly from clean lobby."""
+    """Return True when the 'SELECT HOME CITY' civ-picker modal is visible.
+
+    Primary method: OCR ``SELECT_HOME_CITY_CROP`` on a fresh screenshot and
+    check for the positive title marker ``"homecity"``/``"selecthome"``.  This
+    is immune to the false-positive that the old pixel-diff approach produced:
+    a lobby showing a non-default map (Alaska) or a non-default P1 civ
+    (French) also differs from ``CLEAN_LOBBY_REF`` by ``>= significant_change``
+    pixels, so the old check wrongly returned True before any click.
+
+    Fallback (tesseract unavailable): pixel-diff against CLEAN_LOBBY_REF.
+    This is the legacy behaviour and still false-positives on non-default lobby
+    states — but it is better than crashing when OCR is not installed.  Log a
+    warning comment in the code (below) so operators are aware.
+    """
     p = ARTIFACT_DIR / "_state.png"
     screenshot(p)
+    # --- Primary: positive title-text marker (OCR) ---
+    # Try OCR first; _picker_title_visible degrades to False on ImportError /
+    # missing tesseract, which triggers the pixel-diff fallback below.
+    if _picker_title_visible(p):
+        return True
+    # If OCR reported False but tesseract IS available the modal is genuinely
+    # closed — return False immediately (skip the noisy pixel-diff path).
+    try:
+        import pytesseract  # noqa: F401
+        return False
+    except ImportError:
+        pass
+    # --- Fallback: pixel-diff (legacy; tesseract not installed) ---
+    # NOTE: This fallback false-positives on non-default lobby states (different
+    # map, non-default civ selections). Install tesseract to use the reliable
+    # title-text path.
     d = diff_pixels(CLEAN_LOBBY_REF, p)
     if d < 0:
-        return False  # error → don't claim picker open
+        return False  # diff error → don't claim picker open
     return d >= coords["diff_thresholds"]["significant_change"]
 
 
@@ -825,6 +854,13 @@ def is_picker_open(coords: dict) -> bool:
 # axis to absorb a few pixels of fade-in jitter.
 MATCH_SETUP_HEADER_CROP = (700, 30, 1220, 95)   # "MATCH SETUP" banner
 GAME_OPTIONS_HEADER_CROP = (1380, 130, 1880, 195)  # "GAME OPTIONS" sub-tab
+
+# "SELECT HOME CITY" title bar of the civ-picker modal overlay.
+# Measured 2026-06-09 at 1920x1080 by OCR-probing civ_picker.png:
+# the title occupies roughly x=80-680, y=160-240.  The wider y band
+# (80 px) absorbs fade-in jitter while staying entirely above the first
+# civ row (which starts at y~255).
+SELECT_HOME_CITY_CROP = (80, 160, 680, 240)
 
 
 def _ocr_text(crop_box: tuple[int, int, int, int], shot_path: Path) -> str:
@@ -847,6 +883,38 @@ def _ocr_text(crop_box: tuple[int, int, int, int], shot_path: Path) -> str:
             return pytesseract.image_to_string(big, config="--psm 7").strip()
     except Exception:
         return ""
+
+
+def _picker_title_visible(shot_path) -> bool:
+    """Return True when a civ-picker modal title is visible in shot_path.
+
+    There are TWO picker variants the engine shows in the same screen region:
+      - "SELECT HOME CITY"   (rows like "BRITISH EMPIRE (LONDON)")
+      - "SELECT CIVILIZATION" (bare names like "FRANCE", "FRANCE (NAPOLEONIC ERA)")
+
+    Both titles occupy ``SELECT_HOME_CITY_CROP``. Positive markers in the
+    normalised OCR: ``"homecity"`` / ``"selecthome"`` (variant 1) or
+    ``"selectciv"`` / ``"civilization"`` (variant 2). All four substrings are
+    absent from the plain lobby and the main menu, so they cleanly discriminate
+    the picker overlay from false-positive lobby states (different map,
+    non-default civ on P1, etc.) that the old pixel-diff approach mis-triggered.
+
+    Degrades to False — never raises — when:
+      - pytesseract / PIL are unavailable (tesseract not installed)
+      - shot_path does not exist or fails to open
+      - any unexpected exception in OCR
+    """
+    try:
+        raw = _ocr_text(SELECT_HOME_CITY_CROP, Path(shot_path))
+        norm = _normalise_ocr(raw)
+        return (
+            "homecity" in norm
+            or "selecthome" in norm
+            or "selectciv" in norm
+            or "civilization" in norm
+        )
+    except Exception:
+        return False
 
 
 def verify_match_setup_screen(
@@ -943,29 +1011,40 @@ def verify_match_setup_screen(
 
 
 def picker_opened_since(baseline: Path, coords: dict) -> bool:
-    """Picker open relative to a fresh pre-click baseline.
+    """Return True when the picker modal is visible in the post-click frame.
 
-    The clean-lobby reference goes stale once opponent civs are assigned
-    (each non-default opponent adds ~10-30k pixels of drift), so checking
-    `is_picker_open` alone false-negatives on later slots. Comparing
-    against a baseline taken immediately before the click isolates the
-    delta caused by the picker overlay only.
+    Primary method: OCR positive-title check via ``_picker_title_visible``.
+    The baseline argument is retained for the pixel-diff fallback path; when
+    OCR is available it is not used and can safely be a stale or mismatched
+    screenshot without causing a false result.
 
-    2026-05-08: Also returns True when the post-click screenshot itself
-    shows a picker overlay (vs the clean-lobby reference). The original
-    baseline-delta logic false-negatives if the picker was ALREADY open
-    when the baseline was taken (post == baseline → delta=0). Either
-    layout (SELECT HOME CITY or SELECT CIVILIZATION) trips this fallback
-    because both produce >>significant_change pixels of drift vs clean.
+    2026-06-09: Rewrote primary detection to use ``_picker_title_visible``
+    (same fix as ``is_picker_open``).  The old baseline-delta logic
+    false-positived when the pre-click lobby itself differed from
+    ``CLEAN_LOBBY_REF`` (e.g. Alaska map, French on P1), causing the modal
+    to be declared open without a click being needed.
+
+    Pixel-diff fallback (tesseract missing):
+      1. Post-click vs pre-click baseline delta (isolates picker overlay).
+      2. Post-click vs CLEAN_LOBBY_REF delta (catches already-open case).
     """
     p = ARTIFACT_DIR / "_state_postclick.png"
     screenshot(p)
+    # --- Primary: title-text marker (OCR) ---
+    if _picker_title_visible(p):
+        return True
+    # If tesseract is available and title not seen → modal is closed.
+    try:
+        import pytesseract  # noqa: F401
+        return False
+    except ImportError:
+        pass
+    # --- Fallback: pixel-diff (tesseract not installed) ---
     sig = coords["diff_thresholds"]["significant_change"]
     d = diff_pixels(baseline, p)
     if d >= sig:
         return True
-    # Fallback: post-click frame itself shows a picker (works for both
-    # SELECT HOME CITY and SELECT CIVILIZATION layouts).
+    # Also check post-click vs clean lobby (catches already-open case).
     d_clean = diff_pixels(CLEAN_LOBBY_REF, p)
     if d_clean >= sig:
         return True
@@ -1123,7 +1202,8 @@ HOME_CITY_TO_TOKEN: dict[str, str] = {
     "KANO": "ANWHausa",
     "AMSTERDAM": "ANWDutch",
     "LONDON": "ANWBritish",
-    "TOKYO": "ANWJapanese",
+    "KYOTO": "ANWJapanese",        # real in-game city; TOKYO was dead alias (fixed 2026-06-09)
+    "TOKYO": "ANWJapanese",         # kept for safety but Kyoto is canonical per nation_map.json
     "BEIJING": "ANWChinese",
     "PEKING": "ANWChinese",
     "GREAT COUNCIL": "ANWLakota",
@@ -1131,6 +1211,32 @@ HOME_CITY_TO_TOKEN: dict[str, str] = {
     "VALLETTA": "ANWMaltese",
     "CHAN SANTA CRUZ": "ANWMayans",
     "NEDERLAND": "ANWDutch",
+    # --- added 2026-06-09: nation-map audit, identity-verification aliases ---
+    "BUENOS AIRES": "ANWArgentines",
+    "LA PAZ": "ANWBajaCalifornians",
+    "ALGIERS": "ANWBarbary",
+    "RIO DE JANEIRO": "ANWBrazil",
+    "SONOMA": "ANWCalifornians",
+    "QUEBEC": "ANWCanadians",
+    "GUATEMALA CITY": "ANWCentralAmericans",
+    "SANTIAGO": "ANWChileans",
+    "BOGOTA": "ANWColumbians",
+    "CAIRO": "ANWEgyptians",
+    "GONDAR": "ANWEthiopians",
+    "HELSINKI": "ANWFinnish",
+    "PORT-AU-PRINCE": "ANWHaitians",
+    "BUDA": "ANWHungarians",
+    "YOGYAKARTA": "ANWIndonesians",
+    # NOTE: ANWNapoleonicFrance + ANWRevFrance also share Paris as home city.
+    # OCR city-name alone cannot disambiguate these 3 civs
+    # (ANWFrench / ANWNapoleonicFrance / ANWRevFrance) — needs leader-name OCR
+    # (see artifacts/nation_map/GAPS.md P2). PARIS already maps to ANWFrench
+    # above; do NOT add colliding PARIS entries for the other two.
+    "LIMA": "ANWPeruvians",
+    "LAREDO": "ANWRioGrande",
+    "BUCHAREST": "ANWRomanians",
+    "PRETORIA": "ANWSouthAfricans",
+    "AUSTIN": "ANWTexians",
 }
 
 

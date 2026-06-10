@@ -2,15 +2,15 @@
   "schema_version": 1,
   "civ_token": "ANWInca",
   "civ_label": "Inca",
-  "captured_at": "2026-05-28T00:42:21Z",
+  "captured_at": "2026-06-09T09:14:17Z",
   "host_perspective": true,
   "host_civ_token": null,
-  "match_id": "anwinca_2026-05-28_004221",
+  "match_id": "anwinca_2026-06-09_091417",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1779929019249,
+      "captured_ms": 1780996549002,
       "ocr_text": null,
       "crops": [
         {
@@ -29,7 +29,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1779929041285,
+      "captured_ms": 1780996573043,
       "ocr_text": null,
       "crops": [
         {
@@ -46,71 +46,180 @@
       ]
     },
     {
-      "label": "03_ingame",
-      "full_path": "01_diplomacy.png",
-      "captured_ms": null,
+      "label": "03_hud",
+      "full_path": "full/03_hud.png",
+      "captured_ms": 1780996635909,
       "ocr_text": null,
       "crops": [
         {
-          "name": "diplomacy_panel",
+          "name": "home_city_button",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            1790,
+            50,
+            1910,
+            130
           ],
-          "crop_path": "01_diplomacy.png",
-          "thumb_path": "thumbs/diplomacy_panel.webp"
+          "crop_path": "crops/home_city_button.png",
+          "thumb_path": "thumbs/home_city_button.webp"
         },
         {
-          "name": "scoreboard_player_row",
+          "name": "hud_flag_corner",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            1660,
+            8,
+            1910,
+            60
           ],
-          "crop_path": "02_scoreboard.png",
-          "thumb_path": "thumbs/scoreboard_player_row.webp"
-        },
+          "crop_path": "crops/hud_flag_corner.png",
+          "thumb_path": "thumbs/hud_flag_corner.webp"
+        }
+      ]
+    },
+    {
+      "label": "04_homecity_panel",
+      "full_path": "full/04_homecity_panel.png",
+      "captured_ms": 1780996639660,
+      "ocr_text": null,
+      "crops": [
         {
           "name": "home_city_scene",
           "crop_region": [
             0,
             0,
-            0,
-            0
+            1920,
+            1000
           ],
-          "crop_path": "03_homecity.png",
+          "crop_path": "crops/home_city_scene.png",
           "thumb_path": "thumbs/home_city_scene.webp"
-        },
+        }
+      ]
+    },
+    {
+      "label": "05_tech_tree",
+      "full_path": "full/05_tech_tree.png",
+      "captured_ms": 1780996649102,
+      "ocr_text": null,
+      "crops": [
         {
-          "name": "04_ally_homecity",
+          "name": "tech_tree_overview",
+          "crop_region": [
+            80,
+            100,
+            1840,
+            980
+          ],
+          "crop_path": "crops/tech_tree_overview.png",
+          "thumb_path": "thumbs/tech_tree_overview.webp"
+        }
+      ]
+    },
+    {
+      "label": "07_scoreboard",
+      "full_path": "full/07_scoreboard.png",
+      "captured_ms": 1780996652756,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "scoreboard_player_row",
+          "crop_region": [
+            200,
+            280,
+            1720,
+            360
+          ],
+          "crop_path": "crops/scoreboard_player_row.png",
+          "thumb_path": "thumbs/scoreboard_player_row.webp"
+        }
+      ]
+    },
+    {
+      "label": "08_esc_menu",
+      "full_path": "full/08_esc_menu.png",
+      "captured_ms": 1780996655801,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "esc_menu_player_summary",
+          "crop_region": [
+            550,
+            250,
+            1370,
+            830
+          ],
+          "crop_path": "crops/esc_menu_player_summary.png",
+          "thumb_path": "thumbs/esc_menu_player_summary.webp"
+        }
+      ]
+    },
+    {
+      "label": "06_diplomacy",
+      "full_path": "full/06_diplomacy.png",
+      "captured_ms": 1780996661354,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "diplomacy_panel",
+          "crop_region": [
+            400,
+            140,
+            1520,
+            940
+          ],
+          "crop_path": "crops/diplomacy_panel.png",
+          "thumb_path": "thumbs/diplomacy_panel.webp"
+        }
+      ]
+    },
+    {
+      "label": "10_ai_homecity",
+      "full_path": "full/10_ai_homecity.png",
+      "captured_ms": 1780996670328,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "ai_home_city_scene",
           "crop_region": [
             0,
             0,
-            0,
-            0
+            1920,
+            1000
           ],
-          "crop_path": "04_ally_homecity.png"
+          "crop_path": "crops/ai_home_city_scene.png",
+          "thumb_path": "thumbs/ai_home_city_scene.webp"
         },
+        {
+          "name": "ai_deck_view",
+          "crop_region": [
+            1400,
+            700,
+            1900,
+            1000
+          ],
+          "crop_path": "crops/ai_deck_view.png",
+          "thumb_path": "thumbs/ai_deck_view.webp"
+        }
+      ]
+    },
+    {
+      "label": "09_endgame",
+      "full_path": "full/09_endgame.png",
+      "captured_ms": 1780996685353,
+      "ocr_text": null,
+      "crops": [
         {
           "name": "endgame_flag",
           "crop_region": [
-            0,
-            0,
-            0,
-            0
+            200,
+            60,
+            1720,
+            540
           ],
-          "crop_path": "05_postgame.png",
+          "crop_path": "crops/endgame_flag.png",
           "thumb_path": "thumbs/endgame_flag.webp"
         }
       ]
     }
   ],
   "status": "complete",
-  "warnings": [
-    "wait_for_in_game:timeout_or_failure",
-    "manifest reconciled with on-disk crops 2026-05-30"
-  ]
+  "warnings": []
 }

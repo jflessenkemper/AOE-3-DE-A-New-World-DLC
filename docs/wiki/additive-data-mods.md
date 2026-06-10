@@ -46,28 +46,34 @@ Empirically:
 
 ## Overlay file conventions
 
-All additive XMLs live under `<mod>/data/`:
+Most additive XMLs live directly under `<mod>/data/`. What **ANW actually
+ships** (verified — `ls data/*mods*.xml`):
 
 ```
 data/civmods.xml
-data/civmodsy.xml      # rare DE patch-y branch variant
-data/stringmods.xml
-data/techtreemods.xml
-data/techtreeymods.xml
 data/protomods.xml
-data/protoymods.xml
+data/techtreemods.xml
+data/randomnamemods.xml
 ```
 
-The naming pattern is `<basename>mods.xml` and (for some files) a
-`<basename>ymods.xml` sibling that targets the DE patch-y variant.
+The stringtable overlay is the exception: it lives **per-locale** at
+`data/strings/<lang>/stringmods.xml` (ANW: `data/strings/english/stringmods.xml`)
+— there is **no** top-level `data/stringmods.xml`. See
+[stringmods.xml](data-layer/stringmods.md).
+
+The general DE naming pattern is `<basename>mods.xml`, with an optional
+`<basename>ymods.xml` sibling that would target the DE patch-y branch
+variant. **ANW ships none of those `y` siblings** (no `civmodsy.xml`,
+`techtreeymods.xml`, or `protoymods.xml` in `data/`) — they are a DE
+convention, not files this mod carries.
 
 ## Case sensitivity
 
 **Tag and attribute names ARE case-sensitive at the merge layer.** The
 base game uses lowercase tags (`<civ>`, `<name>`, `<main>`); a mod that
 uses Capital tags (`<Civ>`, `<Name>`) has its entries silently dropped.
-Empirically verified in this repo (the lowercase rewrite restored 46
-ANW civs to the picker). See
+Empirically verified in this repo (the lowercase rewrite restored the
+full set of ANW civs — 44 active today — to the picker). See
 [case-sensitivity pitfall](modding-pitfalls/case-sensitivity.md).
 
 ## Verifying a merge

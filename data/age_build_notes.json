@@ -398,5 +398,45 @@
       "3": "Ship Minutemen Companies, Kosciuszko Fortifications, Regulars 4, Legion Washington, Carbine Cav 1, Gatlings Team, and Ironclads-Steamers. Peak Continental Army: Sharpshooters + Gatling Guns + Ironclade river support deliver the Yorktown breakthrough.",
       "4": "No Imperial cards; sustain with Ironclad and Gatling repeats for a supreme industrial-era Union assault."
     }
+  },
+  "ANWCalifornians": {
+    "strategy_overview": "California Rancho doctrine: Hacienda boom finances California Lancer cavalry raids and Insurgente levy spam; Sharpshooters screen the flanks as Soldados push the line toward the Fort age.",
+    "ages": {
+      "0": "Send Hacienda Wagon and Alhondiga de Granaditas cards. Build the first Hacienda immediately; Cathedral construction begins the religious eco branch.",
+      "1": "Ship Fortified Haciendas, Chipotles, Criollos, and Insurgentes 1. Multi-barracks Insurgente levy opens; General hero inspires from the TC as light Hacienda walls anchor the perimeter.",
+      "2": "Send California Haciendas, Ranching, Cavalry Combat, Soldado, and Guerilla Tactics. Transition to Soldado + California Lancer elite army; Empressario Contracts card delivers bonus shipments.",
+      "3": "Ship California Statehood, Gonzales Guns, Sharpshooters, Heavy Fortifications, and Fort Wagon. Elite Sharpshooter + Lancer column makes the decisive push into enemy base.",
+      "4": "No Imperial cards; sustain with Ironclad, Lancer, and Sharpshooter repeats for an endgame California assault."
+    }
+  },
+  "ANWBajaCalifornians": {
+    "strategy_overview": "Baja Rancho doctrine: Hacienda-anchored economy with Barbacoa food surpluses sustains prolonged Insurgente attrition and Chinaco cavalry harassment until Soldado elite force arrives.",
+    "ages": {
+      "0": "Send Hacienda Wagon and Barbacoa cards. Build the first Hacienda immediately; Padre heroes provide forward healing from Colonial onward.",
+      "1": "Ship Fortified Haciendas, Chipotles, Criollos, and Insurgentes 1. Multi-barracks Insurgente levy with Padre support absorbs early pressure; Chinaco raids harass enemy gather points.",
+      "2": "Send California Haciendas, Ranching, Cavalry Combat, Soldado, and Guerilla Tactics. Core Chinaco + Soldado army builds; Empressario Contracts card boosts shipment rate.",
+      "3": "Ship California Statehood, Sharpshooters, Heavy Fortifications, and Ironclads-Steamers. Sharpshooter screen covers the Chinaco + Soldado strike force; Fort Wagon secures forward position.",
+      "4": "No Imperial cards; sustain with Ironclad and Sharpshooter repeats for an endgame Baja push."
+    }
+  },
+  "ANWCentralAmericans": {
+    "strategy_overview": "Central American Federal doctrine: Insurgente + Soldado combined arms from multi-barracks supported by Padre morale and Fortified Hacienda walls; Empressario Contracts sustain the war into Industrial age.",
+    "ages": {
+      "0": "Send Hacienda Wagon and Alhondiga de Granaditas cards. Build the first Hacienda immediately; General Mexicans hero provides early inspire bonus.",
+      "1": "Ship Fortified Haciendas, Chipotles, Criollos, Royal Decree, and Insurgentes 1. Multi-barracks levy opens; Hacienda walls form a defensive perimeter around the civic core.",
+      "2": "Send Mexican Mint, Soldado, Cavalry Combat, Insurgente Combat, and Guerilla Tactics. Transition to Soldado + Chinaco strike force; Padre healing sustains the advance.",
+      "3": "Ship Sharpshooters, Heavy Fortifications, Empressario Contracts, Fort Wagon, and Ironclads-Steamers. Elite Sharpshooter + Soldado column pushes with Fort support; Galleon fire assists coastal maps.",
+      "4": "No Imperial cards; sustain with Ironclad and Insurgente repeats for a decisive Federal Republic finish."
+    }
+  },
+  "ANWRioGrande": {
+    "strategy_overview": "Rio Grande Republic doctrine: Copper Canyon coin and Ranching food from Haciendas finance fast Chinaco cavalry raids and Insurgente levy pressure; Republic of the Rio Grande cards deliver an elite combined-arms finish.",
+    "ages": {
+      "0": "Send Hacienda Wagon and Copper Canyon cards. Build the first Hacienda immediately; Barbacoa card provides early food advantage.",
+      "1": "Ship Fortified Haciendas, Chipotles, Criollos, and Insurgentes 1. Multi-barracks Insurgente levy with Chinaco cavalry raids; General hero inspires from the TC.",
+      "2": "Send Ranching, Cavalry Combat, Soldado, Mexican Mint, and Guerilla Tactics. Transition to Chinaco + Soldado elite army; Empressario Contracts card boosts shipment rate.",
+      "3": "Ship Texas Army, Sharpshooters, Heavy Fortifications, Fort Wagon, and Ironclads-Steamers. Sharpshooter + Chinaco combined column makes the decisive push; Ironclad naval support on river maps.",
+      "4": "No Imperial cards; sustain with Ironclad, Sharpshooter, and Insurgente repeats for a supreme Rio Grande assault."
+    }
   }
 }

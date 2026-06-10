@@ -60,10 +60,10 @@ game:
 
 ## Verification
 
-In this repo, switching from Capital to lowercase tags restored 46
-ANW civs to the picker (verified empirically, 2026-05-09 session). No
-intermediate state existed — the engine either saw all ANW civs
-(after lowercasing) or none of them.
+In this repo, switching from Capital to lowercase tags restored the
+full set of ANW civs (44 active today) to the picker (verified
+empirically, 2026-05-09 session). No intermediate state existed — the
+engine either saw all ANW civs (after lowercasing) or none of them.
 
 ## Status
 

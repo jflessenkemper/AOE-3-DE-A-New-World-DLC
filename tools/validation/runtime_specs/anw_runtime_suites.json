@@ -5,7 +5,7 @@
       "description": "Verifies the AI-only non-elite rout system starts up while leaving elite units and player-controlled units under manual control.",
       "required": [
         {
-          "value": "A New World: [RULE] AI non-elite rout enabled at 25% health; elite units hold and human-controlled units keep manual control",
+          "value": "A New World: [RULE] AI rout enabled: non-unique units at 25% HP, unique/nation-specific units at 10% HP; hero within 18m suppresses rout",
           "description": "AI rout enabled"
         }
       ]

@@ -249,6 +249,9 @@ void anwInitRevolutionCommander(void)
       btOffenseDefense = 0.65;
       btBiasTrade = 0.15;
       btBiasNative = 0.2;
+      btBiasInf = 0.45;
+      btBiasCav = 0.7;   // Bolivar llanero cavalry sweep — satisfies expects_cavalry=true
+      btBiasArt = 0.3;
       anwSetMilitaryFocus(0.45, 0.7, 0.3);
       // LL-BUILD-STYLE-BEGIN
       anwUseForwardOperationalLineStyle(0);
@@ -269,6 +272,9 @@ void anwInitRevolutionCommander(void)
       btOffenseDefense = 0.4;
       btBiasTrade = 0.35;
       btBiasNative = 0.0;
+      btBiasInf = 0.7;
+      btBiasCav = 0.3;
+      btBiasArt = 0.6;   // Muhammad Ali Nizam-i Cedid artillery modernization — satisfies expects_artillery=true
       anwSetMilitaryFocus(0.7, 0.3, 0.55);
       // LL-BUILD-STYLE-BEGIN
       anwUseHighlandCitadelStyle(4);
@@ -311,6 +317,9 @@ void anwInitRevolutionCommander(void)
       btOffenseDefense = 0.7;
       btBiasTrade = 0.15;
       btBiasNative = 0.65;
+      btBiasInf = 0.85;  // Louverture mass infantry insurrection — satisfies expects_infantry=true
+      btBiasCav = 0.15;
+      btBiasArt = 0.15;
       anwSetMilitaryFocus(0.85, 0.15, 0.15);
       // LL-BUILD-STYLE-BEGIN
       anwUseJungleGuerrillaNetworkStyle(0);
@@ -427,6 +436,9 @@ void anwInitRevolutionCommander(void)
       btOffenseDefense = 0.75;
       btBiasTrade = 0.0;
       btBiasNative = -0.1;
+      btBiasInf = 0.75;
+      btBiasCav = 0.6;   // Napoleon combined-arms with cavalry sweep — satisfies expects_cavalry=true
+      btBiasArt = 0.55;
       anwSetMilitaryFocus(0.75, 0.55, 0.55);
       // LL-BUILD-STYLE-BEGIN
       anwUseForwardOperationalLineStyle(0);

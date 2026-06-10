@@ -32,6 +32,11 @@ from typing import Optional
 WINDOW_TITLE_SUBSTR = "Age of Empires III"
 _CACHE: Optional[tuple[str, str]] = None  # (X_DISPLAY, GAMESCOPE_WL)
 
+# AoE3 DE identity constants — used to verify a gamescope process tree is
+# actually hosting AoE3 and NOT another Proton/Steam title (e.g. CoH2).
+_AOE3_APPID = "933110"
+_AOE3_EXE = "AoE3DE_s.exe"
+
 
 def invalidate_cache() -> None:
     """Force re-detection on the next call to detect_aoe3_display()."""
@@ -205,6 +210,106 @@ def _gs_socket_resolution(gs_socket: str, *, timeout: int = 8) -> Optional[tuple
             pass
 
 
+def _gamescope_hosts_aoe3(gs_pid: int) -> bool:
+    """Return True only if the gamescope process tree contains AoE3 DE.
+
+    Walks the process tree rooted at *gs_pid* and looks for either:
+      - ``AppId=933110`` in any process's cmdline (Steam/Proton injects this), or
+      - ``AoE3DE_s.exe`` anywhere in any process's cmdline.
+
+    Returns False (fail-safe) if process inspection is unavailable or raises
+    any exception — the caller must then treat the gamescope as not-AoE3 rather
+    than assume it is.
+    """
+    try:
+        import psutil  # type: ignore
+    except ImportError:
+        # psutil unavailable — fall back to /proc scanning so the function
+        # works without the optional dependency.
+        return _gamescope_hosts_aoe3_proc(gs_pid)
+
+    try:
+        root = psutil.Process(gs_pid)
+        # Include the gamescope process itself plus all descendants.
+        procs = [root] + root.children(recursive=True)
+        for proc in procs:
+            try:
+                cmdline = " ".join(proc.cmdline())
+            except (psutil.AccessDenied, psutil.NoSuchProcess, OSError):
+                continue
+            if _AOE3_APPID in cmdline or _AOE3_EXE in cmdline:
+                return True
+    except (psutil.NoSuchProcess, psutil.AccessDenied, OSError):
+        pass
+    return False
+
+
+def _gamescope_hosts_aoe3_proc(gs_pid: int) -> bool:
+    """psutil-free fallback: walk /proc/<pid>/cmdline for the process tree.
+
+    Uses only stdlib. Returns False on any error (fail-safe).
+    """
+    import glob as _glob
+
+    def _cmdline(pid: int) -> str:
+        try:
+            with open(f"/proc/{pid}/cmdline", "rb") as fh:
+                return fh.read().replace(b"\x00", b" ").decode(errors="replace")
+        except OSError:
+            return ""
+
+    def _ppid(pid: int) -> Optional[int]:
+        try:
+            with open(f"/proc/{pid}/stat", "r") as fh:
+                parts = fh.read().split()
+                return int(parts[3])  # field 4 (0-indexed 3) = ppid
+        except (OSError, IndexError, ValueError):
+            return None
+
+    # Build a map pid -> [child_pid] for all accessible processes.
+    try:
+        all_pids = [int(os.path.basename(p))
+                    for p in _glob.glob("/proc/[0-9]*")]
+    except OSError:
+        return False
+
+    children: dict[int, list[int]] = {}
+    for pid in all_pids:
+        ppid = _ppid(pid)
+        if ppid is not None:
+            children.setdefault(ppid, []).append(pid)
+
+    # BFS from gs_pid.
+    queue = [gs_pid]
+    seen: set[int] = set()
+    while queue:
+        pid = queue.pop()
+        if pid in seen:
+            continue
+        seen.add(pid)
+        cmd = _cmdline(pid)
+        if _AOE3_APPID in cmd or _AOE3_EXE in cmd:
+            return True
+        queue.extend(children.get(pid, []))
+    return False
+
+
+def _find_gamescope_pid() -> Optional[int]:
+    """Return the PID of the first 'gamescope' process found, or None."""
+    try:
+        res = subprocess.run(
+            ["pgrep", "-x", "gamescope"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if res.returncode == 0:
+            pids = [int(p.strip()) for p in res.stdout.splitlines() if p.strip().isdigit()]
+            if pids:
+                return pids[0]
+    except (subprocess.TimeoutExpired, FileNotFoundError, ValueError):
+        pass
+    return None
+
+
 def _x_display_resolution(display: str) -> Optional[tuple[int, int]]:
     """Return (width, height) of the X root window on the given display, or None."""
     env = {**os.environ, "DISPLAY": display}
@@ -234,18 +339,57 @@ def _x_display_resolution(display: str) -> Optional[tuple[int, int]]:
     return None
 
 
+def _gamescope_pids_for_socket(gs_socket: str) -> list[int]:
+    """Return PIDs of gamescope processes that own *gs_socket*.
+
+    Looks for processes named 'gamescope' whose cmdline contains the socket
+    name (e.g. 'gamescope-0').  Returns an empty list if none are found or
+    /proc inspection fails — callers treat an empty list as unverifiable.
+    """
+    pids: list[int] = []
+    try:
+        res = subprocess.run(
+            ["pgrep", "-x", "gamescope"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if res.returncode != 0:
+            return pids
+        for line in res.stdout.splitlines():
+            pid_str = line.strip()
+            if not pid_str.isdigit():
+                continue
+            pid = int(pid_str)
+            try:
+                with open(f"/proc/{pid}/cmdline", "rb") as fh:
+                    cmdline = fh.read().replace(b"\x00", b" ").decode(errors="replace")
+                if gs_socket in cmdline:
+                    pids.append(pid)
+            except OSError:
+                # If we can't read cmdline for this pid, still include it so the
+                # caller can try process-tree inspection — better to check than skip.
+                pids.append(pid)
+    except (subprocess.TimeoutExpired, FileNotFoundError, ValueError):
+        pass
+    return pids
+
+
 def detect_aoe3_display(*, use_cache: bool = True) -> tuple[str, str]:
     """Detect (X_DISPLAY, GAMESCOPE_WL) for the running AoE3 DE instance.
 
     Algorithm:
       1. For each X display with an X-lock file, check for the AoE3 window.
-      2. For each gamescope socket in $XDG_RUNTIME_DIR, try `gamescopectl status`.
-      3. Pair the first valid X display with the first valid gamescope socket.
+      2. Verify at least one gamescope process tree hosting that display
+         contains AppId=933110 or AoE3DE_s.exe (guards against false-positive
+         when a different Steam title such as CoH2 is the only running gamescope).
+      3. For each gamescope socket in $XDG_RUNTIME_DIR, try `gamescopectl status`.
+      4. Pair the first valid X display with the first valid gamescope socket.
          (They are typically co-indexed: :1 + gamescope-0, :2 + gamescope-1, etc.
          but we verify each independently rather than assuming the offset.)
 
     Returns (X_DISPLAY, GAMESCOPE_WL), e.g. (":2", "gamescope-1").
-    Raises RuntimeError if no AoE3 window is found on any display.
+    Raises RuntimeError if no AoE3 window is found on any display, or if
+    process-tree verification confirms the only running gamescope hosts a
+    different title (AppId != 933110 / exe != AoE3DE_s.exe).
     """
     global _CACHE
     if use_cache and _CACHE is not None:
@@ -265,6 +409,62 @@ def detect_aoe3_display(*, use_cache: bool = True) -> tuple[str, str]:
             f"AoE3 DE window not found on any X display "
             f"(checked: {displays}). Is the game running?"
         )
+
+    # --- AppId / exe identity gate ----------------------------------------
+    # After the window-title check passes, verify that a gamescope process
+    # hosting AoE3 DE (AppId=933110 / AoE3DE_s.exe) is actually present.
+    # This prevents the false-positive where a different game (e.g. CoH2,
+    # AppId=231430 / RelicCoH2.exe) is the only live gamescope and the
+    # window-title check mis-fired (tool timeout / stale window list).
+    #
+    # Fail-safe: if process inspection is completely unavailable (no pgrep,
+    # no /proc, no psutil) we log a warning but do NOT claim AoE3 is present
+    # — the caller gets a RuntimeError rather than a false positive.
+    aoe3_verified = False
+    # Gather all gamescope pids once and check whether any of their trees
+    # contains the AoE3 identity markers.
+    all_gs_pids: list[int] = []
+    for gs_sock in sockets:
+        all_gs_pids.extend(_gamescope_pids_for_socket(gs_sock))
+    # Also check all gamescope pids even if they don't match a known socket name
+    # (covers the fallback/derived-name path).
+    try:
+        res = subprocess.run(
+            ["pgrep", "-x", "gamescope"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if res.returncode == 0:
+            for line in res.stdout.splitlines():
+                pid_str = line.strip()
+                if pid_str.isdigit():
+                    pid = int(pid_str)
+                    if pid not in all_gs_pids:
+                        all_gs_pids.append(pid)
+    except (subprocess.TimeoutExpired, FileNotFoundError, ValueError):
+        pass
+
+    if all_gs_pids:
+        for gs_pid in all_gs_pids:
+            if _gamescope_hosts_aoe3(gs_pid):
+                aoe3_verified = True
+                break
+        if not aoe3_verified:
+            raise RuntimeError(
+                f"AoE3 DE window title found on DISPLAY={aoe3_display}, but "
+                f"no gamescope process tree contains AppId={_AOE3_APPID} or "
+                f"{_AOE3_EXE!r}. A different Steam title is likely running "
+                f"under gamescope (e.g. CoH2 AppId=231430). "
+                f"Is AoE3 DE (AppId={_AOE3_APPID}) actually running?"
+            )
+    else:
+        # pgrep / /proc unavailable — cannot verify identity. Fail safe.
+        raise RuntimeError(
+            f"AoE3 DE window title found on DISPLAY={aoe3_display}, but "
+            f"process-tree inspection is unavailable (no pgrep / no /proc). "
+            f"Cannot confirm AppId={_AOE3_APPID} / {_AOE3_EXE!r} is present. "
+            f"Refusing to report AoE3 present without identity verification."
+        )
+    # ----------------------------------------------------------------------
 
     # Pair the AoE3 X display with the gamescope that renders at the same
     # resolution. Multiple gamescope instances may both answer ``status``,

@@ -59,12 +59,16 @@ _CIVMODS = REPO_ROOT / "data" / "civmods.xml"
 # We warn about these rather than failing so the validator doesn't block deploy.
 _KNOWN_MISSING_POSTGAME_DDTS: frozenset[str] = frozenset({
     "ui/ingame/ingame_ui_postgame_flag_barbary",
+    "ui/ingame/ingame_ui_postgame_flag_baja_californian",
+    "ui/ingame/ingame_ui_postgame_flag_californian",
     "ui/ingame/ingame_ui_postgame_flag_canadian",
+    "ui/ingame/ingame_ui_postgame_flag_central_american",
     "ui/ingame/ingame_ui_postgame_flag_egyptian",
     "ui/ingame/ingame_ui_postgame_flag_ethiopian",
     "ui/ingame/ingame_ui_postgame_flag_finnish",
     "ui/ingame/ingame_ui_postgame_flag_hungarian",
     "ui/ingame/ingame_ui_postgame_flag_indonesian",
+    "ui/ingame/ingame_ui_postgame_flag_rio_grande",
     "ui/ingame/ingame_ui_postgame_flag_romanian",
     "ui/ingame/ingame_ui_postgame_flag_south_african",
     "ui/ingame/ingame_ui_postgame_flag_swedish",

@@ -2,15 +2,15 @@
   "schema_version": 1,
   "civ_token": "ANWBritish",
   "civ_label": "British",
-  "captured_at": "2026-06-01T09:59:38Z",
+  "captured_at": "2026-06-10T02:59:51Z",
   "host_perspective": true,
   "host_civ_token": null,
-  "match_id": "anwbritish_2026-06-01_095938",
+  "match_id": "anwbritish_2026-06-10_025951",
   "captures": [
     {
       "label": "01_lobby",
       "full_path": "full/01_lobby.png",
-      "captured_ms": 1780308140775,
+      "captured_ms": 1781060518193,
       "ocr_text": null,
       "crops": [
         {
@@ -29,7 +29,7 @@
     {
       "label": "02_loading",
       "full_path": "full/02_loading.png",
-      "captured_ms": 1780308161413,
+      "captured_ms": 1781060542058,
       "ocr_text": null,
       "crops": [
         {
@@ -48,7 +48,7 @@
     {
       "label": "03_hud",
       "full_path": "full/03_hud.png",
-      "captured_ms": 1780308221400,
+      "captured_ms": 1781060594622,
       "ocr_text": null,
       "crops": [
         {
@@ -78,7 +78,7 @@
     {
       "label": "04_homecity_panel",
       "full_path": "full/04_homecity_panel.png",
-      "captured_ms": 1780308226194,
+      "captured_ms": 1781060631868,
       "ocr_text": null,
       "crops": [
         {
@@ -97,7 +97,7 @@
     {
       "label": "05_tech_tree",
       "full_path": "full/05_tech_tree.png",
-      "captured_ms": 1780308237370,
+      "captured_ms": 1781060642584,
       "ocr_text": null,
       "crops": [
         {
@@ -114,9 +114,47 @@
       ]
     },
     {
+      "label": "07_scoreboard",
+      "full_path": "full/07_scoreboard.png",
+      "captured_ms": 1781060646815,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "scoreboard_player_row",
+          "crop_region": [
+            200,
+            280,
+            1720,
+            360
+          ],
+          "crop_path": "crops/scoreboard_player_row.png",
+          "thumb_path": "thumbs/scoreboard_player_row.webp"
+        }
+      ]
+    },
+    {
+      "label": "08_esc_menu",
+      "full_path": "full/08_esc_menu.png",
+      "captured_ms": 1781060650370,
+      "ocr_text": null,
+      "crops": [
+        {
+          "name": "esc_menu_player_summary",
+          "crop_region": [
+            550,
+            250,
+            1370,
+            830
+          ],
+          "crop_path": "crops/esc_menu_player_summary.png",
+          "thumb_path": "thumbs/esc_menu_player_summary.webp"
+        }
+      ]
+    },
+    {
       "label": "06_diplomacy",
       "full_path": "full/06_diplomacy.png",
-      "captured_ms": 1780308243560,
+      "captured_ms": 1781060656239,
       "ocr_text": null,
       "crops": [
         {
@@ -135,7 +173,7 @@
     {
       "label": "10_ai_homecity",
       "full_path": "full/10_ai_homecity.png",
-      "captured_ms": 1780308268687,
+      "captured_ms": 1781060666568,
       "ocr_text": null,
       "crops": [
         {
@@ -163,47 +201,9 @@
       ]
     },
     {
-      "label": "07_scoreboard",
-      "full_path": "full/07_scoreboard.png",
-      "captured_ms": 1780308281766,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "scoreboard_player_row",
-          "crop_region": [
-            200,
-            280,
-            1720,
-            360
-          ],
-          "crop_path": "crops/scoreboard_player_row.png",
-          "thumb_path": "thumbs/scoreboard_player_row.webp"
-        }
-      ]
-    },
-    {
-      "label": "08_esc_menu",
-      "full_path": "full/08_esc_menu.png",
-      "captured_ms": 1780308296623,
-      "ocr_text": null,
-      "crops": [
-        {
-          "name": "esc_menu_player_summary",
-          "crop_region": [
-            550,
-            250,
-            1370,
-            830
-          ],
-          "crop_path": "crops/esc_menu_player_summary.png",
-          "thumb_path": "thumbs/esc_menu_player_summary.webp"
-        }
-      ]
-    },
-    {
       "label": "09_endgame",
       "full_path": "full/09_endgame.png",
-      "captured_ms": 1780308321171,
+      "captured_ms": 1781060681766,
       "ocr_text": null,
       "crops": [
         {
@@ -221,5 +221,7 @@
     }
   ],
   "status": "complete",
-  "warnings": []
+  "warnings": [
+    "homecity_panel_assetpreload_timeout"
+  ]
 }

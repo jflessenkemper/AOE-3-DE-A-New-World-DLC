@@ -1,3 +1,4 @@
+"""Verify the live Proton mod install on disk matches the packaged release tree, flagging any extra or missing files."""
 from __future__ import annotations
 
 from dataclasses import dataclass

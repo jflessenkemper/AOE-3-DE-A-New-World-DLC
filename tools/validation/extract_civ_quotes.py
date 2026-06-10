@@ -97,7 +97,7 @@ _BRANCH_RE = re.compile(
 
 # Matches a single-line tactical function: string llGet...(void) { return ("..."); }
 _TACTICAL_RE = re.compile(
-    r'string\s+(?P<fn>llGetLegendaryLeader(?:Retreat|Rout|BulkAssault|Decapitation)Line)'
+    r'string\s+(?P<fn>anwGetLeader(?:Retreat|Rout|BulkAssault|Decapitation)Line)'
     r'\s*\(void\)\s*\{\s*return\s*\("(?P<line>[^"]+)"\);\s*\}',
     re.DOTALL,
 )
@@ -112,10 +112,10 @@ def extract_shared_tactical_lines(xs_path: Path) -> dict[str, str]:
     parsed from the 4 single-line functions near lines 127-145."""
     text = xs_path.read_text(encoding="utf-8")
     fn_to_key = {
-        "llGetLegendaryLeaderRetreatLine": "retreat",
-        "llGetLegendaryLeaderRoutLine": "rout",
-        "llGetLegendaryLeaderBulkAssaultLine": "bulk_assault",
-        "llGetLegendaryLeaderDecapitationLine": "decapitation",
+        "anwGetLeaderRetreatLine": "retreat",
+        "anwGetLeaderRoutLine": "rout",
+        "anwGetLeaderBulkAssaultLine": "bulk_assault",
+        "anwGetLeaderDecapitationLine": "decapitation",
     }
     result: dict[str, str] = {}
     for m in _TACTICAL_RE.finditer(text):
@@ -149,9 +149,11 @@ def extract_insults_compliments(xs_path: Path) -> dict[str, dict[str, list[str]]
     """
     text = xs_path.read_text(encoding="utf-8")
 
-    # Slice out the two function bodies.
-    insult_start_marker = "string llGetLegendaryLeaderInsult(void)"
-    compliment_start_marker = "string llGetLegendaryLeaderCompliment(void)"
+    # Slice out the two function bodies. (The XS functions were renamed from
+    # llGetLegendaryLeader* to anwGetLeader* — keep these markers in sync with
+    # game/ai/core/aiLeaderQuotes.xs.)
+    insult_start_marker = "string anwGetLeaderInsult(void)"
+    compliment_start_marker = "string anwGetLeaderCompliment(void)"
 
     insult_start = text.index(insult_start_marker)
     compliment_start = text.index(compliment_start_marker)

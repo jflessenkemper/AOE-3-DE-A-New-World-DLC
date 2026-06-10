@@ -52,6 +52,16 @@ try:
 except Exception:
     _IMAGE_UTILS_AVAILABLE = False
 
+# Building-parity profile — used to compute "N/M buildings captured" callout
+# in the per-civ buildings strip. Falls back gracefully if the module is absent.
+try:
+    from tools.aoe3_automation.capture_profile import expected_building_filenames as _expected_building_filenames
+    _CAPTURE_PROFILE_AVAILABLE = True
+except Exception:
+    _CAPTURE_PROFILE_AVAILABLE = False
+    def _expected_building_filenames(token: str) -> list:  # type: ignore[misc]
+        return []
+
 # Quote-extractor module — surfaces every AI insult / compliment / chatset
 # line per civ so they can be rendered under each civ card. See
 # ``tools/validation/extract_civ_quotes.py`` for the parser.
@@ -219,25 +229,49 @@ ART_SURFACE_LABELS: dict[str, str] = {
 SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
     ("lobby",      ["01_lobby.png"]),
     ("loading",    ["02_loading.png"]),
-    ("HUD",        ["02_hud_default.png", "03_hud.png"]),
+    # Fresh per-civ orchestrator (anw_visual_capture_runner.py) output names
+    # are listed FIRST; legacy batch-runner names remain as fallbacks so a
+    # civ that only has older captures still populates. First-existing wins.
+    ("HUD",        ["03_hud.png", "02_hud_default.png"]),
     # Hero/Explorer selected in the HUD — the selection panel shows the
     # unit's name, letting the user visually confirm each nation's hero
     # name is correct.  Captured by recapture.py surface "hero".
     ("hero",       ["09_hero_selected.png", "10_hero_selected.png",
                     "hero_selected.png"]),
-    ("scoreboard", ["03_scoreboard.png", "07_scoreboard_with_banter.png", "02_scoreboard.png"]),
-    ("diplomacy",  ["04_diplomacy.png", "06_diplomacy.png", "01_diplomacy.png"]),
-    ("home city",  ["05_homecity_panel.png", "04_homecity_panel.png", "03_homecity.png"]),
+    ("scoreboard", ["07_scoreboard.png", "03_scoreboard.png", "07_scoreboard_with_banter.png", "02_scoreboard.png"]),
+    ("Player Summary", ["06_diplomacy.png", "04_diplomacy.png", "01_diplomacy.png"]),
+    ("home city",  ["04_homecity_panel.png", "05_homecity_panel.png", "03_homecity.png"]),
     ("tech tree",  ["05_tech_tree.png"]),
-    ("ally HC",    ["06b_ai_homecity_via_diplo.png", "04_ally_homecity.png"]),
-    ("esc menu",   ["06_esc_menu.png", "08_esc_menu.png"]),
-    ("endgame",    ["07_endgame_screen.png", "09_postgame_results.png", "05_postgame.png"]),
+    ("ally HC",    ["10_ai_homecity.png", "06b_ai_homecity_via_diplo.png", "04_ally_homecity.png"]),
+    ("esc menu",   ["08_esc_menu.png", "06_esc_menu.png"]),
+    ("endgame",    ["09_endgame.png", "07_endgame_screen.png", "09_postgame_results.png", "05_postgame.png"]),
     ("abandon",    ["07a_abandon_screen.png"]),
     ("awards",     ["20_postgame_awards.png"]),
     ("Age-Up II",  ["08_ageup_age2.png"]),
     ("Age-Up III", ["08_ageup_age3.png"]),
     ("Age-Up IV",  ["08_ageup_age4.png"]),
     ("Age-Up V",   ["08_ageup_age5.png"]),
+    # ── Civ-review surfaces (added 2026-06-06 per release-readiness review) ──
+    # These cover the gameplay-content surfaces that prove each nation plays
+    # correctly — bonuses, deck cards, units, buildings, shipments, hero
+    # abilities, lore. The columns below are canonical single-shot slots;
+    # multi-image surfaces (every building / every unique unit) render their
+    # FULL set in the per-civ "extras" strip below the canonical grid.
+    ("civ info",        ["11_civ_info.png"]),
+    ("civ lore",        ["16_civ_lore.png"]),
+    ("deck builder",    ["12_deck_builder.png"]),
+    ("shipments",       ["14_shipments.png"]),
+    ("hero abilities",  ["15_hero_abilities.png"]),
+    ("unique unit",     ["13_unique_unit.png"]),
+    ("units in-world",  ["17_units_inworld.png"]),
+    # NOTE: per-building command cards are NOT a single canonical column — every
+    # building (Town Center, Barracks, Stable, …) is rendered as its own named
+    # cell by the dedicated "Buildings" strip (_render_buildings_strip), so the
+    # lightbox shows each building's NAME at the top. See that helper below.
+    ("unique building", ["18_unique_building.png"]),
+    ("native/trade",    ["19_native_trade.png"]),
+    ("base overview",   ["21_base_overview.png"]),
+    ("politician",      ["22_politician_detail.png"]),
 ]
 
 # AI-round canonical columns (the round where the AI plays the nation).
@@ -245,7 +279,6 @@ SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
 AI_SCREENSHOT_COLUMNS: list[tuple[str, list[str]]] = [
     ("AI: Chat Portrait", ["ai_01_chat_portrait.png"]),
     ("AI: Home City",     ["ai_02_homecity.png"]),
-    ("AI: Deck",          ["ai_03_deck.png"]),
 ]
 
 # Map each column label -> the surface key understood by
@@ -258,7 +291,7 @@ RECAPTURE_SURFACE_KEY: dict[str, str] = {
     "HUD": "hud",
     "hero": "hero",
     "scoreboard": "scoreboard",
-    "diplomacy": "diplomacy",
+    "Player Summary": "diplomacy",
     "home city": "homecity",
     "tech tree": "techtree",
     "ally HC": "allyhc",
@@ -302,6 +335,69 @@ _CANONICAL_SCREENSHOT_NAMES: set[str] = {
 SCREENSHOT_FILES: list[tuple[str, str]] = [
     (candidates[0], label) for label, candidates in SCREENSHOT_COLUMNS
 ]
+
+# Human-readable labels for extra captured surfaces not covered by the
+# canonical SCREENSHOT_COLUMNS / AI_SCREENSHOT_COLUMNS grids.
+# Copied from tools/validation/build_british_review.py — update both if names
+# change.
+EXTRA_SHOT_LABELS: dict[str, str] = {
+    # Pre-game / lobby
+    '01_lobby.png': 'Lobby — civ picker / flag',
+    '02_loading.png': 'Loading screen',
+    # In-game HUD + panels
+    '03_hud.png': 'In-game HUD (Age 1)',
+    '03_scoreboard.png': 'Scoreboard (Tab)',
+    '04_diplomacy.png': 'Diplomacy screen',
+    '04_homecity_panel.png': 'Home City panel',
+    '05_homecity_panel.png': 'Home City panel (deck view)',
+    '05_tech_tree.png': 'Tech tree (early game)',
+    '06_diplomacy.png': 'Diplomacy screen (allies set)',
+    '06_esc_menu.png': 'ESC pause menu',
+    '06b_ai_homecity_via_diplo.png': 'AI Home City (via Diplomacy)',
+    '06b_diplomacy_after_ally.png': 'Diplomacy — after ally selected',
+    # Building menus (command cards)
+    'build_command_card.png': 'Build command card (villager)',
+    'building_town_center.png': 'Building menu — Town Center',
+    'building_market.png': 'Building menu — Market',
+    # Age-up politician dialogs
+    '08_ageup_age2.png': 'Age 2 — Colonial politician select',
+    '08_ageup_age3.png': 'Age 3 — Fortress politician select',
+    '08_ageup_age4.png': 'Age 4 — Industrial politician select',
+    '08_ageup_age5.png': 'Age 5 — Imperial politician select',
+    '08_esc_menu.png': 'ESC pause menu (mid-game)',
+    # World / units / hero
+    '09_hero_selected.png': 'Hero / Explorer selected',
+    '17_units_inworld.png': 'Units in world',
+    '21_base_overview.png': 'British base (overhead)',
+    '10_ai_homecity.png': 'AI Home City',
+    # AI-perspective surfaces
+    'ai_01_chat_portrait.png': 'AI chat portrait',
+    'ai_02_homecity.png': 'AI Home City (ally-flag click)',
+    'ai_03_deck.png': 'AI primary deck',
+    # End / post-game
+    '07a_abandon_screen.png': 'Resign — abandon screen',
+    '07a_abandon_screen_confirm.png': 'Resign — confirm dialog',
+    '07a_post_resign.png': 'Post-resign transition',
+    '07_endgame_screen.png': 'End-game screen',
+    '07_scoreboard.png': 'Scoreboard (final)',
+    '09_endgame.png': 'End-game results',
+    '20_postgame_awards.png': 'Post-game awards (final tab)',
+}
+
+
+def _pretty_shot_name(filename: str) -> str:
+    """Return a human-readable label for an extra screenshot filename.
+
+    Looks up ``EXTRA_SHOT_LABELS`` first; falls back to title-casing the
+    filename stem with any leading ``NN_`` numeric prefix stripped.
+    """
+    if filename in EXTRA_SHOT_LABELS:
+        return EXTRA_SHOT_LABELS[filename]
+    stem = Path(filename).stem
+    # Strip leading numeric prefix like "08_" or "06b_"
+    import re as _re
+    stem = _re.sub(r'^[0-9]+[a-z]*_', '', stem)
+    return stem.replace('_', ' ').title()
 
 
 # Spec tokens whose ANW art-folder name isn't ``ANW<first-word>``. These
@@ -712,6 +808,79 @@ def _stage_card_icons(decks: dict, cards_db: dict) -> set[str]:
     return staged
 
 
+def _load_civ_cultures() -> dict[str, str]:
+    """Load culture per ANW token from per_civ_building_capture_map.json.
+
+    Returns ``{ANWToken: culture_string}`` (e.g. ``{"ANWBritish": "WesternEurope", ...}``).
+    Falls back to ``{}`` gracefully if the file is missing or malformed.
+    """
+    path = REPO_ROOT / "artifacts" / "validation" / "per_civ_building_capture_map.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        civs = data.get("civs") or {}
+        return {tok: info.get("culture", "") for tok, info in civs.items()
+                if isinstance(info, dict) and info.get("culture")}
+    except Exception as exc:
+        print(f"  [warn] could not load per_civ_building_capture_map.json: {exc}",
+              file=sys.stderr)
+        return {}
+
+
+# Human-readable culture labels (raw JSON value → display text).
+_CULTURE_LABEL: dict[str, str] = {
+    "WesternEurope": "W. Europe",
+    "EasternEurope": "E. Europe",
+    "Mediterranean": "Mediterranean",
+    "AfricaEast": "Africa E.",
+    "AfricaWest": "Africa W.",
+    "Aztec": "Aztec",
+    "Inca": "Inca",
+    "Iroquois": "Iroquois",
+    "Sioux": "Sioux",
+    "Chinese": "Chinese",
+    "Japanese": "Japanese",
+    "Indian": "Indian",
+}
+
+# CSS class suffix per cultural family used for background-color theming.
+# Kept as modifier class names so the CSS does the colouring.
+_CULTURE_FAMILY_CLASS: dict[str, str] = {
+    "WesternEurope": "culture-european",
+    "EasternEurope": "culture-european",
+    "Mediterranean": "culture-european",
+    "Chinese": "culture-asian",
+    "Japanese": "culture-asian",
+    "Indian": "culture-asian",
+    "Aztec": "culture-native",
+    "Inca": "culture-native",
+    "Iroquois": "culture-native",
+    "Sioux": "culture-native",
+    "AfricaEast": "culture-african",
+    "AfricaWest": "culture-african",
+}
+
+
+def _culture_chip_html(anw_token: str, civ_cultures: dict[str, str]) -> str:
+    """Return an HTML chip showing the culture for *anw_token*, or '' if unknown.
+
+    Falls back through ``_ANW_SPEC_TOKEN_ALIAS`` for shortened tokens like
+    ``ANWBaja`` whose full civmods key is ``ANWBajaCalifornians``.
+    """
+    culture = civ_cultures.get(anw_token, "")
+    if not culture:
+        # Try the extended-name alias (Mexican state civs and similar).
+        # _ANW_SPEC_TOKEN_ALIAS is defined later in the file; using .get()
+        # on the module-level dict is fine since all loaders run after import.
+        resolved = _ANW_SPEC_TOKEN_ALIAS.get(anw_token, anw_token)
+        culture = civ_cultures.get(resolved, "")
+    if not culture:
+        return ""
+    label = _CULTURE_LABEL.get(culture, culture)
+    family_cls = _CULTURE_FAMILY_CLASS.get(culture, "")
+    classes = f"culture-chip {family_cls}".strip()
+    return f'<span class="{html.escape(classes)}" title="{html.escape(culture)}">{html.escape(label)}</span>'
+
+
 def _load_civ_blurbs() -> dict:
     """Load data/anw_civ_blurbs.json. Returns {} on error.
 
@@ -1008,18 +1177,17 @@ def _render_unit_row(title: str, unit_names: list[str],
     )
 
 
-def _render_unique_units_row(anw_token: str, blurbs: dict) -> str:
-    """Render the UNIQUE UNITS strip for one civ (10% retreat tier).
-
-    Data from data/anw_civ_blurbs.json unique_units lists.  Returns "" if the
-    civ has no unique_units entry in blurbs (renders as unavailable notice via
-    _render_unit_row when the list is empty).
+def _render_unique_units_row(anw_token: str,
+                             detail: dict[str, list[dict]]) -> str:
+    """Render the UNIQUE UNITS strip for one civ — the elite anchors that never
+    rout early (10% tier). Driven by the corrected `role == "unique"`
+    classification from classify_unit_roles.py (a core unit trained by exactly
+    one nation, or one named in the civ's curated `unique_units`), so each chip
+    carries the unit's authentic extracted icon + full-stat hover label.
+    Empty → "(none / data unavailable)" notice.
     """
-    civ_info = blurbs.get(anw_token)
-    if not civ_info:
-        return _render_unit_row("UNIQUE UNITS", [])
-    unit_names = list(civ_info.get("unique_units") or [])
-    return _render_unit_row("UNIQUE UNITS", unit_names)
+    units = _roster_units_by_role(anw_token, detail, "unique")
+    return _render_role_row("UNIQUE UNITS", units)
 
 
 def _render_hero_explorer_row(anw_token: str,
@@ -1089,28 +1257,357 @@ def _render_hero_explorer_row(anw_token: str,
     )
 
 
-def _render_retreat_units_row(anw_token: str, blurbs: dict,
-                               rosters: dict[str, list[str]],
-                               standard_units: dict[str, list[str]] | None = None) -> str:
-    """Render the RETREAT UNITS strip for one civ (25% retreat tier).
-
-    Retreat units = standard-unit roster for the civ (from curated
-    data/anw_standard_units.json when non-empty, else HTML-derived rosters)
-    MINUS the civ's unique_units (which retreat at 10% instead) AND minus
-    the civ's hero/explorer units (which never retreat; they suppress nearby
-    retreats).
-    Source: data/anw_standard_units.json (curated) or a_new_world.html
-    data-search attributes (fallback), filtered against blurbs unique_units
-    + _ANW_HERO_EXPLORER.
+def _render_retreat_units_row(anw_token: str,
+                              detail: dict[str, list[dict]]) -> str:
+    """Render the RETREAT UNITS strip for one civ — the standard units that rout
+    at the 25% HP threshold. Driven by the corrected `role == "retreat"`
+    classification (a core military unit shared by 2+ nations, excluding the
+    civ's unique elite anchors and its hero, which never rout). Each chip
+    carries the unit's authentic extracted icon + full-stat hover label.
+    Empty → "(none / data unavailable)" notice.
     """
-    curated = (standard_units or {}).get(anw_token)
-    all_units = curated if curated else (rosters.get(anw_token) or [])
-    exclude = set((blurbs.get(anw_token) or {}).get("unique_units") or [])
-    exclude |= set(_ANW_HERO_EXPLORER.get(anw_token) or [])
-    # Case-insensitive exclusion
-    exclude_lower = {e.lower() for e in exclude}
-    retreat = [u for u in all_units if u.lower() not in exclude_lower]
-    return _render_unit_row("RETREAT UNITS", retreat)
+    units = _roster_units_by_role(anw_token, detail, "retreat")
+    return _render_role_row("RETREAT UNITS", units)
+
+
+# ---------------------------------------------------------------------------
+# Full per-civ roster ("every unit this nation can make") — driven by the
+# global unit index (tools/validation/build_unit_index.py →
+# artifacts/unit_index/civ_rosters_detailed.json). Each unit entry carries
+# pre-resolved stats (hp/armor/attacks/cost/pop/age) and a resolved icon
+# basename that already lives under resources/images/icons/units/, so we can
+# stage + render it directly without re-running _resolve_unit_icon().
+# ---------------------------------------------------------------------------
+
+_UNIT_INDEX_DETAIL_PATH = (
+    REPO_ROOT / "artifacts" / "unit_index" / "civ_rosters_detailed.json"
+)
+
+# Role → display label, in render order. The `role` field is the corrected
+# per-(civ,unit) classification written by classify_unit_roles.py
+# (unique = elite anchor that never routs early; retreat = standard unit that
+# routs at the 25% HP threshold; situational = merc/native/shipment/outlaw;
+# hero = never routs). This supersedes the old name-prefix `tier` heuristic.
+_ROSTER_ROLE_ORDER: list[tuple[str, str]] = [
+    ("hero", "Hero / Explorer"),
+    ("unique", "Unique Units — elite anchors (never rout early)"),
+    ("retreat", "Retreat Units — standard (rout at 25% HP)"),
+    ("situational", "Situational — mercenaries / natives / shipments"),
+]
+
+
+def _load_unit_index_detail() -> dict[str, list[dict]]:
+    """Load the per-civ detailed roster from the global unit index.
+
+    Returns ``{anw_token: [unit_dict, ...]}`` or ``{}`` if the index has not
+    been generated yet (the section then renders an unavailable notice).
+    Run ``python3 tools/validation/build_unit_index.py`` to (re)generate it.
+    """
+    if not _UNIT_INDEX_DETAIL_PATH.is_file():
+        print(f"  [warn] unit index not found at {_UNIT_INDEX_DETAIL_PATH}; "
+              f"run build_unit_index.py — full-roster section will be empty")
+        return {}
+    try:
+        with open(_UNIT_INDEX_DETAIL_PATH, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"  [warn] failed to read unit index: {exc}")
+        return {}
+    return data.get("civs") or {}
+
+
+def _stage_full_roster_icons(detail: dict[str, list[dict]]) -> set[str]:
+    """Copy every icon referenced by the detailed rosters into the served tree.
+
+    The ``icon`` field on each unit entry is already a basename under
+    ``resources/images/icons/units/`` (_UNITS_SOURCE_DIR), so this mirrors
+    _stage_unit_icons() but reads from the unit index instead of blurbs.
+    """
+    _SITE_UNIT_ICONS_DIR.mkdir(parents=True, exist_ok=True)
+    wanted: set[str] = set()
+    for units in detail.values():
+        for u in units:
+            icon = u.get("icon")
+            if icon:
+                wanted.add(icon)
+    staged: set[str] = set()
+    missing = 0
+    for icon in sorted(wanted):
+        src = _UNITS_SOURCE_DIR / icon
+        if not src.is_file():
+            missing += 1
+            continue
+        try:
+            shutil.copy2(src, _SITE_UNIT_ICONS_DIR / icon)
+            staged.add(icon)
+        except OSError as exc:
+            print(f"  [warn] failed to stage roster icon {icon}: {exc}",
+                  file=sys.stderr)
+    if missing:
+        print(f"  [warn] full-roster: {missing} icons missing from source "
+              f"(unextracted art assets)")
+    return staged
+
+
+def _fmt_unit_stat_line(u: dict) -> str:
+    """Short stat caption sub-line: e.g. 'HP 100 · Rng 20%'."""
+    bits: list[str] = []
+    hp = u.get("hp")
+    if hp:
+        bits.append(f"HP {hp}")
+    armor = u.get("armor") or []
+    if armor:
+        a = armor[0]
+        bits.append(f"{a.get('type','')[:3]} {a.get('pct',0)}%".strip())
+    return " · ".join(bits)
+
+
+def _fmt_unit_tooltip(u: dict) -> str:
+    """Rich hover tooltip with all indexed stats for one unit."""
+    parts: list[str] = [str(u.get("label") or u.get("proto") or "")]
+    age = u.get("age")
+    if age:
+        parts.append(f"Age {age}")
+    hp = u.get("hp")
+    if hp:
+        parts.append(f"HP {hp}")
+    armor = u.get("armor") or []
+    if armor:
+        parts.append("Armor " + ", ".join(
+            f"{a.get('pct',0)}% {a.get('type','')}" for a in armor))
+    attacks = u.get("attacks") or []
+    if attacks:
+        a0 = attacks[0]
+        atk = f"Atk {a0.get('damage',0):g} {a0.get('type','')}"
+        rng = a0.get("range") or 0
+        if rng:
+            atk += f" (rng {rng:g})"
+        parts.append(atk)
+    cost = u.get("cost") or {}
+    if cost:
+        parts.append("Cost " + ", ".join(
+            f"{amt} {res}" for res, amt in cost.items()))
+    pop = u.get("pop")
+    if pop:
+        parts.append(f"Pop {pop}")
+    src = u.get("source")
+    if src:
+        parts.append(str(src))
+    return " · ".join(parts)
+
+
+def _render_unit_chip(u: dict) -> str:
+    """One unit chip: resolved icon (or '?' placeholder), name caption, a short
+    stat sub-line, and a rich hover tooltip carrying full indexed stats. Used by
+    the unique / retreat rows AND the full-roster section so every surface shows
+    the same authentic icon + hover label."""
+    safe_name = html.escape(str(u.get("label") or u.get("proto") or ""))
+    tip = html.escape(_fmt_unit_tooltip(u))
+    stat_line = html.escape(_fmt_unit_stat_line(u))
+    icon = u.get("icon")
+    if icon and (_SITE_UNIT_ICONS_DIR / icon).is_file():
+        icon_url = f"unit_icons/{html.escape(icon)}"
+        img = (f'<img src="{icon_url}" alt="{safe_name}" '
+               f'title="{tip}" loading="lazy">')
+    else:
+        img = f'<div class="unit-placeholder" title="{tip}">?</div>'
+    sub = f'<div class="unit-statline">{stat_line}</div>' if stat_line else ""
+    return (
+        f'<div class="unit-cell" title="{tip}">'
+        f'{img}'
+        f'<div class="unit-caption">{safe_name}</div>'
+        f'{sub}'
+        f'</div>'
+    )
+
+
+def _roster_units_by_role(anw_token: str, detail: dict[str, list[dict]],
+                          role: str) -> list[dict]:
+    """All units for a civ with the given corrected `role`, in index order."""
+    return [u for u in (detail.get(anw_token) or []) if u.get("role") == role]
+
+
+def _render_role_row(label: str, units: list[dict]) -> str:
+    """Render a single labelled strip of unit chips (Unique / Retreat). Empty →
+    the standard "(none / data unavailable)" notice via _render_unit_row."""
+    if not units:
+        return _render_unit_row(label, [])
+    cells = "".join(_render_unit_chip(u) for u in units)
+    return (
+        f'<div class="unique-units-block">'
+        f'<div class="unique-units-label">{html.escape(label)} '
+        f'<span class="roster-tier-count">({len(units)})</span></div>'
+        f'<div class="unique-units-row">{cells}</div>'
+        f'</div>'
+    )
+
+
+def _render_full_roster_section(
+        anw_token: str,
+        detail: dict[str, list[dict]],
+        *,
+        explorer_map: dict | None = None,
+        unit_to_buildings: dict[str, list[str]] | None = None,
+) -> str:
+    """Render the "ALL UNITS THIS NATION CAN MAKE" block for one civ.
+
+    Units are grouped by the building that produces them (Barracks, Stable,
+    Artillery Foundry, etc.). Units not in the building map go into catch-all
+    groups by source/tier (Mercenary, Native, Shipment, etc.).
+
+    Each chip shows icon + name only — NO stat sub-line. Name is color-coded
+    by role:
+      - "hero"       → gold  (.unit-gold)   — explorer/hero, never retreats
+      - "situational"→ green (.unit-green)  — mercs/natives/shipped, never retreat
+      - "unique"     → red   (.unit-red)    — routs at 10% HP
+      - "retreat"    → red   (.unit-red)    — routs at 25% HP
+
+    Tooltip shows the unit name (or the explorer's real name for role "hero").
+    A legend at the top explains the color coding.
+
+    Data + resolved icons come from the global unit index.
+    Empty/absent civ → unavailable notice.
+    """
+    # Priority list for picking a canonical building when a unit maps to many.
+    _BUILDING_PRIORITY = [
+        'Barracks', 'Stable', 'Artillery Foundry', 'Dock', 'Fort',
+        'Blockhouse', 'Church', 'Trading Post', 'Native Embassy',
+        'Mercenary Contractor', 'Lombard', 'Town Center', 'War Hut',
+        'War Academy', 'Corral', 'Saloon', 'Palace', 'Castle',
+        'Monastery', 'Consulate', 'Village', 'Commandery',
+    ]
+    _BUILDING_PRIORITY_SET = set(_BUILDING_PRIORITY)
+
+    # Source fields that map to catch-all group names when no building is found.
+    _SOURCE_TO_GROUP: dict[str, str] = {
+        "hero": "Explorer / Hero",
+        "homecity_shipment": "Shipment",
+        "outlaw": "Mercenary",
+        "native_alliance": "Native",
+        "church": "Church",
+        "consulate": "Consulate",
+        "politician": "Politician",
+        "revolution": "Revolution",
+        "signature": "Signature",
+        "enable": "Other",
+        "train": "Other",
+    }
+
+    units = detail.get(anw_token) or []
+    if not units:
+        return _render_unit_row("ALL UNITS THIS NATION CAN MAKE", [])
+
+    explorer_map = explorer_map or {}
+    unit_to_buildings = unit_to_buildings or {}
+
+    # Resolve the explorer's real/primary name for this civ (used as tooltip).
+    _explorer_info = explorer_map.get(anw_token) or {}
+    _explorer_primary_name = _explorer_info.get("primary_name", "")
+    _explorer_unit_type = _explorer_info.get("unit_type_name", "")
+
+    def _role_css(role: str) -> str:
+        if role == "hero":
+            return "unit-gold"
+        if role == "situational":
+            return "unit-green"
+        if role in ("unique", "retreat"):
+            return "unit-red"
+        return ""
+
+    def _chip(u: dict) -> str:
+        """Icon + name-only chip, color-coded by role, no stat sub-line."""
+        role = u.get("role") or ""
+        label = str(u.get("label") or u.get("proto") or "")
+        # For the explorer/hero unit, tooltip shows their proper name.
+        if role == "hero" and _explorer_primary_name:
+            tip_text = f"{_explorer_primary_name} ({_explorer_unit_type})" if _explorer_unit_type else _explorer_primary_name
+        else:
+            tip_text = label
+        safe_name = html.escape(label)
+        tip = html.escape(tip_text)
+        css = _role_css(role)
+        icon = u.get("icon")
+        if icon and (_SITE_UNIT_ICONS_DIR / icon).is_file():
+            icon_url = f"unit_icons/{html.escape(icon)}"
+            img = (f'<img src="{icon_url}" alt="{safe_name}" '
+                   f'title="{tip}" loading="lazy">')
+        else:
+            img = f'<div class="unit-placeholder" title="{tip}">?</div>'
+        cell_cls = f'unit-cell {css}'.strip() if css else 'unit-cell'
+        return (
+            f'<div class="{cell_cls}" title="{tip}">'
+            f'{img}'
+            f'<div class="unit-caption">{safe_name}</div>'
+            f'</div>'
+        )
+
+    def _pick_building(proto: str) -> str | None:
+        """Return the best canonical building display name for this unit proto."""
+        candidates = unit_to_buildings.get(proto) or []
+        if not candidates:
+            return None
+        # Prefer a building in our priority list (in priority order).
+        for b in _BUILDING_PRIORITY:
+            if b in candidates:
+                return b
+        # Fall back to first candidate that's not an "Agra Fort" / "Charminar Gate"
+        # variant (those are Indian-specific fortress variants that confuse grouping).
+        for b in candidates:
+            if not any(b.startswith(p) for p in ('Agra Fort', 'Charminar Gate',
+                                                   'Shogunate', 'Maya Castle')):
+                return b
+        return candidates[0]
+
+    # Group units by building (or catch-all group).
+    building_groups: dict[str, list[dict]] = {}
+    for u in units:
+        proto = u.get("proto") or ""
+        bld = _pick_building(proto)
+        if bld:
+            building_groups.setdefault(bld, []).append(u)
+        else:
+            # No building mapping — use source/tier for the catch-all group.
+            src = u.get("source") or u.get("tier") or "other"
+            group_name = _SOURCE_TO_GROUP.get(src, src.replace("_", " ").title())
+            building_groups.setdefault(group_name, []).append(u)
+
+    # Sort groups: canonical buildings first (in priority order), then catch-alls.
+    def _group_sort_key(name: str) -> tuple[int, str]:
+        try:
+            return (0, str(_BUILDING_PRIORITY.index(name)))
+        except ValueError:
+            return (1, name)
+
+    sub_blocks: list[str] = []
+    for group_name in sorted(building_groups.keys(), key=_group_sort_key):
+        bucket = building_groups[group_name]
+        cells = "".join(_chip(u) for u in bucket)
+        sub_blocks.append(
+            f'<div class="roster-building-group">'
+            f'<div class="roster-building-label">{html.escape(group_name)} '
+            f'<span class="roster-tier-count">({len(bucket)})</span></div>'
+            f'<div class="unique-units-row">{cells}</div>'
+            f'</div>'
+        )
+
+    legend = (
+        '<div class="roster-legend">'
+        '<span class="leg-gold">Gold</span> = Explorer / hero (never retreats) &nbsp;·&nbsp; '
+        '<span class="leg-green">Green</span> = Mercenary / native / shipment (never retreats) &nbsp;·&nbsp; '
+        '<span class="leg-red">Red</span> = Will rout (regular units at 25% HP; unique units at 10% HP)'
+        '</div>'
+    )
+
+    total = len(units)
+    return (
+        f'<div class="unique-units-block full-roster-block">'
+        f'<div class="unique-units-label">'
+        f'ALL UNITS THIS NATION CAN MAKE '
+        f'<span class="roster-tier-count">({total})</span></div>'
+        f'{legend}'
+        f'{"".join(sub_blocks)}'
+        f'</div>'
+    )
 
 
 def _load_civmods_leader_portraits() -> dict[str, str]:
@@ -1280,6 +1777,19 @@ _FLAG_TEXTURE_ALIAS: dict[str, str] = {
     "india": "Flag_Indian.png", "japan": "Flag_Japanese.png",
     "malta": "Flag_Maltese.png", "ottomans": "Flag_Ottoman.png",
     "russians": "Flag_Russian.png", "spc_americans": "Flag_American.png",
+    "mx_californian": "Flag_californian.png",
+    "mx_central_american": "Flag_Central_American.png",
+    "mx_baja_californian": "Flag_baja_californian.png",
+    "mx_rio_grande": "Flag_rio_grande.png",
+}
+
+# Doctrine-spec civ tokens that are shortened relative to the civmods.xml
+# <name> token the flag map is keyed by (Mexican state civs). Maps
+# spec-token -> civmods-token so the card header flag lookup resolves.
+_ANW_SPEC_TOKEN_ALIAS: dict[str, str] = {
+    "ANWBaja": "ANWBajaCalifornians",
+    "ANWCentral": "ANWCentralAmericans",
+    "ANWRio": "ANWRioGrande",
 }
 
 _FLAGS_SRC_DIR = REPO_ROOT / "resources" / "images" / "icons" / "flags"
@@ -1323,6 +1833,11 @@ def _stage_flags(flag_map: dict[str, str]) -> dict[str, str]:
         except OSError:
             continue
         out[anw_token] = f"flags/{anw_token}.png"
+    # Register spec-token aliases pointing at the already-staged flag file
+    # (Mexican state civs whose doctrine-spec token is shortened).
+    for spec_tok, civmods_tok in _ANW_SPEC_TOKEN_ALIAS.items():
+        if civmods_tok in out:
+            out[spec_tok] = out[civmods_tok]
     return out
 
 
@@ -1514,7 +2029,7 @@ def _load_wall_calibration() -> dict:
 
 # Spec-token → calibration engine-key map. The calibration keys are the
 # engine civ tokens used by ``kbGetCivName(cMyCiv)`` (e.g. ``French``,
-# ``DEInca``, ``XPAztec``, ``ANWFrenchCanadians``); the spec keys are the
+# ``DEInca``, ``XPAztec``, ``ANWCanadians``); the spec keys are the
 # user-facing leader-tagged tokens (e.g. ``French Louis XVIII Bourbon``,
 # ``Inca Pachacuti``, ``Aztecs Montezuma``, ``Canadians Brock Revolution``).
 # Building this once at module level keeps the per-civ render path O(1).
@@ -1643,12 +2158,21 @@ def _render_per_age_doctrine_block(claims: dict) -> str:
     if not rows:
         return ""
     diff = (
-        '<div class="pad-diff"><b>Difficulty scaling:</b> Sandbox&nbsp;25% '
-        '&rarr; Easy&nbsp;45% &rarr; Moderate&nbsp;65% &rarr; Hard&nbsp;85% '
-        '&rarr; Expert&nbsp;100% intensity. The bands above are the Expert '
-        'doctrine; lower difficulty scales execution down (closure&nbsp;%, '
-        'wall villagers, army size, forward aggression). Style never changes '
-        '\u2014 only how completely the nation executes it.</div>'
+        '<div class="pad-diff"><b>Difficulty scaling</b> — the doctrine above'
+        ' reflects Expert play (100% intensity). Lower difficulties execute'
+        ' the same style but less completely:'
+        '<ul style="margin:4px 0 0 16px;padding:0;list-style:disc">'
+        '<li><b>Sandbox</b> — 25% intensity (passive, minimal aggression)</li>'
+        '<li><b>Easy</b> — 45% intensity</li>'
+        '<li><b>Moderate</b> — 65% intensity</li>'
+        '<li><b>Hard</b> — 85% intensity</li>'
+        '<li><b>Expert</b> — 100% intensity (full execution of every knob above)</li>'
+        '</ul>'
+        '<span style="font-size:9.5px;color:#6e7681">Scaling affects: wall'
+        ' placement rate, army size, closure %, forward aggression.'
+        ' The nation\'s strategy and style never change \u2014 only how'
+        ' completely it executes them.</span>'
+        '</div>'
     )
     return (
         '<div class="pad-block">'
@@ -1788,11 +2312,12 @@ def _render_wall_doctrine_block(token: str, calib: dict,
         ]
     body = '<div class="wall-knobs">' + "".join(rows) + '</div>'
     doctrine = _safe_text(kn.get("doctrine") or "")
-    ws_name = STRATEGY_NAMES.get(ws, "?") if ws is not None else "?"
+    # ws_name tag NOT rendered here — it already appears in the card header-chips
+    # so showing it again would duplicate the strategy label (e.g. "CoastalBatteries"
+    # appearing twice on the same card). The wall-block header uses plain text only.
     return (
         '<div class="wall-block">'
-        f'<div class="wall-block-header">Walling doctrine '
-        f'<span class="wall-block-strat">{_safe_text(ws_name)}</span></div>'
+        '<div class="wall-block-header">Walling doctrine</div>'
         f'<div class="wall-block-prose">{doctrine}</div>'
         f'{body}'
         '</div>'
@@ -2160,6 +2685,60 @@ def _render_civ_art_surfaces_block(anw_token: str,
     return "".join(parts)
 
 
+# ── Gallery thumbnail helpers ───────────────────────────────────────────────
+# Full-res in-game screenshots are 3–5 MB each. Eagerly loading them on page
+# open would push the payload into the gigabyte range.  Instead, we generate
+# compact WebP thumbnails (max 480 px wide, quality 70) under
+# ``full/thumbs/<name>.webp`` alongside the source PNGs.  The gallery <img>
+# points at the small WebP; the modal reads ``data-full`` to open the
+# original PNG.  Thumbnail generation is idempotent: skipped when the WebP
+# already exists and is newer than the source PNG.
+
+GALLERY_THUMB_MAX_WIDTH = 480
+GALLERY_THUMB_QUALITY = 70
+
+
+def _gallery_thumb_path(full_png: Path) -> Path:
+    """Return the expected thumbnail path for a full/ PNG.
+
+    ``visual_art/ANWFoo/full/01_lobby.png``
+    ->  ``visual_art/ANWFoo/full/thumbs/01_lobby.webp``
+    """
+    return full_png.parent / "thumbs" / (full_png.stem + ".webp")
+
+
+def _ensure_gallery_thumb(full_png: Path) -> Path | None:
+    """Generate (or verify up-to-date) a WebP thumbnail for *full_png*.
+
+    Returns the thumb path if PIL is available and generation succeeds,
+    otherwise returns None (caller falls back to the original PNG).
+    Skips generation when the thumb already exists and is newer than the
+    source.
+    """
+    if not _PIL_AVAILABLE:
+        return None
+    thumb = _gallery_thumb_path(full_png)
+    # Up-to-date check
+    if thumb.exists() and thumb.stat().st_mtime >= full_png.stat().st_mtime:
+        return thumb
+    try:
+        thumb.parent.mkdir(parents=True, exist_ok=True)
+        with _PILImage.open(full_png) as img:
+            img = img.convert("RGB")
+            w, h = img.size
+            if w > GALLERY_THUMB_MAX_WIDTH:
+                new_h = int(h * GALLERY_THUMB_MAX_WIDTH / w)
+                img = img.resize((GALLERY_THUMB_MAX_WIDTH, new_h),
+                                 _PILImage.LANCZOS)
+            img.save(thumb, "WEBP", quality=GALLERY_THUMB_QUALITY,
+                     method=4)
+        return thumb
+    except Exception as exc:
+        print(f"  [warn] gallery thumb failed for {full_png.name}: {exc}",
+              file=sys.stderr)
+        return None
+
+
 def _build_screenshot_index() -> dict[str, list[Path]]:
     """Walk ``ART_DIR`` once and return ``{ANW<civ>: [search_dirs]}``.
 
@@ -2276,6 +2855,135 @@ def _find_screenshot(search_dirs: list[Path],
     return None
 
 
+# ── Per-building command-card strip ─────────────────────────────────────────
+# The user wants "a screenshot of every building menu" for visual review, with
+# the BUILDING NAME shown at the top of the lightbox. Building captures land in
+# the civ's full/ dir as ``building_<name>.png`` (e.g. building_town_center.png)
+# plus ``build_command_card.png`` (the whole build menu in one grid). We render
+# each as its own labelled cell so the lightbox caption (which sits at top:10px)
+# shows the building's name.
+def _pretty_building_name(fname: str) -> str:
+    """'building_town_center.png' -> 'Town Center'; 'build_command_card.png' ->
+    'Build menu (all buildings)'. Unknown shapes fall back to a title-cased stem."""
+    stem = fname.rsplit(".", 1)[0]
+    if stem == "build_command_card":
+        return "Build menu (all buildings)"
+    if stem.startswith("building_"):
+        rest = stem[len("building_"):]
+        # Un-identified tour cells keep a generic label until renamed.
+        if rest.startswith("cell"):
+            return "Building (" + rest + ")"
+        return rest.replace("_", " ").title()
+    return stem.replace("_", " ").title()
+
+
+def _render_buildings_strip(search_dirs: list[Path], anw_token: str) -> str:
+    """Render EVERY building command-card capture as its own named cell.
+
+    Scans the civ's search dirs for ``build_command_card.png`` and any
+    ``building_*.png``; dedupes by basename; the build-menu overview leads, the
+    rest follow alphabetically. Returns '' when the civ has no building shots.
+    Each cell's ``data-title`` is the building name so the lightbox shows it at
+    the top. ``data-civ`` is suffixed ``__buildings`` so lightbox prev/next
+    stays within this civ's building set.
+    """
+    found: dict[str, Path] = {}
+    for d in search_dirs:
+        try:
+            entries = sorted(d.iterdir())
+        except OSError:
+            continue
+        for entry in entries:
+            if not entry.is_file() or entry.suffix.lower() != ".png":
+                continue
+            n = entry.name
+            if n in found:
+                continue
+            if n == "build_command_card.png" or n.startswith("building_"):
+                found[n] = entry
+    if not found:
+        return ""
+    # Order: build menu overview first, then building_* alphabetically.
+    def _ord(name: str) -> tuple[int, str]:
+        return (0 if name == "build_command_card.png" else 1, name)
+    ordered = sorted(found.items(), key=lambda kv: _ord(kv[0]))
+
+    group = f"{anw_token}__buildings"
+    cells: list[str] = []
+    for name, path in ordered:
+        pretty = _pretty_building_name(name)
+        try:
+            rel = path.relative_to(REPO_ROOT)
+        except ValueError:
+            rel = path
+        rel_from_site = _site_relative(str(rel))
+        thumb = _ensure_gallery_thumb(path)
+        if thumb is not None:
+            try:
+                thumb_rel = thumb.relative_to(REPO_ROOT)
+            except ValueError:
+                thumb_rel = thumb
+            img_src = _site_relative(str(thumb_rel))
+            data_full = f' data-full="{html.escape(rel_from_site)}"'
+        else:
+            img_src = rel_from_site
+            data_full = ""
+        tip = f"{anw_token} — {pretty} ({name})"
+        cells.append(
+            '<div class="civ-shot-cell">'
+            f'<img src="{html.escape(img_src)}" '
+            f'alt="{html.escape(pretty)}" '
+            f'title="{html.escape(tip)}" '
+            f'data-civ="{html.escape(group)}" data-title="{html.escape(pretty)}" '
+            f'data-date="{_capture_date(path)}" '
+            f'{data_full}'
+            f'onclick="showImg(this)">'
+            f'<div class="civ-shot-label">{html.escape(pretty)}</div>'
+            '</div>'
+        )
+    # Building coverage callout: compare captured set against the parity
+    # profile so the gap is always visible alongside the screenshots.
+    # Logic ported from build_british_review.py's building_gap_html block.
+    coverage_html = ""
+    expected = _expected_building_filenames(anw_token)
+    if expected:
+        captured_named = [fn for fn in expected if fn in found]
+        missing_named  = [fn for fn in expected if fn not in found]
+        n_numeric = sum(
+            1 for f in found
+            if f.startswith("building_") and f not in expected
+            and f[len("building_"):-len(".png")].isdigit()
+        )
+        n_have     = len(captured_named) + n_numeric
+        n_expected = len(expected)
+        def _bslug(fn: str) -> str:
+            return fn[len("building_"):-len(".png")].replace("_", " ").title()
+        have_items = "".join(f"<li>{html.escape(_bslug(fn))}</li>" for fn in captured_named) or "<li>(none yet)</li>"
+        gap_items  = "".join(f"<li>{html.escape(_bslug(fn))}</li>" for fn in missing_named) or "<li>(all captured)</li>"
+        pct        = int(100 * n_have / n_expected) if n_expected else 0
+        bar_color  = "#4a8c4f" if pct == 100 else ("#b5642f" if pct < 50 else "#8b6a3a")
+        coverage_html = (
+            f'<div style="background:#2e2014;padding:8px 14px;border-radius:4px;'
+            f'border-left:3px solid {bar_color};margin-top:8px;font-size:12px;'
+            f'line-height:1.6;color:#ddc8a0">'
+            f'<strong style="color:#f0d896">Building gallery — {n_have}/{n_expected} captured'
+            f' ({pct}%).</strong>'
+            f' Captured: <span style="color:#a0c8a0">{have_items}</span>'
+            + (f' + {n_numeric} numeric.' if n_numeric else '')
+            + (f' <span style="color:#e89090">Still pending: {gap_items}</span>'
+               if missing_named else '')
+            + '</div>'
+        )
+    return (
+        '<div class="civ-shot-block">'
+        '<div class="civ-shot-title">Building command cards '
+        f'<span class="civ-shot-meta">({len(cells)} captured)</span></div>'
+        + coverage_html
+        + '<div class="civ-shot-row">' + "".join(cells) + '</div>'
+        '</div>'
+    )
+
+
 def _render_civ_screenshots_block(
         anw_token: str,
         screenshot_index: dict[str, list[Path]]) -> str:
@@ -2343,16 +3051,30 @@ def _render_civ_screenshots_block(
             except ValueError:
                 rel = hit
             rel_from_site = _site_relative(str(rel))
+            # Use a compact WebP thumbnail as src; store full-res path in
+            # data-full so the modal can open the original PNG on click.
+            thumb = _ensure_gallery_thumb(hit)
+            if thumb is not None:
+                try:
+                    thumb_rel = thumb.relative_to(REPO_ROOT)
+                except ValueError:
+                    thumb_rel = thumb
+                img_src = _site_relative(str(thumb_rel))
+                data_full = f' data-full="{html.escape(rel_from_site)}"'
+            else:
+                img_src = rel_from_site
+                data_full = ""
             _cmd = _recapture_cmd(anw_token, label)
             _tip = (f"{anw_token} — {label} ({hit.name})"
                     + (f"\nRe-grab: {_cmd}" if _cmd else ""))
             cell_rows.append(
                 '<div class="civ-shot-cell">'
-                f'<img src="{html.escape(rel_from_site)}" '
+                f'<img src="{html.escape(img_src)}" '
                 f'alt="{html.escape(label)}" '
                 f'title="{html.escape(_tip)}" '
                 f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
                 f'data-date="{_capture_date(hit)}" '
+                f'{data_full}'
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2373,6 +3095,22 @@ def _render_civ_screenshots_block(
         # from extras so they don't re-appear there).
         if hit is not None and col_idx in bogus_indices:
             seen_paths.add(hit)
+
+    # Surfaces excluded from display by user request: AI primary deck frames
+    # and Asset Preloading splash captures are not meaningful for review.
+    # _assetpreload_*.png files are captures that fired during the AoE3 loading
+    # splash; ai_03_deck.png is the AI deck panel (not needed for review).
+    _EXCLUDED_SURFACE_NAMES: frozenset[str] = frozenset({"ai_03_deck.png"})
+
+    def _is_excluded_surface(name: str) -> bool:
+        """Return True for surfaces the user asked to suppress from display."""
+        if name in _EXCLUDED_SURFACE_NAMES:
+            return True
+        # Suppress any file whose name starts with "_assetpreload_" — these are
+        # captures that fired during the Asset Preloading / home-city-panel splash.
+        if name.startswith("_assetpreload_"):
+            return True
+        return False
 
     # Extras: any PNG in the civ's search dirs that isn't a canonical
     # candidate AND wasn't already shown above. Deduplicate by basename
@@ -2397,6 +3135,11 @@ def _render_civ_screenshots_block(
                 continue
             if entry.name in seen_names:
                 continue
+            if _is_excluded_surface(entry.name):
+                # Excluded surface — skip from display but track as seen so
+                # it doesn't re-appear in other passes.
+                seen_names.add(entry.name)
+                continue
             seen_names.add(entry.name)
             extras.append(entry)
 
@@ -2413,16 +3156,28 @@ def _render_civ_screenshots_block(
             except ValueError:
                 rel = hit
             rel_from_site = _site_relative(str(rel))
+            thumb = _ensure_gallery_thumb(hit)
+            if thumb is not None:
+                try:
+                    thumb_rel = thumb.relative_to(REPO_ROOT)
+                except ValueError:
+                    thumb_rel = thumb
+                img_src = _site_relative(str(thumb_rel))
+                data_full = f' data-full="{html.escape(rel_from_site)}"'
+            else:
+                img_src = rel_from_site
+                data_full = ""
             _cmd = _recapture_cmd(anw_token, label)
             _tip = (f"{anw_token} — {label} ({hit.name})"
                     + (f"\nRe-grab: {_cmd}" if _cmd else ""))
             ai_cell_rows.append(
                 '<div class="civ-shot-cell">'
-                f'<img src="{html.escape(rel_from_site)}" '
+                f'<img src="{html.escape(img_src)}" '
                 f'alt="{html.escape(label)}" '
                 f'title="{html.escape(_tip)}" '
                 f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
                 f'data-date="{_capture_date(hit)}" '
+                f'{data_full}'
                 f'onclick="showImg(this)">'
                 f'<div class="civ-shot-label">{html.escape(label)}</div>'
                 '</div>'
@@ -2442,14 +3197,52 @@ def _render_civ_screenshots_block(
 
     # Single unified group (user request 2026-06-02): all surfaces — player
     # round + AI round — in ONE wrapped row with no "HUMAN ROUND" / "AI ROUND"
-    # / "Additional captures" sub-headings. The redundant "extras" (alternate
-    # captures of surfaces already shown as canonical columns) are intentionally
-    # NOT rendered, so the strip never shows duplicate images of the same
-    # surface. ``extras`` is still computed above only to mark those paths seen.
-    _ = extras  # intentionally unused in the merged single-group layout
+    # sub-headings.
+    #
+    # extras (age-up dialogs, diplomacy, ESC menu, hero, base overview, post-
+    # game awards, etc.) are now rendered as a separate labelled row below so
+    # that the full capture set is visible in the readiness site without needing
+    # the standalone british_review page.
+    extra_cell_rows: list[str] = []
+    for extra_path in extras:
+        try:
+            rel = extra_path.relative_to(REPO_ROOT)
+        except ValueError:
+            rel = extra_path
+        rel_from_site = _site_relative(str(rel))
+        thumb = _ensure_gallery_thumb(extra_path)
+        if thumb is not None:
+            try:
+                thumb_rel = thumb.relative_to(REPO_ROOT)
+            except ValueError:
+                thumb_rel = thumb
+            img_src = _site_relative(str(thumb_rel))
+            data_full = f' data-full="{html.escape(rel_from_site)}"'
+        else:
+            img_src = rel_from_site
+            data_full = ""
+        label = _pretty_shot_name(extra_path.name)
+        _tip = f"{anw_token} — {label} ({extra_path.name})"
+        extra_cell_rows.append(
+            '<div class="civ-shot-cell">'
+            f'<img src="{html.escape(img_src)}" '
+            f'alt="{html.escape(label)}" '
+            f'title="{html.escape(_tip)}" '
+            f'data-civ="{html.escape(anw_token)}" data-title="{html.escape(label)}" '
+            f'data-date="{_capture_date(extra_path)}" '
+            f'{data_full}'
+            f'onclick="showImg(this)">'
+            f'<div class="civ-shot-label">{html.escape(label)}</div>'
+            '</div>'
+        )
     total_present = n_present + n_ai_present
     total_slots = len(SCREENSHOT_COLUMNS) + len(AI_SCREENSHOT_COLUMNS)
+    # Build the buildings strip so we can count its cells for the header.
+    buildings_strip_html = _render_buildings_strip(search_dirs, anw_token)
     parts: list[str] = []
+    # Single unified "In-game screenshots" section — all surface rows
+    # (canonical, AI, extras, buildings) share ONE titled block so the
+    # site has only one screenshot section heading per civ.
     parts.append('<div class="civ-shot-block">')
     parts.append('<div class="civ-shot-title">In-game screenshots '
                  f'<span class="civ-shot-meta">'
@@ -2459,8 +3252,113 @@ def _render_civ_screenshots_block(
     parts.extend(cell_rows)
     parts.extend(ai_cell_rows)
     parts.append('</div>')
+    # Extra captures row: surfaces not covered by the canonical / AI columns
+    # (age-up dialogs, diplomacy, ESC menus, hero, base overview, post-game
+    # awards, etc.). Rendered inline (no separate block title) when extras exist.
+    if extra_cell_rows:
+        parts.append('<div class="civ-shot-row" style="margin-top:6px">')
+        parts.extend(extra_cell_rows)
+        parts.append('</div>')
+    # Building command-card images rendered inline below the main shots.
+    if buildings_strip_html:
+        # Strip the outer civ-shot-block wrapper from the buildings HTML so it
+        # sits as a sub-row inside our single block rather than as a sibling block.
+        parts.append(buildings_strip_html)
     parts.append('</div>')
     return "".join(parts)
+
+
+def _load_all_validator_specs() -> list[dict]:
+    """Return the canonical VALIDATORS list from run_all_validators.py.
+
+    Each entry is ``{"name": str, "path": str, "description": str}`` where
+    description is the first meaningful line of that validator script's module
+    docstring (same source as ``_load_validator_descriptions()``).  Falls back
+    to a name-derived label if the docstring is absent.
+
+    This is used to render the full validator table at the top of the site
+    regardless of whether a gate-report JSON exists (it may have only a partial
+    run or be absent entirely).
+
+    Implementation: parses run_all_validators.py via AST to extract the
+    VALIDATORS list without importing the module (avoids subprocess/argparse
+    side-effects that would break on ``exec_module``).
+    """
+    import ast as _ast
+
+    def _first_docstring_line(py_file: Path) -> str:
+        try:
+            src = py_file.read_text(encoding="utf-8")
+            tree = _ast.parse(src)
+            doc = _ast.get_docstring(tree)
+            if doc:
+                return next(
+                    (ln.strip() for ln in doc.splitlines() if ln.strip()), ""
+                )
+        except Exception:
+            pass
+        return ""
+
+    def _str_const(node: _ast.expr | None) -> str:
+        """Extract a string constant from an AST node, or ''."""
+        if node is None:
+            return ""
+        if isinstance(node, _ast.Constant) and isinstance(node.value, str):
+            return node.value
+        return ""
+
+    run_all_path = HERE / "run_all_validators.py"
+    validator_specs: list[dict] = []
+    try:
+        src = run_all_path.read_text(encoding="utf-8")
+        tree = _ast.parse(src)
+        # Find the VALIDATORS: list[...] = [...] assignment at module level.
+        # run_all_validators.py uses a type-annotated assignment (AnnAssign),
+        # not a plain Assign, so we must check both node types.
+        for node in _ast.walk(tree):
+            list_node: _ast.List | None = None
+            if isinstance(node, _ast.AnnAssign):
+                # Type-annotated: VALIDATORS: list[ValidatorSpec] = [...]
+                if (isinstance(node.target, _ast.Name)
+                        and node.target.id == "VALIDATORS"
+                        and isinstance(node.value, _ast.List)):
+                    list_node = node.value
+            elif isinstance(node, _ast.Assign):
+                # Plain: VALIDATORS = [...]
+                if (any(isinstance(t, _ast.Name) and t.id == "VALIDATORS"
+                        for t in node.targets)
+                        and isinstance(node.value, _ast.List)):
+                    list_node = node.value
+            if list_node is None:
+                continue
+            for elt in list_node.elts:
+                # Each element is a ValidatorSpec(...) call.
+                if not isinstance(elt, _ast.Call):
+                    continue
+                args = elt.args
+                kwargs = {kw.arg: kw.value for kw in elt.keywords}
+                # Positional: ValidatorSpec(name, path, ...)
+                name_node = args[0] if len(args) > 0 else kwargs.get("name")
+                path_node = args[1] if len(args) > 1 else kwargs.get("path")
+                name = _str_const(name_node)
+                path = _str_const(path_node)
+                if not name:
+                    continue
+                script_path = REPO_ROOT / path if path else None
+                desc = (_first_docstring_line(script_path)
+                        if script_path and script_path.is_file() else "")
+                if not desc:
+                    desc = name.replace("_", " ").title()
+                validator_specs.append({
+                    "name": name,
+                    "path": path,
+                    "description": desc,
+                })
+            break
+    except Exception as exc:
+        print(f"  [warn] could not parse VALIDATORS from run_all_validators.py: {exc}",
+              file=sys.stderr)
+    return validator_specs
 
 
 def collect_validator_results() -> dict:
@@ -2468,6 +3366,67 @@ def collect_validator_results() -> dict:
         return {"overall": "MISSING", "results": [], "counts": {},
                 "total": 0, "run_id": None}
     return json.loads(GATE_REPORT.read_text(encoding="utf-8"))
+
+
+def _load_validator_descriptions() -> dict[str, str]:
+    """Return a mapping of validator short-name -> description string.
+
+    Priority: plain-English sentences from ``validator_plain_descriptions.json``
+    (if the name has an entry there) — otherwise falls back to the first line of
+    the validator script's module docstring.
+
+    The short name matches the ``name`` field in ``run_all_validators_report.json``
+    (e.g. ``"xml_well_formed"`` maps to ``validate_xml_well_formed.py``).
+
+    Also handles ``self_X`` names which are self-test runs of
+    ``validate_X_tests.py`` (e.g. ``self_civ_loadability`` ->
+    ``validate_civ_loadability_tests.py``).
+    """
+    import ast as _ast
+
+    # Load plain-English overrides first; skip the "_comment" meta-key.
+    _plain_desc_path = HERE / "validator_plain_descriptions.json"
+    _plain: dict[str, str] = {}
+    try:
+        _raw = json.loads(_plain_desc_path.read_text(encoding="utf-8"))
+        _plain = {k: v for k, v in _raw.items() if k != "_comment"}
+    except Exception:
+        pass
+
+    def _first_docstring_line(py_file: Path) -> str:
+        try:
+            src = py_file.read_text(encoding="utf-8")
+            tree = _ast.parse(src)
+            doc = _ast.get_docstring(tree)
+            if doc:
+                return next(
+                    (ln.strip() for ln in doc.splitlines() if ln.strip()), ""
+                )
+        except Exception:
+            pass
+        return ""
+
+    descriptions: dict[str, str] = {}
+    for py_file in sorted(HERE.glob("validate_*.py")):
+        short_name = py_file.stem[len("validate_"):]  # strip leading "validate_"
+        # Plain-English JSON takes priority; fall back to docstring.
+        line = _plain.get(short_name) or _first_docstring_line(py_file)
+        if line:
+            descriptions[short_name] = line
+            # Also register under "self_<base>" for test-runner self-check entries
+            # (e.g. "validate_civ_loadability_tests" -> "self_civ_loadability").
+            if short_name.endswith("_tests"):
+                self_key = "self_" + short_name[: -len("_tests")]
+                descriptions.setdefault(self_key, _plain.get(self_key) or line)
+    # Also handle self_X entries whose backing file is test_X.py.
+    # The report name is self_<stem>, e.g. test_validator.py -> self_test_validator.
+    for py_file in sorted(HERE.glob("test_*.py")):
+        self_key = f"self_{py_file.stem}"  # e.g. "test_validator" -> "self_test_validator"
+        if self_key not in descriptions:
+            line = _plain.get(self_key) or _first_docstring_line(py_file)
+            if line:
+                descriptions[self_key] = line
+    return descriptions
 
 
 def collect_spec_data() -> dict:
@@ -2629,16 +3588,21 @@ section h2{font-size:22px;padding:16px 24px;background:#21262d;
 section .content{padding:24px}
 
 /* Validator grid */
-.validator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-                gap:8px;margin-top:8px}
+.validator-grid{display:grid;grid-template-columns:1fr;gap:4px;margin-top:8px}
 .validator-card{background:#0d1117;border:1px solid #30363d;border-radius:4px;
-                padding:12px 14px;display:flex;justify-content:space-between;
-                align-items:center;gap:8px;font-size:13px}
+                padding:10px 14px;display:grid;
+                grid-template-columns:220px 1fr auto;
+                align-items:center;gap:10px;font-size:13px}
 .validator-card.pass{border-left:3px solid #3fb950}
 .validator-card.fail{border-left:3px solid #f85149}
 .validator-card.skip{border-left:3px solid #d29922}
+.validator-card.not-run{border-left:3px solid #484f58}
 .validator-card .name{font-family:'SF Mono','Monaco',monospace;font-size:12px;
-                      color:#c9d1d9;overflow:hidden;text-overflow:ellipsis}
+                      color:#c9d1d9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.validator-card .desc{color:#8b949e;font-size:12px;overflow:hidden;
+                      text-overflow:ellipsis;white-space:nowrap}
+.validator-card .verdict-block{display:flex;flex-direction:column;align-items:flex-end;
+                               gap:2px;white-space:nowrap;flex-shrink:0}
 .validator-card .verdict{font-weight:600;font-size:11px;letter-spacing:0.5px}
 .validator-card .duration{color:#6e7681;font-size:10px}
 
@@ -2941,6 +3905,45 @@ section .content{padding:24px}
                                      border:1px dashed #30363d;border-radius:3px;
                                      background:#0d1117;color:#484f58;
                                      font-size:18px}
+/* Full per-civ roster (every unit the nation can make) */
+.full-roster-block{background:#0a0e14}
+.roster-tier{margin-top:8px}
+.roster-tier:first-of-type{margin-top:4px}
+.roster-tier-label{font-size:9px;font-weight:600;color:#6e7681;
+                   text-transform:uppercase;letter-spacing:0.6px;
+                   margin-bottom:4px}
+.roster-tier-count{color:#484f58;font-weight:400}
+.full-roster-block .unit-placeholder{height:40px;width:40px;
+                                     display:flex;align-items:center;
+                                     justify-content:center;
+                                     border:1px dashed #30363d;border-radius:3px;
+                                     background:#0d1117;color:#484f58;
+                                     font-size:18px;cursor:help}
+.unit-statline{font-size:8px;color:#6e7681;margin-top:1px;
+               line-height:1.15;max-width:54px}
+/* Unit role color classes for full-roster section */
+.unit-gold .unit-caption{color:#d4a017;font-weight:600}
+.unit-green .unit-caption{color:#3fb950;font-weight:600}
+.unit-red .unit-caption{color:#f85149}
+/* Building-group headers inside the full roster */
+.roster-building-group{margin-top:10px}
+.roster-building-group:first-of-type{margin-top:4px}
+.roster-building-label{font-size:10px;font-weight:700;color:#58a6ff;
+                        text-transform:uppercase;letter-spacing:0.7px;
+                        margin-bottom:5px;border-bottom:1px solid #21262d;
+                        padding-bottom:3px}
+/* Color legend row */
+.roster-legend{font-size:9.5px;color:#8b98a5;margin-bottom:8px;
+               line-height:1.6;background:#0d1117;border:1px solid #21262d;
+               border-radius:4px;padding:5px 8px}
+.roster-legend .leg-gold{color:#d4a017;font-weight:600}
+.roster-legend .leg-green{color:#3fb950;font-weight:600}
+.roster-legend .leg-red{color:#f85149;font-weight:600}
+/* Flat screenshots section (replaces <details> collapsible) */
+.screenshots-section{border-top:1px solid #21262d}
+.screenshots-label{font-size:11px;font-weight:700;text-transform:uppercase;
+                   letter-spacing:0.8px;color:#8b949e;
+                   padding:8px 12px 4px}
 
 /* Counters */
 .counters{display:flex;gap:16px;flex-wrap:wrap}
@@ -3013,6 +4016,50 @@ pre{background:#010409;color:#c9d1d9;padding:14px;border-radius:6px;
     font-size:12px;line-height:1.5;white-space:pre-wrap;
     overflow-wrap:break-word;word-break:break-word;margin:8px 0}
 
+/* ── Culture chips ─────────────────────────────────────────────────── */
+.culture-chip{display:inline-block;font-size:10px;font-weight:600;
+              padding:2px 7px;border-radius:3px;white-space:nowrap;
+              letter-spacing:0.03em;color:#e6edf3;vertical-align:middle}
+.culture-european{background:#1a3a5c;border:1px solid #2d6099}
+.culture-asian{background:#3d1f0d;border:1px solid #7a4020}
+.culture-native{background:#1a3020;border:1px solid #2d6040}
+.culture-african{background:#3d2a0d;border:1px solid #7a5a20}
+
+/* ── Card-header: chips group right-aligned ─────────────────────────── */
+.civ-card-header .header-chips{display:flex;align-items:center;gap:6px;
+                                flex-shrink:0;margin-left:auto}
+
+/* ── Sticky civ-grid toolbar ─────────────────────────────────────────── */
+.civ-toolbar{position:sticky;top:0;z-index:50;background:#010409;
+             border-bottom:1px solid #21262d;padding:8px 12px;
+             display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+             margin-bottom:10px}
+.civ-toolbar input[type=text]{background:#0d1117;border:1px solid #30363d;
+  color:#c9d1d9;font-size:12px;padding:4px 8px;border-radius:4px;
+  outline:none;min-width:160px}
+.civ-toolbar input[type=text]:focus{border-color:#58a6ff}
+.civ-toolbar select{background:#0d1117;border:1px solid #30363d;
+  color:#c9d1d9;font-size:12px;padding:4px 8px;border-radius:4px;outline:none}
+.civ-toolbar select:focus{border-color:#58a6ff}
+.civ-toolbar .toolbar-progress{font-size:12px;color:#8b949e;white-space:nowrap;
+  margin-left:auto}
+.civ-toolbar .toolbar-progress strong{color:#58a6ff}
+
+/* ── Card body section dividers for scanability ─────────────────────── */
+.civ-card .section-label{font-size:9.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.07em;color:#6e7681;margin:12px 0 4px;border-top:1px solid #1b2129;
+  padding-top:8px}
+
+/* ── Collapsible screenshots / roster via <details> ─────────────────── */
+.civ-card details{margin-top:6px}
+.civ-card details summary{font-size:10.5px;font-weight:600;color:#58a6ff;
+  cursor:pointer;padding:4px 0;list-style:none;user-select:none}
+.civ-card details summary::-webkit-details-marker{display:none}
+.civ-card details summary::before{content:"▶ ";font-size:8px;
+  transition:transform .15s;display:inline-block}
+.civ-card details[open] summary::before{content:"▼ "}
+.civ-card details[open] summary{margin-bottom:6px}
+
 .footnote{padding:12px 24px;font-size:11px;color:#6e7681}
 footer{padding:32px 48px;font-size:12px;color:#6e7681;text-align:center;
        border-top:1px solid #21262d;margin-top:32px}
@@ -3044,8 +4091,21 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     anw_unit_rosters = _load_anw_unit_rosters()
     anw_standard_units = _load_anw_standard_units()
     explorer_map = _load_explorer_resolution()
+    # Building→unit map for grouping the full roster by producing building.
+    _building_unit_map_path = REPO_ROOT / "artifacts" / "unit_index" / "building_unit_map.json"
+    try:
+        _bum_raw = json.loads(_building_unit_map_path.read_text(encoding="utf-8"))
+        _unit_to_buildings: dict[str, list[str]] = _bum_raw.get("unit_to_buildings", {})
+    except Exception as _bum_exc:
+        print(f"  [warn] could not load building_unit_map.json: {_bum_exc}",
+              file=sys.stderr)
+        _unit_to_buildings = {}
     _stage_unit_icons(civ_blurbs, rosters=anw_unit_rosters,
                       standard_units=anw_standard_units)
+    # Full per-civ roster ("every unit this nation can make") from the global
+    # unit index — stage its (pre-resolved) icons too.
+    unit_index_detail = _load_unit_index_detail()
+    _stage_full_roster_icons(unit_index_detail)
     # Per-age strategy text, keyed by spec token. Replaces the old
     # ``first build / expects / distance / deadlines`` claim block in
     # the per-civ card with five short DLC-aware strategy paragraphs
@@ -3055,6 +4115,8 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # block under each civ card. Sourced from
     # ``tools/ai_design/wall_knob_calibration.py``.
     wall_calib = _load_wall_calibration()
+    # Culture per ANW token — sourced from per_civ_building_capture_map.json.
+    civ_cultures = _load_civ_cultures()
     # Latest sim-farm verdicts (observed behaviour) — empty until the farm runs.
     farm_results = _load_farm_results()
 
@@ -3173,18 +4235,82 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     parts.append('</div></section>')
 
     # ============= VALIDATORS =============
+    # Build a name→result lookup from the gate JSON so we can augment the
+    # full canonical VALIDATORS list with run results where they exist.
+    _gate_results_by_name: dict[str, dict] = {
+        r.get("name", ""): r for r in gate.get("results", [])
+    }
+    # Full VALIDATORS list from run_all_validators.py — shown regardless of
+    # whether a gate-report JSON exists so the site always lists every check.
+    _all_validator_specs = _load_all_validator_specs()
+    _total_listed = len(_all_validator_specs) if _all_validator_specs else n_total
     parts.append('<section id="validators"><h2>Validators ('
-                 f'{n_pass}/{n_total} passing)</h2><div class="content">')
+                 f'{n_pass}/{n_total} passing — {_total_listed} defined)</h2>'
+                 '<div class="content">')
     parts.append('<div class="validator-grid">')
+    # Iterate the canonical spec list; fall back to gate results for any entry
+    # not in the spec (e.g. newly added validators not yet in run_all_validators).
+    rendered_names: set[str] = set()
+    _spec_rows = _all_validator_specs or [
+        {"name": r.get("name", "?"),
+         "path": f"tools/validation/validate_{r.get('name','?')}.py",
+         "description": ""}
+        for r in gate.get("results", [])
+    ]
+    for vs in _spec_rows:
+        short_name = vs["name"]
+        rendered_names.add(short_name)
+        desc = vs.get("description", "")
+        r = _gate_results_by_name.get(short_name, {})
+        v = r.get("verdict", "NOT RUN") if r else "NOT RUN"
+        klass = v.lower().replace(" ", "-")
+        dur = r.get("duration_s", 0.0)
+        # Derive the display filename for this validator.
+        if short_name.startswith("self_"):
+            base = short_name[len("self_"):]
+            candidate_validate_tests = HERE / f"validate_{base}_tests.py"
+            candidate_test = HERE / f"test_{base}.py"
+            candidate_bare_test = HERE / f"{base}.py"
+            if candidate_validate_tests.exists():
+                display_file = f"validate_{base}_tests.py"
+            elif candidate_test.exists():
+                display_file = f"test_{base}.py"
+            elif candidate_bare_test.exists():
+                display_file = f"{base}.py"
+            else:
+                display_file = f"test_{base}.py"
+        else:
+            display_file = f"validate_{short_name}.py"
+        dur_text = f"{dur:.1f}s" if r else "—"
+        parts.append(
+            f'<div class="validator-card {klass}">'
+            f'<span class="name">{html.escape(display_file)}</span>'
+            f'<span class="desc">{html.escape(desc)}</span>'
+            f'<span class="verdict-block">'
+            f'<span class="verdict">{html.escape(v)}</span>'
+            f'<span class="duration">{dur_text}</span>'
+            f'</span>'
+            f'</div>'
+        )
+    # Render any gate-report results not already shown via the spec list
+    # (e.g. ad-hoc validators added to the report but not yet in VALIDATORS).
     for r in gate.get("results", []):
+        short_name = r.get("name", "?")
+        if short_name in rendered_names:
+            continue
         v = r.get("verdict", "UNKNOWN")
         klass = v.lower()
         dur = r.get("duration_s", 0.0)
+        display_file = f"validate_{short_name}.py"
+        desc = ""
         parts.append(
             f'<div class="validator-card {klass}">'
-            f'<span class="name">{html.escape(r.get("name","?"))}</span>'
-            f'<span class="verdict">{html.escape(v)}'
-            f' <span class="duration">{dur:.1f}s</span></span>'
+            f'<span class="name">{html.escape(display_file)}</span>'
+            f'<span class="desc">{html.escape(desc)}</span>'
+            f'<span class="verdict-block">'
+            f'<span class="verdict">{html.escape(v)}</span>'
+            f'<span class="duration">{dur:.1f}s</span>'
+            f'</span>'
             f'</div>'
         )
     parts.append('</div>')
@@ -3198,8 +4324,32 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     # ============= CIVS =============
     parts.append(f'<section id="civs"><h2>Per-civ doctrine ({len(civs)} civs)</h2>'
                  '<div class="content">')
-    parts.append('<div class="civ-grid">')
-    for token in sorted(civs.keys()):
+    # Toolbar: text filter, culture filter, progress counter.
+    # Culture options: sorted unique values from civ_cultures, mapped to display labels.
+    _toolbar_cultures = sorted({c for c in civ_cultures.values() if c},
+                               key=lambda x: _CULTURE_LABEL.get(x, x))
+    _culture_options = ''.join(
+        f'<option value="{html.escape(c)}">{html.escape(_CULTURE_LABEL.get(c, c))}</option>'
+        for c in _toolbar_cultures
+    )
+    parts.append(f'''
+<div class="civ-toolbar" id="civToolbar">
+  <input type="text" id="civSearch" placeholder="Filter by nation name…" oninput="filterCivs()" aria-label="Filter civs by name">
+  <select id="civCultureFilter" onchange="filterCivs()" aria-label="Filter by culture">
+    <option value="">All cultures</option>
+    {_culture_options}
+  </select>
+  <span class="toolbar-progress" id="civProgress"><strong>0</strong> / {len(civs)} complete</span>
+</div>
+''')
+    parts.append('<div class="civ-grid" id="civGrid">')
+    # British leads the grid (it is the visual-confirmation TEMPLATE civ the
+    # user reviews first); every other civ follows alphabetically.
+    # NOTE: ``civs.keys()`` are SPEC tokens (e.g. "British Elizabeth"), NOT ANW
+    # tokens — so we must map through _civ_token_to_anw() before comparing.
+    def _civ_sort_key(tok: str) -> tuple[int, str]:
+        return (0 if _civ_token_to_anw(tok) == "ANWBritish" else 1, tok)
+    for token in sorted(civs.keys(), key=_civ_sort_key):
         civ = civs[token]
         claims = civ.get("claims") or {}
         ws = claims.get("wall_strategy")
@@ -3261,9 +4411,9 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # scaling) from the v2 spec claims. Shows what the AI is asserted to
         # do per age and how it scales by difficulty.
         per_age_doctrine_block = _render_per_age_doctrine_block(claims)
-        # Observed/tested behaviour from the sim farm (designed vs observed).
-        tested_block = _render_tested_block(
-            _spec_token_to_calib_key(token), farm_results)
+        # Observed/tested behaviour from the sim farm — removed from per-civ
+        # card output (2026-06-10: tested-behaviour section dropped per user
+        # request; _render_tested_block still defined for potential future use).
         # Per-civ quote / chat block — every AI voice line this civ speaks
         # (engine chatset + leader script insults/compliments + the 4
         # shared tactical lines). Rendered under the wall block per user
@@ -3300,10 +4450,21 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
         # silently omitted. Icons staged into artifacts/validation/unit_icons/
         # by _stage_unit_icons(); units without a resolved icon get a dashed
         # placeholder chip so we never emit a broken src= path.
-        unique_units_html   = _render_unique_units_row(anw_token, civ_blurbs)
-        retreat_units_html  = _render_retreat_units_row(
-                                  anw_token, civ_blurbs, anw_unit_rosters,
-                                  standard_units=anw_standard_units)
+        # Unique / Retreat strips and the full roster are all driven by the
+        # role-augmented unit index (artifacts/unit_index/civ_rosters_detailed
+        # .json, roles merged by classify_unit_roles.py) so every chip shows the
+        # unit's authentic extracted icon + full-stat hover label, and the
+        # unique-vs-retreat split is the data-driven classification rather than
+        # the old name-prefix heuristic.
+        # unique_units_html / retreat_units_html strips removed from card
+        # output (2026-06-10: per user request, these strips are gone; unit
+        # info now shown only in the full roster section below).
+        # Full roster: every unit this nation can train, grouped by building,
+        # with per-unit stats — placed under the unique/retreat strips.
+        full_roster_html    = _render_full_roster_section(
+                                  anw_token, unit_index_detail,
+                                  explorer_map=explorer_map,
+                                  unit_to_buildings=_unit_to_buildings)
 
         # Per-civ in-game screenshot strip — inlined under the deck. The
         # art-surfaces strip is rendered later (after avatar_rel is resolved)
@@ -3362,19 +4523,29 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
             )
         else:
             flag_img = '<div class="civ-flag civ-flag-missing">&#9873;</div>'
-        # Hero/Explorer row — the civ's actual in-game explorer UNIT
-        # (proto + unit-type name + icon) from explorer_resolution.json.
-        hero_explorer_html = _render_hero_explorer_row(anw_token, explorer_map)
+        # Hero/Explorer row removed from card output (2026-06-10: per user
+        # request, the strip under the deck is gone; hero is shown in the
+        # full roster section via role "hero" / gold color).
+        _ = explorer_map  # still loaded; used by full roster for primary_name tooltip
         # Art-surfaces strip REMOVED (2026-06-05): every art surface
         # (lobby portrait, scoreboard row, diplomacy, esc summary, HC button,
         # endgame flag, …) is already shown by the in-game screenshot section
         # below, which the strip was merely cropping. No separate strip needed.
+        _chip_html = _culture_chip_html(anw_token, civ_cultures)
+        # data-culture attr uses the same alias resolution as the chip helper.
+        _resolved_token = _ANW_SPEC_TOKEN_ALIAS.get(anw_token, anw_token)
+        _civ_culture_attr = html.escape(
+            civ_cultures.get(anw_token) or civ_cultures.get(_resolved_token, "")
+        )
         parts.append(f'''
-<div class="civ-card" id="card-{html.escape(anw_token)}" data-civ="{html.escape(anw_token)}">
+<div class="civ-card" id="card-{html.escape(anw_token)}" data-civ="{html.escape(anw_token)}" data-culture="{_civ_culture_attr}">
   <div class="civ-card-header">
     {flag_img}
     <div class="title-block"><h3>{_safe_text(display_name)}</h3></div>
-    <span class="strategy" style="background:{ws_color}">{ws_name}</span>
+    <div class="header-chips">
+      {_chip_html}
+      <span class="strategy" style="background:{ws_color}">{ws_name}</span>
+    </div>
     <label class="complete-check" title="Mark {_safe_text(display_name)} complete">
       <input type="checkbox" onchange="toggleComplete(this,'{html.escape(anw_token)}')">
       <span class="cc-box">&#10003;</span>
@@ -3386,15 +4557,12 @@ def render_page(gate: dict, spec: dict, art: dict, behaviour_map: dict,
     <p style="font-size:12px;color:#8b949e;margin-bottom:10px;line-height:1.6">{_safe_text(prose_short)}</p>
     {ages_block}
     {per_age_doctrine_block}
-    {tested_block}
+    {full_roster_html}
     {wall_block}
     {quotes_block}
     </div>
   {deck_html}
-  {hero_explorer_html}
-  {unique_units_html}
-  {retreat_units_html}
-  {shots_block}
+  <div class="screenshots-section"><div class="screenshots-label">In-game screenshots</div>{shots_block}</div>
 </div>''')
     parts.append('</div></div></section>')
 
@@ -3473,10 +4641,31 @@ function renderModal(){
   var img = document.getElementById('modalImg');
   var cap = document.getElementById('imgModalCaption');
   var src = el.src;
-  // Prefer the higher-resolution crops/X.png over thumbs/X.webp; full
-  // screenshots have no /thumbs/ segment so the replace is a no-op for them.
-  var hiRes = src.replace('/thumbs/', '/crops/').replace(/\\.webp$/, '.png');
+  // Gallery screenshots store the full-res path in data-full (the src is a
+  // compact WebP thumb).  Semantic crop thumbs (/thumbs/X.webp) swap to the
+  // higher-res crops/ equivalent.  Plain PNGs are used as-is.
+  var dataFull = el.getAttribute('data-full');
+  var hiRes;
+  if (dataFull) {
+    // data-full is a site-relative path; resolve against the current page.
+    try { hiRes = new URL(dataFull, document.baseURI).href; } catch(e) { hiRes = dataFull; }
+  } else {
+    hiRes = src.replace('/thumbs/', '/crops/').replace(/\\.webp$/, '.png');
+  }
   var title = el.getAttribute('data-title') || el.title || el.alt || '';
+  // Building screenshots: always show the building NAME at the top. If the
+  // data-title is missing/generic, derive a pretty name from the filename
+  // (building_town_center.png -> "Town Center"; build_command_card.png ->
+  // "Build menu (all buildings)").
+  if (!title || /^building[_-]|build_command_card/.test(src.split('/').pop()||'')){
+    var fn = (src.split('/').pop()||'').replace(/\\.(png|webp|jpg|jpeg)$/i,'');
+    if (fn === 'build_command_card'){ title = 'Build menu (all buildings)'; }
+    else if (fn.indexOf('building_') === 0){
+      var rest = fn.slice('building_'.length);
+      title = /^cell/.test(rest) ? ('Building (' + rest + ')')
+            : rest.replace(/_/g,' ').replace(/\\b\\w/g, function(c){return c.toUpperCase();});
+    }
+  }
   var date = el.getAttribute('data-date') || '';
   var pos = modalGroup.length > 1
     ? '  (' + (modalIdx + 1) + ' / ' + modalGroup.length + ')' : '';
@@ -3532,6 +4721,30 @@ function toggleComplete(cb, civ){
     card.classList.remove('complete');
     try { localStorage.removeItem('anwcomplete:' + civ); } catch(e){}
   }
+  updateProgress();
+}
+function updateProgress(){
+  var cards = document.querySelectorAll('.civ-card[data-civ]');
+  var done = 0;
+  for (var i = 0; i < cards.length; i++){
+    if (cards[i].classList.contains('complete')) done++;
+  }
+  var el = document.getElementById('civProgress');
+  if (el) el.innerHTML = '<strong>' + done + '</strong> / ' + cards.length + ' complete';
+}
+function filterCivs(){
+  var query = (document.getElementById('civSearch') || {value:''}).value.toLowerCase();
+  var culture = (document.getElementById('civCultureFilter') || {value:''}).value;
+  var cards = document.querySelectorAll('.civ-card[data-civ]');
+  for (var i = 0; i < cards.length; i++){
+    var card = cards[i];
+    var nameEl = card.querySelector('.title-block h3');
+    var name = nameEl ? nameEl.textContent.toLowerCase() : '';
+    var cardCulture = card.getAttribute('data-culture') || '';
+    var nameMatch = !query || name.indexOf(query) !== -1;
+    var cultureMatch = !culture || cardCulture === culture;
+    card.style.display = (nameMatch && cultureMatch) ? '' : 'none';
+  }
 }
 document.addEventListener('DOMContentLoaded', function(){
   var cards = document.querySelectorAll('.civ-card[data-civ]');
@@ -3546,6 +4759,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if (cb) cb.checked = true;
     }
   }
+  updateProgress();
 });
 </script>
 

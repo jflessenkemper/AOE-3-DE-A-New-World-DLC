@@ -1,3 +1,4 @@
+"""Parse the game's Age3Log.txt against a runtime spec to verify expected ANW probe events and XS outputs were emitted."""
 from __future__ import annotations
 
 import json

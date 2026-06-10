@@ -15,12 +15,14 @@ KEYWORDS = {
     "rule", "active", "inactive", "minInterval", "maxInterval",
     "highFrequency", "runImmediately", "priority", "group",
     "const", "static", "extern", "mutable",
+    "class",
 }
 
 # Multi-char operators must come first (longest match).
 OPS = [
-    "==", "!=", "<=", ">=", "&&", "||", "<<", ">>",
-    "+=", "-=", "*=", "/=", "%=",
+    "==", "!=", "<=", ">=", "&&", "||", "<<=", ">>=", "<<", ">>",
+    "->",  # lambda arrow: []() -> bool { ... }
+    "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=",
     "++", "--",
     "&", "|", "^", "~",
     "<", ">", "+", "-", "*", "/", "%", "=", "!",

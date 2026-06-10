@@ -21,6 +21,10 @@
   <Color civ="ANWLakota" leader="Chief Gall" r="240" g="240" b="240" />
   <Color civ="ANWUSA" leader="George Washington" r="0" g="51" b="102" />
   <Color civ="ANWMexicans" leader="Miguel Hidalgo" r="0" g="153" b="51" />
+  <Color civ="ANWCalifornians" leader="Mariano Guadalupe Vallejo" r="0" g="102" b="51" />
+  <Color civ="ANWBajaCalifornians" leader="Juan Bautista Alvarado" r="153" g="76" b="0" />
+  <Color civ="ANWCentralAmericans" leader="Francisco Morazan" r="0" g="128" b="51" />
+  <Color civ="ANWRioGrande" leader="Antonio Canales Rosillo" r="102" g="51" b="0" />
   <Color civ="ANWEthiopians" leader="Menelik II" r="0" g="128" b="0" />
   <Color civ="ANWHausa" leader="Usman dan Fodio" r="153" g="102" b="0" />
   <Color civ="ANWNapoleonicFrance" leader="Napoleon Bonaparte" r="0" g="43" b="92" />

@@ -1,3 +1,4 @@
+"""Verify every XML, tactics, material, and dmg file in the repo parses as well-formed XML."""
 from __future__ import annotations
 
 from pathlib import Path

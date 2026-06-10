@@ -13,20 +13,26 @@ fields (the engine merges by field name).
 ```xml
 <civmods>
     <civ>
-        <name>British</name>
+        <name>ANWBritish</name>           <!-- ANW civ tokens are ANW-prefixed -->
         <main>1</main>
         <statsid>BR</statsid>
         <portrait>objects\flags\british</portrait>
         <culture>WesternEurope</culture>
+        <settlerprotoname>Settler</settlerprotoname>
         <displaynameid>410100</displaynameid>
-        <rollovernameid>410500</rollovernameid>
+        <rollovernameid>490201</rollovernameid>
         <homecityfilename>anwhomecitybritish.xml</homecityfilename>
-        <agetech><age>Age0</age><tech>BritishAge0</tech></agetech>
+        <agetech><age>Age0</age><tech>Age0British</tech></agetech>
         <agetech><age>Age1</age><tech>ColonializeBritish</tech></agetech>
         <!-- … many more fields … -->
     </civ>
 </civmods>
 ```
+
+> The active ANW civ token is `ANWBritish` (`<main>1</main>`), distinct
+> from the base `British` entry which ANW keeps as a separate
+> suppression/override row. Verified against `data/civmods.xml`
+> (ANWBritish block at l.5384–5659).
 
 ## Critical fields
 
@@ -114,6 +120,6 @@ for the full bug story.
   [aoe3.heavengames.com/modding/tutorials/expert/newciv](https://aoe3.heavengames.com/modding/tutorials/expert/newciv/index.shtml).
 - Merge semantics: empirically tested in this session. The `<Civ>` vs
   `<civ>` case-sensitivity bug was verified by extracting base
-  `civs.xml` from Data.bar and observing 46 ANW civs dropped before
-  the lowercase rewrite.
+  `civs.xml` from Data.bar and observing the full ANW civ set (44
+  active today) dropped before the lowercase rewrite.
 - Microsoft official: [Additive Data Mods](https://support.ageofempires.com/hc/en-us/articles/360062106732-Additive-Data-Mods).

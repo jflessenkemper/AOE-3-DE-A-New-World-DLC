@@ -946,6 +946,18 @@ def main():
 
     jsonl_path = _configure_structlog(artifact_root)
 
+    # Register harness backend for screenshot capture in av_probe.
+    if GAME_HARNESS_AVAILABLE:
+        try:
+            from tools.aoe3_harness.harness_client import HarnessClient, HarnessConnectionError
+            from tools.aoe3_automation.in_game_driver import set_harness_backend
+            _c = HarnessClient("/tmp/AOE3DEHarness.sock"); _c.connect()
+            set_harness_backend(_c); lobby.set_harness_backend(_c)
+        except HarnessConnectionError as e:
+            logger.warning(f"harness socket unavailable ({e}); screenshots may fail")
+        except Exception as e:
+            logger.warning(f"harness registration failed ({e}); screenshots may fail")
+
     logger.info("=" * 70)
     logger.info("anw_exhibition_runner_start")
     logger.info("=" * 70)

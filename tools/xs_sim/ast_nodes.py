@@ -78,8 +78,23 @@ class Assign(Node):
     value: "Expr" = None  # type: ignore
 
 
+@dataclass
+class LambdaExpr(Node):
+    """Lambda / function-pointer literal:  []( params ) [-> return_type] { body }"""
+    params: list = field(default_factory=list)   # list[Param]
+    return_type: Optional[str] = None
+    body: "Block" = None  # type: ignore
+
+
+@dataclass
+class MemberAccess(Node):
+    """Member access: obj.field"""
+    target: "Expr" = None  # type: ignore
+    field: str = ""
+
+
 Expr = Union[IntLit, FloatLit, BoolLit, StrLit, VectorLit, Var, Index, Call,
-             Unary, Binary, Assign]
+             Unary, Binary, Assign, "LambdaExpr", "MemberAccess"]
 
 
 # ---- statements -----------------------------------------------------------
@@ -179,5 +194,18 @@ class Include(Node):
     path: str = ""
 
 @dataclass
+class ClassField(Node):
+    """A field declaration inside a class body."""
+    typ: str = ""
+    name: str = ""
+    init: Optional[Expr] = None
+
+@dataclass
+class ClassDef(Node):
+    """class Name { fields* };"""
+    name: str = ""
+    fields: list = field(default_factory=list)  # list[ClassField]
+
+@dataclass
 class Program(Node):
-    items: list = field(default_factory=list)  # mix of VarDecl/FuncDef/RuleDef/Include
+    items: list = field(default_factory=list)  # mix of VarDecl/FuncDef/RuleDef/Include/ClassDef

@@ -1,3 +1,4 @@
+"""Lint ANW XS script files for undeclared variables, duplicate rule/function names, and unresolved function calls."""
 from __future__ import annotations
 
 from collections import Counter

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Validator: exercise llSetWallKnobsForCiv() for all 40 civs and cross-check
-against the CALIBRATION source-of-truth in wall_knob_calibration.py.
+"""Validator: exercise anwSetWallKnobsForCiv() for all calibrated civs and
+cross-check against the CALIBRATION source-of-truth in wall_knob_calibration.py.
 
 Usage:
     python3 -m tools.validation.validate_per_civ_wall_knobs
     python3 -m tools.validation.validate_per_civ_wall_knobs --json artifacts/validation/per_civ_wall_knobs.json
 
 Exit codes:
-    0 — all 40 civs PASS
+    0 — all civs PASS
     1 — one or more civs FAIL
 """
 from __future__ import annotations
@@ -51,61 +51,61 @@ from tools.xs_sim.gamestate import GameState       # type: ignore
 # (14 knobs in the calibration table + gLLWallNoWaterBuild = 15 globals total)
 # ---------------------------------------------------------------------------
 WALL_GLOBALS = [
-    "gLLWallStrategy",
-    "gLLWallRadius",
-    "gLLWallGateCount",
-    "gLLWallTierAge2Stone",
-    "gLLWallTriggerAge",
-    "gLLWallSegmentLength",
-    "gLLWallTowerInterleave",
-    "gLLWallSecondaryStrategy",
-    "gLLWallVillagerCount",
-    "gLLWallForwardBiasFraction",
-    "gLLWallOuterRingDelta",
-    "gLLWallEarlyOutpostCount",
-    "gLLWallRepairAggressiveness",
-    "gLLWallClosurePctTarget",
-    "gLLWallNoWaterBuild",
+    "gANWWallStrategy",
+    "gANWWallRadius",
+    "gANWWallGateCount",
+    "gANWWallTierAge2Stone",
+    "gANWWallTriggerAge",
+    "gANWWallSegmentLength",
+    "gANWWallTowerInterleave",
+    "gANWWallSecondaryStrategy",
+    "gANWWallVillagerCount",
+    "gANWWallForwardBiasFraction",
+    "gANWWallOuterRingDelta",
+    "gANWWallEarlyOutpostCount",
+    "gANWWallRepairAggressiveness",
+    "gANWWallClosurePctTarget",
+    "gANWWallNoWaterBuild",
 ]
 
 # Default values mirroring aiHeader.xs declarations (for pre-seeding the
 # interpreter so we can run without loading the full aiHeader.xs).
 WALL_DEFAULTS: dict[str, Any] = {
-    "gLLWallStrategy":             0,
-    "gLLWallRadius":               18,
-    "gLLWallGateCount":            3,
-    "gLLWallTierAge2Stone":        False,
-    "gLLWallTriggerAge":           2,
-    "gLLWallSegmentLength":        12,
-    "gLLWallTowerInterleave":      6,
-    "gLLWallSecondaryStrategy":    -1,
-    "gLLWallVillagerCount":        4,
-    "gLLWallForwardBiasFraction":  0.5,
-    "gLLWallOuterRingDelta":       0,
-    "gLLWallEarlyOutpostCount":    1,
-    "gLLWallRepairAggressiveness": 1,
-    "gLLWallClosurePctTarget":     60,
-    "gLLWallNoWaterBuild":         True,
+    "gANWWallStrategy":             0,
+    "gANWWallRadius":               18,
+    "gANWWallGateCount":            3,
+    "gANWWallTierAge2Stone":        False,
+    "gANWWallTriggerAge":           2,
+    "gANWWallSegmentLength":        12,
+    "gANWWallTowerInterleave":      6,
+    "gANWWallSecondaryStrategy":    -1,
+    "gANWWallVillagerCount":        4,
+    "gANWWallForwardBiasFraction":  0.5,
+    "gANWWallOuterRingDelta":       0,
+    "gANWWallEarlyOutpostCount":    1,
+    "gANWWallRepairAggressiveness": 1,
+    "gANWWallClosurePctTarget":     60,
+    "gANWWallNoWaterBuild":         True,
 }
 
 # Mapping from calibration dict key → expected value (normalised).
 # The calibration stores age2stone and no_water as 0/1 ints; XS uses bool.
 CALIB_KEY_MAP = {
-    "strategy":    "gLLWallStrategy",
-    "radius":      "gLLWallRadius",
-    "gates":       "gLLWallGateCount",
-    "age2stone":   "gLLWallTierAge2Stone",
-    "trigger_age": "gLLWallTriggerAge",
-    "seg_len":     "gLLWallSegmentLength",
-    "towers":      "gLLWallTowerInterleave",
-    "secondary":   "gLLWallSecondaryStrategy",
-    "vils":        "gLLWallVillagerCount",
-    "fwd_bias":    "gLLWallForwardBiasFraction",
-    "outer_ring":  "gLLWallOuterRingDelta",
-    "outposts":    "gLLWallEarlyOutpostCount",
-    "repair":      "gLLWallRepairAggressiveness",
-    "closure_pct": "gLLWallClosurePctTarget",
-    "no_water":    "gLLWallNoWaterBuild",
+    "strategy":    "gANWWallStrategy",
+    "radius":      "gANWWallRadius",
+    "gates":       "gANWWallGateCount",
+    "age2stone":   "gANWWallTierAge2Stone",
+    "trigger_age": "gANWWallTriggerAge",
+    "seg_len":     "gANWWallSegmentLength",
+    "towers":      "gANWWallTowerInterleave",
+    "secondary":   "gANWWallSecondaryStrategy",
+    "vils":        "gANWWallVillagerCount",
+    "fwd_bias":    "gANWWallForwardBiasFraction",
+    "outer_ring":  "gANWWallOuterRingDelta",
+    "outposts":    "gANWWallEarlyOutpostCount",
+    "repair":      "gANWWallRepairAggressiveness",
+    "closure_pct": "gANWWallClosurePctTarget",
+    "no_water":    "gANWWallNoWaterBuild",
 }
 
 DISPATCH_XS = REPO / "game" / "ai" / "core" / "aiWallKnobsByCiv.xs"
@@ -160,6 +160,29 @@ CALIB_TO_SPEC: dict[str, str] = {
     "Spanish":             "Spanish Isabella Castile",
     "DESwedish":           "Swedes Gustavus Adolphus Swedish",
     "ANWTexians":          "Texians Sam Houston Texas Revolution",
+    "ANWCalifornians":     "Californians Vallejo Revolution",
+    "ANWCentralAmericans": "Central Americans Morazan Revolution",
+    "ANWBajaCalifornians": "Baja Californians Alvarado Revolution",
+    "ANWRioGrande":        "Rio Grande Canales Revolution",
+    # ANW canonical nation entries added for coverage (18 civs).
+    "ANWBritish":         "British Elizabeth",
+    "ANWDutch":           "Dutch Maurice Nassau",
+    "ANWPortuguese":      "Portuguese Henry Navigator",
+    "ANWGermans":         "Germans Frederick Great",
+    "ANWItalians":        "Italians Garibaldi",
+    "ANWMexicans":        "Mexicans Hidalgo Standard",
+    "ANWUSA":             "United States Washington",
+    "ANWHaudenosaunee":   "Haudenosaunee Hiawatha Iroquois",
+    "ANWJapanese":        "Japanese Tokugawa Ieyasu",
+    "ANWLakota":          "Lakota Crazy Horse",
+    "ANWSpanish":         "Spanish Isabella Castile",
+    "ANWSwedes":          "Swedes Gustavus Adolphus Swedish",
+    "ANWHausa":           "Hausa Usman dan Fodio",
+    "ANWChinese":         "Chinese Kangxi",
+    "ANWEthiopians":      "Ethiopians Menelik",
+    "ANWIndians":         "Indians Akbar",
+    "ANWMaltese":         "Maltese Valette",
+    "ANWOttomans":        "Ottomans Suleiman",
 }
 
 
@@ -189,7 +212,7 @@ def _normalise_calib(kn: dict) -> dict[str, Any]:
     for calib_key, global_name in CALIB_KEY_MAP.items():
         val = kn[calib_key]
         # Bool globals — calibration stores 0/1
-        if global_name in ("gLLWallTierAge2Stone", "gLLWallNoWaterBuild"):
+        if global_name in ("gANWWallTierAge2Stone", "gANWWallNoWaterBuild"):
             val = bool(val)
         out[global_name] = val
     return out
@@ -225,10 +248,10 @@ def run_civ(civ_token: str, engine_key: str) -> tuple[bool, dict[str, Any]]:
     interp.load_file(DISPATCH_XS)
 
     # Call the dispatch function.
-    if "llSetWallKnobsForCiv" not in interp.functions:
-        return False, {"error": "function llSetWallKnobsForCiv not found in XS"}
+    if "anwSetWallKnobsForCiv" not in interp.functions:
+        return {"error": "function anwSetWallKnobsForCiv not found in XS"}, None
 
-    interp.call_init("llSetWallKnobsForCiv")
+    interp.call_init("anwSetWallKnobsForCiv")
 
     # Read back all 15 globals.
     actual: dict[str, Any] = {g: interp.globals.get(g) for g in WALL_GLOBALS}
@@ -370,7 +393,7 @@ def print_summary(results: list[dict]) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
-        description="Validate llSetWallKnobsForCiv() against wall_knob_calibration.py for all 40 civs."
+        description="Validate anwSetWallKnobsForCiv() against wall_knob_calibration.py for all calibrated civs."
     )
     ap.add_argument(
         "--json",

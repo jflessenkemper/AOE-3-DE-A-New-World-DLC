@@ -364,6 +364,52 @@ def _click(x: int, y: int, *, delay: float = 0.25) -> None:
     time.sleep(delay)
 
 
+def _rclick(x: int, y: int, *, delay: float = 0.25) -> None:
+    """Right-click at game-window coordinates (x, y).
+
+    In AoE3 the right mouse button is the primary RTS command verb: issue a
+    move/rally/gather order with units selected, or cancel a pending
+    building-placement ghost on open ground (the left-click-only harness could
+    never do this — pressing Escape to cancel instead opened the ESC menu).
+
+    Harness backend: routes through the control socket RCLICK verb (added to
+    the gamescope fork 2026-06-06). Falls back to ``xdotool click 3`` when no
+    backend is registered. Mirrors :func:`_click`'s MOVE-then-act cursor-settle
+    sequence so the button event lands at the warped position.
+    """
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.move(x, y)
+        time.sleep(0.05)
+        _HARNESS_BACKEND.rclick(x, y)
+        time.sleep(delay)
+        return
+    _xdo("mousemove", str(x), str(y))
+    time.sleep(0.15)
+    _xdo("click", "3")
+    time.sleep(delay)
+
+
+def _drag(x1: int, y1: int, x2: int, y2: int, *, button: int = 1,
+          delay: float = 0.25) -> None:
+    """Click-drag from (x1,y1) to (x2,y2). button=1 box-selects units.
+
+    Harness backend uses the DRAG verb; the xdotool fallback emulates a drag
+    with mousedown/mouseup around a move.
+    """
+    if _HARNESS_BACKEND is not None:
+        _HARNESS_BACKEND.drag(x1, y1, x2, y2, button)
+        time.sleep(delay)
+        return
+    _xdo("mousemove", str(x1), str(y1))
+    time.sleep(0.1)
+    _xdo("mousedown", str(button))
+    time.sleep(0.1)
+    _xdo("mousemove", str(x2), str(y2))
+    time.sleep(0.1)
+    _xdo("mouseup", str(button))
+    time.sleep(delay)
+
+
 def _key(keyname: str, n: int = 1, delay: float = 0.08) -> None:
     """Press a key N times."""
     for _ in range(n):

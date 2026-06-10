@@ -38,7 +38,6 @@ COUNTRY_FOR = {
     "anwhomecitycolumbia.xml": "Colombia",
     "anwhomecityegypt.xml": "Egypt",
     "anwhomecityfinland.xml": "Finland",
-    "anwhomecityfrenchcanada.xml": "French Canada",
     "anwhomecityhaiti.xml": "Haiti",
     "anwhomecityhungary.xml": "Hungary",
     "anwhomecityindonesians.xml": "Indonesia",

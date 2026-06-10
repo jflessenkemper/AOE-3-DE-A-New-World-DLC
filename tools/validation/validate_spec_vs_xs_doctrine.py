@@ -10,7 +10,7 @@ For each ANW civ in playstyle_spec.json → civs.*.claims, this validator:
      ``game/ai/leaders/leaderCommon.xs:anwApplyBuildStyleForActiveCiv()``.
   3. Identifies the ``anwUse*Style(...)`` call to derive style defaults.
   4. Applies any post-style overrides (``gANWWallStrategy = ...`` assignment or
-     ``gLLForwardBaseEarliestMs = ...`` reset or ``llEnableEarlyForwardBase(...)``
+     ``gANWForwardBaseEarliestMs = ...`` reset or ``anwEnableEarlyForwardBase(...)``
      call) that appear inside the same dispatch block.
   5. Compares the final values against the spec claims.
 
@@ -43,8 +43,8 @@ LEADER_REVOLUTION_XS = REPO_ROOT / "game" / "ai" / "leaders" / "leader_revolutio
 # Wall strategy values match aiHeader.xs cANWWallStrategy* constants:
 #   0 = FortressRing, 1 = ChokepointSegments, 2 = CoastalBatteries,
 #   3 = FrontierPalisades, 4 = UrbanBarricade, 5 = MobileNoWalls
-# expects_forward = True iff the style calls llEnableEarlyForwardBase(...)
-#   without a subsequent reset to gLLForwardBaseEarliestMs = 1200000
+# expects_forward = True iff the style calls anwEnableEarlyForwardBase(...)
+#   without a subsequent reset to gANWForwardBaseEarliestMs = 1200000
 # first_military_building is inferred from the style class:
 #   NavalMercantileCompound → "dock"
 #   ShrineTradeNodeSpread / DistributedEconomicNetwork → "trading_post_or_market"
@@ -282,13 +282,13 @@ def _apply_block_overrides(state: dict[str, Any], block: str) -> None:
             state["wall_strategy"] = WALL_STRATEGY_VALUES[const]
 
     fwd_reset_re = re.compile(
-        r"\bgLLForwardBaseEarliestMs\s*=\s*(\d+)\s*;"
+        r"\bgANWForwardBaseEarliestMs\s*=\s*(\d+)\s*;"
     )
     for mo in fwd_reset_re.finditer(block):
         ms = int(mo.group(1))
         state["expects_forward"] = (ms < 1200000)
 
-    if re.search(r"\bllEnableEarlyForwardBase\s*\(", block):
+    if re.search(r"\banwEnableEarlyForwardBase\s*\(", block):
         state["expects_forward"] = True
 
 

@@ -96,6 +96,77 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("protomods", "tools/validation/validate_protomods.py"),
     ValidatorSpec("techtree", "tools/validation/validate_techtree.py"),
     ValidatorSpec("xs_scripts", "tools/validation/validate_xs_scripts.py"),
+    # XS sim parse coverage: parses every game/ai/ .xs file through the Python
+    # xs_sim parser and asserts coverage stays at/above the 66-file baseline,
+    # naming any file that fails to parse — locks in 100% parse coverage so a
+    # parser change or new .xs file can't silently drop sim coverage.
+    ValidatorSpec("xs_sim_parse_coverage",
+                  "tools/validation/validate_xs_sim_parse_coverage.py",
+                  timeout_s=60),
+    # XS sim interpreter smoke: asserts the 17 xsVector*/kbArea*/kbBase* builtins
+    # are registered and the smart-wall code (anwDetectChokepointVector,
+    # anwDetectCoastVector) executes without exception on canned GameState
+    # fixtures, returning a NON-fallback chokepoint vector on a chokepoint map —
+    # proves the interpreter can deterministically run the AI wall logic.
+    ValidatorSpec("xs_sim_interpreter_smoke",
+                  "tools/validation/validate_xs_sim_interpreter_smoke.py",
+                  timeout_s=60),
+    # Capture-backend guard: flags any standalone-runnable tools/aoe3_automation
+    # script that calls bare _screenshot_raw() while importing the game drivers
+    # but never calls set_harness_backend() — prevents a screenshot tool from
+    # capturing with no backend wired up (silent black/empty frames).
+    ValidatorSpec("capture_backend",
+                  "tools/validation/validate_capture_backend.py",
+                  timeout_s=30),
+    # Build-tour cancel guard: asserts anw_building_tour.py cancels building
+    # placement with a right-click (_rclick) and never uses _key("Escape"),
+    # which would open the ESC pause menu mid-tour and stall screenshot capture.
+    ValidatorSpec("build_tour_cancel",
+                  "tools/validation/validate_build_tour_cancel.py",
+                  timeout_s=30),
+    # Screen-state classifier wiring guard: asserts detect_screen_state and
+    # ensure_at_main_menu exist with correct signatures, and that the runner
+    # calls ensure_at_main_menu before click_skirmish (prevents the paused-game
+    # blind-click bug class). Optional: classifies reference PNGs if present.
+    ValidatorSpec("screen_state_recovery",
+                  "tools/validation/validate_screen_state_recovery.py",
+                  timeout_s=30),
+    # Picker-open detection guard: asserts _picker_title_visible() returns True
+    # for the civ-picker modal screenshot and False for the plain lobby / main
+    # menu.  Catches regression of the pixel-diff false-positive bug (a lobby
+    # with a non-default map or P1 civ differs from CLEAN_LOBBY_REF by
+    # >= significant_change pixels, causing is_picker_open to return True before
+    # any click was made).  Depends on artifacts/validation/ui_states/ PNGs and
+    # pytesseract — degrade-passes on missing deps/PNGs.
+    ValidatorSpec("picker_open_detection",
+                  "tools/validation/validate_picker_open_detection.py",
+                  needs_runtime_artifact=True,
+                  warn_is_pass=True,
+                  timeout_s=30),
+    # Splash-detector guard: asserts is_asset_preloading_frame() returns True for
+    # the real "Asset Preloading (Beta)" loading screen (thin teal progress band)
+    # and False for real in-game frames (home-city harbour water reads ~10x more
+    # teal but spread across the whole strip, not a thin band).  Locks the
+    # 2026-06-10 fix that stopped the home-city panel false-positive from wrongly
+    # tripping the loading-screen contamination gate.  Reads captured reference
+    # PNGs under artifacts/validation/visual_art/ — degrade-passes on missing
+    # PIL/numpy or reference frames.
+    ValidatorSpec("splash_detectors",
+                  "tools/validation/validate_splash_detectors.py",
+                  needs_runtime_artifact=True,
+                  warn_is_pass=True,
+                  timeout_s=30),
+    # Building-tour freshness guard: flags a civ whose building_*.png set is
+    # WHOLLY OLDER than its own core UI surfaces — the fingerprint of a stale,
+    # possibly WRONG-CIV building tour left behind when a civ was re-captured
+    # without --buildings (the 2026-06-10 Britain case: London core surfaces but
+    # Khedivate-of-Egypt/Cairo building shots).  Pure-stdlib mtime comparison;
+    # degrade-passes when no capture corpus or no building tours are present.
+    ValidatorSpec("building_tour_freshness",
+                  "tools/validation/validate_building_tour_freshness.py",
+                  needs_runtime_artifact=True,
+                  warn_is_pass=True,
+                  timeout_s=30),
     ValidatorSpec("stringtables", "tools/validation/validate_stringtables.py"),
 
     # === Tier 4: Art / visuals ===
@@ -210,6 +281,12 @@ VALIDATORS: list[ValidatorSpec] = [
     # cross-source parity with age_build_notes.json, and unique playstyle text.
     ValidatorSpec("blurb_coverage",
                   "tools/validation/validate_blurb_coverage.py",
+                  timeout_s=15),
+    # Leader quote integrity: every ANW leader must have non-empty insult+compliment
+    # quotes in aiLeaderQuotes.xs, with no placeholder/TODO/TBD text, no non-ASCII
+    # characters (chat cannot render them), and no duplicate quote shared across leaders.
+    ValidatorSpec("leader_quote_integrity",
+                  "tools/validation/validate_leader_quote_integrity.py",
                   timeout_s=15),
     # Proto unit/building references: every entry in unique_units and
     # unique_buildings in anw_civ_blurbs.json must resolve to a real
@@ -351,6 +428,33 @@ VALIDATORS: list[ValidatorSpec] = [
                   "tools/validation/validate_per_civ_wall_knobs.py",
                   warn_is_pass=False,
                   timeout_s=60),
+    # Smart-wall strategy coverage: asserts every <main>1</main> ANW civ token
+    # in civmods.xml receives an explicit gANWWallStrategy assignment somewhere
+    # in the leader/leaderCommon XS (no civ silently falls back to the default
+    # FortressRing). Guards the chokepoint/coastal/palisade smart-wall dispatch
+    # so a newly-added civ can't ship with an unintended walling personality.
+    ValidatorSpec("anw_wall_strategy_coverage",
+                  "tools/validation/validate_anw_wall_strategy_coverage.py",
+                  warn_is_pass=False,
+                  timeout_s=30),
+    # Revolt-disabled invariant: asserts mid-game revolting stays fully removed
+    # at all three layers — TECH (revolt-trigger techs are unobtainable by
+    # default), DATA (LLDisableStockRevolutionsGlobal exists + is obtainable),
+    # and AI (gANWAllowRevolt declared false in aiGlobals.xs + the aiTechs.xs
+    # revolt decision is guarded by it). Stops a stray tech/flag re-enabling the
+    # removed revolt mechanic.
+    ValidatorSpec("revolt_disabled",
+                  "tools/validation/validate_revolt_disabled.py",
+                  timeout_s=30),
+    # Revolution-doctrine wiring: for every civ where civIsRevolution() is true
+    # (minus civs with a dedicated leader file), asserts anwInitRevolutionCommander()
+    # has a matching `else if (rvltName == "C")` branch — catching the bug class
+    # where a revolution civ is recognised but has NO commander doctrine wired,
+    # so it would fall back to generic AI with none of its historical playstyle.
+    ValidatorSpec("revolution_doctrine",
+                  "tools/validation/validate_revolution_doctrine.py",
+                  warn_is_pass=True,
+                  timeout_s=30),
     # Civ asset existence: every flag/portrait/UI asset on every ANW civ
     # must resolve to a real file (DDT in base .bar OR PNG in mod tree).
     # Caught 24 broken-flag references on first run.
@@ -384,6 +488,200 @@ VALIDATORS: list[ValidatorSpec] = [
                   args=["--static-mode"],
                   timeout_s=30),
 
+    # Probe-chat leak guard: asserts the three control flags
+    # (cANWProbeToHostChat, cANWProbeToSelfChat, cANWDebugVisible) are declared
+    # false in aiGlobals.xs, and that every aiChat() call inside anwProbe() in
+    # aiUtilities.xs is guarded by an if-flag while aiEcho() stays unconditional,
+    # so AI diagnostic [ANWP ...] probes can never leak into player-visible chat.
+    ValidatorSpec("no_probe_chat_leak",
+                  "tools/validation/validate_no_probe_chat_leak.py",
+                  timeout_s=15),
+    # Civ picker-map integrity: every <main>1</main> civ token in civmods.xml
+    # has a picker-map entry, no two civs share the same picker index, and all
+    # indices are within the valid range. Guards the screenshot-capture civ
+    # selection from the off-by-one/duplicate-index bug that selected the wrong
+    # civ for 5 civs during visual capture.
+    ValidatorSpec("civ_picker_map",
+                  "tools/validation/validate_civ_picker_map.py",
+                  timeout_s=15),
+    # Keeps the wiki nation/building map in sync with the civmods.xml civ list.
+    ValidatorSpec("wiki_nation_coverage",
+                  "tools/validation/validate_wiki_nation_coverage.py",
+                  timeout_s=15),
+    # Pins the load-bearing naming convention: every active (<main>1</main>)
+    # civ token must carry the ANW prefix (ANWBritish, not bare British), so
+    # the token primary key joining homecity/personality/decks/playercolors
+    # never collides with a base civ or dangles. Catches a civ added without
+    # the prefix or a base civ accidentally left active.
+    ValidatorSpec("anw_civ_token_prefix",
+                  "tools/validation/validate_anw_civ_token_prefix.py",
+                  timeout_s=15),
+    # Asserts the wiki "Wall Strategy Index" table stays in sync with the
+    # authoritative playstyle_spec claims.wall_strategy for all active civs:
+    # every active token has a row, the integer + enum name match the spec,
+    # and no stale/extra rows linger. Born from the stale 18-civ table that
+    # declared "26 civs TBD" long after every civ had an explicit strategy.
+    ValidatorSpec("wiki_wall_strategy_sync",
+                  "tools/validation/validate_wiki_wall_strategy_sync.py",
+                  timeout_s=30),
+    # Guards the nations-and-buildings wiki against the stale-placeholder class
+    # of defect: fails if it carries misleading "TBD / needs verification" /
+    # "not yet validated" phrases that falsely signal an unfinished mod, AND
+    # locks the verified fact behind the Asian-Wonder note (data/protomods.xml
+    # defines zero Wonder protos — Asian wonders are base-game protounits).
+    ValidatorSpec("wiki_no_stale_placeholders",
+                  "tools/validation/validate_wiki_no_stale_placeholders.py",
+                  timeout_s=30),
+    # Pins each data-layer wiki doc to the REAL root element of the data file
+    # it documents (civmods/protomods/techtreemods/stringmods/homecity), so a
+    # schema example can't drift to the base-game root (<proto>/<techtree>/
+    # <stringtable>) — which would teach a copy-paste that silently fails to
+    # merge. Also asserts each documented data path actually exists.
+    ValidatorSpec("wiki_datalayer_accuracy",
+                  "tools/validation/validate_wiki_datalayer_accuracy.py",
+                  timeout_s=30),
+    # Walks every markdown doc under docs/wiki/ and asserts each referenced
+    # `tools/<...>.py` script AND each `artifacts/<...>` evidence file (link
+    # targets and inline code in "## Tools" tables, "Sources", and cross-refs)
+    # resolves to a real path — catches the link-rot that happens when a file
+    # is renamed/moved/regenerated (e.g. a phantom
+    # tools/aoe3_automation/scenario_emitter.py when the real one lives under
+    # tools/validation/), so the wiki never points a reader at a dead path.
+    # data/*.xml is intentionally excluded here (it has legitimate "does NOT
+    # ship" mentions) and is covered by wiki_phantom_data_files instead.
+    ValidatorSpec("wiki_tool_links",
+                  "tools/validation/validate_wiki_tool_links.py",
+                  timeout_s=30),
+    # Asserts known non-existent data-overlay files (data/stringmods.xml — the
+    # real one is per-locale at data/strings/<lang>/stringmods.xml; plus the
+    # never-shipped data/protoymods.xml / data/techtreeymods.xml / data/civmodsy.xml)
+    # never appear inside a ```fenced code block``` where they'd read as real,
+    # copy-pasteable paths. Inline prose may still correctly state the file does
+    # NOT ship. Born from additive-data-mods.md once listing those phantoms in a
+    # code block. Also self-checks that the phantom set is still phantom on disk.
+    ValidatorSpec("wiki_phantom_data_files",
+                  "tools/validation/validate_wiki_phantom_data_files.py",
+                  timeout_s=30),
+    # Pins every TOTAL-roster "N ANW civ tokens" / "all N civs" claim in the
+    # wiki to the live active-civ count (number of <main>1</main> blocks in
+    # data/civmods.xml, currently 44). Born from three docs carrying a stale
+    # "restored 46 ANW civs" historical note that contradicted the verifiable
+    # 44 (git showed the roster grew 40->44 and was never 46). Narrow on
+    # purpose: per-culture sub-group counts (10 European, 19 Asian, ... that
+    # sum to 44) and the 66 total <civ> blocks are NOT matched. Any future
+    # roster change forces every total-count claim to update in lockstep.
+    ValidatorSpec("wiki_civ_count",
+                  "tools/validation/validate_wiki_civ_count.py",
+                  timeout_s=30),
+    # Asserts the per-culture civ breakdown in nations-and-buildings.md is
+    # internally consistent and partitions the live roster: each "N ANW civs:
+    # a, b, c" line's stated count equals the civs it lists, no civ is filed
+    # under two cultures, and the union of all listed civs equals exactly the
+    # set of active <main>1</main> tokens in data/civmods.xml. Complements
+    # wiki_nation_coverage (which only checks each token APPEARS) by also
+    # checking the breakdown counts add up and stay in sync with the data.
+    ValidatorSpec("wiki_culture_rosters",
+                  "tools/validation/validate_wiki_culture_rosters.py",
+                  timeout_s=30),
+    # Asserts every building proto named in a roster-table row of
+    # nations-and-buildings.md (the backticked middle column, e.g. `TownCenter`,
+    # `WarHut`, `FortFrontier`) resolves to a real proto in the extracted
+    # authoritative proto-name map (artifacts/unit_index/full_proto_name_to_locid.json,
+    # ~2456 names) — so a typo or renamed/fabricated building can't slip into the
+    # roster docs. Scoped to table rows so it ignores tech/effect/civ tokens.
+    ValidatorSpec("wiki_building_protos",
+                  "tools/validation/validate_wiki_building_protos.py",
+                  timeout_s=30),
+    # Visual-capture integrity: every per-civ screenshot dir under
+    # artifacts/validation/visual_art/<civ>/ is intact and correctly attributed.
+    # Asserts (1) the manifest's civ_token equals the directory name — catches a
+    # capture run that screenshotted the WRONG civ into a civ's folder; (2) the
+    # reliable floor surfaces (full/01_lobby.png, full/02_loading.png) exist for
+    # every active civ — catches a run that silently produced nothing; (3) every
+    # full-res PNG loads as a real image and is not a black/blank frame
+    # (mean luminance >= 8) — catches the gamescope race where a screenshot fires
+    # before the frame renders and saves pure black. Pins the documented capture
+    # ceiling (AoE3 crashes mid-skirmish for many civs) as the floor so any future
+    # capture regression turns the gate red.
+    ValidatorSpec("visual_capture_integrity",
+                  "tools/validation/validate_visual_capture_integrity.py",
+                  timeout_s=60),
+    # Harness re-wire guard: the visual-capture runner clicks through the
+    # AOE3DEHarness control socket (wired once at startup by _wire_harness()).
+    # When a civ run relaunches AoE3 (--force-relaunch-between-civs or the
+    # defensive aoe3_dead_pre_civ path), the old socket belonged to the dead
+    # process, so every later click raises [Errno 32] Broken pipe and the civ
+    # fails at click_skirmish (reproduced 2026-06-09: a force-relaunch run
+    # silently lost 3 of 4 civs). This asserts every gating relaunch site
+    # (`if not _relaunch_aoe3()`) is followed within 15 lines by a
+    # _wire_harness() re-wire, so the fix can't be dropped by a future edit.
+    ValidatorSpec("harness_rewire_after_relaunch",
+                  "tools/validation/validate_harness_rewire_after_relaunch.py",
+                  timeout_s=15),
+    # Gamescope AppId/exe identity guard: gamescope_detect.py must verify the
+    # process tree of the detected gamescope contains AppId=933110 or
+    # AoE3DE_s.exe before reporting AoE3 present. Guards the 2026-06-09 bug
+    # where CoH2 (AppId=231430) was the only running gamescope and the detector
+    # false-positively logged "[gamescope_detect] AoE3 detected" — causing the
+    # runner to drive CoH2's menu instead of waiting for AoE3. This validator
+    # fails if a future edit removes the AppId/exe guard from the detection path.
+    ValidatorSpec("gamescope_detect_appid",
+                  "tools/validation/validate_gamescope_detect_appid.py",
+                  timeout_s=30),
+    # Loading-screen contamination guard: classifies every captured full/ surface
+    # with the same detector the runner uses (image_utils.is_splash_frame, which
+    # covers BOTH the bright-globe splash and the dark "Asset Preloading (Beta)"
+    # screen) and fails if any surface that should be a real game/UI frame is
+    # actually a loading screen. Closes the gap the non-black luminance check
+    # left open (a loading screen is non-black, mean_lum ~38): the 2026-06-09
+    # speed-path regression captured the Asset-Preloading screen into British
+    # 03_hud.png and 04_homecity_panel.png and the integrity check passed it.
+    ValidatorSpec("no_loading_screen_contamination",
+                  "tools/validation/validate_no_loading_screen_contamination.py",
+                  timeout_s=120),
+    # Capture parity: pins that every active ANW nation has Britain-parity
+    # visual-capture coverage — 22 fixed core surfaces (01_lobby through
+    # 21_base_overview, including all 4 age-up shots, both ai_homecity/deck
+    # screens, the semi-manual hero/units/awards/base_overview surfaces, and
+    # build_command_card) plus at least one building_<slug>.png per entry in
+    # the civ's buildable roster from data/anw_civ_blurbs.json
+    # (COMMON_CORE_BUILDINGS union unique_buildings). warn_is_pass=True because
+    # the live building-capture passes are still being built out — most civs
+    # currently have only lobby+loading; large gaps are expected and must not
+    # block the deploy gate until Phases 1+2 complete.
+    ValidatorSpec("capture_parity",
+                  "tools/validation/validate_capture_parity.py",
+                  warn_is_pass=True,
+                  timeout_s=30),
+    # Civ-identity OCR guard: OCRs the home-city panel / loading screen in every
+    # civ's captured full/ directory and asserts the expected home-city name
+    # (e.g. "LONDON" for ANWBritish) appears, with no alien name (e.g. "PARIS")
+    # dominant. Catches the 2026-06-09 bug where the pipeline screenshotted
+    # France/Napoleon into ANWBritish's folder with no detection.
+    # needs_runtime_artifact=True because it reads real capture output from
+    # artifacts/validation/visual_art/. warn_is_pass=True: OCR is optional dep;
+    # failures are captures-in-progress, not a deploy blocker by themselves.
+    ValidatorSpec("capture_civ_identity",
+                  "tools/validation/validate_capture_civ_identity.py",
+                  needs_runtime_artifact=True,
+                  warn_is_pass=True,
+                  timeout_s=120),
+    # Readiness site image validator: guards against regression to the 2026-05-12
+    # bug where full-res PNGs (3-5 MB each, ~1.8 GB total) were referenced as
+    # <img src> with lazy loading — images stayed blank until scroll. Asserts
+    # gallery images use compact webp thumbs with eager loading, full-res only
+    # in data-full attributes.
+    ValidatorSpec("readiness_site_images",
+                  "tools/validation/validate_readiness_site_images.py",
+                  timeout_s=30),
+    # Meta-validator: guards against the stale-prefix class of bug where a
+    # validator or AI-design tool greps XS source using the dead pre-rename
+    # gLL/cLL/ll*/[LLP identifier family instead of the current gANW/cANW/anw*
+    # names — causing it to silently match nothing and return a false result.
+    ValidatorSpec("no_dead_prefixes",
+                  "tools/validation/validate_no_dead_prefixes.py",
+                  timeout_s=15),
+
     # === Self-test suites (verify the validators themselves still work) ===
     ValidatorSpec("self_civ_loadability", "tools/validation/validate_civ_loadability_tests.py",
                   timeout_s=15),
@@ -392,6 +690,14 @@ VALIDATORS: list[ValidatorSpec] = [
     ValidatorSpec("self_scenario_binary", "tools/validation/validate_scenario_binary_tests.py",
                   timeout_s=15),
     ValidatorSpec("self_test_validator", "tools/validation/test_validator.py",
+                  timeout_s=30),
+    # Self-test: exercises the wall.closure log parser + evaluate_wall_closure
+    # logic in validate_doctrine_compliance against a synthetic [ANWP] log,
+    # asserting the PASS / FAIL / SKIP / INCOMPLETE verdicts for the smart-wall
+    # closure watchdog. Guards the parse_probes() return-shape contract that
+    # silently broke this test when it grew from a 2-tuple to a 3-tuple.
+    ValidatorSpec("self_wall_closure_parser",
+                  "tools/validation/test_wall_closure_parser.py",
                   timeout_s=30),
 ]
 

@@ -68,6 +68,37 @@ ANW_SHADOW_CIVS = {
 ASIAN_CONSULATE_CIVS = {"ANWChinese", "ANWJapanese", "ANWIndians"}
 
 # ---------------------------------------------------------------------------
+# Curated signature-unit overrides (2026-06-06)
+# ---------------------------------------------------------------------------
+# Blurb-promised "signature" units that the heuristic resolver misses. Each
+# entry was VERIFIED two ways before inclusion:
+#   1. proto exists in proto.xml (so build_unit_index can attach real stats), and
+#   2. the unit is genuinely granted to that civ in the mod data —
+#      civmods.xml <multipleblocktrain> (emergency garrison militia),
+#      anwhomecity*.xml deck card (FreeHomeCityUnit), or techtreemods.xml.
+# They are skipped by the normal walk because of either a NON_MILITARY type
+# (AbstractHealer / AbstractVillager / Transport / Ship), an ALWAYS_EXCLUDE
+# entry, or a grant mechanism (<multipleblocktrain>) the resolver does not
+# parse. Injected with source="signature" so downstream consumers (doctrine
+# compliance validator) can filter them out of composition-ratio maths.
+#
+# NOT included — verified absent from the mod data, so wiring would fabricate:
+#   ANWHungarians "Hajduk": no deSaloonHajduk grant anywhere; the only hajduk
+#   proto granted in civmods is deREVHajdukArquebusier (ANWRussians). Left as a
+#   documented content gap rather than an invented roster entry.
+SIGNATURE_OVERRIDES = {
+    # civ_token: [ (proto, display_label, age, tier) ]
+    "ANWBrazil":        [("deREVVoluntarioBatch", "Voluntario da Patria", 3, "core_unique")],
+    "ANWUSA":           [("deFedStateMilitiaBatch", "State Militia", 2, "core_unique")],
+    "ANWTexians":       [("deFortStateMilitiaBatch", "State Militia", 2, "core_unique")],
+    "ANWMexicans":      [("dePadre", "Padre", 2, "core_unique")],
+    "ANWFrench":        [("Coureur", "Coureur des Bois", 1, "core_unique")],
+    "ANWSpanish":       [("Missionary", "Missionary", 1, "core_unique")],
+    "ANWSouthAfricans": [("deREVStarTrekWagon", "Trek Wagon", 3, "core_unique"),
+                         ("Fluyt", "Fluyt", 2, "core_unique")],
+}
+
+# ---------------------------------------------------------------------------
 # Exclusion helpers
 # ---------------------------------------------------------------------------
 
@@ -993,6 +1024,24 @@ def resolve_rosters(civmods, anw_effects, base_effects, unit_to_buildings, proto
                 mercenaries.append(entry)
             else:
                 military_units.append(entry)
+
+        # --- Curated signature-unit overrides (verified granted + present) ---
+        existing_protos = {u["proto"] for u in military_units + mercenaries}
+        for proto, label, age, tier in SIGNATURE_OVERRIDES.get(civ_token, []):
+            if proto in existing_protos:
+                continue
+            pinfo = proto_info.get(proto)
+            if pinfo is None:
+                notes.append(f"SIGNATURE override skipped (proto absent): {proto}")
+                continue
+            military_units.append({
+                "proto": proto,
+                "label": label,
+                "age": age,
+                "source": "signature",
+                "tier": tier,
+            })
+            notes.append(f"Signature override: +{proto} ({label})")
 
         if unknown:
             notes.append(f"Protos not in proto.xml: {unknown[:5]}")

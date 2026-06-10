@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+# ============================================================================
+# DEPRECATED / OBSOLETE — DO NOT GATE. The per-civ Development tables and their
+# <!-- DEV-START name="..." --> / <!-- DEV-END --> comment markers were
+# intentionally removed from a_new_world.html in commit 6db1026 ("Remove
+# dev-tree subsections + Dev Trees Only button from reference site"). With zero
+# DEV-START blocks left in the HTML this validator can never pass — it is kept
+# only for git history. Current coverage of the dev-subtree concept lives in the
+# GATED validate_dev_subtrees.py; HTML art-wiring is covered by the GATED
+# civmods_art_consistency / civ_asset_existence / art_coverage / civ_crossrefs.
+# ============================================================================
 """Validate the per-civ Development tables in a_new_world.html against mod data.
 
 The Development table is the QA reference the modder consults to know what

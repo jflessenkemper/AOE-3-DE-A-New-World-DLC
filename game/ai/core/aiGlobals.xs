@@ -575,6 +575,16 @@ extern const bool cANWVerboseDiagnostics = false;
 // wall dispatch, age-up, chatset-fire, rout, explorer-escort, and economy
 // snapshot events in the .age3Yrec chat stream.
 extern const bool cANWReplayProbes = true;
+// When true, anwProbe() ALSO mirrors each probe line to the human host (P1)
+// on-screen chat box. That is handy for live spectating but it FLOODS the
+// chat box and buries AI personality quotes/taunts. Default false: probes
+// still emit via aiEcho (dev builds) and a self-addressed aiChat (recorded in
+// the replay/log chat stream — parsers read every aiChat record regardless of
+// recipient), so probe/log DATA capture is unaffected while your on-screen
+// chat stays clean for quote/taunt testing. Flip true only when you want the
+// probe firehose visible live on the host screen.
+extern const bool cANWProbeToHostChat = false;
+extern const bool cANWProbeToSelfChat = false;
 // Phase-3 firehose: when true, every anwLogRuleTick() also emits a per-rule
 // `rule.fired` probe. Enables fine-grained per-rule timeline reconstruction
 // from replays at the cost of high chat-stream volume — keep off for

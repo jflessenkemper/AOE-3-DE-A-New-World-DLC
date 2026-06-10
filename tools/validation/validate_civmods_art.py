@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+# ============================================================================
+# DEPRECATED / OBSOLETE — DO NOT GATE. This validator parses the same
+# <!-- DEV-START name="..." --> / <!-- DEV-END --> HTML blocks as
+# validate_dev_tree.py, which were intentionally removed from a_new_world.html
+# in commit 6db1026 ("Remove dev-tree subsections + Dev Trees Only button from
+# reference site"). With zero DEV-START blocks it raises SystemExit before doing
+# any work, so it can never pass. Kept only for git history. The HTML-vs-civmods
+# art-wiring it once checked is now covered by the GATED civmods_art_consistency,
+# civ_asset_existence, art_coverage, and civ_crossrefs validators.
+# ============================================================================
 r"""Cross-check HTML Development art references against data/civmods.xml wiring.
 
 The dev-tree validator (``validate_dev_tree.py``) proves every flag/portrait

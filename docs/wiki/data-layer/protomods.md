@@ -7,9 +7,15 @@
 
 ## Schema
 
+The root element is `<protomods>` (not `<proto>`), and additive entries
+merge into the base proto table **by `name`** — protomods units carry no
+`id` attribute (verified: 0 `id=` attributes across all entries in
+`data/protomods.xml`). The general base-proto `<unit>` field surface, for
+reference, is:
+
 ```xml
-<proto>
-  <unit id="..." name="UnitName">
+<protomods>
+  <unit name="UnitName">          <!-- merge key is name; no id attribute -->
     <displaynameid>...</displaynameid>
     <rolloverid>...</rolloverid>
     <initialhitpoints>...</initialhitpoints>
@@ -27,10 +33,30 @@
     <cost resourcetype="Gold">...</cost>
     <buildbounty>...</buildbounty>
     <killbounty>...</killbounty>
+    <contain mergeMode='remove'>AbstractArtillery</contain>
     ...
   </unit>
-</proto>
+</protomods>
 ```
+
+### What ANW's `data/protomods.xml` actually contains
+
+Despite the broad field surface above, ANW's protomods.xml is a **focused
+single-purpose overlay**, not a stat-rebalance table. All 58 entries are the
+**same** minimal override — each removes `AbstractArtillery` from a ship /
+transport unit's `<contain>` list so artillery can no longer be garrisoned
+aboard those naval units:
+
+```xml
+<unit name="Caravel">
+  <contain mergeMode='remove' indelay="3.0" outdelay="0.0">AbstractArtillery</contain>
+</unit>
+```
+
+(Verified against `data/protomods.xml`: 58 `<unit>` entries, every one a
+single `<contain mergeMode='remove'>AbstractArtillery</contain>`, zero stat
+or cost overrides.) Unit stats/costs for ANW civs are instead adjusted in
+[techtreemods.xml](techtreemods.md) via `<Effect>` rows, not here.
 
 ### Field categories (community-reconstructed)
 
@@ -53,8 +79,10 @@ tags at runtime.
 ## File paths
 
 - Base: `proto.xml.xmb` inside base BARs.
-- Additive overlay: `data/protomods.xml` (preferred) or
-  `data/protoymods.xml` (DE patch-y variant — community-observed).
+- Additive overlay: `data/protomods.xml` (the one ANW ships). A
+  `data/protoymods.xml` (`y`-variant, for the Asian `protoy.xml` table) is
+  community-observed in other mods but **ANW does not ship one** (verified:
+  no such file in `data/`).
 - Tactics files: `data/tactics/<unit>tactics.tactics`.
 - Animation/sound rigs are referenced by name and resolved against
   `anim.xml.xmb` and the sound libraries.

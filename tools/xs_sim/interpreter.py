@@ -45,6 +45,14 @@ _DEFAULT_CONSTS: dict[str, Any] = {
     "cResourceFood": 0, "cResourceWood": 1, "cResourceGold": 2, "cResourceXP": 3,
     "cMyID": 1, "cPlayerRelationAny": 0, "cPlayerRelationEnemy": 2,
     "cPlayerRelationAlly": 1, "cPlayerRelationSelf": 0,
+    # Area type constants (P1 — explicit values override the c-prefix fallback
+    # which would return 0 for all, colliding with cAreaTypeLand).
+    "cAreaTypeLand": 0,
+    "cAreaTypeWater": 1,
+    "cAreaTypeImpassableLand": 2,
+    "cAreaTypeCliff": 3,
+    # Invalid vector sentinel used throughout wall-strategy code.
+    "cInvalidVector": (-1.0, -1.0, -1.0),
 }
 
 
@@ -373,6 +381,45 @@ class Interpreter:
 
     @staticmethod
     def _binop(op: str, a: Any, b: Any) -> Any:
+        # Vector arithmetic: XS supports vec+vec, vec-vec, vec*scalar, scalar*vec,
+        # vec/scalar, and vec==vec comparisons. Tuples represent vectors.
+        a_is_vec = isinstance(a, tuple)
+        b_is_vec = isinstance(b, tuple)
+        if a_is_vec or b_is_vec:
+            if op == "+":
+                if a_is_vec and b_is_vec:
+                    return (a[0]+b[0], a[1]+b[1], a[2]+b[2])
+                if a_is_vec:
+                    s = float(b)
+                    return (a[0]+s, a[1]+s, a[2]+s)
+                s = float(a)
+                return (s+b[0], s+b[1], s+b[2])
+            if op == "-":
+                if a_is_vec and b_is_vec:
+                    return (a[0]-b[0], a[1]-b[1], a[2]-b[2])
+                if a_is_vec:
+                    s = float(b)
+                    return (a[0]-s, a[1]-s, a[2]-s)
+                s = float(a)
+                return (s-b[0], s-b[1], s-b[2])
+            if op == "*":
+                if a_is_vec and not b_is_vec:
+                    s = float(b)
+                    return (a[0]*s, a[1]*s, a[2]*s)
+                if b_is_vec and not a_is_vec:
+                    s = float(a)
+                    return (s*b[0], s*b[1], s*b[2])
+                # vec*vec (dot product in some contexts) — return scalar
+                if a_is_vec and b_is_vec:
+                    return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+            if op == "/":
+                if a_is_vec and not b_is_vec:
+                    s = float(b)
+                    return (a[0]/s, a[1]/s, a[2]/s) if s != 0 else (0.0, 0.0, 0.0)
+            if op == "==": return a == b
+            if op == "!=": return a != b
+            # Fallthrough for unknown vector ops — return 0 rather than crash
+            return 0
         if op == "+":
             if isinstance(a, str) or isinstance(b, str):
                 return str(a) + str(b)

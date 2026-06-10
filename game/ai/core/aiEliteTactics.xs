@@ -1820,6 +1820,15 @@ bool anwIsAiRoutEligibleUnit(int unitID = -1)
    {
       return (false);
    }
+   // Mercenaries NEVER rout — for any faction (user directive). They are
+   // bought, gold-only shock troops with no home-city morale to break; the
+   // design intent is that they fight to the death rather than retreat. This
+   // exemption precedes the elite/threshold branches below so a mercenary is
+   // excluded regardless of its HP or any elite flag.
+   if (kbUnitIsType(unitID, cUnitTypeMercenary) == true)
+   {
+      return (false);
+   }
    // Out-of-scope: human-controlled units retain manual orders. The XS
    // engine only ticks rules for the *current* AI player, so any unit
    // owned by a human player is naturally filtered by the cMyID check

@@ -1,3 +1,4 @@
+"""Check ANW home city XML files for duplicate card names, missing tech references, and broken prerequisite chains."""
 from __future__ import annotations
 
 from collections import Counter, defaultdict, deque

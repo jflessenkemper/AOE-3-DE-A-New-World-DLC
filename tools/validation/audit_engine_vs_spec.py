@@ -2,11 +2,11 @@
 """Cross-check engine wall_strategy assignments vs playstyle_spec.json claims.
 
 Reads:
-  game/ai/aiHeader.xs               — wall strategy enum (cLLWallStrategy*)
-  game/ai/leaders/leaderCommon.xs   — llUse*Style functions + per-civ dispatch
-  game/ai/leaders/leader_*.xs       — per-leader init style call
+  game/ai/core/aiHeader.xs               — wall strategy enum (cANWWallStrategy*)
+  game/ai/leaders/leaderCommon.xs        — anwUse*Style functions + per-civ dispatch
+  game/ai/leaders/leader_*.xs            — per-leader init style call
   game/ai/leaders/leader_revolution_commanders.xs — per-ANW commander dispatch
-  playstyle_spec.json               — authoritative claims per data_name
+  playstyle_spec.json                    — authoritative claims per data_name
 
 Reports any data_name whose engine-resolved wall_strategy differs from the
 spec claim. Comments are stripped before scanning so commented-out style
@@ -36,11 +36,11 @@ def strip_comments(src: str) -> str:
 
 
 def load_style_to_ws(common_path: pathlib.Path) -> dict[str, int]:
-    """For each `void llUse<X>Style(...)` body, find the gLLWallStrategy assignment."""
+    """For each `void anwUse<X>Style(...)` body, find the gANWWallStrategy assignment."""
     src = strip_comments(common_path.read_text())
     out: dict[str, int] = {}
     pat = re.compile(
-        r'void (llUse\w+Style)\(.*?\)\s*\{[^}]*?gLLWallStrategy\s*=\s*cLLWallStrategy(\w+)',
+        r'void (anwUse\w+Style)\(.*?\)\s*\{[^}]*?gANWWallStrategy\s*=\s*cANWWallStrategy(\w+)',
         re.DOTALL,
     )
     for m in pat.finditer(src):
@@ -48,13 +48,13 @@ def load_style_to_ws(common_path: pathlib.Path) -> dict[str, int]:
     return out
 
 
-WALL_OVERRIDE_RX = re.compile(r'gLLWallStrategy\s*=\s*cLLWallStrategy(\w+)\s*;')
+WALL_OVERRIDE_RX = re.compile(r'gANWWallStrategy\s*=\s*cANWWallStrategy(\w+)\s*;')
 
 
 def load_leader_file_style(leaders_dir: pathlib.Path) -> dict[str, tuple[str, int | None]]:
-    """leader_<token>.xs -> (llUse*Style call, effective_wall_strategy_int or None).
+    """leader_<token>.xs -> (anwUse*Style call, effective_wall_strategy_int or None).
 
-    If a gLLWallStrategy = cLLWallStrategy<X>; assignment appears AFTER the
+    If a gANWWallStrategy = cANWWallStrategy<X>; assignment appears AFTER the
     last style-helper call in the file, that override value is used as the
     effective wall_strategy instead of the helper's default.  The caller still
     looks up the helper default from style_ws; we store the override (if any)
@@ -65,11 +65,11 @@ def load_leader_file_style(leaders_dir: pathlib.Path) -> dict[str, tuple[str, in
         if 'revolution' in p.stem:
             continue
         txt = strip_comments(p.read_text())
-        call_matches = list(re.finditer(r'(llUse\w+Style)\s*\(', txt))
+        call_matches = list(re.finditer(r'(anwUse\w+Style)\s*\(', txt))
         if not call_matches:
             continue
         style = call_matches[-1].group(1)
-        # Check for a post-helper gLLWallStrategy override.
+        # Check for a post-helper gANWWallStrategy override.
         post_text = txt[call_matches[-1].end():]
         wall_overrides = WALL_OVERRIDE_RX.findall(post_text)
         ws_override: int | None = None
@@ -100,20 +100,19 @@ def _extract_block(src: str, open_pos: int) -> str:
 
 
 def load_revolution_dispatch(rev_path: pathlib.Path) -> dict[str, tuple[str, int | None]]:
-    """ANW<civ> or ANW<civ> -> (llUse*Style call, wall_override_int or None).
+    """ANW<civ> -> (anwUse*Style call, wall_override_int or None).
 
     For each `if (rvltName == "ANWXxx")` block, extracts the exact
     brace-delimited block text (no bleed into sibling blocks), finds the
-    llUse*Style call, then checks for a gLLWallStrategy override AFTER that
+    anwUse*Style call, then checks for a gANWWallStrategy override AFTER that
     call within the same block.
     """
     src = strip_comments(rev_path.read_text())
     out: dict[str, tuple[str, int | None]] = {}
-    # ANW renamed revolution dispatch keys; accept both legacy and current prefixes.
-    for m in re.finditer(r'rvltName\s*==\s*"((?:ANW|ANW)\w+)"[^{]*(\{)', src):
+    for m in re.finditer(r'rvltName\s*==\s*"(ANW\w+)"[^{]*(\{)', src):
         brace_pos = m.start(2)
         block = _extract_block(src, brace_pos)
-        s = re.search(r'(llUse\w+Style)\s*\(', block)
+        s = re.search(r'(anwUse\w+Style)\s*\(', block)
         if not s:
             continue
         style = s.group(1)
@@ -128,12 +127,12 @@ def load_revolution_dispatch(rev_path: pathlib.Path) -> dict[str, tuple[str, int
 
 
 def load_civ_dispatch(common_path: pathlib.Path) -> dict[str, tuple[str, int | None]]:
-    """leaderCommon.xs `cMyCiv == cCiv<X>` branch -> (first llUse*Style call, override_ws or None).
+    """leaderCommon.xs `cMyCiv == cCiv<X>` branch -> (first anwUse*Style call, override_ws or None).
 
     Mirrors load_leader_file_style / load_revolution_dispatch: scans for a
-    gLLWallStrategy override that appears AFTER the helper call inside the
+    gANWWallStrategy override that appears AFTER the helper call inside the
     same `cMyCiv == cCiv<X>` block. This is required because civs like
-    cCivRussians intentionally call `llUseCossackVoiskoStyle(1)` (helper
+    cCivRussians intentionally call `anwUseCossackVoiskoStyle(1)` (helper
     default = FortressRing) then immediately override to FrontierPalisades.
     Without honouring this, the audit produces spurious mismatches.
     """
@@ -143,7 +142,7 @@ def load_civ_dispatch(common_path: pathlib.Path) -> dict[str, tuple[str, int | N
     for m in re.finditer(r'cMyCiv\s*==\s*cCiv(\w+)[^{]*?(\{)', src):
         token = m.group(1)
         block = _extract_block(src, m.start(2))
-        s = re.search(r'(llUse\w+Style)\s*\(', block)
+        s = re.search(r'(anwUse\w+Style)\s*\(', block)
         if not s:
             continue
         style = s.group(1)
@@ -176,7 +175,7 @@ def infer_engine_ws(data_name: str, civ_label: str, leader_to_style, rvlt_style,
     """Return (engine_ws_int, style_name, source_tag) or (None, None, None).
 
     For leader files and revolution dispatch blocks, if a post-helper
-    gLLWallStrategy override was recorded the override value supersedes the
+    gANWWallStrategy override was recorded the override value supersedes the
     style helper's default (same logic as validate_leader_vs_spec.py).
     """
     norm = data_name.lower().replace(' ', '_')
@@ -187,12 +186,11 @@ def infer_engine_ws(data_name: str, civ_label: str, leader_to_style, rvlt_style,
             label = style if ws_override is None else f'{style}+wall_override'
             return effective_ws, label, f'leader_file:{stem}'
     cl_compact = civ_label.replace(' ', '').replace('-', '')
-    # ANW renamed revolution dispatch keys from `ANW*` to `ANW*`. Try both.
-    # Also consult CIV_TOKEN_ALIAS so e.g. "Revolutionary France" -> "RevFrance".
+    # Consult CIV_TOKEN_ALIAS so e.g. "Revolutionary France" -> "RevFrance".
     compact_candidates = [cl_compact]
     if civ_label in CIV_TOKEN_ALIAS:
         compact_candidates.append(CIV_TOKEN_ALIAS[civ_label])
-    for prefix in ('ANW', 'ANW'):
+    for prefix in ('ANW',):
         for cand in compact_candidates:
             rvlt_key = prefix + cand
             if rvlt_key in rvlt_style:

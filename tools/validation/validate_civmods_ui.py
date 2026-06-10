@@ -1,3 +1,4 @@
+"""Verify every ANW civ in civmods.xml has all required UI flag fields and that referenced WPF asset files exist on disk."""
 from __future__ import annotations
 
 from pathlib import Path

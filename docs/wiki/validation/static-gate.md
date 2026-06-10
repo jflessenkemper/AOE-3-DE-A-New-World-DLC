@@ -1,6 +1,6 @@
 # Static gate — offline validators
 
-> ANW ships ~80 offline Python validators in [`tools/validation/`](../../../tools/validation/)
+> ANW ships 80+ offline Python validators in [`tools/validation/`](../../../tools/validation/)
 > that run without launching the engine. They cover XML well-formedness,
 > cross-reference resolution, asset existence, picker prediction, AI
 > personality wiring, and more. The community has no comparable
@@ -74,6 +74,32 @@
 | [`validate_packaged_mod.py`](../../../tools/validation/validate_packaged_mod.py) | Packaged mod validation |
 | [`validate_scenario_binary.py`](../../../tools/validation/validate_scenario_binary.py) | `.age3Yscn` binary checks |
 | [`replay_determinism_validator.py`](../../../tools/validation/replay_determinism_validator.py) | Replay determinism |
+
+### Capture / visual-art pipeline
+
+These guard the non-intrusive screenshot pipeline (`gamescopectl` +
+harness) that produces per-civ visual-art surfaces for the readiness
+site — so a mis-detected display or an under-captured civ is caught
+before review rather than after.
+
+| Validator | Checks |
+|---|---|
+| [`validate_capture_parity.py`](../../../tools/validation/validate_capture_parity.py) | Every active civ reaches Britain-parity coverage: all 22 core surfaces (from `capture_profile.CORE_SURFACES`) + `build_command_card.png` + one `building_*.png` per buildable structure (named slug or numeric-indexed count) |
+| [`validate_gamescope_detect_appid.py`](../../../tools/validation/validate_gamescope_detect_appid.py) | `gamescope_detect.py` verifies the gamescope process tree actually hosts AoE3 (Steam AppId `933110` / `AoE3DE_s.exe`) before reporting "AoE3 detected" — prevents a different Steam title (e.g. CoH2) under gamescope from false-positiving and routing captures to the wrong game |
+| [`validate_readiness_site_images.py`](../../../tools/validation/validate_readiness_site_images.py) | The unified readiness site's per-civ gallery `<img>` tags must reference compact `full/thumbs/*.webp` (never raw multi-MB `full/*.png`) and load eagerly (no `loading="lazy"`), every `visual_art/` ref must resolve on disk, and total eager payload must stay under 60 MB — so every screenshot is visible on page load instead of blank-until-scroll |
+
+### Wiki / documentation sync
+
+These guard against the documentation drifting out of sync with the
+shipped data — the wiki is a release artifact, so stale or misleading
+docs are treated as gate failures.
+
+| Validator | Checks |
+|---|---|
+| [`validate_wiki_nation_coverage.py`](../../../tools/validation/validate_wiki_nation_coverage.py) | Every active civ token (`<main>1</main>`) appears in the wiki nation/building map |
+| [`validate_wiki_wall_strategy_sync.py`](../../../tools/validation/validate_wiki_wall_strategy_sync.py) | Wiki "Wall Strategy Index" table matches `playstyle_spec.json` claims.wall_strategy for all civs (int + enum name; no stale/extra rows) |
+| [`validate_wiki_no_stale_placeholders.py`](../../../tools/validation/validate_wiki_no_stale_placeholders.py) | Wiki carries no misleading uncertainty markers ("TBD / needs verification", "not yet validated", "NEEDS VERIFY"); locks the base-game-Wonder fact (zero Wonder protos in protomods.xml) |
+| [`validate_anw_wall_strategy_coverage.py`](../../../tools/validation/validate_anw_wall_strategy_coverage.py) | Every active civ has an explicit wall-strategy claim (no civ left on the default) |
 
 ### Tier runners
 

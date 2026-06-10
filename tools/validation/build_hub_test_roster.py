@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Generate a 6-pass roster schedule for anwHubTest covering all 40 civs.
+"""Generate a 7-pass roster schedule for anwHubTest covering all 44 civs.
 
 The hub test seats up to 7 AI players per run (slot 1 = observer). With
-40 civs total we need 6 cycles to spot-check every doctrine in-engine.
+44 civs total we need 7 cycles to spot-check every doctrine in-engine.
 The schedule mixes wall-strategies per pass so each run exercises
 cross-strategy interactions (e.g. FortressRing turtling next to a Mobile
 forward-cavalry rusher).
 
-This is the canonical 40-civ test-coverage plan referenced from the
+This is the canonical 44-civ test-coverage plan referenced from the
 release readiness site. Re-run after spec edits to keep the schedule
 in sync.
 
@@ -54,11 +54,11 @@ def build_schedule(civs: dict) -> list[list[str]]:
 
 def render_md(passes: list[list[str]], civs: dict) -> str:
     lines = [
-        "# ANW Hub Test — 40-Civ Roster Schedule",
+        "# ANW Hub Test — 44-Civ Roster Schedule",
         "",
         "**Map:** anwHubTest (8-player slot, observer at center)",
         "**Capacity:** ≤7 AI civs per run",
-        f"**Total civs:** {sum(len(p) for p in passes)}/40",
+        f"**Total civs:** {sum(len(p) for p in passes)}/44",
         f"**Passes required:** {len(passes)}",
         "",
         "Each pass mixes wall strategies so cross-doctrine interactions",
@@ -94,7 +94,7 @@ def main() -> int:
     args.md.parent.mkdir(parents=True, exist_ok=True)
     args.md.write_text(md)
     print(f"  Wrote: {args.md}  ({args.md.stat().st_size} bytes)")
-    print(f"  Total: {sum(len(p) for p in passes)}/40 civs in {len(passes)} passes")
+    print(f"  Total: {sum(len(p) for p in passes)}/44 civs in {len(passes)} passes")
 
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)

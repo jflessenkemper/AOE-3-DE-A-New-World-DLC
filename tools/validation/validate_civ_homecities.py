@@ -1,3 +1,4 @@
+"""Verify every ANW civ in civmods.xml has a valid HomeCityFilename entry with no duplicate or orphan home city files."""
 from __future__ import annotations
 
 from collections import Counter

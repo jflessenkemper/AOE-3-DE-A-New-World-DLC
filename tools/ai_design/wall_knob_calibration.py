@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ANW per-civ wall-knob calibration — single source of truth.
 
-For each of 40 civs we set 14 wall tuning knobs (gLLWall* in aiHeader.xs).
+For each civ we set 14 wall tuning knobs (gANWWall* in aiHeader.xs).
 Calibration anchors:
   1. wall_strategy (from playstyle_spec.json claims) — picks the topology
   2. per-age strategy (from NATION_PLAYSTYLE.ages in a_new_world.html)
@@ -377,20 +377,158 @@ CALIBRATION = {
         towers=0, secondary=3, vils=0, fwd_bias=0.0, outer_ring=0,
         outposts=5, repair=0, closure_pct=0, no_water=1,
         doctrine="Texas Ranger — pure mobile cavalry, frontier fallback"),
+
+    # ============================================================
+    # ANW CANONICAL NATIONS — mirror base-civ counterpart strategy.
+    # kbGetCivName returns "ANWBritish" etc. for these; without these entries
+    # they fall through to the else-default (FortressRing=0) silently.
+    # ============================================================
+
+    # -- Coastal (2) --
+    "ANWBritish": dict(  # Elizabeth I — Tudor naval, mirrors British
+        rev_token="ANWBritish", strategy=2,
+        radius=22, gates=4, age2stone=1, trigger_age=2, seg_len=20,
+        towers=6, secondary=0, vils=6, fwd_bias=0.20, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Channel-defense coastal — mirrors British (Elizabeth) exactly"),
+
+    "ANWDutch": dict(  # Maurice of Nassau — Dutch dyke, mirrors Dutch
+        rev_token="ANWDutch", strategy=2,
+        radius=18, gates=3, age2stone=1, trigger_age=2, seg_len=20,
+        towers=7, secondary=4, vils=7, fwd_bias=0.15, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Dutch dyke-defense coastal — mirrors Dutch (Maurice) exactly"),
+
+    "ANWPortuguese": dict(  # Henry the Navigator — Atlantic carrack, mirrors Portuguese
+        rev_token="ANWPortuguese", strategy=2,
+        radius=22, gates=4, age2stone=1, trigger_age=2, seg_len=20,
+        towers=5, secondary=0, vils=6, fwd_bias=0.20, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Atlantic carrack coastal defense — mirrors Portuguese (Henry) exactly"),
+
+    # -- Urban Barricade (4) --
+    "ANWGermans": dict(  # Frederick the Great — Prussian barricade, mirrors Germans
+        rev_token="ANWGermans", strategy=4,
+        radius=14, gates=3, age2stone=1, trigger_age=2, seg_len=20,
+        towers=8, secondary=0, vils=7, fwd_bias=0.25, outer_ring=8,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Prussian double-ring urban barricade — mirrors Germans (Frederick) exactly"),
+
+    "ANWItalians": dict(  # Garibaldi — Risorgimento urban, mirrors DEItalians
+        rev_token="ANWItalians", strategy=4,
+        radius=12, gates=3, age2stone=1, trigger_age=2, seg_len=20,
+        towers=5, secondary=0, vils=4, fwd_bias=0.15, outer_ring=4,
+        outposts=1, repair=3, closure_pct=100, no_water=1,
+        doctrine="Risorgimento city walls urban barricade — mirrors DEItalians (Garibaldi) exactly"),
+
+    "ANWMexicans": dict(  # Hidalgo — insurgente barricade, mirrors DEMexicans
+        rev_token="ANWMexicans", strategy=4,
+        radius=11, gates=3, age2stone=0, trigger_age=2, seg_len=20,
+        towers=4, secondary=3, vils=4, fwd_bias=0.20, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Insurgente town barricade — mirrors DEMexicans (Hidalgo) exactly"),
+
+    "ANWUSA": dict(  # Washington — Continental Army barricade, mirrors DEAmericans
+        rev_token="ANWUSA", strategy=4,
+        radius=12, gates=3, age2stone=1, trigger_age=2, seg_len=20,
+        towers=5, secondary=3, vils=5, fwd_bias=0.20, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Continental Army camp barricade — mirrors DEAmericans (Washington) exactly"),
+
+    # -- Mobile / No Walls (5) --
+    "ANWHaudenosaunee": dict(  # Hiawatha — Iroquois longhouse confederation, mirrors XPIroquois
+        rev_token="ANWHaudenosaunee", strategy=5,
+        radius=0, gates=0, age2stone=0, trigger_age=5, seg_len=0,
+        towers=0, secondary=1, vils=0, fwd_bias=0.0, outer_ring=0,
+        outposts=5, repair=0, closure_pct=0, no_water=1,
+        doctrine="Iroquois Confederacy no-walls, choke fallback — mirrors XPIroquois (Hiawatha) exactly"),
+
+    "ANWJapanese": dict(  # Tokugawa — samurai field doctrine, mirrors Japanese
+        rev_token="ANWJapanese", strategy=5,
+        radius=0, gates=0, age2stone=0, trigger_age=5, seg_len=0,
+        towers=0, secondary=4, vils=0, fwd_bias=0.0, outer_ring=0,
+        outposts=3, repair=0, closure_pct=0, no_water=1,
+        doctrine="Tokugawa daimyo field army no-walls — mirrors Japanese (Tokugawa) exactly"),
+
+    "ANWLakota": dict(  # Chief Gall — Plains horse warriors, mirrors XPSioux
+        rev_token="ANWLakota", strategy=5,
+        radius=0, gates=0, age2stone=0, trigger_age=5, seg_len=0,
+        towers=0, secondary=3, vils=0, fwd_bias=0.0, outer_ring=0,
+        outposts=5, repair=0, closure_pct=0, no_water=1,
+        doctrine="Plains horse warrior no-walls — mirrors XPSioux (Chief Gall) exactly"),
+
+    "ANWSpanish": dict(  # Isabella — Reconquista mobile column, mirrors Spanish
+        rev_token="ANWSpanish", strategy=5,
+        radius=0, gates=0, age2stone=0, trigger_age=5, seg_len=0,
+        towers=0, secondary=2, vils=0, fwd_bias=0.0, outer_ring=0,
+        outposts=3, repair=0, closure_pct=0, no_water=1,
+        doctrine="Reconquista mobile column — mirrors Spanish (Isabella) exactly"),
+
+    "ANWSwedes": dict(  # Gustavus Adolphus — Caroline mobile, mirrors DESwedish
+        rev_token="ANWSwedes", strategy=5,
+        radius=0, gates=0, age2stone=0, trigger_age=5, seg_len=0,
+        towers=0, secondary=4, vils=0, fwd_bias=0.0, outer_ring=0,
+        outposts=3, repair=0, closure_pct=0, no_water=1,
+        doctrine="Swedish Caroline mobile doctrine — mirrors DESwedish (Gustavus) exactly"),
+
+    # -- Frontier Palisades (3) --
+    "ANWHausa": dict(  # Muhammadu Kanta — caravanserai frontier, mirrors DEHausa
+        rev_token="ANWHausa", strategy=3,
+        radius=18, gates=5, age2stone=0, trigger_age=2, seg_len=20,
+        towers=3, secondary=5, vils=4, fwd_bias=0.55, outer_ring=4,
+        outposts=4, repair=3, closure_pct=100, no_water=1,
+        doctrine="Hausa caravanserai frontier palisade — mirrors DEHausa (Usman) exactly"),
+
+    # -- Fortress Ring (0) — default already correct but explicit for coverage --
+    "ANWChinese": dict(  # Kangxi — Great Wall doctrine, mirrors Chinese
+        rev_token="ANWChinese", strategy=0,
+        radius=18, gates=3, age2stone=1, trigger_age=2, seg_len=20,
+        towers=5, secondary=1, vils=7, fwd_bias=0.40, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Great Wall fortress doctrine — mirrors Chinese (Kangxi) exactly"),
+
+    "ANWEthiopians": dict(  # Menelik II — Highland fortress, mirrors DEEthiopians
+        rev_token="ANWEthiopians", strategy=0,
+        radius=20, gates=3, age2stone=0, trigger_age=2, seg_len=20,
+        towers=4, secondary=1, vils=5, fwd_bias=0.40, outer_ring=4,
+        outposts=3, repair=3, closure_pct=100, no_water=1,
+        doctrine="Highland citadel fortress — mirrors DEEthiopians (Menelik) exactly"),
+
+    "ANWIndians": dict(  # Shivaji — Maratha hill-fort, mirrors Indians
+        rev_token="ANWIndians", strategy=0,
+        radius=16, gates=2, age2stone=1, trigger_age=2, seg_len=20,
+        towers=7, secondary=1, vils=7, fwd_bias=0.35, outer_ring=4,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Maratha hill-fort citadel — mirrors Indians (Shivaji/Akbar) exactly"),
+
+    "ANWMaltese": dict(  # Valette — Hospitaller fortress, mirrors DEMaltese
+        rev_token="ANWMaltese", strategy=0,
+        radius=16, gates=3, age2stone=1, trigger_age=2, seg_len=20,
+        towers=8, secondary=2, vils=10, fwd_bias=0.15, outer_ring=6,
+        outposts=1, repair=3, closure_pct=100, no_water=1,
+        doctrine="Order of St John siege fortress — mirrors DEMaltese (Valette) exactly"),
+
+    "ANWOttomans": dict(  # Suleiman — Janissary double ring, mirrors Ottomans
+        rev_token="ANWOttomans", strategy=0,
+        radius=20, gates=4, age2stone=1, trigger_age=2, seg_len=20,
+        towers=6, secondary=4, vils=8, fwd_bias=0.30, outer_ring=6,
+        outposts=2, repair=3, closure_pct=100, no_water=1,
+        doctrine="Janissary-engineer double ring — mirrors Ottomans (Suleiman) exactly"),
 }
 
 
 def emit_xs() -> str:
     """Emit the centralized aiWallKnobsByCiv.xs source."""
     rows = []
+    civ_count = len(CALIBRATION)
     rows.append("// AUTO-GENERATED by tools/ai_design/wall_knob_calibration.py")
-    rows.append("// 40-civ × 14-knob calibration table.")
+    rows.append(f"// {civ_count}-civ × 14-knob calibration table.")
     rows.append("// Edit the .py file and re-emit; do not hand-edit this XS file.")
     rows.append("//")
     rows.append("// Called from aiLoaderStandard.xs::preInit() AFTER initLeader<Name>()")
     rows.append("// so per-civ knobs override any strategy defaults set in leader files.")
     rows.append("")
-    rows.append("void llSetWallKnobsForCiv(void)")
+    rows.append("void anwSetWallKnobsForCiv(void)")
     rows.append("{")
     rows.append("   // Resolve civ key — use kbGetCivName so we can distinguish")
     rows.append("   // base civs from revolution-spawn civs (ANW*).")
@@ -423,28 +561,28 @@ def emit_xs() -> str:
     rows.append("   else")
     rows.append("   {")
     rows.append("      // Unknown civ — leave defaults from aiHeader.xs.")
-    rows.append("      llProbe(\"wall.knobs\", \"civ=\" + civKey + \" status=default\");")
+    rows.append("      anwProbe(\"wall.knobs\", \"civ=\" + civKey + \" status=default\");")
     rows.append("      return;")
     rows.append("   }")
     rows.append("")
     rows.append("   // One-shot probe so validators can confirm per-civ knob set reached the engine.")
-    rows.append("   llProbe(\"wall.knobs\",")
+    rows.append("   anwProbe(\"wall.knobs\",")
     rows.append("      \"civ=\" + civKey +")
-    rows.append("      \" strategy=\" + gLLWallStrategy +")
-    rows.append("      \" r=\" + gLLWallRadius +")
-    rows.append("      \" g=\" + gLLWallGateCount +")
-    rows.append("      \" stoneA2=\" + gLLWallTierAge2Stone +")
-    rows.append("      \" trig=\" + gLLWallTriggerAge +")
-    rows.append("      \" segL=\" + gLLWallSegmentLength +")
-    rows.append("      \" tow=\" + gLLWallTowerInterleave +")
-    rows.append("      \" sec=\" + gLLWallSecondaryStrategy +")
-    rows.append("      \" v=\" + gLLWallVillagerCount +")
-    rows.append("      \" fwd=\" + gLLWallForwardBiasFraction +")
-    rows.append("      \" outer=\" + gLLWallOuterRingDelta +")
-    rows.append("      \" outp=\" + gLLWallEarlyOutpostCount +")
-    rows.append("      \" rep=\" + gLLWallRepairAggressiveness +")
-    rows.append("      \" clo=\" + gLLWallClosurePctTarget +")
-    rows.append("      \" noW=\" + gLLWallNoWaterBuild);")
+    rows.append("      \" strategy=\" + gANWWallStrategy +")
+    rows.append("      \" r=\" + gANWWallRadius +")
+    rows.append("      \" g=\" + gANWWallGateCount +")
+    rows.append("      \" stoneA2=\" + gANWWallTierAge2Stone +")
+    rows.append("      \" trig=\" + gANWWallTriggerAge +")
+    rows.append("      \" segL=\" + gANWWallSegmentLength +")
+    rows.append("      \" tow=\" + gANWWallTowerInterleave +")
+    rows.append("      \" sec=\" + gANWWallSecondaryStrategy +")
+    rows.append("      \" v=\" + gANWWallVillagerCount +")
+    rows.append("      \" fwd=\" + gANWWallForwardBiasFraction +")
+    rows.append("      \" outer=\" + gANWWallOuterRingDelta +")
+    rows.append("      \" outp=\" + gANWWallEarlyOutpostCount +")
+    rows.append("      \" rep=\" + gANWWallRepairAggressiveness +")
+    rows.append("      \" clo=\" + gANWWallClosurePctTarget +")
+    rows.append("      \" noW=\" + gANWWallNoWaterBuild);")
     rows.append("}")
     rows.append("")
     return "\n".join(rows)
@@ -453,21 +591,21 @@ def emit_xs() -> str:
 def _emit_knob_block(kn: dict) -> list[str]:
     """Emit one assignment block for a calibrated row."""
     return [
-        f"      gLLWallStrategy             = {kn['strategy']};",
-        f"      gLLWallRadius               = {kn['radius']};",
-        f"      gLLWallGateCount            = {kn['gates']};",
-        f"      gLLWallTierAge2Stone        = {'true' if kn['age2stone'] else 'false'};",
-        f"      gLLWallTriggerAge           = {kn['trigger_age']};",
-        f"      gLLWallSegmentLength        = {kn['seg_len']};",
-        f"      gLLWallTowerInterleave      = {kn['towers']};",
-        f"      gLLWallSecondaryStrategy    = {kn['secondary']};",
-        f"      gLLWallVillagerCount        = {kn['vils']};",
-        f"      gLLWallForwardBiasFraction  = {kn['fwd_bias']};",
-        f"      gLLWallOuterRingDelta       = {kn['outer_ring']};",
-        f"      gLLWallEarlyOutpostCount    = {kn['outposts']};",
-        f"      gLLWallRepairAggressiveness = {kn['repair']};",
-        f"      gLLWallClosurePctTarget     = {kn['closure_pct']};",
-        f"      gLLWallNoWaterBuild         = {'true' if kn['no_water'] else 'false'};",
+        f"      gANWWallStrategy             = {kn['strategy']};",
+        f"      gANWWallRadius               = {kn['radius']};",
+        f"      gANWWallGateCount            = {kn['gates']};",
+        f"      gANWWallTierAge2Stone        = {'true' if kn['age2stone'] else 'false'};",
+        f"      gANWWallTriggerAge           = {kn['trigger_age']};",
+        f"      gANWWallSegmentLength        = {kn['seg_len']};",
+        f"      gANWWallTowerInterleave      = {kn['towers']};",
+        f"      gANWWallSecondaryStrategy    = {kn['secondary']};",
+        f"      gANWWallVillagerCount        = {kn['vils']};",
+        f"      gANWWallForwardBiasFraction  = {kn['fwd_bias']};",
+        f"      gANWWallOuterRingDelta       = {kn['outer_ring']};",
+        f"      gANWWallEarlyOutpostCount    = {kn['outposts']};",
+        f"      gANWWallRepairAggressiveness = {kn['repair']};",
+        f"      gANWWallClosurePctTarget     = {kn['closure_pct']};",
+        f"      gANWWallNoWaterBuild         = {'true' if kn['no_water'] else 'false'};",
     ]
 
 

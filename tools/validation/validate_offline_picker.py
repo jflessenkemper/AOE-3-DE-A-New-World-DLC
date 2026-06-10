@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -33,10 +34,47 @@ sys.path.insert(0, str(REPO_ROOT))
 from tools.cardextract.offline_engine_sim import (  # noqa: E402
     diagnose_merge_gap, load_base_civs, load_civmods, merge, simulate_picker,
 )
-from tools.migration.anw_mapping import (  # noqa: E402
-    ANW_NON_PICKER_TOKENS, engine_token_for,
-)
-from tools.migration.anw_token_map import ANW_CIVS  # noqa: E402
+from tools.migration.anw_mapping import engine_token_for  # noqa: E402
+
+# --- Dynamic active-civ loader -----------------------------------------------
+# Derives the picker-eligible civ set directly from data/civmods.xml so the
+# validator automatically covers new civs without any manual list updates.
+# Mirrors the canonical loader in tools/validation/validate_civ_picker_map.py.
+_CIVMODS_XML = REPO_ROOT / "data" / "civmods.xml"
+
+
+def _active_civmods_tokens() -> set[str]:
+    """Return all civ tokens from civmods.xml that carry <main>1</main>.
+
+    These are exactly the civs the engine will show in the skirmish picker
+    (assuming a correct tag-case merge). The set is derived at runtime, so
+    adding or removing a civ from civmods.xml is immediately reflected here
+    without any manual list maintenance.
+    """
+    root = ET.parse(_CIVMODS_XML).getroot()
+    tokens: set[str] = set()
+    for civ in root.findall("civ"):
+        main_tag = civ.find("main")
+        if main_tag is not None and main_tag.text == "1":
+            name_tag = civ.find("name")
+            if name_tag is not None and name_tag.text:
+                tokens.add(name_tag.text.strip())
+    return tokens
+
+
+# Civs that exist in ANW but are intentionally NOT picker-registered.
+# A token belongs here ONLY when it has NO civmods.xml entry AND is a
+# pure revolution-mechanic variant (launched via political choice in-game,
+# never selectable in the Skirmish lobby).
+#
+# ANWAmericans — American Revolution variant of DEAmericans. Has no civmods.xml
+#   entry at all (verified 2026-06-10); it cannot appear in the picker.
+# ANWMexicans is NOT listed here: it has <main>1</main> in civmods.xml and IS
+#   a full pickable civ. Its earlier exclusion was stale and caused false-green.
+_ALWAYS_NON_PICKER: set[str] = {
+    "ANWAmericans",  # revolution destination only — no civmods.xml entry
+}
+# ---------------------------------------------------------------------------
 
 
 def main() -> int:
@@ -57,15 +95,14 @@ def main() -> int:
     sens = merge(base, mods, case="sensitive")
     picker = simulate_picker(sens)
 
-    # Picker-pickable subset: exclude revolution-mechanic-only variants that
-    # are intentionally NOT registered in civmods.xml. See ANW_NON_PICKER_TOKENS
-    # docstring in tools/migration/anw_mapping.py.
+    # Derive the expected picker set dynamically from civmods.xml: every token
+    # with <main>1</main> is picker-eligible, minus the small set of civs that
+    # are intentionally never registered in the picker (see _ALWAYS_NON_PICKER).
     #
-    # The engine registry (civmods.xml `<name>`) uses base-game tokens for 22
-    # legacy civs (XPAztec, British, DEAmericans, …) while the canonical ANW
-    # namespace renames them (ANWAztecs, ANWBritish, ANWUSA). Translate via
-    # `engine_token_for()` before checking picker visibility.
-    expected_anw = set(ANW_CIVS.keys()) - ANW_NON_PICKER_TOKENS
+    # All civmods.xml <name> tokens are already engine-truth tokens (as of the
+    # 2026-05-20 ANW-prefix refactor), so engine_token_for() is a no-op for
+    # them, but is kept for correctness in case a legacy mapping is ever added.
+    expected_anw = _active_civmods_tokens() - _ALWAYS_NON_PICKER
     expected_engine_tokens = {engine_token_for(t) for t in expected_anw}
     visible_engine = {c.name for c in picker if c.name in expected_engine_tokens}
     # Map back to canonical for the missing-list (sorts more naturally).
@@ -78,7 +115,7 @@ def main() -> int:
 
     print(f"  Base civs in picker:        {sum(1 for c in picker if c.name not in expected_engine_tokens):>3}")
     print(f"  ANW civs in picker:         {len(visible_anw):>3} / {expected_total}")
-    print(f"  Deferred (non-picker):      {len(ANW_NON_PICKER_TOKENS):>3} ({sorted(ANW_NON_PICKER_TOKENS)})")
+    print(f"  Deferred (non-picker):      {len(_ALWAYS_NON_PICKER):>3} ({sorted(_ALWAYS_NON_PICKER)})")
     print(f"  Total picker civs:          {len(picker):>3}")
     print()
     print(f"  Civmods <Civ>/<civ> tag:    {diag['mod_root_tags']}")
@@ -112,7 +149,7 @@ def main() -> int:
             "expected_anw": expected_total,
             "visible_anw_count": len(visible_anw),
             "missing_anw": missing_anw,
-            "deferred_non_picker": sorted(ANW_NON_PICKER_TOKENS),
+            "deferred_non_picker": sorted(_ALWAYS_NON_PICKER),
             "total_picker_civs": len(picker),
             **diag,
         }

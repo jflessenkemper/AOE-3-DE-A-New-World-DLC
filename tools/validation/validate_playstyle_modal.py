@@ -16,7 +16,7 @@ For every `<details class="nation-node" data-name="...">` we expect:
     bsProse / pills must be present.)
   * No "internal jargon leakage" — bullets and prose must not include
     `{n}×` multipliers, `level n/N` notation, or raw XS variable names
-    like `gLLTerrainBiasStrength`. The modal is end-user-facing.
+    like `gANWTerrainBiasStrength`. The modal is end-user-facing.
 
 Exits 1 with a per-nation report on any mismatch.
 """
@@ -80,9 +80,9 @@ PLAYSTYLE_OBJECT_RE = re.compile(
 JARGON_PATTERNS = (
     re.compile(r"\d+(?:\.\d+)?\s*×"),                 # "1.30×"
     re.compile(r"\blevel\s+\d+\s*/\s*\d+", re.IGNORECASE),  # "level 2/5"
-    re.compile(r"\bgLL[A-Za-z]+\b"),                  # "gLLTerrainBiasStrength"
-    re.compile(r"\bcLLTerrain[A-Za-z]+\b"),           # raw constant
-    re.compile(r"\bcLLHeading[A-Za-z]+\b"),
+    re.compile(r"\bgANW[A-Za-z]+\b"),                  # "gANWTerrainBiasStrength"
+    re.compile(r"\bcANWTerrain[A-Za-z]+\b"),          # raw constant
+    re.compile(r"\bcANWHeading[A-Za-z]+\b"),
 )
 
 

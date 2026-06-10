@@ -84,8 +84,8 @@ def collect_xs_emitters() -> tuple[set[str], set[str]]:
     """Return (static_tags, dynamic_prefixes) emitted by XS."""
     static: set[str] = set()
     dyn: set[str] = set()
-    static_re = re.compile(r'llProbe\s*\(\s*"([a-zA-Z][a-zA-Z0-9._]*)"')
-    dyn_re = re.compile(r'llProbe\s*\(\s*"([a-zA-Z][a-zA-Z0-9._]*)"\s*\+')
+    static_re = re.compile(r'anwProbe\s*\(\s*"([a-zA-Z][a-zA-Z0-9._]*)"')
+    dyn_re = re.compile(r'anwProbe\s*\(\s*"([a-zA-Z][a-zA-Z0-9._]*)"\s*\+')
     xs_files: list[Path] = []
     for d in XS_DIRS:
         if d.exists():

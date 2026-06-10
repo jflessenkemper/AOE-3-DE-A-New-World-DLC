@@ -1,3 +1,4 @@
+"""Verify the packaged mod release tree contains only ship-ready files and no dev-only artifacts or stray top-level entries."""
 from __future__ import annotations
 
 from dataclasses import dataclass

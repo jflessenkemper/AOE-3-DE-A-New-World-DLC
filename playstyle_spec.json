@@ -877,6 +877,7 @@
    "doctrine_prose": "Holds a fortified coastline with shore batteries and forward outposts, then raids inland with light cavalry. Defends the harbour core, trades for resources, and pressures the enemy economy with mobile horse rather than committing to a pitched line.",
    "claims": {
     "wall_strategy": 2,
+    "expects_naval": true,
     "first_military_building": "barracks_or_stable",
     "first_wall_before_ms": 660000,
     "military_distance_band": [
@@ -1022,7 +1023,7 @@
    "claims": {
     "wall_strategy": 5,
     "first_military_building": "barracks_or_stable",
-    "first_wall_before_ms": 0,
+    "first_wall_before_ms": 720000,
     "military_distance_band": [
      0.9,
      1.3

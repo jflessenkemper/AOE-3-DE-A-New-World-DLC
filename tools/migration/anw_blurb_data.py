@@ -116,10 +116,6 @@ BLURBS = {
         leader_history="Louis-Joseph Papineau (1786-1871) led the Patriote movement in Lower Canada, demanding responsible government from the British colonial administration in the 1830s.",
         nation_history="The Province of Canada (1841-1867) merged Upper and Lower Canada after the 1837-1838 rebellions, paving the road toward Confederation and the Dominion of Canada.",
     ),
-    "ANWFrenchCanadians": dict(
-        leader_history="Louis Riel (1844-1885) led the Métis in the Red River Resistance and the North-West Rebellion, founding Manitoba before his execution by the Canadian government.",
-        nation_history="Lower Canada was the French-speaking Catholic society of the St. Lawrence valley, anchored on the seigneurial system and the 1837 Patriote uprising for responsible government.",
-    ),
     "ANWBrazil": dict(
         leader_history="Pedro II of Brazil (r. 1831-1889) reigned for 58 years over a constitutional monarchy that abolished slavery in 1888 — and was deposed by republican coup the following year.",
         nation_history="The Empire of Brazil (1822-1889) was the Americas' only durable post-colonial monarchy, fueled by sugar, coffee, and the Atlantic slave-trade until abolition forced political collapse.",

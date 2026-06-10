@@ -1,3 +1,4 @@
+"""Validate stringmods.xml string table files for duplicate _locID values, malformed entries, and missing language nodes."""
 from __future__ import annotations
 
 from collections import Counter

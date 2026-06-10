@@ -74,6 +74,11 @@ class HarnessState:
         ready:      1 when the inner game window has been mapped and has
                     committed its first composited frame (i.e. the game is
                     past the splash screen and on the main menu); 0 otherwise.
+        inner_pid:  PID of the inner game (Wine/Proton) window process, or 0
+                    if the game window has not composited a frame yet.
+        inner_alive: 1 when ``inner_pid`` is non-zero and the process is still
+                    alive (``kill(pid, 0)`` succeeds); 0 if it has exited.
+                    ``inner_alive=0`` with ``inner_pid!=0`` flags a game crash.
     """
 
     pid: int
@@ -81,6 +86,8 @@ class HarnessState:
     internal_w: int
     internal_h: int
     ready: int = 0
+    inner_pid: int = 0
+    inner_alive: int = 0
 
 
 @dataclass(frozen=True)
@@ -388,12 +395,16 @@ class HarnessClient:
                 f"Cannot parse STATE response: {resp!r}"
             ) from exc
         ready = int(fields.get("ready", "0"))
+        inner_pid = int(fields.get("inner_pid", "0"))
+        inner_alive = int(fields.get("inner_alive", "0"))
         return HarnessState(
             pid=pid,
             uptime_ms=uptime_ms,
             internal_w=internal_w,
             internal_h=internal_h,
             ready=ready,
+            inner_pid=inner_pid,
+            inner_alive=inner_alive,
         )
 
     def wait_for_ready(self, timeout: float = 60.0) -> HarnessState:
@@ -482,8 +493,29 @@ class HarnessClient:
         resp = self.send_raw(f"MOVE {x} {y}")
         self._require_ok("MOVE", resp)
 
-    def click(self, x: int, y: int) -> None:
-        """Inject a left-click at compositor coordinates.
+    def click(self, x: int, y: int, button: int = 1) -> None:
+        """Inject a mouse click at compositor coordinates.
+
+        Args:
+            x: Horizontal pixel coordinate.
+            y: Vertical pixel coordinate.
+            button: Mouse button index — 1=left (default), 2=middle, 3=right.
+
+        Raises:
+            HarnessCommandError:    on server error.
+            HarnessConnectionError: on socket failure.
+        """
+        if button == 1:
+            resp = self.send_raw(f"CLICK {x} {y}")
+        else:
+            resp = self.send_raw(f"CLICK {x} {y} {button}")
+        self._require_ok("CLICK", resp)
+
+    def rclick(self, x: int, y: int) -> None:
+        """Inject a right-click at compositor coordinates.
+
+        In an RTS this is the primary command verb: move/rally/gather, and it
+        cancels a pending building-placement ghost on open ground.
 
         Args:
             x: Horizontal pixel coordinate.
@@ -493,8 +525,50 @@ class HarnessClient:
             HarnessCommandError:    on server error.
             HarnessConnectionError: on socket failure.
         """
-        resp = self.send_raw(f"CLICK {x} {y}")
-        self._require_ok("CLICK", resp)
+        resp = self.send_raw(f"RCLICK {x} {y}")
+        self._require_ok("RCLICK", resp)
+
+    def button(self, action: str, button: int = 1) -> None:
+        """Press or release a mouse button at the current pointer position.
+
+        Pair :meth:`move` with ``button("down")`` / ``button("up")`` to build
+        custom gestures. For a simple click-drag prefer :meth:`drag`.
+
+        Args:
+            action: "down" or "up" (case-insensitive).
+            button: Mouse button index — 1=left (default), 2=middle, 3=right.
+
+        Raises:
+            ValueError:             if action is not "down"/"up".
+            HarnessCommandError:    on server error.
+            HarnessConnectionError: on socket failure.
+        """
+        act = action.strip().upper()
+        if act not in ("DOWN", "UP"):
+            raise ValueError(f"button action must be 'down' or 'up', got {action!r}")
+        resp = self.send_raw(f"BUTTON {act} {button}")
+        self._require_ok("BUTTON", resp)
+
+    def drag(self, x1: int, y1: int, x2: int, y2: int, button: int = 1) -> None:
+        """Press at (x1,y1), warp to (x2,y2), then release — a click-drag.
+
+        With button=1 this is a box-select (drag-select units); with button=3
+        it is a right-drag.
+
+        Args:
+            x1, y1: Source pixel coordinate (press point).
+            x2, y2: Destination pixel coordinate (release point).
+            button: Mouse button index — 1=left (default), 2=middle, 3=right.
+
+        Raises:
+            HarnessCommandError:    on server error.
+            HarnessConnectionError: on socket failure.
+        """
+        if button == 1:
+            resp = self.send_raw(f"DRAG {x1} {y1} {x2} {y2}")
+        else:
+            resp = self.send_raw(f"DRAG {x1} {y1} {x2} {y2} {button}")
+        self._require_ok("DRAG", resp)
 
     def screenshot(self, host_path: str | Path) -> ScreenshotResult:
         """Request a screenshot saved to the given host-filesystem path.
@@ -568,6 +642,323 @@ class HarnessClient:
         """
         resp = self.send_raw(f"WHEEL {dx} {dy}")
         self._require_ok("WHEEL", resp)
+
+    # ------------------------------------------------------------------
+    # Selection / input helpers (DCLICK, MCLICK, CHORD, TYPE, SLEEP)
+    # ------------------------------------------------------------------
+
+    def dclick(self, x: int, y: int, button: int = 1) -> None:
+        """Double-click at (x,y) within the system double-click interval.
+
+        In AoE3 a left double-click selects all on-screen units of the
+        clicked unit's type.
+
+        Args:
+            x, y:   Pixel coordinate.
+            button: Mouse button index — 1=left (default), 2=middle, 3=right.
+        """
+        resp = self.send_raw(f"DCLICK {x} {y} {button}")
+        self._require_ok("DCLICK", resp)
+
+    def mclick(self, x: int, y: int, mod: str, button: int = 1) -> None:
+        """Modifier-click: hold ``mod`` while clicking at (x,y).
+
+        Shift-click adds to the current selection; Ctrl-click selects all of
+        the unit's type.
+
+        Args:
+            x, y:   Pixel coordinate.
+            mod:    Modifier name — "shift", "ctrl"/"control", or "alt".
+            button: Mouse button index — 1=left (default), 2=middle, 3=right.
+        """
+        resp = self.send_raw(f"MCLICK {x} {y} {mod} {button}")
+        self._require_ok("MCLICK", resp)
+
+    def chord(self, vks: list[int]) -> None:
+        """Press a key chord: all VKs down in order, released in reverse.
+
+        Example: ``chord([0x11, 0x10, 0x31])`` for Ctrl+Shift+1 (assign a
+        control group). Up to 16 keys.
+
+        Args:
+            vks: List of Win32 virtual-key codes.
+
+        Raises:
+            ValueError:          if the list is empty or longer than 16.
+            HarnessCommandError: if any VK has no evdev mapping (no key is
+                                 left stuck down in that case).
+        """
+        if not vks:
+            raise ValueError("chord() requires at least one VK")
+        if len(vks) > 16:
+            raise ValueError("chord() accepts at most 16 keys")
+        args = " ".join(f"{vk:#04x}" for vk in vks)
+        resp = self.send_raw(f"CHORD {args}")
+        self._require_ok("CHORD", resp)
+
+    def type_text(self, text: str) -> None:
+        """Type an ASCII string as synthetic keystrokes (Shift applied as needed).
+
+        Letters, digits, space and common US-ANSI punctuation are supported;
+        unmappable characters are skipped. Used for chat / cheat entry.
+
+        Args:
+            text: The string to type. Must not contain a newline.
+
+        Raises:
+            ValueError:          if *text* contains a newline (would break the
+                                 line protocol).
+            HarnessCommandError: on server error.
+        """
+        if "\n" in text:
+            raise ValueError("type_text() text must not contain a newline")
+        resp = self.send_raw(f"TYPE {text}")
+        self._require_ok("TYPE", resp)
+
+    def sleep(self, ms: int) -> None:
+        """Ask the server to sleep for *ms* milliseconds (clamped to 10000).
+
+        Useful inside a pipelined command sequence to pace actions without a
+        Python-side round trip.
+
+        Args:
+            ms: Milliseconds to sleep (server clamps to a 10 s maximum).
+        """
+        resp = self.send_raw(f"SLEEP {int(ms)}")
+        self._require_ok("SLEEP", resp)
+
+    # ------------------------------------------------------------------
+    # Server-side pixel / region readback (PIXEL, REGION_STAT, REGION_HASH)
+    # ------------------------------------------------------------------
+
+    def pixel(self, x: int, y: int) -> tuple[int, int, int]:
+        """Read one composited pixel; returns an ``(r, g, b)`` tuple (0-255).
+
+        Args:
+            x, y: Pixel coordinate in the logical 1920x1080 space.
+
+        Returns:
+            ``(r, g, b)`` channel values.
+        """
+        resp = self.send_raw(f"PIXEL {x} {y}")
+        payload = self._require_ok("PIXEL", resp)
+        f = self._parse_fields(payload)
+        try:
+            return (int(f["r"]), int(f["g"]), int(f["b"]))
+        except (KeyError, ValueError) as exc:
+            raise HarnessProtocolError(
+                f"Cannot parse PIXEL response: {resp!r}"
+            ) from exc
+
+    def region_stat(
+        self, x: int, y: int, w: int, h: int
+    ) -> dict[str, int]:
+        """Region statistics over RGB channels of every pixel in (x,y,w,h).
+
+        Returns a dict with keys:
+            ``sum``     — sum of (r+g+b) across all pixels.
+            ``mean``    — average channel value (0-255).
+            ``nonzero`` — count of pixels with any channel > 0.
+            ``bright``  — count of pixels with (r+g+b) > 384.
+        """
+        resp = self.send_raw(f"REGION_STAT {x} {y} {w} {h}")
+        payload = self._require_ok("REGION_STAT", resp)
+        f = self._parse_fields(payload)
+        try:
+            return {
+                "sum": int(f["sum"]),
+                "mean": int(f["mean"]),
+                "nonzero": int(f["nonzero"]),
+                "bright": int(f["bright"]),
+            }
+        except (KeyError, ValueError) as exc:
+            raise HarnessProtocolError(
+                f"Cannot parse REGION_STAT response: {resp!r}"
+            ) from exc
+
+    def region_hash(self, x: int, y: int, w: int, h: int) -> int:
+        """FNV-1a 64-bit hash over the region's decoded RGB bytes.
+
+        Two captures of an unchanged region hash equal; any pixel change
+        flips the hash. Returns the hash as an ``int``.
+        """
+        resp = self.send_raw(f"REGION_HASH {x} {y} {w} {h}")
+        payload = self._require_ok("REGION_HASH", resp)
+        f = self._parse_fields(payload)
+        try:
+            return int(f["hash"], 16)
+        except (KeyError, ValueError) as exc:
+            raise HarnessProtocolError(
+                f"Cannot parse REGION_HASH response: {resp!r}"
+            ) from exc
+
+    def _wait_region(
+        self,
+        verb: str,
+        x: int,
+        y: int,
+        w: int,
+        h: int,
+        timeout_ms: int,
+        stable_ms: Optional[int],
+    ) -> tuple[bool, int]:
+        """Shared WAIT_STABLE / WAIT_CHANGE implementation.
+
+        Returns ``(success, waited_ms)``. On timeout ``success`` is False.
+        Uses a socket timeout long enough to cover the server-side wait.
+        The server polls internally every 100 ms (not client-configurable).
+        """
+        parts = [verb, str(x), str(y), str(w), str(h), str(int(timeout_ms))]
+        if stable_ms is not None:
+            parts.append(str(int(stable_ms)))
+        # Ensure the socket read outlives the server-side wait loop.
+        prev = self._timeout
+        self._set_sock_timeout(max(self._timeout, timeout_ms / 1000.0 + 5.0))
+        try:
+            resp = self.send_raw(" ".join(parts))
+        finally:
+            self._set_sock_timeout(prev)
+        if resp.startswith("OK"):
+            payload = resp[2:].strip()
+            f = self._parse_fields(payload)
+            return (True, int(f.get("waited", "0")))
+        # ERR TIMEOUT waited=.. is an expected (non-exceptional) outcome.
+        if resp.startswith("ERR"):
+            parts2 = resp[3:].strip().split(None, 1)
+            code = parts2[0] if parts2 else ""
+            if code == "TIMEOUT":
+                f = self._parse_fields(parts2[1] if len(parts2) > 1 else "")
+                return (False, int(f.get("waited", str(int(timeout_ms)))))
+        self._raise_err(verb, resp)
+        return (False, 0)  # unreachable
+
+    def wait_stable(
+        self,
+        x: int,
+        y: int,
+        w: int,
+        h: int,
+        timeout_ms: int = 8000,
+        stable_ms: int = 600,
+    ) -> tuple[bool, int]:
+        """Block until the region's hash holds steady for *stable_ms*.
+
+        Returns ``(True, waited_ms)`` once stable, or ``(False, timeout_ms)``
+        on timeout. Good for "wait until the screen settles" after a click.
+        """
+        return self._wait_region(
+            "WAIT_STABLE", x, y, w, h, timeout_ms, stable_ms
+        )
+
+    def wait_change(
+        self,
+        x: int,
+        y: int,
+        w: int,
+        h: int,
+        timeout_ms: int = 8000,
+    ) -> tuple[bool, int]:
+        """Block until the region's hash differs from the first sample.
+
+        Returns ``(True, waited_ms)`` on first change, or ``(False, timeout_ms)``
+        on timeout. Good for "wait until something happens" after an action.
+        """
+        return self._wait_region(
+            "WAIT_CHANGE", x, y, w, h, timeout_ms, None
+        )
+
+    # ------------------------------------------------------------------
+    # In-memory screenshot over the socket (SCREENSHOT_BYTES)
+    # ------------------------------------------------------------------
+
+    def screenshot_bytes(self, fmt: str = "png") -> bytes:
+        """Capture the full frame and return its encoded bytes over the socket.
+
+        Unlike :meth:`screenshot` (which writes a file the host must re-open),
+        this ships the encoded image straight back: the server replies with an
+        ``OK bytes=<N> fmt=<fmt>\\n`` header, then exactly ``N`` raw bytes.
+
+        Args:
+            fmt: "png" (default, lossless) or "jpg" (quality ~85, smaller).
+
+        Returns:
+            The encoded image bytes.
+
+        Raises:
+            ValueError:             if *fmt* is not png/jpg.
+            HarnessCommandError:    on server error.
+            HarnessConnectionError: if the socket closes mid-transfer.
+        """
+        fmt = fmt.strip().lower()
+        if fmt not in ("png", "jpg", "jpeg"):
+            raise ValueError(f"screenshot_bytes fmt must be png/jpg, got {fmt!r}")
+        if self._sock is None:
+            raise HarnessConnectionError("Not connected; call connect() first.")
+        try:
+            self._sock.sendall(f"SCREENSHOT_BYTES {fmt}\n".encode("ascii"))
+            # Read the header line up to the first newline.
+            buf = b""
+            while b"\n" not in buf:
+                chunk = self._sock.recv(4096)
+                if not chunk:
+                    raise HarnessConnectionError(
+                        "AOE3DEHarness closed the connection during header read."
+                    )
+                buf += chunk
+                if len(buf) > _LINE_MAX:
+                    raise HarnessProtocolError(
+                        "SCREENSHOT_BYTES header exceeded line limit"
+                    )
+            header, rest = buf.split(b"\n", 1)
+            header_str = header.decode("ascii", errors="replace").strip()
+            if not header_str.startswith("OK"):
+                self._raise_err("SCREENSHOT_BYTES", header_str)
+            fields = self._parse_fields(header_str[2:].strip())
+            try:
+                nbytes = int(fields["bytes"])
+            except (KeyError, ValueError) as exc:
+                raise HarnessProtocolError(
+                    f"Cannot parse SCREENSHOT_BYTES header: {header_str!r}"
+                ) from exc
+            # `rest` already holds the first slice of the payload.
+            data = bytearray(rest)
+            while len(data) < nbytes:
+                chunk = self._sock.recv(min(65536, nbytes - len(data)))
+                if not chunk:
+                    raise HarnessConnectionError(
+                        f"SCREENSHOT_BYTES truncated: got {len(data)} of {nbytes}"
+                    )
+                data.extend(chunk)
+            return bytes(data[:nbytes])
+        except socket.timeout as exc:
+            raise HarnessTimeoutError(
+                f"Socket timed out during SCREENSHOT_BYTES after {self._timeout}s"
+            ) from exc
+        except HarnessError:
+            raise
+        except OSError as exc:
+            raise HarnessConnectionError(
+                f"Socket error during SCREENSHOT_BYTES: {exc}"
+            ) from exc
+
+    # ------------------------------------------------------------------
+    # Internal helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _parse_fields(payload: str) -> dict[str, str]:
+        """Split a ``k=v k=v`` payload into a dict."""
+        fields: dict[str, str] = {}
+        for token in payload.split():
+            if "=" in token:
+                k, v = token.split("=", 1)
+                fields[k] = v
+        return fields
+
+    def _set_sock_timeout(self, seconds: float) -> None:
+        """Adjust the live socket's timeout (used to cover long WAIT_* calls)."""
+        if self._sock is not None:
+            self._sock.settimeout(seconds)
 
     def quit(self) -> None:
         """Tell the server to close this connection cleanly.

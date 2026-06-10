@@ -11,10 +11,10 @@ in the AI XS scripts:
         ``\\b([a-z]+\\.[a-z_]+)\\b`` — dotted lowercase identifier) must
         reference a probe that exists, either as a literal
         ``anwProbe("name"`` site in any AI XS file, or as a known dynamic
-        emission (``llCheckMilestone(tag)`` → ``milestone.first_<tag>``).
+        emission (``anwCheckMilestone(tag)`` → ``milestone.first_<tag>``).
 
   C-2 — MILESTONE TAG COVERAGE
-        Each tag passed to ``llCheckMilestone("<tag>", ...)`` in
+        Each tag passed to ``anwCheckMilestone("<tag>", ...)`` in
         ``game/ai/core/aiDoctrineProbes.xs`` must either (a) be cited by
         at least one ``[HUBTEST]`` narrative line, OR (b) be on the
         EXEMPT list below (with a justifying comment).
@@ -74,8 +74,8 @@ _HUBTEST_MSG_RE = re.compile(
 # Pattern to find anwProbe("name" literal sites.
 _LLPROBE_LITERAL_RE = re.compile(r'anwProbe\s*\(\s*"([^"]+)"')
 
-# Pattern to find llCheckMilestone("<tag>", ...) calls.
-_MILESTONE_TAG_RE = re.compile(r'llCheckMilestone\s*\(\s*"([^"]+)"')
+# Pattern to find anwCheckMilestone("<tag>", ...) calls.
+_MILESTONE_TAG_RE = re.compile(r'anwCheckMilestone\s*\(\s*"([^"]+)"')
 
 
 # ---------------------------------------------------------------------------
@@ -101,7 +101,7 @@ def collect_literal_probes(ai_dir: Path) -> set[str]:
 
 
 def collect_milestone_tags(doctrine_xs_text: str) -> list[str]:
-    """Extract all tag strings from ``llCheckMilestone("<tag>", ...)`` calls."""
+    """Extract all tag strings from ``anwCheckMilestone("<tag>", ...)`` calls."""
     return _MILESTONE_TAG_RE.findall(doctrine_xs_text)
 
 
@@ -136,7 +136,7 @@ def check_c1_narrative_cites_real_probes(
                     "bad_token": tok,
                     "msg": (
                         f"[HUBTEST] message cites '{tok}' which is not emitted "
-                        f"by any anwProbe() or llCheckMilestone() in game/ai/"
+                        f"by any anwProbe() or anwCheckMilestone() in game/ai/"
                     ),
                 })
     return violations
@@ -163,7 +163,7 @@ def check_c2_milestone_tag_coverage(
                 "tag": tag,
                 "probe": milestone_probe,
                 "msg": (
-                    f"llCheckMilestone(\"{tag}\") emits '{milestone_probe}' but "
+                    f"anwCheckMilestone(\"{tag}\") emits '{milestone_probe}' but "
                     f"no [HUBTEST] narrative line cites it, and it is not in "
                     f"MILESTONE_TAG_EXEMPT"
                 ),
@@ -214,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"  [HUBTEST] messages found : {len(hubtest_messages)}")
     print(f"  Literal anwProbe() sites  : {len(literal_probes)}")
-    print(f"  llCheckMilestone tags    : {len(milestone_tags)} "
+    print(f"  anwCheckMilestone tags   : {len(milestone_tags)} "
           f"({len(MILESTONE_TAG_EXEMPT)} exempt)")
     print(f"  Total known probe names  : {len(all_probes)}")
     print()

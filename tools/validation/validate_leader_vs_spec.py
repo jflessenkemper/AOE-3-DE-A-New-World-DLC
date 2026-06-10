@@ -2,9 +2,9 @@
 """validate_leader_vs_spec.py — static cross-check between
 `game/ai/leaders/leader_*.xs` and `playstyle_spec.json`.
 
-Why: each leader file invokes one of the `llUseXStyle()` helpers in
-`leaderCommon.xs`, which locks down `gLLWallStrategy`,
-`gLLBuildStyle`, and a default military-distance multiplier. The
+Why: each leader file invokes one of the `anwUseXStyle()` helpers in
+`leaderCommon.xs`, which locks down `gANWWallStrategy`,
+`gANWBuildStyle`, and a default military-distance multiplier. The
 playstyle_spec.json (extracted from a_new_world.html)
 asserts what each civ *should* be doing. If a leader file's selected
 style doesn't agree with the spec, the AI will play the wrong
@@ -15,7 +15,7 @@ This linter parses both sides statically and reports mismatches
 without ever launching the engine. Catches:
   • Wrong doctrine selected (style's wallStrategy ≠ spec's wall_strategy)
   • Per-leader overrides that contradict the style's defaults
-    (e.g. a `gLLMilitaryDistanceMultiplier = 0.7` after a style that
+    (e.g. a `gANWMilitaryDistanceMultiplier = 0.7` after a style that
     would normally land at 1.1, breaking the spec's [1.1, 1.3] band)
 
 What it does NOT check (those need the engine):
@@ -46,18 +46,18 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 LEADERS_DIR = REPO_ROOT / "game" / "ai" / "leaders"
 SPEC_PATH = REPO_ROOT / "playstyle_spec.json"
 
-# Wall strategy constant → int. Mirrors aiHeader.xs:202-207.
+# Wall strategy constant → int. Mirrors aiHeader.xs enum (post-gANW rename).
 WALL_STRAT_INT = {
-    "cLLWallStrategyFortressRing":        0,
-    "cLLWallStrategyChokepointSegments":  1,
-    "cLLWallStrategyCoastalBatteries":    2,
-    "cLLWallStrategyFrontierPalisades":   3,
-    "cLLWallStrategyUrbanBarricade":      4,
-    "cLLWallStrategyMobileNoWalls":       5,
+    "cANWWallStrategyFortressRing":        0,
+    "cANWWallStrategyChokepointSegments":  1,
+    "cANWWallStrategyCoastalBatteries":    2,
+    "cANWWallStrategyFrontierPalisades":   3,
+    "cANWWallStrategyUrbanBarricade":      4,
+    "cANWWallStrategyMobileNoWalls":       5,
 }
-WALL_STRAT_NAME = {v: k.removeprefix("cLLWallStrategy") for k, v in WALL_STRAT_INT.items()}
+WALL_STRAT_NAME = {v: k.removeprefix("cANWWallStrategy") for k, v in WALL_STRAT_INT.items()}
 
-# Runtime gLLLeaderKey (set in leaderCommon.xs cMyCiv switch) → spec slug.
+# Runtime gANWLeaderKey (set in leaderCommon.xs cMyCiv switch) → spec slug.
 # Kept in sync with tools/validation/validate_doctrine_compliance.py.
 RUNTIME_TO_SPEC_LEADER = {
     "wellington": "elizabeth",
@@ -68,26 +68,26 @@ RUNTIME_TO_SPEC_LEADER = {
                                     # spec lists Muhammadu Kanta of Kebbi.
 }
 
-# Leader filename slug → runtime gLLLeaderKey. For 23/26 leader files
-# the slug == gLLLeaderKey directly; the three exceptions are recorded
+# Leader filename slug → runtime gANWLeaderKey. For 23/26 leader files
+# the slug == gANWLeaderKey directly; the three exceptions are recorded
 # explicitly. The two revolution dispatcher files (revolution_*) are
 # skipped because they cover many revs in one file.
 LEADER_FILE_TO_RUNTIME_KEY = {
-    "valette":  "jean",   # leader_valette.xs sets gLLLeaderKey="jean" (Maltese)
+    "valette":  "jean",   # leader_valette.xs sets gANWLeaderKey="jean" (Maltese)
     "crazy_horse": "crazyhorse",  # underscore in filename, no underscore in key
 }
 
 
 # ─── parsing helpers ───────────────────────────────────────────────────────
 
-# Map from `llUseXStyle()` helper name → (build_style_const, wall_strategy_const).
+# Map from `anwUseXStyle()` helper name → (build_style_const, wall_strategy_const).
 # Built by parsing leaderCommon.xs once. We extract every void-defn block of
-# the form `void llUseXStyle(...){ … gLLWallStrategy = ...; … }`.
+# the form `void anwUseXStyle(...){ … gANWWallStrategy = ...; … }`.
 STYLE_HELPER_RX = re.compile(
-    r"void\s+(llUse\w+Style)\s*\([^)]*\)\s*\{(.*?)\n\}", re.DOTALL
+    r"void\s+(anwUse\w+Style)\s*\([^)]*\)\s*\{(.*?)\n\}", re.DOTALL
 )
-WALL_ASSIGN_RX = re.compile(r"gLLWallStrategy\s*=\s*(cLLWallStrategy\w+)")
-BUILD_ASSIGN_RX = re.compile(r"cLLBuildStyle(\w+)")
+WALL_ASSIGN_RX = re.compile(r"gANWWallStrategy\s*=\s*(cANWWallStrategy\w+)")
+BUILD_ASSIGN_RX = re.compile(r"cANWBuildStyle(\w+)")
 
 
 def parse_style_helpers(common_xs: Path) -> dict[str, dict[str, Any]]:
@@ -104,23 +104,23 @@ def parse_style_helpers(common_xs: Path) -> dict[str, dict[str, Any]]:
         info: dict[str, Any] = {}
         if wm:
             info["wall_strategy"] = WALL_STRAT_INT.get(wm.group(1))
-            info["wall_strategy_name"] = wm.group(1).removeprefix("cLLWallStrategy")
+            info["wall_strategy_name"] = wm.group(1).removeprefix("cANWWallStrategy")
         if bm:
-            info["build_style"] = "cLLBuildStyle" + bm.group(1)
+            info["build_style"] = "cANWBuildStyle" + bm.group(1)
         out[name] = info
     return out
 
 
-# `gLLLeaderKey = "elizabeth"` style assignments in leaderCommon.xs
-LEADER_KEY_RX = re.compile(r'gLLLeaderKey\s*=\s*"([a-zA-Z_]+)"')
+# `gANWLeaderKey = "elizabeth"` style assignments in leaderCommon.xs
+LEADER_KEY_RX = re.compile(r'gANWLeaderKey\s*=\s*"([a-zA-Z_]+)"')
 
 
 def parse_leader_file(path: Path, helpers: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """Pull every llUse*Style() call + post-call gLL* override out of a
+    """Pull every anwUse*Style() call + post-call gANW* override out of a
     leader file. Last write wins (engine semantics).
 
-    For wall_strategy, any explicit ``gLLWallStrategy = cLLWallStrategy<X>``
-    assignment that appears *after* the last llUse*Style() call in the file
+    For wall_strategy, any explicit ``gANWWallStrategy = cANWWallStrategy<X>``
+    assignment that appears *after* the last anwUse*Style() call in the file
     is treated as a spec override and takes precedence over the helper's
     default. This avoids false-positives when a leader file intentionally
     overrides the helper's wall strategy (e.g. Montezuma, Pachacuti).
@@ -128,10 +128,10 @@ def parse_leader_file(path: Path, helpers: dict[str, dict[str, Any]]) -> dict[st
     text = path.read_text(encoding="utf-8", errors="replace")
 
     # Find position of last style-helper call so we can check for
-    # post-helper gLLWallStrategy overrides.
-    style_call_matches = list(re.finditer(r"(llUse\w+Style)\s*\(", text))
+    # post-helper gANWWallStrategy overrides.
+    style_call_matches = list(re.finditer(r"(anwUse\w+Style)\s*\(", text))
     style_calls = [m.group(1) for m in style_call_matches]
-    direct_mdist = re.findall(r"gLLMilitaryDistanceMultiplier\s*=\s*([\d.]+)", text)
+    direct_mdist = re.findall(r"gANWMilitaryDistanceMultiplier\s*=\s*([\d.]+)", text)
 
     style = style_calls[-1] if style_calls else None
     style_info = helpers.get(style, {}) if style else {}
@@ -226,11 +226,11 @@ def check_leader(parsed: dict[str, Any], spec_entry: dict[str, Any]) -> list[tup
         actual = parsed.get("effective_wall_strategy")
         if actual is None:
             out.append((WARN, "wall_strategy",
-                f"no llUse*Style() call found; spec wants {WALL_STRAT_NAME.get(expected,'?')}({expected})"))
+                f"no anwUse*Style() call found; spec wants {WALL_STRAT_NAME.get(expected,'?')}({expected})"))
         elif actual != expected:
             via_str = parsed['selected_style']
             if parsed.get("wall_strategy_override_const"):
-                via_str = f"gLLWallStrategy override after {via_str}"
+                via_str = f"gANWWallStrategy override after {via_str}"
             out.append((FAIL, "wall_strategy",
                 f"file picks {WALL_STRAT_NAME.get(actual,'?')}({actual}) "
                 f"via {via_str}, spec wants "
@@ -238,21 +238,21 @@ def check_leader(parsed: dict[str, Any], spec_entry: dict[str, Any]) -> list[tup
         else:
             via_str = parsed['selected_style']
             if parsed.get("wall_strategy_override_const"):
-                via_str = f"gLLWallStrategy override after {via_str}"
+                via_str = f"gANWWallStrategy override after {via_str}"
             out.append((PASS, "wall_strategy",
                 f"{WALL_STRAT_NAME.get(actual,'?')} (via {via_str})"))
 
-    # Military distance band — last gLLMilitaryDistanceMultiplier
+    # Military distance band — last gANWMilitaryDistanceMultiplier
     # override in the leader file vs. the band claim. If the leader file
     # never overrides, we trust the style helper's default (stored
-    # implicitly inside llConfigureBuildStyleProfile and not parsed
+    # implicitly inside anwConfigureBuildStyleProfile and not parsed
     # here, so we can only check explicit overrides).
     if "military_distance_band" in claims and parsed["mdist_overrides"]:
         lo, hi = claims["military_distance_band"]
         actual = parsed["mdist_overrides"][-1]
         if not (lo <= actual <= hi):
             out.append((FAIL, "military_distance_band",
-                f"leader-file override gLLMilitaryDistanceMultiplier={actual} "
+                f"leader-file override gANWMilitaryDistanceMultiplier={actual} "
                 f"is outside spec band [{lo}, {hi}]"))
         else:
             out.append((PASS, "military_distance_band",

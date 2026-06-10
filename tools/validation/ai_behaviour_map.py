@@ -49,40 +49,40 @@ COMMON_FILE = LEADERS_DIR / "leaderCommon.xs"
 # Source: game/ai/leaders/leaderCommon.xs llUse*Style helpers (verified
 # inline at build time).
 STYLE_DEFAULT_WALL = {
-    "llUseCompactFortifiedCoreStyle":      "FortressRing",
-    "llUseDistributedEconomicNetworkStyle":"FrontierPalisades",
-    "llUseForwardOperationalLineStyle":    "MobileNoWalls",
-    "llUseMobileFrontierScatterStyle":     "MobileNoWalls",
-    "llUseShrineTradeNodeSpreadStyle":     "MobileNoWalls",
-    "llUseCivicMilitiaCenterStyle":        "FrontierPalisades",
-    "llUseSteppeCavalryWedgeStyle":        "MobileNoWalls",
-    "llUseNavalMercantileCompoundStyle":   "CoastalBatteries",
-    "llUseSiegeTrainConcentrationStyle":   "FortressRing",
-    "llUseJungleGuerrillaNetworkStyle":    "MobileNoWalls",
-    "llUseHighlandCitadelStyle":           "FortressRing",
-    "llUseCossackVoiskoStyle":             "FortressRing",
-    "llUseRepublicanLeveeStyle":           "UrbanBarricade",
-    "llUseAndeanTerraceFortressStyle":     "ChokepointSegments",
+    "anwUseCompactFortifiedCoreStyle":      "FortressRing",
+    "anwUseDistributedEconomicNetworkStyle":"FrontierPalisades",
+    "anwUseForwardOperationalLineStyle":    "MobileNoWalls",
+    "anwUseMobileFrontierScatterStyle":     "MobileNoWalls",
+    "anwUseShrineTradeNodeSpreadStyle":     "MobileNoWalls",
+    "anwUseCivicMilitiaCenterStyle":        "FrontierPalisades",
+    "anwUseSteppeCavalryWedgeStyle":        "MobileNoWalls",
+    "anwUseNavalMercantileCompoundStyle":   "CoastalBatteries",
+    "anwUseSiegeTrainConcentrationStyle":   "FortressRing",
+    "anwUseJungleGuerrillaNetworkStyle":    "MobileNoWalls",
+    "anwUseHighlandCitadelStyle":           "FortressRing",
+    "anwUseCossackVoiskoStyle":             "FortressRing",
+    "anwUseRepublicanLeveeStyle":           "UrbanBarricade",
+    "anwUseAndeanTerraceFortressStyle":     "ChokepointSegments",
 }
 
 # Default earliest-forward-base ms baked into each style helper.
-# None = style does NOT call llEnableEarlyForwardBase.
+# None = style does NOT call anwEnableEarlyForwardBase.
 # Source: game/ai/leaders/leaderCommon.xs (verified line-by-line).
 STYLE_FORWARD_BASE_MS = {
-    "llUseCompactFortifiedCoreStyle":      None,
-    "llUseDistributedEconomicNetworkStyle":420000,
-    "llUseForwardOperationalLineStyle":    300000,
-    "llUseMobileFrontierScatterStyle":     360000,
-    "llUseShrineTradeNodeSpreadStyle":     480000,
-    "llUseCivicMilitiaCenterStyle":        420000,
-    "llUseSteppeCavalryWedgeStyle":        300000,
-    "llUseNavalMercantileCompoundStyle":   None,
-    "llUseSiegeTrainConcentrationStyle":   360000,
-    "llUseJungleGuerrillaNetworkStyle":    360000,
-    "llUseHighlandCitadelStyle":           None,
-    "llUseCossackVoiskoStyle":             360000,
-    "llUseRepublicanLeveeStyle":           360000,
-    "llUseAndeanTerraceFortressStyle":     None,
+    "anwUseCompactFortifiedCoreStyle":      None,
+    "anwUseDistributedEconomicNetworkStyle":420000,
+    "anwUseForwardOperationalLineStyle":    300000,
+    "anwUseMobileFrontierScatterStyle":     360000,
+    "anwUseShrineTradeNodeSpreadStyle":     480000,
+    "anwUseCivicMilitiaCenterStyle":        420000,
+    "anwUseSteppeCavalryWedgeStyle":        300000,
+    "anwUseNavalMercantileCompoundStyle":   None,
+    "anwUseSiegeTrainConcentrationStyle":   360000,
+    "anwUseJungleGuerrillaNetworkStyle":    360000,
+    "anwUseHighlandCitadelStyle":           None,
+    "anwUseCossackVoiskoStyle":             360000,
+    "anwUseRepublicanLeveeStyle":           360000,
+    "anwUseAndeanTerraceFortressStyle":     None,
 }
 
 WALL_STRATEGY_NAMES = {
@@ -96,9 +96,9 @@ WALL_STRATEGY_NAMES = {
 WALL_NAME_TO_ID = {v: k for k, v in WALL_STRATEGY_NAMES.items()}
 
 PERSONALITY_FUNCS = {
-    "llSetBalancedPersonality":  "Balanced",
-    "llSetAggressivePersonality":"Aggressive",
-    "llSetDefensivePersonality": "Defensive",
+    "anwSetBalancedPersonality":  "Balanced",
+    "anwSetAggressivePersonality":"Aggressive",
+    "anwSetDefensivePersonality": "Defensive",
 }
 
 # Civ → leader file & key (for the 24 hard-coded leaders).
@@ -275,13 +275,13 @@ def parse_block(body: str) -> dict:
         if m:
             out["bt"][k] = float(m.group(1))
     # Military focus.
-    m = re.search(r"llSetMilitaryFocus\s*\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)", body)
+    m = re.search(r"anwSetMilitaryFocus\s*\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)", body)
     if m:
         out["mil_focus"] = {"infantry": float(m.group(1)),
                             "cavalry":  float(m.group(2)),
                             "artillery":float(m.group(3))}
     # Build style.
-    m = re.search(r"\b(llUse\w+Style)\s*\(\s*(-?\d+)?\s*(?:,\s*(true|false))?\s*\)", body)
+    m = re.search(r"\b(anwUse\w+Style)\s*\(\s*(-?\d+)?\s*(?:,\s*(true|false))?\s*\)", body)
     if m:
         fn = m.group(1)
         intensity = int(m.group(2)) if m.group(2) else None
@@ -297,22 +297,22 @@ def parse_block(body: str) -> dict:
         if style_fwd is not None:
             out["forward_base"]["earliest_ms_from_style"] = style_fwd
     # Explicit wall strategy override.
-    m = re.search(r"gLLWallStrategy\s*=\s*cLLWallStrategy(\w+)", body)
+    m = re.search(r"gANWWallStrategy\s*=\s*cANWWallStrategy(\w+)", body)
     if m:
         out["wall_strategy_override"] = m.group(1)
     # Distance multipliers.
     dm_keys = (
-        ("house",   "gLLHouseDistanceMultiplier"),
-        ("economic","gLLEconomicDistanceMultiplier"),
-        ("military","gLLMilitaryDistanceMultiplier"),
-        ("tc",      "gLLTownCenterDistanceMultiplier"),
+        ("house",   "gANWHouseDistanceMultiplier"),
+        ("economic","gANWEconomicDistanceMultiplier"),
+        ("military","gANWMilitaryDistanceMultiplier"),
+        ("tc",      "gANWTownCenterDistanceMultiplier"),
     )
     for label, glob in dm_keys:
         m = re.search(rf"\b{glob}\s*=\s*(-?\d+(?:\.\d+)?)\s*;", body)
         if m:
             out["distance_multipliers"][label] = float(m.group(1))
     # Strongpoint profile.
-    m = re.search(r"llSetBuildStrongpointProfile\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(true|false)\s*\)", body)
+    m = re.search(r"anwSetBuildStrongpointProfile\s*\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(true|false)\s*\)", body)
     if m:
         out["strongpoint"] = {
             "tower_level":          int(m.group(1)),
@@ -321,7 +321,7 @@ def parse_block(body: str) -> dict:
             "prefer_forward_base":  m.group(4) == "true",
         }
     # Tactical doctrine.
-    m = re.search(r"llSetLeaderTacticalDoctrine\s*\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)", body)
+    m = re.search(r"anwSetLeaderTacticalDoctrine\s*\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)", body)
     if m:
         out["tactical_doctrine"] = {
             "protection":    float(m.group(1)),
@@ -336,10 +336,10 @@ def parse_block(body: str) -> dict:
             v = m.group(1)
             out["cv"][k] = (v == "true") if v in ("true","false") else int(v)
     # Forward base config.
-    m = re.search(r"llEnableEarlyForwardBase\s*\(\s*(-?\d+)\s*\)", body)
+    m = re.search(r"anwEnableEarlyForwardBase\s*\(\s*(-?\d+)\s*\)", body)
     if m:
         out["forward_base"]["earliest_ms"] = int(m.group(1))
-    m = re.search(r"gLLForwardBaseEarliestMs\s*=\s*(-?\d+)", body)
+    m = re.search(r"gANWForwardBaseEarliestMs\s*=\s*(-?\d+)", body)
     if m:
         out["forward_base"]["earliest_ms"] = int(m.group(1))
     # Note: the broader scan for ``llEnableForwardBaseStyle()`` in
@@ -556,7 +556,7 @@ def derive_all() -> dict:
         # Detect ``llEnableForwardBaseStyle()`` anywhere in the full
         # leader source (including age-rules) — leaders like Shivaji
         # opt into the forward axis via the age-2 rule, not init.
-        if re.search(r"\bllEnableForwardBaseStyle\s*\(", src):
+        if re.search(r"\banwEnableForwardBaseStyle\s*\(", src):
             parsed.setdefault("forward_base", {})["style_enabled"] = True
         cb = CivBehaviour(spec_key=spec_key, source_file=str(xs_path.relative_to(ROOT)))
         for k, v in parsed.items():
@@ -887,7 +887,7 @@ def render_markdown(data: dict) -> str:
         lines.append("| {} | {} | {} | {} | {} | {}/{}/{} | rb={} od={} |".format(
             spec_key, cb.get("leader_label","—"), cb.get("personality","—"),
             cb.get("wall_strategy","—"),
-            (bs.get("function","—") or "—").replace("llUse","").replace("Style",""),
+            (bs.get("function","—") or "—").replace("anwUse","").replace("Style",""),
             mf.get("infantry","—"), mf.get("cavalry","—"), mf.get("artillery","—"),
             bt.get("btRushBoom","—"), bt.get("btOffenseDefense","—"),
         ))

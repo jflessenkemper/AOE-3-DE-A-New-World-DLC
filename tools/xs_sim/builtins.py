@@ -14,7 +14,7 @@ from __future__ import annotations
 import math
 from typing import Any, Callable
 
-from .gamestate import GameState
+from .gamestate import GameState, AreaInfo
 
 
 # ---- Generic helpers ---------------------------------------------------
@@ -70,6 +70,120 @@ def _xsArrayGet(args, gs, interp):
 def _xsArrayGetSize(args, gs, interp):
     arr = args[0]
     return len(arr.data) if isinstance(arr, XSArray) else 0
+
+
+# ---- xs* vector stdlib -------------------------------------------------
+
+def _xsVectorGetX(args, gs, interp):
+    v = args[0]
+    return float(v[0]) if isinstance(v, tuple) and len(v) >= 1 else 0.0
+
+def _xsVectorGetY(args, gs, interp):
+    v = args[0]
+    return float(v[1]) if isinstance(v, tuple) and len(v) >= 2 else 0.0
+
+def _xsVectorGetZ(args, gs, interp):
+    v = args[0]
+    return float(v[2]) if isinstance(v, tuple) and len(v) >= 3 else 0.0
+
+def _xsVectorSet(args, gs, interp):
+    x = float(args[0]) if len(args) > 0 else 0.0
+    y = float(args[1]) if len(args) > 1 else 0.0
+    z = float(args[2]) if len(args) > 2 else 0.0
+    return (x, y, z)
+
+def _xsVectorSetX(args, gs, interp):
+    v = args[0] if isinstance(args[0], tuple) else (0.0, 0.0, 0.0)
+    x = float(args[1]) if len(args) > 1 else 0.0
+    return (x, v[1] if len(v) > 1 else 0.0, v[2] if len(v) > 2 else 0.0)
+
+def _xsVectorSetZ(args, gs, interp):
+    v = args[0] if isinstance(args[0], tuple) else (0.0, 0.0, 0.0)
+    z = float(args[1]) if len(args) > 1 else 0.0
+    return (v[0] if len(v) > 0 else 0.0, v[1] if len(v) > 1 else 0.0, z)
+
+def _xsVectorNormalize(args, gs, interp):
+    v = args[0]
+    if not isinstance(v, tuple) or len(v) < 3:
+        return (0.0, 0.0, 0.0)
+    mag = (v[0]**2 + v[1]**2 + v[2]**2) ** 0.5
+    if mag == 0.0:
+        return (0.0, 0.0, 0.0)
+    return (v[0]/mag, v[1]/mag, v[2]/mag)
+
+def _xsVectorLength(args, gs, interp):
+    v = args[0]
+    if not isinstance(v, tuple) or len(v) < 3:
+        return 0.0
+    return (v[0]**2 + v[1]**2 + v[2]**2) ** 0.5
+
+
+# ---- kbArea* mocks -------------------------------------------------------
+
+def _kbAreaGetIDByPosition(args, gs, interp):
+    pos = args[0] if args else None
+    if not isinstance(pos, tuple) or not gs.areas:
+        return -1
+    best_id, best_dist = -1, float('inf')
+    for aid, info in gs.areas.items():
+        dx = pos[0] - info.center[0]
+        dz = pos[2] - info.center[2]
+        d = (dx*dx + dz*dz) ** 0.5
+        if d < best_dist:
+            best_dist, best_id = d, aid
+    return best_id
+
+def _kbAreaGetType(args, gs, interp):
+    aid = int(args[0]) if args else -1
+    info = gs.areas.get(aid)
+    return info.area_type if info else 0
+
+def _kbAreaGetCenter(args, gs, interp):
+    aid = int(args[0]) if args else -1
+    info = gs.areas.get(aid)
+    return info.center if info else (0.0, 0.0, 0.0)
+
+def _kbAreaGetNumberTiles(args, gs, interp):
+    aid = int(args[0]) if args else -1
+    info = gs.areas.get(aid)
+    return info.num_tiles if info else 0
+
+def _kbAreaGetNumberBorderAreas(args, gs, interp):
+    aid = int(args[0]) if args else -1
+    info = gs.areas.get(aid)
+    return len(info.border_area_ids) if info else 0
+
+def _kbAreaGetBorderAreaID(args, gs, interp):
+    aid = int(args[0]) if len(args) > 0 else -1
+    idx = int(args[1]) if len(args) > 1 else -1
+    info = gs.areas.get(aid)
+    if info and 0 <= idx < len(info.border_area_ids):
+        return info.border_area_ids[idx]
+    return -1
+
+
+# ---- kbBase* mocks -------------------------------------------------------
+
+def _kbBaseGetMainID(args, gs, interp):
+    # Return the first base marked as main, or the first base, or fallback 1.
+    for bid, b in gs.bases.items():
+        if b.get("main"):
+            return bid
+    for bid in gs.bases:
+        return bid
+    return 1
+
+def _kbBaseGetLocation(args, gs, interp):
+    # args: (playerID, baseID)
+    bid = int(args[1]) if len(args) > 1 else 1
+    b = gs.bases.get(bid)
+    return b["location"] if b else (0.0, 0.0, 0.0)
+
+def _kbBaseGetFrontVector(args, gs, interp):
+    # args: (playerID, baseID)
+    bid = int(args[1]) if len(args) > 1 else 1
+    b = gs.bases.get(bid)
+    return b["front_vector"] if b else (0.0, 0.0, 0.0)
 
 
 # ---- Rule control (interpreter-level) ----------------------------------
@@ -180,6 +294,29 @@ BUILTINS: dict[str, Callable] = {
     "xsSetRuleMinIntervalSelf": _xsSetRuleMinIntervalSelf,
     "xsGetTime":     _xsGetTime,
     "xsGetTimeSec":  _xsGetTimeSec,
+
+    # vector stdlib (P0)
+    "xsVectorGetX":      _xsVectorGetX,
+    "xsVectorGetY":      _xsVectorGetY,
+    "xsVectorGetZ":      _xsVectorGetZ,
+    "xsVectorSet":       _xsVectorSet,
+    "xsVectorSetX":      _xsVectorSetX,
+    "xsVectorSetZ":      _xsVectorSetZ,
+    "xsVectorNormalize": _xsVectorNormalize,
+    "xsVectorLength":    _xsVectorLength,
+
+    # kbArea* mocks (P2)
+    "kbAreaGetIDByPosition":      _kbAreaGetIDByPosition,
+    "kbAreaGetType":              _kbAreaGetType,
+    "kbAreaGetCenter":            _kbAreaGetCenter,
+    "kbAreaGetNumberTiles":       _kbAreaGetNumberTiles,
+    "kbAreaGetNumberBorderAreas": _kbAreaGetNumberBorderAreas,
+    "kbAreaGetBorderAreaID":      _kbAreaGetBorderAreaID,
+
+    # kbBase* mocks (P3)
+    "kbBaseGetMainID":      _kbBaseGetMainID,
+    "kbBaseGetLocation":    _kbBaseGetLocation,
+    "kbBaseGetFrontVector": _kbBaseGetFrontVector,
 
     # math
     "sqrt":  lambda a, gs, i: math.sqrt(float(a[0])),

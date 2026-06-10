@@ -79,27 +79,71 @@ class Parser:
             items.append(self._parse_top())
         return A.Program(items=items)
 
+    def _parse_class_def(self) -> A.ClassDef:
+        """Parse:  class Name { field_decls* };"""
+        kw = self.expect("kw", "class")
+        name_tok = self.expect("id")
+        self.expect("op", "{")
+        fields: list[A.ClassField] = []
+        while not self.check("op", "}"):
+            # Field declaration: type name [= init] ;
+            # type may be a kw or an id (user-defined type)
+            ft = self.peek()
+            if ft.kind == "kw" and ft.value in TYPE_KWS:
+                ftype = self.eat().value
+            elif ft.kind == "id":
+                ftype = self.eat().value
+            else:
+                raise ParseError(
+                    f"{self.filename}:{ft.line}:{ft.col} expected field type in class, "
+                    f"got {ft.kind}={ft.value!r}"
+                )
+            fname = self.expect("id").value
+            finit = None
+            if self.match("op", "="):
+                finit = self._parse_expr()
+            self.expect("op", ";")
+            fields.append(A.ClassField(typ=ftype, name=fname, init=finit,
+                                        line=ft.line, col=ft.col))
+        self.expect("op", "}")
+        self.match("op", ";")  # optional trailing semicolon
+        return A.ClassDef(name=name_tok.value, fields=fields,
+                           line=kw.line, col=kw.col)
+
     def _parse_top(self):
         t = self.peek()
         if t.kind == "include":
             self.eat()
             return A.Include(path=t.value, line=t.line, col=t.col)
+        # Bare `include "file.xs"` (no leading #) — lexer emits id='include'
+        if t.kind == "id" and t.value == "include":
+            self.eat()
+            path_tok = self.expect("str")
+            self.match("op", ";")  # optional semicolon after bare include
+            return A.Include(path=path_tok.value, line=t.line, col=t.col)
         if self.check("kw", "rule"):
             return self._parse_rule()
+        if self.check("kw", "class"):
+            return self._parse_class_def()
 
-        # Skip storage-class keywords (const/static/extern) — purely advisory
+        # Skip storage-class keywords (const/static/extern/mutable) — purely advisory
         # for the simulator. We treat them all as plain decls.
         is_const = False
-        while self.check("kw", "const") or self.check("kw", "static") or self.check("kw", "extern"):
+        while (self.check("kw", "const") or self.check("kw", "static")
+               or self.check("kw", "extern") or self.check("kw", "mutable")):
             kw = self.eat()
             if kw.value == "const":
                 is_const = True
 
-        # Type keyword is required for top-level decls (var or func).
-        if not (t.kind == "kw" and self.peek().value in TYPE_KWS):
+        # Type keyword required for top-level decls (var or func).
+        # Accepts built-in type keywords (void/int/etc.) or user-defined type
+        # identifiers (class names).
+        type_peek = self.peek()
+        if not ((type_peek.kind == "kw" and type_peek.value in TYPE_KWS)
+                or type_peek.kind == "id"):
             raise ParseError(
-                f"{self.filename}:{t.line}:{t.col} expected declaration, "
-                f"got {t.kind}={t.value!r}"
+                f"{self.filename}:{type_peek.line}:{type_peek.col} expected declaration, "
+                f"got {type_peek.kind}={type_peek.value!r}"
             )
         type_tok = self.eat()
 
@@ -159,6 +203,20 @@ class Parser:
                 f"{self.filename}:{t.line}:{t.col} expected param type, got {t.value!r}"
             )
         typ = self.eat().value
+        # Function-pointer param type:  bool(int, int) comp = init
+        # If `(` immediately follows the type kw, skip the fn-ptr type list.
+        if self.check("op", "("):
+            self.eat()
+            depth = 1
+            while depth > 0:
+                tk = self.eat()
+                if tk.kind == "op" and tk.value == "(": depth += 1
+                elif tk.kind == "op" and tk.value == ")": depth -= 1
+            name = self.expect("id").value
+            default = None
+            if self.match("op", "="):
+                default = self._parse_expr()
+            return A.Param(typ=typ, name=name, default=default)
         # Allow `void` with no name (legacy XS habit).
         if typ == "void" and not self.check("id"):
             return A.Param(typ="void", name="")
@@ -168,6 +226,19 @@ class Parser:
             default = self._parse_expr()
         return A.Param(typ=typ, name=name, default=default)
 
+    def _rule_attr_match(self, canonical: str) -> bool:
+        """Match a rule attribute by canonical name, case-insensitively.
+
+        Rule keywords may appear as ``kw`` tokens (exact case) or ``id``
+        tokens (alternative casing, e.g. ``mininterval``).  Accept both.
+        """
+        t = self.peek()
+        if t.value.lower() == canonical.lower():
+            if t.kind in ("kw", "id"):
+                self.eat()
+                return True
+        return False
+
     def _parse_rule(self) -> A.RuleDef:
         kw = self.expect("kw", "rule")
         name = self.expect("id").value
@@ -175,21 +246,21 @@ class Parser:
         # Attributes appear in any order until '{'
         while not self.check("op", "{"):
             t = self.peek()
-            if self.match("kw", "active"):
+            if self._rule_attr_match("active"):
                 rd.active = True
-            elif self.match("kw", "inactive"):
+            elif self._rule_attr_match("inactive"):
                 rd.active = False
-            elif self.match("kw", "minInterval"):
+            elif self._rule_attr_match("minInterval"):
                 rd.min_interval = self._parse_number()
-            elif self.match("kw", "maxInterval"):
+            elif self._rule_attr_match("maxInterval"):
                 rd.max_interval = self._parse_number()
-            elif self.match("kw", "highFrequency"):
+            elif self._rule_attr_match("highFrequency"):
                 rd.high_frequency = True
-            elif self.match("kw", "runImmediately"):
+            elif self._rule_attr_match("runImmediately"):
                 rd.run_immediately = True
-            elif self.match("kw", "priority"):
+            elif self._rule_attr_match("priority"):
                 rd.priority = int(self._parse_number())
-            elif self.match("kw", "group"):
+            elif self._rule_attr_match("group"):
                 rd.group = self.expect("id").value
             else:
                 raise ParseError(
@@ -224,8 +295,29 @@ class Parser:
             return self._parse_block()
 
         # Local var decl: type ident [= expr] ;
-        if t.kind == "kw" and t.value in TYPE_KWS and self.peek(1).kind == "id":
+        # Also handles fn-pointer local:  type '(' type_list ')' ident [= expr] ;
+        # Also handles user-defined type (class name) as `id id` at stmt start.
+        if (t.kind == "kw" and t.value in TYPE_KWS and (
+                self.peek(1).kind == "id" or self.peek(1).value == "(")) or (
+                t.kind == "id" and self.peek(1).kind == "id"):
             type_tok = self.eat()
+            # Fn-pointer local var:  bool(int,int) name = init;
+            if self.check("op", "("):
+                self.eat()
+                depth = 1
+                while depth > 0:
+                    tk = self.eat()
+                    if tk.kind == "op" and tk.value == "(": depth += 1
+                    elif tk.kind == "op" and tk.value == ")": depth -= 1
+                name_tok = self.expect("id")
+                init = None
+                if self.match("op", "="):
+                    init = self._parse_expr()
+                self.expect("op", ";")
+                return A.VarDecl(
+                    typ=type_tok.value, name=name_tok.value, init=init,
+                    line=type_tok.line, col=type_tok.col,
+                )
             name_tok = self.expect("id")
             init = None
             if self.match("op", "="):
@@ -236,8 +328,8 @@ class Parser:
                 line=type_tok.line, col=type_tok.col,
             )
 
-        # const/static local
-        if t.kind == "kw" and t.value in ("const", "static", "extern"):
+        # const/static/mutable local
+        if t.kind == "kw" and t.value in ("const", "static", "extern", "mutable"):
             self.eat()
             return self._parse_stmt()
 
@@ -251,7 +343,11 @@ class Parser:
             return self._parse_switch(t)
         if self.match("kw", "return"):
             ret = A.Return(line=t.line, col=t.col)
-            if not self.check("op", ";"):
+            # Handle `return ();` — empty parens used as a no-op return in some .xs files
+            if self.check("op", "(") and self.peek(1).kind == "op" and self.peek(1).value == ")":
+                self.eat()  # consume '('
+                self.eat()  # consume ')'
+            elif not self.check("op", ";"):
                 ret.value = self._parse_expr()
             self.expect("op", ";")
             return ret
@@ -261,6 +357,21 @@ class Parser:
         if self.match("kw", "continue"):
             self.expect("op", ";")
             return A.Continue(line=t.line, col=t.col)
+
+        # XS game-engine debug macros: debugTechs <expr-tokens> ;
+        # These take a bare expression argument with no parentheses; some
+        # instances also have stray unmatched ')' before ';'.  Skip all
+        # tokens up to the next ';' rather than attempting to parse an expr.
+        if t.kind == "id" and t.value in ("debugTechs", "debugChat",
+                                          "debugStrings", "debugExploration"):
+            self.eat()
+            while not self.check("op", ";") and not self.check("eof"):
+                self.eat()
+            self.expect("op", ";")
+            return A.ExprStmt(
+                expr=A.StrLit(value=f"<{t.value} skipped>", line=t.line, col=t.col),
+                line=t.line, col=t.col,
+            )
 
         # Expression statement
         e = self._parse_expr()
@@ -391,7 +502,7 @@ class Parser:
 
     def _parse_assign(self) -> A.Expr:
         left = self._parse_ternary()
-        for op in ("=", "+=", "-=", "*=", "/=", "%="):
+        for op in ("=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>="):
             if self.check("op", op):
                 t = self.eat()
                 right = self._parse_assign()
@@ -457,8 +568,16 @@ class Parser:
         return left
 
     def _parse_cmp(self) -> A.Expr:
-        left = self._parse_add()
+        left = self._parse_shift()
         while any(self.check("op", o) for o in ("<", "<=", ">", ">=")):
+            t = self.eat()
+            right = self._parse_shift()
+            left = A.Binary(op=t.value, left=left, right=right, line=t.line, col=t.col)
+        return left
+
+    def _parse_shift(self) -> A.Expr:
+        left = self._parse_add()
+        while self.check("op", "<<") or self.check("op", ">>"):
             t = self.eat()
             right = self._parse_add()
             left = A.Binary(op=t.value, left=left, right=right, line=t.line, col=t.col)
@@ -495,6 +614,26 @@ class Parser:
                 idx = self._parse_expr()
                 self.expect("op", "]")
                 node = A.Index(target=node, index=idx, line=t.line, col=t.col)
+            elif self.check("op", "."):
+                t = self.eat()
+                field_tok = self.expect("id")
+                if self.check("op", "("):
+                    # method call: obj.method(args)
+                    self.eat()
+                    args: list = []
+                    if not self.check("op", ")"):
+                        args.append(self._parse_expr())
+                        while self.match("op", ","):
+                            args.append(self._parse_expr())
+                    self.expect("op", ")")
+                    node = A.Call(
+                        name=f".{field_tok.value}",
+                        args=[node] + args,
+                        line=t.line, col=t.col,
+                    )
+                else:
+                    node = A.MemberAccess(target=node, field=field_tok.value,
+                                          line=t.line, col=t.col)
             elif self.check("op", "++") or self.check("op", "--"):
                 t = self.eat()
                 # postfix ++/-- → desugar to (x = x +/- 1)
@@ -509,6 +648,29 @@ class Parser:
             else:
                 break
         return node
+
+    def _parse_lambda(self) -> A.LambdaExpr:
+        """Parse a lambda literal:  [] '(' params ')' ['->' type] block"""
+        t = self.peek()
+        self.expect("op", "[")
+        self.expect("op", "]")
+        self.expect("op", "(")
+        params: list[A.Param] = []
+        if not self.check("op", ")"):
+            params.append(self._parse_param())
+            while self.match("op", ","):
+                params.append(self._parse_param())
+        self.expect("op", ")")
+        return_type = None
+        if self.match("op", "->"):
+            rt = self.peek()
+            if rt.kind == "kw" and rt.value in TYPE_KWS:
+                return_type = self.eat().value
+            else:
+                return_type = self.expect("id").value
+        body = self._parse_block()
+        return A.LambdaExpr(params=params, return_type=return_type, body=body,
+                             line=t.line, col=t.col)
 
     def _parse_primary(self) -> A.Expr:
         t = self.peek()
@@ -534,6 +696,11 @@ class Parser:
             y = self._parse_expr(); self.expect("op", ",")
             z = self._parse_expr(); self.expect("op", ")")
             return A.VectorLit(x=x, y=y, z=z, line=t.line, col=t.col)
+
+        # lambda literal:  [](...) -> T { ... }
+        if t.kind == "op" and t.value == "[":
+            if self.peek(1).kind == "op" and self.peek(1).value == "]":
+                return self._parse_lambda()
 
         # parenthesised
         if t.kind == "op" and t.value == "(":

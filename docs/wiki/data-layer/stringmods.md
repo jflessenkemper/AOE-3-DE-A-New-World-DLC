@@ -1,26 +1,32 @@
 # stringmods.xml — additive stringtable
 
-> Plain XML at `data/stringmods.xml`. Adds or overrides `_locID`-keyed
+> Plain XML at `data/strings/english/stringmods.xml` (per-locale path —
+> NOT a top-level `data/stringmods.xml`). Adds or overrides `_locID`-keyed
 > entries in the base stringtable. Replaces the legacy
-> `Mod/Data/Strings/<lang>/stringtabley.xml` workflow, which DE silently
-> ignores.
+> `Mod/Data/Strings/<lang>/stringtabley.xml` workflow (the differently-named
+> `stringtabley.xml`, which DE silently ignores).
 
 ## Schema
 
-Root: `<stringtable>` containing `<String _locID="...">...</String>`
-entries. Confirmed minimal example from
-[forums.ageofempires.com — additive strings thread](https://forums.ageofempires.com/t/how-should-an-additive-strings-mod-look-like/213986):
+ANW's actual file is rooted at `<stringmods>` and nests
+`<StringTable>` → `<Language name="English">` → `<String _locID="...">…</String>`
+(verified against `data/strings/english/stringmods.xml`). The bare
+`<String _locID='…'>text</String>` form documented on
+[forums.ageofempires.com — additive strings thread](https://forums.ageofempires.com/t/how-should-an-additive-strings-mod-look-like/213986)
+is the inner element; ANW wraps it in the `<stringmods>`/`StringTable`/`Language`
+envelope:
 
 ```xml
-<String _locID='20038'>ModContinue</String>
-```
-
-```xml
-<stringtable>
-  <String _locID="36883">Britain</String>
-  <String _locID="490331">Elizabeth I</String>
-  ...
-</stringtable>
+<?xml version='1.0' encoding='utf-8'?>
+<stringmods>
+  <StringTable>
+    <Language name="English">
+      <String _locID="36883">Britain</String>
+      <String _locID="490331">Elizabeth I</String>
+      ...
+    </Language>
+  </StringTable>
+</stringmods>
 ```
 
 | Field | Type | Notes |
@@ -46,14 +52,19 @@ No first-party documentation. Community-observed:
 - ~10000-60000: bulk of base game (civ names, unit names, tech names)
 - 100000+: DLC / DE-era content
 
-Mods should pick high IDs to avoid collisions. ANW uses the **490000+**
-band (e.g. `490331`, `490382`, `490002`).
+Mods should pick high IDs to avoid collisions. ANW uses two high bands
+(verified in `data/strings/english/stringmods.xml`): **400000+** for
+leader/civ history blurbs (e.g. `400001` José de San Martín, `400005` Sir
+Isaac Brock) and **490000+** for UI display/rollover names (e.g. `490331`,
+`490382`, `490002`).
 
 ## File path conventions
 
-- DE additive: `data/stringmods.xml` — one file per mod, regardless of
-  locale. DE picks the runtime language and merges against the matching
-  base stringtable.
+- DE additive (what ANW ships): `data/strings/<lang>/stringmods.xml` —
+  ANW's lives at `data/strings/english/stringmods.xml`. Every repo tool
+  (validators, `build_civ_columns.py`, `build_dev_reference.py`) treats
+  this per-locale path as authoritative; there is **no** top-level
+  `data/stringmods.xml`.
 - Legacy: `data/strings/<lang>/stringtabley.xml` — **silently ignored**
   by DE. Forum bug report:
   > "Age 3 DE no longer loads stringtables from the
@@ -106,4 +117,4 @@ band (e.g. `490331`, `490382`, `490002`).
 - [forums.ageofempires.com — silent-ignore bug for legacy paths](https://forums.ageofempires.com/t/age-3-de-no-longer-loads-stringtables-from-the-mod-data-strings-english-folder/107991).
 - [forums.ageofempires.com — DebugOutputGameData stringmods thread](https://forums.ageofempires.com/t/debugoutputgamedata-not-showing-stringmods/225246).
 - [Microsoft Additive Data Mods](https://support.ageofempires.com/hc/en-us/articles/360062106732-Additive-Data-Mods).
-- This repo: `artifacts/extracted_base_stringtable.xml`, `data/stringmods.xml`.
+- This repo: `artifacts/extracted_base_stringtable.xml`, `data/strings/english/stringmods.xml`.
